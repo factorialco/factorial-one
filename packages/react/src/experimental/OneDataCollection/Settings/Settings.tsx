@@ -6,9 +6,10 @@ import { FiltersDefinition } from "../Filters/types"
 import { GroupingDefinition, GroupingState } from "../grouping"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
-import { RecordType, SortingsDefinition } from "../types"
+import { RecordType, SortingsDefinition, SortingsState } from "../sortings"
 import { Visualization } from "../visualizations/collection"
 import { GroupingSelector } from "./components/GroupingSelector"
+import { SortingSelector } from "./components/SortingSelector"
 import { VisualizationSelector } from "./components/VisualizationSelector"
 
 type SettingsProps<
@@ -34,6 +35,9 @@ type SettingsProps<
   grouping?: Grouping
   currentGrouping?: GroupingState<R, Grouping>
   onGroupingChange: (groupingState: GroupingState<R, Grouping>) => void
+  sortings?: SortingsDefinition
+  currentSortings: SortingsState<Sortings>
+  onSortingsChange: (sortings: SortingsState<Sortings>) => void
 }
 
 export const Settings = <
@@ -50,6 +54,9 @@ export const Settings = <
   grouping,
   currentGrouping,
   onGroupingChange,
+  sortings,
+  currentSortings,
+  onSortingsChange,
 }: SettingsProps<
   R,
   Filters,
@@ -113,6 +120,15 @@ export const Settings = <
                   grouping={grouping}
                   currentGrouping={currentGrouping}
                   onGroupingChange={handleGroupingChange}
+                />
+              </div>
+            )}
+            {sortings && Object.keys(sortings).length > 0 && (
+              <div className="mb-2">
+                <SortingSelector
+                  currentSortings={currentSortings}
+                  onChange={onSortingsChange}
+                  sortings={sortings}
                 />
               </div>
             )}
