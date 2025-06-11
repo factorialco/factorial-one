@@ -3569,9 +3569,9 @@ export declare type TabItem = {
     id: string;
 });
 
-declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
+declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "infoIcon" | "sticky" | "width">;
 
-declare function TableHead({ children, width, sortState, onSortClick, info, sticky, hidden, align, }: TableHeadProps): JSX_2.Element;
+declare function TableHead({ children, width, sortState, onSortClick, info, infoIcon, sticky, hidden, align, }: TableHeadProps): JSX_2.Element;
 
 declare interface TableHeadProps {
     children: React.ReactNode;
@@ -3607,6 +3607,11 @@ declare interface TableHeadProps {
      * that shows this text in a tooltip when hovered.
      */
     info?: string;
+    /**
+     * Icon to display when info is provided.
+     * @default InfoCircleLine
+     */
+    infoIcon?: IconType;
     /**
      * When true, the header cell will not be visible.
      * @default false

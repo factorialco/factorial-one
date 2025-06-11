@@ -1,7 +1,7 @@
 import './experimental.css';var SP = Object.defineProperty;
 var $P = (e, t, n) => t in e ? SP(e, t, { enumerable: !0, configurable: !0, writable: !0, value: n }) : e[t] = n;
 var be = (e, t, n) => $P(e, typeof t != "symbol" ? t + "" : t, n);
-import { a3 as Kw, a4 as Uw, a5 as mv, a6 as md, a7 as NP, a8 as DP, a9 as EP, aa as TP, ab as _f, ac as WP, ad as OP, ae as _e, af as Jw, ag as AP, ah as uo, ai as Vs, aj as Yl, ak as jP, al as Jd, am as LP, an as Mf, ao as RP, ap as IP, aq as Qd, ar as zP, as as FP, at as VP, au as hv, av as HP, aw as pv, ax as BP, ay as Qw, az as Zw, aA as qP, W as g1, aB as GP, aC as XP, aD as YP, b as gv, aE as KP, aF as UP, f as JP, a as E, T as ra, c as fi, aG as at, aH as Kl, aI as dn, P as Ve, aJ as ku, aK as hd, aL as oi, aM as ek, aN as oa, aO as tk, aP as ce, aQ as nk, aR as QP, aS as wn, aT as ik, aU as ak, aV as rk, aW as ok, aX as v1, aY as sk, aZ as vv, a_ as dk, $ as pd, S as Or, I as ge, F as y1, j as Pt, a$ as lk, p as fe, b0 as Xe, b1 as _i, b2 as ck, b3 as rt, b4 as xu, b5 as Rm, b6 as b1, b7 as ln, b8 as et, m as br, n as sa, b9 as uk, v as Ar, w as jr, y as Lr, C as Xn, s as ZP, ba as w1, bb as Im, bc as eC, bd as tC, be as Ul, bf as nC, bg as fk, bh as mk, bi as hk, bj as pk, bk as iC, bl as aC, bm as rC, bn as oC, bo as sC, bp as dC, bq as lC, br as cC, bs as uC, bt as fC, o as k1, a0 as gd, bu as mC, M as x1, a2 as hC, bv as Wa, a1 as pC, bw as gC, bx as vC, by as yC, bz as bC, bA as wC, bB as kC, bC as xC, bD as Ga, L as ys, bE as _1, bF as gk, bG as M1, Q as _C, bH as vk, bI as yk, bJ as bk, bK as MC, bL as wk, D as kk, k as xk, bM as PC, bN as _u, x as CC, i as SC, R as $C, bO as vd, l as zm, N as _k, bP as yd, bQ as Mk, q as bd, bR as wd, bS as kd, bT as P1, r as xd, t as Pk, u as NC, bU as DC, bV as EC, bW as TC, bX as WC, bY as _d, bZ as C1, b_ as S1, b$ as Md, c0 as OC, c1 as Ck, Y as Sk, c2 as AC, c3 as jC, c4 as LC, A as RC, B as IC, e as zC, g as FC, V as VC, d as HC, c5 as BC, c6 as qC, c7 as GC, c8 as XC } from "./imageHandler-BLn3rLP1.js";
+import { a3 as Kw, a4 as Uw, a5 as mv, a6 as md, a7 as NP, a8 as DP, a9 as EP, aa as TP, ab as _f, ac as WP, ad as OP, ae as _e, af as Jw, ag as AP, ah as uo, ai as Vs, aj as Yl, ak as jP, al as Jd, am as LP, an as Mf, ao as RP, ap as IP, aq as Qd, ar as zP, as as FP, at as VP, au as hv, av as HP, aw as pv, ax as BP, ay as Qw, az as Zw, aA as qP, W as g1, aB as GP, aC as XP, aD as YP, b as gv, aE as KP, aF as UP, f as JP, a as E, T as ra, c as fi, aG as at, aH as Kl, aI as dn, P as Ve, aJ as ku, aK as hd, aL as oi, aM as ek, aN as oa, aO as tk, aP as ce, aQ as nk, aR as QP, aS as wn, aT as ik, aU as ak, aV as rk, aW as ok, aX as v1, aY as sk, aZ as vv, a_ as dk, $ as pd, S as Or, I as ge, F as y1, j as Pt, a$ as lk, p as fe, b0 as Ge, b1 as _i, b2 as ck, b3 as rt, b4 as xu, b5 as Rm, b6 as b1, b7 as ln, b8 as et, m as br, n as sa, b9 as uk, v as Ar, w as jr, y as Lr, C as Xn, s as ZP, ba as w1, bb as Im, bc as eC, bd as tC, be as Ul, bf as nC, bg as fk, bh as mk, bi as hk, bj as pk, bk as iC, bl as aC, bm as rC, bn as oC, bo as sC, bp as dC, bq as lC, br as cC, bs as uC, bt as fC, o as k1, a0 as gd, bu as mC, M as x1, a2 as hC, bv as Wa, a1 as pC, bw as gC, bx as vC, by as yC, bz as bC, bA as wC, bB as kC, bC as xC, bD as Ga, L as ys, bE as _1, bF as gk, bG as M1, Q as _C, bH as vk, bI as yk, bJ as bk, bK as MC, bL as wk, D as kk, k as xk, bM as PC, bN as _u, x as CC, i as SC, R as $C, bO as vd, l as zm, N as _k, bP as yd, bQ as Mk, q as bd, bR as wd, bS as kd, bT as P1, r as xd, t as Pk, u as NC, bU as DC, bV as EC, bW as TC, bX as WC, bY as _d, bZ as C1, b_ as S1, b$ as Md, c0 as OC, c1 as Ck, Y as Sk, c2 as AC, c3 as jC, c4 as LC, A as RC, B as IC, e as zC, g as FC, V as VC, d as HC, c5 as BC, c6 as qC, c7 as GC, c8 as XC } from "./imageHandler-BLn3rLP1.js";
 import { c9 as pIe } from "./imageHandler-BLn3rLP1.js";
 import { jsxs as k, jsx as l, Fragment as De } from "react/jsx-runtime";
 import * as S from "react";
@@ -4862,7 +4862,7 @@ const Bn = ({
     {
       className: E(
         "flex w-full appearance-none rounded-md border-0 bg-f1-background p-2 ring-1 ring-inset ring-f1-border transition-all placeholder:text-f1-foreground-tertiary hover:ring-f1-border-hover",
-        Xe("focus:ring-f1-border-hover"),
+        Ge("focus:ring-f1-border-hover"),
         n ? "flex gap-1 py-1.5 ps-2" : "ps-3",
         r.disabled && "cursor-not-allowed bg-f1-background-secondary opacity-50",
         a && "ring-f1-border-critical-bold",
@@ -5040,7 +5040,7 @@ const W$ = ({
               className: E(
                 j$,
                 p,
-                Xe("focus-visible:border-f1-border-hover")
+                Ge("focus-visible:border-f1-border-hover")
               ),
               children: [
                 /* @__PURE__ */ l(_$, { placeholder: t, asChild: !0, children: x && /* @__PURE__ */ l(A$, { item: x }) }),
@@ -5213,7 +5213,7 @@ const Dd = S.forwardRef(({ className: e, indeterminate: t, disabled: n, hideLabe
           n && "cursor-not-allowed opacity-50 hover:border-f1-border",
           t && "data-[state=checked]:bg-f1-background data-[state=checked]:text-f1-foreground-selected hover:data-[state=checked]:border-f1-border-hover",
           a.checked && n && "data-[state=checked]:bg-f1-background-secondary data-[state=checked]:text-f1-foreground-secondary",
-          Xe(),
+          Ge(),
           e
         ),
         checked: a.checked,
@@ -8332,7 +8332,7 @@ const p3 = S.forwardRef(({ className: e, disabled: t, hideLabel: n, ...i }, a) =
         className: E(
           "relative h-5 w-[1.875rem] rounded-full bg-f1-border hover:bg-f1-border-hover data-[state=checked]:bg-f1-background-selected-bold",
           t && "cursor-not-allowed opacity-50",
-          Xe(),
+          Ge(),
           e
         ),
         disabled: t,
@@ -8553,7 +8553,7 @@ var Fv = R.forwardRef(
 const C3 = Pt({
   base: E(
     "inline-flex items-center justify-center rounded-sm text-sm font-medium transition-colors hover:bg-f1-background-secondary hover:text-f1-foreground-secondary disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-f1-background-secondary data-[state=on]:text-f1-foreground",
-    Xe()
+    Ge()
   ),
   variants: {
     variant: {
@@ -13415,7 +13415,7 @@ const Bu = function({
               ref: h,
               className: E(
                 "inline-flex flex-shrink-0 items-center",
-                Xe()
+                Ge()
               ),
               children: (r == null ? void 0 : r(v.length, c)) ?? w
             }
@@ -17534,7 +17534,7 @@ const RA = ({
       onClick: a,
       className: E(
         "relative flex flex-col rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary no-underline transition-shadow hover:shadow",
-        Xe()
+        Ge()
       ),
       onMouseEnter: g ? void 0 : y,
       onMouseLeave: g ? void 0 : w,
@@ -20443,7 +20443,7 @@ const kRe = ({
               rel: "noreferrer",
               className: E(
                 "flex items-center gap-1 rounded-sm bg-f1-background-secondary px-2 py-0.5 text-base font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary-hover [&>svg]:text-f1-foreground-secondary",
-                Xe()
+                Ge()
               ),
               children: [
                 i.label,
@@ -20699,7 +20699,7 @@ const sL = (e) => {
     /* @__PURE__ */ l(jr, { asChild: !0, children: /* @__PURE__ */ l(
       "button",
       {
-        className: E("inline-flex flex-shrink-0 items-center", Xe()),
+        className: E("inline-flex flex-shrink-0 items-center", Ge()),
         children: a
       }
     ) }),
@@ -22375,7 +22375,7 @@ const tb = _e.create(ge), aR = ({
   {
     className: E(
       "flex h-6 w-6 items-center justify-center rounded",
-      Xe()
+      Ge()
     ),
     onClick: () => t(!e),
     "aria-label": n,
@@ -23114,7 +23114,7 @@ const pR = ({ contentId: e }) => {
     "a",
     {
       href: `#${e}`,
-      className: Xe(
+      className: Ge(
         "absolute z-50 -translate-y-[1000px] translate-x-4 rounded-md bg-f1-background px-4 py-2.5 text-base font-medium text-f1-foreground no-underline transition-transform duration-200 focus-visible:translate-y-4"
       ),
       children: t.actions.skipToContent
@@ -23470,7 +23470,7 @@ function $Re({ label: e, options: t, hasNewUpdate: n }) {
         {
           className: E(
             "relative flex h-6 w-6 items-center justify-center rounded-full bg-f1-background-bold text-f1-foreground-inverse shadow-md transition-all",
-            Xe()
+            Ge()
           ),
           "aria-label": e,
           children: [
@@ -23578,7 +23578,7 @@ const MR = ({
         {
           className: E(
             "group flex w-fit max-w-full flex-nowrap items-center justify-center gap-1 rounded p-1.5 text-f1-foreground transition-colors hover:bg-f1-background-hover data-[state=open]:bg-f1-background-hover",
-            Xe()
+            Ge()
           ),
           tabIndex: 0,
           title: t == null ? void 0 : t.name,
@@ -23640,7 +23640,7 @@ function NRe({
       {
         className: E(
           "flex w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary data-[state=open]:bg-f1-background-secondary",
-          Xe("focus-visible:ring-inset")
+          Ge("focus-visible:ring-inset")
         ),
         onClick: r,
         children: [
@@ -23924,7 +23924,7 @@ const jR = ({
       ...a,
       className: E(
         "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
-        Xe("focus-visible:ring-inset"),
+        Ge("focus-visible:ring-inset"),
         r ? "bg-f1-background-secondary text-f1-foreground" : "hover:bg-f1-background-secondary"
       ),
       children: /* @__PURE__ */ l(jR, { item: e, active: r })
@@ -24054,7 +24054,7 @@ const jR = ({
       {
         className: E(
           "group relative flex w-full select-none items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary transition-colors hover:cursor-pointer hover:bg-f1-background-secondary",
-          Xe("focus-visible:ring-inset"),
+          Ge("focus-visible:ring-inset"),
           n && "hidden"
         ),
         onClick: u,
@@ -24364,7 +24364,7 @@ function WRe({
       onClick: e,
       className: E(
         "mb-[calc(0.75rem-1px)] flex w-full cursor-pointer items-center justify-between rounded bg-f1-background-inverse-secondary p-1.5 text-f1-foreground-secondary ring-1 ring-inset ring-f1-border-secondary transition-all hover:ring-f1-border-hover",
-        Xe()
+        Ge()
       ),
       type: "button",
       ...i,
@@ -24514,7 +24514,7 @@ const zR = Pt({
         rel: "noreferrer",
         className: E(
           "flex items-center gap-1 rounded-sm px-2 py-0.5 text-base font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary-hover [&>svg]:text-f1-foreground-secondary",
-          Xe()
+          Ge()
         ),
         children: [
           i.label,
@@ -60407,7 +60407,7 @@ const Nh = {
                     "after:absolute after:inset-x-1 after:inset-y-0 after:z-0 after:rounded-md after:ring-1 after:ring-inset after:ring-f1-border-secondary after:transition-all after:duration-100 after:content-['']",
                     L && "cursor-not-allowed text-f1-foreground-secondary",
                     !L && "hover:after:bg-f1-background-hover",
-                    Xe(),
+                    Ge(),
                     (N || D) && "after:inset-x-0",
                     P && "after:bg-f1-background-selected-bold after:ring-0 hover:after:bg-f1-background-selected-bold-hover [&>span]:text-f1-foreground-inverse",
                     P && !N && !D && e === "range" && "rounded-none bg-f1-background-selected after:opacity-0 after:transition-none first:rounded-l-md last:rounded-r-md hover:bg-f1-background-selected [&>span]:text-f1-foreground-selected"
@@ -60629,7 +60629,7 @@ function VCe({
               "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-['']",
               !D && "hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
               D && "cursor-not-allowed text-f1-foreground-secondary",
-              Xe(),
+              Ge(),
               x && e === "single" && "bg-f1-background-selected-bold after:opacity-100 hover:bg-f1-background-selected-bold-hover [&>span]:z-10 [&>span]:text-f1-foreground-inverse",
               x && e === "range" && "rounded-none bg-f1-background-selected hover:bg-f1-background-selected [&:nth-child(3n+1)]:rounded-s-md [&:nth-child(3n+3)]:rounded-e-md [&>span]:text-f1-foreground-selected",
               (b || C) && e === "range" && "rounded-none bg-f1-background-selected after:opacity-100 [&>span]:z-10 [&>span]:text-f1-foreground-inverse",
@@ -60829,7 +60829,7 @@ const HCe = {
                     "after:absolute after:inset-x-1 after:inset-y-0 after:z-0 after:rounded-md after:ring-1 after:ring-inset after:ring-f1-border-secondary after:transition-all after:duration-100 after:content-['']",
                     L && "cursor-not-allowed text-f1-foreground-secondary",
                     !L && "hover:after:bg-f1-background-hover",
-                    Xe(),
+                    Ge(),
                     (N || D) && "after:inset-x-0",
                     P && "after:bg-f1-background-selected-bold after:ring-0 hover:after:bg-f1-background-selected-bold-hover [&>span]:text-f1-foreground-inverse",
                     P && !N && !D && e === "range" && "rounded-none bg-f1-background-selected after:opacity-0 after:transition-none first:rounded-l-md last:rounded-r-md hover:bg-f1-background-selected [&>span]:text-f1-foreground-selected"
@@ -61161,7 +61161,7 @@ function UCe({
               "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-['']",
               !D && "hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
               D && "cursor-not-allowed text-f1-foreground-secondary",
-              Xe(),
+              Ge(),
               P && "[&>span]:font-normal [&>span]:text-f1-foreground-secondary",
               x && e === "single" && "bg-f1-background-selected-bold after:opacity-100 hover:bg-f1-background-selected-bold-hover [&>span]:z-10 [&>span]:text-f1-foreground-inverse [&>span]:opacity-100",
               x && e === "range" && "rounded-none bg-f1-background-selected hover:bg-f1-background-selected [&:nth-child(4n+1)]:rounded-s-md [&:nth-child(4n+4)]:rounded-e-md [&>span]:text-f1-foreground-selected [&>span]:opacity-100",
@@ -61519,7 +61519,7 @@ function t8e({
           ys,
           {
             href: r,
-            className: E("absolute inset-0 z-0 block rounded-xl", Xe()),
+            className: E("absolute inset-0 z-0 block rounded-xl", Ge()),
             "aria-label": t
           }
         ),
@@ -61551,7 +61551,7 @@ function t8e({
                           className: E(
                             "flex h-6 w-6 items-center justify-center rounded-sm transition-colors hover:bg-f1-background-secondary",
                             g && "bg-f1-background-secondary",
-                            Xe()
+                            Ge()
                           ),
                           "aria-label": "Other actions",
                           children: /* @__PURE__ */ l(ge, { icon: Va, size: "sm" })
@@ -61999,7 +61999,7 @@ function c8e({
         {
           className: E(
             "text-f1-foreground-primary text-xs underline",
-            Xe()
+            Ge()
           ),
           onClick: () => {
             c(!0);
@@ -62043,7 +62043,7 @@ function c8e({
             {
               className: E(
                 "flex w-full flex-1 cursor-pointer appearance-none items-center justify-between gap-1 rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
-                Xe()
+                Ge()
               ),
               onClick: () => {
                 n(
@@ -62160,7 +62160,7 @@ const m8e = {
       a && (a == null ? void 0 : a.type) !== "person" && "rounded-sm",
       r && !a && "pl-1.5",
       n && "cursor-pointer",
-      n && Xe()
+      n && Ge()
     ),
     onClick: n,
     onKeyDown: (o) => {
@@ -62183,7 +62183,7 @@ const m8e = {
           className: E(
             "-m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full [&_svg]:text-f1-icon-secondary [&_svg]:transition-colors [&_svg]:hover:text-f1-icon [&_svg]:focus:text-f1-icon",
             t === "selected" && "[&_svg]:text-f1-icon-selected [&_svg]:hover:text-f1-icon-selected-hover [&_svg]:focus:text-f1-icon-selected-hover",
-            Xe()
+            Ge()
           ),
           tabIndex: 0,
           "aria-label": "Close",
@@ -62304,7 +62304,7 @@ function w8e({
           "group relative flex w-full appearance-none items-center justify-between rounded px-2 py-1.5 font-medium transition-colors",
           "hover:bg-f1-background-secondary",
           n === a && "bg-f1-background-secondary",
-          Xe()
+          Ge()
         ),
         onClick: () => i(a),
         children: /* @__PURE__ */ k("div", { className: "flex items-center justify-start gap-2.5", children: [
@@ -62476,7 +62476,7 @@ const x8e = ({
         className: E(
           "flex w-full cursor-pointer items-center justify-between rounded-sm p-2 text-left font-medium text-f1-foreground hover:bg-f1-background-secondary",
           s && "bg-f1-background-selected hover:bg-f1-background-selected",
-          Xe()
+          Ge()
         ),
         onClick: () => n == null ? void 0 : n(r.filter),
         "data-visible": !0,
@@ -62785,7 +62785,7 @@ const s_ = q(
         className: E(
           "inline-flex cursor-auto appearance-none gap-1 rounded-md border-0 bg-f1-background px-1 ring-1 ring-inset ring-f1-border transition-all placeholder:text-f1-foreground-tertiary hover:ring-f1-border-hover",
           "[%>*] py-1",
-          Xe("focus:ring-f1-border-hover"),
+          Ge("focus:ring-f1-border-hover"),
           n && "cursor-not-allowed bg-f1-background-secondary opacity-50",
           i && "ring-f1-border-critical-bold",
           a
@@ -63006,7 +63006,7 @@ const E8e = (e) => "date" in e, T8e = {
                         tabIndex: 0,
                         className: E(
                           "flex h-5 w-5 items-center justify-center rounded-full",
-                          Xe()
+                          Ge()
                         ),
                         onClick: (m) => {
                           m.stopPropagation(), c();
@@ -63037,7 +63037,7 @@ const E8e = (e) => "date" in e, T8e = {
               layoutId: "search-container",
               className: E(
                 "relative h-8 w-full bg-f1-border p-px transition-colors hover:bg-f1-border-hover",
-                Xe()
+                Ge()
               ),
               onClick: u,
               onKeyDown: f,
@@ -63072,7 +63072,7 @@ const E8e = (e) => "date" in e, T8e = {
                           tabIndex: 0,
                           className: E(
                             "flex h-5 w-5 items-center justify-center rounded-full",
-                            Xe()
+                            Ge()
                           ),
                           onClick: (m) => {
                             m.stopPropagation(), c();
@@ -63223,7 +63223,7 @@ const tf = ({
     className: E(
       "flex h-8 min-w-8 select-none items-center justify-center rounded px-1.5 font-medium text-f1-foreground-secondary transition-all hover:cursor-pointer hover:bg-f1-background-secondary-hover",
       t && "bg-f1-background-selected-bold font-semibold text-f1-foreground-inverse hover:bg-f1-background-selected-bold-hover",
-      Xe(),
+      Ge(),
       e
     ),
     ...n
@@ -64385,29 +64385,40 @@ function zl({
   sortState: n = "none",
   onSortClick: i,
   info: a,
-  sticky: r,
-  hidden: o = !1,
-  align: s = "left"
+  infoIcon: r = M1,
+  sticky: o,
+  hidden: s = !1,
+  align: d = "left"
 }) {
-  const { isScrolled: d, isScrolledRight: c } = S_(), u = (r == null ? void 0 : r.left) !== void 0, f = (r == null ? void 0 : r.right) !== void 0, m = u || f, h = (r == null ? void 0 : r.left) ?? 0, p = (r == null ? void 0 : r.right) ?? 0, g = i || a, v = /* @__PURE__ */ l(De, { children: /* @__PURE__ */ k(
+  const { isScrolled: c, isScrolledRight: u } = S_(), f = (o == null ? void 0 : o.left) !== void 0, m = (o == null ? void 0 : o.right) !== void 0, h = f || m, p = (o == null ? void 0 : o.left) ?? 0, g = (o == null ? void 0 : o.right) ?? 0, v = i || a, y = /* @__PURE__ */ l(De, { children: /* @__PURE__ */ k(
     "div",
     {
       className: E(
         "flex items-center whitespace-nowrap",
-        g && "gap-1",
-        s === "right" && "flex-row-reverse"
+        v && "gap-1",
+        d === "right" && "flex-row-reverse"
       ),
       children: [
         /* @__PURE__ */ l("div", { className: E("truncate", t !== "auto" && "overflow-hidden"), children: e }),
-        g && /* @__PURE__ */ k("div", { className: "flex items-center", children: [
-          a && /* @__PURE__ */ l("div", { className: "flex h-6 w-6 items-center justify-center text-f1-foreground-secondary", children: /* @__PURE__ */ l(ge, { icon: M1, size: "sm" }) }),
+        v && /* @__PURE__ */ k("div", { className: "flex items-center", children: [
+          a && /* @__PURE__ */ l("div", { className: "flex h-6 w-6 items-center justify-center text-f1-foreground-secondary", children: /* @__PURE__ */ l(Bt, { label: a, children: /* @__PURE__ */ l(
+            "div",
+            {
+              className: E(
+                "flex h-5 w-5 items-center justify-center rounded-xs",
+                Ge()
+              ),
+              tabIndex: 0,
+              children: /* @__PURE__ */ l(ge, { icon: r, size: "sm" })
+            }
+          ) }) }),
           i && /* @__PURE__ */ l(
             _e.button,
             {
               onClick: i,
               className: E(
                 "relative h-5 w-5 rounded-xs p-1 text-f1-foreground-secondary opacity-0 transition-all focus-within:opacity-100 hover:bg-f1-background-hover group-hover:opacity-100",
-                Xe()
+                Ge()
               ),
               "aria-label": "Sort",
               whileTap: { scale: 0.8 },
@@ -64452,35 +64463,35 @@ function zl({
         ] })
       ]
     }
-  ) }), y = N_(t);
+  ) }), w = N_(t);
   return /* @__PURE__ */ k(
     P_,
     {
       className: E(
         "group",
-        m && (d || c) && "relative bg-f1-background before:absolute before:inset-x-0 before:bottom-0 before:h-px before:w-full before:bg-f1-border-secondary before:content-['']",
-        m && "sticky z-10",
-        o && "after:hidden"
+        h && (c || u) && "relative bg-f1-background before:absolute before:inset-x-0 before:bottom-0 before:h-px before:w-full before:bg-f1-border-secondary before:content-['']",
+        h && "sticky z-10",
+        s && "after:hidden"
       ),
-      tabIndex: r ? 0 : void 0,
+      tabIndex: o ? 0 : void 0,
       style: {
-        width: y,
-        maxWidth: y,
-        minWidth: y,
-        left: h,
-        right: p
+        width: w,
+        maxWidth: w,
+        minWidth: w,
+        left: p,
+        right: g
       },
-      role: o ? "presentation" : void 0,
+      role: s ? "presentation" : void 0,
       "aria-sort": i ? n === "asc" ? "ascending" : n === "desc" ? "descending" : "none" : void 0,
       children: [
-        m && /* @__PURE__ */ l("div", { className: "absolute inset-x-0 top-0 z-[-1] h-px w-full bg-f1-border-secondary" }),
-        /* @__PURE__ */ l(rt, { children: (u && d || f && c) && /* @__PURE__ */ l(
+        h && /* @__PURE__ */ l("div", { className: "absolute inset-x-0 top-0 z-[-1] h-px w-full bg-f1-border-secondary" }),
+        /* @__PURE__ */ l(rt, { children: (f && c || m && u) && /* @__PURE__ */ l(
           _e.div,
           {
             className: E(
               "absolute inset-y-0 h-full w-4 from-f1-foreground-secondary to-transparent",
-              u && "-right-4 bg-gradient-to-r",
-              f && "-left-4 bg-gradient-to-l"
+              f && "-right-4 bg-gradient-to-r",
+              m && "-left-4 bg-gradient-to-l"
             ),
             initial: { opacity: 0 },
             animate: { opacity: 0.1 },
@@ -64488,7 +64499,7 @@ function zl({
           },
           "shadow-gradient"
         ) }),
-        !o && (a ? /* @__PURE__ */ l(Bt, { label: a, children: v }) : v)
+        !s && y
       ]
     }
   );
@@ -64605,7 +64616,7 @@ const Xb = Tt(t7e, n7e), i7e = (e, t) => (e(t) || []).filter(
           className: E(
             "flex h-8 w-8 items-center justify-center rounded text-f1-icon-bold hover:bg-f1-background-secondary",
             n && "bg-f1-background-secondary",
-            Xe("focus-visible:ring-inset")
+            Ge("focus-visible:ring-inset")
           ),
           children: [
             /* @__PURE__ */ l(ge, { icon: Su }),
@@ -64840,7 +64851,7 @@ const Xb = Tt(t7e, n7e), i7e = (e, t) => (e(t) || []).filter(
               className: E(
                 "flex w-full flex-col items-center justify-center gap-1 rounded-sm p-2 font-medium text-f1-foreground-secondary transition-colors",
                 c && "bg-f1-background-secondary text-f1-foreground",
-                Xe()
+                Ge()
               ),
               onClick: () => o(d),
               children: [
@@ -74846,7 +74857,7 @@ function Vc(e, t) {
 function r9(e) {
   return typeof e == "function";
 }
-function Ge(e, t = void 0, ...n) {
+function Xe(e, t = void 0, ...n) {
   return r9(e) ? t ? e.bind(t)(...n) : e(...n) : e;
 }
 function mNe(e = {}) {
@@ -74895,23 +74906,23 @@ function pNe(e, t) {
       };
     }, {}), h = K0({
       ...m,
-      content: Ge(Pe(c, "content", f)),
-      marks: Ge(Pe(c, "marks", f)),
-      group: Ge(Pe(c, "group", f)),
-      inline: Ge(Pe(c, "inline", f)),
-      atom: Ge(Pe(c, "atom", f)),
-      selectable: Ge(Pe(c, "selectable", f)),
-      draggable: Ge(Pe(c, "draggable", f)),
-      code: Ge(Pe(c, "code", f)),
-      whitespace: Ge(Pe(c, "whitespace", f)),
-      linebreakReplacement: Ge(Pe(c, "linebreakReplacement", f)),
-      defining: Ge(Pe(c, "defining", f)),
-      isolating: Ge(Pe(c, "isolating", f)),
+      content: Xe(Pe(c, "content", f)),
+      marks: Xe(Pe(c, "marks", f)),
+      group: Xe(Pe(c, "group", f)),
+      inline: Xe(Pe(c, "inline", f)),
+      atom: Xe(Pe(c, "atom", f)),
+      selectable: Xe(Pe(c, "selectable", f)),
+      draggable: Xe(Pe(c, "draggable", f)),
+      code: Xe(Pe(c, "code", f)),
+      whitespace: Xe(Pe(c, "whitespace", f)),
+      linebreakReplacement: Xe(Pe(c, "linebreakReplacement", f)),
+      defining: Xe(Pe(c, "defining", f)),
+      isolating: Xe(Pe(c, "isolating", f)),
       attrs: Object.fromEntries(u.map((y) => {
         var w;
         return [y.name, { default: (w = y == null ? void 0 : y.attribute) === null || w === void 0 ? void 0 : w.default }];
       }))
-    }), p = Ge(Pe(c, "parseHTML", f));
+    }), p = Xe(Pe(c, "parseHTML", f));
     p && (h.parseDOM = p.map((y) => Y0(y, u)));
     const g = Pe(c, "renderHTML", f);
     g && (h.toDOM = (y) => g({
@@ -74934,16 +74945,16 @@ function pNe(e, t) {
       };
     }, {}), h = K0({
       ...m,
-      inclusive: Ge(Pe(c, "inclusive", f)),
-      excludes: Ge(Pe(c, "excludes", f)),
-      group: Ge(Pe(c, "group", f)),
-      spanning: Ge(Pe(c, "spanning", f)),
-      code: Ge(Pe(c, "code", f)),
+      inclusive: Xe(Pe(c, "inclusive", f)),
+      excludes: Xe(Pe(c, "excludes", f)),
+      group: Xe(Pe(c, "group", f)),
+      spanning: Xe(Pe(c, "spanning", f)),
+      code: Xe(Pe(c, "code", f)),
       attrs: Object.fromEntries(u.map((v) => {
         var y;
         return [v.name, { default: (y = v == null ? void 0 : v.attribute) === null || y === void 0 ? void 0 : y.default }];
       }))
-    }), p = Ge(Pe(c, "parseHTML", f));
+    }), p = Xe(Pe(c, "parseHTML", f));
     p && (h.parseDOM = p.map((v) => Y0(v, u)));
     const g = Pe(c, "renderHTML", f);
     return g && (h.toDOM = (v) => g({
@@ -75134,9 +75145,9 @@ class di {
     }, this.config = {
       ...this.config,
       ...t
-    }, this.name = this.config.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${this.name}".`), this.options = this.config.defaultOptions, this.config.addOptions && (this.options = Ge(Pe(this, "addOptions", {
+    }, this.name = this.config.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${this.name}".`), this.options = this.config.defaultOptions, this.config.addOptions && (this.options = Xe(Pe(this, "addOptions", {
       name: this.name
-    }))), this.storage = Ge(Pe(this, "addStorage", {
+    }))), this.storage = Xe(Pe(this, "addStorage", {
       name: this.name,
       options: this.options
     })) || {};
@@ -75153,9 +75164,9 @@ class di {
   }
   extend(t = {}) {
     const n = new di(t);
-    return n.parent = this, this.child = n, n.name = t.name ? t.name : n.parent.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${n.name}".`), n.options = Ge(Pe(n, "addOptions", {
+    return n.parent = this, this.child = n, n.name = t.name ? t.name : n.parent.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${n.name}".`), n.options = Xe(Pe(n, "addOptions", {
       name: n.name
-    })), n.storage = Ge(Pe(n, "addStorage", {
+    })), n.storage = Xe(Pe(n, "addStorage", {
       name: n.name,
       options: n.options
     })), n;
@@ -75480,7 +75491,7 @@ class co {
         editor: this.editor,
         type: ym(t.name, this.schema)
       };
-      t.type === "mark" && (!((n = Ge(Pe(t, "keepOnSplit", i))) !== null && n !== void 0) || n) && this.splittableMarks.push(t.name);
+      t.type === "mark" && (!((n = Xe(Pe(t, "keepOnSplit", i))) !== null && n !== void 0) || n) && this.splittableMarks.push(t.name);
       const a = Pe(t, "onBeforeCreate", i), r = Pe(t, "onCreate", i), o = Pe(t, "onUpdate", i), s = Pe(t, "onSelectionUpdate", i), d = Pe(t, "onTransaction", i), c = Pe(t, "onFocus", i), u = Pe(t, "onBlur", i), f = Pe(t, "onDestroy", i);
       a && this.editor.on("beforeCreate", a), r && this.editor.on("create", r), o && this.editor.on("update", o), s && this.editor.on("selectionUpdate", s), d && this.editor.on("transaction", d), c && this.editor.on("focus", c), u && this.editor.on("blur", u), f && this.editor.on("destroy", f);
     });
@@ -75494,9 +75505,9 @@ class vt {
     }, this.config = {
       ...this.config,
       ...t
-    }, this.name = this.config.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${this.name}".`), this.options = this.config.defaultOptions, this.config.addOptions && (this.options = Ge(Pe(this, "addOptions", {
+    }, this.name = this.config.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${this.name}".`), this.options = this.config.defaultOptions, this.config.addOptions && (this.options = Xe(Pe(this, "addOptions", {
       name: this.name
-    }))), this.storage = Ge(Pe(this, "addStorage", {
+    }))), this.storage = Xe(Pe(this, "addStorage", {
       name: this.name,
       options: this.options
     })) || {};
@@ -75513,9 +75524,9 @@ class vt {
   }
   extend(t = {}) {
     const n = new vt({ ...this.config, ...t });
-    return n.parent = this, this.child = n, n.name = t.name ? t.name : n.parent.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${n.name}".`), n.options = Ge(Pe(n, "addOptions", {
+    return n.parent = this, this.child = n, n.name = t.name ? t.name : n.parent.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${n.name}".`), n.options = Xe(Pe(n, "addOptions", {
       name: n.name
-    })), n.storage = Ge(Pe(n, "addStorage", {
+    })), n.storage = Xe(Pe(n, "addStorage", {
       name: n.name,
       options: n.options
     })), n;
@@ -76138,7 +76149,7 @@ function Z0(e, t) {
     name: i.name,
     options: i.options,
     storage: i.storage
-  }, r = Ge(Pe(i, "group", a));
+  }, r = Xe(Pe(i, "group", a));
   return typeof r != "string" ? !1 : r.split(" ").includes("list");
 }
 function vf(e, { checkChildren: t = !0, ignoreWhitespace: n = !1 } = {}) {
@@ -77242,7 +77253,7 @@ function Tr(e) {
   return new Gd({
     find: e.find,
     handler: ({ state: t, range: n, match: i }) => {
-      const a = Ge(e.getAttributes, void 0, i);
+      const a = Xe(e.getAttributes, void 0, i);
       if (a === !1 || a === null)
         return null;
       const { tr: r } = t, o = i[i.length - 1], s = i[0];
@@ -77261,7 +77272,7 @@ function rEe(e) {
   return new Gd({
     find: e.find,
     handler: ({ state: t, range: n, match: i }) => {
-      const a = Ge(e.getAttributes, void 0, i) || {}, { tr: r } = t, o = n.from;
+      const a = Xe(e.getAttributes, void 0, i) || {}, { tr: r } = t, o = n.from;
       let s = n.to;
       const d = e.type.create(a);
       if (i[1]) {
@@ -77282,7 +77293,7 @@ function Uh(e) {
   return new Gd({
     find: e.find,
     handler: ({ state: t, range: n, match: i }) => {
-      const a = t.doc.resolve(n.from), r = Ge(e.getAttributes, void 0, i) || {};
+      const a = t.doc.resolve(n.from), r = Xe(e.getAttributes, void 0, i) || {};
       if (!a.node(-1).canReplaceWith(a.index(-1), a.indexAfter(-1), e.type))
         return null;
       t.tr.delete(n.from, n.to).setBlockType(n.from, n.from, e.type, r);
@@ -77309,7 +77320,7 @@ function Eo(e) {
   return new Gd({
     find: e.find,
     handler: ({ state: t, range: n, match: i, chain: a }) => {
-      const r = Ge(e.getAttributes, void 0, i) || {}, o = t.tr.delete(n.from, n.to), d = o.doc.resolve(n.from).blockRange(), c = d && _g(d, e.type, r);
+      const r = Xe(e.getAttributes, void 0, i) || {}, o = t.tr.delete(n.from, n.to), d = o.doc.resolve(n.from).blockRange(), c = d && _g(d, e.type, r);
       if (!c)
         return null;
       if (o.wrap(d, c), e.keepMarks && e.editor) {
@@ -77336,9 +77347,9 @@ let On = class Jh {
     }, this.config = {
       ...this.config,
       ...t
-    }, this.name = this.config.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${this.name}".`), this.options = this.config.defaultOptions, this.config.addOptions && (this.options = Ge(Pe(this, "addOptions", {
+    }, this.name = this.config.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${this.name}".`), this.options = this.config.defaultOptions, this.config.addOptions && (this.options = Xe(Pe(this, "addOptions", {
       name: this.name
-    }))), this.storage = Ge(Pe(this, "addStorage", {
+    }))), this.storage = Xe(Pe(this, "addStorage", {
       name: this.name,
       options: this.options
     })) || {};
@@ -77355,9 +77366,9 @@ let On = class Jh {
   }
   extend(t = {}) {
     const n = new Jh(t);
-    return n.parent = this, this.child = n, n.name = t.name ? t.name : n.parent.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${n.name}".`), n.options = Ge(Pe(n, "addOptions", {
+    return n.parent = this, this.child = n, n.name = t.name ? t.name : n.parent.name, t.defaultOptions && Object.keys(t.defaultOptions).length > 0 && console.warn(`[tiptap warn]: BREAKING CHANGE: "defaultOptions" is deprecated. Please use "addOptions" instead. Found in extension: "${n.name}".`), n.options = Xe(Pe(n, "addOptions", {
       name: n.name
-    })), n.storage = Ge(Pe(n, "addStorage", {
+    })), n.storage = Xe(Pe(n, "addStorage", {
       name: n.name,
       options: n.options
     })), n;
@@ -77462,7 +77473,7 @@ function qa(e) {
   return new kNe({
     find: e.find,
     handler: ({ state: t, range: n, match: i, pasteEvent: a }) => {
-      const r = Ge(e.getAttributes, void 0, i, a);
+      const r = Xe(e.getAttributes, void 0, i, a);
       if (r === !1 || r === null)
         return null;
       const { tr: o } = t, s = i[i.length - 1], d = i[0];
@@ -80259,7 +80270,7 @@ const mWe = ({ editor: e, disabled: t, labels: n }) => {
                     {
                       className: E(
                         "flex w-80 appearance-none items-center gap-2 rounded border-0 bg-f1-background py-1 pl-2 pr-1 ring-1 ring-inset ring-f1-border transition-all placeholder:text-f1-foreground-tertiary",
-                        e.isActive("link") ? "cursor-auto" : Xe("focus:ring-f1-border-hover") + "hover:ring-f1-border-hover"
+                        e.isActive("link") ? "cursor-auto" : Ge("focus:ring-f1-border-hover") + "hover:ring-f1-border-hover"
                       ),
                       children: [
                         /* @__PURE__ */ l(
@@ -82722,7 +82733,7 @@ const GOe = vt.create({
       storage: e.storage
     };
     return {
-      allowGapCursor: (t = Ge(Pe(e, "allowGapCursor", n))) !== null && t !== void 0 ? t : null
+      allowGapCursor: (t = Xe(Pe(e, "allowGapCursor", n))) !== null && t !== void 0 ? t : null
     };
   }
 }), XOe = On.create({
