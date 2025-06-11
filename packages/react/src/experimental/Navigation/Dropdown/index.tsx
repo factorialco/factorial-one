@@ -17,6 +17,7 @@ import {
   DropdownItem,
   DropdownItemObject,
 } from "./internal"
+import { sortDropdownItems } from "./utils"
 
 const privateProps = [] as const
 
@@ -64,7 +65,7 @@ export const MobileDropdown = ({ items, children }: DropdownProps) => {
       <DrawerOverlay className="bg-f1-background-overlay" />
       <DrawerContent className="bg-f1-background">
         <div className="flex flex-col px-2 pb-3 pt-2">
-          {items.map((item, index) =>
+          {sortDropdownItems(items).map((item, index) =>
             item.type === "separator" ? (
               <div
                 key={`separator-${index}`}

@@ -13,6 +13,7 @@ import { cn } from "../../../lib/utils"
 import { AvatarVariant } from "../../Information/Avatars/Avatar"
 import { NavigationItem } from "../utils"
 import { DropdownItemContent } from "./DropdownItem"
+import { sortDropdownItems } from "./utils"
 
 export type DropdownItemSeparator = { type: "separator" }
 export type DropdownItem = DropdownItemObject | DropdownItemSeparator
@@ -100,7 +101,7 @@ export function DropdownInternal({
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align={align}>
-        {items.map((item, index) =>
+        {sortDropdownItems(items).map((item, index) =>
           item.type === "separator" ? (
             <DropdownMenuSeparator key={index} />
           ) : (
