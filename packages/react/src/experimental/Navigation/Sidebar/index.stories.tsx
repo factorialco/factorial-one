@@ -13,7 +13,7 @@ import { Sidebar } from "./Sidebar"
 const meta: Meta<typeof Sidebar> = {
   title: "Navigation/Sidebar",
   component: Sidebar,
-  tags: ["autodocs", "experimental", "no-sidebar"],
+  tags: ["autodocs", "experimental", "internal"],
   parameters: {
     layout: "centered",
   },
