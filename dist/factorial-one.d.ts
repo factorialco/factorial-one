@@ -16,6 +16,7 @@ import { LineChartConfig } from '../../ui/chart';
 import { LineChartPropsBase } from './utils/types';
 import { LinkProps as LinkProps_3 } from './Link';
 import { PieChartProps } from './PieChart';
+import { PopoverContentProps } from '@radix-ui/react-popover';
 import * as React_2 from 'react';
 import { ReactNode } from 'react';
 import { RefAttributes } from 'react';
@@ -76,7 +77,7 @@ export declare const Button: ForwardRefExoticComponent<ButtonProps & RefAttribut
 
 declare const Button_2: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round" | "className"> & DataAttributes & {
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round" | "className" | "pressed"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -96,6 +97,7 @@ declare interface ButtonProps_2 extends React_2.ButtonHTMLAttributes<HTMLButtonE
     size?: ButtonSize;
     variant?: ButtonVariant;
     appendButton?: React_2.ReactNode;
+    pressed?: boolean;
 }
 
 declare type ButtonSize = (typeof sizes)[number];
@@ -104,7 +106,8 @@ declare type ButtonVariant = (typeof variants)[number];
 
 declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
-    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
+    pressed?: boolean | undefined;
+    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | "outlinePromote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
 } & ({
     class?: ClassValue;
@@ -128,7 +131,26 @@ declare type CopyButtonProps = Omit<ComponentProps<typeof Button_2>, "onClick" |
     copyTooltipLabel?: string;
 };
 
+declare type DefaultAction = {
+    variant: "default";
+    label: string;
+    onClick: () => void;
+};
+
 declare const defaultTranslations: {
+    readonly approvals: {
+        readonly history: "Approval history";
+        readonly statuses: {
+            readonly waiting: "Waiting";
+            readonly pending: "Pending";
+            readonly approved: "Approved";
+            readonly rejected: "Rejected";
+        };
+        readonly requiredNumbers: {
+            readonly one: "One approval required";
+            readonly other: "{{count}} approvals required";
+        };
+    };
     readonly navigation: {
         readonly sidebar: "Main navigation";
         readonly previous: "Previous";
@@ -393,6 +415,46 @@ export declare interface LoadingStateProps {
     label: string;
 }
 
+declare type ModuleId = keyof typeof modules;
+
+declare const modules: {
+    readonly benefits: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly calendar: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly cards: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly clockin: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly discover: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly documents: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly engagement: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly finance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly goals: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly home: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly hub: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly inbox: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly kudos: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly mydocuments: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly organization: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly overviews: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly payroll: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly performance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly profile: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly projects: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly recruitment: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly reports: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly sales: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly settings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly shifts: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly social: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly software: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly spaces: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly spending: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly tasks: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly timeoff: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly timetracking: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly trainings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly treasury: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly workflows: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+};
+
 export declare interface NextStepsProps {
     title: string;
     items: StepItemProps[];
@@ -420,7 +482,7 @@ declare type ProductBlankslateProps = {
     moduleName?: string;
 };
 
-export declare function ProductCard({ title, description, onClick, onClose, isVisible, icon, dismissable, trackVisibility, }: ProductCardProps): false | JSX_2.Element;
+export declare function ProductCard({ title, description, onClick, onClose, isVisible, dismissable, trackVisibility, ...props }: ProductCardProps): false | JSX_2.Element;
 
 export declare type ProductCardProps = {
     title: string;
@@ -428,10 +490,13 @@ export declare type ProductCardProps = {
     onClick: () => void;
     onClose?: () => void;
     isVisible: boolean;
-    icon: IconType;
     dismissable?: boolean;
     trackVisibility?: (open: boolean) => void;
-};
+} & ({
+    module: ModuleId;
+} | {
+    icon: IconType;
+});
 
 export declare function ProductModal({ isOpen, onClose, title, image, benefits, errorMessage, successMessage, loadingState, nextSteps, closeLabel, primaryAction, modalTitle, modalIcon, secondaryAction, }: ProductModalProps): JSX_2.Element;
 
@@ -488,6 +553,19 @@ label?: string;
 color?: string;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
+declare type PromoteAction = {
+    variant: "promote";
+    label: string;
+    onClick: () => void;
+    errorMessage: UpsellingButtonProps["errorMessage"];
+    successMessage: UpsellingButtonProps["successMessage"];
+    loadingState: UpsellingButtonProps["loadingState"];
+    nextSteps: UpsellingButtonProps["nextSteps"];
+    closeLabel: UpsellingButtonProps["closeLabel"];
+    showIcon?: boolean;
+    showConfirmation?: boolean;
+};
+
 declare type RegularAction = BaseAction & {
     type: "regular";
     variant: ButtonVariant;
@@ -531,6 +609,7 @@ export declare interface TwoColumnLayoutProps {
 
 declare type UpsellAction = BaseAction & {
     type: "upsell";
+    variant: "promote" | "outlinePromote";
     errorMessage: ErrorMessageProps;
     successMessage: SuccessMessageProps;
     loadingState: LoadingStateProps;
@@ -539,9 +618,25 @@ declare type UpsellAction = BaseAction & {
     showConfirmation: boolean;
 };
 
-export declare function UpsellingButton({ label, showIcon, onRequest, showConfirmation, loading: externalLoading, errorMessage, successMessage, loadingState, nextSteps, closeLabel, ...props }: UpsellingButtonProps): JSX_2.Element;
+export declare function UpsellingBanner({ title, subtitle, mediaUrl, primaryAction, secondaryAction, onClose, }: UpsellingBannerProps): JSX_2.Element | null;
 
-export declare interface UpsellingButtonProps extends Omit<ButtonProps, "variant" | "icon"> {
+export declare namespace UpsellingBanner {
+    var displayName: string;
+}
+
+declare type UpsellingBannerProps = {
+    title: string;
+    subtitle?: string;
+    mediaUrl: string;
+    primaryAction?: DefaultAction | PromoteAction;
+    secondaryAction?: DefaultAction | PromoteAction;
+    onClose?: () => void;
+};
+
+export declare function UpsellingButton({ label, showIcon, onRequest, showConfirmation, loading: externalLoading, errorMessage, successMessage, loadingState, nextSteps, closeLabel, variant, ...props }: UpsellingButtonProps): JSX_2.Element;
+
+export declare interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> {
+    variant?: "promote" | "outlinePromote";
     /**
      * The text to be displayed in the button
      */
@@ -580,6 +675,27 @@ export declare interface UpsellingButtonProps extends Omit<ButtonProps, "variant
     closeLabel: string;
 }
 
+export declare function UpsellingPopover({ isOpen, setIsOpen, label, variant, size, showIcon, side, align, icon, mediaUrl, title, description, width, trackVisibility, actions, onClick, }: UpsellingPopoverProps): JSX_2.Element;
+
+declare type UpsellingPopoverProps = {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+    label: string;
+    variant: ButtonProps["variant"];
+    size?: ButtonProps["size"];
+    side?: PopoverContentProps["side"];
+    align?: PopoverContentProps["align"];
+    icon?: IconType;
+    showIcon?: boolean;
+    mediaUrl: string;
+    title: string;
+    description: string;
+    width?: string;
+    trackVisibility?: (visible: boolean) => void;
+    actions?: Action[];
+    onClick?: () => void;
+};
+
 export declare const UpsellRequestResponseDialog: ForwardRefExoticComponent<UpsellRequestResponseDialogProps & RefAttributes<HTMLDivElement>>;
 
 declare interface UpsellRequestResponseDialogProps {
@@ -612,7 +728,7 @@ export declare const useXRay: () => {
     disable: () => void;
 };
 
-declare const variants: readonly ["default", "outline", "critical", "neutral", "ghost", "promote"];
+declare const variants: readonly ["default", "outline", "critical", "neutral", "ghost", "promote", "outlinePromote"];
 
 export declare const VerticalBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
 label?: boolean;
