@@ -194,6 +194,7 @@ export const BasicTableView: Story = {
                     label: "Department",
                     render: (item) => item.department,
                     sorting: "department",
+                    info: "Team that the employee belongs to",
                   },
                   {
                     label: "Salary",
