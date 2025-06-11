@@ -27,7 +27,8 @@ jobs:
       - uses: ./.github/actions/setup-node-pnpm
       - name: Install Playwright
         run: |
-          PLAYWRIGHT_VERSION=$(node -p "require('./packages/react/package.json').devDependencies['@playwright/test']")
+          PLAYWRIGHT_VERSION=$(pnpm why @playwright/test -r --json | jq -r '.[] | select(.devDependencies["@playwright/test"]) | .devDependencies["@playwright/test"].version')
+          echo "PLAYWRIGHT_VERSION: $PLAYWRIGHT_VERSION"
           pnpx playwright@$PLAYWRIGHT_VERSION install --with-deps
       - name: Build Storybook
         run: |
