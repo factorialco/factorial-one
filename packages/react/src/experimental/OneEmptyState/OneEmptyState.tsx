@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/Button"
+import { UpsellingButton } from "@/components/UpsellingKit/UpsellingButton"
 import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
 import { AlertAvatar } from "../Information/Avatars/AlertAvatar"
 import * as Types from "./types"
@@ -26,9 +27,32 @@ export function OneEmptyState({
       </div>
       {actions && (
         <div className="flex w-full flex-col items-center justify-center gap-2 sm:w-fit sm:flex-row sm:gap-3 [&>div]:w-full">
-          {actions.map((action) => (
-            <Button key={action.label} {...action} />
-          ))}
+          {actions.map((action) => {
+            if (action.type === "upsell") {
+              return (
+                <UpsellingButton
+                  key={action.label}
+                  label={action.label}
+                  onRequest={() => Promise.resolve(action.onClick())}
+                  errorMessage={action.errorMessage}
+                  successMessage={action.successMessage}
+                  loadingState={action.loadingState}
+                  nextSteps={action.nextSteps}
+                  closeLabel={action.closeLabel}
+                />
+              )
+            } else {
+              return (
+                <Button
+                  key={action.label}
+                  label={action.label}
+                  variant={action.variant}
+                  onClick={action.onClick}
+                  icon={action.icon}
+                />
+              )
+            }
+          })}
         </div>
       )}
     </div>

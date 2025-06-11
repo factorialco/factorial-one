@@ -8,7 +8,9 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { Skeleton } from "@/ui/skeleton"
+import { AnimatePresence, motion } from "framer-motion"
 import { useEffect } from "react"
+import { Spinner } from "../../../../Information/Spinner"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
@@ -115,9 +117,25 @@ export const ListCollection = <
 
   if (isInitialLoading) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col gap-4">
+      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden rounded-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary">
         {Array.from({ length: 10 }).map((_, index) => (
-          <Skeleton key={index} className="h-10 w-full" />
+          <div
+            key={index}
+            className="flex flex-col items-start gap-3 p-3 md:h-18 md:flex-row md:items-center md:justify-between md:gap-2"
+          >
+            <div className="flex flex-col gap-2">
+              <Skeleton className="h-4 w-28" />
+              <div className="flex flex-col gap-2 md:flex-row">
+                <Skeleton className="h-3 w-10" />
+                <Skeleton className="h-3 w-10" />
+              </div>
+            </div>
+            <div className="flex flex-col gap-2 md:flex-row">
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-4 w-16" />
+            </div>
+          </div>
         ))}
       </div>
     )
@@ -147,31 +165,43 @@ export const ListCollection = <
           />
         )}
 
-        <div className="flex flex-row gap-2 px-4 py-2">
-          <SortingSelector
-            source={source}
-            onChange={setCurrentSortings}
-            currentSortings={currentSortings}
-          />
-        </div>
+        <SortingSelector
+          source={source}
+          onChange={setCurrentSortings}
+          currentSortings={currentSortings}
+        />
       </div>
       <div
         className={cn(
           "flex min-h-0 flex-1 flex-col gap-2",
-          isLoading && "o select-none opacity-50 transition-opacity"
+          isLoading && "select-none opacity-50 transition-opacity"
         )}
         aria-live={isLoading ? "polite" : undefined}
         aria-busy={isLoading ? "true" : undefined}
       >
         <div className="min-h-0 flex-1 overflow-auto">
+          <AnimatePresence>
+            {isLoading && (
+              <motion.div
+                className="absolute inset-0 flex cursor-progress items-center justify-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Spinner />
+              </motion.div>
+            )}
+          </AnimatePresence>
           {data.type === "grouped" &&
             data.groups.map((group) => {
               const itemCount = group.itemCount
               return (
-                <>
+                <div
+                  className="flex flex-col gap-0 pt-2 first:pt-0"
+                  key={`group-header-${group.key}`}
+                >
                   <GroupHeader
-                    key={`group-header-${group.key}`}
-                    className="px-4"
+                    className="cursor-pointer select-none rounded-md px-6 py-3 transition-colors hover:bg-f1-background-hover"
                     selectable={!!source.selectable}
                     select={
                       groupAllSelectedStatus[group.key]?.checked
@@ -189,18 +219,28 @@ export const ListCollection = <
                     open={openGroups[group.key]}
                     onOpenChange={(open) => setGroupOpen(group.key, open)}
                   />
-                  {openGroups[group.key] && (
-                    <ListGroup
-                      key={`list-group-${group.key}`}
-                      source={source}
-                      items={group.records}
-                      selectedItems={selectedItems}
-                      handleSelectItemChange={handleSelectItemChange}
-                      fields={fields}
-                      itemDefinition={itemDefinition}
-                    />
-                  )}
-                </>
+                  <AnimatePresence>
+                    {openGroups[group.key] && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.1, ease: "easeInOut" }}
+                        className="mt-0.5"
+                      >
+                        <ListGroup
+                          key={`list-group-${group.key}`}
+                          source={source}
+                          items={group.records}
+                          selectedItems={selectedItems}
+                          handleSelectItemChange={handleSelectItemChange}
+                          fields={fields}
+                          itemDefinition={itemDefinition}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               )
             })}
 

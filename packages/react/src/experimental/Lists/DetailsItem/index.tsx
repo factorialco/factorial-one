@@ -19,10 +19,14 @@ type Content =
   | (ComponentProps<typeof Weekdays> & {
       type: "weekdays"
     })
+  | (ComponentProps<typeof DataList.DotTagItem> & {
+      type: "dot-tag"
+    })
 
 export interface DetailsItemType {
   title: string
   content: Content | Content[]
+  isHorizontal?: boolean
   spacingAtTheBottom?: boolean
 }
 
@@ -37,19 +41,27 @@ const ItemContent: FC<{ content: Content }> = ({ content }) => (
     {content.type === "item" && <DataList.Item {...content} />}
     {content.type === "team" && <DataList.TeamItem {...content} />}
     {content.type === "company" && <DataList.CompanyItem {...content} />}
+    {content.type === "dot-tag" && <DataList.DotTagItem {...content} />}
   </>
 )
 
 export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
-  function DetailsItem({ title, content, spacingAtTheBottom }, ref) {
+  function DetailsItem(
+    { title, content, isHorizontal = false, spacingAtTheBottom },
+    ref
+  ) {
     const contentArray = Array.isArray(content) ? content : [content]
 
     return (
       <div
         ref={ref}
-        className={cn("flex flex-col gap-0.5", spacingAtTheBottom && "pb-3")}
+        className={cn(
+          "flex flex-col gap-0.5",
+          spacingAtTheBottom && !isHorizontal && "pb-3",
+          isHorizontal && "xs:[&_ul>li]:p-0 [&_ul]:flex-1"
+        )}
       >
-        <DataList label={title}>
+        <DataList label={title} isHorizontal={isHorizontal}>
           {contentArray.map((c, i) => (
             <ItemContent key={i} content={c} />
           ))}

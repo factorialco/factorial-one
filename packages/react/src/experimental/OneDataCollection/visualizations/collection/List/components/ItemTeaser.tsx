@@ -2,39 +2,33 @@ import {
   Avatar,
   AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
-import { cn } from "@/lib/utils"
 
 export type ItemTeaserProps = {
   title: string
   avatar?: AvatarVariant
-  description?: string
-  metadata?: string
-  className?: string
+  description?: string[]
 }
 
-export const ItemTeaser = ({
-  title,
-  avatar,
-  description,
-  metadata,
-  className,
-}: ItemTeaserProps) => {
+export const ItemTeaser = ({ title, avatar, description }: ItemTeaserProps) => {
   return (
-    <article className={cn("flex items-center gap-2", className)}>
+    <article className="flex w-[calc(100%-72px)] min-w-40 flex-col items-start gap-3 md:w-full md:flex-row md:items-center md:gap-2">
       {avatar && <Avatar avatar={avatar} size="medium" />}
-      <div>
+      <div className="flex flex-col gap-0.5 md:gap-1">
         <header>
           <h3 className="text-base font-medium text-f1-foreground">{title}</h3>
         </header>
-        <aside className="font-regular flex flex-row gap-1 text-base text-f1-foreground-secondary">
-          {description && (
-            <h6 className="font-regular text-base">{description}</h6>
-          )}
-          {metadata && (
-            <>
-              {" • "}
-              <h6 className="font-regular text-base">{metadata}</h6>
-            </>
+        <aside>
+          {description && description.length > 0 && (
+            <div className="flex w-full flex-col text-base font-normal text-f1-foreground-secondary md:flex-row md:gap-1">
+              {description.map((item, index) => (
+                <div key={index} className="flex flex-row gap-1">
+                  <span className="line-clamp-1 break-all">{item}</span>
+                  {index < description.length - 1 && (
+                    <span className="hidden md:inline"> · </span>
+                  )}
+                </div>
+              ))}
+            </div>
           )}
         </aside>
       </div>

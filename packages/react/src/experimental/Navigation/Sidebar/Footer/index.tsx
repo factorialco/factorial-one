@@ -17,6 +17,7 @@ interface SidebarFooterProps {
   hasActivityUpdates?: boolean
   activityButtonShortcut?: string[]
   onActivityButtonClick?: () => void
+  onDropdownClick?: () => void
   options: DropdownItem[]
 }
 
@@ -24,8 +25,9 @@ export function SidebarFooter({
   user,
   options,
   showActivityButton = false,
-  activityButtonShortcut = ["cmd", "B"],
+  activityButtonShortcut,
   onActivityButtonClick,
+  onDropdownClick,
   hasActivityUpdates,
 }: SidebarFooterProps) {
   const i18n = useI18n()
@@ -39,6 +41,7 @@ export function SidebarFooter({
               "flex w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary data-[state=open]:bg-f1-background-secondary",
               focusRing("focus-visible:ring-inset")
             )}
+            onClick={onDropdownClick}
           >
             <PersonAvatar
               src={user.avatarUrl}

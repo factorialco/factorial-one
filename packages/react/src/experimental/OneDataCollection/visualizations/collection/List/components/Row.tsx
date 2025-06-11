@@ -100,6 +100,15 @@ export const Row = <
     )
   )
 
+  // mobile dropdown includes primary actions
+  const mobileDropdownItemActions = actionsToDropdownItems([
+    ...primaryItemActions,
+    ...itemActions.filter(
+      (action) =>
+        action.type === "separator" || !primaryItemActions.includes(action)
+    ),
+  ])
+
   const [dropDownOpen, setDropDownOpen] = useState(false)
 
   const [dropDownOpenTimeout, setDropDownOpenTimeout] =
@@ -125,12 +134,87 @@ export const Row = <
   return (
     <div
       className={cn(
-        "relative flex w-full flex-row gap-2 p-2 pl-4",
-        "group hover:bg-f1-background-hover"
+        "relative flex w-full flex-col justify-between gap-4 p-3 transition-colors md:flex-row md:p-2 md:pl-3 md:pr-4",
+        "group after:absolute after:inset-y-0 after:-right-px after:z-10 after:hidden after:h-full after:w-10 after:bg-gradient-to-r after:from-transparent after:via-f1-background after:via-75% after:to-f1-background after:transition-all after:content-[''] hover:after:via-[#F5F6F8] hover:after:to-[#F5F6F8] dark:hover:after:via-[#192231] dark:hover:after:to-[#192231] md:after:block hover:md:bg-f1-background-hover",
+        dropDownOpen && "md:bg-f1-background-hover"
       )}
     >
+      <div className="flex flex-row items-center gap-2">
+        {source.selectable && id !== undefined && (
+          <div className="hidden items-center justify-end md:flex">
+            <Checkbox
+              checked={selectedItems.has(id)}
+              onCheckedChange={(checked) =>
+                handleSelectItemChange(item, checked)
+              }
+              title={`Select ${source.selectable(item)}`}
+              hideLabel
+            />
+          </div>
+        )}
+        {itemHref && (
+          <Link href={itemHref} className="absolute inset-0 block" tabIndex={0}>
+            <span className="sr-only">{actions.view}</span>
+          </Link>
+        )}
+        <ItemTeaser
+          title={itemDef.title}
+          avatar={itemDef.avatar}
+          description={itemDef.description}
+        />
+      </div>
+      <div className="flex flex-col items-start md:flex-row md:items-center [&>div]:justify-end">
+        {(fields || []).map((field) => (
+          <div key={String(field.label)} onClick={itemOnClick}>
+            <div className="flex items-center justify-center px-0 py-1 md:p-3 [&>span]:whitespace-nowrap">
+              {renderCell(item, field)}
+            </div>
+          </div>
+        ))}
+      </div>
+      {source.itemActions && (
+        <>
+          <aside
+            className={cn(
+              "absolute -right-px bottom-0 top-0 z-20 hidden items-center justify-end gap-2 py-2 pl-20 pr-3 opacity-0 transition-all group-hover:opacity-100 md:flex",
+              "bg-gradient-to-l from-[#F5F6F8] from-0% dark:from-[#192231]",
+              "via-[#F5F6F8] via-60% dark:via-[#192231]",
+              "to-transparent to-100%",
+              dropDownOpen ? "opacity-100" : "opacity-0"
+            )}
+          >
+            {primaryItemActions.map((action) => (
+              <Button
+                key={action.label}
+                label={action.label}
+                variant="outline"
+                onClick={action.onClick}
+                icon={action.icon}
+              />
+            ))}
+
+            <ItemActionsDropdown
+              align="end"
+              items={dropdownItemActions}
+              onOpenChange={handleDropDownOpenChange}
+            />
+          </aside>
+          <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center md:hidden">
+            <ItemActionsDropdown
+              align="end"
+              items={mobileDropdownItemActions}
+              onOpenChange={handleDropDownOpenChange}
+            />
+          </div>
+        </>
+      )}
       {source.selectable && id !== undefined && (
-        <div className="flex items-center justify-end">
+        <div
+          className={cn(
+            "absolute right-3 top-3 flex h-8 w-8 items-center justify-center md:hidden",
+            source.itemActions && "right-12"
+          )}
+        >
           <Checkbox
             checked={selectedItems.has(id)}
             onCheckedChange={(checked) => handleSelectItemChange(item, checked)}
@@ -138,52 +222,6 @@ export const Row = <
             hideLabel
           />
         </div>
-      )}
-      {itemHref && (
-        <Link href={itemHref} className="absolute inset-0 block" tabIndex={0}>
-          <span className="sr-only">{actions.view}</span>
-        </Link>
-      )}
-      <ItemTeaser
-        className="min-w-40 flex-1"
-        title={itemDef.title}
-        avatar={itemDef.avatar}
-        description={itemDef.description}
-        metadata={itemDef.metadata}
-      />
-      <div className="flex flex-1 flex-row items-center justify-end gap-2">
-        {(fields || []).map((field) => (
-          <div key={String(field.label)} onClick={itemOnClick}>
-            <div className={cn()}>{renderCell(item, field)}</div>
-          </div>
-        ))}
-      </div>
-      {source.itemActions && (
-        <aside
-          className={cn(
-            "absolute bottom-0 right-0 top-0 items-center justify-end gap-1 p-2 pl-20 group-hover:flex",
-            "bg-gradient-to-l from-[#f00] from-0%",
-            "via-[#f00] via-60%",
-            "to-transparent to-100%",
-            dropDownOpen ? "flex" : "hidden"
-          )}
-        >
-          {primaryItemActions.map((action) => (
-            <Button
-              key={action.label}
-              label={action.label}
-              variant="outline"
-              onClick={action.onClick}
-              icon={action.icon}
-            />
-          ))}
-
-          <ItemActionsDropdown
-            align="end"
-            items={dropdownItemActions}
-            onOpenChange={handleDropDownOpenChange}
-          />
-        </aside>
       )}
     </div>
   )

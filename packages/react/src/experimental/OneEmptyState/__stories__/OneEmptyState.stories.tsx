@@ -44,3 +44,46 @@ export const WithAlert: Story = {
     )
   },
 }
+
+export const WithUpsell: Story = {
+  args: {
+    title: "Take your team’s skills to the next level",
+    description:
+      "Activate Trainings to create engaging sessions and track real progress!",
+    emoji: "⚡️",
+    actions: [
+      {
+        label: "Learn more",
+        onClick: fn(),
+        variant: "outline",
+      },
+      {
+        label: "Request information",
+        onClick: fn(),
+        type: "upsell",
+        errorMessage: {
+          title: "Error",
+          description: "Something went wrong",
+        },
+        successMessage: {
+          title: "Success",
+          description: "Something went right",
+          buttonLabel: "Close",
+          buttonOnClick: fn(),
+        },
+        loadingState: {
+          label: "Loading...",
+        },
+        nextSteps: {
+          title: "Next steps",
+          items: [
+            {
+              text: "Step 1",
+            },
+          ],
+        },
+        closeLabel: "Close",
+      },
+    ],
+  },
+}

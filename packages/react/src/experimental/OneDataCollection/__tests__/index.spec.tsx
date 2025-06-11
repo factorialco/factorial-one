@@ -890,7 +890,7 @@ describe("Collections", () => {
     })
 
     // Find the filter button
-    const filterButton = screen.getByTitle("Filters")
+    const filterButton = screen.getByRole("button", { name: "Filters" })
 
     // Just verify the filter button exists
     expect(filterButton).toBeInTheDocument()

@@ -1,4 +1,4 @@
-import { Ai, Download, Pencil } from "@/icons/app"
+import { Ai, Download, Pencil, Upload } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react"
 import { SecondaryActionsItemDefinition } from "../actions"
 import { FiltersDefinition } from "../Filters/types"
@@ -89,18 +89,12 @@ const buildSecondaryActions = (): SecondaryActionsItemDefinition[] => {
       onClick: () => console.log(`Another user action`),
       description: "User actions",
     },
-    {
-      label: "Another user actions User",
-      icon: Pencil,
-      onClick: () => console.log(`Another user action`),
-      description: "User actions",
-    },
 
     // Separator between action groups
     { type: "separator" },
     {
       label: "Export",
-      icon: Download,
+      icon: Upload,
       onClick: () => console.log(`Downloading users`),
       description: "Download users",
     },

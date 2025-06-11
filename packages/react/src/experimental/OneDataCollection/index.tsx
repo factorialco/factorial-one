@@ -498,7 +498,7 @@ export const OneDataCollection = <
       )}
       <div
         className={cn(
-          "flex min-h-0 flex-1 flex-col gap-4 px-6",
+          "flex min-h-0 flex-col gap-4 px-6",
           fullHeight && "max-h-full"
         )}
       >
@@ -562,38 +562,37 @@ export const OneDataCollection = <
           </div>
           <Filters.ChipsList />
         </Filters.Root>
-
-        {emptyState ? (
-          <div className="flex flex-1 flex-col items-center justify-center">
-            <OneEmptyState
-              emoji={emptyState.emoji}
-              title={emptyState.title}
-              description={emptyState.description}
-              actions={emptyState.actions}
-            />
-          </div>
-        ) : (
-          <>
-            <VisualizationRenderer
-              visualization={visualizations[currentVisualization]}
-              source={source}
-              onSelectItems={onSelectItemsLocal}
-              onLoadData={onLoadData}
-              onLoadError={onLoadError}
-            />
-            {bulkActions?.primary &&
-              (bulkActions?.primary || []).length > 0 && (
-                <OneActionBar
-                  isOpen={showActionBar}
-                  selectedNumber={selectedItemsCount}
-                  primaryActions={bulkActions.primary}
-                  secondaryActions={bulkActions?.secondary}
-                  onUnselect={() => clearSelectedItemsFunc?.()}
-                />
-              )}
-          </>
-        )}
       </div>
+
+      {emptyState ? (
+        <div className="flex flex-1 flex-col items-center justify-center">
+          <OneEmptyState
+            emoji={emptyState.emoji}
+            title={emptyState.title}
+            description={emptyState.description}
+            actions={emptyState.actions}
+          />
+        </div>
+      ) : (
+        <>
+          <VisualizationRenderer
+            visualization={visualizations[currentVisualization]}
+            source={source}
+            onSelectItems={onSelectItemsLocal}
+            onLoadData={onLoadData}
+            onLoadError={onLoadError}
+          />
+          {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
+            <OneActionBar
+              isOpen={showActionBar}
+              selectedNumber={selectedItemsCount}
+              primaryActions={bulkActions.primary}
+              secondaryActions={bulkActions?.secondary}
+              onUnselect={() => clearSelectedItemsFunc?.()}
+            />
+          )}
+        </>
+      )}
     </div>
   )
 }
