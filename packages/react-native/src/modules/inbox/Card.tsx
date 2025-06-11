@@ -1,27 +1,47 @@
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { RawTag } from "../../components/Tags/RawTag";
 import { AppIcons } from "../../icons";
 import { PersonAvatar } from "../../components/Avatars/PersonAvatar";
+import { AlertTag } from "../../components/Tags/AlertTab";
+import { useState } from "react";
+import { cn } from "../../lib/utils";
 
 type Props = {
+  id: string;
   title: string;
   description: string;
   date: string;
   firstName: string;
   lastName: string;
   src?: string;
+  onPress?: (id: string) => void;
 };
 
 export const InboxCard = ({
+  id,
   title,
   description,
   date,
   src,
   firstName,
   lastName,
+  onPress,
 }: Props) => {
+  const [randomFlag] = useState(Math.random() < 0.5);
+  const [isPressed, setIsPressed] = useState(false);
+
   return (
-    <View className="flex-row gap-3 bg-f1-background">
+    <Pressable
+      className={cn(
+        "flex-row gap-3 rounded-lg bg-f1-background px-4 py-2",
+        isPressed && "bg-f1-background-hover",
+      )}
+      onPress={() => {
+        onPress?.(id);
+      }}
+      onPressIn={() => setIsPressed(true)}
+      onPressOut={() => setIsPressed(false)}
+    >
       <View className="flex-row flex-wrap gap-2">
         <PersonAvatar
           firstName={firstName}
@@ -37,8 +57,11 @@ export const InboxCard = ({
         <Text className="font-regular text-base text-f1-foreground">
           {description}
         </Text>
-        <RawTag icon={AppIcons.CalendarArrowRight} text={date} />
+        <View className="flex-row gap-2">
+          {randomFlag && <AlertTag level="warning" text={"Due in 2 days"} />}
+          <RawTag icon={AppIcons.CalendarArrowRight} text={date} />
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };

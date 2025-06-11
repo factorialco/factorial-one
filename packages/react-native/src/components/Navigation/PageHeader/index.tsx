@@ -5,7 +5,7 @@ import { AppIcons } from "../../..";
 
 type ActionType = "notifications";
 
-type ActionT = {
+export type ActionT = {
   type: ActionType;
   label: string;
   onPress: () => void;
