@@ -23,7 +23,7 @@ type Story = StoryObj<WidgetInboxListItemProps>
 export const Default: Story = {
   args: {
     id: "1",
-    module: "clockin",
+    module: "clock-in",
     title: "Title",
     subtitle: "Module · 4 Nov 2024",
     onClick: () => {},

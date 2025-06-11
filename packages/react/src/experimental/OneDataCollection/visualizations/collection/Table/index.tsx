@@ -52,7 +52,10 @@ export type TableColumnDefinition<
   R extends RecordType,
   Sortings extends SortingsDefinition,
 > = WithOptionalSorting<R, Sortings> &
-  Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">
+  Pick<
+    ComponentProps<typeof TableHead>,
+    "hidden" | "info" | "infoIcon" | "sticky" | "width"
+  >
 
 export type TableVisualizationOptions<
   R extends RecordType,
@@ -131,7 +134,13 @@ export const TableCollection = <
     handleSelectItemChange,
     handleSelectAll,
     handleSelectGroupChange,
-  } = useSelectable(data, paginationInfo, source, onSelectItems)
+  } = useSelectable(
+    data,
+    paginationInfo,
+    source,
+    onSelectItems,
+    source.defaultSelectedItems
+  )
 
   /**
    * Determine the sort state of a column
