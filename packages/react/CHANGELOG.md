@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.92.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.1...factorial-one-react-v1.92.2) (2025-06-11)
+
+
+### Bug Fixes
+
+* **DataCollection:** display tooltip with info icon & custom icon ([#2051](https://github.com/factorialco/factorial-one/issues/2051)) ([18725e0](https://github.com/factorialco/factorial-one/commit/18725e00619081289e62d7bb5e9b17aafbac3c13))
+
+## [1.92.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.0...factorial-one-react-v1.92.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* update modules to icon map ([#2050](https://github.com/factorialco/factorial-one/issues/2050)) ([aa8bdf9](https://github.com/factorialco/factorial-one/commit/aa8bdf96e701bab4bdd337c5a5d7b5abcfcc31c1))
+
 ## [1.92.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.91.0...factorial-one-react-v1.92.0) (2025-06-11)
 
 

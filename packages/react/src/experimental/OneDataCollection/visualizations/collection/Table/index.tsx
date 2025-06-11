@@ -52,7 +52,10 @@ export type TableColumnDefinition<
   R extends RecordType,
   Sortings extends SortingsDefinition,
 > = WithOptionalSorting<R, Sortings> &
-  Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">
+  Pick<
+    ComponentProps<typeof TableHead>,
+    "hidden" | "info" | "infoIcon" | "sticky" | "width"
+  >
 
 export type TableVisualizationOptions<
   R extends RecordType,
