@@ -11,7 +11,9 @@ const SvgFaceNeutral = (props: SvgProps, ref: Ref<Svg>) => (
   >
     <Path
       fill="currentColor"
-      d="M12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16M9 14.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM10 9a1 1 0 0 0-1 1v1a1 1 0 1 0 2 0v-1a1 1 0 0 0-1-1m4 0a1 1 0 0 0-1 1v1a1 1 0 1 0 2 0v-1a1 1 0 0 0-1-1"
+      fillRule="evenodd"
+      d="M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18M8 14a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2zm2-6a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1m4 0a1 1 0 0 0-1 1v2a1 1 0 1 0 2 0V9a1 1 0 0 0-1-1"
+      clipRule="evenodd"
     />
   </Svg>
 );

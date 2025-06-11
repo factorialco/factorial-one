@@ -1,5 +1,40 @@
 # Changelog
 
+## [0.13.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.13.0...factorial-one-react-native-v0.13.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* better grouping in ActivityItemList ([#2036](https://github.com/factorialco/factorial-one/issues/2036)) ([ea1e031](https://github.com/factorialco/factorial-one/commit/ea1e0314e4b159ead0e9c6d4f85d727515019571))
+
+## [0.13.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.12.0...factorial-one-react-native-v0.13.0) (2025-06-06)
+
+
+### Features
+
+* new inbox module components and new page header component ([#2031](https://github.com/factorialco/factorial-one/issues/2031)) ([3474fc0](https://github.com/factorialco/factorial-one/commit/3474fc056ac11ea2414a3ee017763c14f44e1123))
+
+## [0.12.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.11.0...factorial-one-react-native-v0.12.0) (2025-06-06)
+
+
+### Features
+
+* create new component avatar for mobile ([#2026](https://github.com/factorialco/factorial-one/issues/2026)) ([b6da3c6](https://github.com/factorialco/factorial-one/commit/b6da3c60fa98d4d4be048b684cfd6ae81e427948))
+
+## [0.11.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.10.0...factorial-one-react-native-v0.11.0) (2025-06-05)
+
+
+### Features
+
+* create new  Chip & RawTag component for mobile ([#2005](https://github.com/factorialco/factorial-one/issues/2005)) ([3c60e51](https://github.com/factorialco/factorial-one/commit/3c60e5181cbc46db31488dd5755abab45071f008))
+
+## [0.10.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.9.0...factorial-one-react-native-v0.10.0) (2025-06-04)
+
+
+### Features
+
+* create new f1 components AlertTag for Mobile ([#1994](https://github.com/factorialco/factorial-one/issues/1994)) ([afe7df1](https://github.com/factorialco/factorial-one/commit/afe7df11e763712ca5f18e228702c5d09061523f))
+
 ## [0.9.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.8.2...factorial-one-react-native-v0.9.0) (2025-05-30)
 
 

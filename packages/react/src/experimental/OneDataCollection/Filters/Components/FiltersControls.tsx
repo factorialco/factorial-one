@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react"
 import { Button } from "../../../../components/Actions/Button"
-import { Icon } from "../../../../components/Utilities/Icon"
 import { Filter } from "../../../../icons/app"
 import { useI18n } from "../../../../lib/providers/i18n"
-import { cn, focusRing } from "../../../../lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "../../../../ui/popover"
 import { getFilterType } from "../FilterTypes"
 import { FilterTypeContext, FilterTypeSchema } from "../FilterTypes/types"
@@ -17,6 +15,7 @@ interface FiltersControlsProps<Filters extends FiltersDefinition> {
   onChange: (value: FiltersState<Filters>) => void
   isOpen?: boolean
   onOpenChange?: (open: boolean) => void
+  hideLabel?: boolean
 }
 
 export function FiltersControls<Filters extends FiltersDefinition>({
@@ -25,6 +24,7 @@ export function FiltersControls<Filters extends FiltersDefinition>({
   onChange,
   isOpen: controlledIsOpen,
   onOpenChange: controlledOnOpenChange,
+  hideLabel,
 }: FiltersControlsProps<Filters>) {
   const [selectedFilterKey, setSelectedFilterKey] = useState<
     keyof Filters | null
@@ -76,17 +76,15 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     <div className="flex items-center gap-2">
       <Popover open={isOpen} onOpenChange={onOpenChange}>
         <PopoverTrigger asChild>
-          <button
-            className={cn(
-              "flex h-8 w-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary text-f1-foreground hover:border-f1-border-hover",
-              isOpen && "border-f1-border-hover",
-              focusRing()
-            )}
-            title={i18n.filters.label}
-          >
-            <Icon icon={Filter} />
-            <span className="sr-only">{i18n.filters.label}</span>
-          </button>
+          <Button
+            variant="outline"
+            label={i18n.filters.label}
+            icon={Filter}
+            pressed={isOpen}
+            onClick={() => onOpenChange(!isOpen)}
+            hideLabel={hideLabel}
+            round={hideLabel}
+          />
         </PopoverTrigger>
         <PopoverContent
           className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"

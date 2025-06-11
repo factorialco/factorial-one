@@ -1,3 +1,9 @@
+import { LoadingStateProps } from "@/components/UpsellingKit/UpsellingButton"
+import {
+  ErrorMessageProps,
+  NextStepsProps,
+  SuccessMessageProps,
+} from "@/components/UpsellingKit/UpsellRequestResponseDialog"
 import { IconType } from "@/components/Utilities/Icon"
 import { AlertAvatarProps } from "@/experimental/Information/Avatars/AlertAvatar"
 
@@ -24,7 +30,43 @@ export type ActionProps = {
    * @optional
    */
   icon?: IconType
-}
+} & (
+  | {
+      /**
+       * The type of the action
+       */
+      type: "upsell"
+      /**
+       * The error message of the action
+       */
+      errorMessage: ErrorMessageProps
+      /**
+       * The success message of the action
+       */
+      successMessage: SuccessMessageProps
+
+      /**
+       * The loading state of the action
+       */
+      loadingState: LoadingStateProps
+
+      /**
+       * The next steps of the action
+       */
+      nextSteps: NextStepsProps
+
+      /**
+       * The next steps of the action
+       */
+      closeLabel: string
+    }
+  | {
+      /**
+       * The type of the action
+       */
+      type?: "default"
+    }
+)
 
 export type OneEmptyStateProps = {
   /**

@@ -151,14 +151,14 @@ export const BasicTableView: Story = {
       }),
       secondaryActions: () => [
         {
-          label: "Import",
+          label: "Export",
           icon: Upload,
-          onClick: () => console.log(`Import`),
+          onClick: () => console.log(`Export`),
         },
         {
-          label: "Export",
+          label: "Import",
           icon: Download,
-          onClick: () => console.log(`Export`),
+          onClick: () => console.log(`Import`),
         },
       ],
     })
@@ -371,12 +371,12 @@ export const BasicCardView: Story = {
       secondaryActions: () => [
         {
           label: "Import",
-          icon: Upload,
+          icon: Download,
           onClick: () => console.log(`Import`),
         },
         {
           label: "Export",
-          icon: Download,
+          icon: Upload,
           onClick: () => console.log(`Export`),
         },
       ],
@@ -615,42 +615,6 @@ export const WithSelectableAndBulkActions: Story = {
       }}
     />
   ),
-}
-
-// Examples with filters and loading states
-export const WithPreselectedFilters: Story = {
-  render: () => {
-    const dataSource = useDataSource({
-      filters,
-      sortings,
-      presets: filterPresets,
-      currentFilters: {
-        department: ["Engineering"],
-      },
-      dataAdapter: {
-        fetchData: createPromiseDataFetch(),
-      },
-    })
-
-    return (
-      <OneDataCollection
-        source={dataSource}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-            },
-          },
-        ]}
-      />
-    )
-  },
 }
 
 const JsonVisualization = ({

@@ -1,4 +1,17 @@
 export const defaultTranslations = {
+  approvals: {
+    history: "Approval history",
+    statuses: {
+      waiting: "Waiting",
+      pending: "Pending",
+      approved: "Approved",
+      rejected: "Rejected",
+    },
+    requiredNumbers: {
+      one: "One approval required",
+      other: "{{count}} approvals required",
+    },
+  },
   navigation: {
     sidebar: "Main navigation",
     previous: "Previous",

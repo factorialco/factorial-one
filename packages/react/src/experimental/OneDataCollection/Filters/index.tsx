@@ -134,6 +134,7 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
     <FiltersContext.Provider
       value={{
         ...props,
+        presets: props.presets as PresetsDefinition<FiltersDefinition>,
         filters: localFiltersValue,
         schema: schema,
         removeFilterValue,
@@ -153,8 +154,14 @@ FiltersRoot.displayName = "Filters.Root"
  * Filter controls
  */
 const FiltersControls = () => {
-  const { schema, filters, isFiltersOpen, setIsFiltersOpen, setFiltersValue } =
-    useContext(FiltersContext)
+  const {
+    schema,
+    filters,
+    isFiltersOpen,
+    setIsFiltersOpen,
+    setFiltersValue,
+    presets,
+  } = useContext(FiltersContext)
 
   return (
     schema && (
@@ -164,6 +171,7 @@ const FiltersControls = () => {
         onChange={setFiltersValue}
         onOpenChange={setIsFiltersOpen}
         isOpen={isFiltersOpen}
+        hideLabel={!!presets}
       />
     )
   )

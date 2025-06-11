@@ -93,12 +93,19 @@ export type CollectionSearchOptions = {
  * Defines preset filter configurations that can be applied to a collection.
  * @template Filters - The available filter configurations
  */
-export type PresetsDefinition<Filters extends FiltersDefinition> = Array<{
+export type PresetDefinition<Filters extends FiltersDefinition> = {
   /** Display name for the preset */
   label: string
   /** Filter configuration to apply when this preset is selected */
   filter: FiltersState<Filters>
-}>
+  /** Function to count the number of items that match the filter */
+  itemsCount?: (
+    filters: FiltersState<Filters>
+  ) => Promise<number | undefined> | number | undefined
+}
+
+export type PresetsDefinition<Filters extends FiltersDefinition> =
+  PresetDefinition<Filters>[]
 
 /**
  * Base response type for collection data

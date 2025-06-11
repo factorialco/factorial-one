@@ -1,12 +1,28 @@
 import { categorizeItemsByDate } from "@/lib/date"
 import { useI18n } from "@/lib/providers/i18n"
 import { withSkeleton } from "@/lib/skeleton"
+import sortBy from "lodash/sortBy"
 import throttle from "lodash/throttle"
 import React from "react"
 import { ActivityItem } from "../ActivityItem"
 import { Section, SectionProps } from "./Section"
 
 const MORE_ITEMS_LOADING_COUNT = 3
+
+const GROUP_SORT_ORDER = ["today", "yesterday", "lastWeek", "lastMonth"]
+
+type GroupEntry = [string, SectionProps["items"]]
+
+const sortGroups = (groups: GroupEntry[]) => {
+  return sortBy(groups, ([group]) => {
+    const index = GROUP_SORT_ORDER.indexOf(group)
+    if (index === -1) {
+      return -Number(group)
+    }
+
+    return index - 4000
+  })
+}
 
 export type ActivityItemListProps = Pick<
   SectionProps,
@@ -43,8 +59,8 @@ export const BaseActivityItemList = ({
     }
   }, 1000)
 
-  const groups = Object.entries(categorizedItems).filter(
-    ([_, items]) => !!items.length
+  const groups = sortGroups(
+    Object.entries(categorizedItems).filter(([_, items]) => !!items.length)
   )
 
   return (
@@ -53,9 +69,11 @@ export const BaseActivityItemList = ({
         <React.Fragment key={group}>
           <Section
             title={
-              translations.date.groups[
-                group as keyof typeof translations.date.groups
-              ]
+              group in translations.date.groups
+                ? translations.date.groups[
+                    group as keyof typeof translations.date.groups
+                  ]
+                : group
             }
             items={items}
             onClickItem={onClickItem}

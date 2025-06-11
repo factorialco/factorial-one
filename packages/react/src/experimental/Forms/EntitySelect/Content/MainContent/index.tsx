@@ -373,6 +373,12 @@ export const MainContent = ({
 
   const totalFlattenedItems = flattenedList.length
 
+  const anySelectOrClearAction =
+    !singleSelector && (selectAllLabel || clearLabel)
+  const anyAction = actions && actions.length > 0
+  const showFooter =
+    !loading && ((!singleSelector && anySelectOrClearAction) || anyAction)
+
   return (
     <div
       className={cn(
@@ -414,7 +420,7 @@ export const MainContent = ({
       <section
         className={cn(
           "flex-grow-1 flex h-96 flex-col justify-start gap-1 border-0 border-r-[1px] border-solid border-f1-border-secondary bg-f1-background",
-          singleSelector || loading ? "rounded-b-xl border-r-0" : ""
+          !showFooter ? "rounded-b-xl border-r-0" : ""
         )}
       >
         {loading && (

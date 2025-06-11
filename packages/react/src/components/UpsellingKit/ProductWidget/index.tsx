@@ -19,6 +19,7 @@ type BaseAction = {
 
 type UpsellAction = BaseAction & {
   type: "upsell"
+  variant: "promote" | "outlinePromote"
   errorMessage: ErrorMessageProps
   successMessage: SuccessMessageProps
   loadingState: LoadingStateProps
@@ -111,7 +112,7 @@ export function ProductWidget({
               </div>
               <div className="flex flex-col gap-[2px] p-3">
                 <Label className="text-lg font-medium">{title}</Label>
-                <Label className="line-clamp-2 text-base font-normal text-f1-foreground-secondary">
+                <Label className="line-clamp-3 text-base font-normal text-f1-foreground-secondary">
                   {description}
                 </Label>
               </div>
@@ -131,6 +132,7 @@ export function ProductWidget({
                     nextSteps={action.nextSteps}
                     closeLabel={action.closeLabel}
                     showConfirmation={action.showConfirmation}
+                    variant={action.variant}
                   />
                 ) : (
                   <Button

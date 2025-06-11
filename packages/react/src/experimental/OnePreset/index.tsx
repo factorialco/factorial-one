@@ -1,9 +1,11 @@
+import { Await } from "@/components/Utilities/Await"
+import { Skeleton } from "@/ui/skeleton"
 import { cn } from "../../lib/utils"
 import { Counter } from "../Information/Counter"
 
 interface PresetProps {
   label: string
-  number?: number
+  number?: number | Promise<number | undefined>
   onClick?: () => void
   selected?: boolean
 }
@@ -29,7 +31,16 @@ export const Preset = ({ label, number, onClick, selected }: PresetProps) => {
       />
       <span className="whitespace-nowrap">{label}</span>
       {number && (
-        <Counter value={number} type={selected ? "selected" : "default"} />
+        <Await resolve={number} fallback={<Skeleton className="h-4 w-4" />}>
+          {(number) =>
+            number && (
+              <Counter
+                value={number}
+                type={selected ? "selected" : "default"}
+              />
+            )
+          }
+        </Await>
       )}
     </label>
   )

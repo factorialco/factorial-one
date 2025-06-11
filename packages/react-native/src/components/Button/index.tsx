@@ -3,7 +3,6 @@ import React, { forwardRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { cn } from "../../lib/utils";
 import { Icon, type IconType } from "../Icon";
-import { type IconColorName } from "../../lib/colors";
 
 export const variants = [
   "default",
@@ -19,7 +18,7 @@ export const sizes = ["sm", "md", "lg"] as const;
 export type ButtonSize = (typeof sizes)[number];
 
 const buttonVariants = cva({
-  base: "flex-row items-center justify-center rounded border-none",
+  base: "flex-row items-center justify-center rounded border-none grow-0",
   variants: {
     variant: {
       default: "bg-f1-background-accent-bold",
@@ -68,10 +67,7 @@ const pressedVariants = cva({
   },
 });
 
-const getIconColor = (
-  variant: ButtonVariant,
-  isPressed: boolean,
-): IconColorName => {
+const getIconColor = (variant: ButtonVariant, isPressed: boolean) => {
   switch (variant) {
     case "default":
       return "text-f1-icon-inverse";
@@ -82,10 +78,7 @@ const getIconColor = (
   }
 };
 
-const getIconOnlyColor = (
-  variant: ButtonVariant,
-  isPressed: boolean,
-): IconColorName => {
+const getIconOnlyColor = (variant: ButtonVariant, isPressed: boolean) => {
   switch (variant) {
     case "critical":
       return isPressed ? "text-f1-icon-inverse" : "text-f1-icon-critical-bold";
@@ -169,7 +162,7 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
   const shouldShowPressed = isPressed && !isDisabled;
 
   return (
-    <View className="relative">
+    <View className="flex items-start">
       <Pressable
         ref={ref}
         disabled={isDisabled}
@@ -198,12 +191,12 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
           <Icon
             icon={icon}
             size={size === "sm" ? "sm" : "md"}
-            color={
+            className={cn(
+              hideLabel && round ? undefined : "-ml-0.5",
               hideLabel && round
                 ? getIconOnlyColor(variant, shouldShowPressed)
-                : getIconColor(variant, shouldShowPressed)
-            }
-            className={hideLabel && round ? undefined : "-ml-0.5"}
+                : getIconColor(variant, shouldShowPressed),
+            )}
           />
         )}
         {emoji && (

@@ -48,3 +48,14 @@ export const WithMoreLinesThanAllowed: Story = {
     },
   },
 }
+
+export const Horizontal: Story = {
+  args: {
+    title: "Address",
+    content: {
+      type: "item",
+      text: "Paseo Mara, 62, Bajos\nPáez del Vallès\nCeuta",
+    },
+    isHorizontal: true,
+  },
+}
