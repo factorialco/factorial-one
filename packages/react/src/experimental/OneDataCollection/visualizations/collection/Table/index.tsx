@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"

@@ -6,7 +6,7 @@ import {
   isWithinInterval,
   startOfMonth,
 } from "date-fns"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { CalendarMode, DateRange } from "../../types"
 
 export const getHalfYearFromMonth = (month: number): number =>
