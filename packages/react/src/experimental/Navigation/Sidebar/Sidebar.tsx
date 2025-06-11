@@ -6,6 +6,7 @@ import { useReducedMotion } from "../../../lib/a11y"
 import { useI18n } from "../../../lib/providers/i18n"
 import { cn } from "../../../lib/utils"
 import { useSidebar } from "../ApplicationFrame/FrameProvider"
+import { SidebarFooter } from "./Footer"
 
 const ScrollShadow = ({ position }: { position: "top" | "bottom" }) => (
   <motion.div
@@ -72,9 +73,12 @@ export function Sidebar({
   const renderFooter = () => {
     if (!footer) return null
     if (isValidElement(footer) && onFooterDropdownClick) {
-      return cloneElement(footer as ReactElement<any>, {
-        onDropdownClick: onFooterDropdownClick,
-      })
+      return cloneElement(
+        footer as ReactElement<React.ComponentProps<typeof SidebarFooter>>,
+        {
+          onDropdownClick: onFooterDropdownClick,
+        }
+      )
     }
 
     return footer
