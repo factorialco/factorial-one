@@ -83,6 +83,12 @@ const meta = {
       description: "Controls the initial height of the editor",
       defaultValue: "auto",
     },
+    allowTaskList: {
+      control: "boolean",
+      description:
+        "Controls if the task list is allowed in the editor, this is needed if the text lives outside of the display component",
+      defaultValue: true,
+    },
   },
 } satisfies Meta<typeof RichTextEditor>
 
@@ -173,7 +179,8 @@ export const Default: Story = {
     onChange: (result: resultType) => {
       console.log(result)
     },
-    placeholder: "Write something here...",
+    placeholder:
+      "Write something here to test our Write something here to test our Write something here to test our Write something here to test our Write something here to test our Write something here to test our ",
     mentionsConfig: { users: users },
     enhanceConfig: {
       onEnhanceText: (params: {
@@ -275,62 +282,6 @@ export const Default: Story = {
   },
 }
 
-type SkeletonStory = StoryObj<typeof RichTextEditor.Skeleton>
-
-export const Skeleton: SkeletonStory = {
-  tags: ["experimental"],
-  render: () => <RichTextEditor.Skeleton />,
-}
-
-export const WithoutEnhance: Story = {
-  args: {
-    ...Default.args,
-    enhanceConfig: undefined,
-    height: "auto",
-  },
-}
-
-export const WithoutFiles: Story = {
-  args: {
-    ...Default.args,
-    filesConfig: undefined,
-  },
-}
-
-export const JustOnePrimaryAction: Story = {
-  args: {
-    ...Default.args,
-    primaryAction: {
-      action: {
-        label: "Add",
-        onClick: () => alert("Add"),
-        variant: "default",
-      },
-    },
-    secondaryAction: undefined,
-  },
-}
-
-export const JustSecondaryAction: Story = {
-  args: {
-    ...Default.args,
-    primaryAction: undefined,
-    secondaryAction: {
-      label: "Cancel",
-      onClick: () => alert("Cancel"),
-      variant: "outline",
-    },
-  },
-}
-
-export const WithoutActions: Story = {
-  args: {
-    ...Default.args,
-    primaryAction: undefined,
-    secondaryAction: undefined,
-  },
-}
-
 export const Blank: Story = {
   args: {
     ...Default.args,
@@ -341,5 +292,13 @@ export const Blank: Story = {
     initialEditorState: undefined,
     mentionsConfig: undefined,
     maxCharacters: undefined,
+    allowTaskList: false,
   },
+}
+
+type SkeletonStory = StoryObj<typeof RichTextEditor.Skeleton>
+
+export const Skeleton: SkeletonStory = {
+  tags: ["experimental"],
+  render: () => <RichTextEditor.Skeleton />,
 }
