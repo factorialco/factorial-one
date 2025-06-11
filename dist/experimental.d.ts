@@ -15,6 +15,7 @@ import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
 import { Dispatch } from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import { Editor } from '@tiptap/react';
 import { FC } from 'react';
 import { FieldPath } from 'react-hook-form';
 import { FieldValues } from 'react-hook-form';
@@ -29,6 +30,7 @@ import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
 import { Observable } from 'zen-observable-ts';
 import { Path } from 'react-hook-form';
+import { PersonCellValue } from './types/person.tsx';
 import { PieChartProps } from '../../../components/Charts/PieChart';
 import { PopoverProps } from '@radix-ui/react-popover';
 import { PropsWithChildren } from 'react';
@@ -93,7 +95,37 @@ declare type ActionProps = {
      * @optional
      */
     icon?: IconType;
-};
+} & ({
+    /**
+     * The type of the action
+     */
+    type: "upsell";
+    /**
+     * The error message of the action
+     */
+    errorMessage: ErrorMessageProps;
+    /**
+     * The success message of the action
+     */
+    successMessage: SuccessMessageProps;
+    /**
+     * The loading state of the action
+     */
+    loadingState: LoadingStateProps;
+    /**
+     * The next steps of the action
+     */
+    nextSteps: NextStepsProps;
+    /**
+     * The next steps of the action
+     */
+    closeLabel: string;
+} | {
+    /**
+     * The type of the action
+     */
+    type?: "default";
+});
 
 declare type ActionType = CopyActionType | NavigateActionType;
 
@@ -205,6 +237,22 @@ declare interface ApplicationFrameProps {
     sidebar: React.ReactNode;
     children: React.ReactNode;
 }
+
+declare const ApprovalStep: FC<ApprovalStepProps>;
+
+declare type ApprovalStepProps = {
+    title: string;
+    approvalsRequired?: number;
+    status: Status_2;
+    approvers: Approver[];
+};
+
+declare type Approver = {
+    firstName: string;
+    lastName: string;
+    avatar?: string;
+    status: Status_2;
+};
 
 export declare const AreaChartWidget: ForwardRefExoticComponent<Omit<AreaChartWidgetProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
@@ -392,6 +440,28 @@ declare type BaseTag<T extends {
     type: string;
 }> = T & WithTooltipDescription;
 
+export declare const BasicTextEditor: ForwardRefExoticComponent<BasicTextEditorProps & RefAttributes<BasicTextEditorHandle>>;
+
+export declare type BasicTextEditorHandle = {
+    clear: () => void;
+    focus: () => void;
+    setContent: (content: string) => void;
+};
+
+export declare interface BasicTextEditorProps {
+    onChange: (value: {
+        json: JSONContent | null;
+        html: string | null;
+    }) => void;
+    placeholder: string;
+    initialEditorState?: {
+        content: JSONContent | string;
+    };
+    toolbarLabels: ToolbarLabels;
+    slashCommandGroupLabels?: SlashCommandGroupLabels;
+    readonly?: boolean;
+}
+
 declare type BreadcrumbBaseItemType = NavigationItem & {
     id: string;
     loading?: boolean;
@@ -404,9 +474,11 @@ declare type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
     loading: true;
 };
 
-declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
+declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & ({
+    module?: ModuleId;
+} | {
     icon?: IconType;
-};
+});
 
 /**
  * Responsive breadcrumb navigation component that automatically collapses items when space is limited.
@@ -480,7 +552,18 @@ export declare type BulkActionDefinition = {
 
 declare const Button: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round" | "className"> & DataAttributes & {
+export declare interface ButtonConfig {
+    key: string;
+    icon: IconType_2;
+    active: (editor: Editor) => boolean;
+    onClick: (editor: Editor) => void;
+    tooltip: {
+        label: string;
+        shortcut: string[];
+    };
+}
+
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round" | "className" | "pressed"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -500,6 +583,7 @@ declare interface ButtonProps_2 extends React_2.ButtonHTMLAttributes<HTMLButtonE
     size?: ButtonSize;
     variant?: ButtonVariant;
     appendButton?: React_2.ReactNode;
+    pressed?: boolean;
 }
 
 declare type ButtonSize = (typeof sizes_3)[number];
@@ -508,7 +592,8 @@ declare type ButtonVariant = (typeof variants_2)[number];
 
 declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
-    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
+    pressed?: boolean | undefined;
+    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | "outlinePromote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
 } & ({
     class?: ClassValue;
@@ -877,6 +962,8 @@ declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "team";
 }) | (ComponentProps<typeof Weekdays> & {
     type: "weekdays";
+}) | (ComponentProps<typeof DataList.DotTagItem> & {
+    type: "dot-tag";
 });
 
 /**
@@ -957,11 +1044,13 @@ declare const DataList: ForwardRefExoticComponent<DataListProps & RefAttributes<
     CompanyItem: ForwardRefExoticComponent<CompanyItemProps & RefAttributes<HTMLLIElement>>;
     PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
     TeamItem: ForwardRefExoticComponent<TeamItemProps & RefAttributes<HTMLLIElement>>;
+    DotTagItem: ForwardRefExoticComponent<DotTagProps & RefAttributes<HTMLLIElement>>;
 };
 
 declare type DataListProps = {
     children: ReactElement<Items>[] | ReactElement<Items>;
     label?: string;
+    isHorizontal?: boolean;
 };
 
 /**
@@ -1144,16 +1233,18 @@ declare const daytimePageVariants: (props?: ({
 
 export declare const DetailsItem: ForwardRefExoticComponent<DetailsItemType & RefAttributes<HTMLDivElement>>;
 
-export declare const DetailsItemsList: ForwardRefExoticComponent<DetailsItemsListProps & RefAttributes<HTMLDivElement>>;
+export declare const DetailsItemsList: default_2.ForwardRefExoticComponent<DetailsItemsListProps & default_2.RefAttributes<HTMLDivElement>>;
 
 declare interface DetailsItemsListProps {
-    title: string;
+    title?: string;
+    tableView?: boolean;
     details: DetailsItemType[];
 }
 
 export declare interface DetailsItemType {
     title: string;
     content: Content | Content[];
+    isHorizontal?: boolean;
     spacingAtTheBottom?: boolean;
 }
 
@@ -1377,6 +1468,11 @@ export declare type errorConfig = {
     onClose?: () => void;
     closeErrorButtonLabel?: string;
 };
+
+declare interface ErrorMessageProps {
+    title: string;
+    description: string;
+}
 
 /**
  * Extracts the property keys from a record type.
@@ -1799,6 +1895,7 @@ declare type InFilterOptionItem<T = unknown> = {
  * @template T - Type of the underlying value
  */
 declare type InFilterOptions_2<T> = {
+    cache?: boolean;
     options: Array<InFilterOptionItem<T>> | (() => Array<InFilterOptionItem<T>> | Promise<Array<InFilterOptionItem<T>>>);
 };
 
@@ -1820,9 +1917,8 @@ export declare type ItemActionsDefinition<T extends RecordType> = (item: T) => A
 
 declare type ItemDefinition = {
     title: string;
-    description?: string;
+    description?: string[];
     avatar?: AvatarVariant;
-    metadata?: string;
 };
 
 declare type ItemProps = {
@@ -1858,6 +1954,10 @@ declare type ListVisualizationOptions<R extends RecordType, _Filters extends Fil
     fields: ReadonlyArray<ListPropertyDefinition<R, Sortings>>;
 };
 
+declare interface LoadingStateProps {
+    label: string;
+}
+
 export declare const MAX_EXPANDED_ACTIONS = 2;
 
 export declare type MentionedUser = {
@@ -1867,7 +1967,26 @@ export declare type MentionedUser = {
     href?: string;
 };
 
-export declare type mentionsConfig = {
+export declare interface MentionItemComponentProps {
+    item: MentionedUser;
+    index: number;
+    selected: boolean;
+}
+
+export declare interface MentionListRef {
+    onKeyDown: (props: {
+        event: KeyboardEvent;
+    }) => boolean;
+}
+
+export declare interface MentionNodeAttrs {
+    id: string;
+    label: string;
+    image_url?: string;
+    href?: string;
+}
+
+export declare type MentionsConfig = {
     onMentionQueryStringChanged?: (queryString: string) => Promise<MentionedUser[]> | undefined;
     users: MentionedUser[];
 };
@@ -1979,11 +2098,22 @@ export declare const MobileDropdown: ({ items, children }: DropdownProps) => JSX
 
 declare type ModalPosition = "center" | "left" | "right";
 
-export declare function ModuleAvatar({ size, icon }: ModuleAvatarProps): JSX_2.Element;
+/**
+ * Module avatar
+ * @description A component that displays a module avatar
+ * @experimental
+ * @returns
+ */
+export declare function ModuleAvatar({ size, ...props }: ModuleAvatarProps): JSX_2.Element;
 
-export declare interface ModuleAvatarProps extends VariantProps<typeof moduleAvatarVariants> {
+export declare type ModuleAvatarProps = VariantProps<typeof moduleAvatarVariants> & ({
+    module: ModuleId;
+} | {
+    /**
+     * @deprecated This component should only render module related icons, not arbitrary icons. The `icon` property will be removed soon. Use the `module` prop instead.
+     */
     icon: IconType;
-}
+});
 
 declare const moduleAvatarVariants: (props?: ({
     size?: "lg" | "md" | "sm" | undefined;
@@ -1994,6 +2124,46 @@ declare const moduleAvatarVariants: (props?: ({
     class?: never;
     className?: ClassValue;
 })) | undefined) => string;
+
+export declare type ModuleId = keyof typeof modules;
+
+export declare const modules: {
+    readonly benefits: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly calendar: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly cards: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly clockin: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly discover: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly documents: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly engagement: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly finance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly goals: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly home: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly hub: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly inbox: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly kudos: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly mydocuments: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly organization: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly overviews: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly payroll: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly performance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly profile: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly projects: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly recruitment: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly reports: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly sales: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly settings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly shifts: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly social: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly software: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly spaces: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly spending: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly tasks: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly timeoff: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly timetracking: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly trainings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly treasury: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly workflows: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+};
 
 declare type NavigateActionType = {
     type: "navigate";
@@ -2075,6 +2245,11 @@ declare type NavigationProps = {
 
 export declare type NewColor = Extract<keyof typeof baseColors, "viridian" | "malibu" | "yellow" | "purple" | "lilac" | "barbie" | "smoke" | "army" | "flubber" | "indigo" | "camel">;
 
+declare interface NextStepsProps {
+    title: string;
+    items: StepItemProps[];
+}
+
 declare type NumberCellValue = number | undefined | NumberValue;
 
 export declare const NumberInput: ForwardRefExoticComponent<Omit<NumberInputProps, "ref"> & RefAttributes<HTMLInputElement>>;
@@ -2107,6 +2282,12 @@ action: BulkAction,
 ]) => void;
 
 export declare const OneAlert: ({ title, description, action, link, variant, }: AlertProps) => JSX_2.Element;
+
+export declare const OneApprovalHistory: FC<OneApprovalHistoryProps>;
+
+declare type OneApprovalHistoryProps = {
+    steps: ApprovalStep[];
+};
 
 export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaultSelected, showNavigation, showInput, minDate, maxDate, }: OneCalendarProps): JSX_2.Element;
 
@@ -2228,6 +2409,45 @@ declare type OneDropdownButtonItem<T = string> = {
     critical?: boolean;
 };
 
+export declare function OneEmptyState({ title, description, variant, emoji, actions, }: Types.OneEmptyStateProps): JSX_2.Element;
+
+declare type OneEmptyStateProps = {
+    /**
+     * The title of the empty state
+     */
+    title: string;
+    /**
+     * If defined, a description will be displayed in the empty state
+     * @optional
+     */
+    description?: string;
+    /**
+     * An array of action objects to display as buttons in the empty state.
+     * Each action represents a user-interactable option, such as "Retry" or "Go Back",
+     * and can include a label, click handler, optional icon, and button variant.
+     * @optional
+     */
+    actions?: ActionProps[];
+} & ({
+    /**
+     * The variant of the empty state
+     * @optional
+     */
+    variant?: "default";
+    /**
+     * An icon will be displayed in the empty state.
+     * emoji string
+     */
+    emoji?: string;
+} | {
+    /**
+     * The variant of the empty state
+     * @optional
+     */
+    variant: Exclude<AlertAvatarProps["type"], "positive">;
+    emoji?: never;
+});
+
 export declare const OneModal: OneModalComponent;
 
 declare const OneModal_2: default_2.FC<OneModalProps>;
@@ -2238,10 +2458,11 @@ declare type OneModalComponent = typeof OneModal_2 & {
     Footer: typeof OneModalFooter;
 };
 
-declare const OneModalContent: ({ tabs, activeTabId, setActiveTabId, children, }: OneModalContentProps) => JSX_2.Element;
+declare const OneModalContent: ({ tabs, activeTabId, setActiveTabId, withPadding, children, }: OneModalContentProps) => JSX_2.Element;
 
 declare type OneModalContentProps = {
     children: React.ReactNode;
+    withPadding?: boolean;
 } & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
 
 declare const OneModalFooter: ({ children }: OneModalFooterProps) => JSX_2.Element;
@@ -2250,10 +2471,19 @@ declare type OneModalFooterProps = {
     children: React.ReactNode;
 };
 
-declare const OneModalHeader: ({ title, otherActions, }: OneModalHeaderProps) => JSX_2.Element;
+declare const OneModalHeader: ({ title, module, otherActions, }: OneModalHeaderProps) => JSX_2.Element;
 
 declare type OneModalHeaderProps = {
-    title: string;
+    title?: string;
+    /**
+     * Module configuration for the header. Only works when modal position is set to "right".
+     * Displays module icon and name in the header.
+     */
+    module?: {
+        id: ModuleId;
+        label: string;
+        href: string;
+    };
     otherActions?: DropdownInternalProps["items"];
 };
 
@@ -2469,19 +2699,11 @@ export declare type PersonAvatarProps = {
 
 declare type PersonAvatarProps_2 = ComponentProps<typeof PersonAvatar>;
 
-declare type PersonCellValue = PersonValue;
-
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
 export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
 
 declare type PersonTagProps = ComponentProps<typeof PersonTag>;
-
-declare interface PersonValue {
-    firstName: string;
-    lastName: string;
-    src?: string;
-}
 
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: PieChartProps;
@@ -2500,6 +2722,19 @@ declare type PostEventProps = {
 };
 
 /**
+ * Defines preset filter configurations that can be applied to a collection.
+ * @template Filters - The available filter configurations
+ */
+export declare type PresetDefinition<Filters extends FiltersDefinition> = {
+    /** Display name for the preset */
+    label: string;
+    /** Filter configuration to apply when this preset is selected */
+    filter: FiltersState<Filters>;
+    /** Function to count the number of items that match the filter */
+    itemsCount?: (filters: FiltersState<Filters>) => Promise<number | undefined> | number | undefined;
+};
+
+/**
  * Filter presets
  */
 export declare const Presets: {
@@ -2507,16 +2742,7 @@ export declare const Presets: {
     displayName: string;
 };
 
-/**
- * Defines preset filter configurations that can be applied to a collection.
- * @template Filters - The available filter configurations
- */
-export declare type PresetsDefinition<Filters extends FiltersDefinition> = Array<{
-    /** Display name for the preset */
-    label: string;
-    /** Filter configuration to apply when this preset is selected */
-    filter: FiltersState<Filters>;
-}>;
+export declare type PresetsDefinition<Filters extends FiltersDefinition> = PresetDefinition<Filters>[];
 
 export declare type PrevNextDateNavigation = {
     prev: DateRange | false;
@@ -2751,7 +2977,7 @@ declare type Props_17 = {
 
 declare type Props_18<Id extends string | number = string | number> = {
     id: Id;
-    icon?: IconType;
+    module?: ModuleId;
     title: string;
     subtitle: string;
     onClick?: (id: Id) => void;
@@ -2938,7 +3164,7 @@ export declare type RichTextEditorHandle = {
 };
 
 export declare interface RichTextEditorProps {
-    mentionsConfig?: mentionsConfig;
+    mentionsConfig?: MentionsConfig;
     enhanceConfig?: enhanceConfig;
     filesConfig?: filesConfig;
     secondaryAction?: secondaryActionType;
@@ -2950,7 +3176,7 @@ export declare interface RichTextEditorProps {
         content?: string;
         files?: File[];
     };
-    toolbarLabels: toolbarLabels;
+    toolbarLabels: ToolbarLabels;
     title: string;
     errorConfig?: errorConfig;
     height?: heightType;
@@ -3042,7 +3268,7 @@ declare interface SearchBarProps extends ButtonHTMLAttributes<HTMLButtonElement>
 declare type SearchFilterDefinition = BaseFilterDefinition<"search">;
 
 declare interface SecondaryAction extends PrimaryActionButton {
-    variant?: "outline" | "critical";
+    variant?: "outline" | "critical" | "outlinePromote" | "promote";
 }
 
 export declare type SecondaryActionsDefinition = {
@@ -3136,7 +3362,7 @@ declare const shortcutVariants: (props?: ({
 
 export declare function Sidebar({ header, body, footer }: SidebarProps): JSX_2.Element;
 
-export declare function SidebarFooter({ user, options, showActivityButton, activityButtonShortcut, onActivityButtonClick, hasActivityUpdates, }: SidebarFooterProps): JSX_2.Element;
+export declare function SidebarFooter({ user, options, showActivityButton, activityButtonShortcut, onActivityButtonClick, onDropdownClick, hasActivityUpdates, }: SidebarFooterProps): JSX_2.Element;
 
 declare interface SidebarFooterProps {
     user: {
@@ -3148,6 +3374,7 @@ declare interface SidebarFooterProps {
     hasActivityUpdates?: boolean;
     activityButtonShortcut?: string[];
     onActivityButtonClick?: () => void;
+    onDropdownClick?: () => void;
     options: DropdownItem[];
 }
 
@@ -3186,6 +3413,13 @@ declare const skeletonVariants: (props?: ({
     class?: never;
     className?: ClassValue;
 })) | undefined) => string;
+
+declare interface SlashCommandGroupLabels {
+    textStyles: string;
+    lists: string;
+    blocks: string;
+    [key: string]: string;
+}
 
 /**
  * Type helper to extract keys from a SortingsDefinition
@@ -3288,6 +3522,8 @@ className?: ClassValue;
 
 declare type Status = "positive" | "neutral" | "negative";
 
+declare type Status_2 = "waiting" | "pending" | "approved" | "rejected";
+
 declare type StatusCellValue = StatusValue;
 
 declare type StatusMetadata = BaseMetadata & {
@@ -3315,6 +3551,11 @@ declare interface StatusValue {
 
 export declare type StatusVariant = Variant;
 
+declare interface StepItemProps {
+    text: string;
+    isCompleted?: boolean;
+}
+
 export declare type subActionType = {
     label: string;
     onClick: () => void;
@@ -3327,6 +3568,13 @@ declare type Success = {
     rootMessage?: never;
     errors?: never;
 };
+
+declare interface SuccessMessageProps {
+    title: string;
+    description: string;
+    buttonLabel: string;
+    buttonOnClick: () => void;
+}
 
 export declare const SummariesWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
@@ -3621,7 +3869,28 @@ export declare const ToggleGroupItem: React_2.ForwardRefExoticComponent<Omit<Tog
     className?: ClassValue;
 })) | undefined) => string> & React_2.RefAttributes<HTMLButtonElement>>;
 
-export declare type toolbarLabels = {
+export declare interface ToolbarButtonProps {
+    onClick?: () => void;
+    active?: boolean;
+    label: string;
+    disabled: boolean;
+    icon: IconType_2;
+    tooltip?: {
+        description?: string;
+        label?: string;
+        shortcut?: ComponentProps<typeof Shortcut>["keys"];
+    };
+    showLabel?: boolean;
+}
+
+export declare interface ToolbarDropdownItem {
+    label: string;
+    icon: IconType_2;
+    onClick: () => void;
+    isActive: boolean;
+}
+
+export declare interface ToolbarLabels {
     bold: string;
     italic: string;
     underline: string;
@@ -3650,7 +3919,19 @@ export declare type toolbarLabels = {
     linkLabel: string;
     linkPaste: string;
     close: string;
-};
+    [key: string]: string;
+}
+
+export declare interface ToolbarProps {
+    editor: Editor;
+    isFullscreen?: boolean;
+    disableButtons: boolean;
+    onClose?: () => void;
+    animationComplete?: boolean;
+    labels: ToolbarLabels;
+    darkMode?: boolean;
+    showEmojiPicker?: boolean;
+}
 
 declare interface TwoColumnsItemType {
     title: string;
@@ -3667,6 +3948,13 @@ declare interface TwoColumnsListType {
 declare type Type = "bar-chart" | "line-chart";
 
 declare const type: readonly ["base", "rounded"];
+
+declare namespace Types {
+    export {
+        ActionProps,
+        OneEmptyStateProps
+    }
+}
 
 declare type URL_2 = string;
 
@@ -3735,7 +4023,7 @@ declare const variants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-declare const variants_2: readonly ["default", "outline", "critical", "neutral", "ghost", "promote"];
+declare const variants_2: readonly ["default", "outline", "critical", "neutral", "ghost", "promote", "outlinePromote"];
 
 export declare const VerticalBarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: VerticalBarChartProps;
@@ -3828,7 +4116,7 @@ export declare function WidgetHighlightButton({ label, count, icon, iconClassNam
 
 export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_19): JSX_2.Element;
 
-export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_18): JSX_2.Element;
+export declare function WidgetInboxListItem({ id, title, subtitle, onClick, module, }: Props_18): JSX_2.Element;
 
 export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_18<Id>;
 
