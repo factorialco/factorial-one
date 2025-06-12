@@ -160,21 +160,22 @@ export type PageBasedPaginatedResponse<TRecord> =
  * @extends BasePaginatedResponse
  *
  * @property {"infinite-scroll"} type Identifies the pagination type as "infinite-scroll".
- * @property {number} cursor The current position or index used to fetch the next set of records.
+ * @property {string | null} cursor The current position cursor used to fetch the next set of records.
  * @property {boolean} hasMore Indicates whether there are additional records available for loading.
  */
 export type InfiniteScrollPaginatedResponse<TRecord> =
   BasePaginatedResponse<TRecord> & {
     type: Extract<PaginationType, "infinite-scroll">
     /**
-     * Represents the current position or state in a sequence, collection, or dataset.
-     * Typically used to track the index or position for iteration or navigation purposes.
-     * A numerical value that can be incremented or decremented to traverse through the elements.
+     * Represents the current position cursor for pagination.
+     * This is typically a string (often Base64-encoded) that represents
+     * the position of the last item in the current result set.
+     * Used to fetch the next page of results.
      */
-    cursor: number
+    cursor: string | null
     /**
-     * A boolean flag indicating whether there are more items or data available for processing, fetching, or pagination.
-     * Typically used in scenarios where data is loaded in chunks or pages to determine if additional requests are needed.
+     * A boolean flag indicating whether there are more items available for fetching.
+     * Used to determine if additional requests should be made for pagination.
      */
     hasMore: boolean
   }
@@ -210,10 +211,11 @@ export type PaginatedFetchOptions<
   NavigationFilters extends NavigationFiltersDefinition,
 > = BaseFetchOptions<Filters, Sortings, NavigationFilters> & {
   pagination: {
-    currentPage?: number // For page-based pagination
-    cursor?: number // For infinite-scroll pagination
     perPage?: number // Common to both
-  }
+  } & (
+    | { currentPage: number; cursor?: never }
+    | { cursor?: string | null; currentPage?: never }
+  )
 }
 
 /**
