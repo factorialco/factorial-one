@@ -1,4 +1,4 @@
-import { Meta, Title, Unstyled } from "@storybook/blocks"
+import { Meta, Title, Unstyled } from "@storybook/addon-docs/blocks"
 
 import { ComponentProps } from "react"
 import { Icon } from "../../src/components/Utilities/Icon"
