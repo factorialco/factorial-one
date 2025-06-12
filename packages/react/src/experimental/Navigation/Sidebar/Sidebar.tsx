@@ -1,11 +1,12 @@
 import { ScrollArea } from "@/ui/scrollarea"
 import { AnimatePresence, motion } from "motion/react"
-import { ReactNode } from "react"
+import { ReactElement, ReactNode, cloneElement, isValidElement } from "react"
 import { useIntersectionObserver } from "usehooks-ts"
 import { useReducedMotion } from "../../../lib/a11y"
 import { useI18n } from "../../../lib/providers/i18n"
 import { cn } from "../../../lib/utils"
 import { useSidebar } from "../ApplicationFrame/FrameProvider"
+import { SidebarFooter } from "./Footer"
 
 const ScrollShadow = ({ position }: { position: "top" | "bottom" }) => (
   <motion.div
@@ -34,9 +35,15 @@ interface SidebarProps {
   header?: ReactNode
   body?: ReactNode
   footer?: ReactNode
+  onFooterDropdownClick?: () => void
 }
 
-export function Sidebar({ header, body, footer }: SidebarProps) {
+export function Sidebar({
+  header,
+  body,
+  footer,
+  onFooterDropdownClick,
+}: SidebarProps) {
   const { sidebarState, isSmallScreen } = useSidebar()
   const shouldReduceMotion = useReducedMotion()
 
@@ -61,6 +68,20 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
     top: { duration: shouldReduceMotion ? 0 : 0.1 },
     left: { duration: shouldReduceMotion ? 0 : 0.1 },
     default: { duration: shouldReduceMotion ? 0 : 0.2 },
+  }
+
+  const renderFooter = () => {
+    if (!footer) return null
+    if (isValidElement(footer) && onFooterDropdownClick) {
+      return cloneElement(
+        footer as ReactElement<React.ComponentProps<typeof SidebarFooter>>,
+        {
+          onDropdownClick: onFooterDropdownClick,
+        }
+      )
+    }
+
+    return footer
   }
 
   return (
@@ -118,7 +139,7 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
           </AnimatePresence>
         </nav>
       )}
-      <footer className="flex-shrink-0">{footer}</footer>
+      <footer className="flex-shrink-0">{renderFooter()}</footer>
     </motion.aside>
   )
 }
