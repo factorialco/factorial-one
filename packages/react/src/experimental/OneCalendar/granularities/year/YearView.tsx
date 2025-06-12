@@ -7,7 +7,7 @@ import {
   isWithinInterval,
   startOfYear,
 } from "date-fns"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { CalendarMode, DateRange } from "../../types"
 
 interface YearViewProps {

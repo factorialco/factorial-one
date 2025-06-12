@@ -11,7 +11,7 @@ import {
 import { useI18n } from "@/lib/providers/i18n"
 import { Button } from "@/ui/button"
 import { cva } from "cva"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, useState } from "react"
 import { EmojiImage } from "../../../../lib/emojis"
 import { BaseAvatar } from "../BaseAvatar"
