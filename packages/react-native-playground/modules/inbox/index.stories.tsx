@@ -29,9 +29,6 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-// Define categories
-const categories = ["Time Off", "Time Tracking", "Spending"];
-
 // Generate sample data with categories
 const categorizedSections: InboxSection[] = [
   {
@@ -116,18 +113,31 @@ const categorizedSections: InboxSection[] = [
   },
 ];
 
-// Helper to count items by category
-const getCategoryCount = (category: string) =>
-  categorizedSections.reduce(
+const getAvailableCategories = (sections: InboxSection[]): string[] => {
+  const set = new Set<string>();
+  sections.forEach((section) => {
+    section.data.forEach((item) => {
+      if (item.category) set.add(item.category);
+    });
+  });
+  return Array.from(set);
+};
+
+const getCategoryCount = (category: string, sections: InboxSection[]) =>
+  sections.reduce(
     (sum, section) =>
       sum + section.data.filter((item) => item.category === category).length,
     0,
   );
 
-const buildFilters = (selectedCategory: string | undefined): FilterOption[] =>
-  categories.map((cat) => ({
+const buildFilters = (
+  selectedCategory: string | undefined,
+  availableCategories: string[],
+  sections: InboxSection[],
+): FilterOption[] =>
+  availableCategories.map((cat) => ({
     label: cat,
-    number: getCategoryCount(cat),
+    number: getCategoryCount(cat, sections),
     selected: cat === selectedCategory,
   }));
 
@@ -135,17 +145,32 @@ const Template = (args: any) => {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(
     undefined,
   );
-  const filters = buildFilters(selectedCategory);
+
+  // Use args.sections if provided, otherwise use categorizedSections
+  const baseSections =
+    args.sections !== undefined ? args.sections : categorizedSections;
+
+  const availableCategories = getAvailableCategories(baseSections);
+
+  const sectionsToShow = selectedCategory
+    ? baseSections.filter((section: InboxSection) =>
+        section.data.some(
+          (item) => (item as any).category === selectedCategory,
+        ),
+      )
+    : baseSections;
+
+  // Always show filters if there are available categories
+  const filters =
+    availableCategories.length > 0
+      ? buildFilters(selectedCategory, availableCategories, baseSections)
+      : [];
+
   const handleFilterChange = (idx: number) => {
-    const cat = categories[idx];
+    const cat = availableCategories[idx];
     setSelectedCategory((prev) => (prev === cat ? undefined : cat));
   };
-  // If no category is selected, show all sections
-  const sectionsToShow = selectedCategory
-    ? categorizedSections.filter((section) =>
-        section.data.some((item) => item.category === selectedCategory),
-      )
-    : categorizedSections;
+
   return (
     <InboxView
       {...args}
@@ -158,10 +183,94 @@ const Template = (args: any) => {
 };
 
 export const Default: Story = {
+  args: {
+    title: "Inbox (Mixed Indicators)",
+    sections: [
+      {
+        id: "1",
+        title: "Today",
+        data: [
+          {
+            id: "a",
+            title: "Vacation Request",
+            description: "John Doe requested vacation.",
+            date: "01/01/2025",
+            firstName: "John",
+            lastName: "Doe",
+            src: "https://i.pravatar.cc/150",
+            category: "Time Off",
+            due: "Due in 2 days",
+            indicatorType: "navigate",
+          },
+          {
+            id: "b",
+            title: "Sick Leave",
+            description: "Jane Doe reported sick leave.",
+            date: "02/01/2025",
+            firstName: "Jane",
+            lastName: "Doe",
+            src: "https://i.pravatar.cc/150",
+            category: "Time Off",
+            due: "Due in 2 days",
+            indicatorType: "open_detail",
+          },
+        ],
+      },
+      {
+        id: "2",
+        title: "Last week",
+        data: [
+          {
+            id: "c",
+            title: "Missing Entry",
+            description: "John Doe missed a time entry.",
+            date: "03/01/2025",
+            firstName: "John",
+            lastName: "Doe",
+            src: "https://i.pravatar.cc/150",
+            category: "Time Tracking",
+            indicatorType: "not_actionable",
+          },
+        ],
+      },
+      {
+        id: "3",
+        title: "Last month",
+        data: [
+          {
+            id: "d",
+            title: "Expense Report",
+            description: "Jane Doe submitted an expense report.",
+            date: "04/01/2025",
+            firstName: "Jane",
+            lastName: "Doe",
+            src: "https://i.pravatar.cc/150",
+            category: "Spending",
+            indicatorType: "open_browser",
+          },
+          {
+            id: "e",
+            title: "Purchase Request",
+            description: "John Doe requested a purchase.",
+            date: "05/01/2025",
+            firstName: "John",
+            lastName: "Doe",
+            src: "https://i.pravatar.cc/150",
+            category: "Spending",
+            indicatorType: "navigate",
+          },
+        ],
+      },
+    ],
+    emptyState: emptyStateData,
+  },
   render: Template,
 };
 
 export const DefaultWithFilters: Story = {
+  args: {
+    sections: categorizedSections,
+  },
   render: Template,
 };
 
@@ -173,6 +282,58 @@ export const Empty: Story = {
   args: {
     title: "Inbox (Empty)",
     sections: [],
+    emptyState: emptyStateData,
+  },
+  render: Template,
+};
+
+export const WithNavigateIndicator: Story = {
+  args: {
+    title: "Inbox (Navigate Indicator)",
+    sections: [
+      {
+        id: "1",
+        title: "Today",
+        data: [
+          {
+            id: "a",
+            title: "Vacation Request",
+            description: "John Doe requested vacation.",
+            date: "01/01/2025",
+            firstName: "John",
+            lastName: "Doe",
+            src: "https://i.pravatar.cc/150",
+            indicatorType: "navigate",
+          },
+        ],
+      },
+    ],
+    emptyState: emptyStateData,
+  },
+  render: Template,
+};
+
+export const WithOpenBrowserIndicator: Story = {
+  args: {
+    title: "Inbox (Open Browser Indicator)",
+    sections: [
+      {
+        id: "1",
+        title: "Today",
+        data: [
+          {
+            id: "b",
+            title: "Expense Report",
+            description: "Jane Doe submitted an expense report.",
+            date: "04/01/2025",
+            firstName: "Jane",
+            lastName: "Doe",
+            src: "https://i.pravatar.cc/150",
+            indicatorType: "open_browser",
+          },
+        ],
+      },
+    ],
     emptyState: emptyStateData,
   },
   render: Template,

@@ -6,7 +6,7 @@ import { AlertTag } from "../../components/Tags/AlertTab";
 import { useState } from "react";
 import { cn } from "../../lib/utils";
 
-type IndicatorT =
+export type IndicatorT =
   | "open_detail"
   | "navigate"
   | "not_actionable"
@@ -21,10 +21,18 @@ type Props = {
   lastName: string;
   src?: string;
   onPress?: (id: string) => void;
-  indicator?: {
-    type: IndicatorT;
-  };
+  indicatorType?: IndicatorT;
   due?: string;
+};
+
+const indicatorIconMap: Record<
+  IndicatorT,
+  (typeof AppIcons)[keyof typeof AppIcons]
+> = {
+  navigate: AppIcons.ArrowRight,
+  open_detail: AppIcons.Maximize,
+  not_actionable: AppIcons.Laptop,
+  open_browser: AppIcons.Globe,
 };
 
 export const InboxCard = ({
@@ -36,7 +44,7 @@ export const InboxCard = ({
   firstName,
   lastName,
   onPress,
-  indicator,
+  indicatorType,
   due,
 }: Props) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -66,18 +74,7 @@ export const InboxCard = ({
           <Text className="line-clamp-2 text-base font-medium text-f1-foreground">
             {title}
           </Text>
-          {indicator?.type === "navigate" && (
-            <RawTag icon={AppIcons.ArrowRight} />
-          )}
-          {indicator?.type === "open_detail" && (
-            <RawTag icon={AppIcons.Maximize} />
-          )}
-          {indicator?.type === "not_actionable" && (
-            <RawTag icon={AppIcons.Laptop} />
-          )}
-          {indicator?.type === "open_browser" && (
-            <RawTag icon={AppIcons.Globe} />
-          )}
+          {indicatorType && <RawTag icon={indicatorIconMap[indicatorType]} />}
         </View>
         <Text className="font-regular line-clamp-2 text-base text-f1-foreground-secondary">
           {description}

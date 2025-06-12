@@ -1,7 +1,7 @@
 import { InboxList } from "./List";
 import { memo, useCallback } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { InboxCard } from "./Card";
+import { InboxCard, IndicatorT } from "./Card";
 import { ActionT, PageHeader } from "../../components/Navigation/PageHeader";
 import { EmptyStateT } from "./EmptyState";
 import { FilterOption, Filters } from "./Filters";
@@ -9,7 +9,6 @@ import { View } from "react-native";
 
 export type { FilterOption };
 
-// Sample data type for the list items
 type SampleListItem = {
   id: string;
   title: string;
@@ -21,6 +20,7 @@ type SampleListItem = {
   onPress?: (id: string) => void;
   category: string;
   due?: string;
+  indicatorType?: IndicatorT;
 };
 
 export type InboxSection = {
@@ -68,6 +68,7 @@ export const InboxView = memo(
             src={item.src}
             onPress={onPress}
             due={item.due}
+            indicatorType={item.indicatorType}
           />
         </View>
       ),
