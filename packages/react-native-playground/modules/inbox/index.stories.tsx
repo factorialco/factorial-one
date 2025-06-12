@@ -47,6 +47,7 @@ const categorizedSections: InboxSection[] = [
         lastName: "Doe",
         src: "https://i.pravatar.cc/150",
         category: "Time Off",
+        due: "Due in 2 days",
       },
       {
         id: "b",
@@ -57,6 +58,7 @@ const categorizedSections: InboxSection[] = [
         lastName: "Doe",
         src: "https://i.pravatar.cc/150",
         category: "Time Off",
+        due: "Due in 2 days",
       },
     ],
   },

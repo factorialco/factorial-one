@@ -6,7 +6,9 @@ import { ActionT, PageHeader } from "../../components/Navigation/PageHeader";
 import { EmptyStateT } from "./EmptyState";
 import { FilterOption, Filters } from "./Filters";
 import { View } from "react-native";
+
 export type { FilterOption };
+
 // Sample data type for the list items
 type SampleListItem = {
   id: string;
@@ -18,6 +20,7 @@ type SampleListItem = {
   date: string;
   onPress?: (id: string) => void;
   category: string;
+  due?: string;
 };
 
 export type InboxSection = {
@@ -64,6 +67,7 @@ export const InboxView = memo(
             lastName={item.lastName}
             src={item.src}
             onPress={onPress}
+            due={item.due}
           />
         </View>
       ),

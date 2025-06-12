@@ -6,6 +6,12 @@ import { AlertTag } from "../../components/Tags/AlertTab";
 import { useState } from "react";
 import { cn } from "../../lib/utils";
 
+type IndicatorT =
+  | "open_detail"
+  | "navigate"
+  | "not_actionable"
+  | "open_browser";
+
 type Props = {
   id: string;
   title: string;
@@ -15,6 +21,10 @@ type Props = {
   lastName: string;
   src?: string;
   onPress?: (id: string) => void;
+  indicator?: {
+    type: IndicatorT;
+  };
+  due?: string;
 };
 
 export const InboxCard = ({
@@ -26,8 +36,9 @@ export const InboxCard = ({
   firstName,
   lastName,
   onPress,
+  indicator,
+  due,
 }: Props) => {
-  const [randomFlag] = useState(Math.random() < 0.5);
   const [isPressed, setIsPressed] = useState(false);
 
   return (
@@ -50,15 +61,29 @@ export const InboxCard = ({
           size="medium"
         />
       </View>
-      <View className="flex-1 justify-between gap-1">
-        <Text className="line-clamp-2 text-base font-medium text-f1-foreground">
-          {title}
-        </Text>
+      <View className="flex-1 justify-between gap-1" pointerEvents="none">
+        <View className="flex-1 flex-row items-center justify-between">
+          <Text className="line-clamp-2 text-base font-medium text-f1-foreground">
+            {title}
+          </Text>
+          {indicator?.type === "navigate" && (
+            <RawTag icon={AppIcons.ArrowRight} />
+          )}
+          {indicator?.type === "open_detail" && (
+            <RawTag icon={AppIcons.Maximize} />
+          )}
+          {indicator?.type === "not_actionable" && (
+            <RawTag icon={AppIcons.Laptop} />
+          )}
+          {indicator?.type === "open_browser" && (
+            <RawTag icon={AppIcons.Globe} />
+          )}
+        </View>
         <Text className="font-regular line-clamp-2 text-base text-f1-foreground-secondary">
           {description}
         </Text>
         <View className="flex-row gap-2">
-          {randomFlag && <AlertTag level="warning" text={"Due in 2 days"} />}
+          {due && <AlertTag level="warning" text={due} />}
           <RawTag icon={AppIcons.CalendarArrowRight} text={date} />
         </View>
       </View>
