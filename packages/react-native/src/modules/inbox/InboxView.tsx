@@ -83,6 +83,7 @@ export const InboxView = memo(
       },
     ];
 
+    // Filtering logic: flatten all items, filter by category, regroup by section
     let filteredSections = sections;
     if (category) {
       filteredSections = sections
