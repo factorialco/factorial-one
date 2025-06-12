@@ -8,7 +8,7 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { Skeleton } from "@/ui/skeleton"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { useEffect } from "react"
 import { Spinner } from "../../../../Information/Spinner"
 import type { FiltersDefinition } from "../../../Filters/types"
@@ -188,7 +188,10 @@ export const ListCollection = <
           data.groups.map((group) => {
             const itemCount = group.itemCount
             return (
-              <div className="flex flex-col gap-0 pt-2 first:pt-0">
+              <div
+                className="flex flex-col gap-0 pt-2 first:pt-0"
+                key={`group-header-${group.key}`}
+              >
                 <GroupHeader
                   key={`group-header-${group.key}`}
                   className="cursor-pointer select-none rounded-md px-6 py-3 transition-colors hover:bg-f1-background-hover"
