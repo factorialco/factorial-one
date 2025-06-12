@@ -7,12 +7,12 @@ exports[`DateAvatar Snapshot 1`] = `
   <Text
     className="pt-0.5 text-xs font-semibold uppercase leading-3 text-f1-special-highlight dark:text-f1-foreground-inverse-secondary"
   >
-    Jun
+    Jan
   </Text>
   <Text
     className="flex items-center justify-center text-lg font-medium leading-tight text-f1-foreground"
   >
-    6
+    1
   </Text>
 </View>
 `;
