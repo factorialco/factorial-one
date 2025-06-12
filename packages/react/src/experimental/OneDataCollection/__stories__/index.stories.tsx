@@ -11,7 +11,7 @@ import {
   Target,
   Upload,
 } from "@/icons/app"
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"

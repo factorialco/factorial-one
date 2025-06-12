@@ -1,6 +1,6 @@
 import { Search } from "@/icons/app"
 import { Input } from "@/ui/input"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useEffect, useState } from "react"
 import { InFilter } from "./InFilter"
 import type { InFilterOptionItem } from "./types"

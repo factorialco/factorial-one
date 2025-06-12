@@ -1,9 +1,9 @@
-import type { Meta } from "@storybook/react"
+import type { Meta } from "@storybook/react-vite"
 
 import { Plus } from "@/icons/app"
-import { expect, fn, userEvent, within } from "@storybook/test"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { ComponentProps, useState } from "react"
+import { expect, fn, userEvent, within } from "storybook/test"
 import { RawTag } from "../../Information/Tags/RawTag"
 import { famousEmployees } from "./entity-select-name.factory"
 import {
@@ -418,7 +418,7 @@ export const AlwaysOpenInForm = {
     }
 
     return (
-      <form onSubmit={fn}>
+      <form onSubmit={() => fn()}>
         <EntitySelect
           {...props}
           singleSelector={false}
@@ -633,7 +633,7 @@ export const HiddenAvatar = {
     }
 
     return (
-      <form onSubmit={fn}>
+      <form onSubmit={() => fn()}>
         <EntitySelect
           {...props}
           singleSelector={false}
@@ -679,7 +679,7 @@ export const WithActions = {
     }
 
     return (
-      <form onSubmit={fn}>
+      <form onSubmit={() => fn()}>
         <EntitySelect
           {...props}
           groups={[{ label: "All", value: "all", groupType: "team" }]}

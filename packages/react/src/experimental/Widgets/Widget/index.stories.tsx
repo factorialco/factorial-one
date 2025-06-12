@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import Pencil from "@/icons/app/Pencil"
 import { Placeholder } from "@/lib/storybook-utils/placeholder"
-import { fn } from "@storybook/test"
 import { ComponentProps } from "react"
+import { fn } from "storybook/test"
 import { Widget } from "./index"
 
 const meta: Meta = {
