@@ -1,4 +1,4 @@
-import { composeStory } from "@storybook/react"
+import { composeStory } from "@storybook/react-vite"
 import { render, screen } from "@testing-library/react"
 import { userEvent } from "storybook/test"
 import { describe, expect, test, vi } from "vitest"

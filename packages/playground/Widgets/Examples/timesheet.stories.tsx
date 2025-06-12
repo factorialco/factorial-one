@@ -1,7 +1,7 @@
 import { CategoryBarSection } from "~/packages/react/experimental/Widgets/Content/CategoryBarSection";
 import { Widget } from "~/packages/react/experimental/Widgets/Widget";
 import { WidgetSection } from "~/packages/react/experimental/Widgets/WidgetSection";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta = {
   title: "Insights/Examples/Timesheet",

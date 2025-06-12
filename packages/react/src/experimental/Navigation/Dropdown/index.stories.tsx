@@ -46,7 +46,49 @@ export const Default: Story = {
       },
     ],
   },
+}
+
+export const PlayTest: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+    a11y: {
+      skipCi: true,
+      disable: true, // as the play test uses body storybook container, it will be marked as an issues
+    },
+  },
+  args: {
+    items: [
+      {
+        label: "Create",
+        onClick: () => console.log("Create clicked"),
+        icon: Icons.Add,
+        description: "New creation process",
+        "data-test": "foo",
+      },
+      {
+        label: "Edit",
+        onClick: () => console.log("Edit clicked"),
+        icon: Icons.Pencil,
+        description: "Edit item's information",
+      },
+      {
+        label: "Save",
+        onClick: () => console.log("Save clicked"),
+        icon: Icons.Save,
+        description: "Preserve changes",
+      },
+      { type: "separator" },
+      {
+        label: "Delete",
+        onClick: () => console.log("Delete clicked"),
+        description: "Remove item",
+        critical: true,
+        icon: Icons.Delete,
+      },
+    ],
+  },
   play: async ({ canvasElement }) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     // Search the full page because the popup is rendered in a portal, outside the story canvas
     const page = within(canvasElement.closest("body")!)
 

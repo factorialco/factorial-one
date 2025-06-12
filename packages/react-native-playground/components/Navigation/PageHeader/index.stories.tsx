@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, View, Text } from "react-native";
-import type { Meta, StoryFn } from "@storybook/react-vite";
+import type { Meta, StoryFn } from "@storybook/react";
 import { PageHeader } from "@factorialco/factorial-one-react-native";
 
 const meta: Meta<typeof PageHeader> = {

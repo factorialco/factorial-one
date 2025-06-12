@@ -4,9 +4,11 @@ import {
   PalmTree as PalmTreeIcon,
 } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { subDays } from "date-fns"
+import { addSeconds, subDays } from "date-fns"
+import MockDate from "mockdate"
 import { ActivityItemList } from "./index"
 
+const mockDate = new Date(2024, 3, 1)
 const meta: Meta<typeof ActivityItemList> = {
   decorators: [
     (Story) => (
@@ -15,12 +17,21 @@ const meta: Meta<typeof ActivityItemList> = {
       </div>
     ),
   ],
+  async beforeEach() {
+    MockDate.set(mockDate)
+
+    // 👇 Reset the Date after each story
+    return () => {
+      MockDate.reset()
+    }
+  },
+
   component: ActivityItemList,
   title: "Information/Activity/ActivityItemList",
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs", "experimental", "no-sidebar"],
+  tags: ["autodocs", "experimental", "internal"],
 }
 
 export default meta
@@ -41,7 +52,7 @@ const ITEMS = new Array(10).fill(null).map((_, index) => ({
     return icons[index % icons.length]
   })(),
   createdAt: (() => {
-    const today = new Date()
+    const today = addSeconds(mockDate, 10)
 
     const groups = [
       today, // today

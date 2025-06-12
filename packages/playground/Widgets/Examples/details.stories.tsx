@@ -7,7 +7,7 @@ import {
   DetailsItemType,
 } from "~/packages/react/experimental/PageLayouts/Utils/DetailsItem";
 import { Weekdays } from "~/packages/react/experimental/Widgets/Content/Weekdays";
-import { Meta, StoryObj } from "@storybook/react-vite";
+import { Meta, StoryObj } from "@storybook/react";
 import { ComponentProps } from "react";
 
 const meta: Meta = {

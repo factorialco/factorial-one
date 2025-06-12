@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Text } from "react-native";
 import { TextInput } from "react-native";
 import { TouchableOpacity } from "react-native";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   Icon,
   AppIcons,

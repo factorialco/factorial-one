@@ -9,7 +9,7 @@ import {
   PersonAvatar,
 } from "@factorialco/factorial-one-react-native";
 import { Check } from "@factorialco/factorial-one-react-native/src/icons/app";
-import type { Meta, StoryFn } from "@storybook/react-vite";
+import type { Meta, StoryFn } from "@storybook/react";
 import { icons } from "lucide-react-native";
 import { ScrollView, View, Text } from "react-native";
 

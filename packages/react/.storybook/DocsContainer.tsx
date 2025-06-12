@@ -6,7 +6,7 @@ import {
 } from "@storybook/addon-docs/blocks"
 import { addons } from "storybook/preview-api"
 import { FC, PropsWithChildren, useEffect, useState } from "react"
-import { DARK_MODE_EVENT_NAME } from "storybook-dark-mode"
+import { DARK_MODE_EVENT_NAME } from "@vueless/storybook-dark-mode"
 import lightTheme, { darkTheme } from "./FactorialOne.ts"
 import { DOCS_RENDERED } from "storybook/internal/core-events"
 import {

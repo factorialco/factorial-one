@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { Meta, StoryObj } from "@storybook/react";
 import { CompanyAvatar } from "@factorialco/factorial-one-react-native";
 import { Check } from "@factorialco/factorial-one-react-native/src/icons/app";
 

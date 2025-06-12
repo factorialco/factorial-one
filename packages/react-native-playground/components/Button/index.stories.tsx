@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, View, Text } from "react-native";
-import type { StoryFn } from "@storybook/react-vite";
+import type { StoryFn } from "@storybook/react";
 import { Button } from "@factorialco/factorial-one-react-native";
 import { AppIcons } from "@factorialco/factorial-one-react-native";
 

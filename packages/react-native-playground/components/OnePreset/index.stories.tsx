@@ -1,4 +1,4 @@
-import type { StoryFn } from "@storybook/react-vite";
+import type { StoryFn } from "@storybook/react";
 import { OnePreset } from "@factorialco/factorial-one-react-native";
 import { ScrollView, View, Text } from "react-native";
 import { useState } from "react";

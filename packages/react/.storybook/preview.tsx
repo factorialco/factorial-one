@@ -1,7 +1,7 @@
 // organize-imports-ignore
 import React, { useState } from "react"
 import { INITIAL_VIEWPORTS } from "storybook/viewport"
-import type { Preview } from "@storybook/react"
+import type { Preview } from "@storybook/react-vite"
 
 import { action } from "storybook/actions"
 import { MotionGlobalConfig } from "motion/react"
