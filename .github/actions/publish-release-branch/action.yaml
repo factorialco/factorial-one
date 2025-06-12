@@ -27,7 +27,7 @@ runs:
         cd ${{ inputs.directory }}
 
         # Replace workspace:* dependencies with latest
-        echo "Updating dependencies: Replace `workspace:*` with `latest`"
+        echo "Updating dependencies: Replace 'workspace:*' with 'latest'"
         sed -i 's/"workspace:\*"/"latest"/g' package.json
 
         # # Get current version from package.json
@@ -43,8 +43,10 @@ runs:
 
         echo "Adding all changes"
         git add -A
+
         echo "Committing changes"
-        git commit -m "chore: update dependencies"
+        # If nothing to commit, skip
+        git commit -m "chore: update dependencies" || echo "No changes to commit. Continuing..."
 
         echo "Publishing branch"
         # Publish alpha version
