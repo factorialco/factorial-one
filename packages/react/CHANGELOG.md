@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.93.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.3...factorial-one-react-v1.93.0) (2025-06-12)
+
+
+### Features
+
+* Onclick dropdown footer ([#2064](https://github.com/factorialco/factorial-one/issues/2064)) ([00f6b3f](https://github.com/factorialco/factorial-one/commit/00f6b3f40d0ca98429bb5a73d20136a63abcf466))
+
+## [1.92.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.2...factorial-one-react-v1.92.3) (2025-06-11)
+
+
+### Bug Fixes
+
+* whitespace prewrap added to add wrapping and avoid issues when pre code block is added ([#2053](https://github.com/factorialco/factorial-one/issues/2053)) ([3099da6](https://github.com/factorialco/factorial-one/commit/3099da62c880efacb5a564ce847454a4bdb2732f))
+
+## [1.92.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.1...factorial-one-react-v1.92.2) (2025-06-11)
+
+
+### Bug Fixes
+
+* **DataCollection:** display tooltip with info icon & custom icon ([#2051](https://github.com/factorialco/factorial-one/issues/2051)) ([18725e0](https://github.com/factorialco/factorial-one/commit/18725e00619081289e62d7bb5e9b17aafbac3c13))
+
+## [1.92.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.0...factorial-one-react-v1.92.1) (2025-06-11)
+
+
+### Bug Fixes
+
+* update modules to icon map ([#2050](https://github.com/factorialco/factorial-one/issues/2050)) ([aa8bdf9](https://github.com/factorialco/factorial-one/commit/aa8bdf96e701bab4bdd337c5a5d7b5abcfcc31c1))
+
 ## [1.92.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.91.0...factorial-one-react-v1.92.0) (2025-06-11)
 
 

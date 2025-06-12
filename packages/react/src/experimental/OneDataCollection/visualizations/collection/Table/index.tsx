@@ -15,7 +15,7 @@ import {
   TableRow,
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
@@ -52,7 +52,10 @@ export type TableColumnDefinition<
   R extends RecordType,
   Sortings extends SortingsDefinition,
 > = WithOptionalSorting<R, Sortings> &
-  Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">
+  Pick<
+    ComponentProps<typeof TableHead>,
+    "hidden" | "info" | "infoIcon" | "sticky" | "width"
+  >
 
 export type TableVisualizationOptions<
   R extends RecordType,

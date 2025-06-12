@@ -9,7 +9,7 @@ import {
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { Skeleton } from "@/ui/skeleton"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useMemo } from "react"
 import { useI18n } from "../../../../../lib/providers/i18n"
 import { OnePagination } from "../../../../OnePagination"

@@ -2,7 +2,7 @@ import { Icon } from "@/factorial-one"
 import { Ai, ChevronRight } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Input } from "@/ui/input"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import React, { useEffect, useRef, useState } from "react"
 import { EnhancementOption } from "../../utils/types"
 
