@@ -630,7 +630,11 @@ export function createDataAdapter<
     records: TRecord[],
     filters: FiltersState<TFilters>,
     sortingsState: SortingsState<TSortings>,
-    pagination?: { currentPage?: number; perPage?: number; cursor?: number }
+    pagination?: {
+      currentPage?: number
+      perPage?: number
+      cursor?: string | null
+    }
   ): TRecord[] | PaginatedResponse<TRecord> => {
     let filteredRecords = [...records]
 
@@ -727,15 +731,18 @@ export function createDataAdapter<
 
       const cursor = "cursor" in pagination ? pagination.cursor : 0
 
-      const nextCursor = cursor ? cursor + pageSize : pageSize
+      const nextCursor = cursor ? Number(cursor) + pageSize : pageSize
 
-      const paginatedRecords = filteredRecords.slice(cursor, nextCursor)
+      const paginatedRecords = filteredRecords.slice(
+        Number(cursor) || 0,
+        nextCursor
+      )
 
       return {
         type: "infinite-scroll" as const, // Use const assertion to help TypeScript
         records: paginatedRecords,
         total: filteredRecords.length,
-        cursor: nextCursor,
+        cursor: String(nextCursor),
         perPage: pageSize,
         hasMore: nextCursor < filteredRecords.length,
       }
