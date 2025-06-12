@@ -264,8 +264,8 @@ export function useData<
               "cursor" in result && result.cursor !== undefined
                 ? result.cursor
                 : appendMode
-                  ? result.perPage
-                  : 0,
+                  ? String(result.perPage)
+                  : "0",
             hasMore:
               "hasMore" in result
                 ? result.hasMore
@@ -322,13 +322,26 @@ export function useData<
 
   type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
 
+  // Define a type for the fetch parameters to make the function more maintainable
+  type FetchDataParams<
+    Filters extends FiltersDefinition,
+    NavigationFilters extends NavigationFiltersDefinition,
+  > = {
+    filters: FiltersState<Filters>
+    currentPage?: number
+    navigationFilters: NavigationFiltersState<NavigationFilters>
+    appendMode?: boolean
+    cursor?: string | null
+  }
+
   const fetchDataAndUpdate = useCallback(
-    async (
-      filters: FiltersState<Filters>,
+    async ({
+      filters,
       currentPage = 1,
-      navigationFilters: NavigationFiltersState<NavigationFilters>,
-      appendMode = false
-    ) => {
+      navigationFilters,
+      appendMode = false,
+      cursor = null,
+    }: FetchDataParams<Filters, NavigationFilters>) => {
       try {
         // Clean up any existing subscription before creating a new one
         if (cleanup.current) {
@@ -359,17 +372,19 @@ export function useData<
               ? dataAdapter.perPage
               : defaultPerPage
 
-          // In useData.ts, in the fetchDataAndUpdate function
-          return dataAdapter.paginationType === "pages"
-            ? dataAdapter.fetchData({
-                ...baseFetchOptions,
-                pagination: { currentPage, perPage: perPageValue },
-              })
-            : dataAdapter.fetchData({
-                ...baseFetchOptions,
-                // Use the currentPage parameter as the cursor for infinite scroll
-                pagination: { cursor: currentPage, perPage: perPageValue },
-              })
+          // Use appropriate pagination type based on dataAdapter configuration
+          if (dataAdapter.paginationType === "pages") {
+            return dataAdapter.fetchData({
+              ...baseFetchOptions,
+              pagination: { currentPage, perPage: perPageValue },
+            })
+          } else {
+            // For infinite scroll, use the cursor parameter directly
+            return dataAdapter.fetchData({
+              ...baseFetchOptions,
+              pagination: { cursor, perPage: perPageValue },
+            })
+          }
         }
 
         const result = fetcher()
@@ -415,6 +430,7 @@ export function useData<
     ]
   )
 
+  // In setPage function
   const setPage = useCallback(
     (page: number) => {
       // Return early if not page-based pagination or trying to set the same page
@@ -426,7 +442,12 @@ export function useData<
       }
 
       setIsLoading(true)
-      fetchDataAndUpdate(mergedFilters, page, currentNavigationFilters)
+      // Use named parameters with currentPage
+      fetchDataAndUpdate({
+        filters: mergedFilters,
+        currentPage: page,
+        navigationFilters: currentNavigationFilters,
+      })
     },
     [
       fetchDataAndUpdate,
@@ -443,6 +464,7 @@ export function useData<
     return pagination !== null && pagination.type === "infinite-scroll"
   }
 
+  // In loadMore function
   const loadMore = useCallback(() => {
     if (!paginationInfo || isLoading) return
 
@@ -454,18 +476,20 @@ export function useData<
     }
 
     if (paginationInfo.hasMore) {
-      const currentCursor = paginationInfo.cursor ?? 0
+      // Extract the cursor from paginationInfo
+      const currentCursor = paginationInfo.cursor
 
       setIsLoadingMore(true)
       setIsLoading(true)
       isLoadingMoreRef.current = true
 
-      fetchDataAndUpdate(
-        mergedFilters,
-        currentCursor,
-        currentNavigationFilters,
-        true
-      )
+      // Use named parameters
+      fetchDataAndUpdate({
+        filters: mergedFilters,
+        navigationFilters: currentNavigationFilters,
+        appendMode: true,
+        cursor: currentCursor,
+      })
     }
   }, [
     fetchDataAndUpdate,
@@ -483,11 +507,12 @@ export function useData<
       // Explicitly pass 0 as the initial position for infinite scroll
       const initialPosition =
         dataAdapter.paginationType === "infinite-scroll" ? 0 : 1
-      fetchDataAndUpdate(
-        mergedFilters,
-        initialPosition,
-        currentNavigationFilters
-      )
+      fetchDataAndUpdate({
+        filters: mergedFilters,
+        currentPage: initialPosition,
+        navigationFilters: currentNavigationFilters,
+        cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
+      })
     }
 
     return () => {
