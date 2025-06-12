@@ -9,7 +9,7 @@ import { ChevronDown, ChevronLeft, ChevronUp, Menu } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { ReactElement, useRef } from "react"
 
 import { Breadcrumbs, BreadcrumbsProps } from "../Breadcrumbs"

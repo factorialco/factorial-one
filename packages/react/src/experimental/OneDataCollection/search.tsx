@@ -3,7 +3,7 @@ import {
   LayoutGroup,
   motion,
   MotionConfig,
-} from "framer-motion"
+} from "motion/react"
 import { useId, useRef, useState } from "react"
 import { useOnClickOutside } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
