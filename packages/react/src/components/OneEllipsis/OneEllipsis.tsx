@@ -15,6 +15,7 @@ const checkForEllipsis = (element: HTMLElement | null, lines: number) => {
     return element.scrollHeight > lineHeight * lines
   }
   // For single line, check if content width exceeds container width
+  console.log(element.scrollWidth, element.clientWidth)
   return element.scrollWidth > element.clientWidth
 }
 
@@ -79,6 +80,7 @@ type OneEllipsisProps = {
   className?: string
   lines?: number
   children: string
+  tag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span"
 }
 
 const OneEllipsis = forwardRef<HTMLDivElement, OneEllipsisProps>(
@@ -108,7 +110,7 @@ const OneEllipsis = forwardRef<HTMLDivElement, OneEllipsisProps>(
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <span>{Text}</span>
+            <span className="overflow-hidden">{Text}</span>
           </TooltipTrigger>
           <TooltipContent className="max-w-xl">{children}</TooltipContent>
         </Tooltip>

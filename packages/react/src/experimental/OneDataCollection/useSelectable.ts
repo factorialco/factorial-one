@@ -282,8 +282,8 @@ export function useSelectable<
   const areAllKnownItemsSelected = useMemo(
     () =>
       (paginationInfo && selectedCount === paginationInfo.total) ||
-      (!paginationInfo && selectedCount === data.records.length),
-    [paginationInfo, selectedCount, data.records.length]
+      (!paginationInfo && selectedCount === data.records?.length),
+    [paginationInfo, selectedCount, data.records?.length]
   )
 
   const isAllSelected = useMemo(
@@ -347,7 +347,7 @@ export function useSelectable<
 
   useEffect(() => {
     // Notify the parent component about the selected items
-    const totalItems = paginationInfo?.total ?? data.records.length
+    const totalItems = paginationInfo?.total ?? (data.records?.length || 0)
 
     const selectedItemsCount = allSelectedCheck
       ? totalItems - unselectedCount
@@ -387,7 +387,7 @@ export function useSelectable<
     groupsState,
     groupAllSelectedStatus,
     paginationInfo?.total,
-    data.records.length,
+    data.records?.length,
   ])
 
   return {

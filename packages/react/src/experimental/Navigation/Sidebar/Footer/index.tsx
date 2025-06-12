@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/Button"
+import { OneEllipsis } from "@/components/OneEllipsis"
 import { Badge } from "@/experimental/exports"
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
@@ -34,11 +35,11 @@ export function SidebarFooter({
 
   return (
     <div className="flex flex-row items-center justify-between gap-1 p-3">
-      <div className="flex-1">
+      <div className="min-w-0 flex-1">
         <Dropdown items={options}>
           <button
             className={cn(
-              "flex w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary data-[state=open]:bg-f1-background-secondary",
+              "flex w-full max-w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary data-[state=open]:bg-f1-background-secondary",
               focusRing("focus-visible:ring-inset")
             )}
             onClick={onDropdownClick}
@@ -49,9 +50,7 @@ export function SidebarFooter({
               lastName={user.lastName}
               size="xsmall"
             />
-            <span className="line-clamp-1 flex-1 text-left text-f1-foreground">
-              {user.firstName} {user.lastName}
-            </span>
+            <OneEllipsis>{`${user.firstName} ${user.lastName}`}</OneEllipsis>
           </button>
         </Dropdown>
       </div>

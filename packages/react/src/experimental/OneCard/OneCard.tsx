@@ -135,7 +135,10 @@ export function OneCard({
       {link && (
         <Link
           href={link}
-          className={cn("absolute inset-0 z-0 block rounded-xl", focusRing())}
+          style={{
+            zIndex: 1,
+          }}
+          className={cn("z-1 absolute inset-0 block rounded-xl", focusRing())}
           aria-label={title}
         />
       )}

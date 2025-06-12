@@ -16,7 +16,7 @@ export const Default: Story = {
   args: {
     user: {
       firstName: "Dani",
-      lastName: "Moreno",
+      lastName: "Moreno Frontend kind of long name",
       avatarUrl: "https://github.com/dani-moreno.png",
     },
     showActivityButton: true,

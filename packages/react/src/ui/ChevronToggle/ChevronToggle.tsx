@@ -8,6 +8,7 @@ export type ChevronToggleProps = {
   className?: string
   onClick?: () => void
   disabled?: boolean
+  size?: "xs" | "sm"
 }
 
 export const ChevronToggle = ({
@@ -15,20 +16,21 @@ export const ChevronToggle = ({
   className,
   onClick,
   disabled,
+  size = "xs",
 }: ChevronToggleProps) => {
   return (
     <motion.div
       animate={{ rotate: open ? 180 : 0 }}
       transition={{ duration: 0.2 }}
       className={cn(
-        "flex h-3 w-3 shrink-0 items-center justify-center text-f1-icon-bold",
+        "flex h-3 w-3 shrink-0 items-center justify-center",
         disabled && "cursor-not-allowed opacity-50",
 
         className
       )}
       onClick={onClick}
     >
-      <Icon icon={ChevronDown} size="xs" role="button" />
+      <Icon icon={ChevronDown} size={size} role="button" />
     </motion.div>
   )
 }
