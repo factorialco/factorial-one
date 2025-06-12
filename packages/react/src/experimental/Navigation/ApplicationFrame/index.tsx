@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, MotionConfig } from "framer-motion"
+import { AnimatePresence, motion, MotionConfig } from "motion/react"
 import { cn, focusRing } from "../../../lib/utils"
 
 import { useReducedMotion } from "../../../lib/a11y"
