@@ -1,3 +1,4 @@
+import { experimentalComponent } from "@/lib/experimental"
 import {
   ChartContainer,
   ChartLegend,
@@ -77,4 +78,9 @@ export const _RadarChart = <K extends ChartConfig>(
   )
 }
 
-export const RadarChart = fixedForwardRef(_RadarChart)
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+export const RadarChart = fixedForwardRef(
+  experimentalComponent<typeof _RadarChart>("RadarChart", _RadarChart)
+)

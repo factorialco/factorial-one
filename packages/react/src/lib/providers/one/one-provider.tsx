@@ -76,6 +76,7 @@ export const FactorialOneProvider: React.FC<{
   i18n: Omit<I18nProviderProps, "children">
   l10n: Omit<L10nProviderProps, "children">
   isDev?: boolean
+  showExperimentalWarnings?: boolean
 }> = ({
   children,
   layout,
@@ -85,10 +86,14 @@ export const FactorialOneProvider: React.FC<{
   i18n,
   l10n,
   isDev = false,
+  showExperimentalWarnings = false,
 }) => {
   return (
     <MotionProvider>
-      <UserPlatformProvider isDev={isDev}>
+      <UserPlatformProvider
+        isDev={isDev}
+        showExperimentalWarnings={showExperimentalWarnings}
+      >
         <L10nProvider {...l10n}>
           <I18nProvider {...i18n}>
             <LinkProvider {...link}>
