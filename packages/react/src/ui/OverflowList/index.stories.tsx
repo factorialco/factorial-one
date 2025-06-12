@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { Icon } from "../../components/Utilities/Icon"

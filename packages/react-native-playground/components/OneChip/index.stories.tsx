@@ -1,5 +1,5 @@
 import { OneChip } from "@factorialco/factorial-one-react-native";
-import type { Meta, StoryFn, StoryObj } from "@storybook/react";
+import type { Meta, StoryFn, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 import { AppIcons } from "@factorialco/factorial-one-react-native";
 import { View } from "react-native";

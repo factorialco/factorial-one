@@ -3,12 +3,12 @@ import React from "react"
 import {
   DocsContainer as BaseContainer,
   DocsContainerProps,
-} from "@storybook/blocks"
-import { addons } from "@storybook/preview-api"
+} from "@storybook/addon-docs/blocks"
+import { addons } from "storybook/preview-api"
 import { FC, PropsWithChildren, useEffect, useState } from "react"
 import { DARK_MODE_EVENT_NAME } from "storybook-dark-mode"
 import lightTheme, { darkTheme } from "./FactorialOne.ts"
-import { DOCS_RENDERED } from "@storybook/core-events"
+import { DOCS_RENDERED } from "storybook/internal/core-events"
 import {
   Alert,
   AlertDescription,

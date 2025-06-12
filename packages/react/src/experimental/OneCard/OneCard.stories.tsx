@@ -9,9 +9,9 @@ import {
   Office,
   Star,
 } from "@/icons/app"
-import type { Meta, StoryObj } from "@storybook/react"
-import { fn } from "@storybook/test"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
+import { fn } from "storybook/test"
 import cat from "../../../storybook-assets/cat.jpeg"
 import { OneCard } from "./OneCard"
 

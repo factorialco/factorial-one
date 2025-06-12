@@ -1,5 +1,5 @@
 import { FileAvatar } from "@factorialco/factorial-one-react-native";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { View } from "react-native";
 
 const meta = {

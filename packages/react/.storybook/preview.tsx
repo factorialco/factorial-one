@@ -1,8 +1,8 @@
 // organize-imports-ignore
 import React, { useState } from "react"
-import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
+import { INITIAL_VIEWPORTS } from "storybook/viewport"
 import type { Preview } from "@storybook/react"
-import { action } from "@storybook/addon-actions"
+import { action } from "storybook/actions"
 import { MotionGlobalConfig } from "framer-motion"
 import isChromatic from "chromatic/isChromatic"
 

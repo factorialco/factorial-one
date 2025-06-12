@@ -1,6 +1,6 @@
 import React from "react";
 import { ScrollView, View, Text } from "react-native";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   ActivityItem,
   ActivityItemSkeleton,

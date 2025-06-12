@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { subDays } from "date-fns"
 import { CalendarView, DateRange } from "../../OneCalendar/types"
 import { OneDatePicker } from "../OneDatePicker"

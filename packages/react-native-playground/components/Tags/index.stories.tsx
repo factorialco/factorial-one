@@ -5,7 +5,7 @@ import {
   AppIcons,
   RawTag,
 } from "@factorialco/factorial-one-react-native";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { ScrollView, View, Text } from "react-native";
 
 const meta: Meta = {
