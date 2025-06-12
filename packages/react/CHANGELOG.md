@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.93.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.93.0...factorial-one-react-v1.93.1) (2025-06-12)
+
+
+### Bug Fixes
+
+* **header:** stop playing favorite button animation on initial render ([#2071](https://github.com/factorialco/factorial-one/issues/2071)) ([675d8aa](https://github.com/factorialco/factorial-one/commit/675d8aa0e7c81d0e69595920fd7ef228a8b5e7a4))
+
 ## [1.93.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.3...factorial-one-react-v1.93.0) (2025-06-12)
 
 
