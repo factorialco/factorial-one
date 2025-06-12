@@ -10,7 +10,7 @@ export const SectionHeader = ({
   count: number;
 }) => {
   return (
-    <View className="flex-row items-center justify-start gap-2 px-4 pb-2 pt-3">
+    <View className="flex-row items-center justify-start gap-2 px-5 py-3">
       <Text className="text-base font-semibold text-f1-foreground">
         {capitalize(title)}
       </Text>
