@@ -2,7 +2,7 @@ import { Icon } from "@/components/Utilities/Icon"
 import Star from "@/icons/app/Star"
 import StarFilled from "@/icons/app/StarFilled"
 import { cn, focusRing } from "@/lib/utils"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 
 const IconMotion = motion.create(Icon)
 

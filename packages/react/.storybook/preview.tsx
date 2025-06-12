@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
-import { MotionGlobalConfig } from "framer-motion"
+import { MotionGlobalConfig } from "motion/react"
 import isChromatic from "chromatic/isChromatic"
 
 import "../src/styles.css"

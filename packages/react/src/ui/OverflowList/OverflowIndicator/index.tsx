@@ -2,7 +2,7 @@ import { Icon } from "@/components/Utilities/Icon"
 import { ChevronDown } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { FC } from "react"
 
 const IconMotion = motion.create(Icon)

@@ -1,6 +1,6 @@
 import { useL10n } from "@/lib/providers/l10n"
 import { Calendar } from "@/ui/calendar"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import {
   SelectRangeEventHandler,
   SelectSingleEventHandler,
