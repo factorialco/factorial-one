@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/ui/scrollarea"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { ReactElement, ReactNode, cloneElement, isValidElement } from "react"
 import { useIntersectionObserver } from "usehooks-ts"
 import { useReducedMotion } from "../../../lib/a11y"
