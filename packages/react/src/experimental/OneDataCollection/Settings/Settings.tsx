@@ -86,6 +86,10 @@ export const Settings = <
     onGroupingChange(grouping)
   }
 
+  const hasVisualizations = visualizations && visualizations.length > 1
+  const hasGrouping = grouping && groupByOptions > 0
+  const hasSortings = sortings && Object.keys(sortings).length > 0
+
   return (
     shouldShowSettings && (
       <div className="flex gap-2">
@@ -98,41 +102,49 @@ export const Settings = <
               onClick={() => {}}
               hideLabel
               round
+              pressed={open}
             />
           </PopoverTrigger>
           <PopoverContent
-            className="w-[280px] rounded-md border border-solid border-f1-border-secondary p-2"
+            className="flex w-[280px] flex-col gap-0 rounded-md border border-solid border-f1-border-secondary p-0"
             align="end"
             sideOffset={8}
-            alignOffset={-6}
           >
-            {visualizations && visualizations.length > 1 && (
-              <div className="mb-2">
+            {[
+              hasVisualizations && (
                 <VisualizationSelector
+                  key="visualization"
                   visualizations={visualizations}
                   currentVisualization={currentVisualization}
                   onVisualizationChange={handleVisualizationChange}
                 />
-              </div>
-            )}
-            {grouping && groupByOptions > 0 && (
-              <div className="mb-2">
+              ),
+              hasGrouping && (
                 <GroupingSelector
+                  key="grouping"
                   grouping={grouping}
                   currentGrouping={currentGrouping}
                   onGroupingChange={handleGroupingChange}
                 />
-              </div>
-            )}
-            {sortings && Object.keys(sortings).length > 0 && (
-              <div className="mb-2">
+              ),
+              hasSortings && (
                 <SortingSelector
+                  key="sorting"
                   currentSortings={currentSortings}
                   onChange={onSortingsChange}
                   sortings={sortings}
                 />
-              </div>
-            )}
+              ),
+            ]
+              .filter(Boolean)
+              .map((block, index, array) => (
+                <div key={index}>
+                  {block}
+                  {index < array.length - 1 && (
+                    <div className="h-px w-full bg-f1-border-secondary" />
+                  )}
+                </div>
+              ))}
           </PopoverContent>
         </Popover>
       </div>

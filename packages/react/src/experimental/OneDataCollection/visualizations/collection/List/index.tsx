@@ -153,8 +153,8 @@ export const ListCollection = <
 
   return (
     <>
-      <div className="flex flex-row items-center gap-2 px-4 py-2">
-        {source.selectable && (
+      {source.selectable && (
+        <div className="flex flex-row items-center gap-2 px-4 py-2">
           <Checkbox
             checked={allSelectedStatus.checked}
             indeterminate={allSelectedStatus.indeterminate}
@@ -162,8 +162,8 @@ export const ListCollection = <
             disabled={isLoading}
             title="[TODO] Select all"
           />
-        )}
-      </div>
+        </div>
+      )}
       <div
         className={cn(
           "relative",
