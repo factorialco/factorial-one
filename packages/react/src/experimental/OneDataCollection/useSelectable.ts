@@ -4,9 +4,9 @@ import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import type { SortingsDefinition } from "./sortings"
 import {
+  BasePaginatedResponse,
   DataSource,
   OnSelectItemsCallback,
-  PaginationInfo,
   RecordType,
 } from "./types"
 
@@ -26,7 +26,7 @@ export function useSelectable<
   NavigationFilters extends NavigationFiltersDefinition,
 >(
   data: ReadonlyArray<Record>,
-  paginationInfo: PaginationInfo | null,
+  paginationInfo: BasePaginatedResponse<Record> | null,
   source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>,
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
 ): UseSelectable<Record> {

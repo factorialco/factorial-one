@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.13.1...factorial-one-react-native-v0.14.0) (2025-06-12)
+
+
+### Features
+
+* remove unused separator ([#2073](https://github.com/factorialco/factorial-one/issues/2073)) ([af53065](https://github.com/factorialco/factorial-one/commit/af5306513a91e927a478d9299a333a5bc7849646))
+
 ## [0.13.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.13.0...factorial-one-react-native-v0.13.1) (2025-06-06)
 
 
