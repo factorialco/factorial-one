@@ -33,8 +33,10 @@ const defaultArgs: EntitySelectProps = {
   clearLabel: "Clear",
   selectedLabel: "selected",
   notFoundTitle: "No results found",
+  onCreate: fn(),
+  onCreateLabel: "Create new user",
+  notFoundSubtitle: "Try searching with a different term or create a new user.",
   disabled: false,
-  notFoundSubtitle: "Try searching with a different term.",
   groups: [
     { label: "None", value: "all", type: "avatar" },
     { label: "Team", value: "teams", type: "team" },
@@ -695,63 +697,6 @@ export const WithActions = {
           selectedGroup={"all"}
           selectedEntities={selected ? [selected] : []}
           onSelect={(selection: EntitySelectEntity | null) => {
-            setSelected(selection)
-          }}
-        />
-      </form>
-    )
-  },
-}
-
-export const WithCreate = {
-  args: {
-    ...defaultArgs,
-    onCreate: fn(),
-    onCreateLabel: "Create new user",
-    notFoundSubtitle:
-      "Try searching with a different term or create a new user.",
-  },
-
-  render: (props: ComponentProps<typeof EntitySelect>) => {
-    const [expandedElements, setExpandedElements] = useState<EntityId[]>([])
-    const [selected, setSelected] = useState<EntitySelectEntity[]>([
-      {
-        ...famousEmployees[0],
-      },
-      { ...famousEmployees[1] },
-    ])
-    const [selectedGroup, setSelectedGroup] = useState<string>(
-      props.selectedGroup ?? "all"
-    )
-
-    const onItemExpandedChange = (id: EntityId, expanded: boolean) => {
-      if (expanded) {
-        setExpandedElements([id].concat(expandedElements))
-      } else {
-        setExpandedElements(expandedElements.filter((el) => el !== id))
-      }
-    }
-
-    return (
-      <form onSubmit={() => fn()}>
-        <EntitySelect
-          {...props}
-          singleSelector={false}
-          onItemExpandedChange={onItemExpandedChange}
-          entities={
-            GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA].map((el) => ({
-              ...el,
-              expanded: expandedElements.includes(el.id),
-              subItems: el.subItems?.map((el2) => ({ ...el2 })),
-            })) || []
-          }
-          selectedGroup={selectedGroup}
-          onGroupChange={(value) => {
-            setSelected([])
-            setSelectedGroup(value ?? "all")
-          }}
-          selectedEntities={selected}
-          onSelect={(selection: EntitySelectEntity[]) => {
             setSelected(selection)
           }}
         />
