@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
-import avatar from "../../../../storybook-assets/avatar.jpeg"
 import { Check, Placeholder } from "../../../icons/app"
 import { OnePersonListItem } from "./index"
+import avatar from "/avatars/person03.jpg"
 
 const meta = {
   title: "List/OnePersonListItem",

@@ -17,7 +17,7 @@ export const Default: Story = {
     user: {
       firstName: "Dani",
       lastName: "Moreno Frontend kind of long name",
-      avatarUrl: "https://github.com/dani-moreno.png",
+      avatarUrl: "/avatars/person04.jpg",
     },
     showActivityButton: true,
     hasActivityUpdates: true,

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
-import avatar from "../../../../storybook-assets/avatar.jpeg"
 import { EntitySelect } from "./index"
 import { EntityId, EntitySelectEntity } from "./types"
+import avatar from "/avatars/person01.jpg"
 
 // --------------------------------------
 // EXAMPLE GRAPHQL COMMENT BLOCK

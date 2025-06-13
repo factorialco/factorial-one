@@ -121,7 +121,7 @@ export const WithCustomTrigger: Story = {
     <Dropdown {...args}>
       <button aria-label="Open user menu">
         <PersonAvatar
-          src="https://github.com/dani-moreno.png"
+          src="/avatars/person04.jpg"
           firstName="Dani"
           lastName="Moreno"
           size="large"
@@ -172,7 +172,7 @@ export const WithAvatars: Story = {
           type: "person",
           firstName: "Josep Jaume",
           lastName: "Rey",
-          src: "https://github.com/josepjaume.png",
+          src: "/avatars/person02.jpg",
           "aria-label": "Josep Jaume Rey avatar",
         },
       },
@@ -182,7 +182,7 @@ export const WithAvatars: Story = {
           type: "person",
           firstName: "Nik",
           lastName: "Lopin",
-          src: "https://github.com/nlopin.png",
+          src: "/avatars/person07.jpg",
           "aria-label": "Nik Lopin avatar",
         },
       },
@@ -192,7 +192,7 @@ export const WithAvatars: Story = {
           type: "person",
           firstName: "Saúl",
           lastName: "Domínguez",
-          src: "https://github.com/sauldom102.png",
+          src: "/avatars/person05.jpg",
           "aria-label": "Saúl Domínguez avatar",
         },
       },
