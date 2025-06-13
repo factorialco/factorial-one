@@ -33,6 +33,7 @@ const meta: Meta<typeof PersonAvatarExample> = {
     size: "medium",
     hasBadge: false,
   },
+  /*
   decorators: [
     (Story, context) => {
       const { hasBadge, ...args } = context.args
@@ -41,7 +42,7 @@ const meta: Meta<typeof PersonAvatarExample> = {
         : undefined
       return <Story args={{ ...args, badge: badgeProps }} />
     },
-  ],
+  ],*/
 } satisfies Meta<typeof PersonAvatarExample>
 
 export default meta
@@ -63,5 +64,14 @@ export const WithBadge: Story = {
       icon: Check,
     },
     size: "medium",
+  },
+}
+
+export const WithModuleBadge: Story = {
+  args: {
+    badge: {
+      type: "module",
+      module: "my_trainings" as const,
+    },
   },
 }
