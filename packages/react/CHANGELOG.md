@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.96.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.96.0...factorial-one-react-v1.96.1) (2025-06-13)
+
+
+### Bug Fixes
+
+* update BasicTextEditor styles for improved scrolling behavior ([#2086](https://github.com/factorialco/factorial-one/issues/2086)) ([a6b4316](https://github.com/factorialco/factorial-one/commit/a6b43160be4743e2ca3e970cf4a9428defbcded0))
+
 ## [1.96.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.2...factorial-one-react-v1.96.0) (2025-06-13)
 
 
