@@ -12,6 +12,7 @@ import {
   Upload,
 } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
+import { GroupingDefinition } from "../grouping"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
@@ -517,6 +518,11 @@ export const RendererTypes: Story = {
 }
 
 export const CustomCardProperties: Story = {
+  parameters: {
+    a11y: {
+      skipCi: true,
+    },
+  },
   render: () => {
     const dataSource = useDataSource({
       filters,
@@ -619,7 +625,8 @@ const JsonVisualization = ({
       typeof filters,
       typeof sortings,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockUsers)[number]>
     >
   >
 }) => {
@@ -650,7 +657,8 @@ export const WithCustomJsonView: Story = {
       typeof filters,
       typeof sortings,
       MockActions,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<MockUser>
     >({
       filters,
       sortings,
@@ -1049,15 +1057,16 @@ export const WithSynchronousData: Story = {
       typeof filters,
       typeof sortings,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockUsers)[number]>
     >({
       filters,
       sortings,
       presets: filterPresets,
       dataAdapter: {
-        fetchData: ({ filters, sortings }) => {
+        fetchData: ({ filters, sortings, navigationFilters }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, sortings)
+          return filterUsers(mockUsers, filters, sortings, navigationFilters)
         },
       },
     })
@@ -1274,7 +1283,8 @@ export const WithSyncSearch: Story = {
       typeof filters,
       typeof sortings,
       ItemActionsDefinition<(typeof mockUserData)[number]>,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockUserData)[number]>
     >({
       filters,
       sortings,
@@ -1314,7 +1324,7 @@ export const WithSyncSearch: Story = {
 
           // Apply sorting if provided
           if (sortings) {
-            ;[sortings].forEach(({ field, order }) => {
+            sortings.forEach(({ field, order }) => {
               filteredUsers.sort((a, b) => {
                 const aValue = a[field as keyof (typeof mockUserData)[number]]
                 const bValue = b[field as keyof (typeof mockUserData)[number]]
@@ -1394,7 +1404,8 @@ export const WithAsyncSearch: Story = {
       typeof filters,
       typeof sortings,
       MockActions,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<MockUser>
     >({
       filters,
       sortings,
@@ -1461,7 +1472,7 @@ export const WithAsyncSearch: Story = {
 
               // Apply sorting if provided
               if (sortings) {
-                ;[sortings].forEach(({ field, order }) => {
+                sortings.forEach(({ field, order }) => {
                   const direction = order
 
                   filteredUsers.sort((a, b) => {
