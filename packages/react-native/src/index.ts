@@ -9,7 +9,7 @@ export * from "./components/OnePreset";
 export * from "./components/Tags/exports";
 export * from "./components/OneChip";
 export * from "./components/Navigation/PageHeader";
-export * from "./components/Tags/exports";
+export * from "./components/Navigation/TopNav";
 
 // Export icons
 export * from "./icons";
