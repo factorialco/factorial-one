@@ -33,10 +33,10 @@ const getAvatarSize = (
       ModuleAvatarProps["size"]
     >
   > = {
-    xlarge: "lg",
-    large: "md",
-    small: "sm",
-    xsmall: "xs",
+    xlarge: "md",
+    large: "sm",
+    small: "xs",
+    xsmall: "xxs",
   } as const
 
   return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
@@ -82,7 +82,17 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
       <div className="relative inline-flex">
         <div
           className="h-fit w-fit"
-          style={badge ? { clipPath: getMask.get(type, size) } : undefined}
+          style={
+            badge
+              ? {
+                  clipPath: getMask.get(
+                    type === "rounded" ? "rounded" : "base",
+                    size,
+                    badge.type === "module" ? "module" : "default"
+                  ),
+                }
+              : undefined
+          }
         >
           <AvatarComponent
             size={size}
@@ -109,9 +119,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
         {badge && (
           <div className="absolute -bottom-0.5 -right-0.5">
             {badge.type === "module" && (
-              <div className="drop-shadow-[0_10px_0_rgba(255,255,255,1)]">
-                <ModuleAvatar module={badge.module} size={moduleAvatarSize} />
-              </div>
+              <ModuleAvatar module={badge.module} size={moduleAvatarSize} />
             )}
             {badge.type !== "module" && (
               <Badge type={badge.type} icon={badge.icon} size={badgeSize} />
