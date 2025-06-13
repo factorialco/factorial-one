@@ -99,10 +99,15 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
         overflowItems: items,
       })
     } else {
-      setItemsState({
-        visibleItems: items.slice(0, visibleCount),
-        overflowItems: items.slice(visibleCount),
-      })
+      setItemsState((prev) =>
+        prev.visibleItems.length === visibleCount &&
+        prev.overflowItems.length === items.length - visibleCount
+          ? prev
+          : {
+              visibleItems: items.slice(0, visibleCount),
+              overflowItems: items.slice(visibleCount),
+            }
+      )
     }
   }, [items, measureItemSizes, calculateVisibleItemCount])
 
@@ -148,6 +153,12 @@ interface OverflowListProps<T> {
    * @default 0
    */
   minSize: number
+
+  /**
+   * Callback when the visible items change
+   * @param visibleItems - The visible items
+   */
+  onVisibleItemsChange?: (visibleItems: T[]) => void
 }
 
 const VerticalOverflowList = function VerticalOverflowList<T>({
@@ -156,9 +167,14 @@ const VerticalOverflowList = function VerticalOverflowList<T>({
   className,
   gap = 0,
   minSize,
+  onVisibleItemsChange,
 }: OverflowListProps<T>) {
   const { containerRef, measurementContainerRef, visibleItems } =
     useOverflowCalculation(items, gap)
+
+  useEffect(() => {
+    onVisibleItemsChange?.(visibleItems)
+  }, [onVisibleItemsChange, visibleItems])
 
   return (
     <div

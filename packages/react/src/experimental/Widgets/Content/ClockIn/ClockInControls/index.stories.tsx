@@ -3,7 +3,7 @@ import {
   Office as OfficeIcon,
   Suitcase as SuitcaseIcon,
 } from "@/icons/app"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { ClockInControls } from "./index"
 
 const defaultLabels = {

@@ -6,11 +6,13 @@ import {
   FiltersState,
   GroupingDefinition,
   GroupingState,
+  InfiniteScrollPaginatedResponse,
   ItemActionsDefinition,
   OnBulkActionCallback,
   OneDataCollection,
   OnSelectItemsCallback,
   PaginatedResponse,
+  PaginationType,
   PresetsDefinition,
   RecordType,
   SortingsStateMultiple,
@@ -602,7 +604,7 @@ interface DataAdapterOptions<TRecord> {
   data: TRecord[]
   delay?: number
   useObservable?: boolean
-  paginationType?: "pages"
+  paginationType?: PaginationType
   perPage?: number
 }
 
@@ -630,7 +632,11 @@ export function createDataAdapter<
     records: TRecord[],
     filters: FiltersState<TFilters>,
     sortingsState: SortingsStateMultiple,
-    pagination?: { currentPage?: number; perPage?: number }
+    pagination?: {
+      currentPage?: number
+      perPage?: number
+      cursor?: string | null
+    }
   ): TRecord[] | PaginatedResponse<TRecord> => {
     let filteredRecords = [...records]
 
@@ -715,14 +721,34 @@ export function createDataAdapter<
       )
 
       return {
+        type: "pages",
         records: paginatedRecords,
         total: filteredRecords.length,
         currentPage,
         perPage: pageSize,
         pagesCount: Math.ceil(filteredRecords.length / pageSize),
       }
-    }
+    } else if (pagination && paginationType === "infinite-scroll") {
+      const pageSize = pagination.perPage || perPage
 
+      const cursor = "cursor" in pagination ? pagination.cursor : null
+
+      const nextCursor = cursor ? Number(cursor) + pageSize : pageSize
+
+      const paginatedRecords = filteredRecords.slice(
+        Number(cursor) || 0,
+        nextCursor
+      )
+
+      return {
+        type: "infinite-scroll" as const, // Use const assertion to help TypeScript
+        records: paginatedRecords,
+        total: filteredRecords.length,
+        cursor: String(nextCursor),
+        perPage: pageSize,
+        hasMore: nextCursor < filteredRecords.length,
+      }
+    }
     return filteredRecords
   }
 
@@ -781,6 +807,69 @@ export function createDataAdapter<
                   pagination
                 ) as PaginatedResponse<TRecord>
               )
+            } catch (error) {
+              reject(error)
+            }
+          }, delay)
+        })
+      },
+    }
+
+    return adapter
+  } else if (paginationType === "infinite-scroll") {
+    const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
+      paginationType: "infinite-scroll",
+      perPage,
+      fetchData: ({ filters, sortings, pagination }) => {
+        if (useObservable) {
+          return new Observable<PromiseState<PaginatedResponse<TRecord>>>(
+            (observer) => {
+              observer.next({
+                loading: true,
+                error: null,
+                data: null,
+              })
+
+              setTimeout(() => {
+                const fetch = () =>
+                  filterData(
+                    data,
+                    filters,
+                    sortings,
+                    pagination
+                  ) as InfiniteScrollPaginatedResponse<TRecord>
+
+                try {
+                  observer.next({
+                    loading: false,
+                    error: null,
+                    data: fetch(),
+                  })
+                  observer.complete()
+                } catch (error) {
+                  observer.next({
+                    loading: false,
+                    error:
+                      error instanceof Error ? error : new Error(String(error)),
+                    data: null,
+                  })
+                  observer.complete()
+                }
+              }, delay)
+            }
+          )
+        }
+
+        return new Promise<PaginatedResponse<TRecord>>((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              const result = filterData(
+                data,
+                filters,
+                sortings,
+                pagination
+              ) as InfiniteScrollPaginatedResponse<TRecord>
+              resolve(result)
             } catch (error) {
               reject(error)
             }

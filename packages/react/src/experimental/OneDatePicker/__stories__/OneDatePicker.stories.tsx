@@ -1,13 +1,23 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { subDays } from "date-fns"
+import MockDate from "mockdate"
 import { CalendarView, DateRange } from "../../OneCalendar/types"
 import { OneDatePicker } from "../OneDatePicker"
 import { predefinedPresets } from "../presets"
 import { DatePickerValue } from "../types"
 
+const mockDate = new Date(2025, 6, 30)
 const meta = {
   title: "DatePicker",
   component: OneDatePicker,
+  async beforeEach() {
+    MockDate.set(mockDate)
+
+    // 👇 Reset the Date after each story
+    return () => {
+      MockDate.reset()
+    }
+  },
   parameters: {
     docs: {
       description: {
@@ -30,7 +40,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const today = new Date(2025, 6, 30)
+const today = mockDate
 const presets = [
   predefinedPresets.today,
   predefinedPresets.lastWeek,

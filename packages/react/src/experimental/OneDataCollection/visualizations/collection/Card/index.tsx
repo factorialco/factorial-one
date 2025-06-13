@@ -11,8 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useMemo } from "react"
-import { useI18n } from "../../../../../lib/providers/i18n"
-import { OnePagination } from "../../../../OnePagination"
+import { PagesPagination } from "../../../components/PagesPagination"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
@@ -213,8 +212,6 @@ export const CardCollection = <
   Grouping,
   CardVisualizationOptions<Record, Filters, Sortings>
 >) => {
-  const t = useI18n()
-
   // We override the perPage to ensure it's always a multiple of 2, 3, and 4
   // This ensures the cards are always aligned in a grid regardless of the
   // screen size (2 columns on sm, 3 on lg, 4 on xl)
@@ -308,6 +305,7 @@ export const CardCollection = <
               return (
                 <>
                   <GroupHeader
+                    className="p-4"
                     label={group.label}
                     itemCount={group.itemCount}
                     onOpenChange={(open) => setGroupOpen(group.key, open)}
@@ -356,23 +354,7 @@ export const CardCollection = <
           )}
         </>
       )}
-      {paginationInfo && (
-        <div className="flex w-full items-center justify-between px-6 pt-4">
-          <span className="shrink-0 text-f1-foreground-secondary">
-            {`${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
-              paginationInfo.currentPage * paginationInfo.perPage,
-              paginationInfo.total
-            )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
-          </span>
-          <div className="flex items-center">
-            <OnePagination
-              totalPages={paginationInfo.pagesCount}
-              currentPage={paginationInfo.currentPage}
-              onPageChange={setPage}
-            />
-          </div>
-        </div>
-      )}
+      <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
     </>
   )
 }

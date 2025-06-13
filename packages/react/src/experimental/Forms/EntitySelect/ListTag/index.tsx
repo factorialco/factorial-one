@@ -22,7 +22,7 @@ export const ListTag = ({
         className={cn(
           "max-w-54 w-fit gap-1 text-ellipsis break-all border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]",
           "rounded-full",
-          hiddenAvatar ? "pl-2" : "pl-1"
+          hiddenAvatar ? "pl-2" : "pl-0"
         )}
         left={
           !hiddenAvatar && (
