@@ -41,7 +41,7 @@ const ExtensionsConfiguration = ({
     TextStyleExtension,
     ColorExtension,
     TypographyExtension,
-    HighlightExtension,
+    ...(plainHtmlMode ? [HighlightExtension] : []),
     TextAlignExtension,
     LinkExtension,
     PersistSelection,
