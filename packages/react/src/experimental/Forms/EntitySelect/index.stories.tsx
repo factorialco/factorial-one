@@ -547,7 +547,7 @@ export const WithSearch = {
     const noResultsTitle = popoverContent.getByText("No results found")
     expect(noResultsTitle).toBeInTheDocument()
     const noResultsSubtitle = popoverContent.getByText(
-      "Try searching with a different term."
+      "Try searching with a different term or create a new user."
     )
     expect(noResultsSubtitle).toBeInTheDocument()
 
