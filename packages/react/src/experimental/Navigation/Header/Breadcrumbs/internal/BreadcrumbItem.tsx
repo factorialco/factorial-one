@@ -1,3 +1,4 @@
+import { IconType } from "@/components/Utilities/Icon"
 import { ModuleAvatar, ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { BreadcrumbSelect } from "@/experimental/Navigation/Header"
 import { BreadcrumbSkeleton } from "@/experimental/Navigation/Header/Breadcrumbs/internal/BreadcrumbSkeleton"
@@ -66,13 +67,18 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
         )}
         transition={{ duration: 0.15 }}
       >
-        {!isLoading && (module || icon) && (isOnly || isFirst) && (
-          <ModuleAvatar
-            // TODO remove icon when the prop will be deprecated
-            {...(icon ? { icon } : { module: module as ModuleId })}
-            size={isOnly ? "lg" : "sm"}
-          />
-        )}
+        {!isLoading &&
+          (("module" in item && item.module) ||
+            ("icon" in item && item.icon)) &&
+          (isOnly || isFirst) && (
+            <ModuleAvatar
+              // TODO remove icon when the prop will be deprecated
+              {...(icon
+                ? { icon: icon as unknown as IconType }
+                : { module: module as ModuleId })}
+              size={isOnly ? "lg" : "sm"}
+            />
+          )}
         <span className="truncate">
           {!isLoading && "label" in item ? item.label : ""}
         </span>

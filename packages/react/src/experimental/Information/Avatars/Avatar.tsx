@@ -26,8 +26,8 @@ export const Avatar = ({
         <PersonAvatar
           firstName={avatar.firstName}
           lastName={avatar.lastName}
-          src={avatar.src}
           badge={avatar.badge}
+          src={avatar.src}
           size={size}
           aria-label={avatar["aria-label"]}
           aria-labelledby={avatar["aria-labelledby"]}
@@ -38,8 +38,8 @@ export const Avatar = ({
         <TeamAvatar
           name={avatar.name}
           src={avatar.src}
-          size={size}
           badge={avatar.badge}
+          size={size}
           aria-label={avatar["aria-label"]}
           aria-labelledby={avatar["aria-labelledby"]}
         />
@@ -49,8 +49,8 @@ export const Avatar = ({
         <CompanyAvatar
           name={avatar.name}
           src={avatar.src}
-          size={size}
           badge={avatar.badge}
+          size={size}
           aria-label={avatar["aria-label"]}
           aria-labelledby={avatar["aria-labelledby"]}
         />

@@ -32,7 +32,7 @@ const statusTagVariants: Record<Status, "neutral" | "positive" | "critical"> = {
   rejected: "critical",
 }
 
-const badgeMap: Record<"approved" | "rejected", BadgeProps> = {
+const badgeMap: Record<"approved" | "rejected", Required<BadgeProps>> = {
   approved: {
     icon: CheckIcon,
     type: "positive",
@@ -45,7 +45,7 @@ const badgeMap: Record<"approved" | "rejected", BadgeProps> = {
   },
 }
 
-const defaultBadge: BadgeProps = {
+const defaultBadge: Required<BadgeProps> = {
   icon: QuestionIcon,
   type: "neutral",
   size: "sm",
@@ -59,7 +59,7 @@ const badgePriority: Record<NonNullable<BadgeProps["type"]>, number> = {
   neutral: 0,
 }
 
-const getAvatarBadge = (status: Status): BadgeProps => {
+const getAvatarBadge = (status: Status): Required<BadgeProps> => {
   return status in badgeMap
     ? badgeMap[status as keyof typeof badgeMap]
     : defaultBadge

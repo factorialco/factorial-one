@@ -1,3 +1,4 @@
+import { AvatarBadge } from "@/experimental/exports"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
@@ -6,7 +7,6 @@ import React from "react"
 import { Button } from "../../../components/Actions/Button"
 import { Icon, IconType } from "../../../components/Utilities/Icon"
 import { InfoCircle } from "../../../icons/app"
-import { BadgeProps } from "../../exports"
 import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 import { DotTag, DotTagProps } from "../../Information/Tags/DotTag"
 import { RawTag, RawTagProps } from "../../Information/Tags/RawTag"
@@ -16,7 +16,7 @@ export type OnePersonListItemProps = {
     firstName: string
     lastName: string
     avatarUrl?: string
-    avatarBadge?: Omit<BadgeProps, "size">
+    avatarBadge?: AvatarBadge
   }
   description?: string
   bottomTags: Omit<RawTagProps, "noBorder">[]

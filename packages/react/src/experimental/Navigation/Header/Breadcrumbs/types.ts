@@ -15,16 +15,11 @@ type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
   loading: true
 }
 
-type BreadcrumbNavItemType = BreadcrumbBaseItemType &
-  (
-    | {
-        module?: ModuleId
-      }
-    | {
-        // @deprecated This property will be removed soon. Use the `module` property instead.
-        icon?: IconType
-      }
-  )
+type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
+  module?: ModuleId
+  // @deprecated This property will be removed soon. Use the `module` property instead.
+  icon?: IconType
+}
 
 type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   type: "select"

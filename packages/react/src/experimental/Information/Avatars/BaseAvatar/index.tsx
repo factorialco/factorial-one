@@ -5,6 +5,8 @@ import {
 } from "@/ui/avatar"
 import { ComponentProps, forwardRef } from "react"
 import { Badge, BadgeProps } from "../../Badge"
+import { ModuleAvatar, ModuleAvatarProps } from "../../ModuleAvatar"
+import { AvatarBadge } from "../types"
 import { getAvatarColor, getInitials, getMask } from "./utils"
 
 const getBadgeSize = (
@@ -22,6 +24,24 @@ const getBadgeSize = (
   return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
 }
 
+const getAvatarSize = (
+  size: ShadAvatarProps["size"]
+): ModuleAvatarProps["size"] | undefined => {
+  const sizeMap: Partial<
+    Record<
+      Exclude<ShadAvatarProps["size"], undefined>,
+      ModuleAvatarProps["size"]
+    >
+  > = {
+    xlarge: "md",
+    large: "sm",
+    small: "xs",
+    xsmall: "xxs",
+  } as const
+
+  return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
+}
+
 type ShadAvatarProps = ComponentProps<typeof AvatarComponent>
 
 type Props = {
@@ -30,7 +50,7 @@ type Props = {
   src?: string
   size?: ShadAvatarProps["size"]
   color?: ShadAvatarProps["color"] | "random"
-  badge?: BadgeProps
+  badge?: AvatarBadge
 } & Pick<ShadAvatarProps, "aria-label" | "aria-labelledby">
 
 export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
@@ -55,11 +75,24 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
 
     const hasAria = Boolean(ariaLabel || ariaLabelledby)
 
+    const badgeSize = getBadgeSize(size)
+    const moduleAvatarSize = getAvatarSize(size)
+
     return (
       <div className="relative inline-flex">
         <div
           className="h-fit w-fit"
-          style={badge ? { clipPath: getMask.get(type, size) } : undefined}
+          style={
+            badge
+              ? {
+                  clipPath: getMask.get(
+                    type === "rounded" ? "rounded" : "base",
+                    size,
+                    badge.type === "module" ? "module" : "default"
+                  ),
+                }
+              : undefined
+          }
         >
           <AvatarComponent
             size={size}
@@ -85,11 +118,12 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
         </div>
         {badge && (
           <div className="absolute -bottom-0.5 -right-0.5">
-            <Badge
-              type={badge.type}
-              icon={badge.icon}
-              size={getBadgeSize(size)}
-            />
+            {badge.type === "module" && (
+              <ModuleAvatar module={badge.module} size={moduleAvatarSize} />
+            )}
+            {badge.type !== "module" && (
+              <Badge type={badge.type} icon={badge.icon} size={badgeSize} />
+            )}
           </div>
         )}
       </div>
