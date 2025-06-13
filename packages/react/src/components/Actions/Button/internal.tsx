@@ -3,6 +3,7 @@ import { Button as ShadcnButton } from "@/ui/button"
 import { EmojiImage } from "@/lib/emojis.tsx"
 import { cn } from "@/lib/utils"
 import { cva } from "cva"
+import { motion } from "motion/react"
 import { ComponentProps, forwardRef, useState } from "react"
 import { Icon, IconType } from "../../Utilities/Icon"
 
@@ -102,6 +103,17 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
       }
     }
 
+    const loadingVariants = cva({
+      base: "rounded-full border-solid border-f1-foreground-inverse border-t-transparent will-change-transform",
+      variants: {
+        size: {
+          sm: "h-3 w-3 border-[1px]",
+          md: "h-4 w-4 border-2",
+          lg: "h-5 w-5 border-2",
+        },
+      },
+    })
+
     return (
       <ShadcnButton
         title={hideLabel ? label : undefined}
@@ -112,25 +124,44 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
         size={size}
         round={hideLabel}
         appendButton={appendButton}
-        className={className}
+        className={cn(className, "relative")}
         {...props}
+        aria-busy={forceLoading}
       >
-        {icon && (
-          <Icon
-            size={size === "sm" ? "sm" : "md"}
-            icon={icon}
-            className={
-              hideLabel
-                ? iconOnlyVariants({ variant })
-                : iconVariants({ variant })
-            }
-          />
+        {forceLoading && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div
+              className={cn(loadingVariants({ size }))}
+              animate={{ rotate: 360 }}
+              transition={{
+                duration: 1,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              aria-label="Loading..."
+            />
+          </div>
         )}
-        {emoji && (
-          <EmojiImage emoji={emoji} size={size === "sm" ? "sm" : "md"} />
-        )}
-        <span className={cn(hideLabel && "sr-only")}>{label}</span>
-        {append}
+        <div
+          className={cn(forceLoading && "invisible", "flex items-center gap-1")}
+        >
+          {icon && (
+            <Icon
+              size={size === "sm" ? "sm" : "md"}
+              icon={icon}
+              className={
+                hideLabel
+                  ? iconOnlyVariants({ variant })
+                  : iconVariants({ variant })
+              }
+            />
+          )}
+          {emoji && (
+            <EmojiImage emoji={emoji} size={size === "sm" ? "sm" : "md"} />
+          )}
+          <span className={cn(hideLabel && "sr-only")}>{label}</span>
+          {append}
+        </div>
       </ShadcnButton>
     )
   }
