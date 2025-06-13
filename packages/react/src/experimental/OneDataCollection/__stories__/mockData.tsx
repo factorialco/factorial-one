@@ -729,7 +729,7 @@ export function createDataAdapter<
     } else if (pagination && paginationType === "infinite-scroll") {
       const pageSize = pagination.perPage || perPage
 
-      const cursor = "cursor" in pagination ? pagination.cursor : 0
+      const cursor = "cursor" in pagination ? pagination.cursor : null
 
       const nextCursor = cursor ? Number(cursor) + pageSize : pageSize
 
