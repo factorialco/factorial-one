@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.96.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.2...factorial-one-react-v1.96.0) (2025-06-13)
+
+
+### Features
+
+* **datacollection:** grouping ([#1661](https://github.com/factorialco/factorial-one/issues/1661)) ([5785b90](https://github.com/factorialco/factorial-one/commit/5785b9067ae20cd8fb8a8bc238bfc908ea851ed7))
+
 ## [1.95.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.1...factorial-one-react-v1.95.2) (2025-06-13)
 
 
