@@ -103,27 +103,90 @@ export type PresetsDefinition<Filters extends FiltersDefinition> =
 export type BaseResponse<Record> = Record[]
 
 /**
- * Information about the current pagination state
+ * Defines the available pagination types used throughout the application.
+ * - "pages": Represents traditional page-based navigation with numbered pages.
+ * - "infinite-scroll": Represents continuous loading of content as the user scrolls.
  */
-export type PaginationInfo = {
+export type PaginationType = "pages" | "infinite-scroll"
+
+/**
+ * Represents a base structure for paginated API responses, providing
+ * details about the records on the current page and pagination metadata.
+ *
+ * @template TRecord The type of each record in the paginated response.
+ *
+ * @property {TRecord[]} records The list of records for the current page.
+ * @property {number} total The total number of records available.
+ * @property {number} perPage The number of records displayed per page.
+ */
+export type BasePaginatedResponse<TRecord> = {
+  /** The records for the current page */
+  records: TRecord[]
   /** Total number of records available */
   total: number
-  /** Current page number (1-indexed) */
-  currentPage: number
   /** Number of records per page */
   perPage: number
-  /** Total number of pages available */
-  pagesCount: number
 }
+
+/**
+ * Represents a paginated response with page-based navigation.
+ *
+ * Combines the base pagination response with additional properties specific to
+ * page-based pagination, allowing clients to navigate the dataset using page numbers.
+ *
+ * This type is useful for APIs returning data in discrete pages, where both the
+ * current page index and the total number of pages are provided.
+ *
+ * @template TRecord - The type of the individual records in the dataset.
+ *
+ * @property {"pages"} type - Indicates the pagination type is page-based.
+ * @property {number} currentPage - The index of the current page being viewed.
+ * @property {number} pagesCount - The total number of pages available.
+ */
+export type PageBasedPaginatedResponse<TRecord> =
+  BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "pages">
+    /** Current page number (1-indexed) */
+    currentPage: number
+    /** Total number of pages available */
+    pagesCount: number
+  }
+
+/**
+ * Represents a paginated response structure tailored for infinite scroll implementations.
+ *
+ * @template TRecord The type of the individual record contained in the paginated response.
+ *
+ * @extends BasePaginatedResponse
+ *
+ * @property {"infinite-scroll"} type Identifies the pagination type as "infinite-scroll".
+ * @property {string | null} cursor The current position cursor used to fetch the next set of records.
+ * @property {boolean} hasMore Indicates whether there are additional records available for loading.
+ */
+export type InfiniteScrollPaginatedResponse<TRecord> =
+  BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "infinite-scroll">
+    /**
+     * Represents the current position cursor for pagination.
+     * This is typically a string (often Base64-encoded) that represents
+     * the position of the last item in the current result set.
+     * Used to fetch the next page of results.
+     */
+    cursor: string | null
+    /**
+     * A boolean flag indicating whether there are more items available for fetching.
+     * Used to determine if additional requests should be made for pagination.
+     */
+    hasMore: boolean
+  }
 
 /**
  * Response type for paginated collection data
  * @template Record - The type of records in the collection
  */
-export type PaginatedResponse<Record> = {
-  /** The records for the current page */
-  records: Record[]
-} & PaginationInfo
+export type PaginatedResponse<TRecord> =
+  | PageBasedPaginatedResponse<TRecord>
+  | InfiniteScrollPaginatedResponse<TRecord>
 
 /**
  * Base options for data fetching
@@ -141,17 +204,18 @@ export type BaseFetchOptions<
   navigationFilters?: NavigationFiltersState<NavigationFilters>
 }
 
-/**
- * Options for paginated data fetching
- * @template Filters - The available filter configurations
- */
+// Update PaginatedFetchOptions to handle both pagination types
 export type PaginatedFetchOptions<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
 > = BaseFetchOptions<Filters, Sortings, NavigationFilters> & {
-  /** Pagination configuration */
-  pagination: { currentPage: number; perPage: number }
+  pagination: {
+    perPage?: number // Common to both
+  } & (
+    | { currentPage: number; cursor?: never }
+    | { cursor?: string | null; currentPage?: never }
+  )
 }
 
 /**
@@ -192,7 +256,7 @@ export type PaginatedDataAdapter<
   NavigationFilters extends NavigationFiltersDefinition,
 > = {
   /** Indicates this adapter uses page-based pagination */
-  paginationType: "pages"
+  paginationType: PaginationType
   /** Default number of records per page */
   perPage?: number
   /**
