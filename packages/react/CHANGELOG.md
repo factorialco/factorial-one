@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.95.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.1...factorial-one-react-v1.95.2) (2025-06-13)
+
+
+### Bug Fixes
+
+* update fallback cursor value to null in mock data ([#2081](https://github.com/factorialco/factorial-one/issues/2081)) ([015ecb0](https://github.com/factorialco/factorial-one/commit/015ecb0df5d86484651b8181390ce5ad3bdcf750))
+
 ## [1.95.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.0...factorial-one-react-v1.95.1) (2025-06-13)
 
 
