@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { DetailsItemsList } from "@/experimental/Lists/DetailsItemsList"
 import * as DetailsItemsListStories from "@/experimental/Lists/DetailsItemsList/index.stories"

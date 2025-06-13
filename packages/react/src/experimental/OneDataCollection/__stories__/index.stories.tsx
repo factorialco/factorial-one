@@ -11,7 +11,7 @@ import {
   Target,
   Upload,
 } from "@/icons/app"
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
@@ -194,6 +194,7 @@ export const BasicTableView: Story = {
                     label: "Department",
                     render: (item) => item.department,
                     sorting: "department",
+                    info: "Team that the employee belongs to",
                   },
                   {
                     label: "Salary",

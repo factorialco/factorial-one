@@ -47,7 +47,10 @@ export type TableColumnDefinition<
   Record,
   Sortings extends SortingsDefinition,
 > = WithOptionalSorting<Record, Sortings> &
-  Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">
+  Pick<
+    ComponentProps<typeof TableHead>,
+    "hidden" | "info" | "infoIcon" | "sticky" | "width"
+  >
 
 export type TableVisualizationOptions<
   Record extends RecordType,

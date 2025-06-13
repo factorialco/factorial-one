@@ -1,4 +1,4 @@
-import { motion, Variants } from "framer-motion"
+import { motion, Variants } from "motion/react"
 import * as React from "react"
 
 const containerVariants: Variants = {

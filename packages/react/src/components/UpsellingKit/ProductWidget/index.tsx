@@ -14,7 +14,7 @@ import { useEffect, useState } from "react"
 
 type BaseAction = {
   label: string
-  onClick: () => Promise<void>
+  onClick: () => Promise<void> | void
 }
 
 type UpsellAction = BaseAction & {
@@ -112,7 +112,7 @@ export function ProductWidget({
               </div>
               <div className="flex flex-col gap-[2px] p-3">
                 <Label className="text-lg font-medium">{title}</Label>
-                <Label className="line-clamp-2 text-base font-normal text-f1-foreground-secondary">
+                <Label className="line-clamp-3 text-base font-normal text-f1-foreground-secondary">
                   {description}
                 </Label>
               </div>

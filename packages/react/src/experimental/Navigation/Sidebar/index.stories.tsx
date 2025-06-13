@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { ComponentProps } from "react"
 import { SidebarFooter } from "./Footer"
 import * as SidebarFooterStories from "./Footer/index.stories"
@@ -13,7 +13,7 @@ import { Sidebar } from "./Sidebar"
 const meta: Meta<typeof Sidebar> = {
   title: "Navigation/Sidebar",
   component: Sidebar,
-  tags: ["autodocs", "experimental", "no-sidebar"],
+  tags: ["autodocs", "experimental", "internal"],
   parameters: {
     layout: "centered",
   },

@@ -26,7 +26,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node-pnpm
       - name: Install Playwright
-        run: pnpx playwright install --with-deps
+        run: |
+          PLAYWRIGHT_VERSION=$(pnpm why @playwright/test -r --json | jq -r '.[] | select(.devDependencies["@playwright/test"]) | .devDependencies["@playwright/test"].version')
+          echo "PLAYWRIGHT_VERSION: $PLAYWRIGHT_VERSION"
+          pnpx playwright@$PLAYWRIGHT_VERSION install --with-deps
       - name: Build Storybook
         run: |
           pnpm --filter @factorialco/factorial-one-core build

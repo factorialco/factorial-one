@@ -1,6 +1,6 @@
 import * as NavigationMenuPrimitives from "@radix-ui/react-navigation-menu"
 import { cva, type VariantProps } from "cva"
-import { LayoutGroup, motion } from "framer-motion"
+import { LayoutGroup, motion } from "motion/react"
 import * as React from "react"
 import { useId } from "react"
 import { withSkeleton } from "../lib/skeleton"

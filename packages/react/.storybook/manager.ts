@@ -1,10 +1,18 @@
-import { addons } from "@storybook/manager-api"
 import {
   renderLabel,
   type TagBadgeParameters,
 } from "storybook-addon-tag-badges"
+import { addons } from "storybook/manager-api"
+import { create } from "storybook/theming"
+
+const theme = create({
+  base: "light",
+  brandTitle: "Factorial One Design System",
+  brandImage: "./factorial-logo.svg",
+})
 
 addons.setConfig({
+  theme,
   sidebar: {
     showRoots: true,
     collapsedRoots: ["playground"],

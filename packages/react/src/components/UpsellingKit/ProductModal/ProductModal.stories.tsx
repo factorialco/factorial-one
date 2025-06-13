@@ -2,7 +2,7 @@ import { ApplicationFrame } from "@/experimental/Navigation/ApplicationFrame"
 import ApplicationFrameStoryMeta from "@/experimental/Navigation/ApplicationFrame/index.stories"
 import UpsellIcon from "@/icons/app/Upsell"
 import SalesIcon from "@/icons/modules/Sales"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { ComponentProps } from "react"
 import { ProductModal } from "./index"
 
