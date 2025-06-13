@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.95.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.0...factorial-one-react-v1.95.1) (2025-06-13)
+
+
+### Bug Fixes
+
+* add support to know number of visible items in WidgetItemList component ([#2079](https://github.com/factorialco/factorial-one/issues/2079)) ([487b17e](https://github.com/factorialco/factorial-one/commit/487b17e1d0650cb05692b63084de8ad3ecc34469))
+
 ## [1.95.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.94.0...factorial-one-react-v1.95.0) (2025-06-13)
 
 
