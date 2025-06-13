@@ -33,8 +33,10 @@ const defaultArgs: EntitySelectProps = {
   clearLabel: "Clear",
   selectedLabel: "selected",
   notFoundTitle: "No results found",
+  onCreate: fn(),
+  onCreateLabel: "Create new user",
+  notFoundSubtitle: "Try searching with a different term or create a new user.",
   disabled: false,
-  notFoundSubtitle: "Try searching with a different term.",
   groups: [
     { label: "None", value: "all", type: "avatar" },
     { label: "Team", value: "teams", type: "team" },
@@ -545,7 +547,7 @@ export const WithSearch = {
     const noResultsTitle = popoverContent.getByText("No results found")
     expect(noResultsTitle).toBeInTheDocument()
     const noResultsSubtitle = popoverContent.getByText(
-      "Try searching with a different term."
+      "Try searching with a different term or create a new user."
     )
     expect(noResultsSubtitle).toBeInTheDocument()
 
