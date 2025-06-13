@@ -10,6 +10,7 @@ export * from "./components/Tags/exports";
 export * from "./components/OneChip";
 export * from "./components/Navigation/PageHeader";
 export * from "./components/Tags/exports";
+export * from "./components/experimental/Lists/DataList";
 
 // Export icons
 export * from "./icons";

@@ -45,7 +45,7 @@ export const ItemContainer = forwardRef<HTMLLIElement, ItemContainerProps>(
       <View className="flex rounded font-medium text-f1-foreground *:flex-1">
         <Action
           action={action}
-          className={cn("flex items-center gap-1.5 p-1.5", className)}
+          className={cn("flex flex-row items-center gap-1.5 p-1.5", className)}
         >
           {LeftIcon &&
             (typeof LeftIcon === "function" ? (
@@ -53,7 +53,7 @@ export const ItemContainer = forwardRef<HTMLLIElement, ItemContainerProps>(
             ) : (
               <Icon icon={LeftIcon} size="md" />
             ))}
-          <Text className="line-clamp-5 flex-1 whitespace-pre-line text-left">
+          <Text className="line-clamp-5 text-left text-f1-foreground">
             {text}
           </Text>
         </Action>
@@ -87,7 +87,7 @@ const Action = ({
         </NavigateAction>
       );
     case "noop":
-      return <div {...props}>{children}</div>;
+      return <View {...props}>{children}</View>;
     default: {
       const _exhaustiveCheck: never = type;
       return _exhaustiveCheck;
