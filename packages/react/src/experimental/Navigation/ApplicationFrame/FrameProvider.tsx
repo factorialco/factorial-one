@@ -10,6 +10,8 @@ import React, {
 import { useMediaQuery } from "usehooks-ts"
 import { useNavigation } from "../../../lib/linkHandler"
 
+const PREFERRED_INITIAL_STATE_KEY = "one_sidebar_locked"
+
 type SidebarState = "locked" | "unlocked" | "hidden"
 
 interface FrameContextType {
@@ -45,7 +47,11 @@ export function FrameProvider({ children }: FrameProviderProps) {
     initializeWithValue: true,
   })
 
-  const [locked, setLocked] = useState(true)
+  const [locked, setLocked] = useState<boolean>(() => {
+    const storedState = localStorage.getItem(PREFERRED_INITIAL_STATE_KEY)
+
+    return storedState !== null ? !!storedState : true
+  })
   const [visible, setVisible] = useState(false)
   const [prevSidebarState, setPrevSidebarState] = useState<SidebarState | null>(
     null
@@ -84,6 +90,10 @@ export function FrameProvider({ children }: FrameProviderProps) {
   useEffect(() => {
     setVisible(false)
   }, [currentPath])
+
+  useEffect(() => {
+    localStorage.setItem(PREFERRED_INITIAL_STATE_KEY, locked ? "1" : "")
+  }, [locked])
 
   useEffect(() => {
     return () => {
