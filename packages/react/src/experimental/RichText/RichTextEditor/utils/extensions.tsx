@@ -24,6 +24,7 @@ interface ExtensionsConfigurationProps {
   setMentionSuggestions: (suggestions: MentionedUser[]) => void
   placeholder: string
   maxCharacters?: number
+  plainHtmlMode?: boolean
 }
 
 const ExtensionsConfiguration = ({
@@ -32,6 +33,7 @@ const ExtensionsConfiguration = ({
   setMentionSuggestions,
   placeholder,
   maxCharacters,
+  plainHtmlMode = true,
 }: ExtensionsConfigurationProps) => {
   return [
     StarterKitExtension,
@@ -39,12 +41,11 @@ const ExtensionsConfiguration = ({
     TextStyleExtension,
     ColorExtension,
     TypographyExtension,
-    HighlightExtension,
-    TaskListExtension,
-    CustomTaskExtension,
+    ...(plainHtmlMode ? [HighlightExtension] : []),
     TextAlignExtension,
     LinkExtension,
     PersistSelection,
+    ...(plainHtmlMode ? [TaskListExtension, CustomTaskExtension] : []),
     createPlaceholderExtension(placeholder),
     createCharacterCountExtension(maxCharacters),
     ...createMentionExtensions(

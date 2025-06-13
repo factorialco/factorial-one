@@ -63,6 +63,7 @@ interface RichTextEditorProps {
   title: string
   errorConfig?: errorConfig
   height?: heightType
+  plainHtmlMode?: boolean
 }
 
 type RichTextEditorHandle = {
@@ -91,6 +92,7 @@ const RichTextEditorComponent = forwardRef<
     title,
     errorConfig,
     height = "auto",
+    plainHtmlMode = true,
   },
   ref
 ) {
@@ -173,6 +175,7 @@ const RichTextEditorComponent = forwardRef<
         setMentionSuggestions,
         placeholder,
         maxCharacters,
+        plainHtmlMode,
       }),
       content: editorState.json || editorState.html,
       onUpdate: ({ editor }: { editor: Editor }) => {
@@ -390,6 +393,7 @@ const RichTextEditorComponent = forwardRef<
           toolbarLabels={toolbarLabels}
           isToolbarOpen={isToolbarOpen}
           isFullscreen={isFullscreen}
+          plainHtmlMode={plainHtmlMode}
         />
       </div>
     </div>

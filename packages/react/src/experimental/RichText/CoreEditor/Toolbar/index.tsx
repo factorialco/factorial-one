@@ -23,6 +23,7 @@ import {
   Underline,
 } from "@/icons/app"
 import { cn } from "@/lib/utils"
+import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
 import React from "react"
 import { LinkPopup } from "./LinkPopup"
@@ -49,6 +50,7 @@ export const Toolbar = ({
   labels,
   darkMode = false,
   showEmojiPicker = true,
+  plainHtmlMode = true,
 }: ToolbarProps) => {
   // Format buttons configuration
   const formatButtons: ButtonConfig[] = [
@@ -153,26 +155,32 @@ export const Toolbar = ({
         shortcut: ["cmd", "alt", "7"],
       },
     },
-    {
-      key: "taskList",
-      icon: CheckDouble,
-      active: (editor) => editor.isActive("taskList"),
-      onClick: (editor) => editor.chain().focus().toggleTaskList().run(),
-      tooltip: {
-        label: `[ ] ${labels.taskList}`,
-        shortcut: ["cmd", "alt", "t"],
-      },
-    },
-    {
-      key: "highlight",
-      icon: Pencil,
-      active: (editor) => editor.isActive("highlight"),
-      onClick: (editor) => editor.chain().focus().toggleHighlight().run(),
-      tooltip: {
-        label: `==${labels.highlight}==`,
-        shortcut: ["cmd", "alt", "h"],
-      },
-    },
+    ...(plainHtmlMode
+      ? [
+          {
+            key: "taskList",
+            icon: CheckDouble,
+            active: (editor: Editor) => editor.isActive("taskList"),
+            onClick: (editor: Editor) =>
+              editor.chain().focus().toggleTaskList().run(),
+            tooltip: {
+              label: `[ ] ${labels.taskList}`,
+              shortcut: ["cmd", "alt", "t"],
+            },
+          },
+          {
+            key: "highlight",
+            icon: Pencil,
+            active: (editor: Editor) => editor.isActive("highlight"),
+            onClick: (editor: Editor) =>
+              editor.chain().focus().toggleHighlight().run(),
+            tooltip: {
+              label: `==${labels.highlight}==`,
+              shortcut: ["cmd", "alt", "h"],
+            },
+          },
+        ]
+      : []),
   ]
 
   // Render buttons from configuration
