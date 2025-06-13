@@ -12,8 +12,8 @@ import {
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
-import cat from "../../../storybook-assets/cat.jpeg"
 import { OneCard } from "./OneCard"
+import cat from "/avatars/person04.jpg"
 
 const meta = {
   component: OneCard,
