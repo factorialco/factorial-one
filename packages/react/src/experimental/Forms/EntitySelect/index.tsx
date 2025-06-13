@@ -443,6 +443,8 @@ export const EntitySelect = (
           width={props.width ?? containerWidth - 2}
           disabled={props.disabled}
           hiddenAvatar={props.hiddenAvatar}
+          onCreate={props.onCreate}
+          onCreateLabel={props.onCreateLabel}
         />
       </div>
     )
@@ -496,6 +498,8 @@ export const EntitySelect = (
           disabled={props.disabled}
           hiddenAvatar={props.hiddenAvatar}
           actions={props.actions}
+          onCreate={props.onCreate}
+          onCreateLabel={props.onCreateLabel}
         />
       </PopoverContent>
     </Popover>

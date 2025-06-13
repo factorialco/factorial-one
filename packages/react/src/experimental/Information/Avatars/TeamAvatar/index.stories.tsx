@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Check } from "../../../../icons/app"
 import { sizes } from "../../../../ui/avatar"
 import { TeamAvatar } from "./index"

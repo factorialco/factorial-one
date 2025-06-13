@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { PageDecorator } from "@/lib/storybook-utils/pageDecorator"
 import { Placeholder } from "@/lib/storybook-utils/placeholder"

@@ -1,5 +1,5 @@
 import { Placeholder } from "@/icons/app"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { IconAvatar } from "./index"
 
 const meta: Meta<typeof IconAvatar> = {

@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { UpsellingPopover } from "."
 
@@ -85,6 +85,8 @@ export const Default: Story = {
         onClick: () => {
           console.log("clicked")
         },
+        type: "regular",
+        variant: "promote",
       },
     ],
   },
@@ -123,7 +125,9 @@ export const WithUpsellingButton: Story = {
     actions: [
       {
         type: "upsell",
+        variant: "promote",
         label: "Request Information",
+        showConfirmation: true,
         errorMessage: {
           title: "Request failed",
           description:

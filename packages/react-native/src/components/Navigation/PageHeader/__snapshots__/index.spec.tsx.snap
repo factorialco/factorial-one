@@ -2,7 +2,7 @@
 
 exports[`PageHeader Snapshot - renders correctly with multiple actions 1`] = `
 <View
-  className="flex-row items-center justify-between p-4"
+  className="flex-row items-center justify-between px-5 py-3"
 >
   <Text
     className="text-3xl font-semibold text-f1-foreground"
@@ -107,7 +107,7 @@ exports[`PageHeader Snapshot - renders correctly with multiple actions 1`] = `
 
 exports[`PageHeader Snapshot - renders correctly with one action 1`] = `
 <View
-  className="flex-row items-center justify-between p-4"
+  className="flex-row items-center justify-between px-5 py-3"
 >
   <Text
     className="text-3xl font-semibold text-f1-foreground"
@@ -166,7 +166,7 @@ exports[`PageHeader Snapshot - renders correctly with one action 1`] = `
 
 exports[`PageHeader Snapshot - renders correctly with one action with a badge 1`] = `
 <View
-  className="flex-row items-center justify-between p-4"
+  className="flex-row items-center justify-between px-5 py-3"
 >
   <Text
     className="text-3xl font-semibold text-f1-foreground"
@@ -228,7 +228,7 @@ exports[`PageHeader Snapshot - renders correctly with one action with a badge 1`
 
 exports[`PageHeader Snapshot - renders correctly with only a title 1`] = `
 <View
-  className="flex-row items-center justify-between p-4"
+  className="flex-row items-center justify-between px-5 py-3"
 >
   <Text
     className="text-3xl font-semibold text-f1-foreground"

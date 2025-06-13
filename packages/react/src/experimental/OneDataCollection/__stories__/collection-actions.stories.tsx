@@ -1,5 +1,5 @@
 import { Ai, Download, Pencil, Upload } from "@/icons/app"
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { SecondaryActionsItemDefinition } from "../actions"
 import { FiltersDefinition } from "../Filters/types"
 import { OneDataCollection, useDataSource } from "../index"

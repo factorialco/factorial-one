@@ -1,9 +1,9 @@
-import type { Meta } from "@storybook/react"
+import type { Meta } from "@storybook/react-vite"
 
 import { Plus } from "@/icons/app"
-import { expect, fn, userEvent, within } from "@storybook/test"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { ComponentProps, useState } from "react"
+import { expect, fn, userEvent, within } from "storybook/test"
 import { RawTag } from "../../Information/Tags/RawTag"
 import { famousEmployees } from "./entity-select-name.factory"
 import {
@@ -33,8 +33,10 @@ const defaultArgs: EntitySelectProps = {
   clearLabel: "Clear",
   selectedLabel: "selected",
   notFoundTitle: "No results found",
+  onCreate: fn(),
+  onCreateLabel: "Create new user",
+  notFoundSubtitle: "Try searching with a different term or create a new user.",
   disabled: false,
-  notFoundSubtitle: "Try searching with a different term.",
   groups: [
     { label: "None", value: "all", type: "avatar" },
     { label: "Team", value: "teams", type: "team" },
@@ -418,7 +420,7 @@ export const AlwaysOpenInForm = {
     }
 
     return (
-      <form onSubmit={fn}>
+      <form onSubmit={() => fn()}>
         <EntitySelect
           {...props}
           singleSelector={false}
@@ -545,7 +547,7 @@ export const WithSearch = {
     const noResultsTitle = popoverContent.getByText("No results found")
     expect(noResultsTitle).toBeInTheDocument()
     const noResultsSubtitle = popoverContent.getByText(
-      "Try searching with a different term."
+      "Try searching with a different term or create a new user."
     )
     expect(noResultsSubtitle).toBeInTheDocument()
 
@@ -633,7 +635,7 @@ export const HiddenAvatar = {
     }
 
     return (
-      <form onSubmit={fn}>
+      <form onSubmit={() => fn()}>
         <EntitySelect
           {...props}
           singleSelector={false}
@@ -679,7 +681,7 @@ export const WithActions = {
     }
 
     return (
-      <form onSubmit={fn}>
+      <form onSubmit={() => fn()}>
         <EntitySelect
           {...props}
           groups={[{ label: "All", value: "all", groupType: "team" }]}

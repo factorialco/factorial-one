@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { BarChartProps } from "../../../../components/Charts/BarChart"
 import BarChartStory from "../../../../components/Charts/BarChart/index.stories"
 import { Placeholder } from "../../../../lib/storybook-utils/placeholder"

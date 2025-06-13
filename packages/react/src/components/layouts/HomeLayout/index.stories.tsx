@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { AreaChartWidget } from "@/experimental/Widgets/Charts/AreaChartWidget"
 import { Placeholder } from "@/lib/storybook-utils/placeholder"

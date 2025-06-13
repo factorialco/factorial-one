@@ -1,5 +1,9 @@
 import type { StorybookConfig } from "@storybook/react-vite"
+import { createRequire } from "node:module"
+import { dirname, join } from "node:path"
 import * as process from "node:process"
+
+const require = createRequire(import.meta.url)
 
 // We should add the STORYBOOK_ prefix to make sure that the environment variables are in browser mode (for example manager.ts file)
 if (process.env.PUBLIC_BUILD) {
@@ -29,17 +33,16 @@ const config: StorybookConfig = {
   ],
   staticDirs: ["../public"],
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/addon-a11y",
-    "@storybook/addon-themes",
-    "storybook-dark-mode",
-    "@chromatic-com/storybook",
-    "storybook-addon-tag-badges",
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-a11y"),
+    getAbsolutePath("@storybook/addon-themes"),
+    getAbsolutePath("@vueless/storybook-dark-mode"),
+    getAbsolutePath("@chromatic-com/storybook"),
+    getAbsolutePath("storybook-addon-tag-badges"),
+    getAbsolutePath("@storybook/addon-docs"),
   ],
   framework: {
-    name: "@storybook/react-vite",
+    name: getAbsolutePath("@storybook/react-vite"),
     options: {},
   },
   docs: {
@@ -54,3 +57,7 @@ const config: StorybookConfig = {
   },
 }
 export default config
+
+function getAbsolutePath(value: string) {
+  return dirname(require.resolve(join(value, "package.json")))
+}

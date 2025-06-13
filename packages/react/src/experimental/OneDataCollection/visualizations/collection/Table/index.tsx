@@ -11,7 +11,8 @@ import {
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { ComponentProps, useEffect, useMemo } from "react"
+import { Skeleton } from "@/ui/skeleton.tsx"
+import { ComponentProps, useEffect, useMemo, useRef } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { ActionsDropdown } from "../../../ItemActions/Dropdown"
@@ -82,17 +83,50 @@ export const TableCollection = <
   TableVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
+  const loadingIndicatorRef = useRef<HTMLDivElement>(null)
 
-  const { data, paginationInfo, setPage, isInitialLoading } = useData<
-    Record,
-    Filters,
-    Sortings,
-    NavigationFilters
-  >(source, {
+  const {
+    data,
+    paginationInfo,
+    setPage,
+    loadMore,
+    isInitialLoading,
+    isLoadingMore,
+  } = useData<Record, Filters, Sortings, NavigationFilters>(source, {
     onError: (error) => {
       onLoadError(error)
     },
   })
+
+  const { currentSortings, setCurrentSortings, isLoading } = source
+
+  useEffect(() => {
+    if (paginationInfo?.type !== "infinite-scroll" || !paginationInfo.hasMore) {
+      return
+    }
+
+    const loadingIndicator = loadingIndicatorRef.current
+    if (!loadingIndicator) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isLoading && !isLoadingMore) {
+          loadMore()
+        }
+      },
+      {
+        root: null, // viewport
+        rootMargin: "200px",
+        threshold: 0.1,
+      }
+    )
+
+    observer.observe(loadingIndicator)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [paginationInfo, isLoadingMore, loadMore, isLoading])
 
   useEffect(() => {
     onLoadData({
@@ -104,8 +138,6 @@ export const TableCollection = <
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
   }, [paginationInfo?.total, data])
-
-  const { currentSortings, setCurrentSortings, isLoading } = source
 
   const frozenColumnsLeft = useMemo(() => frozenColumns, [frozenColumns])
 
@@ -190,6 +222,9 @@ export const TableCollection = <
   }
 
   const checkColumnWidth = source.selectable ? 52 : 0
+
+  const skeletonColumns =
+    columns.length + (source.itemActions ? 1 : 0) + (source.selectable ? 1 : 0)
 
   return (
     <>
@@ -335,9 +370,30 @@ export const TableCollection = <
               </TableRow>
             )
           })}
+          {paginationInfo?.type === "infinite-scroll" &&
+            isLoadingMore &&
+            Array.from({ length: 5 }).map((_, rowIndex) => (
+              <TableRow key={`skeleton-row-${rowIndex}`}>
+                {Array.from({ length: skeletonColumns }).map((_, colIndex) => (
+                  <TableCell key={`skeleton-cell-${rowIndex}-${colIndex}`}>
+                    <Skeleton className="h-4 w-full" />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
         </TableBody>
       </OneTable>
-      {paginationInfo && (
+
+      {paginationInfo?.type === "infinite-scroll" && paginationInfo.hasMore && (
+        <div
+          ref={loadingIndicatorRef}
+          className="h-10 w-full"
+          aria-hidden="true"
+        />
+      )}
+
+      {/*TODO: Move this logic to a shared component since it's on Card visualization as well*/}
+      {paginationInfo && paginationInfo.type === "pages" && (
         <div className="flex w-full items-center justify-between px-6 pt-4">
           <span className="shrink-0 text-f1-foreground-secondary">
             {paginationInfo.total > 0 &&

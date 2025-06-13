@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { TagList } from "./index"
 
 const mockAvatarUrl = "https://i.pravatar.cc/150"

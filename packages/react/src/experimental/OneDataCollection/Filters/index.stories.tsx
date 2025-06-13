@@ -1,8 +1,8 @@
 import { Input } from "@/ui/input"
 import { Label } from "@/ui/label"
-import type { Meta, StoryObj } from "@storybook/react"
-import { fn } from "@storybook/test"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useEffect, useState } from "react"
+import { fn } from "storybook/test"
 import { PresetsDefinition } from "../types"
 import { InFilterOptions } from "./FilterTypes/InFilter/types"
 import * as Filters from "./index"
@@ -28,7 +28,7 @@ const meta = {
       </>
     )
   },
-} satisfies Meta<typeof Filters>
+} satisfies Meta
 
 export default meta
 

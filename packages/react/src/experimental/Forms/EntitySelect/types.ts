@@ -47,6 +47,8 @@ interface EntitySelectCommonProps
   width?: number
   hiddenAvatar?: boolean
   applySearchToGroup?: boolean
+  onCreate?: (partialName: string) => void
+  onCreateLabel?: string
   actions?: Action[]
 }
 
