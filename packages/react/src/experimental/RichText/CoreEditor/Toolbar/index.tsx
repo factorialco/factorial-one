@@ -50,7 +50,7 @@ export const Toolbar = ({
   labels,
   darkMode = false,
   showEmojiPicker = true,
-  allowTaskList = true,
+  plainHtmlMode = true,
 }: ToolbarProps) => {
   // Format buttons configuration
   const formatButtons: ButtonConfig[] = [
@@ -155,7 +155,7 @@ export const Toolbar = ({
         shortcut: ["cmd", "alt", "7"],
       },
     },
-    ...(allowTaskList
+    ...(plainHtmlMode
       ? [
           {
             key: "taskList",
@@ -168,18 +168,19 @@ export const Toolbar = ({
               shortcut: ["cmd", "alt", "t"],
             },
           },
+          {
+            key: "highlight",
+            icon: Pencil,
+            active: (editor: Editor) => editor.isActive("highlight"),
+            onClick: (editor: Editor) =>
+              editor.chain().focus().toggleHighlight().run(),
+            tooltip: {
+              label: `==${labels.highlight}==`,
+              shortcut: ["cmd", "alt", "h"],
+            },
+          },
         ]
       : []),
-    {
-      key: "highlight",
-      icon: Pencil,
-      active: (editor) => editor.isActive("highlight"),
-      onClick: (editor) => editor.chain().focus().toggleHighlight().run(),
-      tooltip: {
-        label: `==${labels.highlight}==`,
-        shortcut: ["cmd", "alt", "h"],
-      },
-    },
   ]
 
   // Render buttons from configuration

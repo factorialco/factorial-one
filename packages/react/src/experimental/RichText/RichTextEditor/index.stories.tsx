@@ -83,7 +83,7 @@ const meta = {
       description: "Controls the initial height of the editor",
       defaultValue: "auto",
     },
-    allowTaskList: {
+    plainHtmlMode: {
       control: "boolean",
       description:
         "Controls if the task list is allowed in the editor, this is needed if the text lives outside of the display component",
@@ -292,7 +292,7 @@ export const Blank: Story = {
     initialEditorState: undefined,
     mentionsConfig: undefined,
     maxCharacters: undefined,
-    allowTaskList: false,
+    plainHtmlMode: false,
   },
 }
 
