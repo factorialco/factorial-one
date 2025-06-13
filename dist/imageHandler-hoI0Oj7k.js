@@ -8798,19 +8798,25 @@ const Uge = () => {
               "aria-label": "Loading..."
             }
           ) }),
-          /* @__PURE__ */ ye("div", { className: Ae(o && "invisible"), children: [
-            a && /* @__PURE__ */ E(
-              ni,
-              {
-                size: l === "sm" ? "sm" : "md",
-                icon: a,
-                className: n ? CE({ variant: c }) : nK({ variant: c })
-              }
-            ),
-            s && /* @__PURE__ */ E(eK, { emoji: s, size: l === "sm" ? "sm" : "md" }),
-            /* @__PURE__ */ E("span", { className: Ae(n && "sr-only"), children: t }),
-            f
-          ] })
+          /* @__PURE__ */ ye(
+            "div",
+            {
+              className: Ae(o && "invisible", "flex items-center gap-1"),
+              children: [
+                a && /* @__PURE__ */ E(
+                  ni,
+                  {
+                    size: l === "sm" ? "sm" : "md",
+                    icon: a,
+                    className: n ? CE({ variant: c }) : nK({ variant: c })
+                  }
+                ),
+                s && /* @__PURE__ */ E(eK, { emoji: s, size: l === "sm" ? "sm" : "md" }),
+                /* @__PURE__ */ E("span", { className: Ae(n && "sr-only"), children: t }),
+                f
+              ]
+            }
+          )
         ]
       }
     );
