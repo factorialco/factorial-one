@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { EmojiAvatar } from "../..";
+import { EmojiAvatar } from "../../components/Avatars/EmojiAvatar";
 import { useEffect } from "react";
 
 export type EmptyStateT = {
