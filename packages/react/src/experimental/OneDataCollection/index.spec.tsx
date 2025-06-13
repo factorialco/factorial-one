@@ -17,7 +17,11 @@ import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
-import type { DataSource } from "./types"
+import type {
+  DataSource,
+  PaginatedFetchOptions,
+  PaginatedResponse,
+} from "./types"
 import { useData } from "./useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -1109,7 +1113,8 @@ describe("Collections", () => {
           dataAdapter: {
             paginationType: "pages",
             perPage: 10,
-            fetchData: async ({ pagination }) => {
+            fetchData: (async (options) => {
+              const { pagination } = options
               const { currentPage = 1 } = pagination || {}
               const itemsPerPage = 10
               const totalItems = 45
@@ -1134,7 +1139,15 @@ describe("Collections", () => {
                 perPage: itemsPerPage,
                 pagesCount: Math.ceil(totalItems / itemsPerPage),
               }
-            },
+            }) as (
+              options: PaginatedFetchOptions<
+                FiltersDefinition,
+                SortingsDefinition,
+                NavigationFiltersDefinition
+              >
+            ) => Promise<
+              PaginatedResponse<{ id: number; name: string; email: string }>
+            >,
           },
         }),
       { wrapper: TestWrapper }
