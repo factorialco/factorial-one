@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View } from "react-native";
-import { DetailsItem, DetailsItemProps } from "./DetailsItem";
-import { cn } from "../lib/utils";
+import { DetailsItem, DetailsItemProps } from "../DetailsItem";
+import { cn } from "../../lib/utils";
 
 export interface DetailsListProps {
   items: Array<Pick<DetailsItemProps, "title" | "value">>;

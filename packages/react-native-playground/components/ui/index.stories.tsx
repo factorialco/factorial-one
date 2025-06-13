@@ -1,10 +1,10 @@
 import * as React from "react";
 import { View } from "react-native";
-import { DetailsList } from "../../../react-native/src/ui/DetailsList";
-import { DetailsItem } from "../../../react-native/src/ui/DetailsItem";
+import { DetailsList } from "../../../react-native/src/components/DetailsList";
+import { DetailsItem } from "../../../react-native/src/components/DetailsItem";
 
 export default {
-  title: "UI/DetailsList",
+  title: "Components/DetailsList",
   component: DetailsList,
 };
 
@@ -35,8 +35,8 @@ export const DetailsListMultiple = () => (
 
 export const DetailsItemStandalone = () => (
   <View className="p-4">
-    <DetailsItem title="Requester" value="Elias Skile" isSingle />
-    <DetailsItem title="Total amount" value="13,46€" isFirst />
-    <DetailsItem title="Cost centers" value="Product · Design" isLast />
+    <DetailsItem title="Requester" value="Elias Skile" />
+    <DetailsItem title="Total amount" value="13,46€" />
+    <DetailsItem title="Cost centers" value="Product · Design" />
   </View>
 );
