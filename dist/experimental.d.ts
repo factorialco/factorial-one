@@ -232,6 +232,22 @@ declare interface ApplicationFrameProps {
     children: React.ReactNode;
 }
 
+declare const ApprovalStep: FC<ApprovalStepProps>;
+
+declare type ApprovalStepProps = {
+    title: string;
+    approvalsRequired?: number;
+    status: Status_2;
+    approvers: Approver[];
+};
+
+declare type Approver = {
+    firstName: string;
+    lastName: string;
+    avatar?: string;
+    status: Status_2;
+};
+
 export declare const AreaChartWidget: ForwardRefExoticComponent<Omit<AreaChartWidgetProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 export declare const AutoGrid: ForwardRefExoticComponent<Omit<HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
@@ -404,6 +420,25 @@ declare interface BaseHeaderProps_2 {
 
 declare type BaseMetadata = {
     icon: IconType;
+};
+
+/**
+ * Represents a base structure for paginated API responses, providing
+ * details about the records on the current page and pagination metadata.
+ *
+ * @template TRecord The type of each record in the paginated response.
+ *
+ * @property {TRecord[]} records The list of records for the current page.
+ * @property {number} total The total number of records available.
+ * @property {number} perPage The number of records displayed per page.
+ */
+export declare type BasePaginatedResponse<TRecord> = {
+    /** The records for the current page */
+    records: TRecord[];
+    /** Total number of records available */
+    total: number;
+    /** Number of records per page */
+    perPage: number;
 };
 
 /**
@@ -940,6 +975,8 @@ declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "team";
 }) | (ComponentProps<typeof Weekdays> & {
     type: "weekdays";
+}) | (ComponentProps<typeof DataList.DotTagItem> & {
+    type: "dot-tag";
 });
 
 /**
@@ -1020,11 +1057,13 @@ declare const DataList: ForwardRefExoticComponent<DataListProps & RefAttributes<
     CompanyItem: ForwardRefExoticComponent<CompanyItemProps & RefAttributes<HTMLLIElement>>;
     PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
     TeamItem: ForwardRefExoticComponent<TeamItemProps & RefAttributes<HTMLLIElement>>;
+    DotTagItem: ForwardRefExoticComponent<DotTagProps & RefAttributes<HTMLLIElement>>;
 };
 
 declare type DataListProps = {
     children: ReactElement<Items>[] | ReactElement<Items>;
     label?: string;
+    isHorizontal?: boolean;
 };
 
 /**
@@ -1200,16 +1239,18 @@ declare const daytimePageVariants: (props?: ({
 
 export declare const DetailsItem: ForwardRefExoticComponent<DetailsItemType & RefAttributes<HTMLDivElement>>;
 
-export declare const DetailsItemsList: ForwardRefExoticComponent<DetailsItemsListProps & RefAttributes<HTMLDivElement>>;
+export declare const DetailsItemsList: default_2.ForwardRefExoticComponent<DetailsItemsListProps & default_2.RefAttributes<HTMLDivElement>>;
 
 declare interface DetailsItemsListProps {
-    title: string;
+    title?: string;
+    tableView?: boolean;
     details: DetailsItemType[];
 }
 
 export declare interface DetailsItemType {
     title: string;
     content: Content | Content[];
+    isHorizontal?: boolean;
     spacingAtTheBottom?: boolean;
 }
 
@@ -1390,6 +1431,8 @@ declare interface EntitySelectCommonProps extends Omit<PopoverProps, "children" 
     width?: number;
     hiddenAvatar?: boolean;
     applySearchToGroup?: boolean;
+    onCreate?: (partialName: string) => void;
+    onCreateLabel?: string;
     actions?: Action[];
 }
 
@@ -1833,6 +1876,33 @@ declare type InFilterOptions_2<T> = {
     options: Array<InFilterOptionItem<T>> | (() => Array<InFilterOptionItem<T>> | Promise<Array<InFilterOptionItem<T>>>);
 };
 
+/**
+ * Represents a paginated response structure tailored for infinite scroll implementations.
+ *
+ * @template TRecord The type of the individual record contained in the paginated response.
+ *
+ * @extends BasePaginatedResponse
+ *
+ * @property {"infinite-scroll"} type Identifies the pagination type as "infinite-scroll".
+ * @property {string | null} cursor The current position cursor used to fetch the next set of records.
+ * @property {boolean} hasMore Indicates whether there are additional records available for loading.
+ */
+export declare type InfiniteScrollPaginatedResponse<TRecord> = BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "infinite-scroll">;
+    /**
+     * Represents the current position cursor for pagination.
+     * This is typically a string (often Base64-encoded) that represents
+     * the position of the last item in the current result set.
+     * Used to fetch the next page of results.
+     */
+    cursor: string | null;
+    /**
+     * A boolean flag indicating whether there are more items available for fetching.
+     * Used to determine if additional requests should be made for pagination.
+     */
+    hasMore: boolean;
+};
+
 export declare const Input: React.FC<InputProps>;
 
 declare const Input_2: React_2.ForwardRefExoticComponent<React_2.InputHTMLAttributes<HTMLInputElement> & {
@@ -2053,40 +2123,57 @@ declare const moduleAvatarVariants: (props?: ({
 export declare type ModuleId = keyof typeof modules;
 
 export declare const modules: {
+    readonly analytics: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly ats: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly benefits: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly calendar: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly cards: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly clockin: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly "clock-in": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly company_attendance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly company_documents: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly company_projects: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly company_trainings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly compensations: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly discover: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly documents: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly employee_attendance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly employees: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly engagement: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly finance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly engagement_insights: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly "finance-accounting": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly "finance-sales": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly "finance-spending": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly "finance-treasury": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly "finance-workspace": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly goals: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly home: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly hub: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly inbox: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly kudos: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly mydocuments: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly organization: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly my_benefits: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly my_documents: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly my_projects: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly my_spending: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly my_trainings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly "new-trainings": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly notifications: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly inbox: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly overviews: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly payroll: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly performance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly payroll_bundle: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly performance_v2: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly processes: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly profile: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly projects: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly recruitment: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly project_management: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly reports: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly sales: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly settings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly shift_management: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly shifts: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly social: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly software: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly spaces: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly spending: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly space_control: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly talent_analytics: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly tasks: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly "time-tracking": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly timeoff: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly timetracking: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly trainings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
-    readonly treasury: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly workflows: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
 };
 
@@ -2208,6 +2295,12 @@ action: BulkAction,
 
 export declare const OneAlert: ({ title, description, action, link, variant, }: AlertProps) => JSX_2.Element;
 
+export declare const OneApprovalHistory: FC<OneApprovalHistoryProps>;
+
+declare type OneApprovalHistoryProps = {
+    steps: ApprovalStep[];
+};
+
 export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaultSelected, showNavigation, showInput, minDate, maxDate, }: OneCalendarProps): JSX_2.Element;
 
 export declare interface OneCalendarProps {
@@ -2326,6 +2419,45 @@ declare type OneDropdownButtonItem<T = string> = {
     critical?: boolean;
 };
 
+export declare function OneEmptyState({ title, description, variant, emoji, actions, }: Types.OneEmptyStateProps): JSX_2.Element;
+
+declare type OneEmptyStateProps = {
+    /**
+     * The title of the empty state
+     */
+    title: string;
+    /**
+     * If defined, a description will be displayed in the empty state
+     * @optional
+     */
+    description?: string;
+    /**
+     * An array of action objects to display as buttons in the empty state.
+     * Each action represents a user-interactable option, such as "Retry" or "Go Back",
+     * and can include a label, click handler, optional icon, and button variant.
+     * @optional
+     */
+    actions?: ActionProps[];
+} & ({
+    /**
+     * The variant of the empty state
+     * @optional
+     */
+    variant?: "default";
+    /**
+     * An icon will be displayed in the empty state.
+     * emoji string
+     */
+    emoji?: string;
+} | {
+    /**
+     * The variant of the empty state
+     * @optional
+     */
+    variant: Exclude<AlertAvatarProps["type"], "positive">;
+    emoji?: never;
+});
+
 export declare const OneModal: OneModalComponent;
 
 declare const OneModal_2: default_2.FC<OneModalProps>;
@@ -2336,10 +2468,11 @@ declare type OneModalComponent = typeof OneModal_2 & {
     Footer: typeof OneModalFooter;
 };
 
-declare const OneModalContent: ({ tabs, activeTabId, setActiveTabId, children, }: OneModalContentProps) => JSX_2.Element;
+declare const OneModalContent: ({ tabs, activeTabId, setActiveTabId, withPadding, children, }: OneModalContentProps) => JSX_2.Element;
 
 declare type OneModalContentProps = {
     children: React.ReactNode;
+    withPadding?: boolean;
 } & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
 
 declare const OneModalFooter: ({ children }: OneModalFooterProps) => JSX_2.Element;
@@ -2348,10 +2481,19 @@ declare type OneModalFooterProps = {
     children: React.ReactNode;
 };
 
-declare const OneModalHeader: ({ title, otherActions, }: OneModalHeaderProps) => JSX_2.Element;
+declare const OneModalHeader: ({ title, module, otherActions, }: OneModalHeaderProps) => JSX_2.Element;
 
 declare type OneModalHeaderProps = {
-    title: string;
+    title?: string;
+    /**
+     * Module configuration for the header. Only works when modal position is set to "right".
+     * Displays module icon and name in the header.
+     */
+    module?: {
+        id: ModuleId;
+        label: string;
+        href: string;
+    };
     otherActions?: DropdownInternalProps["items"];
 };
 
@@ -2472,6 +2614,36 @@ declare interface Option_2 {
 
 declare type Options = Items_2 | ((search?: string) => Promise<Items_2> | Items_2);
 
+declare interface OverflowListProps<T> {
+    items: T[];
+    /**
+     * What to render as a list item (items outside of the overflow list)
+     * @param item - The item to render
+     * @param index - The index of the item
+     * @param isVisible - Whether this item is in the visible list (true) or measurement container (false)
+     */
+    renderListItem: (item: T, index: number, isVisible?: boolean) => ReactNode;
+    /**
+     * Additional styling for the container
+     */
+    className?: string;
+    /**
+     * The gap between items in pixels
+     * @default 8
+     */
+    gap?: number;
+    /**
+     * The minimum size of the container
+     * @default 0
+     */
+    minSize: number;
+    /**
+     * Callback when the visible items change
+     * @param visibleItems - The visible items
+     */
+    onVisibleItemsChange?: (visibleItems: T[]) => void;
+}
+
 export declare function Page({ children, header, embedded }: PageProps): JSX_2.Element;
 
 export declare namespace Page {
@@ -2490,6 +2662,29 @@ export declare type PageAction = {
     }>;
 });
 
+/**
+ * Represents a paginated response with page-based navigation.
+ *
+ * Combines the base pagination response with additional properties specific to
+ * page-based pagination, allowing clients to navigate the dataset using page numbers.
+ *
+ * This type is useful for APIs returning data in discrete pages, where both the
+ * current page index and the total number of pages are provided.
+ *
+ * @template TRecord - The type of the individual records in the dataset.
+ *
+ * @property {"pages"} type - Indicates the pagination type is page-based.
+ * @property {number} currentPage - The index of the current page being viewed.
+ * @property {number} pagesCount - The total number of pages available.
+ */
+export declare type PageBasedPaginatedResponse<TRecord> = BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "pages">;
+    /** Current page number (1-indexed) */
+    currentPage: number;
+    /** Total number of pages available */
+    pagesCount: number;
+};
+
 export declare function PageHeader({ module, statusTag, breadcrumbs, actions, embedded, navigation, productUpdates, favorites, }: HeaderProps): JSX_2.Element;
 
 declare interface PageProps {
@@ -2505,7 +2700,7 @@ declare interface PageProps {
  */
 export declare type PaginatedDataAdapter<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, NavigationFilters extends NavigationFiltersDefinition> = {
     /** Indicates this adapter uses page-based pagination */
-    paginationType: "pages";
+    paginationType: PaginationType;
     /** Default number of records per page */
     perPage?: number;
     /**
@@ -2516,40 +2711,30 @@ export declare type PaginatedDataAdapter<Record extends RecordType, Filters exte
     fetchData: (options: PaginatedFetchOptions<Filters, Sortings, NavigationFilters>) => PaginatedResponse<Record> | Promise<PaginatedResponse<Record>> | Observable<PromiseState<PaginatedResponse<Record>>>;
 };
 
-/**
- * Options for paginated data fetching
- * @template Filters - The available filter configurations
- */
 export declare type PaginatedFetchOptions<Filters extends FiltersDefinition, Sortings extends SortingsDefinition, NavigationFilters extends NavigationFiltersDefinition> = BaseFetchOptions<Filters, Sortings, NavigationFilters> & {
-    /** Pagination configuration */
     pagination: {
+        perPage?: number;
+    } & ({
         currentPage: number;
-        perPage: number;
-    };
+        cursor?: never;
+    } | {
+        cursor?: string | null;
+        currentPage?: never;
+    });
 };
 
 /**
  * Response type for paginated collection data
  * @template Record - The type of records in the collection
  */
-export declare type PaginatedResponse<Record> = {
-    /** The records for the current page */
-    records: Record[];
-} & PaginationInfo;
+export declare type PaginatedResponse<TRecord> = PageBasedPaginatedResponse<TRecord> | InfiniteScrollPaginatedResponse<TRecord>;
 
 /**
- * Information about the current pagination state
+ * Defines the available pagination types used throughout the application.
+ * - "pages": Represents traditional page-based navigation with numbered pages.
+ * - "infinite-scroll": Represents continuous loading of content as the user scrolls.
  */
-export declare type PaginationInfo = {
-    /** Total number of records available */
-    total: number;
-    /** Current page number (1-indexed) */
-    currentPage: number;
-    /** Number of records per page */
-    perPage: number;
-    /** Total number of pages available */
-    pagesCount: number;
-};
+export declare type PaginationType = "pages" | "infinite-scroll";
 
 export declare const PersonAvatar: {
     ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: PersonAvatarProps): JSX_2.Element;
@@ -2855,7 +3040,7 @@ declare type Props_19<Id extends string | number = string | number> = {
     minSize?: number;
     onClickItem?: (id: Id) => void;
     showAllItems?: boolean;
-};
+} & Pick<ComponentProps<typeof VerticalOverflowList>, "onVisibleItemsChange">;
 
 declare type Props_2 = {
     name: string;
@@ -3047,7 +3232,7 @@ export declare interface RichTextEditorProps {
     title: string;
     errorConfig?: errorConfig;
     height?: heightType;
-    allowTaskList?: boolean;
+    plainHtmlMode?: boolean;
 }
 
 declare interface RichTextEditorSkeletonProps {
@@ -3228,9 +3413,9 @@ declare const shortcutVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-export declare function Sidebar({ header, body, footer }: SidebarProps): JSX_2.Element;
+export declare function Sidebar({ header, body, footer, onFooterDropdownClick, }: SidebarProps): JSX_2.Element;
 
-export declare function SidebarFooter({ user, options, showActivityButton, activityButtonShortcut, onActivityButtonClick, hasActivityUpdates, }: SidebarFooterProps): JSX_2.Element;
+export declare function SidebarFooter({ user, options, showActivityButton, activityButtonShortcut, onActivityButtonClick, onDropdownClick, hasActivityUpdates, }: SidebarFooterProps): JSX_2.Element;
 
 declare interface SidebarFooterProps {
     user: {
@@ -3242,6 +3427,7 @@ declare interface SidebarFooterProps {
     hasActivityUpdates?: boolean;
     activityButtonShortcut?: string[];
     onActivityButtonClick?: () => void;
+    onDropdownClick?: () => void;
     options: DropdownItem[];
 }
 
@@ -3258,6 +3444,7 @@ declare interface SidebarProps {
     header?: ReactNode;
     body?: ReactNode;
     footer?: ReactNode;
+    onFooterDropdownClick?: () => void;
 }
 
 declare type SidebarState = "locked" | "unlocked" | "hidden";
@@ -3381,6 +3568,8 @@ className?: ClassValue;
 
 declare type Status = "positive" | "neutral" | "negative";
 
+declare type Status_2 = "waiting" | "pending" | "approved" | "rejected";
+
 declare type StatusCellValue = StatusValue;
 
 declare type StatusMetadata = BaseMetadata & {
@@ -3486,9 +3675,9 @@ export declare type TabItem = {
     id: string;
 });
 
-declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
+declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "infoIcon" | "sticky" | "width">;
 
-declare function TableHead({ children, width, sortState, onSortClick, info, sticky, hidden, align, }: TableHeadProps): JSX_2.Element;
+declare function TableHead({ children, width, sortState, onSortClick, info, infoIcon, sticky, hidden, align, }: TableHeadProps): JSX_2.Element;
 
 declare interface TableHeadProps {
     children: React.ReactNode;
@@ -3524,6 +3713,11 @@ declare interface TableHeadProps {
      * that shows this text in a tooltip when hovered.
      */
     info?: string;
+    /**
+     * Icon to display when info is provided.
+     * @default InfoCircleLine
+     */
+    infoIcon?: IconType;
     /**
      * When true, the header cell will not be visible.
      * @default false
@@ -3788,7 +3982,7 @@ export declare interface ToolbarProps {
     labels: ToolbarLabels;
     darkMode?: boolean;
     showEmojiPicker?: boolean;
-    allowTaskList?: boolean;
+    plainHtmlMode?: boolean;
 }
 
 declare interface TwoColumnsItemType {
@@ -3806,6 +4000,13 @@ declare interface TwoColumnsListType {
 declare type Type = "bar-chart" | "line-chart";
 
 declare const type: readonly ["base", "rounded"];
+
+declare namespace Types {
+    export {
+        ActionProps,
+        OneEmptyStateProps
+    }
+}
 
 declare type URL_2 = string;
 
@@ -3879,6 +4080,11 @@ declare const variants_2: readonly ["default", "outline", "critical", "neutral",
 export declare const VerticalBarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: VerticalBarChartProps;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+declare const VerticalOverflowList: {
+    <T>({ items, renderListItem, className, gap, minSize, onVisibleItemsChange, }: OverflowListProps<T>): JSX_2.Element;
+    displayName: string;
+};
 
 /**
  * Represents a visualization configuration for displaying collection data.
@@ -3960,7 +4166,7 @@ export declare type WidgetEmptyStateProps = {
 
 export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_17): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_19): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, onVisibleItemsChange, }: Props_19): JSX_2.Element;
 
 export declare function WidgetInboxListItem({ id, title, subtitle, onClick, module, }: Props_18): JSX_2.Element;
 
