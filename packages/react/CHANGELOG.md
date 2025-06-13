@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.95.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.94.0...factorial-one-react-v1.95.0) (2025-06-13)
+
+
+### Features
+
+* **DataCollection:** Add support for infinite-scroll pagination type ([#1979](https://github.com/factorialco/factorial-one/issues/1979)) ([a480793](https://github.com/factorialco/factorial-one/commit/a480793e6a432113bac9b622dae9b3628611bdd2))
+
 ## [1.94.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.93.1...factorial-one-react-v1.94.0) (2025-06-13)
 
 
