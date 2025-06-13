@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.94.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.93.1...factorial-one-react-v1.94.0) (2025-06-13)
+
+
+### Features
+
+* add create action to EntitySelect component ([#1970](https://github.com/factorialco/factorial-one/issues/1970)) ([a95e3dd](https://github.com/factorialco/factorial-one/commit/a95e3ddb89a5c2b71d53e2ee465fd4a36dff13c1))
+
 ## [1.93.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.93.0...factorial-one-react-v1.93.1) (2025-06-12)
 
 
