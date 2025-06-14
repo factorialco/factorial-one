@@ -1,4 +1,4 @@
-import { Cell, Pie, PieChart } from "recharts"
+import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts"
 import { getLabels, normalizeData } from "./helpers"
 
 export type ClockInStatus = "clocked-in" | "break" | "clocked-out"
@@ -39,15 +39,16 @@ export function ClockInGraph({
   })
 
   return (
-    <div className="relative h-40 w-40">
-      <PieChart width={156} height={156}>
-        {/* Main progress ring */}
-        <Pie
-          data={normalizedData}
-          cx={74}
-          cy={74}
-          innerRadius={62}
-          outerRadius={74}
+    <div className="relative aspect-square w-full max-w-[10rem]">
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart>
+          {/* Main progress ring */}
+          <Pie
+            data={normalizedData}
+          cx="50%"
+          cy="50%"
+          innerRadius="40%"
+          outerRadius="47%"
           startAngle={225}
           endAngle={-45}
           paddingAngle={2}
@@ -65,7 +66,8 @@ export function ClockInGraph({
             />
           ))}
         </Pie>
-      </PieChart>
+        </PieChart>
+      </ResponsiveContainer>
 
       {/* Time display */}
       <div className="absolute inset-0 flex items-center justify-center">
