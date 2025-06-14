@@ -1,0 +1,101 @@
+import {
+  Canvas,
+  Meta,
+  Controls,
+  Unstyled,
+  Story,
+} from "@storybook/addon-docs/blocks"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
+
+import * as SummaryStories from "./summary.stories"
+
+<Meta title="Data collection/Summary" />
+
+# Data collection / Summary
+
+## Introduction
+
+The Summary feature provides a way to display aggregated data at the bottom of
+your data collection tables. This powerful tool lets you quickly visualize
+totals, averages, or counts for numeric columns, giving users valuable insights
+at a glance without requiring additional calculations.
+
+This feature is particularly useful for financial data, inventory management,
+performance metrics, and any scenario where aggregated values provide meaningful
+context to the tabular data.
+
+## Examples
+
+### Basic Summary Row
+
+<Canvas of={SummaryStories.BasicSummaryRow} meta={SummaryStories} />
+
+### Multiple Calculation Types
+
+<Canvas of={SummaryStories.MultipleSummaryTypes} meta={SummaryStories} />
+
+### Custom Formatting
+
+<Canvas of={SummaryStories.FormattedSummaryRow} meta={SummaryStories} />
+
+## Setting Up Summary Rows
+
+To enable the Summary feature in your data collection component, provide the
+`summary` attribute in the source prop:
+
+```tsx
+const dataSource = useDataSource({
+  // other config options
+  summary: {
+    // Define which columns should have summary calculations
+    columns: {
+      // Key is the column id
+      amount: {
+        // Type can be 'sum', 'avg', or 'count'
+        type: "sum",
+        // Optional formatter function
+        formatter: (value) => `$${value.toFixed(2)}`,
+      },
+      quantity: { type: "sum" },
+      products: { type: "count" },
+    },
+    // Optional label for the first cell in the summary row
+    label: "Totals",
+  },
+})
+```
+
+## Summary Options
+
+### columns
+
+An object where each key represents a column ID and the value contains the calculation configuration:
+
+- **type**: The calculation type to perform ('sum', 'avg', or 'count')
+- **formatter**: (Optional) A function to format the calculated value
+
+### label
+
+(Optional) Text to display in the first cell of the summary row. If not provided, the first cell will be empty.
+
+## Best Practices
+
+<DoDonts>
+  <DoDonts.Do title="Use appropriate calculation types">
+    Choose calculation types that make sense for each column's data. For example, use 'sum' for financial values, 'avg' for metrics, and 'count' for categorical data.
+  </DoDonts.Do>
+  <DoDonts.Dont title="Don't overuse summary calculations">
+    Apply summary calculations selectively to the most important columns rather than to all columns, which can overwhelm users with information.
+  </DoDonts.Dont>
+  
+  <DoDonts.Do title="Apply clear formatting">
+    Use formatters to ensure summary values match the formatting of the column data (e.g., currency symbols, decimal places).
+  </DoDonts.Do>
+  <DoDonts.Dont title="Don't use for non-numeric data">
+    Avoid applying sum or average calculations to non-numeric columns, as this can produce confusing or meaningless results.
+  </DoDonts.Dont>
+</DoDonts>
+
+## Accessibility Considerations
+
+Summary rows are implemented using proper table footer (`<tfoot>`) HTML elements, ensuring they are semantically correct and accessible to screen readers. The calculated values are properly associated with their respective columns for clear navigation.
