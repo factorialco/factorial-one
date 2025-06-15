@@ -11,8 +11,7 @@ const meta: Meta = {
   },
   args: {
     companyName: "Factorial",
-    companyImageUrl:
-      "https://avatars.githubusercontent.com/u/21041797?s=200&v=4",
+    companyImageUrl: "/avatars/factorial.png",
     onClick: () => {},
   },
 }

@@ -84,7 +84,7 @@ export const WithAvatar: Story = {
       type: "person",
       firstName: "Dani",
       lastName: "Moreno",
-      src: "https://github.com/dani-moreno.png",
+      src: "/avatars/person01.jpg",
     },
   },
   render: ({ icon: _icon, ...args }) => (
@@ -104,7 +104,7 @@ export const WithAvatar: Story = {
         avatar={{
           type: "company",
           name: "Factorial",
-          src: "https://github.com/factorialco.png",
+          src: "/avatars/factorial.png",
         }}
       />
     </div>

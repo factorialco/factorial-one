@@ -31,7 +31,7 @@ const config: StorybookConfig = {
           },
         ]),
   ],
-  staticDirs: ["../public"],
+  staticDirs: ["../public", "./static"],
   addons: [
     getAbsolutePath("@storybook/addon-links"),
     getAbsolutePath("@storybook/addon-a11y"),

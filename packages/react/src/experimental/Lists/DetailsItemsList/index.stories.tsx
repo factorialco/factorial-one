@@ -25,7 +25,7 @@ const meta: Meta = {
           type: "person",
           firstName: "Saul",
           lastName: "Dominguez",
-          avatarUrl: "https://github.com/sauldom102.png",
+          avatarUrl: "/avatars/person01.jpg",
           action: {
             type: "navigate",
             href: "",
