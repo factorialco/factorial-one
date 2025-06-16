@@ -1,5 +1,5 @@
 import { TableHead as TableHeadRoot } from "@/ui/table"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { Icon, IconType } from "../../../components/Utilities/Icon"
 import { ArrowDown, InfoCircleLine } from "../../../icons/app"
 import { cn, focusRing } from "../../../lib/utils"

@@ -1,5 +1,5 @@
 import { TableCell as TableCellRoot } from "@/ui/table"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { Link } from "../../../lib/linkHandler"
 import { useI18n } from "../../../lib/providers/i18n"
 import { cn } from "../../../lib/utils"

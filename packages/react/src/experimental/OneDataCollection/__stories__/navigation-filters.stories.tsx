@@ -1,5 +1,5 @@
 import { granularityDefinitions } from "@/experimental/OneCalendar/granularities/index"
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { addDays } from "date-fns"
 import { ExampleComponent } from "./mockData"
 

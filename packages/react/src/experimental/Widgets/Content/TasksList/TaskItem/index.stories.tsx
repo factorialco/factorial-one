@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { TaskItem, TaskItemProps } from "./index"
 
 const meta: Meta<TaskItemProps> = {

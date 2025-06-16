@@ -1,7 +1,7 @@
 import { Check, LayersFront } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { Button as ShadcnButton } from "@/ui/button"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, forwardRef, useEffect, useState } from "react"
 import { Icon } from "../../Utilities/Icon"
 import { iconOnlyVariants } from "./internal"

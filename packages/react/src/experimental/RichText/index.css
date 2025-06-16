@@ -98,7 +98,7 @@
 
 .ProseMirror pre,
 .rich-text-display-container pre {
-  @apply relative mx-0 overflow-x-auto rounded-md bg-f1-background-secondary p-2;
+  @apply relative mx-0 overflow-x-auto whitespace-pre-wrap rounded-md bg-f1-background-secondary p-2;
 }
 
 .ProseMirror code,

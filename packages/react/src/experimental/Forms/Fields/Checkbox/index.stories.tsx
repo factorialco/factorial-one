@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
-import { expect, within } from "@storybook/test"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
+import { expect, within } from "storybook/test"
 import { Checkbox } from "./index"
 
 const meta = {

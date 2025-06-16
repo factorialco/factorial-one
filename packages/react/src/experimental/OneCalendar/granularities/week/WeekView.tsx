@@ -1,6 +1,6 @@
 import { Calendar } from "@/ui/calendar"
 import { endOfWeek, startOfWeek } from "date-fns"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import {
   DayClickEventHandler,
   DateRange as DayPickerDateRange,

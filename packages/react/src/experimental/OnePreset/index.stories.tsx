@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
-import { fn } from "@storybook/test"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
+import { fn } from "storybook/test"
 import { Preset } from "./index"
 
 const meta = {

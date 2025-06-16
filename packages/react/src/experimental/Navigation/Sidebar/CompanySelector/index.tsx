@@ -1,5 +1,5 @@
 import { Skeleton } from "@/ui/skeleton"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { ReactNode, useMemo, useState } from "react"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import { ChevronDown, Circle } from "../../../../icons/app"

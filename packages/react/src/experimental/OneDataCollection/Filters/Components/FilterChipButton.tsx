@@ -1,7 +1,7 @@
 "use client"
 
 import { Skeleton } from "@/ui/skeleton"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { ReactElement, useEffect, useState } from "react"
 import { Chip } from "../../../OneChip"
 import { getFilterType } from "../FilterTypes"

@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "cva"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { cn } from "../../../lib/utils"
 
 const spinnerVariants = cva({

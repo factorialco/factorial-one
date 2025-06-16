@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { AnimatePresence } from "framer-motion"
+import { AnimatePresence } from "motion/react"
 import { useI18n } from "../../../../lib/providers/i18n"
 import {
   FilterDefinitionsByType,

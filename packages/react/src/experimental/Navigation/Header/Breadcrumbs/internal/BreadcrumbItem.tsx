@@ -9,7 +9,7 @@ import {
   BreadcrumbItem as ShadBreadcrumbItem,
   BreadcrumbLink as ShadBreadcrumbLink,
 } from "@/ui/breadcrumb"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { forwardRef, PropsWithChildren, ReactNode } from "react"
 import { BreadcrumbSeparator } from "./BreadcrumbSeparator"
 

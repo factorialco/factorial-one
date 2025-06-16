@@ -1,5 +1,5 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import * as React from "react"
 import { useId } from "react"
 import { Icon } from "../components/Utilities/Icon"

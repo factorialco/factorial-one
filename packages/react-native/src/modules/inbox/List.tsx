@@ -2,7 +2,6 @@ import { memo, ReactElement } from "react";
 import { SectionList, SectionListData, View } from "react-native";
 import { EmptyState, EmptyStateT } from "./EmptyState";
 import { SectionHeader } from "./SectionHeader";
-import { Separator } from "./Separator";
 
 // Define the props interface with the generic type T
 interface InboxListProps<T extends { id: string }> {
@@ -22,7 +21,7 @@ const InboxListBase = <T extends { id: string }>({
   const isEmpty = sections.length === 0;
   if (isEmpty) {
     return (
-      <View className="flex-1 p-4">
+      <View className="flex-1 p-5">
         <EmptyState
           emoji={emptyState.emoji}
           title={emptyState.title}
@@ -46,12 +45,8 @@ const InboxListBase = <T extends { id: string }>({
         section: { title },
         section: currentSection,
       }) => {
-        const isFirstSection = sections.indexOf(currentSection) === 0;
         return (
-          <View>
-            {!isFirstSection && <Separator />}
-            <SectionHeader title={title} count={currentSection.data.length} />
-          </View>
+          <SectionHeader title={title} count={currentSection.data.length} />
         );
       }}
       stickySectionHeadersEnabled={false}

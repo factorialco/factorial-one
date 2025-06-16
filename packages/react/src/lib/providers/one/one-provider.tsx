@@ -1,4 +1,4 @@
-import { MotionConfig } from "framer-motion"
+import { MotionConfig } from "motion/react"
 import {
   ComponentProps,
   createContext,

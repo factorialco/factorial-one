@@ -6,7 +6,7 @@ import {
 } from "@/experimental/RichText/CoreEditor"
 import { Paperclip, TextSize } from "@/icons/app"
 import { Editor } from "@tiptap/react"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { EnhanceActivator } from "../Enhance"
 import {

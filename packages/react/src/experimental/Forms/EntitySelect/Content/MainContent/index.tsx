@@ -5,6 +5,7 @@ import { Spinner } from "../../../../exports"
 import { VirtualList } from "../../../../Navigation/VirtualList"
 import { Select } from "../../../Fields/Select"
 import { Action } from "../../../Fields/Select/SelectBottomActions"
+import { CreateItem } from "../../CreateItem"
 import { EntitySelectListItem } from "../../ListItem"
 import {
   EntityId,
@@ -16,34 +17,14 @@ import {
 import { Footer } from "./Footer"
 import { Searcher } from "./Searcher"
 
-export const MainContent = ({
-  groupView,
-  entities,
-  groups,
-  selectedGroup,
-  search,
-  onSelect,
-  onRemove,
-  onSubItemRemove,
-  onSubItemSelect,
-  onClear,
-  onSelectAll,
-  onSearch,
-  selectedEntities,
-  onGroupChange,
-  onToggleExpand,
-  searchPlaceholder,
-  selectAllLabel,
-  clearLabel,
-  notFoundTitle,
-  notFoundSubtitle,
-  className,
-  actions,
-  singleSelector = false,
-  loading = false,
-  disabled = false,
-  hiddenAvatar = false,
-}: {
+const VIRTUAL_LIST_HEIGHT = 384
+const ITEM_SIZE_DEFAULT = 36
+const ITEM_SIZE_PARENT = 37
+const SCROLL_TIMEOUT_SHORT = 1
+const FOCUS_TIMEOUT = 200
+const FOCUSABLE_SELECTOR = '[data-avatarname-navigator-element="true"]'
+
+interface MainContentProps {
   groupView: boolean
   entities: EntitySelectEntity[]
   groups: EntitySelectNamedGroup[]
@@ -76,6 +57,39 @@ export const MainContent = ({
   disabled?: boolean
   hiddenAvatar?: boolean
   actions?: Action[]
+  onCreate?: (partialName: string) => void
+  onCreateLabel?: string
+}
+
+export const MainContent: React.FC<MainContentProps> = ({
+  groupView,
+  entities,
+  groups,
+  selectedGroup,
+  search,
+  onSelect,
+  onRemove,
+  onSubItemRemove,
+  onSubItemSelect,
+  onClear,
+  onSelectAll,
+  onSearch,
+  selectedEntities = [],
+  onGroupChange,
+  onToggleExpand,
+  searchPlaceholder,
+  selectAllLabel,
+  clearLabel,
+  notFoundTitle,
+  notFoundSubtitle,
+  className,
+  actions,
+  onCreate,
+  onCreateLabel,
+  singleSelector = false,
+  loading = false,
+  disabled = false,
+  hiddenAvatar = false,
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null)
 
@@ -91,46 +105,77 @@ export const MainContent = ({
   )
 
   const goToFirst = useCallback(() => {
-    ref.current?.scrollTo({
-      top: 0,
-    })
     setTimeout(() => {
-      const focusableSelectors = '[data-avatarname-navigator-element="true"]'
+      ref.current?.scrollTo({ top: 0 })
+    }, SCROLL_TIMEOUT_SHORT)
+    setTimeout(() => {
       const allFocusable = Array.from(
-        document.querySelectorAll(focusableSelectors)
+        document.querySelectorAll(FOCUSABLE_SELECTOR)
       ) as HTMLElement[]
       allFocusable[0]?.focus()
-    }, 100)
+    }, FOCUS_TIMEOUT)
   }, [])
 
   const goToLast = useCallback(() => {
-    ref.current?.scrollTo({ top: ref.current?.scrollHeight })
     setTimeout(() => {
-      const focusableSelectors = '[data-avatarname-navigator-element="true"]'
+      ref.current?.scrollTo({ top: ref.current?.scrollHeight })
+    }, SCROLL_TIMEOUT_SHORT)
+    setTimeout(() => {
       const allFocusable = Array.from(
-        document.querySelectorAll(focusableSelectors)
+        document.querySelectorAll(FOCUSABLE_SELECTOR)
       ) as HTMLElement[]
       allFocusable[allFocusable.length - 1]?.focus()
-    }, 100)
+    }, FOCUS_TIMEOUT)
   }, [])
 
-  const itemRenderer = useCallback(
-    (vi: VirtualItem) => {
-      const entity = entities[vi.index]
-      const selectedEntity = (selectedEntities ?? []).find(
-        (el) => el.id === entity.id
-      )
+  const selectedEntitiesMap = useMemo(
+    () => new Map(selectedEntities.map((entity) => [entity.id, entity])),
+    [selectedEntities]
+  )
+
+  const getSelectionState = useCallback(
+    (entity: EntitySelectEntity) => {
+      const selectedEntity = selectedEntitiesMap.get(entity.id)
+
+      if (!groupView) {
+        return {
+          selected: !!selectedEntity,
+          partialSelected: !!selectedEntity,
+        }
+      }
+
       const selectedSubItems = (entity.subItems ?? []).filter((subItem) =>
         selectedEntity?.subItems?.some(
           (selectedSubItem) => selectedSubItem.subId === subItem.subId
         )
       )
-      const selected = groupView
-        ? (entity.subItems?.length ?? 0) === selectedSubItems.length
-        : !!(selectedEntities ?? []).find((el) => el.id === entity.id)
-      const partialSelected = groupView
-        ? !selected && selectedSubItems.length > 0
-        : selected
+
+      const selected =
+        (entity.subItems?.length ?? 0) === selectedSubItems.length
+      const partialSelected = !selected && selectedSubItems.length > 0
+
+      return { selected, partialSelected }
+    },
+    [groupView, selectedEntitiesMap]
+  )
+
+  const itemRenderer = useCallback(
+    (vi: VirtualItem) => {
+      if (vi.index === 0 && onCreate) {
+        return (
+          <CreateItem
+            label={onCreateLabel ?? ""}
+            onCreate={() => onCreate?.(search)}
+            goToFirst={goToFirst}
+            goToLast={goToLast}
+          />
+        )
+      }
+
+      const index = onCreate ? vi.index - 1 : vi.index
+      const entity = entities[index]
+      const { selected, partialSelected } = getSelectionState(entity)
+
       return (
         <EntitySelectListItem
           expanded={entity.expanded ?? false}
@@ -143,10 +188,7 @@ export const MainContent = ({
           onRemove={onRemove}
           selected={selected}
           partialSelected={partialSelected}
-          showGroupIcon={
-            groups.find((el) => el.value === selectedGroup)?.groupType ===
-            "team"
-          }
+          showGroupIcon={isTeamGroup(groups, selectedGroup)}
           singleSelector={singleSelector}
           goToFirst={goToFirst}
           goToLast={goToLast}
@@ -156,20 +198,22 @@ export const MainContent = ({
       )
     },
     [
+      onCreate,
+      onCreateLabel,
       disabled,
       entities,
+      getSelectionState,
       goToFirst,
       goToLast,
       groupView,
       groups,
+      hiddenAvatar,
       onRemove,
       onSelect,
       onToggleExpand,
       search,
-      selectedEntities,
       selectedGroup,
       singleSelector,
-      hiddenAvatar,
     ]
   )
 
@@ -186,8 +230,9 @@ export const MainContent = ({
         }))
       : entities
           .flatMap((entity) => {
-            const foundSelected = selectedEntities?.find(
-              (el) => el.id === entity.id
+            const foundSelected = findSelectedEntity(
+              selectedEntities ?? [],
+              entity.id
             )
             return [
               {
@@ -220,8 +265,20 @@ export const MainContent = ({
 
   const itemFlattenedRenderer = useCallback(
     (vi: VirtualItem) => {
-      const parent = flattenedList[vi.index].parent
-      const subItem = flattenedList[vi.index].subItem
+      if (vi.index === 0 && onCreate) {
+        return (
+          <CreateItem
+            label={onCreateLabel ?? ""}
+            onCreate={() => onCreate?.(search)}
+            goToFirst={goToFirst}
+            goToLast={goToLast}
+          />
+        )
+      }
+
+      const index = onCreate ? vi.index - 1 : vi.index
+      const parent = flattenedList[index].parent
+      const subItem = flattenedList[index].subItem
       if (!parent) {
         const recoveredEntity: EntitySelectEntity = {
           id: subItem.subId,
@@ -231,8 +288,9 @@ export const MainContent = ({
           expanded: subItem.expanded,
           searchKeys: subItem.subSearchKeys,
         }
-        const selectedEntity = (selectedEntities ?? []).find(
-          (el) => el.id === recoveredEntity.id
+        const selectedEntity = findSelectedEntity(
+          selectedEntities,
+          recoveredEntity.id
         )
         const selectedSubItems = (recoveredEntity?.subItems ?? []).filter(
           (subItem) =>
@@ -269,12 +327,11 @@ export const MainContent = ({
         )
       }
 
-      let selected = !!(selectedEntities ?? []).find(
-        (el) => el.id === subItem.subId
-      )
+      let selected = !!findSelectedEntity(selectedEntities, subItem.subId)
       if (!selected) {
-        const selectedParentEntity = (selectedEntities ?? []).find(
-          (el) => el.id === parent.id
+        const selectedParentEntity = findSelectedEntity(
+          selectedEntities,
+          parent.id
         )
         const selectedSubItems = (parent?.subItems ?? []).filter((subItem) =>
           selectedParentEntity?.subItems?.some(
@@ -326,6 +383,8 @@ export const MainContent = ({
       onSubItemSelect,
       onSubItemRemove,
       hiddenAvatar,
+      onCreate,
+      onCreateLabel,
     ]
   )
 
@@ -333,9 +392,6 @@ export const MainContent = ({
     if (!entities.length) {
       return [false, false]
     }
-    const selectedMap = new Map<EntityId, EntitySelectEntity>(
-      (selectedEntities ?? []).map((se) => [se.id, se])
-    )
 
     let visibleCount = 0
     let selectedVisibleCount = 0
@@ -343,24 +399,23 @@ export const MainContent = ({
     if (!groupView) {
       visibleCount = entities.length
       selectedVisibleCount = entities.reduce(
-        (acc, { id }) => acc + (selectedMap.has(id) ? 1 : 0),
+        (acc, { id }) => acc + (selectedEntitiesMap.has(id) ? 1 : 0),
         0
       )
     } else {
+      const selectedSubIds = new Set(
+        [...selectedEntitiesMap.values()].flatMap(
+          (selParent) =>
+            selParent.subItems?.map((selectedSub) => selectedSub.subId) ?? []
+        )
+      )
+
       entities.forEach((fe) => {
         const subItems = fe.subItems ?? []
         visibleCount += subItems.length
-        const selectedSubIds = new Set(
-          [...selectedMap.values()].flatMap(
-            (selParent) =>
-              selParent.subItems?.map((selectedSub) => selectedSub.subId) ?? []
-          )
-        )
-        subItems.forEach((sub) => {
-          if (selectedSubIds.has(sub.subId)) {
-            selectedVisibleCount += 1
-          }
-        })
+        selectedVisibleCount += subItems.filter((sub) =>
+          selectedSubIds.has(sub.subId)
+        ).length
       })
     }
 
@@ -369,7 +424,7 @@ export const MainContent = ({
     const anySelected = selectedVisibleCount > 0
 
     return [allSelected, anySelected]
-  }, [entities, selectedEntities, groupView])
+  }, [entities, selectedEntitiesMap, groupView])
 
   const totalFlattenedItems = flattenedList.length
 
@@ -429,30 +484,39 @@ export const MainContent = ({
           </div>
         )}
         {!loading && !totalFilteredEntities && (
-          <div className="flex h-full w-full flex-col items-center justify-center gap-0.5">
+          <div
+            className="absolute flex w-full flex-col items-center justify-center gap-0.5 p-5"
+            style={{
+              height: VIRTUAL_LIST_HEIGHT,
+            }}
+          >
             <span className="text-lg font-medium">{notFoundTitle}</span>
-            <span className="text-f1-foreground-secondary">
+            <span className="text-center text-f1-foreground-secondary">
               {notFoundSubtitle}
             </span>
           </div>
         )}
-        {!loading && !!totalFilteredEntities && (
+        {!loading && (!!totalFilteredEntities || onCreate) && (
           <div className="h-full">
             {!groupView ? (
               <VirtualList
-                height={384}
-                itemCount={entities.length}
-                itemSize={36}
+                height={VIRTUAL_LIST_HEIGHT}
+                itemCount={entities.length + (onCreate ? 1 : 0)}
+                itemSize={ITEM_SIZE_DEFAULT}
                 renderer={itemRenderer}
                 ref={ref}
               />
             ) : (
               <VirtualList
-                height={384}
-                itemCount={totalFlattenedItems}
-                itemSize={(index) =>
-                  flattenedList[index].parent === null ? 37 : 36
-                }
+                height={VIRTUAL_LIST_HEIGHT}
+                itemCount={totalFlattenedItems + (onCreate ? 1 : 0)}
+                itemSize={(index) => {
+                  if (index === 0 && onCreate) return ITEM_SIZE_DEFAULT
+                  const adjustedIndex = onCreate ? index - 1 : index
+                  return flattenedList[adjustedIndex]?.parent === null
+                    ? ITEM_SIZE_PARENT
+                    : ITEM_SIZE_DEFAULT
+                }}
                 renderer={itemFlattenedRenderer}
                 ref={ref}
               />
@@ -474,4 +538,15 @@ export const MainContent = ({
       />
     </div>
   )
+}
+
+const findSelectedEntity = (entities: EntitySelectEntity[], id: EntityId) => {
+  return entities.find((el) => el.id === id)
+}
+
+const isTeamGroup = (
+  groups: EntitySelectNamedGroup[],
+  selectedGroup: string
+) => {
+  return groups.find((el) => el.value === selectedGroup)?.groupType === "team"
 }

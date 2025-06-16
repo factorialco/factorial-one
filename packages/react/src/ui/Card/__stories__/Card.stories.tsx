@@ -1,5 +1,5 @@
 import ChevronRight from "@/icons/app/ChevronRight"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import {
   Card,
   CardComment,

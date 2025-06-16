@@ -1,7 +1,7 @@
 import { IconType } from "@/factorial-one"
 import { cn } from "@/lib/utils"
 import * as Popover from "@radix-ui/react-popover"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
 import { ToolbarButton } from "../ToolbarButton"
 

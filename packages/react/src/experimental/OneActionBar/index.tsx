@@ -8,7 +8,7 @@ import {
 } from "@/experimental/Navigation/Dropdown"
 import { useI18n } from "@/lib/providers/i18n"
 import NumberFlow from "@number-flow/react"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 
 type ActionType = {
   label: string

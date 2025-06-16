@@ -1,9 +1,9 @@
-import { addons } from "@storybook/manager-api"
-import { create } from "@storybook/theming"
 import {
   renderLabel,
   type TagBadgeParameters,
 } from "storybook-addon-tag-badges"
+import { addons } from "storybook/manager-api"
+import { create } from "storybook/theming"
 
 const theme = create({
   base: "light",

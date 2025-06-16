@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { cn, focusRing } from "../../../../lib/utils"
 import { FilterDefinitionsByType, getFilterType } from "../FilterTypes"
 import type {

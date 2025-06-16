@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/react"
+import type { Meta } from "@storybook/react-vite"
 
 import { VerticalBarChartProps } from "../../../../components/Charts/VerticalBarChart"
 import BarChartStory from "../../../../components/Charts/VerticalBarChart/index.stories"

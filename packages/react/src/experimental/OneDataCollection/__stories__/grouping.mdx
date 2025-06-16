@@ -1,4 +1,10 @@
-import { Canvas, Meta, Controls, Unstyled, Story } from "@storybook/blocks"
+import {
+  Canvas,
+  Meta,
+  Controls,
+  Unstyled,
+  Story,
+} from "@storybook/addon-docs/blocks"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 import * as GroupingStories from "./grouping.stories"
@@ -141,6 +147,10 @@ field of the record and the value is an object with the following properties:
 ### With grouping and pagination
 
 <Canvas of={GroupingStories.WithPaginationAndGrouping} />
+
+### With grouping and infinite scroll pagination
+
+<Canvas of={GroupingStories.WithInfiniteScrollPaginationAndGrouping} />
 
 ### Selectable grouping
 
