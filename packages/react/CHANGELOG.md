@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.97.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.0...factorial-one-react-v1.97.1) (2025-06-16)
+
+
+### Bug Fixes
+
+* **RichTextEditor:** addresing some editor errors ([#2067](https://github.com/factorialco/factorial-one/issues/2067)) ([ae47adf](https://github.com/factorialco/factorial-one/commit/ae47adf66a360f19c85d8afcd9e5c6ab768b6694))
+
 ## [1.97.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.96.1...factorial-one-react-v1.97.0) (2025-06-16)
 
 
