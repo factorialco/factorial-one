@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.97.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.96.1...factorial-one-react-v1.97.0) (2025-06-16)
+
+
+### Features
+
+* button loading spinner ([#2076](https://github.com/factorialco/factorial-one/issues/2076)) ([f782d57](https://github.com/factorialco/factorial-one/commit/f782d5735c8fc9b01706a4c886174f2cbca0415a))
+
 ## [1.96.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.96.0...factorial-one-react-v1.96.1) (2025-06-13)
 
 
