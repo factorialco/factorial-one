@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/react"
+import type { Meta } from "@storybook/react-vite"
 
 import AreaChartStory from "../../../../components/Charts/AreaChart/index.stories"
 import { LineChartProps } from "../../../../components/Charts/LineChart"

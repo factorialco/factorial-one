@@ -75,12 +75,10 @@ export function useSelectable<
     if (defaultSelectedItems) {
       if (isGrouped) {
         ;(defaultSelectedItems.groups || []).forEach((defaultGroup) => {
-          console.log("defaultGroup", defaultGroup, data.groups)
           const group = data.groups.find(
             (group) => group.key === defaultGroup.groupId
           )
           if (group) {
-            console.log("group", group.key, defaultGroup.checked)
             handleSelectGroupChange(group, defaultGroup.checked)
           }
         })

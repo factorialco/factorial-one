@@ -14,7 +14,7 @@ import { useEffect, useState } from "react"
 
 type BaseAction = {
   label: string
-  onClick: () => Promise<void>
+  onClick: () => Promise<void> | void
 }
 
 type UpsellAction = BaseAction & {

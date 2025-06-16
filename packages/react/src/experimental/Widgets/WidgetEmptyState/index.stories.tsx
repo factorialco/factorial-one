@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { Placeholder as PlaceholderIcon } from "../../../icons/app"
 import { WidgetEmptyState } from "./index"

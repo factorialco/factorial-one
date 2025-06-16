@@ -1,4 +1,10 @@
-import { Canvas, Meta, Controls, Unstyled, Story } from "@storybook/blocks"
+import {
+  Canvas,
+  Meta,
+  Controls,
+  Unstyled,
+  Story,
+} from "@storybook/addon-docs/blocks"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 import * as DataCollectionStories from "./index.stories"
@@ -190,11 +196,7 @@ const { source, currentSelectable, setCurrentSelectable } = useDataCollection({
   source={source}
   onBulkAction={handleBulkActions}
 />
-<<<<<<< HEAD
-````
-=======
 ```
->>>>>>> FCT-25305-grouping
 
 You can react to the action selected by the user using the `OneDataCollection`
 component `onBulkAction` prop.
@@ -244,3 +246,4 @@ The callback receives the following parameters:
   of={DataCollectionStories.WithSelectableAndBulkActions}
   meta={DataCollectionStories}
 />
+````
