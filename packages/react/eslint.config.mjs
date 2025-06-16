@@ -2,6 +2,7 @@ import { fixupConfigRules } from "@eslint/compat"
 import { FlatCompat } from "@eslint/eslintrc"
 import js from "@eslint/js"
 import tsParser from "@typescript-eslint/parser"
+import oxlint from "eslint-plugin-oxlint"
 import reactRefresh from "eslint-plugin-react-refresh"
 import globals from "globals"
 import path from "node:path"
@@ -9,6 +10,8 @@ import { fileURLToPath } from "node:url"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+
+const isCI = process.env.CI === "true"
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -23,6 +26,14 @@ const reactSettings = {
   },
 }
 export default [
+  {
+    files: ["eslint.config.mjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
   // Main project configuration
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
@@ -39,6 +50,9 @@ export default [
       "storybook-static",
     ],
     settings: reactSettings,
+    rules: {
+      "no-console": isCI ? "error" : "off",
+    },
   },
   ...fixupConfigRules(
     compat.extends(
@@ -88,4 +102,5 @@ export default [
       ],
     },
   },
+  ...oxlint.configs["flat/recommended"], // oxlint should be the last one
 ]
