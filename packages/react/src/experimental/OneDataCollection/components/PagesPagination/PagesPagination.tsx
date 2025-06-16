@@ -1,19 +1,27 @@
 import { OnePagination } from "@/experimental/OnePagination"
 import { useI18n } from "@/lib/providers/i18n"
+import { cn } from "@/lib/utils"
 import { PaginationInfo } from "../../types"
 import { isPageBasedPagination } from "../../useData"
 
 export const PagesPagination = ({
   paginationInfo,
   setPage,
+  className,
 }: {
   paginationInfo: PaginationInfo | null
   setPage: (page: number) => void
+  className?: string
 }) => {
   const t = useI18n()
   return (
     isPageBasedPagination(paginationInfo) && (
-      <div className="flex w-full items-center justify-between px-6 pt-4">
+      <div
+        className={cn(
+          "flex w-full items-center justify-between px-6",
+          className
+        )}
+      >
         <span className="shrink-0 text-f1-foreground-secondary">
           {paginationInfo.total > 0 &&
             `${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
