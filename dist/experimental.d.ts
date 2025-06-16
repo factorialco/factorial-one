@@ -423,6 +423,25 @@ declare type BaseMetadata = {
 };
 
 /**
+ * Represents a base structure for paginated API responses, providing
+ * details about the records on the current page and pagination metadata.
+ *
+ * @template TRecord The type of each record in the paginated response.
+ *
+ * @property {TRecord[]} records The list of records for the current page.
+ * @property {number} total The total number of records available.
+ * @property {number} perPage The number of records displayed per page.
+ */
+export declare type BasePaginatedResponse<TRecord> = {
+    /** The records for the current page */
+    records: TRecord[];
+    /** Total number of records available */
+    total: number;
+    /** Number of records per page */
+    perPage: number;
+};
+
+/**
  * Base response type for collection data
  * @template Record - The type of records in the collection
  */
@@ -1419,6 +1438,8 @@ declare interface EntitySelectCommonProps extends Omit<PopoverProps, "children" 
     width?: number;
     hiddenAvatar?: boolean;
     applySearchToGroup?: boolean;
+    onCreate?: (partialName: string) => void;
+    onCreateLabel?: string;
     actions?: Action[];
 }
 
@@ -1895,6 +1916,33 @@ declare type InFilterOptionItem<T = unknown> = {
 declare type InFilterOptions_2<T> = {
     cache?: boolean;
     options: Array<InFilterOptionItem<T>> | (() => Array<InFilterOptionItem<T>> | Promise<Array<InFilterOptionItem<T>>>);
+};
+
+/**
+ * Represents a paginated response structure tailored for infinite scroll implementations.
+ *
+ * @template TRecord The type of the individual record contained in the paginated response.
+ *
+ * @extends BasePaginatedResponse
+ *
+ * @property {"infinite-scroll"} type Identifies the pagination type as "infinite-scroll".
+ * @property {string | null} cursor The current position cursor used to fetch the next set of records.
+ * @property {boolean} hasMore Indicates whether there are additional records available for loading.
+ */
+export declare type InfiniteScrollPaginatedResponse<TRecord> = BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "infinite-scroll">;
+    /**
+     * Represents the current position cursor for pagination.
+     * This is typically a string (often Base64-encoded) that represents
+     * the position of the last item in the current result set.
+     * Used to fetch the next page of results.
+     */
+    cursor: string | null;
+    /**
+     * A boolean flag indicating whether there are more items available for fetching.
+     * Used to determine if additional requests should be made for pagination.
+     */
+    hasMore: boolean;
 };
 
 export declare const Input: React.FC<InputProps>;
@@ -2610,6 +2658,36 @@ declare interface Option_2 {
 
 declare type Options = Items_2 | ((search?: string) => Promise<Items_2> | Items_2);
 
+declare interface OverflowListProps<T> {
+    items: T[];
+    /**
+     * What to render as a list item (items outside of the overflow list)
+     * @param item - The item to render
+     * @param index - The index of the item
+     * @param isVisible - Whether this item is in the visible list (true) or measurement container (false)
+     */
+    renderListItem: (item: T, index: number, isVisible?: boolean) => ReactNode;
+    /**
+     * Additional styling for the container
+     */
+    className?: string;
+    /**
+     * The gap between items in pixels
+     * @default 8
+     */
+    gap?: number;
+    /**
+     * The minimum size of the container
+     * @default 0
+     */
+    minSize: number;
+    /**
+     * Callback when the visible items change
+     * @param visibleItems - The visible items
+     */
+    onVisibleItemsChange?: (visibleItems: T[]) => void;
+}
+
 export declare function Page({ children, header, embedded }: PageProps): JSX_2.Element;
 
 export declare namespace Page {
@@ -2628,6 +2706,29 @@ export declare type PageAction = {
     }>;
 });
 
+/**
+ * Represents a paginated response with page-based navigation.
+ *
+ * Combines the base pagination response with additional properties specific to
+ * page-based pagination, allowing clients to navigate the dataset using page numbers.
+ *
+ * This type is useful for APIs returning data in discrete pages, where both the
+ * current page index and the total number of pages are provided.
+ *
+ * @template TRecord - The type of the individual records in the dataset.
+ *
+ * @property {"pages"} type - Indicates the pagination type is page-based.
+ * @property {number} currentPage - The index of the current page being viewed.
+ * @property {number} pagesCount - The total number of pages available.
+ */
+export declare type PageBasedPaginatedResponse<TRecord> = BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "pages">;
+    /** Current page number (1-indexed) */
+    currentPage: number;
+    /** Total number of pages available */
+    pagesCount: number;
+};
+
 export declare function PageHeader({ module, statusTag, breadcrumbs, actions, embedded, navigation, productUpdates, favorites, }: HeaderProps): JSX_2.Element;
 
 declare interface PageProps {
@@ -2643,7 +2744,7 @@ declare interface PageProps {
  */
 export declare type PaginatedDataAdapter<Record extends RecordType, Filters extends FiltersDefinition, NavigationFilters extends NavigationFiltersDefinition> = {
     /** Indicates this adapter uses page-based pagination */
-    paginationType: "pages";
+    paginationType: PaginationType;
     /** Default number of records per page */
     perPage?: number;
     /**
@@ -2654,40 +2755,35 @@ export declare type PaginatedDataAdapter<Record extends RecordType, Filters exte
     fetchData: (options: PaginatedFetchOptions<Filters, NavigationFilters>) => PaginatedResponse<Record> | Promise<PaginatedResponse<Record>> | Observable<PromiseState<PaginatedResponse<Record>>>;
 };
 
-/**
- * Options for paginated data fetching
- * @template Filters - The available filter configurations
- */
 export declare type PaginatedFetchOptions<Filters extends FiltersDefinition, NavigationFilters extends NavigationFiltersDefinition> = BaseFetchOptions<Filters, NavigationFilters> & {
-    /** Pagination configuration */
     pagination: {
+        perPage?: number;
+    } & ({
         currentPage: number;
-        perPage: number;
-    };
+        cursor?: never;
+    } | {
+        cursor?: string | null;
+        currentPage?: never;
+    });
 };
 
 /**
  * Response type for paginated collection data
  * @template Record - The type of records in the collection
  */
-export declare type PaginatedResponse<Record> = {
-    /** The records for the current page */
-    records: Record[];
-} & PaginationInfo;
+export declare type PaginatedResponse<TRecord> = PageBasedPaginatedResponse<TRecord> | InfiniteScrollPaginatedResponse<TRecord>;
 
 /**
- * Information about the current pagination state
+ * Pagination state and controls
  */
-export declare type PaginationInfo = {
-    /** Total number of records available */
-    total: number;
-    /** Current page number (1-indexed) */
-    currentPage: number;
-    /** Number of records per page */
-    perPage: number;
-    /** Total number of pages available */
-    pagesCount: number;
-};
+export declare type PaginationInfo = Omit<PageBasedPaginatedResponse<unknown> | InfiniteScrollPaginatedResponse<unknown>, "records">;
+
+/**
+ * Defines the available pagination types used throughout the application.
+ * - "pages": Represents traditional page-based navigation with numbered pages.
+ * - "infinite-scroll": Represents continuous loading of content as the user scrolls.
+ */
+export declare type PaginationType = "pages" | "infinite-scroll";
 
 export declare const PersonAvatar: {
     ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: PersonAvatarProps): JSX_2.Element;
@@ -2993,7 +3089,7 @@ declare type Props_19<Id extends string | number = string | number> = {
     minSize?: number;
     onClickItem?: (id: Id) => void;
     showAllItems?: boolean;
-};
+} & Pick<ComponentProps<typeof VerticalOverflowList>, "onVisibleItemsChange">;
 
 declare type Props_2 = {
     name: string;
@@ -3380,7 +3476,7 @@ declare const shortcutVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-export declare function Sidebar({ header, body, footer }: SidebarProps): JSX_2.Element;
+export declare function Sidebar({ header, body, footer, onFooterDropdownClick, }: SidebarProps): JSX_2.Element;
 
 export declare function SidebarFooter({ user, options, showActivityButton, activityButtonShortcut, onActivityButtonClick, onDropdownClick, hasActivityUpdates, }: SidebarFooterProps): JSX_2.Element;
 
@@ -3411,6 +3507,7 @@ declare interface SidebarProps {
     header?: ReactNode;
     body?: ReactNode;
     footer?: ReactNode;
+    onFooterDropdownClick?: () => void;
 }
 
 declare type SidebarState = "locked" | "unlocked" | "hidden";
@@ -4054,6 +4151,11 @@ export declare const VerticalBarChartWidget: ForwardRefExoticComponent<Omit<Widg
 chart: VerticalBarChartProps;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
+declare const VerticalOverflowList: {
+    <T>({ items, renderListItem, className, gap, minSize, onVisibleItemsChange, }: OverflowListProps<T>): JSX_2.Element;
+    displayName: string;
+};
+
 /**
  * Represents a visualization configuration for displaying collection data.
  * Supports different visualization types (card, table, or custom) with their respective options.
@@ -4133,7 +4235,7 @@ export declare type WidgetEmptyStateProps = {
 
 export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_17): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_19): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, onVisibleItemsChange, }: Props_19): JSX_2.Element;
 
 export declare function WidgetInboxListItem({ id, title, subtitle, onClick, module, }: Props_18): JSX_2.Element;
 

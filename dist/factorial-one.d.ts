@@ -68,7 +68,7 @@ values: {
 
 declare type BaseAction = {
     label: string;
-    onClick: () => Promise<void>;
+    onClick: () => Promise<void> | void;
 };
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
@@ -662,9 +662,9 @@ export declare interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> 
      */
     showIcon?: boolean;
     /**
-     * Function to be executed when the button is clicked. Must return a Promise.
+     * Function to be executed when the button is clicked
      */
-    onRequest?: () => Promise<void>;
+    onRequest?: () => Promise<void> | void;
     /**
      * Whether to show the confirmation dialog after the request
      */
