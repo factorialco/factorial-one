@@ -1,5 +1,5 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import * as React from "react";
 const homeTransition = {
     duration: 0.6,
