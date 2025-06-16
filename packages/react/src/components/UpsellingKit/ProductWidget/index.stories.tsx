@@ -1,4 +1,4 @@
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { ProductWidget } from "."
 
 const meta: Meta<typeof ProductWidget> = {
@@ -17,9 +17,6 @@ export const Default: Story = {
     title: "More benefits to René & your team",
     description:
       "Enjoy greater savings through flexible benefits like meals, transport, and health insurance.",
-    onClick: () => {
-      alert("clicked")
-    },
     onClose: () => {
       alert("dismissed")
     },
@@ -27,6 +24,8 @@ export const Default: Story = {
     width: "300px",
     actions: [
       {
+        type: "regular",
+        variant: "promote",
         label: "Learn more",
         onClick: () => {
           alert("clicked")
@@ -73,9 +72,6 @@ export const WithUpsellingButton: Story = {
     title: "Give René some well-deserved benefits!",
     description:
       "Help people improve their take-home pay by €200 a year with flexible benefits, at no extra cost to you.",
-    onClick: () => {
-      alert("clicked")
-    },
     onClose: () => {
       alert("dismissed")
     },
@@ -104,6 +100,7 @@ export const WithUpsellingButton: Story = {
             console.log("buttonOnClick")
           },
         },
+        showConfirmation: false,
         loadingState: {
           label: "Processing...",
         },

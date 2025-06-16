@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import cat from "../../../../../../storybook-assets/cat.jpeg"
 import { PostEvent } from "./index"
 

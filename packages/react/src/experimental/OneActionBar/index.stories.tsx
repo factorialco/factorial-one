@@ -9,9 +9,9 @@ import {
   Share,
   Upload,
 } from "@/icons/app"
-import type { Meta, StoryObj } from "@storybook/react"
-import { fn } from "@storybook/test"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
+import { fn } from "storybook/test"
 import { OneActionBar } from "."
 
 const meta: Meta<typeof OneActionBar> = {

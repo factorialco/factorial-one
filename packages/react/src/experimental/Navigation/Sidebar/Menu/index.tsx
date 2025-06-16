@@ -5,7 +5,7 @@ import { useI18n } from "@/lib/providers/i18n"
 import { useTouchScreen } from "@/lib/useTouchScreen"
 import { cn, focusRing } from "@/lib/utils"
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
-import { LayoutGroup, motion, Reorder, useDragControls } from "framer-motion"
+import { LayoutGroup, motion, Reorder, useDragControls } from "motion/react"
 import {
   ReactNode,
   RefObject,

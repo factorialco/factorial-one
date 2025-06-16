@@ -11,7 +11,7 @@ import {
   Target,
   Upload,
 } from "@/icons/app"
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { GroupingDefinition } from "../grouping"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
@@ -197,6 +197,7 @@ export const BasicTableView: Story = {
                     label: "Department",
                     render: (item) => item.department,
                     sorting: "department",
+                    info: "Team that the employee belongs to",
                   },
                   {
                     label: "Salary",
@@ -846,7 +847,7 @@ export const WithMultipleVisualizations: Story = {
   },
 }
 
-export const WithPagination: Story = {
+export const WithPagesPagination: Story = {
   render: () => {
     // Create a fixed set of paginated users so we're not regenerating them on every render
     const paginatedMockUsers = generateMockUsers(50)
@@ -893,6 +894,91 @@ export const WithPagination: Story = {
           mockVisualizations.list,
         ]}
       />
+    )
+  },
+}
+
+export const WithInfiniteScrollPagination: Story = {
+  render: () => {
+    // Create a fixed set of paginated users so we're not regenerating them on every render
+    const paginatedMockUsers = generateMockUsers(50)
+
+    const source = useDataSource({
+      filters,
+      presets: filterPresets,
+      sortings,
+      selectable: (item) => (item.id !== "user-1a" ? item.id : undefined),
+      bulkActions: (allSelected) => {
+        return {
+          primary: [
+            {
+              label: allSelected ? "Delete All" : "Delete",
+              icon: Delete,
+              id: "delete-all",
+            },
+          ],
+        }
+      },
+      dataAdapter: createDataAdapter({
+        data: paginatedMockUsers,
+        delay: 500,
+        paginationType: "infinite-scroll",
+        perPage: 10,
+      }),
+    })
+
+    return (
+      <div className="space-y-4" style={{ height: "500px", overflow: "auto" }}>
+        <OneDataCollection
+          source={source}
+          onSelectItems={(selectedItems) => {
+            console.log("Selected items", "->", selectedItems)
+          }}
+          onBulkAction={(action, selectedItems) => {
+            console.log(`Bulk action: ${action}`, "->", selectedItems)
+          }}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  {
+                    label: "Name",
+                    render: (item) => item.name,
+                    sorting: "name",
+                  },
+                  {
+                    label: "Email",
+                    render: (item) => item.email,
+                    sorting: "email",
+                  },
+                  {
+                    label: "Role",
+                    render: (item) => item.role,
+                    sorting: "role",
+                  },
+                  {
+                    label: "Department",
+                    render: (item) => item.department,
+                    sorting: "department",
+                  },
+                ],
+              },
+            },
+            {
+              type: "card",
+              options: {
+                cardProperties: [
+                  { label: "Email", render: (item) => item.email },
+                  { label: "Role", render: (item) => item.role },
+                  { label: "Department", render: (item) => item.department },
+                ],
+                title: (item) => item.name,
+              },
+            },
+          ]}
+        />
+      </div>
     )
   },
 }

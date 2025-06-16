@@ -1,24 +1,23 @@
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { OnePagination } from "@/experimental/OnePagination"
 
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { useGroups } from "@/experimental/OneDataCollection/useGroups"
 
-import { useI18n } from "@/lib/providers/i18n"
+import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { Skeleton } from "@/ui/skeleton"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { useEffect } from "react"
 import { Spinner } from "../../../../Information/Spinner"
+import { PagesPagination } from "../../../components/PagesPagination"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
-import { useData } from "../../../useData"
+import { isInfiniteScrollPagination, useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
 import { ListGroup } from "./components/ListGroup"
-import { SortingSelector } from "./components/SortingSelector"
 import { ListVisualizationOptions } from "./types"
 
 /**
@@ -63,15 +62,14 @@ export const ListCollection = <
   NavigationFilters,
   Grouping
 >) => {
-  const t = useI18n()
-
-  const { data, paginationInfo, setPage, isInitialLoading } = useData<
-    Record,
-    Filters,
-    Sortings,
-    NavigationFilters,
-    Grouping
-  >(source, {
+  const {
+    data,
+    paginationInfo,
+    setPage,
+    isInitialLoading,
+    isLoadingMore,
+    loadMore,
+  } = useData<Record, Filters, Sortings, NavigationFilters, Grouping>(source, {
     onError: (error) => {
       onLoadError(error)
     },
@@ -88,7 +86,15 @@ export const ListCollection = <
     // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
   }, [paginationInfo?.total, data.records])
 
-  const { currentSortings, setCurrentSortings, isLoading } = source
+  const { isLoading } = source
+
+  // Infinite scroll pagination
+  const { loadingIndicatorRef } = useInfiniteScrollPagination(
+    paginationInfo,
+    isLoading,
+    isLoadingMore,
+    loadMore
+  )
 
   /**
    * Item selection
@@ -164,22 +170,15 @@ export const ListCollection = <
             title="[TODO] Select all"
           />
         )}
-
-        <SortingSelector
-          source={source}
-          onChange={setCurrentSortings}
-          currentSortings={currentSortings}
-        />
-      </div>
-      <div
-        className={cn(
-          "flex min-h-0 flex-1 flex-col gap-2",
-          isLoading && "select-none opacity-50 transition-opacity"
-        )}
-        aria-live={isLoading ? "polite" : undefined}
-        aria-busy={isLoading ? "true" : undefined}
-      >
-        <div className="min-h-0 flex-1 overflow-auto">
+        <div
+          className={cn(
+            "flex min-h-0 flex-1 flex-col gap-2",
+            isLoading && "select-none opacity-50 transition-opacity"
+          )}
+          aria-live={isLoading ? "polite" : undefined}
+          aria-busy={isLoading ? "true" : undefined}
+        >
+          <div className="min-h-0 flex-1 overflow-auto"></div>
           <AnimatePresence>
             {isLoading && (
               <motion.div
@@ -201,6 +200,7 @@ export const ListCollection = <
                   key={`group-header-${group.key}`}
                 >
                   <GroupHeader
+                    key={`group-header-${group.key}`}
                     className="cursor-pointer select-none rounded-md px-6 py-3 transition-colors hover:bg-f1-background-hover"
                     selectable={!!source.selectable}
                     select={
@@ -243,7 +243,6 @@ export const ListCollection = <
                 </div>
               )
             })}
-
           {data?.type === "flat" && (
             <ListGroup
               source={source}
@@ -254,27 +253,16 @@ export const ListCollection = <
               itemDefinition={itemDefinition}
             />
           )}
-        </div>
-
-        {paginationInfo && (
-          <div className="flex w-full items-center justify-between px-6">
-            <span className="shrink-0 text-f1-foreground-secondary">
-              {paginationInfo.total > 0 &&
-                `${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
-                  paginationInfo.currentPage * paginationInfo.perPage,
-                  paginationInfo.total
-                )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
-            </span>
-            <div className="flex items-center">
-              <OnePagination
-                totalPages={paginationInfo.pagesCount}
-                currentPage={paginationInfo.currentPage}
-                onPageChange={setPage}
-                disabled={paginationInfo.pagesCount <= 1}
+          {isInfiniteScrollPagination(paginationInfo) &&
+            paginationInfo.hasMore && (
+              <div
+                ref={loadingIndicatorRef}
+                className="h-10 w-full"
+                aria-hidden="true"
               />
-            </div>
-          </div>
-        )}
+            )}
+        </div>
+        <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
       </div>
     </div>
   )

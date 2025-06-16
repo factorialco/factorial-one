@@ -1,5 +1,11 @@
-import { Meta, StoryObj } from "@storybook/react"
-import { ExampleComponent, getMockVisualizations, mockUsers } from "../mockData"
+import { Meta, StoryObj } from "@storybook/react-vite"
+import {
+  createDataAdapter,
+  ExampleComponent,
+  generateMockUsers,
+  getMockVisualizations,
+  mockUsers,
+} from "../mockData"
 
 const meta = {
   title: "Data Collection/Visualizations/List",
@@ -51,6 +57,24 @@ export const ListVisualizationWithGrouping: Story = {
             },
           },
         }}
+      />
+    )
+  },
+}
+
+export const ListVisualizationWithInfiniteScrollPagination: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  render: () => {
+    const mockVisualizations = getMockVisualizations()
+    return (
+      <ExampleComponent
+        visualizations={[mockVisualizations.list]}
+        dataAdapter={createDataAdapter({
+          data: generateMockUsers(100),
+          paginationType: "infinite-scroll",
+        })}
       />
     )
   },

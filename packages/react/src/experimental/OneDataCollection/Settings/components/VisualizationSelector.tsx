@@ -84,7 +84,7 @@ export const VisualizationSelector = <
     }
   }
   return (
-    <div className="grid grid-cols-2">
+    <div className="grid grid-cols-2 p-2">
       {visualizations.map((visualization, index) => {
         const { icon, label } = getVisualizationMeta(visualization)
 

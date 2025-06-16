@@ -1,6 +1,6 @@
 import * as Icons from "@/icons/app"
-import { action } from "@storybook/addon-actions"
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
+import { action } from "storybook/actions"
 import { SidebarFooter } from "./index"
 
 const meta = {
@@ -16,7 +16,7 @@ export const Default: Story = {
   args: {
     user: {
       firstName: "Dani",
-      lastName: "Moreno",
+      lastName: "Moreno Frontend kind of long name",
       avatarUrl: "https://github.com/dani-moreno.png",
     },
     showActivityButton: true,

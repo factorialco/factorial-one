@@ -74,9 +74,12 @@ const createMockDataSource = (
       return {
         records: result,
         total: result.length,
-        currentPage: options.pagination.currentPage,
-        perPage: options.pagination.perPage,
-        pagesCount: Math.ceil(result.length / options.pagination.perPage),
+        currentPage: options.pagination?.currentPage ?? 1,
+        perPage: options.pagination?.perPage ?? 10,
+        pagesCount: Math.ceil(
+          result.length / (options.pagination?.perPage ?? 10)
+        ),
+        type: "pages",
       }
     },
     paginationType: "pages",
@@ -140,6 +143,7 @@ describe("useData", () => {
         currentPage: 1,
         perPage: 10,
         pagesCount: 1,
+        type: "pages",
       })
     })
   })
@@ -368,6 +372,7 @@ describe("useData", () => {
                       currentPage: 1,
                       perPage: 10,
                       pagesCount: 1,
+                      type: "pages",
                     },
                     error: null,
                   })

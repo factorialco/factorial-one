@@ -1,4 +1,5 @@
 import { VerticalOverflowList } from "@/ui/VerticalOverflowList"
+import { ComponentProps } from "react"
 import {
   WidgetInboxListItem,
   WidgetInboxListItemProps,
@@ -9,7 +10,7 @@ type Props<Id extends string | number = string | number> = {
   minSize?: number
   onClickItem?: (id: Id) => void
   showAllItems?: boolean
-}
+} & Pick<ComponentProps<typeof VerticalOverflowList>, "onVisibleItemsChange">
 
 export type WidgetInboxListProps = Props
 
@@ -18,6 +19,7 @@ export function WidgetInboxList({
   minSize = 184,
   onClickItem,
   showAllItems,
+  onVisibleItemsChange,
 }: Props) {
   if (showAllItems) {
     return (
@@ -36,6 +38,7 @@ export function WidgetInboxList({
       renderListItem={(item) => (
         <WidgetInboxListItem key={item.id} {...item} onClick={onClickItem} />
       )}
+      onVisibleItemsChange={onVisibleItemsChange}
       gap={8}
     />
   )

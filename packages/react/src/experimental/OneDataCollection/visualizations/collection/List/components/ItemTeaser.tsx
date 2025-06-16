@@ -1,3 +1,4 @@
+import { OneEllipsis } from "@/components/OneEllipsis"
 import {
   Avatar,
   AvatarVariant,
@@ -15,14 +16,18 @@ export const ItemTeaser = ({ title, avatar, description }: ItemTeaserProps) => {
       {avatar && <Avatar avatar={avatar} size="medium" />}
       <div className="flex flex-col gap-0.5 md:gap-1">
         <header>
-          <h3 className="text-base font-medium text-f1-foreground">{title}</h3>
+          <h3>
+            <OneEllipsis className="text-base font-medium text-f1-foreground">
+              {title}
+            </OneEllipsis>
+          </h3>
         </header>
         <aside>
           {description && description.length > 0 && (
             <div className="flex w-full flex-col text-base font-normal text-f1-foreground-secondary md:flex-row md:gap-1">
               {description.map((item, index) => (
-                <div key={index} className="flex flex-row gap-1">
-                  <span className="line-clamp-1 break-all">{item}</span>
+                <div key={index} className="flex min-w-0 flex-1 flex-row gap-1">
+                  <OneEllipsis>{item}</OneEllipsis>
                   {index < description.length - 1 && (
                     <span className="hidden md:inline"> · </span>
                   )}

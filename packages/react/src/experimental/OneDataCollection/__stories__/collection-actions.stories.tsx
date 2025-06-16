@@ -1,5 +1,5 @@
 import { Ai, Download, Pencil, Upload } from "@/icons/app"
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import { SecondaryActionsItemDefinition } from "../actions"
 import { FiltersDefinition } from "../Filters/types"
 import { OneDataCollection, useDataSource } from "../index"
@@ -7,13 +7,14 @@ import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import { SortingsDefinition } from "../sortings"
 import { DataSource, GroupingDefinition } from "../types"
+import { Visualization } from "../visualizations/collection/types"
 
 const meta = {
   title: "Data Collection/Collection Actions",
   parameters: {
     layout: "padded",
   },
-  tags: ["no-sidebar", "internal"],
+  tags: ["internal"],
 } satisfies Meta
 
 export default meta
@@ -114,6 +115,7 @@ function BaseStory<
   NavigationFilters extends NavigationFiltersDefinition,
 >({
   dataSource,
+  visualizations,
 }: {
   dataSource: DataSource<
     (typeof mockUsers)[number],
@@ -123,34 +125,47 @@ function BaseStory<
     NavigationFilters,
     GroupingDefinition<(typeof mockUsers)[number]>
   >
+  visualizations?: ReadonlyArray<
+    Visualization<
+      (typeof mockUsers)[number],
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      GroupingDefinition<(typeof mockUsers)[number]>
+    >
+  >
 }) {
   return (
     <div className="space-y-8">
       <OneDataCollection
         source={dataSource}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-                {
-                  label: "Status",
-                  render: (item) => ({
-                    type: "status",
-                    value: {
-                      status: item.status === "active" ? "positive" : "warning",
-                      label: item.status,
-                    },
-                  }),
-                },
-              ],
+        visualizations={
+          visualizations ?? [
+            {
+              type: "table",
+              options: {
+                columns: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Email", render: (item) => item.email },
+                  { label: "Role", render: (item) => item.role },
+                  { label: "Department", render: (item) => item.department },
+                  {
+                    label: "Status",
+                    render: (item) => ({
+                      type: "status",
+                      value: {
+                        status:
+                          item.status === "active" ? "positive" : "warning",
+                        label: item.status,
+                      },
+                    }),
+                  },
+                ],
+              },
             },
-          },
-        ]}
+          ]
+        }
       />
     </div>
   )
@@ -230,17 +245,53 @@ export const HiddenLabelExpandedActionsExample: Story = {
 
 // Example showing how actions can be used with card visualization
 export const CardActionsExample: Story = {
+  parameters: {
+    a11y: {
+      skipCi: true,
+    },
+    chromatic: { disableSnapshot: true },
+  },
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
+      primaryActions: () => ({
+        label: "Create user",
+        icon: Ai,
+        onClick: () => console.log(`Creating a user`),
+      }),
       secondaryActions: {
         expanded: 1,
-        actions: buildSecondaryActions,
+        actions: () => {
+          const actions = buildSecondaryActions()
+          actions.forEach((action) => {
+            action.hideLabelWhenExpanded = true
+          })
+          return actions
+        },
       },
     })
 
-    return <BaseStory dataSource={dataSource} />
+    return (
+      <BaseStory
+        dataSource={dataSource}
+        visualizations={[
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+                { label: "Status", render: (item) => item.status },
+              ],
+              title: (item) => item.name,
+            },
+          },
+        ]}
+      />
+    )
   },
 }

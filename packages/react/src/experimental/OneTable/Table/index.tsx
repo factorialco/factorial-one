@@ -6,7 +6,7 @@ import { Spinner } from "../../Information/Spinner"
 import { TableContext } from "../utils/TableContext"
 
 import { cn } from "@/lib/utils"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { TableBody } from "../TableBody"
 import { TableCell } from "../TableCell"
 import { TableHead } from "../TableHead"
