@@ -10,6 +10,8 @@ import { fileURLToPath } from "node:url"
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const isCI = process.env.CI === "true"
+
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
@@ -23,6 +25,14 @@ const reactSettings = {
   },
 }
 export default [
+  {
+    files: ["eslint.config.mjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
   // Main project configuration
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
@@ -39,6 +49,9 @@ export default [
       "storybook-static",
     ],
     settings: reactSettings,
+    rules: {
+      "no-console": isCI ? "error" : "off",
+    },
   },
   ...fixupConfigRules(
     compat.extends(
