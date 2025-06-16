@@ -77,11 +77,11 @@ const BasicTextEditorComponent = forwardRef<
   return (
     <div
       ref={containerRef}
-      className="relative flex h-full w-full flex-row"
+      className="relative flex h-full w-full flex-row overflow-hidden"
       id={editorId}
     >
       <div
-        className="relative w-full flex-grow overflow-hidden"
+        className="scrollbar-macos relative w-full flex-grow overflow-y-scroll"
         onClick={() => editor?.commands.focus()}
       >
         <EditorContent editor={editor} />

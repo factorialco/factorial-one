@@ -1,5 +1,5 @@
 import { Delete } from "@/icons/app"
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from "@storybook/react-vite"
 import {
   GroupingDefinition,
   OneDataCollection,
@@ -215,6 +215,129 @@ export const WithPaginationAndGrouping: Story = {
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "pages",
+      }),
+    })
+
+    return (
+      <OneDataCollection
+        source={source}
+        onSelectItems={(selectedItems) => {
+          console.log("Selected items", "->", selectedItems)
+        }}
+        onBulkAction={(action, selectedItems) => {
+          console.log(`Bulk action: ${action}`, "->", selectedItems)
+        }}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+              title: (item) => item.name,
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+export const WithInfiniteScrollPaginationAndGrouping: Story = {
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+  render: () => {
+    // Create a fixed set of paginated users so we're not regenerating them on every render
+    const paginatedMockUsers = generateMockUsers(50)
+
+    const grouping: GroupingDefinition<(typeof mockUsers)[number]> = {
+      mandatory: true,
+      collapsible: true,
+      groupBy: {
+        department: {
+          name: "Department",
+          label: async (groupId) => {
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+            return groupId
+          },
+          itemCount: async (groupId) => {
+            await new Promise((resolve) => setTimeout(resolve, 1500))
+            return paginatedMockUsers.filter(
+              (user) => user.department === groupId
+            ).length
+          },
+        },
+        role: {
+          name: "Role",
+          label: (groupId) => groupId,
+          itemCount: (groupId) => {
+            return paginatedMockUsers.filter((user) => user.role === groupId)
+              .length
+          },
+        },
+      },
+    }
+
+    const source = useDataSource({
+      selectable: (item) => item.id,
+      filters,
+      presets: filterPresets,
+      sortings,
+      grouping: {
+        ...grouping,
+        defaultOpenGroups: ["Engineering"],
+      },
+      currentGrouping: {
+        field: "department",
+        order: "asc",
+      },
+      bulkActions: (allSelected) => {
+        return {
+          primary: [
+            {
+              label: allSelected ? "Delete All" : "Delete",
+              icon: Delete,
+              id: "delete-all",
+            },
+          ],
+        }
+      },
+      dataAdapter: createDataAdapter({
+        data: paginatedMockUsers,
+        delay: 500,
+        paginationType: "infinite-scroll",
       }),
     })
 

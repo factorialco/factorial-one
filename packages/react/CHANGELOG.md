@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.96.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.96.0...factorial-one-react-v1.96.1) (2025-06-13)
+
+
+### Bug Fixes
+
+* update BasicTextEditor styles for improved scrolling behavior ([#2086](https://github.com/factorialco/factorial-one/issues/2086)) ([a6b4316](https://github.com/factorialco/factorial-one/commit/a6b43160be4743e2ca3e970cf4a9428defbcded0))
+
+## [1.96.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.2...factorial-one-react-v1.96.0) (2025-06-13)
+
+
+### Features
+
+* **datacollection:** grouping ([#1661](https://github.com/factorialco/factorial-one/issues/1661)) ([5785b90](https://github.com/factorialco/factorial-one/commit/5785b9067ae20cd8fb8a8bc238bfc908ea851ed7))
+
+## [1.95.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.1...factorial-one-react-v1.95.2) (2025-06-13)
+
+
+### Bug Fixes
+
+* update fallback cursor value to null in mock data ([#2081](https://github.com/factorialco/factorial-one/issues/2081)) ([015ecb0](https://github.com/factorialco/factorial-one/commit/015ecb0df5d86484651b8181390ce5ad3bdcf750))
+
+## [1.95.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.0...factorial-one-react-v1.95.1) (2025-06-13)
+
+
+### Bug Fixes
+
+* add support to know number of visible items in WidgetItemList component ([#2079](https://github.com/factorialco/factorial-one/issues/2079)) ([487b17e](https://github.com/factorialco/factorial-one/commit/487b17e1d0650cb05692b63084de8ad3ecc34469))
+
+## [1.95.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.94.0...factorial-one-react-v1.95.0) (2025-06-13)
+
+
+### Features
+
+* **DataCollection:** Add support for infinite-scroll pagination type ([#1979](https://github.com/factorialco/factorial-one/issues/1979)) ([a480793](https://github.com/factorialco/factorial-one/commit/a480793e6a432113bac9b622dae9b3628611bdd2))
+
+## [1.94.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.93.1...factorial-one-react-v1.94.0) (2025-06-13)
+
+
+### Features
+
+* add create action to EntitySelect component ([#1970](https://github.com/factorialco/factorial-one/issues/1970)) ([a95e3dd](https://github.com/factorialco/factorial-one/commit/a95e3ddb89a5c2b71d53e2ee465fd4a36dff13c1))
+
+## [1.93.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.93.0...factorial-one-react-v1.93.1) (2025-06-12)
+
+
+### Bug Fixes
+
+* **header:** stop playing favorite button animation on initial render ([#2071](https://github.com/factorialco/factorial-one/issues/2071)) ([675d8aa](https://github.com/factorialco/factorial-one/commit/675d8aa0e7c81d0e69595920fd7ef228a8b5e7a4))
+
 ## [1.93.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.3...factorial-one-react-v1.93.0) (2025-06-12)
 
 

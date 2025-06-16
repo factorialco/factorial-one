@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import { BasicTextEditor } from "./index"
 
 const meta: Meta<typeof BasicTextEditor> = {
@@ -52,7 +52,7 @@ export const Default: Story = {
     placeholder: "Enter '/' to open the command palette...",
     toolbarLabels: defaultToolbarLabels,
     slashCommandGroupLabels: defaultSlashCommandGroupLabels,
-    onChange: (value: string | null) => {
+    onChange: (value) => {
       console.log("Content changed:", value)
     },
     initialEditorState: {
@@ -82,7 +82,7 @@ export const SpanishLabels: Story = {
       lists: "Listas",
       blocks: "Bloques",
     },
-    onChange: (value: string | null) => {
+    onChange: (value) => {
       console.log("Content changed:", value)
     },
     initialEditorState: {

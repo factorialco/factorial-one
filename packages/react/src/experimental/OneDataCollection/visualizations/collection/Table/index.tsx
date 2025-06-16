@@ -1,11 +1,11 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
+import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   getAnimationVariants,
   useGroups,
 } from "@/experimental/OneDataCollection/useGroups"
-import { OnePagination } from "@/experimental/OnePagination"
 import {
   OneTable,
   TableBody,
@@ -16,7 +16,14 @@ import {
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
 import { AnimatePresence, motion } from "motion/react"
-import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
+import {
+  ComponentProps,
+  Fragment,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition } from "../../../property-render"
@@ -26,7 +33,7 @@ import {
   SortingsState,
 } from "../../../sortings"
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
-import { useData } from "../../../useData"
+import { isInfiniteScrollPagination, useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
 import { statusToChecked } from "../utils"
 import { Row } from "./components/Row"
@@ -114,17 +121,53 @@ export const TableCollection = <
     )
   )
 
-  const { data, paginationInfo, setPage, isInitialLoading } = useData<
-    R,
-    Filters,
-    Sortings,
-    NavigationFilters,
-    Grouping
-  >(source, {
+  const loadingIndicatorRef = useRef<HTMLDivElement>(null)
+
+  const {
+    data,
+    paginationInfo,
+    setPage,
+    isInitialLoading,
+    isLoadingMore,
+    loadMore,
+  } = useData<R, Filters, Sortings, NavigationFilters, Grouping>(source, {
     onError: (error) => {
       onLoadError(error)
     },
   })
+
+  const { currentSortings, setCurrentSortings, isLoading } = source
+
+  useEffect(() => {
+    if (
+      !isInfiniteScrollPagination(paginationInfo) ||
+      !paginationInfo.hasMore
+    ) {
+      return
+    }
+
+    const loadingIndicator = loadingIndicatorRef.current
+    if (!loadingIndicator) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isLoading && !isLoadingMore) {
+          loadMore()
+        }
+      },
+      {
+        root: null, // viewport
+        rootMargin: "200px",
+        threshold: 0.1,
+      }
+    )
+
+    observer.observe(loadingIndicator)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [paginationInfo, isLoadingMore, loadMore, isLoading])
 
   useEffect(() => {
     onLoadData({
@@ -136,8 +179,6 @@ export const TableCollection = <
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
   }, [paginationInfo?.total, data.records])
-
-  const { currentSortings, setCurrentSortings, isLoading } = source
 
   const frozenColumnsLeft = useMemo(() => frozenColumns, [frozenColumns])
 
@@ -206,15 +247,13 @@ export const TableCollection = <
     defaultOpenGroups
   )
 
+  const skeletonColumns =
+    columns.length + (source.itemActions ? 1 : 0) + (source.selectable ? 1 : 0)
   /*
    * Initial loading
    */
   if (isInitialLoading) {
-    return (
-      <OneTable.Skeleton
-        columns={columns.length + (source.itemActions ? 1 : 0)}
-      />
-    )
+    return <OneTable.Skeleton columns={skeletonColumns} />
   }
 
   // Enforce that sorting is only used when sortings are defined
@@ -382,25 +421,16 @@ export const TableCollection = <
             })}
         </TableBody>
       </OneTable>
-      {paginationInfo && (
-        <div className="flex w-full items-center justify-between px-6 pt-4">
-          <span className="shrink-0 text-f1-foreground-secondary">
-            {paginationInfo.total > 0 &&
-              `${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
-                paginationInfo.currentPage * paginationInfo.perPage,
-                paginationInfo.total
-              )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
-          </span>
-          <div className="flex items-center">
-            <OnePagination
-              totalPages={paginationInfo.pagesCount}
-              currentPage={paginationInfo.currentPage}
-              onPageChange={setPage}
-              disabled={paginationInfo.pagesCount <= 1}
-            />
-          </div>
-        </div>
+
+      {isInfiniteScrollPagination(paginationInfo) && paginationInfo.hasMore && (
+        <div
+          ref={loadingIndicatorRef}
+          className="h-10 w-full"
+          aria-hidden="true"
+        />
       )}
+
+      <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
     </>
   )
 }
