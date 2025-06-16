@@ -9,6 +9,7 @@ import {
   NavigationFiltersState,
 } from "./navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "./sortings"
+import { SummariesDefinition, SummariesState } from "./summary.ts"
 import { DataError } from "./useData"
 
 /**
@@ -27,6 +28,7 @@ export type DataSourceDefinition<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
 > = {
@@ -55,6 +57,8 @@ export type DataSourceDefinition<
   /** Available sorting fields. If not provided, sorting is not allowed. */
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
+  /** Available summaries fields. If not provided, summaries is not allowed. */
+  summaries?: Summaries
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters, Sortings, NavigationFilters>
   /** Selectable items value under the checkbox column (undefined if not selectable) */
@@ -365,12 +369,20 @@ export type CollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   VisualizationOptions extends object,
 > = {
   /** The data source configuration and state */
-  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    Summaries,
+    ItemActions,
+    NavigationFilters
+  >
   /** Function to handle item selection */
   onSelectItems: OnSelectItemsCallback<Record, Filters>
   /** Function to handle data load */
@@ -389,12 +401,14 @@ export type DataSource<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
 > = DataSourceDefinition<
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters
 > & {
@@ -404,6 +418,8 @@ export type DataSource<
   setCurrentFilters: React.Dispatch<React.SetStateAction<FiltersState<Filters>>>
   /** Current state of applied sortings */
   currentSortings: SortingsState<Sortings>
+  /** Current state of applied summaries */
+  currentSummaries: SummariesState<Summaries>
   /** Function to update the current sortings state */
   setCurrentSortings: React.Dispatch<
     React.SetStateAction<SortingsState<Sortings>>
