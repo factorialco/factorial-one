@@ -4,6 +4,7 @@ import { cn } from "../../../../../lib/utils";
 import { Icon } from "../../../../Icon";
 import { CheckCircle, LayersFront } from "../../../../../icons/app";
 import { Pressable, View } from "react-native";
+import * as Clipboard from "expo-clipboard";
 
 const COPIED_SHOWN_MS = 750;
 
@@ -24,7 +25,7 @@ export const CopyAction = ({ text, children }: CopyActionProps) => {
 
   const copyHandler = async () => {
     try {
-      await navigator.clipboard.writeText(text);
+      await Clipboard.setStringAsync(text);
       setCopied(true);
     } catch (error) {
       void error;
@@ -34,38 +35,35 @@ export const CopyAction = ({ text, children }: CopyActionProps) => {
     <Pressable
       aria-label={copied ? "Copied!" : `Copy ${text}`}
       className={cn(
-        "group flex items-center gap-1.5 rounded p-1.5",
-        "focus-visible:outline focus-visible:outline-2 focus-visible:outline-f1-border-selected-bold",
-        "transition-colors duration-300 hover:bg-f1-background-hover active:bg-f1-background-secondary-hover",
-        copied
-          ? "hover:bg-f1-background-positive focus-visible:bg-f1-background-positive"
-          : undefined,
+        "group flex flex-row justify-between gap-1.5 rounded p-1.5",
+        "transition-colors duration-300 active:bg-f1-background-secondary-hover",
+        copied ? "bg-f1-background-positive" : undefined,
       )}
       onPress={copyHandler}
     >
-      {children}
-      <View className="grid">
-        <Icon
-          icon={LayersFront}
-          size="md"
-          aria-hidden={true}
-          className={cn(
-            "col-start-1 col-end-2 row-start-1 row-end-2",
-            "opacity-0 transition-opacity duration-300",
-            !copied &&
-              "group-hover:opacity-100 group-focus-visible:opacity-100",
-          )}
-        />
-        <Icon
-          icon={CheckCircle}
-          size="md"
-          aria-hidden={true}
-          className={cn(
-            "col-start-1 col-end-2 row-start-1 row-end-2", // place to the same cell
-            "text-f1-icon-positive opacity-0 transition-opacity duration-300",
-            copied && "group-hover:opacity-100 group-focus-visible:opacity-100",
-          )}
-        />
+      <View className="flex flex-row items-center gap-1.5">{children}</View>
+      <View className="flex-rpw flex">
+        {!copied && (
+          <Icon
+            icon={LayersFront}
+            size="md"
+            aria-hidden={true}
+            className={cn(
+              "col-start-1 col-end-2 row-start-1 row-end-2 text-f1-icon-bold",
+            )}
+          />
+        )}
+        {copied && (
+          <Icon
+            icon={CheckCircle}
+            size="md"
+            aria-hidden={true}
+            className={cn(
+              "col-start-1 col-end-2 row-start-1 row-end-2",
+              "text-f1-icon-positive",
+            )}
+          />
+        )}
       </View>
     </Pressable>
   );

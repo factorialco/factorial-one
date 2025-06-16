@@ -1,9 +1,9 @@
 import { forwardRef, ReactElement, ReactNode } from "react";
 import { CopyAction } from "./actions/CopyAction";
-import { NavigateAction } from "./actions/NavigateAction";
 import { cn } from "../../../../lib/utils";
 import { Icon, IconType } from "../../../Icon";
 import { View, Text } from "react-native";
+import { GenericAction } from "./actions/GenericAction";
 
 type ItemContainerProps = {
   leftIcon?: IconType | (() => ReactElement);
@@ -15,7 +15,7 @@ type ItemContainerProps = {
 // internally all action fields are mandatory
 export type InternalActionType =
   | InternalCopyActionType
-  | InternalNavigateActionType
+  | InternalGenericActionType
   | InternalNoopActionType;
 
 export type InternalCopyActionType = {
@@ -23,9 +23,9 @@ export type InternalCopyActionType = {
   text: string;
 };
 
-export type InternalNavigateActionType = {
-  type: "navigate";
-  href: string;
+export type InternalGenericActionType = {
+  type: "generic";
+  handlePress: () => void;
 };
 
 export type InternalNoopActionType = {
@@ -80,11 +80,11 @@ const Action = ({
           {children}
         </CopyAction>
       );
-    case "navigate":
+    case "generic":
       return (
-        <NavigateAction {...action} {...props}>
+        <GenericAction {...action} {...props}>
           {children}
-        </NavigateAction>
+        </GenericAction>
       );
     case "noop":
       return <View {...props}>{children}</View>;

@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement } from "react";
+import { ReactElement } from "react";
 
 import { InternalActionType, ItemContainer } from "./ItemContainer";
 import { cn } from "../../../../lib/utils";
@@ -21,33 +21,33 @@ type Items =
   | typeof CompanyItem
   | typeof TeamItem;
 
-const _DataList = forwardRef<HTMLUListElement, DataListProps>(
-  ({ children, label, isHorizontal = false }) => {
-    return (
-      <View
-        className={cn(
-          isHorizontal
-            ? "flex min-h-12 flex-1 flex-col py-1.5 pl-3 pr-1.5 xs:flex-row"
-            : "min-w-32 max-w-72",
-        )}
-      >
-        {label && (
-          <Text
-            className={cn(
-              "px-1.5 text-f1-foreground-secondary",
-              isHorizontal ? "mt-1.5 w-44 xs:px-0" : "mb-0.5",
-            )}
-          >
-            {label}
-          </Text>
-        )}
-        <View className="flex flex-col justify-center gap-0.5">{children}</View>
-      </View>
-    );
-  },
-);
-
-_DataList.displayName = "DataList";
+const _DataList = ({
+  children,
+  label,
+  isHorizontal = false,
+}: DataListProps) => {
+  return (
+    <View
+      className={cn(
+        isHorizontal
+          ? "flex min-h-12 flex-1 flex-col py-1.5 pl-3 pr-1.5 xs:flex-row"
+          : "min-w-32 max-w-72",
+      )}
+    >
+      {label && (
+        <Text
+          className={cn(
+            "px-1.5 text-f1-foreground-secondary",
+            isHorizontal ? "mt-1.5 w-44 xs:px-0" : "mb-0.5",
+          )}
+        >
+          {label}
+        </Text>
+      )}
+      <View className="flex flex-col justify-center gap-0.5">{children}</View>
+    </View>
+  );
+};
 
 export type ItemProps = {
   text: string;
@@ -55,32 +55,27 @@ export type ItemProps = {
   action?: ActionType;
 };
 
-export type ActionType = CopyActionType | NavigateActionType;
+export type ActionType = CopyActionType | GenericActionType;
 
 export type CopyActionType = {
   type: "copy";
   text?: string;
 };
 
-export type NavigateActionType = {
-  type: "navigate";
-  href: string;
+export type GenericActionType = {
+  type: "generic";
+  handlePress: () => void;
 };
 
-const Item = forwardRef<HTMLLIElement, ItemProps>(
-  ({ text, icon, action }, ref) => {
-    return (
-      <ItemContainer
-        ref={ref}
-        text={text}
-        leftIcon={icon}
-        action={getInternalAction(action, text)}
-      />
-    );
-  },
-);
-
-Item.displayName = "DataList.Item";
+const Item = ({ text, icon, action }: ItemProps) => {
+  return (
+    <ItemContainer
+      text={text}
+      leftIcon={icon}
+      action={getInternalAction(action, text)}
+    />
+  );
+};
 
 type URL = string;
 
@@ -91,27 +86,28 @@ type EmployeeItemProps = {
   action?: ActionType;
 };
 
-const PersonItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
-  ({ action, avatarUrl, firstName, lastName }, ref) => {
-    const fullName = `${firstName} ${lastName}`;
-    return (
-      <ItemContainer
-        ref={ref}
-        leftIcon={() => (
-          <PersonAvatar
-            size="xsmall"
-            src={avatarUrl}
-            firstName={firstName}
-            lastName={lastName}
-          />
-        )}
-        text={fullName}
-        action={getInternalAction(action, fullName)}
-      />
-    );
-  },
-);
-PersonItem.displayName = "PersonItem";
+const PersonItem = ({
+  action,
+  avatarUrl,
+  firstName,
+  lastName,
+}: EmployeeItemProps) => {
+  const fullName = `${firstName} ${lastName}`;
+  return (
+    <ItemContainer
+      leftIcon={() => (
+        <PersonAvatar
+          size="xsmall"
+          src={avatarUrl}
+          firstName={firstName}
+          lastName={lastName}
+        />
+      )}
+      text={fullName}
+      action={getInternalAction(action, fullName)}
+    />
+  );
+};
 
 type CompanyItemProps = {
   name: string;
@@ -119,56 +115,42 @@ type CompanyItemProps = {
   action?: ActionType;
 };
 
-const CompanyItem = forwardRef<HTMLLIElement, CompanyItemProps>(
-  ({ avatarUrl, name, action }, ref) => {
-    return (
-      <ItemContainer
-        ref={ref}
-        leftIcon={() => (
-          <CompanyAvatar name={name} size="xsmall" src={avatarUrl} />
-        )}
-        text={name}
-        action={getInternalAction(action, name)}
-      />
-    );
-  },
-);
-
-CompanyItem.displayName = "CompanyItem";
+const CompanyItem = ({ avatarUrl, name, action }: CompanyItemProps) => {
+  return (
+    <ItemContainer
+      leftIcon={() => (
+        <CompanyAvatar name={name} size="xsmall" src={avatarUrl} />
+      )}
+      text={name}
+      action={getInternalAction(action, name)}
+    />
+  );
+};
 
 type TeamItemProps = {
   name: string;
   action?: ActionType;
 };
 
-const TeamItem = forwardRef<HTMLLIElement, TeamItemProps>(
-  ({ action, name }, ref) => {
-    return (
-      <ItemContainer
-        ref={ref}
-        leftIcon={() => <TeamAvatar name={name} size="xsmall" />}
-        text={name}
-        action={getInternalAction(action, name)}
-      />
-    );
-  },
-);
-
-TeamItem.displayName = "TeamItem";
+const TeamItem = ({ action, name }: TeamItemProps) => {
+  return (
+    <ItemContainer
+      leftIcon={() => <TeamAvatar name={name} size="xsmall" />}
+      text={name}
+      action={getInternalAction(action, name)}
+    />
+  );
+};
 
 type DotTagItemProps = DotTagProps;
 
-const DotTagItem = forwardRef<HTMLLIElement, DotTagItemProps>(
-  ({ ...props }) => {
-    return (
-      <View className="flex items-start pt-1">
-        <DotTag {...props} />
-      </View>
-    );
-  },
-);
-
-DotTagItem.displayName = "DotTagItem";
+const DotTagItem = ({ ...props }: DotTagItemProps) => {
+  return (
+    <View className="flex items-start pt-1">
+      <DotTag {...props} />
+    </View>
+  );
+};
 
 /**
  * convert simplified action type received from user to internal action format

@@ -20,11 +20,17 @@ const meta: Meta<typeof DataList> = {
         <DataList.Item icon={Check} text="Make coffee" />
         <DataList.Item text="hellen@factorial.co" action={{ type: "copy" }} />
         <DataList.Item
-          action={{ type: "navigate", href: "https://factorialhr.com/" }}
+          action={{
+            type: "generic",
+            handlePress: () => console.log("Its work"),
+          }}
           text="Factorial"
         />
         <DataList.Item
-          action={{ type: "navigate", href: "https://factorialhr.com/" }}
+          action={{
+            type: "generic",
+            handlePress: () => console.log("Its work"),
+          }}
           text="Banco Bilbao Vizcaya Argentaria"
         />
         <DataList.PersonItem
@@ -43,8 +49,8 @@ const meta: Meta<typeof DataList> = {
           lastName=" Rey Peroy"
           avatarUrl="https://avatars.githubusercontent.com/u/111746?s=60&v=4"
           action={{
-            type: "navigate",
-            href: "https://avatars.githubusercontent.com/u/111746?s=60&v=4",
+            type: "generic",
+            handlePress: () => console.log("Its work"),
           }}
         />
         <DataList.CompanyItem
