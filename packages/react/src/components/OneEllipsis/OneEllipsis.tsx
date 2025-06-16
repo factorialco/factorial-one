@@ -15,7 +15,6 @@ const checkForEllipsis = (element: HTMLElement | null, lines: number) => {
     return element.scrollHeight > lineHeight * lines
   }
   // For single line, check if content width exceeds container width
-  console.log(element.scrollWidth, element.clientWidth)
   return element.scrollWidth > element.clientWidth
 }
 

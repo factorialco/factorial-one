@@ -573,6 +573,7 @@ export const ExampleComponent = ({
   navigationFilters,
   totalItemSummary,
   visualizations,
+  dataAdapter,
 }: {
   useObservable?: boolean
   usePresets?: boolean
@@ -600,10 +601,14 @@ export const ExampleComponent = ({
   totalItemSummary?: (totalItems: number) => string
   grouping?: GroupingDefinition<MockUser> | undefined
   currentGrouping?: GroupingState<MockUser, GroupingDefinition<MockUser>>
+  paginationType?: PaginationType
+  dataAdapter?: DataAdapter<MockUser, FiltersType, NavigationFiltersDefinition>
 }) => {
   const mockVisualizations = getMockVisualizations({
     frozenColumns,
   })
+
+  console.log("dataAdapter", dataAdapter)
   const dataSource = useDataSource({
     filters,
     navigationFilters,
@@ -645,7 +650,7 @@ export const ExampleComponent = ({
     selectable,
     bulkActions,
     totalItemSummary,
-    dataAdapter: {
+    dataAdapter: dataAdapter ?? {
       fetchData: useObservable
         ? createObservableDataFetch()
         : createPromiseDataFetch(),

@@ -247,7 +247,7 @@ export type BaseDataAdapter<
   NavigationFilters extends NavigationFiltersDefinition,
 > = {
   /** Indicates this adapter doesn't use pagination */
-  paginationType?: never
+  paginationType?: never | undefined
   /**
    * Function to fetch data based on filter options
    * @param options - The filter options to apply when fetching data

@@ -6,6 +6,7 @@ import {
   getAnimationVariants,
   useGroups,
 } from "@/experimental/OneDataCollection/useGroups"
+import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
 import {
   OneTable,
   TableBody,
@@ -16,14 +17,7 @@ import {
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
 import { AnimatePresence, motion } from "motion/react"
-import {
-  ComponentProps,
-  Fragment,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
+import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition } from "../../../property-render"
@@ -121,8 +115,6 @@ export const TableCollection = <
     )
   )
 
-  const loadingIndicatorRef = useRef<HTMLDivElement>(null)
-
   const {
     data,
     paginationInfo,
@@ -138,36 +130,13 @@ export const TableCollection = <
 
   const { currentSortings, setCurrentSortings, isLoading } = source
 
-  useEffect(() => {
-    if (
-      !isInfiniteScrollPagination(paginationInfo) ||
-      !paginationInfo.hasMore
-    ) {
-      return
-    }
-
-    const loadingIndicator = loadingIndicatorRef.current
-    if (!loadingIndicator) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading && !isLoadingMore) {
-          loadMore()
-        }
-      },
-      {
-        root: null, // viewport
-        rootMargin: "200px",
-        threshold: 0.1,
-      }
-    )
-
-    observer.observe(loadingIndicator)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [paginationInfo, isLoadingMore, loadMore, isLoading])
+  // Infinite scroll pagination
+  const { loadingIndicatorRef } = useInfiniteScrollPagination(
+    paginationInfo,
+    isLoading,
+    isLoadingMore,
+    loadMore
+  )
 
   useEffect(() => {
     onLoadData({
