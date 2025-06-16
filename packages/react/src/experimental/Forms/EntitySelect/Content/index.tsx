@@ -22,6 +22,8 @@ export const Content = ({
   loading = false,
   hiddenAvatar = false,
   actions,
+  onCreate,
+  onCreateLabel,
   ...props
 }: {
   groupView: boolean
@@ -57,6 +59,8 @@ export const Content = ({
   disabled?: boolean
   hiddenAvatar?: boolean
   actions?: Action[]
+  onCreate?: (partialName: string) => void
+  onCreateLabel?: string
 }) => {
   const blockSecondaryContent =
     (width ?? totalDefaultWidth) < breakpointToShowEmployeeList
@@ -106,6 +110,8 @@ export const Content = ({
           disabled={props.disabled}
           hiddenAvatar={hiddenAvatar}
           actions={actions}
+          onCreate={onCreate}
+          onCreateLabel={onCreateLabel}
         />
       </div>
     </div>

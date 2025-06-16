@@ -16,7 +16,14 @@ import {
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
-import type { DataSource } from "../../../types"
+import type {
+  BaseFetchOptions,
+  DataSource,
+  GroupingDefinition,
+  PaginatedFetchOptions,
+  PaginatedResponse,
+  PaginationType,
+} from "../../../types"
 import { useData } from "../../../useData"
 import { TableCollection } from "./index"
 
@@ -57,7 +64,8 @@ const createTestSource = (
   TestFilters,
   SortingsDefinition,
   ItemActionsDefinition<Person>,
-  TestNavigationFilters
+  TestNavigationFilters,
+  GroupingDefinition<Person>
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -77,12 +85,26 @@ const createTestSource = (
       return data
     },
   },
+  currentGrouping: undefined,
+  setCurrentGrouping: vi.fn(),
 })
 
 // Test wrapper component that provides I18nProvider
 const TestWrapper = ({ children }: { children: ReactNode }) => (
   <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
 )
+
+class MockIntersectionObserver implements IntersectionObserver {
+  root: Document | Element | null = null
+  rootMargin: string = ``
+  thresholds: readonly number[] = []
+
+  disconnect = vi.fn()
+  observe = vi.fn()
+  takeRecords = vi.fn()
+  unobserve = vi.fn()
+}
+window.IntersectionObserver = MockIntersectionObserver
 
 describe("TableCollection", () => {
   describe("rendering", () => {
@@ -94,7 +116,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource()}
@@ -125,7 +148,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource()}
@@ -171,7 +195,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={columnsWithCustomRender}
             source={createTestSource()}
@@ -199,7 +224,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource([])}
@@ -231,7 +257,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource([], error)}
@@ -268,15 +295,21 @@ describe("TableCollection", () => {
   })
 
   describe("pagination", () => {
-    const createPaginatedTestSource = (
+    const createPaginatedTestSource = ({
       totalItems = 50,
-      itemsPerPage = 10
-    ): DataSource<
+      itemsPerPage = 10,
+      paginationType = "pages",
+    }: {
+      totalItems?: number
+      itemsPerPage?: number
+      paginationType?: PaginationType
+    }): DataSource<
       Person,
       TestFilters,
       SortingsDefinition,
       ItemActionsDefinition<Person>,
-      TestNavigationFilters
+      TestNavigationFilters,
+      GroupingDefinition<Person>
     > => ({
       currentFilters: {},
       setCurrentFilters: vi.fn(),
@@ -290,11 +323,16 @@ describe("TableCollection", () => {
       setCurrentNavigationFilters: vi.fn(),
       navigationFilters: undefined,
       currentNavigationFilters: {},
+      currentGrouping: undefined,
+      setCurrentGrouping: vi.fn(),
       dataAdapter: {
-        paginationType: "pages",
+        paginationType,
         perPage: itemsPerPage,
-        fetchData: async ({ pagination }) => {
-          const { currentPage = 1 } = pagination || {}
+        fetchData: (async (
+          options: PaginatedFetchOptions<TestFilters, TestNavigationFilters>
+        ) => {
+          // Handle both BaseFetchOptions and PaginatedFetchOptions
+          const currentPage = options.pagination?.currentPage ?? 1
           const pagesCount = Math.ceil(totalItems / itemsPerPage)
           const startIndex = (currentPage - 1) * itemsPerPage
           const endIndex = startIndex + itemsPerPage
@@ -312,11 +350,13 @@ describe("TableCollection", () => {
             perPage: itemsPerPage,
             pagesCount,
           }
-        },
+        }) as (
+          options: BaseFetchOptions<TestFilters, TestNavigationFilters>
+        ) => Promise<PaginatedResponse<Person>>,
       },
     })
 
-    it("renders pagination controls when pagination is enabled", async () => {
+    it("renders pagination controls when pages pagination is enabled", async () => {
       render(
         <TestWrapper>
           <TableCollection<
@@ -324,10 +364,13 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
-            source={createPaginatedTestSource()}
+            source={createPaginatedTestSource({
+              paginationType: "pages",
+            })}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}
@@ -343,6 +386,39 @@ describe("TableCollection", () => {
       })
     })
 
+    it("should not render pagination controls when infinite scroll pagination is enabled", async () => {
+      expect(new IntersectionObserver((entries) => entries)).toBeInstanceOf(
+        IntersectionObserver
+      )
+      render(
+        <TestWrapper>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters,
+            GroupingDefinition<Person>
+          >
+            columns={testColumns}
+            source={createPaginatedTestSource({
+              paginationType: "infinite-scroll",
+            })}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
+          />
+        </TestWrapper>
+      )
+
+      await waitFor(() => {
+        // OnePagination renders navigation buttons and page numbers
+        const buttons = screen.queryByRole("link")
+        expect(buttons).not.toBeInTheDocument()
+        expect(screen.queryByText("1")).not.toBeInTheDocument()
+      })
+    })
+
     it("shows loading state when switching pages", async () => {
       render(
         <TestWrapper>
@@ -351,10 +427,11 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
-            source={createPaginatedTestSource()}
+            source={createPaginatedTestSource({})}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}
@@ -385,10 +462,11 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
-            source={createPaginatedTestSource()}
+            source={createPaginatedTestSource({})}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}
@@ -421,10 +499,14 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
-            source={createPaginatedTestSource(5, 10)}
+            source={createPaginatedTestSource({
+              totalItems: 5,
+              itemsPerPage: 10,
+            })}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}
@@ -446,10 +528,14 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
-            source={createPaginatedTestSource(0, 10)}
+            source={createPaginatedTestSource({
+              totalItems: 0,
+              itemsPerPage: 10,
+            })}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}
@@ -498,7 +584,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={columnsWithSorting}
             source={sortableSource}
@@ -543,7 +630,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={[
               {
@@ -618,7 +706,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={[
               {
@@ -696,7 +785,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={[
               {
@@ -768,7 +858,8 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={columnsWithSorting}
             source={createTestSource()} // No sortings defined
