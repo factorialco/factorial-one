@@ -1,3 +1,4 @@
+import { granularityDefinitions } from "@/experimental/OneCalendar"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { subDays } from "date-fns"
 import { CalendarView, DateRange } from "../../OneCalendar/types"
@@ -174,5 +175,68 @@ export const WithMinMaxDates: Story = {
     granularities: ["day", "week", "month"],
     minDate: subDays(today, 30), // Can't select dates before 30 days ago
     maxDate: today, // Can't select dates after today
+  },
+}
+
+export const WithCompareTo: Story = {
+  args: {
+    defaultValue: {
+      value: granularityDefinitions.day.toRange(new Date()),
+      granularity: "day",
+    } as DatePickerValue,
+    granularities: ["day", "week", "month"],
+    minDate: subDays(today, 30), // Can't select dates before 30 days ago
+    maxDate: today, // Can't select dates after today
+    onCompareToChange(compareTo) {
+      console.log("compareTo:", compareTo)
+    },
+    compareTo: {
+      day: [
+        {
+          label: "Yesterday",
+          value: () =>
+            granularityDefinitions.day.add(
+              granularityDefinitions.day.toRange(new Date()),
+              -1
+            ),
+        },
+        {
+          label: "Previous Day",
+          value: { delta: -1, units: "day" },
+        },
+        {
+          label: "Previous Week",
+          value: { delta: -7, units: "day" },
+        },
+      ],
+      week: [
+        {
+          label: "Previous Week",
+          value: { delta: -1, units: "week" },
+        },
+        {
+          label: "Previous 2 Week",
+          value: (value) => [
+            granularityDefinitions.week.add(
+              granularityDefinitions.week.toRange(value),
+              -2
+            ),
+            granularityDefinitions.week.add(
+              granularityDefinitions.week.toRange(value),
+              -1
+            ),
+          ],
+        },
+      ],
+      month: [
+        {
+          label: "Previous Month",
+          value: { delta: -1, units: "month" },
+        },
+      ],
+    },
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
   },
 }

@@ -1,5 +1,6 @@
 import { addDays, differenceInDays, endOfDay, startOfDay } from "date-fns"
 import { GranularityDefinition } from ".."
+import { DateRangeComplete } from "../../types"
 import { isAfterOrEqual, isBeforeOrEqual } from "../../utils"
 import { dayGranularity, toDayGranularityDateRange } from "../day"
 /**
@@ -7,9 +8,18 @@ import { dayGranularity, toDayGranularityDateRange } from "../day"
  * It is used to render a range of dates.
  * It is not a real granularity, but a way to render a range of dates.
  */
+
+const add = (date: DateRangeComplete, delta: number): DateRangeComplete => {
+  return {
+    from: startOfDay(addDays(date.from, delta)),
+    to: endOfDay(addDays(date.to, delta)),
+  }
+}
+
 export const rangeGranularity: GranularityDefinition = {
   calendarMode: "range",
   ...dayGranularity,
+  add,
   getPrevNext: (value, options) => {
     const dateRange = toDayGranularityDateRange(value)
     if (!dateRange) {
@@ -22,14 +32,9 @@ export const rangeGranularity: GranularityDefinition = {
     const { from, to } = dateRange
 
     const delta = differenceInDays(to, from) + 1
-    const [nextFrom, nextTo] = [
-      startOfDay(addDays(from, delta)),
-      endOfDay(addDays(to, delta)),
-    ]
-    const [prevFrom, prevTo] = [
-      startOfDay(addDays(from, -delta)),
-      endOfDay(addDays(to, -delta)),
-    ]
+
+    const { from: prevFrom, to: prevTo } = add({ from, to }, -delta)
+    const { from: nextFrom, to: nextTo } = add({ from, to }, delta)
 
     const minWithGranularity = options.min && startOfDay(options.min)
     const maxWithGranularity = options.max && endOfDay(options.max)
