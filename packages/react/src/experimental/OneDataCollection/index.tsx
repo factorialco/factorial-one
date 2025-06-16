@@ -22,6 +22,7 @@ import {
 } from "./navigationFilters/types"
 import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
+import { SummariesDefinition } from "./summary"
 import type {
   BulkActionDefinition,
   CollectionSearchOptions,
@@ -75,6 +76,7 @@ export const useDataSource = <
   Record extends RecordType,
   FiltersSchema extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
 >(
@@ -84,12 +86,14 @@ export const useDataSource = <
     navigationFilters,
     search,
     defaultSorting,
+    summaries,
     dataAdapter,
     ...rest
   }: DataSourceDefinition<
     Record,
     FiltersSchema,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters
   >,
@@ -98,6 +102,7 @@ export const useDataSource = <
   Record,
   FiltersSchema,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters
 > => {
@@ -148,6 +153,9 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedSummaries = useMemo(() => summaries, deps)
+
   const [isLoading, setIsLoading] = useState(false)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,6 +167,7 @@ export const useDataSource = <
     setCurrentFilters,
     currentSortings,
     setCurrentSortings,
+    summaries: memoizedSummaries,
     search,
     currentSearch,
     setCurrentSearch,
@@ -201,6 +210,7 @@ export const OneDataCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
 >({
@@ -210,7 +220,14 @@ export const OneDataCollection = <
   onBulkAction,
   emptyStates,
 }: {
-  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    Summaries,
+    ItemActions,
+    NavigationFilters
+  >
   visualizations: ReadonlyArray<
     Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
   >

@@ -45,18 +45,13 @@ export const BasicSummaryRow: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
-      sortings,
-      currentFilters: {
-        department: ["Engineering"],
-      },
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
-      summary: {
-        columns: {
-          salary: { type: "sum" },
+      summaries: {
+        salary: {
+          type: "sum",
         },
-        label: "Totals",
       },
     })
 
@@ -72,7 +67,11 @@ export const BasicSummaryRow: Story = {
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
-                { label: "Salary", render: (item) => item.salary },
+                {
+                  label: "Salary",
+                  // summary: "salary",
+                  render: (item) => item.salary,
+                },
               ],
             },
           },

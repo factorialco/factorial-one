@@ -9,7 +9,7 @@ import {
   NavigationFiltersState,
 } from "./navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "./sortings"
-import { SummariesDefinition, SummariesState } from "./summary.ts"
+import { SummariesDefinition } from "./summary.ts"
 import { DataError } from "./useData"
 
 /**
@@ -418,8 +418,6 @@ export type DataSource<
   setCurrentFilters: React.Dispatch<React.SetStateAction<FiltersState<Filters>>>
   /** Current state of applied sortings */
   currentSortings: SortingsState<Sortings>
-  /** Current state of applied summaries */
-  currentSummaries: SummariesState<Summaries>
   /** Function to update the current sortings state */
   setCurrentSortings: React.Dispatch<
     React.SetStateAction<SortingsState<Sortings>>
