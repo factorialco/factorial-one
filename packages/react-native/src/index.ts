@@ -11,6 +11,7 @@ export * from "./components/OneChip";
 export * from "./components/Navigation/PageHeader";
 export * from "./components/Tags/exports";
 export * from "./components/experimental/Lists/DataList";
+export * from "./components/experimental/Lists/DetailsItem";
 
 // Export icons
 export * from "./icons";
