@@ -1,5 +1,5 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import * as React from "react";
 const heartTransition = {
     duration: 0.6,
