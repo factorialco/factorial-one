@@ -298,7 +298,7 @@ export const CardCollection = <
   )
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-0 flex-1 flex-col gap-4">
       <div className="overflow-auto">
         {isInitialLoading ? (
           <CardGrid>
@@ -378,7 +378,11 @@ export const CardCollection = <
           </>
         )}
       </div>
-      <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
+      <PagesPagination
+        paginationInfo={paginationInfo}
+        setPage={setPage}
+        className="pb-4"
+      />
     </div>
   )
 }

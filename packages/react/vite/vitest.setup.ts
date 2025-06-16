@@ -8,7 +8,7 @@ afterEach(() => {
 
 vi.stubGlobal("CSS", { supports: () => true })
 
-vi.stubGlobal("matchMedia", (query) => ({
+vi.stubGlobal("matchMedia", (query: string) => ({
   matches: false,
   media: query,
   onchange: null,
@@ -26,9 +26,29 @@ vi.stubGlobal("ResizeObserver", {
 })
 
 // Mock getComputedStyle for the OneEllipsis component
-vi.stubGlobal("getComputedStyle", () => ({
-  lineHeight: "20px",
-}))
+// ... existing code ...
+vi.stubGlobal("ResizeObserver", {
+  observe: vi.fn(),
+  disconnect: vi.fn(),
+})
+
+// Mock getComputedStyle to return a more complete object
+vi.stubGlobal("getComputedStyle", (elt: Element) => {
+  const style = (elt as HTMLElement)?.style
+
+  return {
+    ...style,
+    lineHeight: "20px",
+    getPropertyValue: (prop: string) => {
+      if (prop in style) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        return style[prop]
+      }
+      return ""
+    },
+  }
+})
 
 // Add pointer event polyfills for testing environment
 if (typeof window !== "undefined") {

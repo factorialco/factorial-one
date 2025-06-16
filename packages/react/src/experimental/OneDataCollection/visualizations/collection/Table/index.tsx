@@ -399,7 +399,11 @@ export const TableCollection = <
         />
       )}
 
-      <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
+      <PagesPagination
+        paginationInfo={paginationInfo}
+        setPage={setPage}
+        className="pb-4"
+      />
     </>
   )
 }

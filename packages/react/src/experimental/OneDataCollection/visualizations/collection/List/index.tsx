@@ -5,7 +5,6 @@ import { useGroups } from "@/experimental/OneDataCollection/useGroups"
 
 import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
 import { cn } from "@/lib/utils"
-import { Checkbox } from "@/ui/checkbox"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect } from "react"
@@ -99,15 +98,10 @@ export const ListCollection = <
   /**
    * Item selection
    */
-  /**
-   * Item selection
-   */
   const {
     selectedItems,
-    allSelectedStatus,
     groupAllSelectedStatus,
     handleSelectItemChange,
-    handleSelectAll,
     handleSelectGroupChange,
   } = useSelectable(data, paginationInfo, source, onSelectItems)
 
@@ -159,26 +153,16 @@ export const ListCollection = <
   }
 
   return (
-    <div className="flex max-h-full min-h-0 flex-1 flex-col px-4 py-2">
-      <div className="flex flex-row items-center gap-2">
-        {source.selectable && (
-          <Checkbox
-            checked={allSelectedStatus.checked}
-            indeterminate={allSelectedStatus.indeterminate}
-            onCheckedChange={handleSelectAll}
-            disabled={isLoading}
-            title="[TODO] Select all"
-          />
+    <div className="flex max-h-full min-h-0 flex-1 flex-col gap-4 px-4 py-2">
+      <div
+        className={cn(
+          "flex min-h-0 flex-1 flex-col gap-2",
+          isLoading && "select-none opacity-50 transition-opacity"
         )}
-        <div
-          className={cn(
-            "flex min-h-0 flex-1 flex-col gap-2",
-            isLoading && "select-none opacity-50 transition-opacity"
-          )}
-          aria-live={isLoading ? "polite" : undefined}
-          aria-busy={isLoading ? "true" : undefined}
-        >
-          <div className="min-h-0 flex-1 overflow-auto"></div>
+        aria-live={isLoading ? "polite" : undefined}
+        aria-busy={isLoading ? "true" : undefined}
+      >
+        <div className="min-h-0 flex-1 overflow-auto">
           <AnimatePresence>
             {isLoading && (
               <motion.div
@@ -262,8 +246,8 @@ export const ListCollection = <
               />
             )}
         </div>
-        <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
       </div>
+      <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
     </div>
   )
 }
