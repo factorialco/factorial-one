@@ -24,7 +24,6 @@ export function L10nProvider({
 export function useL10n(): L10nContextValue {
   const context = useContext(L10nContext)
 
-  console.log("context", context)
   if (context === null) {
     throw new Error("useL10n must be used within an L10nProvider")
   }
