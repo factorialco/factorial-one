@@ -22,6 +22,7 @@ import {
   SortingsDefinition,
   SortingsState,
 } from "../../../sortings"
+import { SummariesDefinition, SummaryKey } from "../../../summary.ts"
 import { CollectionProps, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
@@ -46,18 +47,26 @@ export type WithOptionalSorting<
 export type TableColumnDefinition<
   Record,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
 > = WithOptionalSorting<Record, Sortings> &
   Pick<
     ComponentProps<typeof TableHead>,
     "hidden" | "info" | "infoIcon" | "sticky" | "width"
-  >
+  > & {
+    /**
+     * Optional summary configuration for this column
+     * References a key in the Summaries definition, similar to how sorting works
+     */
+    summary?: SummaryKey<Summaries>
+  }
 
 export type TableVisualizationOptions<
   Record extends RecordType,
   _Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
 > = {
-  columns: ReadonlyArray<TableColumnDefinition<Record, Sortings>>
+  columns: ReadonlyArray<TableColumnDefinition<Record, Sortings, Summaries>>
   frozenColumns?: 0 | 1 | 2
 }
 
@@ -65,6 +74,7 @@ export const TableCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
 >({
@@ -78,9 +88,10 @@ export const TableCollection = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
-  TableVisualizationOptions<Record, Filters, Sortings>
+  TableVisualizationOptions<Record, Filters, Sortings, Summaries>
 >) => {
   const t = useI18n()
   const loadingIndicatorRef = useRef<HTMLDivElement>(null)
@@ -92,13 +103,17 @@ export const TableCollection = <
     loadMore,
     isInitialLoading,
     isLoadingMore,
+    summaries: summariesData,
   } = useData<Record, Filters, Sortings, NavigationFilters>(source, {
     onError: (error) => {
       onLoadError(error)
     },
   })
 
-  const { currentSortings, setCurrentSortings, isLoading } = source
+  const { currentSortings, setCurrentSortings, isLoading, summaries } = source
+
+  console.log("[debug] source.summaries", summaries)
+  console.log("[debug] summariesData", summariesData)
 
   useEffect(() => {
     if (paginationInfo?.type !== "infinite-scroll" || !paginationInfo.hasMore) {
@@ -152,6 +167,18 @@ export const TableCollection = <
     handleSelectItemChange,
     handleSelectAll,
   } = useSelectable(data, paginationInfo, source, onSelectItems)
+
+  // Create a summary data object if summaries exist
+  const summaryData = useMemo(() => {
+    // Early return if no summaries data is available
+    if (!summariesData) return null
+
+    return {
+      data: summariesData as Record, // The data is already in the right format
+      sticky: true,
+      label: source.summaries?.label,
+    }
+  }, [summariesData, source.summaries])
 
   /**
    * Determine the sort state of a column
@@ -216,7 +243,7 @@ export const TableCollection = <
 
   const renderCell = (
     item: Record,
-    column: TableColumnDefinition<Record, Sortings>
+    column: TableColumnDefinition<Record, Sortings, Summaries>
   ) => {
     return renderProperty(item, column, "table")
   }
@@ -370,6 +397,75 @@ export const TableCollection = <
               </TableRow>
             )
           })}
+
+          {/* Add the summary row at the bottom */}
+          {summaryData && (
+            <TableRow
+              className={cn(
+                summaryData.sticky &&
+                  "bg-f1-background-default sticky bottom-0 z-10 shadow-[0_-1px_0_0_var(--f1-border-secondary)]",
+                "font-medium"
+              )}
+            >
+              {source.selectable && (
+                <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
+                  {summaryData.label && (
+                    <div className="font-medium text-f1-foreground-secondary">
+                      {summaryData.label}
+                    </div>
+                  )}
+                </TableCell>
+              )}
+              {columns.map((column, cellIndex) => (
+                <TableCell
+                  key={`summary-${String(column.label)}`}
+                  firstCell={cellIndex === 0}
+                  width={column.width}
+                  sticky={
+                    cellIndex < frozenColumnsLeft
+                      ? {
+                          left: columns
+                            .slice(0, Math.max(0, cellIndex))
+                            .reduce(
+                              (acc, column) => acc + (column.width ?? 0),
+                              checkColumnWidth
+                            ),
+                        }
+                      : undefined
+                  }
+                >
+                  {cellIndex === 0 &&
+                  !source.selectable &&
+                  summaryData.label ? (
+                    <div className="font-medium text-f1-foreground-secondary">
+                      {summaryData.label}
+                    </div>
+                  ) : (
+                    <div
+                      className={cn(
+                        column.align === "right" ? "justify-end" : "",
+                        "flex"
+                      )}
+                    >
+                      {renderCell(summaryData.data, column)}
+                    </div>
+                  )}
+                </TableCell>
+              ))}
+              {source.itemActions && (
+                <TableCell
+                  key="summary-actions"
+                  width={68}
+                  sticky={{
+                    right: 0,
+                  }}
+                >
+                  {""}
+                </TableCell>
+              )}
+            </TableRow>
+          )}
+
           {paginationInfo?.type === "infinite-scroll" &&
             isLoadingMore &&
             Array.from({ length: 5 }).map((_, rowIndex) => (
@@ -397,10 +493,14 @@ export const TableCollection = <
         <div className="flex w-full items-center justify-between px-6 pt-4">
           <span className="shrink-0 text-f1-foreground-secondary">
             {paginationInfo.total > 0 &&
-              `${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
+              `${
+                (paginationInfo.currentPage - 1) * paginationInfo.perPage + 1
+              }-${Math.min(
                 paginationInfo.currentPage * paginationInfo.perPage,
                 paginationInfo.total
-              )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
+              )} ${t.collections.visualizations.pagination.of} ${
+                paginationInfo.total
+              }`}
           </span>
           <div className="flex items-center">
             <OnePagination

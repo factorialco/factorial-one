@@ -1,3 +1,4 @@
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import {
   useCallback,
   useDeferredValue,
@@ -20,6 +21,7 @@ import {
 import { SortingsDefinition } from "./sortings"
 import {
   BaseFetchOptions,
+  BaseResponse,
   DataSource,
   InfiniteScrollPaginatedResponse,
   PageBasedPaginatedResponse,
@@ -65,8 +67,8 @@ interface UseDataReturn<Record> {
 
   // For infinite-scroll pagination:
   loadMore: () => void
-
   totalItems: number | undefined
+  summaries?: Record // Add summaries to the return type
 }
 
 type DataType<T> = PromiseState<T>
@@ -165,20 +167,21 @@ function usePaginationState<Record>() {
  * - setPage: Function to navigate to a specific page
  */
 export function useData<
-  Record extends RecordType,
+  TRecord extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
 >(
   source: DataSource<
-    Record,
+    TRecord,
     Filters,
     Sortings,
-    ItemActionsDefinition<Record>,
+    SummariesDefinition,
+    ItemActionsDefinition<TRecord>,
     NavigationFilters
   >,
   { filters, onError }: UseDataOptions<Filters> = {}
-): UseDataReturn<Record> {
+): UseDataReturn<TRecord> {
   const {
     dataAdapter,
     currentFilters,
@@ -198,9 +201,9 @@ export function useData<
     setData,
     error,
     setError,
-  } = useDataFetchState<Record>()
+  } = useDataFetchState<TRecord>()
 
-  const { paginationInfo, setPaginationInfo } = usePaginationState<Record>()
+  const { paginationInfo, setPaginationInfo } = usePaginationState<TRecord>()
 
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
@@ -220,11 +223,20 @@ export function useData<
       ? currentSearch
       : deferredSearch
 
+  const [summariesData, setSummariesData] = useState<TRecord | undefined>(
+    undefined
+  )
+
   const handleFetchSuccess = useCallback(
     (
-      result: PaginatedResponse<Record> | SimpleResult<Record>,
+      result: PaginatedResponse<TRecord> | SimpleResult<TRecord>,
       appendMode: boolean
     ) => {
+      // Extract summaries data if available
+      const extractedSummaries =
+        "summaries" in result ? result.summaries : undefined
+      setSummariesData(extractedSummaries)
+
       if ("records" in result) {
         if (appendMode) {
           // Append records for infinite scroll
@@ -297,6 +309,7 @@ export function useData<
       setIsLoading,
       setIsLoadingMore,
       setTotalItems,
+      setSummariesData,
       isLoadingMoreRef,
     ]
   )
@@ -320,7 +333,10 @@ export function useData<
     [setError, setIsInitialLoading, setIsLoading]
   )
 
-  type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
+  type ResultType =
+    | PaginatedResponse<TRecord>
+    | SimpleResult<TRecord>
+    | BaseResponse<TRecord>
 
   // Define a type for the fetch parameters to make the function more maintainable
   type FetchDataParams<
@@ -391,6 +407,7 @@ export function useData<
 
         // Handle synchronous data
         if (!("then" in result || "subscribe" in result)) {
+          // @ts-ignore
           handleFetchSuccess(result, appendMode)
           return
         }
@@ -536,6 +553,7 @@ export function useData<
     setPage,
     loadMore,
     totalItems,
+    summaries: summariesData, // Add summaries to the return object
   }
 }
 

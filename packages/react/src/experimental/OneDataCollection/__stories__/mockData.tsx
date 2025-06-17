@@ -21,6 +21,7 @@ import {
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
 
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
@@ -180,6 +181,7 @@ export const getMockVisualizations = (options?: {
     (typeof mockUsers)[number],
     FiltersType,
     typeof sortings,
+    SummariesDefinition,
     ItemActionsDefinition<(typeof mockUsers)[number]>,
     NavigationFiltersDefinition
   >
@@ -418,29 +420,41 @@ export const createObservableDataFetch = (delay = 0) => {
     typeof sortings,
     NavigationFiltersDefinition
   >) =>
-    new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
-      observer.next({
-        loading: true,
-        error: null,
-        data: null,
-      })
-
-      const timeoutId = setTimeout(() => {
+    new Observable<PromiseState<BaseResponse<(typeof mockUsers)[number]>>>(
+      (observer) => {
         observer.next({
-          loading: false,
+          loading: true,
           error: null,
-          data: filterUsers(
+          data: null,
+        })
+
+        const timeoutId = setTimeout(() => {
+          const filteredData = filterUsers(
             mockUsers,
             filters,
             sortingsState,
             navigationFilters
-          ),
-        })
-        observer.complete()
-      }, delay)
+          )
 
-      return () => clearTimeout(timeoutId)
-    })
+          observer.next({
+            loading: false,
+            error: null,
+            data: {
+              records: filteredData,
+              // You can add summaries here if needed
+            },
+          })
+          observer.complete()
+        }, delay)
+
+        return () => clearTimeout(timeoutId)
+      }
+    )
+}
+
+export interface BaseResponse<TRecord> {
+  records: TRecord[]
+  summaries?: TRecord
 }
 
 export const createPromiseDataFetch = (delay = 500) => {
@@ -454,17 +468,44 @@ export const createPromiseDataFetch = (delay = 500) => {
     typeof sortings,
     NavigationFiltersDefinition
   >) =>
-    new Promise<(typeof mockUsers)[number][]>((resolve) => {
+    new Promise<BaseResponse<(typeof mockUsers)[number]>>((resolve) => {
       setTimeout(() => {
-        resolve(
-          filterUsers(
-            mockUsers,
-            filters,
-            sortingsState,
-            navigationFilters,
-            search
-          )
+        // Get filtered data using the existing filterUsers function
+        const filteredData = filterUsers(
+          mockUsers,
+          filters,
+          sortingsState,
+          navigationFilters,
+          search
         )
+
+        // Calculate summaries from the filtered data
+        // This simulates what would come back from a GraphQL query with payrollRunTotals
+        const summaries = {
+          // Calculate the sum of all salaries (similar to totalAmountInCents in your schema)
+          salary: filteredData.reduce((total, user) => {
+            return total + (user.salary || 0)
+          }, 0),
+
+          // You can add other aggregated values as needed
+          userCount: filteredData.length,
+
+          // For demonstration, calculate average salary (excluding undefined values)
+          averageSalary:
+            filteredData.filter((user) => user.salary !== undefined).length > 0
+              ? filteredData.reduce(
+                  (sum, user) => sum + (user.salary || 0),
+                  0
+                ) /
+                filteredData.filter((user) => user.salary !== undefined).length
+              : 0,
+        }
+
+        // Return both the filtered records and the calculated summaries
+        resolve({
+          records: filteredData,
+          summaries: summaries as unknown as (typeof mockUsers)[number], // Type cast needed due to structure difference
+        })
       }, delay)
     })
 }
@@ -491,6 +532,7 @@ export const ExampleComponent = ({
       (typeof mockUsers)[number],
       FiltersType,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
       NavigationFiltersDefinition
     >
@@ -893,41 +935,53 @@ export function createDataAdapter<
     {
       fetchData: ({ filters, sortings }) => {
         if (useObservable) {
-          return new Observable<PromiseState<TRecord[]>>((observer) => {
-            observer.next({
-              loading: true,
-              error: null,
-              data: null,
-            })
+          return new Observable<PromiseState<BaseResponse<TRecord>>>(
+            (observer) => {
+              observer.next({
+                loading: true,
+                error: null,
+                data: null,
+              })
 
-            setTimeout(() => {
-              try {
-                const fetch = () =>
-                  filterData(data, filters, sortings) as TRecord[]
+              setTimeout(() => {
+                try {
+                  const recordsData = filterData(
+                    data,
+                    filters,
+                    sortings
+                  ) as TRecord[]
+                  const fetch = () =>
+                    ({ records: recordsData }) as BaseResponse<TRecord>
 
-                observer.next({
-                  loading: false,
-                  error: null,
-                  data: fetch(),
-                })
-                observer.complete()
-              } catch (error) {
-                observer.next({
-                  loading: false,
-                  error:
-                    error instanceof Error ? error : new Error(String(error)),
-                  data: null,
-                })
-                observer.complete()
-              }
-            }, delay)
-          })
+                  observer.next({
+                    loading: false,
+                    error: null,
+                    data: fetch(),
+                  })
+                  observer.complete()
+                } catch (error) {
+                  observer.next({
+                    loading: false,
+                    error:
+                      error instanceof Error ? error : new Error(String(error)),
+                    data: null,
+                  })
+                  observer.complete()
+                }
+              }, delay)
+            }
+          )
         }
 
-        return new Promise<TRecord[]>((resolve, reject) => {
+        return new Promise<BaseResponse<TRecord>>((resolve, reject) => {
           setTimeout(() => {
             try {
-              resolve(filterData(data, filters, sortings) as TRecord[])
+              const recordsData = filterData(
+                data,
+                filters,
+                sortings
+              ) as TRecord[]
+              resolve({ records: recordsData })
             } catch (error) {
               reject(error)
             }

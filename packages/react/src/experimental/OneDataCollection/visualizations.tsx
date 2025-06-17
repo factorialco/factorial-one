@@ -1,3 +1,4 @@
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
 import { Button } from "../../components/Actions/Button"
@@ -33,6 +34,7 @@ export type Visualization<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
 > =
@@ -46,7 +48,7 @@ export type Visualization<
       /** Table-based visualization type */
       type: "table"
       /** Configuration options for table visualization */
-      options: TableVisualizationOptions<Record, Filters, Sortings>
+      options: TableVisualizationOptions<Record, Filters, Sortings, Summaries>
     }
   | {
       /** Custom visualization type */
@@ -63,6 +65,7 @@ export type Visualization<
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters
         >
@@ -88,11 +91,19 @@ export type VisualizationProps<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  Summaries extends SummariesDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
 > = {
   /** Array of available visualization configurations */
   visualizations?: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
+    Visualization<
+      Record,
+      Filters,
+      Sortings,
+      Summaries,
+      ItemActions,
+      NavigationFilters
+    >
   >
 }
 
@@ -114,6 +125,7 @@ export const VisualizationSelector = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
 >({
@@ -122,7 +134,14 @@ export const VisualizationSelector = <
   onVisualizationChange,
 }: {
   visualizations: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
+    Visualization<
+      Record,
+      Filters,
+      Sortings,
+      Summaries,
+      ItemActions,
+      NavigationFilters
+    >
   >
   currentVisualization: number
   onVisualizationChange: (index: number) => void
@@ -211,6 +230,7 @@ export const VisualizationRenderer = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
 >({
@@ -224,10 +244,18 @@ export const VisualizationRenderer = <
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters
   >
-  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    Summaries,
+    ItemActions,
+    NavigationFilters
+  >
   onSelectItems: OnSelectItemsCallback<Record, Filters>
   onLoadData: OnLoadDataCallback<Record, Filters>
   onLoadError: OnLoadErrorCallback
@@ -240,6 +268,7 @@ export const VisualizationRenderer = <
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters
         >

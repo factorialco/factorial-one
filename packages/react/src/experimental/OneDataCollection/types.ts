@@ -23,6 +23,7 @@ import { DataError } from "./useData"
  * @template PrimaryActions - The available primary actions that can be performed on the collection
  * @template SecondaryActions - The available actions that can be performed on the collection
  * @template OtherActions - The available actions that can be performed on the collection
+ * @template Summaries - The available summaries for the collection
  */
 export type DataSourceDefinition<
   Record extends RecordType,
@@ -58,7 +59,9 @@ export type DataSourceDefinition<
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
   /** Available summaries fields. If not provided, summaries is not allowed. */
-  summaries?: Summaries
+  summaries?: Summaries & {
+    label?: string // Optional label for the summaries row
+  }
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters, Sortings, NavigationFilters>
   /** Selectable items value under the checkbox column (undefined if not selectable) */
@@ -104,7 +107,10 @@ export type PresetsDefinition<Filters extends FiltersDefinition> =
  * Base response type for collection data
  * @template Record - The type of records in the collection
  */
-export type BaseResponse<Record> = Record[]
+export type BaseResponse<Record> = {
+  records: Record[]
+  summaries?: Record // Optional summaries data
+}
 
 /**
  * Defines the available pagination types used throughout the application.
@@ -122,6 +128,7 @@ export type PaginationType = "pages" | "infinite-scroll"
  * @property {TRecord[]} records The list of records for the current page.
  * @property {number} total The total number of records available.
  * @property {number} perPage The number of records displayed per page.
+ * @property {TRecord} [summaries] Optional summaries data for the collection.
  */
 export type BasePaginatedResponse<TRecord> = {
   /** The records for the current page */
@@ -130,6 +137,8 @@ export type BasePaginatedResponse<TRecord> = {
   total: number
   /** Number of records per page */
   perPage: number
+  /** Optional summaries data */
+  summaries?: TRecord
 }
 
 /**
@@ -431,6 +440,10 @@ export type DataSource<
   setCurrentNavigationFilters: React.Dispatch<
     React.SetStateAction<NavigationFiltersState<NavigationFilters>>
   >
+  /** Current summaries data */
+  currentSummaries?: Record
+  /** Function to update the current summaries data */
+  setCurrentSummaries?: React.Dispatch<React.SetStateAction<Record | undefined>>
 }
 /**
  * Utility type for handling both Promise and Observable return types.

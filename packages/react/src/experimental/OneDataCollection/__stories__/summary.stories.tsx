@@ -44,7 +44,6 @@ type Story = StoryObj<typeof meta>
 export const BasicSummaryRow: Story = {
   render: () => {
     const dataSource = useDataSource({
-      filters,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
@@ -69,7 +68,7 @@ export const BasicSummaryRow: Story = {
                 { label: "Department", render: (item) => item.department },
                 {
                   label: "Salary",
-                  // summary: "salary",
+                  summary: "salary",
                   render: (item) => item.salary,
                 },
               ],
