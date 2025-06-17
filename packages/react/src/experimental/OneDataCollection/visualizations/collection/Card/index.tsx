@@ -56,6 +56,27 @@ const CardGrid = ({ children }: { children: React.ReactNode }) => {
  * Group Cards: Renders
  */
 
+export type CardCollectionProps<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+> = CollectionProps<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping,
+  CardVisualizationOptions<Record, Filters, Sortings>
+>
+
+/**
+ * Group Cards: Renders the cards for a group
+ */
+
 type GroupCardsProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
@@ -305,7 +326,6 @@ export const CardCollection = <
               return (
                 <>
                   <GroupHeader
-                    className="p-4"
                     label={group.label}
                     itemCount={group.itemCount}
                     onOpenChange={(open) => setGroupOpen(group.key, open)}
@@ -350,6 +370,8 @@ export const CardCollection = <
               handleSelectItemChange={handleSelectItemChange}
               title={title}
               cardProperties={cardProperties}
+              description={description}
+              avatar={avatar}
             />
           )}
         </>

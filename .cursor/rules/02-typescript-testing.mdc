@@ -17,13 +17,15 @@ alwaysApply: false
 - Implement proper generic constraints.
 
 # Testing Standards
-- Write **Vitest** unit tests for utilities and hooks.
+- Write **Vitest** unit tests for utilities and hooks and components.
 - Create **Storybook stories** for visual testing.
 - Include **accessibility tests** using axe-playwright.
 - Test component variants and edge cases.
 - Avoid excessive mocking; test behavior, not internals.
 - Always run tests to confirm changes.
 - Do not import `@testing-library/jest-dom` 
+- Import vitest methods like: describe, it, expect, etc. explicitily
+- name test files with `.test.tsx` or `.test.ts`, never with `.specs.ts`
 
 ## Example with Icon component
 

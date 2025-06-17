@@ -290,6 +290,9 @@ export const OneDataCollection = <
     currentGrouping,
     setCurrentGrouping,
     grouping,
+    currentSortings,
+    setCurrentSortings,
+    sortings,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
@@ -534,6 +537,9 @@ export const OneDataCollection = <
                 grouping={grouping}
                 currentGrouping={currentGrouping}
                 onGroupingChange={setCurrentGrouping}
+                sortings={sortings}
+                currentSortings={currentSortings}
+                onSortingsChange={setCurrentSortings}
               ></Settings>
               {hasCollectionsActions && (
                 <>

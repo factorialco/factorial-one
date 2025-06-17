@@ -515,10 +515,7 @@ export function useData<
   const setPage = useCallback(
     (page: number) => {
       // Return early if not page-based pagination or trying to set the same page
-      if (
-        !isPageBasedPagination(paginationInfo) ||
-        paginationInfo.currentPage === page
-      ) {
+      if (!isPageBasedPagination(paginationInfo)) {
         return
       }
 
