@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.98.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.2...factorial-one-react-v1.98.0) (2025-06-17)
+
+
+### Features
+
+* datacollection list view ([#1958](https://github.com/factorialco/factorial-one/issues/1958)) ([3cea88a](https://github.com/factorialco/factorial-one/commit/3cea88ac2c6ff84527fedecda9389e12a3eae86a))
+
 ## [1.97.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.1...factorial-one-react-v1.97.2) (2025-06-17)
 
 
