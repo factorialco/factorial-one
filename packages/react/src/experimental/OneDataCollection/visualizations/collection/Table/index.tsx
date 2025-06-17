@@ -170,6 +170,8 @@ export const TableCollection = <
     handleSelectAll,
   } = useSelectable(data, paginationInfo, source, onSelectItems)
 
+  const i18n = useI18n()
+
   // Create a summary data object if summaries exist
   const summaryData = useMemo(() => {
     // Early return if no summaries configuration or summaries data is available
@@ -451,7 +453,16 @@ export const TableCollection = <
                         "flex"
                       )}
                     >
-                      {renderCell(summaryData.data, column)}
+                      {column.summary &&
+                      source.summaries &&
+                      source.summaries[column.summary]?.type === "sum" ? (
+                        <div className="flex gap-1">
+                          <span>{i18n.collections.summaries.types.sum}</span>
+                          {renderCell(summaryData.data, column)}
+                        </div>
+                      ) : (
+                        renderCell(summaryData.data, column)
+                      )}
                     </div>
                   )}
                 </TableCell>

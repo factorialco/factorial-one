@@ -69,6 +69,7 @@ export const BasicSummaryRow: Story = {
                 {
                   label: "Salary",
                   summary: "salary",
+                  align: "right",
                   render: (item) => item.salary,
                 },
               ],
