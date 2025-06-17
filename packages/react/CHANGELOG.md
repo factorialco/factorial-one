@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.97.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.1...factorial-one-react-v1.97.2) (2025-06-17)
+
+
+### Bug Fixes
+
+* allow presets to be hidden ([#2093](https://github.com/factorialco/factorial-one/issues/2093)) ([7c145bf](https://github.com/factorialco/factorial-one/commit/7c145bf9aa24314601765506ea7e8930a5c7d87b))
+
 ## [1.97.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.0...factorial-one-react-v1.97.1) (2025-06-16)
 
 
