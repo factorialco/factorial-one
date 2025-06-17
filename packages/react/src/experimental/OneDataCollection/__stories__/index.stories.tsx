@@ -28,6 +28,8 @@ import {
   filters,
   filterUsers,
   generateMockUsers,
+  getMockVisualizations,
+  MockUser,
   mockUsers,
   PERFORMANCE_SCORE_MOCK,
   PROJECTS_MOCK,
@@ -848,51 +850,13 @@ export const WithMultipleVisualizations: Story = {
       }),
     })
 
-    return (
-      <OneDataCollection
-        source={source}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
-        ]}
-      />
+    const visualizations = Object.values(
+      getMockVisualizations({
+        frozenColumns: 0,
+      })
     )
+
+    return <OneDataCollection source={source} visualizations={visualizations} />
   },
 }
 
@@ -900,6 +864,10 @@ export const WithPagesPagination: Story = {
   render: () => {
     // Create a fixed set of paginated users so we're not regenerating them on every render
     const paginatedMockUsers = generateMockUsers(50)
+
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
 
     const source = useDataSource({
       filters,
@@ -934,44 +902,9 @@ export const WithPagesPagination: Story = {
           console.log(`Bulk action: ${action}`, "->", selectedItems)
         }}
         visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
+          mockVisualizations.table,
+          mockVisualizations.card,
+          mockVisualizations.list,
         ]}
       />
     )
@@ -1065,13 +998,17 @@ export const WithInfiniteScrollPagination: Story = {
 
 export const WithSynchronousData: Story = {
   render: () => {
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
+
     const source = useDataSource<
-      (typeof mockUsers)[number],
+      MockUser,
       typeof filters,
       typeof sortings,
-      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      ItemActionsDefinition<MockUser>,
       NavigationFiltersDefinition,
-      GroupingDefinition<(typeof mockUsers)[number]>
+      GroupingDefinition<MockUser>
     >({
       filters,
       sortings,
@@ -1088,33 +1025,9 @@ export const WithSynchronousData: Story = {
       <OneDataCollection
         source={source}
         visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
+          mockVisualizations.table,
+          mockVisualizations.list,
+          mockVisualizations.card,
         ]}
       />
     )

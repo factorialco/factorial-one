@@ -5,16 +5,17 @@ import {
 
 import { RecordType } from "./types"
 
-export type ItemActionsDefinition<T extends RecordType> = (item: T) =>
-  | Array<
-      | DropdownItemSeparator
-      | (Omit<DropdownItemObject, "type" | "onClick"> & {
-          onClick: () => void
-          enabled?: boolean
-          type?: "primary" | "secondary" | "other"
-        })
-    >
-  | undefined
+export type ActionDefinition =
+  | DropdownItemSeparator
+  | (Omit<DropdownItemObject, "type" | "onClick"> & {
+      onClick: () => void
+      enabled?: boolean
+      type?: "primary" | "secondary" | "other"
+    })
+
+export type ItemActionsDefinition<T extends RecordType> = (
+  item: T
+) => ActionDefinition[] | undefined
 
 /**
  * Filters the actions based on the enabled property
@@ -23,10 +24,10 @@ export type ItemActionsDefinition<T extends RecordType> = (item: T) =>
  * @returns An array of filtered actions
  */
 export const filterItemActions = <T extends RecordType>(
-  actions: ItemActionsDefinition<T>,
+  actions: ItemActionsDefinition<T> | undefined,
   item: T
 ) =>
-  (actions(item) || []).filter(
+  ((actions && actions(item)) || []).filter(
     (action) =>
       action.type === "separator" ||
       action.enabled === undefined ||
