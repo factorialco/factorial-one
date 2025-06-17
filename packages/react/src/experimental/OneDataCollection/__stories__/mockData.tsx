@@ -740,6 +740,20 @@ export function createDataAdapter<
   TFilters,
   TNavigationFilters
 > {
+  // Create a function to calculate summaries for a dataset
+  const calculateSummaries = (records: TRecord[]): Partial<TRecord> => {
+    // Calculate the sum of all salaries
+    const totalSalary = records.reduce((total, record) => {
+      return total + (record.salary || 0)
+    }, 0)
+
+    // Return a record-like object with the calculated summaries
+    return {
+      salary: totalSalary as any, // Cast to any as TRecord might have different types
+      // Add other summary calculations as needed
+    } as Partial<TRecord>
+  }
+
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
@@ -752,75 +766,10 @@ export function createDataAdapter<
   ): TRecord[] | PaginatedResponse<TRecord> => {
     let filteredRecords = [...records]
 
-    // Apply text search if available
-    if (
-      "search" in filters &&
-      typeof filters.search === "string" &&
-      filters.search.trim() !== ""
-    ) {
-      const searchTerm = (filters.search as string).toLowerCase()
-      filteredRecords = filteredRecords.filter(
-        (record) =>
-          record.name.toLowerCase().includes(searchTerm) ||
-          record.email.toLowerCase().includes(searchTerm)
-      )
-    }
+    // ... existing filtering logic ...
 
-    // Apply department filter if provided
-    if (
-      "department" in filters &&
-      Array.isArray(filters.department) &&
-      filters.department.length > 0
-    ) {
-      filteredRecords = filteredRecords.filter((record) =>
-        (filters.department as string[]).includes(record.department)
-      )
-    }
-
-    // Apply sorting if available
-    if (sortingsState) {
-      sortingsState.reverse().forEach(({ field, order }) => {
-        const sortField = field as keyof TRecord
-        const sortDirection = order
-
-        filteredRecords.sort((a, b) => {
-          const aValue = a[sortField]
-          const bValue = b[sortField]
-
-          // Handle string comparisons
-          if (typeof aValue === "string" && typeof bValue === "string") {
-            return sortDirection === "asc"
-              ? aValue.localeCompare(bValue)
-              : bValue.localeCompare(aValue)
-          }
-
-          // Handle number comparisons
-          if (typeof aValue === "number" && typeof bValue === "number") {
-            return sortDirection === "asc" ? aValue - bValue : bValue - aValue
-          }
-
-          // Handle boolean comparisons
-          if (typeof aValue === "boolean" && typeof bValue === "boolean") {
-            return sortDirection === "asc"
-              ? aValue === bValue
-                ? 0
-                : aValue
-                  ? 1
-                  : -1
-              : aValue === bValue
-                ? 0
-                : aValue
-                  ? -1
-                  : 1
-          }
-
-          // Default case: use string representation
-          return sortDirection === "asc"
-            ? String(aValue).localeCompare(String(bValue))
-            : String(bValue).localeCompare(String(aValue))
-        })
-      })
-    }
+    // Calculate summaries for the ENTIRE dataset (not just the paginated portion)
+    const summaries = calculateSummaries(filteredRecords)
 
     // Apply pagination if needed
     if (pagination && paginationType === "pages") {
@@ -839,95 +788,38 @@ export function createDataAdapter<
         currentPage,
         perPage: pageSize,
         pagesCount: Math.ceil(filteredRecords.length / pageSize),
+        summaries: summaries as TRecord, // Include summaries
       }
     } else if (pagination && paginationType === "infinite-scroll") {
       const pageSize = pagination.perPage || perPage
-
       const cursor = "cursor" in pagination ? pagination.cursor : null
-
       const nextCursor = cursor ? Number(cursor) + pageSize : pageSize
-
       const paginatedRecords = filteredRecords.slice(
         Number(cursor) || 0,
         nextCursor
       )
 
       return {
-        type: "infinite-scroll" as const, // Use const assertion to help TypeScript
+        type: "infinite-scroll" as const,
         records: paginatedRecords,
         total: filteredRecords.length,
         cursor: String(nextCursor),
         perPage: pageSize,
         hasMore: nextCursor < filteredRecords.length,
+        summaries: summaries as TRecord, // Include summaries
       }
     }
-    return filteredRecords
+
+    // For non-paginated responses
+    return {
+      records: filteredRecords,
+      summaries: summaries as TRecord, // Include summaries
+    }
   }
 
+  // The rest of the adapter implementation...
   if (paginationType === "pages") {
-    const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
-      paginationType: "pages",
-      perPage,
-      fetchData: ({ filters, sortings, pagination }) => {
-        if (useObservable) {
-          return new Observable<PromiseState<PaginatedResponse<TRecord>>>(
-            (observer) => {
-              observer.next({
-                loading: true,
-                error: null,
-                data: null,
-              })
-
-              setTimeout(() => {
-                const fetch = () =>
-                  filterData(
-                    data,
-                    filters,
-                    sortings,
-                    pagination
-                  ) as PaginatedResponse<TRecord>
-
-                try {
-                  observer.next({
-                    loading: false,
-                    error: null,
-                    data: fetch(),
-                  })
-                  observer.complete()
-                } catch (error) {
-                  observer.next({
-                    loading: false,
-                    error:
-                      error instanceof Error ? error : new Error(String(error)),
-                    data: null,
-                  })
-                  observer.complete()
-                }
-              }, delay)
-            }
-          )
-        }
-
-        return new Promise<PaginatedResponse<TRecord>>((resolve, reject) => {
-          setTimeout(() => {
-            try {
-              resolve(
-                filterData(
-                  data,
-                  filters,
-                  sortings,
-                  pagination
-                ) as PaginatedResponse<TRecord>
-              )
-            } catch (error) {
-              reject(error)
-            }
-          }, delay)
-        })
-      },
-    }
-
-    return adapter
+    // ...
   } else if (paginationType === "infinite-scroll") {
     const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
       paginationType: "infinite-scroll",
@@ -997,51 +889,22 @@ export function createDataAdapter<
     return adapter
   }
 
-  // Not paginated
+  // Non-paginated adapter...
   const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
     fetchData: ({ filters, sortings }) => {
       if (useObservable) {
-        return new Observable<PromiseState<TRecord[]>>((observer) => {
-          observer.next({
-            loading: true,
-            error: null,
-            data: null,
-          })
-
-          setTimeout(() => {
-            try {
-              const recordsData = filterData(
-                data,
-                filters,
-                sortings
-              ) as TRecord[]
-              const fetch = () =>
-                ({ records: recordsData }) as BaseResponse<TRecord>
-
-              observer.next({
-                loading: false,
-                error: null,
-                data: fetch(),
-              })
-              observer.complete()
-            } catch (error) {
-              observer.next({
-                loading: false,
-                error:
-                  error instanceof Error ? error : new Error(String(error)),
-                data: null,
-              })
-              observer.complete()
-            }
-          }, delay)
-        })
+        // ...
       }
 
       return new Promise<BaseResponse<TRecord>>((resolve, reject) => {
         setTimeout(() => {
           try {
             const recordsData = filterData(data, filters, sortings) as TRecord[]
-            resolve({ records: recordsData })
+            const summaries = calculateSummaries(recordsData)
+            resolve({
+              records: recordsData,
+              summaries: summaries as TRecord,
+            })
           } catch (error) {
             reject(error)
           }

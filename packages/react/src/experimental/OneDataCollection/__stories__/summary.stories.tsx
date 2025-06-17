@@ -1,10 +1,12 @@
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { OneDataCollection, useDataSource } from "../index"
 import {
+  createDataAdapter,
   createPromiseDataFetch,
   ExampleComponent,
   filterPresets,
   filters,
+  generateMockUsers,
   sortings,
 } from "./mockData"
 
@@ -81,37 +83,52 @@ export const BasicSummaryRow: Story = {
   },
 }
 
-export const WithMultipleSummaryTypes: Story = {
+export const WithInfiniteScrollSummarySticky: Story = {
   render: () => {
+    const paginatedMockUsers = generateMockUsers(50)
     const dataSource = useDataSource({
       filters,
       sortings,
       presets: filterPresets,
-      currentFilters: {
-        department: ["Engineering"],
+      summaries: {
+        salary: {
+          type: "sum",
+          label: "Total",
+        },
       },
-      dataAdapter: {
-        fetchData: createPromiseDataFetch(),
-      },
+      dataAdapter: createDataAdapter({
+        data: paginatedMockUsers,
+        delay: 500,
+        paginationType: "infinite-scroll",
+        perPage: 10,
+      }),
     })
 
     return (
-      <OneDataCollection
-        source={dataSource}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
+      <div className="space-y-4" style={{ height: "500px", overflow: "auto" }}>
+        <OneDataCollection
+          source={dataSource}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Email", render: (item) => item.email },
+                  { label: "Role", render: (item) => item.role },
+                  { label: "Department", render: (item) => item.department },
+                  {
+                    label: "Salary",
+                    summary: "salary",
+                    align: "right",
+                    render: (item) => item.salary,
+                  },
+                ],
+              },
             },
-          },
-        ]}
-      />
+          ]}
+        />
+      </div>
     )
   },
 }

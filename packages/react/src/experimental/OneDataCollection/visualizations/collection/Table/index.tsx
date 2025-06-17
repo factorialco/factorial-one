@@ -11,6 +11,7 @@ import {
   OneTable,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -432,12 +433,25 @@ export const TableCollection = <
                 />
               )
             })}
-          {/* Add the summary row at the bottom */}
-          {summaryData && (
+          {paginationInfo?.type === "infinite-scroll" &&
+            isLoadingMore &&
+            Array.from({ length: 5 }).map((_, rowIndex) => (
+              <TableRow key={`skeleton-row-${rowIndex}`}>
+                {Array.from({ length: skeletonColumns }).map((_, colIndex) => (
+                  <TableCell key={`skeleton-cell-${rowIndex}-${colIndex}`}>
+                    <Skeleton className="h-4 w-full" />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+        </TableBody>
+        {/* TODO: maybe as new component? */}
+        {summaryData && (
+          <TableFooter>
             <TableRow
               className={cn(
                 summaryData.sticky &&
-                  "bg-f1-background-default sticky bottom-0 z-10 shadow-[0_-1px_0_0_var(--f1-border-secondary)]",
+                  "sticky bottom-0 z-10 bg-f1-background shadow-[0_-1px_0_0_var(--f1-border-secondary)] hover:bg-f1-background",
                 "font-medium"
               )}
             >
@@ -507,19 +521,8 @@ export const TableCollection = <
                 </TableCell>
               )}
             </TableRow>
-          )}
-          {paginationInfo?.type === "infinite-scroll" &&
-            isLoadingMore &&
-            Array.from({ length: 5 }).map((_, rowIndex) => (
-              <TableRow key={`skeleton-row-${rowIndex}`}>
-                {Array.from({ length: skeletonColumns }).map((_, colIndex) => (
-                  <TableCell key={`skeleton-cell-${rowIndex}-${colIndex}`}>
-                    <Skeleton className="h-4 w-full" />
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-        </TableBody>
+          </TableFooter>
+        )}
       </OneTable>
 
       {isInfiniteScrollPagination(paginationInfo) && paginationInfo.hasMore && (
