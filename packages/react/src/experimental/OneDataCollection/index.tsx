@@ -501,12 +501,12 @@ export const OneDataCollection = <
         >
           <div
             className={cn(
-              "flex items-center justify-between",
+              "flex items-center justify-between gap-4",
               !filters && "justify-end"
             )}
           >
             {filters && (
-              <div className="flex flex-1 gap-1">
+              <div className="flex min-w-0 flex-1 gap-1">
                 <Filters.Controls />
                 <Filters.Presets />
               </div>
