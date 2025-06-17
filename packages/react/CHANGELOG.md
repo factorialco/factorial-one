@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.99.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.98.0...factorial-one-react-v1.99.0) (2025-06-17)
+
+
+### Features
+
+* **frame:** remember sidebar state between loads ([#2083](https://github.com/factorialco/factorial-one/issues/2083)) ([0447afd](https://github.com/factorialco/factorial-one/commit/0447afd85995dfd64719d1ca8dcaf2b2801fc587))
+
 ## [1.98.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.2...factorial-one-react-v1.98.0) (2025-06-17)
 
 
