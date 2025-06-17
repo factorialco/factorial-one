@@ -10,6 +10,10 @@ import { fileURLToPath } from "node:url"
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+const isCI = process.env.CI === "true"
+
+const noConsoleRule = isCI || process.env.NOCONSOLE === "true"
+
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
@@ -22,7 +26,16 @@ const reactSettings = {
     version: "detect",
   },
 }
+
 export default [
+  {
+    files: ["eslint.config.mjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
   // Main project configuration
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
@@ -40,6 +53,22 @@ export default [
     ],
     settings: reactSettings,
   },
+  ...(noConsoleRule
+    ? [
+        {
+          files: ["**/*.{js,jsx,ts,tsx}"],
+          ignores: [
+            "**/*.stories.*",
+            "**/__stories__/**",
+            "**/*.test.*",
+            "**/__tests__/**",
+          ],
+          rules: {
+            "no-console": ["error", { allow: ["warn", "error"] }],
+          },
+        },
+      ]
+    : []),
   ...fixupConfigRules(
     compat.extends(
       "eslint:recommended",
