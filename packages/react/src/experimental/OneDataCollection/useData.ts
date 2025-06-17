@@ -21,7 +21,6 @@ import {
 import { SortingsDefinition } from "./sortings"
 import {
   BaseFetchOptions,
-  BaseResponse,
   DataSource,
   InfiniteScrollPaginatedResponse,
   PageBasedPaginatedResponse,
@@ -333,10 +332,7 @@ export function useData<
     [setError, setIsInitialLoading, setIsLoading]
   )
 
-  type ResultType =
-    | PaginatedResponse<TRecord>
-    | SimpleResult<TRecord>
-    | BaseResponse<TRecord>
+  type ResultType = PaginatedResponse<TRecord> | SimpleResult<TRecord>
 
   // Define a type for the fetch parameters to make the function more maintainable
   type FetchDataParams<
@@ -376,7 +372,7 @@ export function useData<
           navigationFilters,
         }
 
-        const fetcher = (): PromiseOrObservable<ResultType> => {
+        function fetcher(): PromiseOrObservable<ResultType> {
           setTotalItems(undefined)
 
           // TODO: Default perPage value from somewhere
@@ -394,12 +390,17 @@ export function useData<
               ...baseFetchOptions,
               pagination: { currentPage, perPage: perPageValue },
             })
-          } else {
+          } else if (dataAdapter.paginationType === "infinite-scroll") {
             // For infinite scroll, use the cursor parameter directly
             return dataAdapter.fetchData({
               ...baseFetchOptions,
               pagination: { cursor, perPage: perPageValue },
             })
+          } else {
+            return dataAdapter.fetchData({
+              ...baseFetchOptions,
+              pagination: {},
+            }) as PromiseOrObservable<ResultType>
           }
         }
 
@@ -407,7 +408,6 @@ export function useData<
 
         // Handle synchronous data
         if (!("then" in result || "subscribe" in result)) {
-          // @ts-ignore
           handleFetchSuccess(result, appendMode)
           return
         }
