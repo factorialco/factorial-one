@@ -1,3 +1,4 @@
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import {
   Add,
   Ai,
@@ -618,6 +619,7 @@ const JsonVisualization = ({
       (typeof mockUsers)[number],
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
       NavigationFiltersDefinition
     >
@@ -649,6 +651,7 @@ export const WithCustomJsonView: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       MockActions,
       NavigationFiltersDefinition
     >({
@@ -1048,6 +1051,7 @@ export const WithSynchronousData: Story = {
       (typeof mockUsers)[number],
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
       NavigationFiltersDefinition
     >({
@@ -1273,6 +1277,7 @@ export const WithSyncSearch: Story = {
       (typeof mockUserData)[number],
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUserData)[number]>,
       NavigationFiltersDefinition
     >({
@@ -1393,6 +1398,7 @@ export const WithAsyncSearch: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       MockActions,
       NavigationFiltersDefinition
     >({
