@@ -110,6 +110,8 @@ export const TableCollection = <
     },
   })
 
+  console.log("[debug] paginationInfo", paginationInfo)
+
   const { currentSortings, setCurrentSortings, isLoading, summaries } = source
 
   console.log("[debug] source.summaries", summaries)
@@ -170,15 +172,17 @@ export const TableCollection = <
 
   // Create a summary data object if summaries exist
   const summaryData = useMemo(() => {
-    // Early return if no summaries data is available
-    if (!summariesData) return null
+    // Early return if no summaries configuration or summaries data is available
+    if (!summariesData || !source.summaries) return null
 
     return {
-      data: summariesData as Record, // The data is already in the right format
+      data: summariesData as Record,
       sticky: true,
       label: source.summaries?.label,
     }
   }, [summariesData, source.summaries])
+
+  console.log("[debug] summaryData", summaryData)
 
   /**
    * Determine the sort state of a column
