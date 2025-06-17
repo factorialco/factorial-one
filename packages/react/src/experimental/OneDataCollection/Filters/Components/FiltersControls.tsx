@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { cn } from "@/lib/utils"
+import { useEffect, useMemo, useState } from "react"
 import { Button } from "../../../../components/Actions/Button"
 import { Filter } from "../../../../icons/app"
 import { useI18n } from "../../../../lib/providers/i18n"
@@ -72,6 +73,29 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run this when the popover is opened
   }, [isOpen])
 
+  const filterType =
+    selectedFilterKey && schema[selectedFilterKey]
+      ? getFilterType(schema[selectedFilterKey].type)
+      : undefined
+
+  console.log("----", filterType?.formHeight)
+  // gets the form height
+  const formHeight = useMemo(() => {
+    if (
+      !selectedFilterKey ||
+      !schema[selectedFilterKey] ||
+      !filterType?.formHeight
+    ) {
+      return undefined
+    }
+
+    return typeof filterType.formHeight === "function"
+      ? filterType.formHeight({
+          schema: schema[selectedFilterKey] as unknown as FilterTypeSchema,
+        })
+      : filterType.formHeight
+  }, [selectedFilterKey, schema, filterType])
+
   return (
     <div className="flex items-center gap-2">
       <Popover open={isOpen} onOpenChange={onOpenChange}>
@@ -87,11 +111,16 @@ export function FiltersControls<Filters extends FiltersDefinition>({
           />
         </PopoverTrigger>
         <PopoverContent
-          className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
+          className="w-[600px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
           align="start"
           side="bottom"
         >
-          <div className="flex h-[min(448px,80vh)] flex-col">
+          <div
+            className={cn(
+              "flex h-[min(448px,80vh)] flex-col",
+              formHeight && `h-[${formHeight}px]`
+            )}
+          >
             <div className="flex min-h-0 flex-1">
               <FilterList
                 definition={schema}
@@ -110,7 +139,6 @@ export function FiltersControls<Filters extends FiltersDefinition>({
                 />
               )}
             </div>
-
             <div className="flex items-center justify-end gap-2 border border-solid border-transparent border-t-f1-border-secondary p-2">
               <Button
                 onClick={handleApplyFilters}
