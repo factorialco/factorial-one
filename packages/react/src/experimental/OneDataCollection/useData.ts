@@ -246,7 +246,7 @@ export function useData<
         }
 
         // Use a default value of "pages" when paginationType is undefined
-        const paginationType = dataAdapter.paginationType || "pages"
+        const paginationType = dataAdapter.paginationType
 
         // Update pagination info based on the pagination type
         if (paginationType === "pages") {
