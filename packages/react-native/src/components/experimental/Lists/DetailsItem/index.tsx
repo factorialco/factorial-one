@@ -1,9 +1,9 @@
-import { ComponentProps, FC, forwardRef } from "react";
+import { ComponentProps, FC } from "react";
 import { DataList } from "../DataList";
 import { cn } from "../../../../lib/utils";
 import { View } from "react-native";
 
-type Content =
+export type Content =
   | (ComponentProps<typeof DataList.Item> & {
       type: "item";
     })
@@ -23,7 +23,6 @@ type Content =
 export interface DetailsItemType {
   title: string;
   content: Content | Content[];
-  isHorizontal?: boolean;
   spacingAtTheBottom?: boolean;
 }
 
@@ -37,29 +36,20 @@ const ItemContent: FC<{ content: Content }> = ({ content }) => (
   </>
 );
 
-export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
-  function DetailsItem({
-    title,
-    content,
-    isHorizontal = false,
-    spacingAtTheBottom,
-  }) {
-    const contentArray = Array.isArray(content) ? content : [content];
+export const DetailsItem = ({
+  title,
+  content,
+  spacingAtTheBottom,
+}: DetailsItemType) => {
+  const contentArray = Array.isArray(content) ? content : [content];
 
-    return (
-      <View
-        className={cn(
-          "flex flex-col gap-0.5",
-          spacingAtTheBottom && !isHorizontal && "pb-3",
-          isHorizontal && "xs:[&_ul>li]:p-0 [&_ul]:flex-1",
-        )}
-      >
-        <DataList label={title} isHorizontal={isHorizontal}>
-          {contentArray.map((c, i) => (
-            <ItemContent key={i} content={c} />
-          ))}
-        </DataList>
-      </View>
-    );
-  },
-);
+  return (
+    <View className={cn("flex flex-col gap-0.5", spacingAtTheBottom && "pb-3")}>
+      <DataList label={title}>
+        {contentArray.map((c, i) => (
+          <ItemContent key={i} content={c} />
+        ))}
+      </DataList>
+    </View>
+  );
+};

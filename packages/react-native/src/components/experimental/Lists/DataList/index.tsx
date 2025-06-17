@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 
-import { InternalActionType, ItemContainer } from "./ItemContainer";
+import { ItemContainer } from "./ItemContainer";
 import { cn } from "../../../../lib/utils";
 import { IconType } from "../../../Icon";
 import { PersonAvatar } from "../../../Avatars/PersonAvatar";
@@ -55,7 +55,7 @@ export type ItemProps = {
   action?: ActionType;
 };
 
-export type ActionType = CopyActionType | GenericActionType;
+export type ActionType = CopyActionType | GenericActionType | NoopActionType;
 
 export type CopyActionType = {
   type: "copy";
@@ -64,7 +64,11 @@ export type CopyActionType = {
 
 export type GenericActionType = {
   type: "generic";
-  handlePress: () => void;
+  handlePress?: () => void;
+};
+
+export type NoopActionType = {
+  type: "noop";
 };
 
 const Item = ({ text, icon, action }: ItemProps) => {
@@ -160,7 +164,7 @@ const DotTagItem = ({ ...props }: DotTagItemProps) => {
 const getInternalAction = (
   action: ActionType | undefined,
   defaultCopyText: string,
-): InternalActionType | undefined => {
+): ActionType | undefined => {
   if (action && action.type === "copy") {
     return { type: "copy", text: action.text ?? defaultCopyText };
   }

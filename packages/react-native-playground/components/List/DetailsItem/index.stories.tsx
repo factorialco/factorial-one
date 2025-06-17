@@ -29,6 +29,28 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const WithTwoContent: Story = {
+  args: {
+    title: "Address",
+    content: [
+      {
+        type: "item",
+        text: "Paseo Mara, 62, Bajos\nPáez del Vallès\nCeuta",
+        action: {
+          type: "copy",
+        },
+      },
+      {
+        type: "item",
+        text: "Paseo Mara, 62, Bajos\nPáez del Vallès\nCeuta",
+        action: {
+          type: "copy",
+        },
+      },
+    ],
+  },
+};
+
 export const WithLongText: Story = {
   args: {
     title: "Address",
@@ -52,16 +74,5 @@ export const WithMoreLinesThanAllowed: Story = {
         type: "copy",
       },
     },
-  },
-};
-
-export const Horizontal: Story = {
-  args: {
-    title: "Address",
-    content: {
-      type: "item",
-      text: "Paseo Mara, 62, Bajos\nPáez del Vallès\nCeuta",
-    },
-    isHorizontal: true,
   },
 };
