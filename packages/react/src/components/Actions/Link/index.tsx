@@ -4,24 +4,19 @@ import ExternalLink from "../../../icons/app/ExternalLink"
 import {
   Link as BaseLink,
   LinkProps as BaseLinkProps,
-  useNavigation,
 } from "../../../lib/linkHandler"
-import { cn } from "../../../lib/utils"
+import { cn, focusRing } from "../../../lib/utils"
 import { Icon } from "../../Utilities/Icon"
 
 const linkVariants = cva({
   base: "inline-flex flex-row items-center gap-1 text-base",
   variants: {
     variant: {
-      text: "text-inherit no-underline",
-      link: "text-f1-link underline visited:text-f1-link hover:text-f1-link active:text-f1-link",
-    },
-    active: {
-      true: "",
-      false: "",
+      unstyled: "text-inherit no-underline",
+      link: "font-medium text-f1-foreground underline decoration-f1-border-hover decoration-1 underline-offset-[5px] transition-all visited:text-f1-foreground hover:text-f1-foreground hover:decoration-f1-border-bold active:text-f1-foreground",
     },
     disabled: {
-      true: "cursor-not-allowed no-underline",
+      true: "cursor-not-allowed opacity-30 hover:decoration-f1-border-hover",
       false: "",
     },
   },
@@ -43,7 +38,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
 ) {
   const { target } = props
   const external = target === "_blank"
-  const { isActive } = useNavigation()
 
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (stopPropagation) {
@@ -60,9 +54,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       className={cn(
         linkVariants({
           variant,
-          active: isActive(props.href),
           disabled: props.disabled,
         }),
+        !props.disabled &&
+          focusRing("focus-visible:rounded-xs focus-visible:ring-offset-2"),
         className
       )}
     >

@@ -35,21 +35,30 @@ export const Default: Story = {
     await expect(link.dataset.test).toBe("foo")
   },
 }
-export const TargetBlank: Story = {
-  args: {
-    target: "_blank",
-    children: "This link opens in a new tab",
-  },
+
+export const Variants: Story = {
+  render: (args) => (
+    <div className="[&>h3]:mt-5 [&>h3]:pb-2">
+      <h3 className="!m-0">Basic usage</h3>
+      <Link {...args} variant="link" />
+      <h3>External link</h3>
+      <Link {...args} variant="link" target="_blank" />
+      <h3>Unstyled</h3>
+      <Link {...args} variant="unstyled" />
+      <h3>Disabled</h3>
+      <Link {...args} variant="link" disabled />
+    </div>
+  ),
 }
 
-export const AsText: Story = {
+export const Inline: Story = {
   args: {
-    variant: "text",
+    href: "#",
+    children: "link",
   },
-}
-
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-  },
+  render: (args) => (
+    <p>
+      Do not click this <Link {...args} /> because it goes nowhere.
+    </p>
+  ),
 }
