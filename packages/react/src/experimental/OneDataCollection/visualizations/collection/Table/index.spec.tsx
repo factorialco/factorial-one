@@ -1,4 +1,5 @@
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import {
   act,
   render,
@@ -62,6 +63,7 @@ const createTestSource = (
   Person,
   TestFilters,
   SortingsDefinition,
+  SummariesDefinition,
   ItemActionsDefinition<Person>,
   TestNavigationFilters
 > => ({
@@ -80,7 +82,7 @@ const createTestSource = (
   dataAdapter: {
     fetchData: async ({ filters: _filters }) => {
       if (error) throw error
-      return data
+      return { records: data }
     },
   },
 })
@@ -111,6 +113,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -142,6 +145,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -188,6 +192,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -216,6 +221,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -248,6 +254,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -298,6 +305,7 @@ describe("TableCollection", () => {
       Person,
       TestFilters,
       SortingsDefinition,
+      SummariesDefinition,
       ItemActionsDefinition<Person>,
       TestNavigationFilters
     > => ({
@@ -359,6 +367,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -391,6 +400,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -420,6 +430,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -454,6 +465,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -490,6 +502,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -518,6 +531,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -573,6 +587,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -618,6 +633,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -693,6 +709,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -771,6 +788,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
@@ -843,6 +861,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             TestNavigationFilters
           >
