@@ -7,11 +7,6 @@ export type SummariesDefinition = Record<
   }
 >
 
-export type SummariesState<Definition extends SummariesDefinition> = {
-  field: keyof Definition
-  type: SummaryType
-} | null
-
 /**
  * Type helper to extract keys from a SummaryDefinition
  */
