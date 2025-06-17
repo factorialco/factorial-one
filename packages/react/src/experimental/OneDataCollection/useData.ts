@@ -1,3 +1,4 @@
+import { groupBy } from "lodash"
 import {
   useCallback,
   useDeferredValue,
@@ -21,11 +22,14 @@ import { SortingsDefinition } from "./sortings"
 import {
   BaseFetchOptions,
   DataSource,
+  GroupingDefinition,
   InfiniteScrollPaginatedResponse,
   PageBasedPaginatedResponse,
   PaginatedResponse,
+  PaginationInfo,
   PromiseOrObservable,
   RecordType,
+  SortingsStateMultiple,
 } from "./types"
 
 /**
@@ -50,15 +54,23 @@ interface UseDataOptions<Filters extends FiltersDefinition> {
 }
 
 /**
+ * Symbol used to identify the groupId in the data
+ */
+export const GROUP_ID_SYMBOL = Symbol("groupId")
+export type WithGroupId<RecordType> = RecordType & {
+  [GROUP_ID_SYMBOL]: unknown | undefined
+}
+
+/**
  * Hook return type for useData
  */
-interface UseDataReturn<Record> {
-  data: Array<Record>
+interface UseDataReturn<R> {
+  data: Data<R>
   isInitialLoading: boolean
   isLoading: boolean
   isLoadingMore: boolean
   error: DataError | null
-  paginationInfo: PaginatedResponse<Record> | null
+  paginationInfo: PaginationInfo | null
 
   // For page-based pagination:
   setPage: (page: number) => void
@@ -71,12 +83,31 @@ interface UseDataReturn<Record> {
 
 type DataType<T> = PromiseState<T>
 
+export type GroupRecord<RecordType> = {
+  key: string
+  label: string | Promise<string>
+  itemCount: number | undefined | Promise<number | undefined>
+  records: RecordType[]
+}
+
+export type Data<RecordType> = {
+  records: WithGroupId<RecordType>[]
+} & (
+  | {
+      type: "grouped"
+      groups: GroupRecord<WithGroupId<RecordType>>[]
+    }
+  | {
+      type: "flat"
+    }
+)
+
 /**
  * Custom hook for handling data fetching state
  */
 function useDataFetchState<Record>() {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [data, setData] = useState<Array<Record>>([])
+  const [data, setData] = useState<Record[]>([])
   const [error, setError] = useState<DataError | null>(null)
 
   return {
@@ -92,9 +123,10 @@ function useDataFetchState<Record>() {
 /**
  * Custom hook for handling pagination state
  */
-function usePaginationState<Record>() {
-  const [paginationInfo, setPaginationInfo] =
-    useState<PaginatedResponse<Record> | null>(null)
+function usePaginationState() {
+  const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
+    null
+  )
   return { paginationInfo, setPaginationInfo }
 }
 
@@ -150,13 +182,13 @@ function usePaginationState<Record>() {
  * }
  * ```
  *
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
  *
  * @param source - The data source object containing dataAdapter and filter state
  * @param options - Optional configuration including filter overrides
  *
- * @returns {UseDataReturn<Record>} An object containing:
+ * @returns {UseDataReturn<R>} An object containing:
  * - data: The current collection records
  * - isInitialLoading: Whether this is the first data load
  * - isLoading: Whether any data fetch is in progress
@@ -165,20 +197,22 @@ function usePaginationState<Record>() {
  * - setPage: Function to navigate to a specific page
  */
 export function useData<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<R>,
 >(
   source: DataSource<
-    Record,
+    R,
     Filters,
     Sortings,
-    ItemActionsDefinition<Record>,
-    NavigationFilters
+    ItemActionsDefinition<R>,
+    NavigationFilters,
+    Grouping
   >,
   { filters, onError }: UseDataOptions<Filters> = {}
-): UseDataReturn<Record> {
+): UseDataReturn<R> {
   const {
     dataAdapter,
     currentFilters,
@@ -188,19 +222,21 @@ export function useData<
     isLoading,
     setIsLoading,
     currentNavigationFilters,
+    currentGrouping,
+    grouping,
   } = source
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
     isInitialLoading,
     setIsInitialLoading,
-    data,
-    setData,
+    data: rawData,
+    setData: setRawData,
     error,
     setError,
-  } = useDataFetchState<Record>()
+  } = useDataFetchState<R>()
 
-  const { paginationInfo, setPaginationInfo } = usePaginationState<Record>()
+  const { paginationInfo, setPaginationInfo } = usePaginationState()
 
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
@@ -221,66 +257,52 @@ export function useData<
       : deferredSearch
 
   const handleFetchSuccess = useCallback(
-    (
-      result: PaginatedResponse<Record> | SimpleResult<Record>,
-      appendMode: boolean
-    ) => {
+    (result: PaginatedResponse<R> | SimpleResult<R>, appendMode: boolean) => {
+      let records: R[] = []
       if ("records" in result) {
-        if (appendMode) {
-          // Append records for infinite scroll
-          setData((prevData) => [...prevData, ...result.records])
-        } else {
-          // Replace data for normal pagination or initial load
-          setData(result.records)
-        }
-
+        records = result.records
         // Use a default value of "pages" when paginationType is undefined
-        const paginationType = dataAdapter.paginationType || "pages"
+        const paginationType: "pages" | "infinite-scroll" =
+          dataAdapter.paginationType || "pages"
 
         // Update pagination info based on the pagination type
-        if (paginationType === "pages") {
+        if (["pages", "infinite-scroll"].includes(paginationType)) {
           // For page-based pagination
           setPaginationInfo({
-            records: result.records,
-            type: "pages",
-            total: result.total,
-            // Safely access currentPage with a default value of 1
-            currentPage: "currentPage" in result ? result.currentPage : 1,
-            perPage: result.perPage,
-            // Safely access pagesCount with a fallback calculation
-            pagesCount:
-              "pagesCount" in result
-                ? result.pagesCount
-                : Math.ceil(result.total / result.perPage),
-          })
-        } else if (paginationType === "infinite-scroll") {
-          // For infinite scroll pagination
-          setPaginationInfo({
-            records: result.records,
-            type: "infinite-scroll",
             total: result.total,
             perPage: result.perPage,
-            cursor:
-              "cursor" in result && result.cursor !== undefined
-                ? result.cursor
-                : appendMode
-                  ? String(result.perPage)
-                  : "0",
-            hasMore:
-              "hasMore" in result
-                ? result.hasMore
-                : data.length + result.records.length < result.total,
+            type: paginationType,
+            // Pages pagination
+            ...(paginationType === "pages" && {
+              currentPage: "currentPage" in result ? result.currentPage : 1,
+              pagesCount:
+                "pagesCount" in result
+                  ? result.pagesCount
+                  : Math.ceil(result.total / result.perPage),
+            }),
+            // Infinite scroll pagination
+            ...(paginationType === "infinite-scroll" && {
+              cursor:
+                "cursor" in result && result.cursor !== undefined
+                  ? result.cursor
+                  : appendMode
+                    ? String(result.perPage)
+                    : "0",
+              hasMore:
+                "hasMore" in result
+                  ? result.hasMore
+                  : rawData.length + result.records.length < result.total,
+            }),
           })
+          setTotalItems(result.total)
         }
-
-        setTotalItems(result.total)
       } else {
         // For non-paginated results, always replace
-        setData(result)
+        records = result
         setTotalItems?.(result.length)
       }
 
-      // At the end:
+      setRawData(appendMode ? (prevData) => [...prevData, ...records] : records)
       setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
@@ -289,9 +311,9 @@ export function useData<
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we don't want to re-run this callback when data.length changes
     [
+      setRawData,
       dataAdapter,
       setPaginationInfo,
-      setData,
       setError,
       setIsInitialLoading,
       setIsLoading,
@@ -300,6 +322,49 @@ export function useData<
       isLoadingMoreRef,
     ]
   )
+
+  const data = useMemo(() => {
+    // Add the groupId to the data if grouping is enabled
+    const data: WithGroupId<R>[] = rawData.map((record) => ({
+      ...record,
+      [GROUP_ID_SYMBOL]:
+        (currentGrouping?.field && record[currentGrouping.field as keyof R]) ||
+        undefined,
+    }))
+
+    /**
+     * Grouped data
+     */
+    if (
+      currentGrouping &&
+      currentGrouping.field &&
+      grouping &&
+      grouping.groupBy[currentGrouping.field as keyof R]
+    ) {
+      const groupedData = groupBy(data, GROUP_ID_SYMBOL)
+
+      return {
+        type: "grouped" as const,
+        records: data,
+        groups: Object.entries(groupedData).map(([key, value]) => ({
+          key,
+          label: grouping.groupBy[currentGrouping.field as keyof R]!.label(
+            key as R[keyof R],
+            mergedFilters
+          ),
+          itemCount: grouping.groupBy[
+            currentGrouping.field as keyof R
+          ]?.itemCount?.(key as R[keyof R], mergedFilters),
+          records: value,
+        })),
+      }
+    }
+
+    /**
+     * Flat data
+     */
+    return { type: "flat" as const, records: data }
+  }, [rawData, currentGrouping, grouping, mergedFilters])
 
   const handleFetchError = useCallback(
     (error: unknown) => {
@@ -320,7 +385,7 @@ export function useData<
     [setError, setIsInitialLoading, setIsLoading]
   )
 
-  type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
+  type ResultType = PaginatedResponse<R> | SimpleResult<R>
 
   // Define a type for the fetch parameters to make the function more maintainable
   type FetchDataParams<
@@ -349,14 +414,29 @@ export function useData<
           cleanup.current = undefined
         }
 
-        const baseFetchOptions: BaseFetchOptions<
-          Filters,
-          Sortings,
-          NavigationFilters
-        > = {
+        const sortings: SortingsStateMultiple = [
+          ...(currentSortings
+            ? [
+                {
+                  field: currentSortings.field as string,
+                  order: currentSortings.order,
+                },
+              ]
+            : []),
+          ...(currentGrouping
+            ? [
+                {
+                  field: currentGrouping.field as string,
+                  order: currentGrouping.order,
+                },
+              ]
+            : []),
+        ]
+
+        const baseFetchOptions: BaseFetchOptions<Filters, NavigationFilters> = {
           filters,
           search: searchValue,
-          sortings: currentSortings,
+          sortings,
           navigationFilters,
         }
 
@@ -424,6 +504,7 @@ export function useData<
       handleFetchError,
       dataAdapter,
       currentSortings,
+      currentGrouping,
       searchValue,
       handleFetchSuccess,
       setIsLoading,
@@ -434,10 +515,7 @@ export function useData<
   const setPage = useCallback(
     (page: number) => {
       // Return early if not page-based pagination or trying to set the same page
-      if (
-        !isPageBasedPagination(paginationInfo) ||
-        paginationInfo.currentPage === page
-      ) {
+      if (!isPageBasedPagination(paginationInfo)) {
         return
       }
 
@@ -457,12 +535,6 @@ export function useData<
       currentNavigationFilters,
     ]
   )
-
-  function isInfiniteScrollPagination<Record>(
-    pagination: PaginatedResponse<Record> | null
-  ): pagination is InfiniteScrollPaginatedResponse<Record> {
-    return pagination !== null && pagination.type === "infinite-scroll"
-  }
 
   // In loadMore function
   const loadMore = useCallback(() => {
@@ -541,8 +613,15 @@ export function useData<
 
 // TODO: move them to utils file???
 // Type guard functions to check pagination types
-function isPageBasedPagination<TRecord>(
-  pagination: PaginatedResponse<TRecord> | null
-): pagination is PageBasedPaginatedResponse<TRecord> {
+export function isPageBasedPagination<R extends RecordType>(
+  pagination: PaginationInfo | null
+): pagination is PageBasedPaginatedResponse<R> {
   return pagination !== null && pagination.type === "pages"
+}
+
+// Type guard function to check if the pagination is infinite scroll
+export function isInfiniteScrollPagination<R extends RecordType>(
+  pagination: PaginationInfo | null
+): pagination is InfiniteScrollPaginatedResponse<R> {
+  return pagination !== null && pagination.type === "infinite-scroll"
 }

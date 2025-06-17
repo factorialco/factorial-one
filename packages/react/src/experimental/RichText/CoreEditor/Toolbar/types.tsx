@@ -76,4 +76,5 @@ export interface ToolbarProps {
   labels: ToolbarLabels
   darkMode?: boolean
   showEmojiPicker?: boolean
+  plainHtmlMode?: boolean
 }

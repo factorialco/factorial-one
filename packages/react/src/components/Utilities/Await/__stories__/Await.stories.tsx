@@ -20,7 +20,7 @@ const ExampleComponent = (args: Story["args"]) => {
 
   useEffect(() => {
     triggerPromise()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only run once
   }, [])
 
   return (

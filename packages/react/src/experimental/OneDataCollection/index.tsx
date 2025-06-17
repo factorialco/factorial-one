@@ -21,12 +21,15 @@ import {
   NavigationFiltersState,
 } from "./navigationFilters/types"
 import { Search } from "./search"
+import { Settings } from "./Settings"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
   BulkActionDefinition,
   CollectionSearchOptions,
   DataSource,
   DataSourceDefinition,
+  GroupingDefinition,
+  GroupingState,
   OnBulkActionCallback,
   OnLoadDataCallback,
   OnSelectItemsCallback,
@@ -34,9 +37,9 @@ import type {
 } from "./types"
 import { DataError } from "./useData"
 import { CustomEmptyStates, useEmptyState } from "./useEmptyState"
-import type { Visualization } from "./visualizations"
-import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 
+import type { Visualization } from "./visualizations/collection"
+import { VisualizationRenderer } from "./visualizations/collection"
 /**
  * A hook that manages data source state and filtering capabilities for a collection.
  * It creates and returns a reusable data source that can be shared across different
@@ -77,21 +80,25 @@ export const useDataSource = <
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
+    currentGrouping: initialCurrentGrouping,
     filters,
     navigationFilters,
     search,
     defaultSorting,
     dataAdapter,
+    grouping,
     ...rest
   }: DataSourceDefinition<
     Record,
     FiltersSchema,
     Sortings,
     ItemActions,
-    NavigationFilters
+    NavigationFilters,
+    Grouping
   >,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<
@@ -99,7 +106,8 @@ export const useDataSource = <
   FiltersSchema,
   Sortings,
   ItemActions,
-  NavigationFilters
+  NavigationFilters,
+  Grouping
 > => {
   const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
@@ -153,6 +161,24 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
 
+  const defaultGrouping = grouping?.mandatory
+    ? {
+        field: Object.keys(
+          grouping.groupBy
+        )[0] as keyof typeof grouping.groupBy,
+        order: "asc" as const,
+      }
+    : undefined
+
+  const [currentGrouping, setCurrentGrouping] = useState<
+    GroupingState<Record, Grouping>
+  >(initialCurrentGrouping ?? defaultGrouping)
+
+  // For mandatory grouping, ensure we have a valid grouping state
+  if (grouping?.mandatory && !currentGrouping?.field) {
+    throw new Error("Grouping is mandatory but no grouping state is set")
+  }
+
   return {
     filters: memoizedFilters,
     currentFilters,
@@ -169,6 +195,9 @@ export const useDataSource = <
     navigationFilters,
     currentNavigationFilters,
     setCurrentNavigationFilters,
+    setCurrentGrouping,
+    currentGrouping,
+    grouping,
     ...rest,
   }
 }
@@ -203,6 +232,7 @@ export const OneDataCollection = <
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >({
   source,
   visualizations,
@@ -210,13 +240,28 @@ export const OneDataCollection = <
   onBulkAction,
   emptyStates,
 }: {
-  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
   visualizations: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
+    Visualization<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
   >
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
   onBulkAction?: OnBulkActionCallback<Record, Filters>
   emptyStates?: CustomEmptyStates
+  onTotalItemsChange?: (totalItems: number) => void
 }): JSX.Element => {
   const {
     // Filters
@@ -242,6 +287,12 @@ export const OneDataCollection = <
       totalItems === undefined
         ? `${totalItems} ${i18n.collections.itemsCount}`
         : null,
+    currentGrouping,
+    setCurrentGrouping,
+    grouping,
+    currentSortings,
+    setCurrentSortings,
+    sortings,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
@@ -453,12 +504,12 @@ export const OneDataCollection = <
         >
           <div
             className={cn(
-              "flex items-center justify-between",
+              "flex items-center justify-between gap-4",
               !filters && "justify-end"
             )}
           >
             {filters && (
-              <div className="flex flex-1 gap-1">
+              <div className="flex min-w-0 flex-1 gap-1">
                 <Filters.Controls />
                 <Filters.Presets />
               </div>
@@ -479,13 +530,17 @@ export const OneDataCollection = <
               {search && (
                 <Search onChange={setCurrentSearch} value={currentSearch} />
               )}
-              {visualizations && visualizations.length > 1 && (
-                <VisualizationSelector
-                  visualizations={visualizations}
-                  currentVisualization={currentVisualization}
-                  onVisualizationChange={setCurrentVisualization}
-                />
-              )}
+              <Settings
+                visualizations={visualizations}
+                currentVisualization={currentVisualization}
+                onVisualizationChange={setCurrentVisualization}
+                grouping={grouping}
+                currentGrouping={currentGrouping}
+                onGroupingChange={setCurrentGrouping}
+                sortings={sortings}
+                currentSortings={currentSortings}
+                onSortingsChange={setCurrentSortings}
+              ></Settings>
               {hasCollectionsActions && (
                 <>
                   {elementsRightActions && (

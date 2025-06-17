@@ -72,7 +72,7 @@ export const FiltersPresets = <Filters extends FiltersDefinition>({
           items={presets}
           renderListItem={renderListPresetItem}
           renderDropdownItem={renderDropdownPresetItem}
-          className="flex-1"
+          className="min-w-0 flex-1"
         />
       </>
     )

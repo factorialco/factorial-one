@@ -50,6 +50,12 @@ interface CheckboxProps extends DataAttributes {
    * @default false
    */
   presentational?: boolean
+
+  /**
+   * Whether the checkbox should stop event propagation
+   * @default false
+   */
+  stopPropagation?: boolean
 }
 
 export function Checkbox({
@@ -62,6 +68,7 @@ export function Checkbox({
   value,
   hideLabel = false,
   presentational = false,
+  stopPropagation = false,
   ...rest
 }: CheckboxProps) {
   return (
@@ -75,6 +82,7 @@ export function Checkbox({
       value={value}
       hideLabel={hideLabel}
       tabIndex={presentational ? -1 : undefined}
+      onClick={(e) => stopPropagation && e.stopPropagation()}
       {...rest}
     />
   )
