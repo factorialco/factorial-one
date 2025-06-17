@@ -30,7 +30,7 @@ const _DataList = ({
     <View
       className={cn(
         isHorizontal
-          ? "flex min-h-12 flex-1 flex-col py-1.5 pl-3 pr-1.5 xs:flex-row"
+          ? "flex min-h-12 flex-shrink flex-row py-1.5 pl-3 pr-1.5"
           : "min-w-32 max-w-72",
       )}
     >
@@ -38,13 +38,15 @@ const _DataList = ({
         <Text
           className={cn(
             "px-1.5 text-f1-foreground-secondary",
-            isHorizontal ? "mt-1.5 w-44 xs:px-0" : "mb-0.5",
+            isHorizontal ? "mt-1.5 w-36 shrink-0" : "mb-0.5",
           )}
         >
           {label}
         </Text>
       )}
-      <View className="flex flex-col justify-center gap-0.5">{children}</View>
+      <View className="flex flex-shrink flex-col justify-center gap-0.5">
+        {children}
+      </View>
     </View>
   );
 };

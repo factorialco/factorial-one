@@ -13,7 +13,7 @@ exports[`DetailsItem Snapshot type company 1`] = `
       Company
     </Text>
     <View
-      className="flex flex-col justify-center gap-0.5"
+      className="flex flex-shrink flex-col justify-center gap-0.5"
     >
       <View
         className="flex rounded font-medium text-f1-foreground *:flex-1"
@@ -198,7 +198,7 @@ exports[`DetailsItem Snapshot type dot-tag 1`] = `
       Dot Tag
     </Text>
     <View
-      className="flex flex-col justify-center gap-0.5"
+      className="flex flex-shrink flex-col justify-center gap-0.5"
     >
       <View
         className="flex items-start pt-1"
@@ -273,7 +273,7 @@ exports[`DetailsItem Snapshot type item 1`] = `
       Email
     </Text>
     <View
-      className="flex flex-col justify-center gap-0.5"
+      className="flex flex-shrink flex-col justify-center gap-0.5"
     >
       <View
         className="flex rounded font-medium text-f1-foreground *:flex-1"
@@ -425,7 +425,7 @@ exports[`DetailsItem Snapshot type person 1`] = `
       Datos personales
     </Text>
     <View
-      className="flex flex-col justify-center gap-0.5"
+      className="flex flex-shrink flex-col justify-center gap-0.5"
     >
       <View
         className="flex rounded font-medium text-f1-foreground *:flex-1"
@@ -598,7 +598,7 @@ exports[`DetailsItem Snapshot type team 1`] = `
       Team
     </Text>
     <View
-      className="flex flex-col justify-center gap-0.5"
+      className="flex flex-shrink flex-col justify-center gap-0.5"
     >
       <View
         className="flex rounded font-medium text-f1-foreground *:flex-1"
