@@ -1,14 +1,14 @@
 import { memo, ReactNode } from "react";
-import { InternalGenericActionType } from "../ItemContainer";
 import { cn } from "../../../../../lib/utils";
 import { Icon } from "../../../../Icon";
 import { ChevronRight } from "../../../../../icons/app";
 import { Pressable, View } from "react-native";
+import { GenericActionType } from "..";
 
 export type GenericActionProps = {
   children: ReactNode;
   className?: string;
-} & InternalGenericActionType;
+} & GenericActionType;
 
 export const GenericAction = memo(
   ({ children, className, ...props }: GenericActionProps) => {

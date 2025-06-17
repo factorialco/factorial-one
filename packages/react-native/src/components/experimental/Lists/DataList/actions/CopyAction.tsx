@@ -1,16 +1,16 @@
 import { ReactNode, useEffect, useState } from "react";
-import { InternalCopyActionType } from "../ItemContainer";
 import { cn } from "../../../../../lib/utils";
 import { Icon } from "../../../../Icon";
 import { CheckCircle, LayersFront } from "../../../../../icons/app";
 import { Pressable, View } from "react-native";
 import * as Clipboard from "expo-clipboard";
+import { CopyActionType } from "..";
 
 const COPIED_SHOWN_MS = 750;
 
 export type CopyActionProps = {
   children: ReactNode;
-} & InternalCopyActionType;
+} & CopyActionType;
 
 export const CopyAction = ({ text, children }: CopyActionProps) => {
   const [copied, setCopied] = useState(false);
@@ -25,8 +25,10 @@ export const CopyAction = ({ text, children }: CopyActionProps) => {
 
   const copyHandler = async () => {
     try {
-      await Clipboard.setStringAsync(text);
-      setCopied(true);
+      if (text) {
+        await Clipboard.setStringAsync(text);
+        setCopied(true);
+      }
     } catch (error) {
       void error;
     }
