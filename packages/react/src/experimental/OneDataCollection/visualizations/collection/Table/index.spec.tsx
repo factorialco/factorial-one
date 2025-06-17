@@ -20,6 +20,7 @@ import { SortingsDefinition } from "../../../sortings"
 import type {
   BaseFetchOptions,
   DataSource,
+  GroupingDefinition,
   PaginatedFetchOptions,
   PaginatedResponse,
   PaginationType,
@@ -65,7 +66,8 @@ const createTestSource = (
   SortingsDefinition,
   SummariesDefinition,
   ItemActionsDefinition<Person>,
-  TestNavigationFilters
+  TestNavigationFilters,
+  GroupingDefinition<Person>
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -85,6 +87,8 @@ const createTestSource = (
       return { records: data }
     },
   },
+  currentGrouping: undefined,
+  setCurrentGrouping: vi.fn(),
 })
 
 // Test wrapper component that provides I18nProvider
@@ -115,7 +119,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource()}
@@ -147,7 +152,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource()}
@@ -194,7 +200,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={columnsWithCustomRender}
             source={createTestSource()}
@@ -223,7 +230,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource([])}
@@ -256,7 +264,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource([], error)}
@@ -307,7 +316,8 @@ describe("TableCollection", () => {
       SortingsDefinition,
       SummariesDefinition,
       ItemActionsDefinition<Person>,
-      TestNavigationFilters
+      TestNavigationFilters,
+      GroupingDefinition<Person>
     > => ({
       currentFilters: {},
       setCurrentFilters: vi.fn(),
@@ -321,15 +331,13 @@ describe("TableCollection", () => {
       setCurrentNavigationFilters: vi.fn(),
       navigationFilters: undefined,
       currentNavigationFilters: {},
+      currentGrouping: undefined,
+      setCurrentGrouping: vi.fn(),
       dataAdapter: {
         paginationType,
         perPage: itemsPerPage,
         fetchData: (async (
-          options: PaginatedFetchOptions<
-            TestFilters,
-            SortingsDefinition,
-            TestNavigationFilters
-          >
+          options: PaginatedFetchOptions<TestFilters, TestNavigationFilters>
         ) => {
           // Handle both BaseFetchOptions and PaginatedFetchOptions
           const currentPage = options.pagination?.currentPage ?? 1
@@ -351,11 +359,7 @@ describe("TableCollection", () => {
             pagesCount,
           }
         }) as (
-          options: BaseFetchOptions<
-            TestFilters,
-            SortingsDefinition,
-            TestNavigationFilters
-          >
+          options: BaseFetchOptions<TestFilters, TestNavigationFilters>
         ) => Promise<PaginatedResponse<Person>>,
       },
     })
@@ -369,7 +373,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource({
@@ -402,7 +407,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource({
@@ -432,7 +438,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource({})}
@@ -467,7 +474,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource({})}
@@ -504,7 +512,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource({
@@ -533,7 +542,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource({
@@ -589,7 +599,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={columnsWithSorting}
             source={sortableSource}
@@ -635,7 +646,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={[
               {
@@ -711,7 +723,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={[
               {
@@ -790,7 +803,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={[
               {
@@ -863,7 +877,8 @@ describe("TableCollection", () => {
             SortingsDefinition,
             SummariesDefinition,
             ItemActionsDefinition<Person>,
-            TestNavigationFilters
+            TestNavigationFilters,
+            GroupingDefinition<Person>
           >
             columns={columnsWithSorting}
             source={createTestSource()} // No sortings defined

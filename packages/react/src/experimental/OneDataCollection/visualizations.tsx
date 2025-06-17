@@ -12,6 +12,7 @@ import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
 import type {
   DataSource,
+  GroupingDefinition,
   OnLoadDataCallback,
   OnLoadErrorCallback,
   OnSelectItemsCallback,
@@ -37,6 +38,7 @@ export type Visualization<
   Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > =
   | {
       /** Card-based visualization type */
@@ -67,7 +69,8 @@ export type Visualization<
           Sortings,
           Summaries,
           ItemActions,
-          NavigationFilters
+          NavigationFilters,
+          Grouping
         >
       }) => JSX.Element
     }
@@ -93,6 +96,7 @@ export type VisualizationProps<
   ItemActions extends ItemActionsDefinition<Record>,
   Summaries extends SummariesDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Array of available visualization configurations */
   visualizations?: ReadonlyArray<
@@ -102,7 +106,8 @@ export type VisualizationProps<
       Sortings,
       Summaries,
       ItemActions,
-      NavigationFilters
+      NavigationFilters,
+      Grouping
     >
   >
 }
@@ -128,6 +133,7 @@ export const VisualizationSelector = <
   Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >({
   visualizations,
   currentVisualization,
@@ -140,7 +146,8 @@ export const VisualizationSelector = <
       Sortings,
       Summaries,
       ItemActions,
-      NavigationFilters
+      NavigationFilters,
+      Grouping
     >
   >
   currentVisualization: number
@@ -233,6 +240,7 @@ export const VisualizationRenderer = <
   Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >({
   visualization,
   source,
@@ -254,7 +262,16 @@ export const VisualizationRenderer = <
     Sortings,
     Summaries,
     ItemActions,
-    NavigationFilters
+    NavigationFilters,
+    Grouping
+  >
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
   >
   onSelectItems: OnSelectItemsCallback<Record, Filters>
   onLoadData: OnLoadDataCallback<Record, Filters>
@@ -270,7 +287,8 @@ export const VisualizationRenderer = <
           Sortings,
           Summaries,
           ItemActions,
-          NavigationFilters
+          NavigationFilters,
+          Grouping
         >
           source={source}
           {...visualization.options}
@@ -286,7 +304,8 @@ export const VisualizationRenderer = <
           Filters,
           Sortings,
           ItemActions,
-          NavigationFilters
+          NavigationFilters,
+          Grouping
         >
           source={source}
           {...visualization.options}

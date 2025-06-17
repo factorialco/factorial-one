@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
 import type { PromiseState } from "../../lib/promise-to-observable"
 import type { FiltersState } from "./Filters/types"
+import { GroupingDefinition } from "./grouping"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
 import type {
@@ -15,7 +16,7 @@ import type {
   PaginatedResponse,
   RecordType,
 } from "./types"
-import { useData } from "./useData"
+import { GROUP_ID_SYMBOL, useData, WithGroupId } from "./useData"
 interface TestRecord extends RecordType {
   id: number
   name: string
@@ -29,9 +30,9 @@ type TestFilters = {
   }
 }
 
-const mockData: TestRecord[] = [
-  { id: 1, name: "Test 1" },
-  { id: 2, name: "Test 2" },
+const mockData: WithGroupId<TestRecord>[] = [
+  { id: 1, name: "Test 1", [GROUP_ID_SYMBOL]: undefined },
+  { id: 2, name: "Test 2", [GROUP_ID_SYMBOL]: undefined },
 ]
 
 type TestSource = DataSource<
@@ -39,16 +40,13 @@ type TestSource = DataSource<
   TestFilters,
   SortingsDefinition,
   ItemActionsDefinition<TestRecord>,
-  NavigationFiltersDefinition
+  NavigationFiltersDefinition,
+  GroupingDefinition<TestRecord>
 >
 
 const createMockDataSource = (
   fetchData: (
-    options: BaseFetchOptions<
-      TestFilters,
-      SortingsDefinition,
-      NavigationFiltersDefinition
-    >
+    options: BaseFetchOptions<TestFilters, NavigationFiltersDefinition>
   ) =>
     | BaseResponse<TestRecord>
     | Promise<BaseResponse<TestRecord>>
@@ -58,7 +56,6 @@ const createMockDataSource = (
   const baseAdapter: BaseDataAdapter<
     TestRecord,
     TestFilters,
-    SortingsDefinition,
     NavigationFiltersDefinition
   > = {
     fetchData,
@@ -67,7 +64,6 @@ const createMockDataSource = (
   const paginatedAdapter: PaginatedDataAdapter<
     TestRecord,
     TestFilters,
-    SortingsDefinition,
     NavigationFiltersDefinition
   > = {
     fetchData: async (options) => {
@@ -104,6 +100,8 @@ const createMockDataSource = (
     currentNavigationFilters: {},
     setCurrentNavigationFilters: vi.fn(),
     navigationFilters: undefined,
+    currentGrouping: undefined,
+    setCurrentGrouping: vi.fn(),
   }
 }
 
@@ -118,7 +116,10 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source))
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toMatchObject({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.isLoading).toBe(false)
       expect(result.current.isInitialLoading).toBe(false)
       expect(result.current.error).toBe(null)
@@ -133,23 +134,16 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toMatchObject({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.paginationInfo).toEqual({
         total: 2,
         currentPage: 1,
         perPage: 10,
         pagesCount: 1,
         type: "pages",
-        records: [
-          {
-            id: 1,
-            name: "Test 1",
-          },
-          {
-            id: 2,
-            name: "Test 2",
-          },
-        ],
       })
     })
   })
@@ -169,7 +163,10 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toMatchObject({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.isInitialLoading).toBe(false)
     })
 
@@ -212,7 +209,10 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toMatchObject({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.isInitialLoading).toBe(false)
     })
 
@@ -255,7 +255,10 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source, { filters }))
 
-      expect(result.current.data).toEqual([mockData[0]])
+      expect(result.current.data).toMatchObject({
+        records: [mockData[0]],
+        type: "flat",
+      })
     })
 
     it("should apply filters to synchronous data", () => {
@@ -271,7 +274,10 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source, { filters }))
 
-      expect(result.current.data).toEqual([mockData[0]])
+      expect(result.current.data).toMatchObject({
+        records: [mockData[0]],
+        type: "flat",
+      })
     })
   })
 
@@ -395,6 +401,8 @@ describe("useData", () => {
         currentNavigationFilters: {},
         setCurrentNavigationFilters: vi.fn(),
         navigationFilters: undefined,
+        currentGrouping: undefined,
+        setCurrentGrouping: vi.fn(),
       }
 
       // Render the hook

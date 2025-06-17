@@ -1,5 +1,61 @@
 # Changelog
 
+## [1.99.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.98.0...factorial-one-react-v1.99.0) (2025-06-17)
+
+
+### Features
+
+* **frame:** remember sidebar state between loads ([#2083](https://github.com/factorialco/factorial-one/issues/2083)) ([0447afd](https://github.com/factorialco/factorial-one/commit/0447afd85995dfd64719d1ca8dcaf2b2801fc587))
+
+## [1.98.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.2...factorial-one-react-v1.98.0) (2025-06-17)
+
+
+### Features
+
+* datacollection list view ([#1958](https://github.com/factorialco/factorial-one/issues/1958)) ([3cea88a](https://github.com/factorialco/factorial-one/commit/3cea88ac2c6ff84527fedecda9389e12a3eae86a))
+
+## [1.97.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.1...factorial-one-react-v1.97.2) (2025-06-17)
+
+
+### Bug Fixes
+
+* allow presets to be hidden ([#2093](https://github.com/factorialco/factorial-one/issues/2093)) ([7c145bf](https://github.com/factorialco/factorial-one/commit/7c145bf9aa24314601765506ea7e8930a5c7d87b))
+
+## [1.97.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.0...factorial-one-react-v1.97.1) (2025-06-16)
+
+
+### Bug Fixes
+
+* **RichTextEditor:** addresing some editor errors ([#2067](https://github.com/factorialco/factorial-one/issues/2067)) ([ae47adf](https://github.com/factorialco/factorial-one/commit/ae47adf66a360f19c85d8afcd9e5c6ab768b6694))
+
+## [1.97.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.96.1...factorial-one-react-v1.97.0) (2025-06-16)
+
+
+### Features
+
+* button loading spinner ([#2076](https://github.com/factorialco/factorial-one/issues/2076)) ([f782d57](https://github.com/factorialco/factorial-one/commit/f782d5735c8fc9b01706a4c886174f2cbca0415a))
+
+## [1.96.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.96.0...factorial-one-react-v1.96.1) (2025-06-13)
+
+
+### Bug Fixes
+
+* update BasicTextEditor styles for improved scrolling behavior ([#2086](https://github.com/factorialco/factorial-one/issues/2086)) ([a6b4316](https://github.com/factorialco/factorial-one/commit/a6b43160be4743e2ca3e970cf4a9428defbcded0))
+
+## [1.96.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.2...factorial-one-react-v1.96.0) (2025-06-13)
+
+
+### Features
+
+* **datacollection:** grouping ([#1661](https://github.com/factorialco/factorial-one/issues/1661)) ([5785b90](https://github.com/factorialco/factorial-one/commit/5785b9067ae20cd8fb8a8bc238bfc908ea851ed7))
+
+## [1.95.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.1...factorial-one-react-v1.95.2) (2025-06-13)
+
+
+### Bug Fixes
+
+* update fallback cursor value to null in mock data ([#2081](https://github.com/factorialco/factorial-one/issues/2081)) ([015ecb0](https://github.com/factorialco/factorial-one/commit/015ecb0df5d86484651b8181390ce5ad3bdcf750))
+
 ## [1.95.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.95.0...factorial-one-react-v1.95.1) (2025-06-13)
 
 

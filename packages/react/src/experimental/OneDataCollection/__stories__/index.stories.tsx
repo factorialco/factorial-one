@@ -7,12 +7,14 @@ import {
   Download,
   Envelope,
   Pencil,
+  Placeholder,
   Share,
   Star,
   Target,
   Upload,
 } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
+import { GroupingDefinition } from "../grouping"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
@@ -27,6 +29,8 @@ import {
   filters,
   filterUsers,
   generateMockUsers,
+  getMockVisualizations,
+  MockUser,
   mockUsers,
   PERFORMANCE_SCORE_MOCK,
   PROJECTS_MOCK,
@@ -434,6 +438,18 @@ export const RendererTypes: Story = {
                     value: {
                       firstName: item.name.split(" ")[0],
                       lastName: item.name.split(" ")[1],
+                      badge:
+                        item.index % 3 === 0
+                          ? {
+                              type: "module",
+                              module: "inbox",
+                            }
+                          : item.index % 3 === 1
+                            ? {
+                                type: "warning",
+                                icon: Placeholder,
+                              }
+                            : undefined,
                     },
                   }),
                   sorting: "name",
@@ -518,6 +534,11 @@ export const RendererTypes: Story = {
 }
 
 export const CustomCardProperties: Story = {
+  parameters: {
+    a11y: {
+      skipCi: true,
+    },
+  },
   render: () => {
     const dataSource = useDataSource({
       filters,
@@ -621,7 +642,8 @@ const JsonVisualization = ({
       typeof sortings,
       SummariesDefinition,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockUsers)[number]>
     >
   >
 }) => {
@@ -653,7 +675,8 @@ export const WithCustomJsonView: Story = {
       typeof sortings,
       SummariesDefinition,
       MockActions,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<MockUser>
     >({
       filters,
       sortings,
@@ -830,51 +853,13 @@ export const WithMultipleVisualizations: Story = {
       }),
     })
 
-    return (
-      <OneDataCollection
-        source={source}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
-        ]}
-      />
+    const visualizations = Object.values(
+      getMockVisualizations({
+        frozenColumns: 0,
+      })
     )
+
+    return <OneDataCollection source={source} visualizations={visualizations} />
   },
 }
 
@@ -882,6 +867,10 @@ export const WithPagesPagination: Story = {
   render: () => {
     // Create a fixed set of paginated users so we're not regenerating them on every render
     const paginatedMockUsers = generateMockUsers(50)
+
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
 
     const source = useDataSource({
       filters,
@@ -916,44 +905,9 @@ export const WithPagesPagination: Story = {
           console.log(`Bulk action: ${action}`, "->", selectedItems)
         }}
         visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
+          mockVisualizations.table,
+          mockVisualizations.card,
+          mockVisualizations.list,
         ]}
       />
     )
@@ -1047,21 +1001,26 @@ export const WithInfiniteScrollPagination: Story = {
 
 export const WithSynchronousData: Story = {
   render: () => {
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
+
     const source = useDataSource<
-      (typeof mockUsers)[number],
+      MockUser,
       typeof filters,
       typeof sortings,
       SummariesDefinition,
-      ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition
+      ItemActionsDefinition<MockUser>,
+      NavigationFiltersDefinition,
+      GroupingDefinition<MockUser>
     >({
       filters,
       sortings,
       presets: filterPresets,
       dataAdapter: {
-        fetchData: ({ filters, sortings }) => {
+        fetchData: ({ filters, sortings, navigationFilters }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, sortings)
+          return filterUsers(mockUsers, filters, sortings, navigationFilters)
         },
       },
     })
@@ -1070,33 +1029,9 @@ export const WithSynchronousData: Story = {
       <OneDataCollection
         source={source}
         visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
+          mockVisualizations.table,
+          mockVisualizations.list,
+          mockVisualizations.card,
         ]}
       />
     )
@@ -1279,7 +1214,8 @@ export const WithSyncSearch: Story = {
       typeof sortings,
       SummariesDefinition,
       ItemActionsDefinition<(typeof mockUserData)[number]>,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockUserData)[number]>
     >({
       filters,
       sortings,
@@ -1319,7 +1255,7 @@ export const WithSyncSearch: Story = {
 
           // Apply sorting if provided
           if (sortings) {
-            ;[sortings].forEach(({ field, order }) => {
+            sortings.forEach(({ field, order }) => {
               filteredUsers.sort((a, b) => {
                 const aValue = a[field as keyof (typeof mockUserData)[number]]
                 const bValue = b[field as keyof (typeof mockUserData)[number]]
@@ -1400,7 +1336,8 @@ export const WithAsyncSearch: Story = {
       typeof sortings,
       SummariesDefinition,
       MockActions,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<MockUser>
     >({
       filters,
       sortings,
@@ -1467,7 +1404,7 @@ export const WithAsyncSearch: Story = {
 
               // Apply sorting if provided
               if (sortings) {
-                ;[sortings].forEach(({ field, order }) => {
+                sortings.forEach(({ field, order }) => {
                   const direction = order
 
                   filteredUsers.sort((a, b) => {

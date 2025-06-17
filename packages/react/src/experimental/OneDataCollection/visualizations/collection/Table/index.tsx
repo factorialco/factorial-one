@@ -1,6 +1,12 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
+import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { OnePagination } from "@/experimental/OnePagination"
+import {
+  getAnimationVariants,
+  useGroups,
+} from "@/experimental/OneDataCollection/useGroups"
+import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
 import {
   OneTable,
   TableBody,
@@ -12,10 +18,10 @@ import {
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton.tsx"
-import { ComponentProps, useEffect, useMemo, useRef } from "react"
+import { AnimatePresence, motion } from "motion/react"
+import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { ActionsDropdown } from "../../../ItemActions/Dropdown"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import {
   SortingKey,
@@ -23,14 +29,16 @@ import {
   SortingsState,
 } from "../../../sortings"
 import { SummariesDefinition, SummaryKey } from "../../../summary.ts"
-import { CollectionProps, RecordType } from "../../../types"
-import { useData } from "../../../useData"
+import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
+import { isInfiniteScrollPagination, useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
+import { statusToChecked } from "../utils"
+import { Row } from "./components/Row"
 
 export type WithOptionalSorting<
-  Record,
+  R extends RecordType,
   Sortings extends SortingsDefinition,
-> = PropertyDefinition<Record> & {
+> = PropertyDefinition<R> & {
   sorting?: SortingKey<Sortings>
 
   /**
@@ -45,10 +53,10 @@ export type WithOptionalSorting<
 }
 
 export type TableColumnDefinition<
-  Record,
+  R extends RecordType,
   Sortings extends SortingsDefinition,
   Summaries extends SummariesDefinition,
-> = WithOptionalSorting<Record, Sortings> &
+> = WithOptionalSorting<R, Sortings> &
   Pick<
     ComponentProps<typeof TableHead>,
     "hidden" | "info" | "infoIcon" | "sticky" | "width"
@@ -61,22 +69,42 @@ export type TableColumnDefinition<
   }
 
 export type TableVisualizationOptions<
-  Record extends RecordType,
+  R extends RecordType,
   _Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   Summaries extends SummariesDefinition,
 > = {
-  columns: ReadonlyArray<TableColumnDefinition<Record, Sortings, Summaries>>
+  columns: ReadonlyArray<TableColumnDefinition<R, Sortings, Summaries>>
   frozenColumns?: 0 | 1 | 2
 }
 
-export const TableCollection = <
-  Record extends RecordType,
+export type TableCollectionProps<
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<R>,
+> = CollectionProps<
+  R,
+  Filters,
+  Sortings,
+  Summaries,
+  ItemActions,
+  NavigationFilters,
+  Grouping,
+  TableVisualizationOptions<R, Filters, Sortings, Summaries>
+>
+
+export const TableCollection = <
+  R extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
+  ItemActions extends ItemActionsDefinition<R>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<R>,
 >({
   columns,
   source,
@@ -85,26 +113,32 @@ export const TableCollection = <
   onLoadData,
   onLoadError,
 }: CollectionProps<
-  Record,
+  R,
   Filters,
   Sortings,
   Summaries,
   ItemActions,
   NavigationFilters,
-  TableVisualizationOptions<Record, Filters, Sortings, Summaries>
+  Grouping,
+  TableVisualizationOptions<R, Filters, Sortings, Summaries>
 >) => {
   const t = useI18n()
-  const loadingIndicatorRef = useRef<HTMLDivElement>(null)
+  // Created a motion component for the row
+  const [MotionRow] = useState(() =>
+    motion.create(
+      Row<R, Filters, Sortings, ItemActions, NavigationFilters, Grouping>
+    )
+  )
 
   const {
     data,
     paginationInfo,
     setPage,
-    loadMore,
     isInitialLoading,
     isLoadingMore,
+    loadMore,
     summaries: summariesData,
-  } = useData<Record, Filters, Sortings, NavigationFilters>(source, {
+  } = useData<R, Filters, Sortings, NavigationFilters, Grouping>(source, {
     onError: (error) => {
       onLoadError(error)
     },
@@ -117,57 +151,37 @@ export const TableCollection = <
   console.log("[debug] source.summaries", summaries)
   console.log("[debug] summariesData", summariesData)
 
-  useEffect(() => {
-    if (paginationInfo?.type !== "infinite-scroll" || !paginationInfo.hasMore) {
-      return
-    }
-
-    const loadingIndicator = loadingIndicatorRef.current
-    if (!loadingIndicator) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading && !isLoadingMore) {
-          loadMore()
-        }
-      },
-      {
-        root: null, // viewport
-        rootMargin: "200px",
-        threshold: 0.1,
-      }
-    )
-
-    observer.observe(loadingIndicator)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [paginationInfo, isLoadingMore, loadMore, isLoading])
+  // Infinite scroll pagination
+  const { loadingIndicatorRef } = useInfiniteScrollPagination(
+    paginationInfo,
+    isLoading,
+    isLoadingMore,
+    loadMore
+  )
 
   useEffect(() => {
     onLoadData({
-      totalItems: paginationInfo?.total || data.length,
+      totalItems: paginationInfo?.total || data.records.length,
       filters: source.currentFilters,
       search: source.currentSearch,
       isInitialLoading,
-      data,
+      data: data.records,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
-  }, [paginationInfo?.total, data])
+  }, [paginationInfo?.total, data.records])
 
   const frozenColumnsLeft = useMemo(() => frozenColumns, [frozenColumns])
 
   /**
    * Item selection
    */
-
   const {
     selectedItems,
-    isAllSelected,
-    isPartiallySelected,
+    allSelectedStatus,
+    groupAllSelectedStatus,
     handleSelectItemChange,
     handleSelectAll,
+    handleSelectGroupChange,
   } = useSelectable(data, paginationInfo, source, onSelectItems)
 
   const i18n = useI18n()
@@ -178,7 +192,7 @@ export const TableCollection = <
     if (!summariesData || !source.summaries) return null
 
     return {
-      data: summariesData as Record,
+      data: summariesData as R,
       sticky: true,
       label: source.summaries?.label,
     }
@@ -228,12 +242,24 @@ export const TableCollection = <
     })
   }
 
+  /*
+   * Groups
+   */
+
+  const collapsible = source.grouping?.collapsible
+  const defaultOpenGroups = source.grouping?.defaultOpenGroups
+  const { openGroups, setGroupOpen } = useGroups(
+    data?.type === "grouped" ? data.groups : [],
+    defaultOpenGroups
+  )
+
+  const skeletonColumns =
+    columns.length + (source.itemActions ? 1 : 0) + (source.selectable ? 1 : 0)
+  /*
+   * Initial loading
+   */
   if (isInitialLoading) {
-    return (
-      <OneTable.Skeleton
-        columns={columns.length + (source.itemActions ? 1 : 0)}
-      />
-    )
+    return <OneTable.Skeleton columns={skeletonColumns} />
   }
 
   // Enforce that sorting is only used when sortings are defined
@@ -248,16 +274,13 @@ export const TableCollection = <
   }
 
   const renderCell = (
-    item: Record,
-    column: TableColumnDefinition<Record, Sortings, Summaries>
+    item: R,
+    column: TableColumnDefinition<R, Sortings, Summaries>
   ) => {
     return renderProperty(item, column, "table")
   }
 
   const checkColumnWidth = source.selectable ? 52 : 0
-
-  const skeletonColumns =
-    columns.length + (source.itemActions ? 1 : 0) + (source.selectable ? 1 : 0)
 
   return (
     <>
@@ -270,19 +293,21 @@ export const TableCollection = <
                 sticky={{ left: 0 }}
                 align="right"
               >
-                <Checkbox
-                  checked={isAllSelected || isPartiallySelected}
-                  indeterminate={isPartiallySelected}
-                  onCheckedChange={handleSelectAll}
-                  title="Select all"
-                  hideLabel
-                  disabled={data.length === 0}
-                />
+                <div className="flex w-full items-center justify-end">
+                  <Checkbox
+                    checked={allSelectedStatus.checked}
+                    indeterminate={allSelectedStatus.indeterminate}
+                    onCheckedChange={handleSelectAll}
+                    title="Select all"
+                    hideLabel
+                    disabled={data?.records.length === 0}
+                  />
+                </div>
               </TableHead>
             )}
             {columns.map(({ sorting, label, ...column }, index) => (
               <TableHead
-                key={String(label)}
+                key={`table-head-${index}`}
                 sortState={getColumnSortState(
                   sorting,
                   source.sortings,
@@ -330,80 +355,83 @@ export const TableCollection = <
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item, index) => {
-            const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
-            const itemOnClick = source.itemOnClick
-              ? source.itemOnClick(item)
-              : undefined
-            const id = source.selectable ? source.selectable(item) : undefined
-            return (
-              <TableRow
-                key={`row-${index}`}
-                selected={!!id && selectedItems.has(id)}
-              >
-                {source.selectable && (
-                  <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
-                    {id !== undefined && (
-                      <div className="flex items-center justify-end">
-                        <Checkbox
-                          checked={selectedItems.has(id)}
-                          onCheckedChange={(checked) =>
-                            handleSelectItemChange(item, checked)
-                          }
-                          title={`Select ${source.selectable(item)}`}
-                          hideLabel
-                        />
-                      </div>
-                    )}
-                  </TableCell>
-                )}
-                {columns.map((column, cellIndex) => (
-                  <TableCell
-                    key={String(column.label)}
-                    firstCell={cellIndex === 0}
-                    href={itemHref}
-                    onClick={itemOnClick}
-                    width={column.width}
-                    sticky={
-                      cellIndex < frozenColumnsLeft
-                        ? {
-                            left: columns
-                              .slice(0, Math.max(0, cellIndex))
-                              .reduce(
-                                (acc, column) => acc + (column.width ?? 0),
-                                checkColumnWidth
-                              ),
-                          }
-                        : undefined
-                    }
-                  >
-                    <div
-                      className={cn(
-                        column.align === "right" ? "justify-end" : "",
-                        "flex"
-                      )}
+          {data?.type === "grouped" &&
+            data.groups.map((group, groupIndex) => {
+              const itemCount = group.itemCount
+              return (
+                <Fragment key={`group-${group.key}`}>
+                  <TableRow key={`group-header-${group.key}`}>
+                    <TableCell
+                      colSpan={columns.length + (source.selectable ? 1 : 0)}
                     >
-                      {renderCell(item, column)}
-                    </div>
-                  </TableCell>
-                ))}
-                {source.itemActions && (
-                  <TableCell
-                    key="actions"
-                    width={68}
-                    sticky={{
-                      right: 0,
-                    }}
-                    href={itemHref}
-                    onClick={itemOnClick}
-                  >
-                    <ActionsDropdown item={item} actions={source.itemActions} />
-                  </TableCell>
-                )}
-              </TableRow>
-            )
-          })}
+                      <GroupHeader
+                        className="px-4"
+                        selectable={!!source.selectable}
+                        select={statusToChecked(
+                          groupAllSelectedStatus[group.key]
+                        )}
+                        onSelectChange={(checked) =>
+                          handleSelectGroupChange(group, checked)
+                        }
+                        showOpenChange={collapsible}
+                        label={group.label}
+                        itemCount={itemCount}
+                        open={openGroups[group.key]}
+                        onOpenChange={(open) => setGroupOpen(group.key, open)}
+                      />
+                    </TableCell>
+                  </TableRow>
 
+                  <AnimatePresence key={`group-animate-${groupIndex}`}>
+                    {MotionRow &&
+                      (!collapsible || openGroups[group.key]) &&
+                      group.records.map((item, index) => {
+                        return (
+                          <MotionRow
+                            variants={getAnimationVariants()}
+                            initial={collapsible ? "hidden" : "visible"}
+                            animate="visible"
+                            exit="hidden"
+                            custom={index}
+                            key={`row-${groupIndex}-${index}`}
+                            layout
+                            source={source}
+                            item={item}
+                            index={index}
+                            groupIndex={groupIndex}
+                            onCheckedChange={(checked) =>
+                              handleSelectItemChange(item, checked)
+                            }
+                            selectedItems={selectedItems}
+                            columns={columns}
+                            frozenColumnsLeft={frozenColumnsLeft}
+                            checkColumnWidth={checkColumnWidth}
+                          />
+                        )
+                      })}
+                  </AnimatePresence>
+                </Fragment>
+              )
+            })}
+          {data?.type === "flat" &&
+            data.records.map((item, index) => {
+              return (
+                <Row
+                  key={`row-${index}`}
+                  groupIndex={0}
+                  source={source}
+                  item={item}
+                  index={index}
+                  onCheckedChange={(checked) =>
+                    handleSelectItemChange(item, checked)
+                  }
+                  selectedItems={selectedItems}
+                  columns={columns}
+                  frozenColumnsLeft={frozenColumnsLeft}
+                  checkColumnWidth={checkColumnWidth}
+                />
+              )
+            })}
           {/* Add the summary row at the bottom */}
           {summaryData && (
             <TableRow
@@ -480,7 +508,6 @@ export const TableCollection = <
               )}
             </TableRow>
           )}
-
           {paginationInfo?.type === "infinite-scroll" &&
             isLoadingMore &&
             Array.from({ length: 5 }).map((_, rowIndex) => (
@@ -495,7 +522,7 @@ export const TableCollection = <
         </TableBody>
       </OneTable>
 
-      {paginationInfo?.type === "infinite-scroll" && paginationInfo.hasMore && (
+      {isInfiniteScrollPagination(paginationInfo) && paginationInfo.hasMore && (
         <div
           ref={loadingIndicatorRef}
           className="h-10 w-full"
@@ -503,30 +530,7 @@ export const TableCollection = <
         />
       )}
 
-      {/*TODO: Move this logic to a shared component since it's on Card visualization as well*/}
-      {paginationInfo && paginationInfo.type === "pages" && (
-        <div className="flex w-full items-center justify-between px-6 pt-4">
-          <span className="shrink-0 text-f1-foreground-secondary">
-            {paginationInfo.total > 0 &&
-              `${
-                (paginationInfo.currentPage - 1) * paginationInfo.perPage + 1
-              }-${Math.min(
-                paginationInfo.currentPage * paginationInfo.perPage,
-                paginationInfo.total
-              )} ${t.collections.visualizations.pagination.of} ${
-                paginationInfo.total
-              }`}
-          </span>
-          <div className="flex items-center">
-            <OnePagination
-              totalPages={paginationInfo.pagesCount}
-              currentPage={paginationInfo.currentPage}
-              onPageChange={setPage}
-              disabled={paginationInfo.pagesCount <= 1}
-            />
-          </div>
-        </div>
-      )}
+      <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
     </>
   )
 }
