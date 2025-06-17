@@ -470,7 +470,6 @@ export const createPromiseDataFetch = (delay = 500) => {
   >) =>
     new Promise<BaseResponse<(typeof mockUsers)[number]>>((resolve) => {
       setTimeout(() => {
-        // Get filtered data using the existing filterUsers function
         const filteredData = filterUsers(
           mockUsers,
           filters,
@@ -479,18 +478,13 @@ export const createPromiseDataFetch = (delay = 500) => {
           search
         )
 
-        // Calculate summaries from the filtered data
-        // This simulates what would come back from a GraphQL query with payrollRunTotals
         const summaries = {
-          // Calculate the sum of all salaries (similar to totalAmountInCents in your schema)
           salary: filteredData.reduce((total, user) => {
             return total + (user.salary || 0)
           }, 0),
 
-          // You can add other aggregated values as needed
           userCount: filteredData.length,
 
-          // For demonstration, calculate average salary (excluding undefined values)
           averageSalary:
             filteredData.filter((user) => user.salary !== undefined).length > 0
               ? filteredData.reduce(
@@ -501,10 +495,9 @@ export const createPromiseDataFetch = (delay = 500) => {
               : 0,
         }
 
-        // Return both the filtered records and the calculated summaries
         resolve({
           records: filteredData,
-          summaries: summaries as unknown as (typeof mockUsers)[number], // Type cast needed due to structure difference
+          summaries: summaries as unknown as (typeof mockUsers)[number],
         })
       }, delay)
     })
