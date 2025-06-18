@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.99.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.99.0...factorial-one-react-v1.99.1) (2025-06-18)
+
+
+### Bug Fixes
+
+* add card view horizontal padding ([#2103](https://github.com/factorialco/factorial-one/issues/2103)) ([3c195da](https://github.com/factorialco/factorial-one/commit/3c195da15e1a1eed667b9801f498a329be966536))
+
 ## [1.99.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.98.0...factorial-one-react-v1.99.0) (2025-06-17)
 
 
