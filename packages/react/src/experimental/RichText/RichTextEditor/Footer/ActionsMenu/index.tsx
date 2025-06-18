@@ -288,7 +288,7 @@ const ActionsMenu = ({
       isFullscreen)
 
   return (
-    <div className="scrollbar-macos flex items-center gap-2 overflow-x-auto">
+    <div className="scrollbar-macos flex items-center gap-2 overflow-x-auto overflow-y-hidden">
       <SecondaryActionsButtons
         secondaryActions={secondaryActions}
         useLittleMode={useLittleMode}

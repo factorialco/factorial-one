@@ -50,7 +50,7 @@ const meta = {
     secondaryAction: {
       control: "object",
       description:
-        "Configures the secondary action button (usually cancel or discard)",
+        "Configures the secondary action button (usually cancel or discard) or switch actions, you can also pass an array of actions",
     },
     maxCharacters: {
       control: "number",
