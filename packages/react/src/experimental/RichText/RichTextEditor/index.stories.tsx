@@ -231,13 +231,21 @@ export const Default: Story = {
         },
       ],
     },
-    secondaryAction: {
-      type: "switch",
-      label: "Cancel",
-      onClick: () => {},
-      variant: "outline",
-      checked: true,
-    },
+    secondaryAction: [
+      {
+        type: "switch",
+        label: "Cancel",
+        onClick: () => {},
+        variant: "outline",
+        checked: true,
+      },
+      {
+        type: "button",
+        label: "Discard",
+        onClick: () => {},
+        variant: "outline",
+      },
+    ],
     toolbarLabels: {
       bold: "Bold",
       italic: "Italic",

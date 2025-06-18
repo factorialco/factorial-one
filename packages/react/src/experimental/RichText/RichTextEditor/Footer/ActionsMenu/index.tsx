@@ -5,10 +5,14 @@ import {
 } from "@/components/Actions/OneDropdownButton"
 import { Switch } from "@/experimental/Forms/Fields/Switch"
 import { ToolbarDivider } from "@/experimental/RichText/CoreEditor"
-import { primaryActionType, secondaryActionType } from "../../utils/types"
+import {
+  primaryActionType,
+  secondaryActionType,
+  secondaryActionsType,
+} from "../../utils/types"
 
 interface ActionsMenuProps {
-  secondaryAction?: secondaryActionType
+  secondaryAction?: secondaryActionsType
   primaryAction?: primaryActionType
   useLittleMode: boolean
   disableButtons: boolean
@@ -18,9 +22,17 @@ interface ActionsMenuProps {
 const getLabelID = (label?: string) =>
   label ? label.toLowerCase().replace(" ", "-") : ""
 
+// Helper function to normalize secondaryAction to an array
+const normalizeSecondaryActions = (
+  secondaryAction?: secondaryActionsType
+): secondaryActionType[] => {
+  if (!secondaryAction) return []
+  return Array.isArray(secondaryAction) ? secondaryAction : [secondaryAction]
+}
+
 const createActionItems = (
   primaryAction?: primaryActionType,
-  secondaryAction?: secondaryActionType
+  secondaryActions?: secondaryActionType[]
 ): OneDropdownButtonItem<string>[] => {
   const primaryActionItems = primaryAction
     ? [
@@ -39,15 +51,12 @@ const createActionItems = (
       icon: sub.icon,
     })) || []
 
-  const secondaryActionItems = secondaryAction
-    ? [
-        {
-          label: secondaryAction.label,
-          value: getLabelID(secondaryAction.label),
-          icon: "icon" in secondaryAction ? secondaryAction.icon : undefined,
-        },
-      ]
-    : []
+  const secondaryActionItems =
+    secondaryActions?.map((action) => ({
+      label: action.label,
+      value: getLabelID(action.label),
+      icon: "icon" in action ? action.icon : undefined,
+    })) || []
 
   return [...primaryActionItems, ...subActionItems, ...secondaryActionItems]
 }
@@ -55,76 +64,99 @@ const createActionItems = (
 const handleActionClick = (
   labelID: string,
   primaryAction?: primaryActionType,
-  secondaryAction?: secondaryActionType
+  secondaryActions?: secondaryActionType[]
 ) => {
   if (labelID === getLabelID(primaryAction?.action.label)) {
     primaryAction?.action.onClick()
-  } else if (labelID === getLabelID(secondaryAction?.label)) {
-    secondaryAction?.onClick()
-  } else {
-    primaryAction?.subActions
-      ?.find((sub) => getLabelID(sub.label) === labelID)
-      ?.onClick()
+    return
   }
+
+  // Check secondary actions
+  const matchingSecondaryAction = secondaryActions?.find(
+    (action) => getLabelID(action.label) === labelID
+  )
+  if (matchingSecondaryAction) {
+    matchingSecondaryAction.onClick()
+    return
+  }
+
+  // Check sub actions
+  primaryAction?.subActions
+    ?.find((sub) => getLabelID(sub.label) === labelID)
+    ?.onClick()
 }
 
-interface SecondaryActionButtonProps {
-  secondaryAction?: secondaryActionType
+interface SecondaryActionsButtonsProps {
+  secondaryActions: secondaryActionType[]
   useLittleMode: boolean
   primaryAction?: primaryActionType
   isFullscreen: boolean
   disableButtons: boolean
 }
 
-const SecondaryActionButton = ({
-  secondaryAction,
+const SecondaryActionsButtons = ({
+  secondaryActions,
   useLittleMode,
   primaryAction,
   isFullscreen,
   disableButtons,
-}: SecondaryActionButtonProps) => {
-  const shouldHideButton =
-    !secondaryAction ||
-    (useLittleMode &&
-      primaryAction &&
-      !isFullscreen &&
-      secondaryAction.type !== "switch")
+}: SecondaryActionsButtonsProps) => {
+  const shouldHideButtons = secondaryActions.length === 0
 
-  if (shouldHideButton) {
+  if (shouldHideButtons) {
     return null
   }
 
-  if (secondaryAction.type === "switch") {
-    return (
-      <Switch
-        title={secondaryAction.label}
-        checked={"checked" in secondaryAction ? secondaryAction.checked : false}
-        onCheckedChange={(checked) => {
-          secondaryAction.onClick(checked)
-        }}
-        disabled={disableButtons || secondaryAction.disabled}
-        hideLabel={
-          "hideLabel" in secondaryAction ? secondaryAction.hideLabel : false
-        }
-      />
-    )
-  }
+  const switchActions = secondaryActions.filter(
+    (action) => action.type === "switch"
+  )
+  const buttonActions = secondaryActions.filter(
+    (action) => action.type !== "switch"
+  )
+
+  const shouldHideButtonActions =
+    useLittleMode && primaryAction && !isFullscreen && buttonActions.length > 0
 
   return (
-    <Button
-      onClick={(e) => {
-        e.preventDefault()
-        secondaryAction.onClick()
-      }}
-      variant={
-        "variant" in secondaryAction ? secondaryAction.variant : "outline"
-      }
-      size="md"
-      label={secondaryAction.label}
-      disabled={disableButtons || secondaryAction.disabled}
-      type="button"
-      icon={"icon" in secondaryAction ? secondaryAction.icon : undefined}
-    />
+    <div className="flex items-center gap-3">
+      {/* Render switch actions - these are always visible if they exist */}
+      {switchActions.map((action, index) => {
+        const toggleAction = action as secondaryActionType & {
+          checked: boolean
+          hideLabel?: boolean
+        }
+        return (
+          <Switch
+            key={`switch-${index}`}
+            title={action.label}
+            checked={toggleAction.checked || false}
+            onCheckedChange={(checked) => {
+              action.onClick(checked)
+            }}
+            disabled={disableButtons || action.disabled}
+            hideLabel={toggleAction.hideLabel || false}
+          />
+        )
+      })}
+
+      {/* Render button actions - these might be hidden in little mode */}
+      {!shouldHideButtonActions &&
+        buttonActions.map((action, index) => (
+          <Button
+            key={`button-${index}`}
+            onClick={(e) => {
+              e.preventDefault()
+              action.onClick()
+            }}
+            variant={"variant" in action ? action.variant : "outline"}
+            size="md"
+            label={action.label}
+            disabled={disableButtons || action.disabled}
+            type="button"
+            icon={"icon" in action ? action.icon : undefined}
+          />
+        ))}
+    </div>
   )
 }
 
@@ -227,33 +259,38 @@ const ActionsMenu = ({
   disableButtons,
   isFullscreen,
 }: ActionsMenuProps) => {
-  if (!secondaryAction && !primaryAction) return null
+  const secondaryActions = normalizeSecondaryActions(secondaryAction)
 
+  if (secondaryActions.length === 0 && !primaryAction) return null
+
+  const buttonSecondaryActions = secondaryActions.filter(
+    (action) => action.type !== "switch"
+  )
   const shouldIncludeSecondaryInDropdown =
-    secondaryAction &&
+    buttonSecondaryActions.length > 0 &&
     useLittleMode &&
-    secondaryAction.type !== "switch" &&
-    primaryAction
-      ? true
-      : false
+    primaryAction &&
+    !isFullscreen
 
   const listOfActions = createActionItems(
     primaryAction,
-    shouldIncludeSecondaryInDropdown ? secondaryAction : undefined
+    shouldIncludeSecondaryInDropdown ? buttonSecondaryActions : undefined
   )
 
   const onActionClick = (labelID: string) =>
-    handleActionClick(labelID, primaryAction, secondaryAction)
+    handleActionClick(labelID, primaryAction, secondaryActions)
 
   const shouldShowDivider =
-    secondaryAction &&
+    secondaryActions.length > 0 &&
     primaryAction &&
-    (!useLittleMode || secondaryAction.type === "switch" || isFullscreen)
+    (!useLittleMode ||
+      secondaryActions.some((action) => action.type === "switch") ||
+      isFullscreen)
 
   return (
     <div className="scrollbar-macos flex items-center gap-2 overflow-x-auto">
-      <SecondaryActionButton
-        secondaryAction={secondaryAction}
+      <SecondaryActionsButtons
+        secondaryActions={secondaryActions}
         useLittleMode={useLittleMode}
         primaryAction={primaryAction}
         isFullscreen={isFullscreen}
@@ -269,7 +306,7 @@ const ActionsMenu = ({
           listOfActions,
           handleOnClick: onActionClick,
           disableButtons,
-          includeSecondaryInDropdown: shouldIncludeSecondaryInDropdown,
+          includeSecondaryInDropdown: shouldIncludeSecondaryInDropdown ?? false,
         })}
     </div>
   )
