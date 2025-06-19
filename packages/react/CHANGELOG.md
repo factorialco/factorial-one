@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.100.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.99.1...factorial-one-react-v1.100.0) (2025-06-19)
+
+
+### Features
+
+* add ClockBack icon ([#2106](https://github.com/factorialco/factorial-one/issues/2106)) ([77a7c30](https://github.com/factorialco/factorial-one/commit/77a7c30adbb789e174a1f2f8dac3ca94b5a09f98))
+
 ## [1.99.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.99.0...factorial-one-react-v1.99.1) (2025-06-18)
 
 
