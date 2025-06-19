@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.101.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.100.0...factorial-one-react-v1.101.0) (2025-06-19)
+
+
+### Features
+
+* **icons:** add PersonMinus & PersonPlus icons ([#2104](https://github.com/factorialco/factorial-one/issues/2104)) ([cb9a4dd](https://github.com/factorialco/factorial-one/commit/cb9a4dd6ffb8d049e159bcd7c03d28f4d599d2a2))
+
 ## [1.100.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.99.1...factorial-one-react-v1.100.0) (2025-06-19)
 
 
