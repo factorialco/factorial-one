@@ -48,7 +48,7 @@ export const DetailsItem = ({
   return (
     <View
       className={cn(
-        "flex flex-col gap-0.5",
+        "flex gap-0.5",
         spacingAtTheBottom && !isHorizontal && "pb-3",
       )}
     >

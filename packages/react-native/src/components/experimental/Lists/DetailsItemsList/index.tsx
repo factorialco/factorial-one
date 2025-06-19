@@ -15,7 +15,7 @@ export const DetailsItemsList = function DetailsItemList({
   details,
 }: DetailsItemsListProps) {
   return (
-    <View className="flex flex-col gap-4">
+    <View className="flex gap-4">
       {!!title && (
         <Text className="mb-1 pl-1.5 text-sm font-semibold text-f1-foreground-secondary">
           {title.toLocaleUpperCase()}
@@ -23,7 +23,7 @@ export const DetailsItemsList = function DetailsItemList({
       )}
       <View
         className={cn(
-          "flex flex-col",
+          "flex",
           tableView
             ? "rounded-md border border-solid border-f1-border-secondary"
             : "gap-3",
