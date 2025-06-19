@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.15.0...factorial-one-core-v1.16.0) (2025-06-19)
+
+
+### Features
+
+* add ClockBack icon ([#2106](https://github.com/factorialco/factorial-one/issues/2106)) ([77a7c30](https://github.com/factorialco/factorial-one/commit/77a7c30adbb789e174a1f2f8dac3ca94b5a09f98))
+
 ## [1.15.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.14.0...factorial-one-core-v1.15.0) (2025-06-05)
 
 
