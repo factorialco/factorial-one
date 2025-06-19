@@ -23,14 +23,12 @@ export const GenericAction = memo(
         )}
       >
         <View className="flex flex-row items-center gap-1.5">{children}</View>
-        <View className="grid">
-          <Icon
-            aria-hidden={true}
-            icon={ChevronRight}
-            size="md"
-            className="text-f1-foreground"
-          />
-        </View>
+        <Icon
+          aria-hidden={true}
+          icon={ChevronRight}
+          size="md"
+          className="text-f1-foreground"
+        />
       </Pressable>
     );
   },

@@ -34,7 +34,7 @@ const _DataList = ({
           : "min-w-32 max-w-72",
       )}
     >
-      {label && (
+      {!!label && (
         <Text
           className={cn(
             "px-1.5 text-f1-foreground-secondary",
@@ -44,7 +44,7 @@ const _DataList = ({
           {label}
         </Text>
       )}
-      <View className="flex flex-shrink flex-col justify-center gap-0.5">
+      <View className="flex flex-shrink justify-center gap-0.5">
         {children}
       </View>
     </View>

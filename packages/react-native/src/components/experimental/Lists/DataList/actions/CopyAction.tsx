@@ -44,7 +44,7 @@ export const CopyAction = ({ text, children }: CopyActionProps) => {
       onPress={copyHandler}
     >
       <View className="flex flex-row items-center gap-1.5">{children}</View>
-      <View className="flex-rpw flex">
+      <View className="flex">
         {!copied && (
           <Icon
             icon={LayersFront}
