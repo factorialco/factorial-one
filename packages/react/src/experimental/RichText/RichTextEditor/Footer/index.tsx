@@ -40,6 +40,7 @@ interface FooterProps {
   toolbarLabels: ToolbarLabels
   setIsToolbarOpen: (isToolbarOpen: boolean) => void
   isToolbarOpen: boolean
+  plainHtmlMode: boolean
 }
 
 const Footer = ({
@@ -58,6 +59,7 @@ const Footer = ({
   disableButtons,
   setIsToolbarOpen,
   isToolbarOpen,
+  plainHtmlMode,
 }: FooterProps) => {
   const [toolbarAnimationComplete, setToolbarAnimationComplete] =
     useState(false)
@@ -104,6 +106,7 @@ const Footer = ({
               setToolbarAnimationComplete(false)
             }}
             animationComplete={toolbarAnimationComplete}
+            plainHtmlMode={plainHtmlMode}
           />
         </motion.div>
 
