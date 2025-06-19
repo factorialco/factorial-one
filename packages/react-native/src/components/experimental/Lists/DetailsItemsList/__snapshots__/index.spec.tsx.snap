@@ -2,7 +2,7 @@
 
 exports[`DetailsItemsList Snapshot  1`] = `
 <View
-  className="flex flex-col gap-4"
+  className="flex gap-4"
 >
   <Text
     className="mb-1 pl-1.5 text-sm font-semibold text-f1-foreground-secondary"
@@ -10,10 +10,10 @@ exports[`DetailsItemsList Snapshot  1`] = `
     DETAILS
   </Text>
   <View
-    className="flex flex-col gap-3"
+    className="flex gap-3"
   >
     <View
-      className="flex flex-col gap-0.5"
+      className="flex gap-0.5"
     >
       <View
         className="min-w-32 max-w-72"
@@ -24,7 +24,7 @@ exports[`DetailsItemsList Snapshot  1`] = `
           Legal entity
         </Text>
         <View
-          className="flex flex-shrink flex-col justify-center gap-0.5"
+          className="flex flex-shrink justify-center gap-0.5"
         >
           <View
             className="flex rounded font-medium text-f1-foreground *:flex-1"
@@ -72,7 +72,7 @@ exports[`DetailsItemsList Snapshot  1`] = `
                 </Text>
               </View>
               <View
-                className="flex-rpw flex"
+                className="flex"
               >
                 <RNSVGSvgView
                   align="xMidYMid"
@@ -162,7 +162,7 @@ exports[`DetailsItemsList Snapshot  1`] = `
       </View>
     </View>
     <View
-      className="flex flex-col gap-0.5"
+      className="flex gap-0.5"
     >
       <View
         className="min-w-32 max-w-72"
@@ -173,7 +173,7 @@ exports[`DetailsItemsList Snapshot  1`] = `
           Manager
         </Text>
         <View
-          className="flex flex-shrink flex-col justify-center gap-0.5"
+          className="flex flex-shrink justify-center gap-0.5"
         >
           <View
             className="flex rounded font-medium text-f1-foreground *:flex-1"
@@ -254,77 +254,73 @@ exports[`DetailsItemsList Snapshot  1`] = `
                   Saul Dominguez
                 </Text>
               </View>
-              <View
-                className="grid"
+              <RNSVGSvgView
+                align="xMidYMid"
+                aria-hidden={true}
+                bbHeight="100%"
+                bbWidth="100%"
+                className="shrink-0 w-5 h-5 stroke-md text-f1-foreground"
+                fill="none"
+                focusable={false}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "flex": 0,
+                      "height": "100%",
+                      "width": "100%",
+                    },
+                  ]
+                }
+                vbHeight={24}
+                vbWidth={24}
               >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  aria-hidden={true}
-                  bbHeight="100%"
-                  bbWidth="100%"
-                  className="shrink-0 w-5 h-5 stroke-md text-f1-foreground"
-                  fill="none"
-                  focusable={false}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
+                <RNSVGGroup
+                  fill={null}
+                  propList={
                     [
-                      {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      {
-                        "flex": 0,
-                        "height": "100%",
-                        "width": "100%",
-                      },
+                      "fill",
                     ]
                   }
-                  vbHeight={24}
-                  vbWidth={24}
                 >
-                  <RNSVGGroup
-                    fill={null}
+                  <RNSVGPath
+                    d="m9 6 6 6M9 18l6-6"
+                    fill={
+                      {
+                        "payload": 4278190080,
+                        "type": 0,
+                      }
+                    }
                     propList={
                       [
-                        "fill",
+                        "stroke",
+                        "strokeLinecap",
+                        "strokeLinejoin",
                       ]
                     }
-                  >
-                    <RNSVGPath
-                      d="m9 6 6 6M9 18l6-6"
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
+                    stroke={
+                      {
+                        "type": 2,
                       }
-                      propList={
-                        [
-                          "stroke",
-                          "strokeLinecap",
-                          "strokeLinejoin",
-                        ]
-                      }
-                      stroke={
-                        {
-                          "type": 2,
-                        }
-                      }
-                      strokeLinecap={1}
-                      strokeLinejoin={1}
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+                    }
+                    strokeLinecap={1}
+                    strokeLinejoin={1}
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
             </View>
           </View>
         </View>
       </View>
     </View>
     <View
-      className="flex flex-col gap-0.5"
+      className="flex gap-0.5"
     >
       <View
         className="min-w-32 max-w-72"
@@ -335,7 +331,7 @@ exports[`DetailsItemsList Snapshot  1`] = `
           Teams
         </Text>
         <View
-          className="flex flex-shrink flex-col justify-center gap-0.5"
+          className="flex flex-shrink justify-center gap-0.5"
         >
           <View
             className="flex rounded font-medium text-f1-foreground *:flex-1"
@@ -404,70 +400,66 @@ exports[`DetailsItemsList Snapshot  1`] = `
                   Management
                 </Text>
               </View>
-              <View
-                className="grid"
+              <RNSVGSvgView
+                align="xMidYMid"
+                aria-hidden={true}
+                bbHeight="100%"
+                bbWidth="100%"
+                className="shrink-0 w-5 h-5 stroke-md text-f1-foreground"
+                fill="none"
+                focusable={false}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "flex": 0,
+                      "height": "100%",
+                      "width": "100%",
+                    },
+                  ]
+                }
+                vbHeight={24}
+                vbWidth={24}
               >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  aria-hidden={true}
-                  bbHeight="100%"
-                  bbWidth="100%"
-                  className="shrink-0 w-5 h-5 stroke-md text-f1-foreground"
-                  fill="none"
-                  focusable={false}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
+                <RNSVGGroup
+                  fill={null}
+                  propList={
                     [
-                      {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      {
-                        "flex": 0,
-                        "height": "100%",
-                        "width": "100%",
-                      },
+                      "fill",
                     ]
                   }
-                  vbHeight={24}
-                  vbWidth={24}
                 >
-                  <RNSVGGroup
-                    fill={null}
+                  <RNSVGPath
+                    d="m9 6 6 6M9 18l6-6"
+                    fill={
+                      {
+                        "payload": 4278190080,
+                        "type": 0,
+                      }
+                    }
                     propList={
                       [
-                        "fill",
+                        "stroke",
+                        "strokeLinecap",
+                        "strokeLinejoin",
                       ]
                     }
-                  >
-                    <RNSVGPath
-                      d="m9 6 6 6M9 18l6-6"
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
+                    stroke={
+                      {
+                        "type": 2,
                       }
-                      propList={
-                        [
-                          "stroke",
-                          "strokeLinecap",
-                          "strokeLinejoin",
-                        ]
-                      }
-                      stroke={
-                        {
-                          "type": 2,
-                        }
-                      }
-                      strokeLinecap={1}
-                      strokeLinejoin={1}
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+                    }
+                    strokeLinecap={1}
+                    strokeLinejoin={1}
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
             </View>
           </View>
           <View
@@ -537,77 +529,73 @@ exports[`DetailsItemsList Snapshot  1`] = `
                   Engineering
                 </Text>
               </View>
-              <View
-                className="grid"
+              <RNSVGSvgView
+                align="xMidYMid"
+                aria-hidden={true}
+                bbHeight="100%"
+                bbWidth="100%"
+                className="shrink-0 w-5 h-5 stroke-md text-f1-foreground"
+                fill="none"
+                focusable={false}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  [
+                    {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    {
+                      "flex": 0,
+                      "height": "100%",
+                      "width": "100%",
+                    },
+                  ]
+                }
+                vbHeight={24}
+                vbWidth={24}
               >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  aria-hidden={true}
-                  bbHeight="100%"
-                  bbWidth="100%"
-                  className="shrink-0 w-5 h-5 stroke-md text-f1-foreground"
-                  fill="none"
-                  focusable={false}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
+                <RNSVGGroup
+                  fill={null}
+                  propList={
                     [
-                      {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      {
-                        "flex": 0,
-                        "height": "100%",
-                        "width": "100%",
-                      },
+                      "fill",
                     ]
                   }
-                  vbHeight={24}
-                  vbWidth={24}
                 >
-                  <RNSVGGroup
-                    fill={null}
+                  <RNSVGPath
+                    d="m9 6 6 6M9 18l6-6"
+                    fill={
+                      {
+                        "payload": 4278190080,
+                        "type": 0,
+                      }
+                    }
                     propList={
                       [
-                        "fill",
+                        "stroke",
+                        "strokeLinecap",
+                        "strokeLinejoin",
                       ]
                     }
-                  >
-                    <RNSVGPath
-                      d="m9 6 6 6M9 18l6-6"
-                      fill={
-                        {
-                          "payload": 4278190080,
-                          "type": 0,
-                        }
+                    stroke={
+                      {
+                        "type": 2,
                       }
-                      propList={
-                        [
-                          "stroke",
-                          "strokeLinecap",
-                          "strokeLinejoin",
-                        ]
-                      }
-                      stroke={
-                        {
-                          "type": 2,
-                        }
-                      }
-                      strokeLinecap={1}
-                      strokeLinejoin={1}
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+                    }
+                    strokeLinecap={1}
+                    strokeLinejoin={1}
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
             </View>
           </View>
         </View>
       </View>
     </View>
     <View
-      className="flex flex-col gap-0.5"
+      className="flex gap-0.5"
     >
       <View
         className="min-w-32 max-w-72"
@@ -618,7 +606,7 @@ exports[`DetailsItemsList Snapshot  1`] = `
           Type
         </Text>
         <View
-          className="flex flex-shrink flex-col justify-center gap-0.5"
+          className="flex flex-shrink justify-center gap-0.5"
         >
           <View
             className="flex items-start pt-1"
