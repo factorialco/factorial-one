@@ -1,13 +1,13 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { ChevronDown } from "@/icons/app"
+import { InputField } from "@/ui/InputField"
 import {
   SelectContent,
   SelectItem as SelectItemPrimitive,
   Select as SelectPrimitive,
   SelectSeparator,
   SelectTrigger,
-  SelectValue as SelectValuePrimitive,
   VirtualItem,
 } from "@/ui/Select"
 import {
@@ -18,7 +18,6 @@ import {
   useRef,
   useState,
 } from "react"
-import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
 import { SelectTopActions } from "./SelectTopActions"
@@ -200,39 +199,35 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
       [filteredOptions]
     )
 
+    const inputFieldProps = {
+      label: "",
+      value: value,
+      onChange: onValueChange,
+      placeholder: placeholder,
+      disabled: disabled,
+    }
     return (
       <SelectPrimitive
         onValueChange={onValueChange}
-        value={value}
+        value={value || ""}
         disabled={disabled}
         open={open}
         onOpenChange={onOpenChangeLocal}
         {...props}
       >
         <SelectTrigger ref={ref} asChild>
-          {children || (
-            <button
-              aria-label="Select unfoldable"
-              className={cn(
-                defaultTrigger,
-                className,
-                focusRing("focus-visible:border-f1-border-hover")
-              )}
-            >
-              <SelectValuePrimitive placeholder={placeholder} asChild>
-                {selectedOption && <SelectValue item={selectedOption} />}
-              </SelectValuePrimitive>
-              <div className="flex h-6 w-6 items-center justify-center">
-                <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
-                  <Icon
-                    icon={ChevronDown}
-                    size="sm"
-                    className="rounded-2xs bg-f1-background-secondary p-0.5"
-                  />
-                </div>
-              </div>
-            </button>
-          )}
+          <InputField
+            {...inputFieldProps}
+            append={
+              <Icon
+                icon={ChevronDown}
+                size="sm"
+                className="rounded-2xs bg-f1-background-secondary p-0.5"
+              />
+            }
+          >
+            Selecect value
+          </InputField>
         </SelectTrigger>
         {openLocal && (
           <SelectContent
