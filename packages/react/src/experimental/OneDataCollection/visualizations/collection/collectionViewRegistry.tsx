@@ -43,6 +43,7 @@ type CollectionVisualizations<
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -113,6 +114,7 @@ export const collectionVisualizations: CollectionVisualizations<
       Record extends RecordType,
       Filters extends FiltersDefinition,
       Sortings extends SortingsDefinition,
+      Summaries extends SummariesDefinition,
       ItemActions extends ItemActionsDefinition<Record>,
       NavigationFilters extends NavigationFiltersDefinition,
       Grouping extends GroupingDefinition<Record>,
@@ -121,6 +123,7 @@ export const collectionVisualizations: CollectionVisualizations<
         Record,
         Filters,
         Sortings,
+        Summaries,
         ItemActions,
         NavigationFilters,
         Grouping
@@ -131,6 +134,7 @@ export const collectionVisualizations: CollectionVisualizations<
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping
