@@ -139,7 +139,7 @@ export const Row = <
         dropDownOpen && "md:bg-f1-background-hover"
       )}
     >
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-1 flex-row items-center gap-2">
         {source.selectable && id !== undefined && (
           <div className="hidden items-center justify-end md:flex">
             <Checkbox
