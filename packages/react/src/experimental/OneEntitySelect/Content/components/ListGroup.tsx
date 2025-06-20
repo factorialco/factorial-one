@@ -55,7 +55,7 @@ export const ListGroup = <
   Grouping
 >) => {
   return (
-    <div className="flex flex-col overflow-hidden [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary">
+    <div className="flex flex-col overflow-hidden rounded-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary">
       {items.map((item, index) => (
         <Row
           key={`row-${index}`}

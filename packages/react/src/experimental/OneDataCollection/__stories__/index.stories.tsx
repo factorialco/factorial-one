@@ -905,6 +905,7 @@ export const WithPagesPagination: Story = {
           mockVisualizations.table,
           mockVisualizations.card,
           mockVisualizations.list,
+          mockVisualizations.simpleList,
         ]}
       />
     )

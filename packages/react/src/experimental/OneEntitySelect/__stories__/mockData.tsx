@@ -1,33 +1,23 @@
 import {
   BaseFetchOptions,
-  BulkActionDefinition,
   DataAdapter,
   FilterDefinition,
   FiltersState,
-  GroupingDefinition,
-  GroupingState,
   InfiniteScrollPaginatedResponse,
-  ItemActionsDefinition,
-  OnBulkActionCallback,
-  OneDataCollection,
-  OnSelectItemsCallback,
   PaginatedResponse,
   PaginationType,
   PresetsDefinition,
   RecordType,
   SortingsStateMultiple,
-  useDataSource,
 } from "@/experimental/OneDataCollection/exports"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
 
 import { NewColor } from "@/experimental/Information/Tags/DotTag"
-import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
-} from "../navigationFilters/types"
-import { Visualization, VisualizationType } from "../visualizations/collection"
+} from "../../OneDataCollection/navigationFilters/types"
 
 export const DEPARTMENTS_MOCK = [
   "Engineering",
@@ -50,14 +40,6 @@ export const filters = {
     },
   },
 } as const
-
-export const YEARS_OF_EXPERIENCIE_MOCK = [
-  8, 12, 4, 15, 7, 3, 11, 6, 13, 2, 9, 14, 5, 10, 1, 8, 13, 4, 11, 6,
-]
-export const START_DATE_MOCK = Array.from(
-  { length: 20 },
-  (_, i) => new Date(2025, 6, 30 + i)
-)
 
 export const PROJECTS_MOCK = [
   "Project A",
@@ -113,13 +95,9 @@ export type MockUser = {
   index: number
   id: string
   name: string
-  email: string
-  role: string
   department: (typeof DEPARTMENTS_MOCK)[number]
   status: string
-  isStarred: boolean
-  salary: number | undefined
-  joinedAt: Date
+  href: string
 }
 
 export const FIRST_NAMES_MOCK = [
@@ -180,51 +158,17 @@ export const ROLES_MOCK = [
 
 export const STATUS_MOCK = ["active", "inactive", "active", "active", "active"]
 
-export const SALARY_MOCK = [
-  100000,
-  80000,
-  90000,
-  undefined,
-  120000,
-  95000,
-  85000,
-  110000,
-  undefined,
-  75000,
-  130000,
-  92000,
-  88000,
-  undefined,
-  115000,
-  105000,
-  82000,
-  98000,
-  undefined,
-  125000,
-  78000,
-  108000,
-  94000,
-  undefined,
-  135000,
-]
-
 export const generateMockUsers = (count: number): MockUser[] => {
   return Array.from({ length: count }).map((_, index) => {
     const department = DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length]
     const name = `${FIRST_NAMES_MOCK[index % FIRST_NAMES_MOCK.length]} ${SURNAMES_MOCK[index % SURNAMES_MOCK.length]}`
-    const email = `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`
     return {
       index,
       id: `user-${index + 1}`,
       name,
-      email,
-      role: ROLES_MOCK[index % ROLES_MOCK.length],
       department,
       status: STATUS_MOCK[index % STATUS_MOCK.length],
-      isStarred: index % 3 === 0,
       href: `/users/user-${index + 1}`,
-      salary: SALARY_MOCK[index % SALARY_MOCK.length],
-      joinedAt: START_DATE_MOCK[index % START_DATE_MOCK.length],
     }
   })
 }
@@ -232,228 +176,13 @@ export const generateMockUsers = (count: number): MockUser[] => {
 // Mock data
 export const mockUsers = generateMockUsers(10)
 
-export const getMockVisualizations = (options?: {
-  frozenColumns?: 0 | 1 | 2
-}): Record<
-  Exclude<VisualizationType, "custom">,
-  Visualization<
-    MockUser,
-    FiltersType,
-    typeof sortings,
-    ItemActionsDefinition<MockUser>,
-    NavigationFiltersDefinition,
-    GroupingDefinition<MockUser>
-  >
-> => ({
-  table: {
-    type: "table",
-    options: {
-      frozenColumns: options?.frozenColumns,
-      columns: [
-        {
-          label: "Name",
-          width: 140,
-          render: (item) => ({
-            type: "person",
-            value: {
-              firstName: item.name.split(" ")[0],
-              lastName: item.name.split(" ")[1],
-            },
-          }),
-          sorting: "name",
-        },
-        {
-          label: "Email",
-          render: (item) => item.email,
-          sorting: "email",
-        },
-        {
-          label: "Role",
-          render: (item) => item.role,
-          sorting: "role",
-        },
-        {
-          label: "Department",
-          render: (item) => item.department,
-          sorting: "department",
-        },
-        {
-          label: "Email 2",
-          render: (item) => item.email,
-          sorting: "email",
-        },
-        {
-          label: "Role 2",
-          render: (item) => item.role,
-          sorting: "role",
-        },
-        {
-          label: "Department 2",
-          render: (item) => item.department,
-          sorting: "department",
-        },
-        {
-          label: "Email 3",
-          render: (item) => item.email,
-          sorting: "email",
-        },
-        {
-          label: "Role 3",
-          render: (item) => item.role,
-          sorting: "role",
-        },
-        {
-          label: "Department 3",
-          render: (item) => item.department,
-          sorting: "department",
-        },
-        {
-          label: "Email 4",
-          render: (item) => item.email,
-          sorting: "email",
-        },
-        {
-          label: "Role 4",
-          render: (item) => item.role,
-          sorting: "role",
-        },
-        {
-          label: "Department 4",
-          render: (item) => item.department,
-          sorting: "department",
-        },
-      ],
-    },
-  },
-  card: {
-    type: "card",
-    options: {
-      title: (item) => item.name,
-      cardProperties: [
-        {
-          label: "Email",
-          render: (item) => item.email,
-        },
-        {
-          label: "Role",
-          render: (item) => item.role,
-        },
-        {
-          label: "Department",
-          render: (item) => item.department,
-        },
-      ],
-    },
-  },
-  simpleList: {
-    type: "simpleList",
-    options: {
-      itemDefinition: (item) => ({
-        title: item.name,
-        description: [item.email, item.role],
-        avatar: {
-          type: "person",
-          firstName: item.name.split(" ")[0],
-          lastName: item.name.split(" ")[1],
-        },
-      }),
-      fields: [
-        {
-          label: "Email",
-          render: (item) => item.email,
-          sorting: "email",
-        },
-        {
-          label: "Role",
-          render: (item) => item.role,
-          sorting: "role",
-        },
-        {
-          label: "Email 2",
-          render: (item) => item.email,
-          sorting: "email",
-        },
-        {
-          label: "Role 2",
-          render: (item) => item.role,
-          sorting: "role",
-        },
-        {
-          label: "Department",
-          render: (item) => ({
-            type: "dotTag",
-            value: {
-              color: "yellow",
-              label: item.department,
-            },
-          }),
-        },
-      ],
-    },
-  },
-  list: {
-    type: "list",
-    options: {
-      itemDefinition: (item) => ({
-        title: item.name,
-        description: [item.email, item.role],
-        avatar: {
-          type: "person",
-          firstName: item.name.split(" ")[0],
-          lastName: item.name.split(" ")[1],
-        },
-      }),
-      fields: [
-        {
-          label: "Email",
-          render: (item) => item.email,
-          sorting: "email",
-        },
-        {
-          label: "Role",
-          render: (item) => item.role,
-          sorting: "role",
-        },
-        {
-          label: "Email 2",
-          render: (item) => item.email,
-          sorting: "email",
-        },
-        {
-          label: "Role 2",
-          render: (item) => item.role,
-          sorting: "role",
-        },
-        {
-          label: "Department",
-          render: (item) => ({
-            type: "dotTag",
-            value: {
-              color: "yellow",
-              label: item.department,
-            },
-          }),
-        },
-      ],
-    },
-  },
-})
 // Example of using the object-based approach (recommended)
 export const sortings = {
   name: {
     label: "Name",
   },
-  email: {
-    label: "Email",
-  },
   department: {
     label: "Department",
-  },
-  role: {
-    label: "Role",
-  },
-  salary: {
-    label: "Salary",
   },
 } as const
 
@@ -470,10 +199,8 @@ export const filterUsers = (
   const searchValue = filterValues.search
   if (typeof searchValue === "string") {
     const searchLower = searchValue.toLowerCase()
-    filteredUsers = filteredUsers.filter(
-      (user) =>
-        user.name.toLowerCase().includes(searchLower) ||
-        user.email.toLowerCase().includes(searchLower)
+    filteredUsers = filteredUsers.filter((user) =>
+      user.name.toLowerCase().includes(searchLower)
     )
   }
 
@@ -531,21 +258,9 @@ export const filterUsers = (
   }
 
   if (search) {
-    filteredUsers = filteredUsers.filter(
-      (user) =>
-        user.name.toLowerCase().includes(search.toLowerCase()) ||
-        user.email.toLowerCase().includes(search.toLowerCase())
+    filteredUsers = filteredUsers.filter((user) =>
+      user.name.toLowerCase().includes(search.toLowerCase())
     )
-  }
-
-  if (navigationFilters) {
-    filteredUsers = filteredUsers.filter((user) => {
-      return (
-        !navigationFilters.date ||
-        (navigationFilters.date.value.from <= user.joinedAt &&
-          navigationFilters.date.value.to >= user.joinedAt)
-      )
-    })
   }
 
   return filteredUsers
@@ -607,127 +322,6 @@ export const createPromiseDataFetch = (delay = 500) => {
 // Utility functions for data fetching
 export type FiltersType = typeof filters
 
-// Example component using useDataSource
-export const ExampleComponent = ({
-  useObservable = false,
-  usePresets = false,
-  frozenColumns = 0,
-  selectable,
-  bulkActions,
-  currentGrouping,
-  grouping,
-  navigationFilters,
-  totalItemSummary,
-  visualizations,
-  dataAdapter,
-}: {
-  useObservable?: boolean
-  usePresets?: boolean
-  frozenColumns?: 0 | 1 | 2
-  visualizations?: ReadonlyArray<
-    Exclude<
-      Visualization<
-        MockUser,
-        FiltersType,
-        typeof sortings,
-        ItemActionsDefinition<MockUser>,
-        NavigationFiltersDefinition,
-        GroupingDefinition<MockUser>
-      >,
-      { type: "simpleList" }
-    >
-  >
-  selectable?: (item: MockUser) => string | number | undefined
-  bulkActions?: (
-    selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
-  ) => {
-    primary: BulkActionDefinition[]
-    secondary?: BulkActionDefinition[]
-  }
-  onSelectItems?: OnSelectItemsCallback<MockUser, FiltersType>
-  onBulkAction?: OnBulkActionCallback<MockUser, FiltersType>
-  navigationFilters?: NavigationFiltersDefinition
-  totalItemSummary?: (totalItems: number) => string
-  grouping?: GroupingDefinition<MockUser> | undefined
-  currentGrouping?: GroupingState<MockUser, GroupingDefinition<MockUser>>
-  paginationType?: PaginationType
-  dataAdapter?: DataAdapter<MockUser, FiltersType, NavigationFiltersDefinition>
-}) => {
-  const mockVisualizations = getMockVisualizations({
-    frozenColumns,
-  })
-
-  console.log("dataAdapter", dataAdapter)
-  const dataSource = useDataSource({
-    filters,
-    navigationFilters,
-    presets: usePresets ? filterPresets : undefined,
-    sortings,
-    grouping,
-    currentGrouping: currentGrouping,
-    itemActions: (item) => [
-      {
-        label: "Edit",
-        icon: Pencil,
-        onClick: () => console.log(`Editing ${item.name}`),
-        description: "Modify user information",
-        type: "primary",
-      },
-      {
-        label: "View Profile",
-        icon: Ai,
-        onClick: () => console.log(`Viewing ${item.name}'s profile`),
-      },
-      { type: "separator" },
-      {
-        label: item.isStarred ? "Remove Star" : "Star User",
-        icon: Star,
-        onClick: () => console.log(`Toggling star for ${item.name}`),
-        description: item.isStarred
-          ? "Remove from favorites"
-          : "Add to favorites",
-      },
-      {
-        label: "Delete",
-        icon: Delete,
-        onClick: () => console.log(`Deleting ${item.name}`),
-        critical: true,
-        description: "Permanently remove user",
-        enabled: item.department === "Engineering" && item.status === "active",
-      },
-    ],
-    selectable,
-    bulkActions,
-    totalItemSummary,
-    dataAdapter: dataAdapter ?? {
-      fetchData: useObservable
-        ? createObservableDataFetch()
-        : createPromiseDataFetch(),
-    },
-  })
-
-  return (
-    <div className="space-y-4">
-      <OneDataCollection
-        source={dataSource}
-        onSelectItems={(selectedItems) =>
-          console.log("Selected items", "->", selectedItems)
-        }
-        onBulkAction={(action, selectedItems) =>
-          console.log(`Bulk action: ${action}`, "->", selectedItems)
-        }
-        visualizations={
-          visualizations ?? [
-            mockVisualizations.table,
-            mockVisualizations.card,
-            mockVisualizations.list,
-          ]
-        }
-      />
-    </div>
-  )
-}
-
 interface DataAdapterOptions<TRecord> {
   data: TRecord[]
   delay?: number
@@ -739,9 +333,9 @@ interface DataAdapterOptions<TRecord> {
 export function createDataAdapter<
   TRecord extends RecordType & {
     name: string
-    email: string
     department: (typeof DEPARTMENTS_MOCK)[number]
-    salary?: number
+    status: string
+    href: string
   },
   TFilters extends Record<string, FilterDefinition>,
   TNavigationFilters extends NavigationFiltersDefinition,
@@ -775,10 +369,8 @@ export function createDataAdapter<
       filters.search.trim() !== ""
     ) {
       const searchTerm = (filters.search as string).toLowerCase()
-      filteredRecords = filteredRecords.filter(
-        (record) =>
-          record.name.toLowerCase().includes(searchTerm) ||
-          record.email.toLowerCase().includes(searchTerm)
+      filteredRecords = filteredRecords.filter((record) =>
+        record.name.toLowerCase().includes(searchTerm)
       )
     }
 
