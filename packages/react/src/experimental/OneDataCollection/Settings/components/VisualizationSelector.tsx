@@ -2,6 +2,7 @@ import { Icon } from "@/components/Utilities/Icon"
 
 import { focusRing } from "@/lib/utils"
 
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { FiltersDefinition } from "../../Filters/types"
@@ -32,6 +33,7 @@ export const VisualizationSelector = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -45,6 +47,7 @@ export const VisualizationSelector = <
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -64,6 +67,7 @@ export const VisualizationSelector = <
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
