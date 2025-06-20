@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.15.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.14.0...factorial-one-react-native-v0.15.0) (2025-06-20)
+
+
+### Features
+
+* add experimental/List components in Mobile ([#2090](https://github.com/factorialco/factorial-one/issues/2090)) ([424c9c9](https://github.com/factorialco/factorial-one/commit/424c9c929e6260691506ca7353ec7f68e782b91a))
+
 ## [0.14.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.13.1...factorial-one-react-native-v0.14.0) (2025-06-12)
 
 
