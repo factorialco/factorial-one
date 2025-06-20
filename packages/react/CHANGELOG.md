@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.102.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.1...factorial-one-react-v1.102.2) (2025-06-20)
+
+
+### Bug Fixes
+
+* **datenavigator:** export ([#2102](https://github.com/factorialco/factorial-one/issues/2102)) ([c3e95c8](https://github.com/factorialco/factorial-one/commit/c3e95c809c869709a4894a0ac76331ad2f408841))
+
 ## [1.102.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.0...factorial-one-react-v1.102.1) (2025-06-20)
 
 
