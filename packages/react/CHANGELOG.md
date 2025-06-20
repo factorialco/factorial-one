@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.102.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.0...factorial-one-react-v1.102.1) (2025-06-20)
+
+
+### Bug Fixes
+
+* **RichTextEditor:** change default plainHtmlMode to false and pass it to Footer component ([#2111](https://github.com/factorialco/factorial-one/issues/2111)) ([2b75ef9](https://github.com/factorialco/factorial-one/commit/2b75ef9bbcd3d33fd6173be1cd50795203e14770))
+
 ## [1.102.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.101.1...factorial-one-react-v1.102.0) (2025-06-20)
 
 
