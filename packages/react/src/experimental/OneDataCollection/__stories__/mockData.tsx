@@ -1036,7 +1036,7 @@ export function createDataAdapter<
     return adapter
   }
 
-  // Non-paginated adapter...
+  // Not paginated
   const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
     fetchData: ({ filters, sortings }) => {
       if (useObservable) {
