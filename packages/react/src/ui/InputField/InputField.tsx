@@ -2,7 +2,7 @@ import { Icon, IconType } from "@/components/Utilities/Icon"
 import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils.ts"
 import { cva } from "cva"
-import { cloneElement, forwardRef, useId, useState } from "react"
+import { cloneElement, forwardRef, useEffect, useId, useState } from "react"
 import { InputMessages } from "./components/InputMessages"
 import { Label } from "./components/Label"
 export const inputFieldSizes = ["sm", "md"] as const
@@ -10,9 +10,11 @@ export type InputFieldSize = (typeof inputFieldSizes)[number]
 
 const defaultEmptyValue = ""
 
-const defaultIsEmpty = (value: string | number | undefined | null) =>
-  value === defaultEmptyValue || value ? value.toString().length === 0 : true
-
+const defaultIsEmpty = (value: string | number | undefined | null) => {
+  return value === defaultEmptyValue || value
+    ? value.toString().length === 0
+    : true
+}
 const defaultLengthProvider = (value: string | number | undefined | null) =>
   value ? value.toString().length : 0
 
@@ -20,8 +22,8 @@ const inputFieldVariants = cva({
   base: "",
   variants: {
     size: {
-      sm: "rounded-sm p-1 pl-2",
-      md: "rounded-md p-2 pl-3",
+      sm: "min-h-[32px] rounded-sm p-1 pl-2",
+      md: "min-h-[40px] rounded-md p-2 pl-3",
     },
   },
   defaultVariants: {
@@ -44,7 +46,10 @@ export type InputFieldProps<T> = {
   labelIcon?: IconType
   hideLabel?: boolean
   placeholder?: string
-  value: T
+  onClickPlaceholder?: () => void
+  onClickChildren?: () => void
+  onClickContent?: () => void
+  value: T | undefined
   onChange?: (value: T) => void
   size?: InputFieldSize
   error?: string | string[] | boolean
@@ -66,12 +71,12 @@ export type InputFieldProps<T> = {
     value?: T
   }
   icon?: IconType
-  isEmpty?: (value: T) => boolean
+  isEmpty?: (value: T | undefined) => boolean
   emptyValue?: T
   maxLength?: number
   hideMaxLength?: boolean
   append?: React.ReactNode
-  lengthProvider?: (value: T) => number
+  lengthProvider?: (value: T | undefined) => number
 }
 
 const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
@@ -97,6 +102,9 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       maxLength,
       hideMaxLength = false,
       append,
+      onClickPlaceholder,
+      onClickChildren,
+      onClickContent,
       ...props
     }: InputFieldProps<string>,
     ref
@@ -106,6 +114,10 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
     const noEdit = disabled || readonly
 
     const [localValue, setLocalValue] = useState(value)
+
+    useEffect(() => {
+      setLocalValue(value)
+    }, [value])
 
     const handleChange = (
       value: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -177,21 +189,28 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
         >
           {icon && (
             <Icon
+              onClick={onClickContent}
               icon={icon}
-              className="h-5 w-5 shrink-0 text-f1-foreground-secondary"
+              className="h-5 w-5 shrink-0 pt-[2px] text-f1-foreground-secondary"
             />
           )}
-          <div className="relative flex w-full gap-2">
-            {cloneElement(children as React.ReactElement, {
-              onChange: handleChange,
-              onBlur: props.onBlur,
-              onFocus: props.onFocus,
-              disabled: noEdit,
-              readonly,
-              value: localValue,
-            })}
+          <div className="relative flex w-full gap-2" onClick={onClickContent}>
+            <div onClick={onClickChildren}>
+              {cloneElement(children as React.ReactElement, {
+                onChange: handleChange,
+                onBlur: props.onBlur,
+                onFocus: props.onFocus,
+                disabled: noEdit,
+                readonly,
+                value: localValue,
+              })}
+            </div>
+
             {placeholder && isEmpty(localValue) && (
-              <div className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex justify-start text-f1-foreground-secondary">
+              <div
+                className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start text-f1-foreground-secondary"
+                onClick={onClickPlaceholder}
+              >
                 {placeholder}
               </div>
             )}
