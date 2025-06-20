@@ -139,11 +139,14 @@ export const TableCollection = <
     isLoadingMore,
     loadMore,
     summaries: summariesData,
-  } = useData<R, Filters, Sortings, NavigationFilters, Grouping>(source, {
-    onError: (error) => {
-      onLoadError(error)
-    },
-  })
+  } = useData<R, Filters, Sortings, Summaries, NavigationFilters, Grouping>(
+    source,
+    {
+      onError: (error) => {
+        onLoadError(error)
+      },
+    }
+  )
 
   console.log("[debug] paginationInfo", paginationInfo)
 
