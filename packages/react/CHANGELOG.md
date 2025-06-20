@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.102.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.101.1...factorial-one-react-v1.102.0) (2025-06-20)
+
+
+### Features
+
+* **RichTextEditor:** multiple secondary actions ([#2107](https://github.com/factorialco/factorial-one/issues/2107)) ([acadfab](https://github.com/factorialco/factorial-one/commit/acadfab4560db83b36f49dd85996573a78de0ee9))
+
 ## [1.101.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.101.0...factorial-one-react-v1.101.1) (2025-06-20)
 
 
