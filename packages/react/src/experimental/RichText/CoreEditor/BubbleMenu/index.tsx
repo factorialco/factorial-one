@@ -19,7 +19,7 @@ export const EditorBubbleMenu = ({
   toolbarLabels,
   isToolbarOpen,
   isFullscreen,
-  plainHtmlMode = true,
+  plainHtmlMode = false,
 }: EditorBubbleMenuProps) => {
   return (
     <BubbleMenu

@@ -43,14 +43,14 @@ import {
   lastIntentType,
   primaryActionType,
   resultType,
-  secondaryActionType,
+  secondaryActionsType,
 } from "./utils/types"
 
 interface RichTextEditorProps {
   mentionsConfig?: MentionsConfig
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
-  secondaryAction?: secondaryActionType
+  secondaryAction?: secondaryActionsType
   primaryAction?: primaryActionType
   onChange: (result: resultType) => void
   maxCharacters?: number
@@ -92,7 +92,7 @@ const RichTextEditorComponent = forwardRef<
     title,
     errorConfig,
     height = "auto",
-    plainHtmlMode = true,
+    plainHtmlMode = false,
   },
   ref
 ) {
@@ -384,6 +384,7 @@ const RichTextEditorComponent = forwardRef<
           toolbarLabels={toolbarLabels}
           setIsToolbarOpen={setIsToolbarOpen}
           isToolbarOpen={isToolbarOpen}
+          plainHtmlMode={plainHtmlMode}
         />
 
         <EditorBubbleMenu
