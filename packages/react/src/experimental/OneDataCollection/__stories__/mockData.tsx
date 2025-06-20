@@ -1,5 +1,6 @@
 import {
   BaseFetchOptions,
+  BaseResponse,
   BulkActionDefinition,
   DataAdapter,
   FilterDefinition,
@@ -559,11 +560,6 @@ export const createObservableDataFetch = (delay = 0) => {
     })
 }
 
-export interface BaseResponse<TRecord> {
-  records: TRecord[]
-  summaries?: TRecord
-}
-
 export const createPromiseDataFetch = (delay = 500) => {
   return ({
     filters,
@@ -779,10 +775,7 @@ export function createDataAdapter<
       perPage?: number
       cursor?: string | null
     }
-  ):
-    | TRecord[]
-    | PaginatedResponse<TRecord>
-    | { records: TRecord[]; summaries: TRecord } => {
+  ): TRecord[] | PaginatedResponse<TRecord> | BaseResponse<TRecord> => {
     let filteredRecords = [...records]
 
     // Apply text search if available
@@ -1040,35 +1033,37 @@ export function createDataAdapter<
   const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
     fetchData: ({ filters, sortings }) => {
       if (useObservable) {
-        return new Observable<PromiseState<TRecord[]>>((observer) => {
-          observer.next({
-            loading: true,
-            error: null,
-            data: null,
-          })
+        return new Observable<PromiseState<BaseResponse<TRecord>>>(
+          (observer) => {
+            observer.next({
+              loading: true,
+              error: null,
+              data: null,
+            })
 
-          setTimeout(() => {
-            try {
-              const fetch = () =>
-                filterData(data, filters, sortings) as TRecord[]
+            setTimeout(() => {
+              try {
+                const fetch = () =>
+                  filterData(data, filters, sortings) as TRecord[]
 
-              observer.next({
-                loading: false,
-                error: null,
-                data: fetch(),
-              })
-              observer.complete()
-            } catch (error) {
-              observer.next({
-                loading: false,
-                error:
-                  error instanceof Error ? error : new Error(String(error)),
-                data: null,
-              })
-              observer.complete()
-            }
-          }, delay)
-        })
+                observer.next({
+                  loading: false,
+                  error: null,
+                  data: { records: fetch() },
+                })
+                observer.complete()
+              } catch (error) {
+                observer.next({
+                  loading: false,
+                  error:
+                    error instanceof Error ? error : new Error(String(error)),
+                  data: null,
+                })
+                observer.complete()
+              }
+            }, delay)
+          }
+        )
       }
 
       return new Promise<BaseResponse<TRecord>>((resolve, reject) => {
