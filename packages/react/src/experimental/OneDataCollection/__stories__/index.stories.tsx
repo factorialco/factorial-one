@@ -1020,7 +1020,14 @@ export const WithSynchronousData: Story = {
       dataAdapter: {
         fetchData: ({ filters, sortings, navigationFilters }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, sortings, navigationFilters)
+          return {
+            records: filterUsers(
+              mockUsers,
+              filters,
+              sortings,
+              navigationFilters
+            ),
+          }
         },
       },
     })
@@ -1271,7 +1278,7 @@ export const WithSyncSearch: Story = {
             })
           }
 
-          return filteredUsers
+          return { records: filteredUsers }
         },
       },
     })
@@ -1425,7 +1432,7 @@ export const WithAsyncSearch: Story = {
                 })
               }
 
-              resolve(filteredUsers)
+              resolve({ records: filteredUsers })
             }, 1000) // Simulate 1 second delay for API response
           })
         },
@@ -1738,7 +1745,7 @@ export const TableWithNoFiltersAndSearch: Story = {
         },
       ],
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
     })
 
@@ -1843,7 +1850,7 @@ export const TableWithNoFilters: Story = {
             )
           }
 
-          return Promise.resolve(filteredUsers)
+          return Promise.resolve({ records: filteredUsers })
         },
       },
     })
@@ -1922,7 +1929,7 @@ export const TableWithSecondaryActions: Story = {
             )
           }
 
-          return Promise.resolve(filteredUsers)
+          return Promise.resolve({ records: filteredUsers })
         },
       },
     })
