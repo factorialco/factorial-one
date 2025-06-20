@@ -80,7 +80,7 @@ interface UseDataReturn<R> {
   // For infinite-scroll pagination:
   loadMore: () => void
   totalItems: number | undefined
-  summaries?: Record // Add summaries to the return type
+  summaries?: R // Add summaries to the return type
 }
 
 type DataType<T> = PromiseState<T>
@@ -202,6 +202,7 @@ export function useData<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 >(
@@ -209,7 +210,7 @@ export function useData<
     R,
     Filters,
     Sortings,
-    SummariesDefinition,
+    Summaries,
     ItemActionsDefinition<R>,
     NavigationFilters,
     Grouping
@@ -259,9 +260,7 @@ export function useData<
       ? currentSearch
       : deferredSearch
 
-  const [summariesData, setSummariesData] = useState<TRecord | undefined>(
-    undefined
-  )
+  const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<R> | SimpleResult<R>, appendMode: boolean) => {
