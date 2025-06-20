@@ -254,14 +254,6 @@ export const VisualizationRenderer = <
     Sortings,
     Summaries,
     ItemActions,
-    NavigationFilters
-  >
-  source: DataSource<
-    Record,
-    Filters,
-    Sortings,
-    Summaries,
-    ItemActions,
     NavigationFilters,
     Grouping
   >
@@ -269,6 +261,7 @@ export const VisualizationRenderer = <
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
