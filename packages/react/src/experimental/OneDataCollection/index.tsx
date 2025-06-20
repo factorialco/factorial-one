@@ -23,6 +23,7 @@ import {
 import { Search } from "./search"
 import { Settings } from "./Settings"
 import { SortingsDefinition, SortingsState } from "./sortings"
+import { SummariesDefinition } from "./summary"
 import type {
   BulkActionDefinition,
   CollectionSearchOptions,
@@ -78,6 +79,7 @@ export const useDataSource = <
   Record extends RecordType,
   FiltersSchema extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -89,6 +91,7 @@ export const useDataSource = <
     navigationFilters,
     search,
     defaultSorting,
+    summaries,
     dataAdapter,
     grouping,
     ...rest
@@ -96,6 +99,7 @@ export const useDataSource = <
     Record,
     FiltersSchema,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -105,6 +109,7 @@ export const useDataSource = <
   Record,
   FiltersSchema,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
@@ -156,6 +161,9 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedSummaries = useMemo(() => summaries, deps)
+
   const [isLoading, setIsLoading] = useState(false)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,6 +193,7 @@ export const useDataSource = <
     setCurrentFilters,
     currentSortings,
     setCurrentSortings,
+    summaries: memoizedSummaries,
     search,
     currentSearch,
     setCurrentSearch,
@@ -230,6 +239,7 @@ export const OneDataCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -244,6 +254,7 @@ export const OneDataCollection = <
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -253,6 +264,7 @@ export const OneDataCollection = <
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping

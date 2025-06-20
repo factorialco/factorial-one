@@ -1,3 +1,4 @@
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { Ai, Download, Pencil, Upload } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { SecondaryActionsItemDefinition } from "../actions"
@@ -111,6 +112,7 @@ const buildSecondaryActions = (): SecondaryActionsItemDefinition[] => {
 function BaseStory<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<(typeof mockUsers)[number]>,
   NavigationFilters extends NavigationFiltersDefinition,
 >({
@@ -121,6 +123,7 @@ function BaseStory<
     (typeof mockUsers)[number],
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     GroupingDefinition<(typeof mockUsers)[number]>
@@ -130,6 +133,7 @@ function BaseStory<
       (typeof mockUsers)[number],
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       GroupingDefinition<(typeof mockUsers)[number]>
@@ -176,7 +180,7 @@ export const BasicActionsExample: Story = {
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
       primaryActions: () => ({
         label: "Create user",
@@ -198,7 +202,7 @@ export const WithExpandedActionsExample: Story = {
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
       primaryActions: () => ({
         label: "Create user",
@@ -220,7 +224,7 @@ export const HiddenLabelExpandedActionsExample: Story = {
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
       primaryActions: () => ({
         label: "Create user",
@@ -254,7 +258,7 @@ export const CardActionsExample: Story = {
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
       primaryActions: () => ({
         label: "Create user",

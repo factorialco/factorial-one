@@ -1,4 +1,5 @@
 import { IconType } from "@/components/Utilities/Icon"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { Kanban, List, Table } from "@/icons/app"
 import {
   FiltersDefinition,
@@ -21,6 +22,7 @@ type CollectionVisualizations<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -30,6 +32,7 @@ type CollectionVisualizations<
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -40,6 +43,7 @@ type CollectionVisualizations<
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -50,6 +54,7 @@ type CollectionVisualizations<
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -61,6 +66,7 @@ export const collectionVisualizations: CollectionVisualizations<
   RecordType,
   FiltersDefinition,
   SortingsDefinition,
+  SummariesDefinition,
   ItemActionsDefinition<RecordType>,
   NavigationFiltersDefinition,
   GroupingDefinition<RecordType>
@@ -72,6 +78,7 @@ export const collectionVisualizations: CollectionVisualizations<
       Record extends RecordType,
       Filters extends FiltersDefinition,
       Sortings extends SortingsDefinition,
+      Summaries extends SummariesDefinition,
       ItemActions extends ItemActionsDefinition<Record>,
       NavigationFilters extends NavigationFiltersDefinition,
       Grouping extends GroupingDefinition<Record>,
@@ -80,6 +87,7 @@ export const collectionVisualizations: CollectionVisualizations<
         Record,
         Filters,
         Sortings,
+        Summaries,
         ItemActions,
         NavigationFilters,
         Grouping
@@ -90,6 +98,7 @@ export const collectionVisualizations: CollectionVisualizations<
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping
@@ -106,6 +115,7 @@ export const collectionVisualizations: CollectionVisualizations<
       Record extends RecordType,
       Filters extends FiltersDefinition,
       Sortings extends SortingsDefinition,
+      Summaries extends SummariesDefinition,
       ItemActions extends ItemActionsDefinition<Record>,
       NavigationFilters extends NavigationFiltersDefinition,
       Grouping extends GroupingDefinition<Record>,
@@ -114,6 +124,7 @@ export const collectionVisualizations: CollectionVisualizations<
         Record,
         Filters,
         Sortings,
+        Summaries,
         ItemActions,
         NavigationFilters,
         Grouping
@@ -124,6 +135,7 @@ export const collectionVisualizations: CollectionVisualizations<
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping
@@ -140,6 +152,7 @@ export const collectionVisualizations: CollectionVisualizations<
       Record extends RecordType,
       Filters extends FiltersDefinition,
       Sortings extends SortingsDefinition,
+      Summaries extends SummariesDefinition,
       ItemActions extends ItemActionsDefinition<Record>,
       NavigationFilters extends NavigationFiltersDefinition,
       Grouping extends GroupingDefinition<Record>,
@@ -148,6 +161,7 @@ export const collectionVisualizations: CollectionVisualizations<
         Record,
         Filters,
         Sortings,
+        Summaries,
         ItemActions,
         NavigationFilters,
         Grouping
@@ -158,6 +172,7 @@ export const collectionVisualizations: CollectionVisualizations<
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping

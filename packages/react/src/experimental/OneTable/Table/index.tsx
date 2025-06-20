@@ -47,7 +47,7 @@ function TableBase({ children, loading = false }: TableProps) {
     <TableContext.Provider
       value={{ isScrolled, setIsScrolled, isScrolledRight, setIsScrolledRight }}
     >
-      <div ref={containerRef} className="relative w-full overflow-auto">
+      <div ref={containerRef} className="relative w-full">
         <TableRoot
           className={cn(loading && "select-none opacity-50 transition-opacity")}
           aria-live={loading ? "polite" : undefined}

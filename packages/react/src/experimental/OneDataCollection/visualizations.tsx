@@ -1,3 +1,4 @@
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
 import { Button } from "../../components/Actions/Button"
@@ -34,6 +35,7 @@ export type Visualization<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -48,7 +50,7 @@ export type Visualization<
       /** Table-based visualization type */
       type: "table"
       /** Configuration options for table visualization */
-      options: TableVisualizationOptions<Record, Filters, Sortings>
+      options: TableVisualizationOptions<Record, Filters, Sortings, Summaries>
     }
   | {
       /** Custom visualization type */
@@ -65,6 +67,7 @@ export type Visualization<
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping
@@ -91,6 +94,7 @@ export type VisualizationProps<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  Summaries extends SummariesDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 > = {
@@ -100,6 +104,7 @@ export type VisualizationProps<
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -125,6 +130,7 @@ export const VisualizationSelector = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -138,6 +144,7 @@ export const VisualizationSelector = <
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -230,6 +237,7 @@ export const VisualizationRenderer = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -244,6 +252,7 @@ export const VisualizationRenderer = <
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -252,6 +261,7 @@ export const VisualizationRenderer = <
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -268,6 +278,7 @@ export const VisualizationRenderer = <
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping
@@ -285,6 +296,7 @@ export const VisualizationRenderer = <
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping

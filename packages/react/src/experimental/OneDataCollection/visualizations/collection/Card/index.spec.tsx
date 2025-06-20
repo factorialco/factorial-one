@@ -1,4 +1,5 @@
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { render, renderHook, screen, waitFor } from "@testing-library/react"
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
@@ -50,6 +51,7 @@ const createTestSource = (
   Person,
   FiltersDefinition,
   SortingsDefinition,
+  SummariesDefinition,
   ItemActionsDefinition<Person>,
   NavigationFiltersDefinition,
   GroupingDefinition<Person>
@@ -66,7 +68,7 @@ const createTestSource = (
   dataAdapter: {
     fetchData: async ({ filters: _filters }) => {
       if (error) throw error
-      return data
+      return { records: data }
     },
   },
   currentNavigationFilters: {},
@@ -85,6 +87,7 @@ describe("CardCollection", () => {
             Person,
             FiltersDefinition,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             NavigationFiltersDefinition,
             GroupingDefinition<Person>
@@ -114,6 +117,7 @@ describe("CardCollection", () => {
             Person,
             FiltersDefinition,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             NavigationFiltersDefinition,
             GroupingDefinition<Person>
@@ -150,6 +154,7 @@ describe("CardCollection", () => {
             Person,
             FiltersDefinition,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             NavigationFiltersDefinition,
             GroupingDefinition<Person>
@@ -182,6 +187,7 @@ describe("CardCollection", () => {
             Person,
             FiltersDefinition,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             NavigationFiltersDefinition,
             GroupingDefinition<Person>
@@ -239,6 +245,7 @@ describe("CardCollection", () => {
             Person,
             FiltersDefinition,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             NavigationFiltersDefinition,
             GroupingDefinition<Person>
@@ -269,6 +276,7 @@ describe("CardCollection", () => {
             Person,
             FiltersDefinition,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             NavigationFiltersDefinition,
             GroupingDefinition<Person>
@@ -299,6 +307,7 @@ describe("CardCollection", () => {
             Person,
             FiltersDefinition,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             NavigationFiltersDefinition,
             GroupingDefinition<Person>
@@ -373,6 +382,7 @@ describe("CardCollection", () => {
             Person,
             FiltersDefinition,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             NavigationFiltersDefinition,
             GroupingDefinition<Person>
@@ -439,6 +449,7 @@ describe("CardCollection", () => {
             Person,
             FiltersDefinition,
             SortingsDefinition,
+            SummariesDefinition,
             ItemActionsDefinition<Person>,
             NavigationFiltersDefinition,
             GroupingDefinition<Person>
