@@ -1,5 +1,5 @@
 import { IconType } from "@/components/Utilities/Icon"
-import { Kanban, List, Table } from "@/icons/app"
+import { Kanban, List, Minus, Table } from "@/icons/app"
 import {
   FiltersDefinition,
   ItemActionsDefinition,
@@ -9,6 +9,7 @@ import {
 import { GroupingDefinition, RecordType } from "../../types"
 import { CardCollection, CardCollectionProps } from "./Card"
 import { ListCollection, ListCollectionProps } from "./List"
+import { SimpleListCollection, SimpleListCollectionProps } from "./SimpleList"
 import { TableCollection, TableCollectionProps } from "./Table"
 
 export type VisualizacionTypeDefinition<Props> = {
@@ -37,6 +38,16 @@ type CollectionVisualizations<
   >
   list: VisualizacionTypeDefinition<
     ListCollectionProps<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
+  >
+  simpleList: VisualizacionTypeDefinition<
+    SimpleListCollectionProps<
       Record,
       Filters,
       Sortings,
@@ -121,6 +132,40 @@ export const collectionVisualizations: CollectionVisualizations<
     ) => {
       return (
         <ListCollection<
+          Record,
+          Filters,
+          Sortings,
+          ItemActions,
+          NavigationFilters,
+          Grouping
+        >
+          {...props}
+        />
+      )
+    },
+  },
+  simpleList: {
+    name: "Simple list",
+    icon: Minus,
+    render: <
+      Record extends RecordType,
+      Filters extends FiltersDefinition,
+      Sortings extends SortingsDefinition,
+      ItemActions extends ItemActionsDefinition<Record>,
+      NavigationFilters extends NavigationFiltersDefinition,
+      Grouping extends GroupingDefinition<Record>,
+    >(
+      props: SimpleListCollectionProps<
+        Record,
+        Filters,
+        Sortings,
+        ItemActions,
+        NavigationFilters,
+        Grouping
+      >
+    ) => {
+      return (
+        <SimpleListCollection<
           Record,
           Filters,
           Sortings,

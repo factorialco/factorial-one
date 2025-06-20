@@ -3,10 +3,10 @@ import { ItemActionsDefinition } from "../../../../item-actions"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { SortingsDefinition } from "../../../../sortings"
 import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
-import { ItemDefinition, ListPropertyDefinition } from "../types"
+import { ItemDefinition, SimpleListPropertyDefinition } from "../types"
 import { Row } from "./Row"
 
-type ListGroupProps<
+type SimpleListGroupProps<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -25,14 +25,14 @@ type ListGroupProps<
   items: R[]
   selectedItems: Map<number | string, R>
   handleSelectItemChange: (item: R, checked: boolean) => void
-  fields: ReadonlyArray<ListPropertyDefinition<R, Sortings>>
+  fields: ReadonlyArray<SimpleListPropertyDefinition<R, Sortings>>
   itemDefinition: (record: R) => ItemDefinition
 }
 
 /**
- * Group List: Renders the list for a group
+ * Group SimpleList: Renders the list for a group
  */
-export const ListGroup = <
+export const SimpleListGroup = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -46,7 +46,7 @@ export const ListGroup = <
   handleSelectItemChange,
   fields,
   itemDefinition,
-}: ListGroupProps<
+}: SimpleListGroupProps<
   Record,
   Filters,
   Sortings,

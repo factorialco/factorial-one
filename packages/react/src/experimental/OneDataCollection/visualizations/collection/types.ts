@@ -13,7 +13,8 @@ import type {
 } from "../../types"
 import type { CardVisualizationOptions } from "../../visualizations/collection/Card"
 import type { TableVisualizationOptions } from "../../visualizations/collection/Table"
-import { ListVisualizationOptions } from "./List/types"
+import type { ListVisualizationOptions } from "./List/types"
+import type { SimpleListVisualizationOptions } from "./SimpleList/types"
 
 /**
  * Represents a visualization configuration for displaying collection data.
@@ -48,6 +49,12 @@ export type Visualization<
       type: "list"
       /** Configuration options for list visualization */
       options: ListVisualizationOptions<Record, Filters, Sortings>
+    }
+  | {
+      /** Simple list-based visualization type */
+      type: "simpleList"
+      /** Configuration options for simple list visualization */
+      options: SimpleListVisualizationOptions<Record, Filters, Sortings>
     }
   | {
       /** Human-readable label for the visualization */
