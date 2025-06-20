@@ -296,6 +296,7 @@ export const VisualizationRenderer = <
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping
