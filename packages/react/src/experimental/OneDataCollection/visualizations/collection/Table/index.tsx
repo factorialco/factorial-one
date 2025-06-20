@@ -156,12 +156,7 @@ export const TableCollection = <
     }
   )
 
-  console.log("[debug] paginationInfo", paginationInfo)
-
-  const { currentSortings, setCurrentSortings, isLoading, summaries } = source
-
-  console.log("[debug] source.summaries", summaries)
-  console.log("[debug] summariesData", summariesData)
+  const { currentSortings, setCurrentSortings, isLoading } = source
 
   // Infinite scroll pagination
   const { loadingIndicatorRef } = useInfiniteScrollPagination(
@@ -205,8 +200,6 @@ export const TableCollection = <
       label: source.summaries?.label,
     }
   }, [summariesData, source.summaries])
-
-  console.log("[debug] summaryData", summaryData)
 
   /**
    * Determine the sort state of a column
