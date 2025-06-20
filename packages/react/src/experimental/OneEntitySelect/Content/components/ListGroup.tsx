@@ -2,7 +2,6 @@ import { FiltersDefinition } from "../../../../Filters/types"
 import { ItemActionsDefinition } from "../../../../item-actions"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { SortingsDefinition } from "../../../../sortings"
-import { SummariesDefinition } from "../../../../summary"
 import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
 import { ItemDefinition, ListPropertyDefinition } from "../types"
 import { Row } from "./Row"
@@ -11,7 +10,6 @@ type ListGroupProps<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -20,7 +18,6 @@ type ListGroupProps<
     R,
     Filters,
     Sortings,
-    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -39,7 +36,6 @@ export const ListGroup = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -54,13 +50,12 @@ export const ListGroup = <
   Record,
   Filters,
   Sortings,
-  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
 >) => {
   return (
-    <div className="flex flex-col overflow-hidden [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary">
+    <div className="flex flex-col overflow-hidden rounded-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary">
       {items.map((item, index) => (
         <Row
           key={`row-${index}`}

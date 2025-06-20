@@ -351,6 +351,52 @@ export const getMockVisualizations = (options?: {
       ],
     },
   },
+  simpleList: {
+    type: "simpleList",
+    options: {
+      itemDefinition: (item) => ({
+        title: item.name,
+        description: [item.email, item.role],
+        avatar: {
+          type: "person",
+          firstName: item.name.split(" ")[0],
+          lastName: item.name.split(" ")[1],
+        },
+      }),
+      fields: [
+        {
+          label: "Email",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Email 2",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role 2",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Department",
+          render: (item) => ({
+            type: "dotTag",
+            value: {
+              color: "yellow",
+              label: item.department,
+            },
+          }),
+        },
+      ],
+    },
+  },
   list: {
     type: "list",
     options: {
