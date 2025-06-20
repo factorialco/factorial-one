@@ -2,6 +2,7 @@ import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { DropdownItemSeparator } from "@/experimental/Navigation/Dropdown/internal"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
@@ -24,6 +25,7 @@ type RowProps<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -32,6 +34,7 @@ type RowProps<
     R,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -50,6 +53,7 @@ export const Row = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -64,6 +68,7 @@ export const Row = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
