@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.103.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.3...factorial-one-react-v1.103.0) (2025-06-20)
+
+
+### Features
+
+* select allow generic value ([#2121](https://github.com/factorialco/factorial-one/issues/2121)) ([300642d](https://github.com/factorialco/factorial-one/commit/300642d8313ba69c31194610f01af72d5d813360))
+
 ## [1.102.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.2...factorial-one-react-v1.102.3) (2025-06-20)
 
 
