@@ -145,7 +145,85 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    label: "Select a theme",
+    value: undefined,
+    placeholder: undefined,
+  },
+}
+
+export const WithPlaceholder: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    placeholder: "Select a theme",
+    value: undefined,
+  },
+}
+
+export const WithHiddenLabel: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    hideLabel: true,
+  },
+}
+
+export const WithIcon: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    icon: Desktop,
+  },
+}
+
+export const WithLabelIcon: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    labelIcon: Circle,
+  },
+}
+
+export const SizeSm: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    icon: Desktop,
+    size: "sm",
+  },
+}
+
+export const WithError: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    error: "Error message",
+  },
+}
+
+export const WithClearable: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    clearable: true,
+  },
+}
 
 export const WithSearchBox: Story = {
   args: {
@@ -201,6 +279,7 @@ export const WithCustomTrigger: Story = {
   },
   render: ({ value, options, placeholder, onChange, ...args }) => (
     <Select
+      label="Select a color"
       value={value}
       options={options}
       placeholder={placeholder}
