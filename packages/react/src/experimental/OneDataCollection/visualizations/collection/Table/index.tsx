@@ -127,7 +127,15 @@ export const TableCollection = <
   // Created a motion component for the row
   const [MotionRow] = useState(() =>
     motion.create(
-      Row<R, Filters, Sortings, ItemActions, NavigationFilters, Grouping>
+      Row<
+        R,
+        Filters,
+        Sortings,
+        Summaries,
+        ItemActions,
+        NavigationFilters,
+        Grouping
+      >
     )
   )
 
