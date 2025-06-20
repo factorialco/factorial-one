@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.101.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.101.0...factorial-one-react-v1.101.1) (2025-06-20)
+
+
+### Bug Fixes
+
+* export ModuleAvatar ([#2113](https://github.com/factorialco/factorial-one/issues/2113)) ([7150e5c](https://github.com/factorialco/factorial-one/commit/7150e5cd108e7c415e4097168d99ec1444c9a0e9))
+
 ## [1.101.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.100.0...factorial-one-react-v1.101.0) (2025-06-19)
 
 
