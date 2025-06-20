@@ -43,14 +43,14 @@ import {
   lastIntentType,
   primaryActionType,
   resultType,
-  secondaryActionType,
+  secondaryActionsType,
 } from "./utils/types"
 
 interface RichTextEditorProps {
   mentionsConfig?: MentionsConfig
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
-  secondaryAction?: secondaryActionType
+  secondaryAction?: secondaryActionsType
   primaryAction?: primaryActionType
   onChange: (result: resultType) => void
   maxCharacters?: number

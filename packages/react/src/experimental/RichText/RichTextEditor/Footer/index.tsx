@@ -12,14 +12,14 @@ import { EnhanceActivator } from "../Enhance"
 import {
   enhanceConfig,
   primaryActionType,
-  secondaryActionType,
+  secondaryActionsType,
 } from "../utils/types"
 import { ActionsMenu } from "./ActionsMenu"
 
 interface FooterProps {
   editor: Editor
   maxCharacters: number | undefined
-  secondaryAction: secondaryActionType | undefined
+  secondaryAction: secondaryActionsType | undefined
   primaryAction: primaryActionType | undefined
   fileInputRef: React.RefObject<HTMLInputElement>
   canUseFiles: boolean
