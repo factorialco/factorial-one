@@ -513,7 +513,7 @@ export const createObservableDataFetch = (delay = 0) => {
     sortings: sortingsState,
     navigationFilters,
   }: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>) =>
-    new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
+    new Observable<PromiseState<BaseResponse<MockUser>>>((observer) => {
       observer.next({
         loading: true,
         error: null,
@@ -528,12 +528,28 @@ export const createObservableDataFetch = (delay = 0) => {
           navigationFilters
         )
 
+        // Calculate summaries like in createPromiseDataFetch
+        const summaries = {
+          salary: filteredData.reduce((total, user) => {
+            return total + (user.salary || 0)
+          }, 0),
+          userCount: filteredData.length,
+          averageSalary:
+            filteredData.filter((user) => user.salary !== undefined).length > 0
+              ? filteredData.reduce(
+                  (sum, user) => sum + (user.salary || 0),
+                  0
+                ) /
+                filteredData.filter((user) => user.salary !== undefined).length
+              : 0,
+        }
+
         observer.next({
           loading: false,
           error: null,
           data: {
             records: filteredData,
-            // You can add summaries here if needed
+            summaries: summaries as unknown as MockUser,
           },
         })
         observer.complete()
@@ -555,7 +571,7 @@ export const createPromiseDataFetch = (delay = 500) => {
     search,
     navigationFilters,
   }: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>) =>
-    new Promise<MockUser[]>((resolve) => {
+    new Promise<BaseResponse<MockUser>>((resolve) => {
       setTimeout(() => {
         const filteredData = filterUsers(
           mockUsers,
@@ -749,22 +765,25 @@ export function createDataAdapter<
 
     // Return a record-like object with the calculated summaries
     return {
-      salary: totalSalary as any, // Cast to any as TRecord might have different types
+      salary: totalSalary, // Cast to any as TRecord might have different types
       // Add other summary calculations as needed
     } as Partial<TRecord>
   }
 
   const filterData = (
     records: TRecord[],
-    filters: FiltersState<TFilters>,
-    sortingsState: SortingsStateMultiple,
+    _filters: FiltersState<TFilters>,
+    _sortingsState: SortingsStateMultiple,
     pagination?: {
       currentPage?: number
       perPage?: number
       cursor?: string | null
     }
-  ): TRecord[] | PaginatedResponse<TRecord> => {
-    let filteredRecords = [...records]
+  ):
+    | TRecord[]
+    | PaginatedResponse<TRecord>
+    | { records: TRecord[]; summaries: TRecord } => {
+    const filteredRecords = [...records]
 
     // ... existing filtering logic ...
 
@@ -811,10 +830,7 @@ export function createDataAdapter<
     }
 
     // For non-paginated responses
-    return {
-      records: filteredRecords,
-      summaries: summaries as TRecord, // Include summaries
-    }
+    return filteredRecords
   }
 
   // The rest of the adapter implementation...
@@ -899,7 +915,13 @@ export function createDataAdapter<
       return new Promise<BaseResponse<TRecord>>((resolve, reject) => {
         setTimeout(() => {
           try {
-            const recordsData = filterData(data, filters, sortings) as TRecord[]
+            const result = filterData(data, filters, sortings)
+            // If the result is an array, we need to wrap it with summaries
+            const recordsData = Array.isArray(result)
+              ? result
+              : "records" in result
+                ? result.records
+                : []
             const summaries = calculateSummaries(recordsData)
             resolve({
               records: recordsData,
