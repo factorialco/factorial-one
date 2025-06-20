@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.102.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.2...factorial-one-react-v1.102.3) (2025-06-20)
+
+
+### Bug Fixes
+
+* make list item row checkbox work when itemHref is present ([#2119](https://github.com/factorialco/factorial-one/issues/2119)) ([b56f613](https://github.com/factorialco/factorial-one/commit/b56f613b0bd6542ae5b0505656d0b8935e6754f7))
+
 ## [1.102.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.1...factorial-one-react-v1.102.2) (2025-06-20)
 
 
