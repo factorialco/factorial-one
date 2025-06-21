@@ -189,6 +189,7 @@ export const f1Colors = {
     hover: "hsl(var(--neutral-40))",
     secondary: "hsl(var(--neutral-10))",
     inverse: "hsl(var(--neutral-0) / 0.2)",
+    bold: "hsl(var(--neutral-100))",
     promote: {
       DEFAULT: "hsl(var(--promote-50) / 0.4)",
       alpha30: "hsl(var(--promote-50) / 0.3)",
