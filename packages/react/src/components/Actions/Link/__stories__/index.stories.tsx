@@ -18,7 +18,7 @@ const meta = {
     },
   },
   args: {
-    children: "This is a link",
+    children: "Link",
     href: "/foo",
     "data-test": "foo",
   },
@@ -34,6 +34,11 @@ export const Default: Story = {
     const link = canvas.getByRole("link")
     await expect(link.dataset.test).toBe("foo")
   },
+  render: (args) => (
+    <p>
+      Do not click this <Link {...args} /> because it goes nowhere.
+    </p>
+  ),
 }
 
 export const Variants: Story = {
@@ -48,17 +53,5 @@ export const Variants: Story = {
       <h3>Disabled</h3>
       <Link {...args} variant="link" disabled />
     </div>
-  ),
-}
-
-export const Inline: Story = {
-  args: {
-    href: "#",
-    children: "link",
-  },
-  render: (args) => (
-    <p>
-      Do not click this <Link {...args} /> because it goes nowhere.
-    </p>
   ),
 }
