@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import { useNavigation } from "../../../lib/linkHandler"
-import { Link } from "./index"
+import { Link } from "../"
+import { useNavigation } from "../../../../lib/linkHandler"
 
 vi.mock("@/lib/linkHandler", async () => {
-  const module = await import("./__mocks__/linkHandler")
+  const module = await import("../__mocks__/linkHandler")
   return module
 })
 

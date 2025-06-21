@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { ComponentProps } from "react"
 import { expect, within } from "storybook/test"
-import { Link } from "./index"
+import { Link } from ".."
 
 const meta = {
   title: "Link",
