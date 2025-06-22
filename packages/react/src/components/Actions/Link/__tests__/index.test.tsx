@@ -16,7 +16,7 @@ describe("Link", () => {
 
   it("applies link variant by default", () => {
     render(<Link href="/test">Click me</Link>)
-    expect(screen.getByRole("link")).toHaveClass("text-f1-link")
+    expect(screen.getByRole("link")).toHaveClass("underline")
   })
 
   it("shows external link icon when target is _blank", () => {

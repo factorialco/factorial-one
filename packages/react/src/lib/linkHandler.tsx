@@ -95,7 +95,9 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     () =>
       forwardRef<HTMLAnchorElement>(function Component(props: LinkProps, ref) {
         if (isDisabled) {
-          const { href, target, rel, download, ...spanProps } = props
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { href, target, rel, download, exactMatch, ...spanProps } =
+            props
           return <span ref={ref} aria-disabled={true} {...spanProps} />
         }
 
