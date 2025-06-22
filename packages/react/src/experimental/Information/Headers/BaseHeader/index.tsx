@@ -187,7 +187,7 @@ export function BaseHeader({
                 onClick={primaryAction.onClick}
                 variant="default"
                 value={primaryAction.value}
-                size="md"
+                size="lg"
                 disabled={primaryAction.disabled}
                 tooltip={primaryAction.tooltip}
               />
@@ -196,7 +196,7 @@ export function BaseHeader({
 
           {visibleSecondaryActions.map((action) => (
             <Fragment key={action.label}>
-              <div className="w-full md:hidden [&>*]:w-full">
+              <div className="w-full md:hidden [&>*]:w-full [&>span]:block [&>span_div]:w-full">
                 <ButtonWithTooltip
                   label={action.label}
                   onClick={action.onClick}
@@ -211,7 +211,7 @@ export function BaseHeader({
           ))}
 
           {visibleOtherActions.length > 0 && (
-            <div className="w-full [&>*]:w-full">
+            <div className="w-full [&>*]:w-full [&_button]:w-full">
               <MobileDropdown items={visibleOtherActions} />
             </div>
           )}
