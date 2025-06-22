@@ -290,6 +290,9 @@ export const OneDataCollection = <
     currentGrouping,
     setCurrentGrouping,
     grouping,
+    currentSortings,
+    setCurrentSortings,
+    sortings,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
@@ -501,12 +504,12 @@ export const OneDataCollection = <
         >
           <div
             className={cn(
-              "flex items-center justify-between",
+              "flex items-center justify-between gap-4",
               !filters && "justify-end"
             )}
           >
             {filters && (
-              <div className="flex flex-1 gap-1">
+              <div className="flex min-w-0 flex-1 gap-1">
                 <Filters.Controls />
                 <Filters.Presets />
               </div>
@@ -534,6 +537,9 @@ export const OneDataCollection = <
                 grouping={grouping}
                 currentGrouping={currentGrouping}
                 onGroupingChange={setCurrentGrouping}
+                sortings={sortings}
+                currentSortings={currentSortings}
+                onSortingsChange={setCurrentSortings}
               ></Settings>
               {hasCollectionsActions && (
                 <>

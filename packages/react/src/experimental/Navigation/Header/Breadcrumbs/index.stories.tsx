@@ -1,6 +1,6 @@
+import { Documents, Recruitment } from "@/icons/modules"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
-import { Documents, Recruitment } from "../../../../icons/modules"
 import { Button } from "../../../../ui/button"
 import { Breadcrumbs, BreadcrumbsProps } from "./index"
 

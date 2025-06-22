@@ -41,12 +41,12 @@
 
 .ProseMirror h2,
 .rich-text-display-container h2 {
-  @apply m-0 mt-2.5 p-0 text-2xl font-medium;
+  @apply m-0 mb-2.5 p-0 text-2xl font-medium;
 }
 
 .ProseMirror h3,
 .rich-text-display-container h3 {
-  @apply m-0 mt-2.5 p-0 text-lg font-medium;
+  @apply m-0 mb-2.5 p-0 text-lg font-medium;
 }
 
 .ProseMirror a,
@@ -132,12 +132,6 @@
   content: "\00a0";
 }
 
-.ProseMirror p.is-editor-empty:first-child::before,
-.rich-text-display-container p.is-editor-empty:first-child::before {
-  @apply pointer-events-none float-left h-0 text-f1-foreground-tertiary;
-  content: attr(data-placeholder);
-}
-
 .ProseMirror ul[data-type="taskList"],
 .rich-text-display-container ul[data-type="taskList"] {
   @apply ml-0;
@@ -192,8 +186,9 @@
 /*
 Placeholder component
 */
+
 .tiptap p.is-empty::before {
-  @apply pointer-events-none float-left h-0 text-f1-foreground-tertiary;
+  @apply pointer-events-none float-left block h-0 max-w-full text-ellipsis whitespace-nowrap text-f1-foreground-tertiary;
   content: attr(data-placeholder);
 }
 
