@@ -3,7 +3,7 @@
 @import "@factorialco/factorial-one-core/base.css";
 
 :root {
-  --fz-sidebar-width: 240px;
+  --ds-sidebar-width: 240px;
 }
 
 .scrollbar-macos {
