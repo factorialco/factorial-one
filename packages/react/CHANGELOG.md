@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.104.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.103.0...factorial-one-react-v1.104.0) (2025-06-23)
+
+
+### Features
+
+* **RichtTextEditor:** mood tracker extension ([#2134](https://github.com/factorialco/factorial-one/issues/2134)) ([8476641](https://github.com/factorialco/factorial-one/commit/84766416d7a629c06768834f252661e01f562580))
+
 ## [1.103.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.3...factorial-one-react-v1.103.0) (2025-06-20)
 
 
