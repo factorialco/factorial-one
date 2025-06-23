@@ -44,7 +44,7 @@ const meta = {
       story: { inline: false, height: "400px" },
     },
   },
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "no-sidebar"],
 } satisfies Meta<typeof UpsellRequestResponseDialog>
 
 export default meta

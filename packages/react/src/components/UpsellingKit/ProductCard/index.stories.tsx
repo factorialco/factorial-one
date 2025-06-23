@@ -6,7 +6,7 @@ import { ComponentProps } from "react"
 const meta: Meta<typeof ProductCard> = {
   title: "UpsellingKit/ProductCard",
   component: ProductCard,
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "no-sidebar"],
   parameters: {
     layout: "fullscreen",
   },
