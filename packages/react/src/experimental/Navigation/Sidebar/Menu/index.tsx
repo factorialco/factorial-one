@@ -25,6 +25,7 @@ import {
 } from "../../../../icons/app"
 import { Avatar, AvatarVariant } from "../../../Information/Avatars/Avatar"
 import { Counter } from "../../../Information/Counter"
+import { Tooltip } from "../../../Overlays/Tooltip"
 import { Dropdown, DropdownItem } from "../../Dropdown"
 import { NavigationItem } from "../../utils"
 import { DragProvider, useDragContext } from "./DragContext"
@@ -43,8 +44,9 @@ type FavoriteMenuItem = (
       type: "avatar"
       avatar?: AvatarVariant
     }
-) &
-  NavigationItem
+) & {
+  tooltip?: string
+} & NavigationItem
 
 export interface MenuCategory {
   id: string
@@ -112,6 +114,7 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
 
 const FavoriteItem = ({
   item,
+  tooltip,
   dragConstraints,
   onRemove,
   index,
@@ -121,6 +124,7 @@ const FavoriteItem = ({
   isSortable = true,
 }: {
   item: FavoriteMenuItem
+  tooltip?: string
   dragConstraints?: RefObject<HTMLElement>
   onRemove?: (item: FavoriteMenuItem) => void
   index: number
@@ -230,13 +234,15 @@ const FavoriteItem = ({
             ) : item.avatar ? (
               <Avatar size="xsmall" avatar={item.avatar} />
             ) : null}
-            <OneEllipsis
-              tag="span"
-              className="line-clamp-1 font-medium text-f1-foreground"
-              lines={1}
-            >
-              {item.label}
-            </OneEllipsis>
+            <OptionalTooltip tooltip={tooltip}>
+              <OneEllipsis
+                tag="span"
+                className="line-clamp-1 font-medium text-f1-foreground"
+                lines={1}
+              >
+                {item.label}
+              </OneEllipsis>
+            </OptionalTooltip>
           </Link>
         </div>
         <div
@@ -628,12 +634,32 @@ function MenuContent({
    * Favorites content
    */
   const favoritesContentWrapperClasses = "flex flex-col gap-0.5"
+  const favoriteLabelsToIndex = useMemo(
+    () =>
+      internalFavorites.reduce<Record<string, Array<number>>>(
+        (acc, item, idx) => {
+          if (!(item.label in acc)) {
+            acc[item.label] = []
+          }
+          acc[item.label].push(idx)
+          return acc
+        },
+        {}
+      ),
+    [internalFavorites]
+  )
+
   const favoritesContent = useMemo(
     () =>
       hasFavorites &&
       internalFavorites.map((item, idx) => (
         <FavoriteItem
           isSortable={!disableDragging}
+          tooltip={
+            (favoriteLabelsToIndex[item.label] ?? []).length > 1
+              ? item.tooltip
+              : undefined
+          }
           key={`${item.href}-${item.label}`}
           item={item}
           dragConstraints={favoritesRef}
@@ -759,3 +785,11 @@ function MenuContent({
     </div>
   )
 }
+
+const OptionalTooltip = ({
+  tooltip,
+  children,
+}: {
+  tooltip?: string
+  children: React.ReactNode
+}) => (tooltip ? <Tooltip description={tooltip}>{children}</Tooltip> : children)
