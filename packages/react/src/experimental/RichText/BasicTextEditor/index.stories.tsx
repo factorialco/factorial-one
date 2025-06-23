@@ -81,38 +81,38 @@ export const Default: Story = {
                 days: [
                   {
                     day: "Monday",
-                    mood: 5,
+                    mood: "superPositive",
                     comment:
                       "More training opportunities would help us grow our skills.",
                   },
                   {
                     day: "Tuesday",
-                    mood: 5,
+                    mood: "superPositive",
                     comment: "-",
                   },
                   {
                     day: "Wednesday",
-                    mood: 4,
+                    mood: "positive",
                     comment: "Great team collaboration today!",
                   },
                   {
                     day: "Thursday",
-                    mood: 3,
+                    mood: "neutral",
                     comment: "Average day, nothing special.",
                   },
                   {
                     day: "Friday",
-                    mood: 5,
+                    mood: "superPositive",
                     comment: "Amazing presentation, very proud of the team!",
                   },
                   {
                     day: "Saturday",
-                    mood: 4,
+                    mood: "positive",
                     comment: "Average day, nothing special.",
                   },
                   {
                     day: "Sunday",
-                    mood: 2,
+                    mood: "negative",
                     comment: "Average day, nothing special.",
                   },
                 ],

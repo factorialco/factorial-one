@@ -1,14 +1,11 @@
 import { Icon } from "@/components/Utilities/Icon"
-import { Button } from "@/factorial-one"
 import {
-  ChevronDown,
-  ChevronUp,
-  FaceNegative,
-  FaceNeutral,
-  FacePositive,
-  FaceSuperNegative,
-  FaceSuperPositive,
-} from "@/icons/app"
+  Pulse,
+  pulseIcon,
+  pulseIconStyle,
+} from "@/experimental/Information/Avatars/PulseAvatar"
+import { Button } from "@/factorial-one"
+import { ChevronDown, ChevronUp } from "@/icons/app"
 import { Node } from "@tiptap/core"
 import {
   NodeViewContent,
@@ -19,21 +16,12 @@ import {
 import { AnimatePresence, motion } from "motion/react"
 import React, { useState } from "react"
 
-// Mapping mood values to face icons and colors
-const moodIconMap = {
-  1: { icon: FaceSuperNegative, color: "text-f1-icon-critical" },
-  2: { icon: FaceNegative, color: "text-f1-icon-warning" },
-  3: { icon: FaceNeutral, color: "text-f1-icon-promote" },
-  4: { icon: FacePositive, color: "text-f1-icon-positive" },
-  5: { icon: FaceSuperPositive, color: "text-f1-icon-selected" },
-}
-
 interface MoodTrackerData {
   title: string
   averageMoodComment: string
   days: {
     day: string
-    mood: number
+    mood: Pulse
     comment: string
   }[]
 }
@@ -67,13 +55,12 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({ node }) => {
                 {data.days.map((day) => (
                   <div
                     key={day.mood}
-                    className={`-ml-1.5 flex items-center justify-center rounded-full bg-f1-background ${moodIconMap[day.mood as keyof typeof moodIconMap].color}`}
+                    className="-ml-1.5 flex items-center justify-center rounded-full bg-f1-background"
                   >
                     <Icon
-                      icon={
-                        moodIconMap[day.mood as keyof typeof moodIconMap].icon
-                      }
+                      icon={pulseIcon[day.mood]}
                       size="lg"
+                      className={pulseIconStyle({ pulse: day.mood })}
                     />
                   </div>
                 ))}
@@ -131,8 +118,6 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({ node }) => {
             >
               <div className="flex flex-col gap-2">
                 {data.days.map((day, index) => {
-                  const moodIcon =
-                    moodIconMap[day.mood as keyof typeof moodIconMap]
                   return (
                     <motion.div
                       key={index}
@@ -153,13 +138,16 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({ node }) => {
                       }}
                       className="flex flex-row items-center gap-2"
                     >
-                      <div
-                        className={`flex items-center justify-center rounded-full ${moodIcon?.color || "text-f1-icon-promote"}`}
-                      >
-                        <Icon icon={moodIcon?.icon || FaceNeutral} size="lg" />
+                      <div className="flex items-center justify-center rounded-full">
+                        <Icon
+                          icon={pulseIcon[day.mood]}
+                          size="lg"
+                          className={pulseIconStyle({ pulse: day.mood })}
+                        />
                       </div>
                       <p className="text-f1-text-primary text-md font-normal">
-                        {day.day}: {day.comment}
+                        <span className="font-semibold">{day.day}:</span>{" "}
+                        {day.comment}
                       </p>
                     </motion.div>
                   )
