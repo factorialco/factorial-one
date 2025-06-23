@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.104.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.104.1...factorial-one-react-v1.104.2) (2025-06-23)
+
+
+### Bug Fixes
+
+* set correct spacing and flex for data collection list item description ([#2123](https://github.com/factorialco/factorial-one/issues/2123)) ([38f5d58](https://github.com/factorialco/factorial-one/commit/38f5d58d97b989cb09d70568b29b9e27aac02aba))
+
 ## [1.104.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.104.0...factorial-one-react-v1.104.1) (2025-06-23)
 
 
