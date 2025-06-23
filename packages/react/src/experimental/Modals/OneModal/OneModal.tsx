@@ -82,7 +82,7 @@ export const OneModal: React.FC<OneModalProps> = ({
   if (isSidePosition) {
     contentClassName = cn(
       "w-full overflow-x-hidden flex flex-col absolute top-3 bottom-3 translate-y-0 translate-x-0 max-w-[539px] rounded-md border border-solid border-f1-border-secondary",
-      position === "left" && "left-3 right-8",
+      position === "left" && "left-3",
       position === "right" && "left-auto right-3"
     )
   }
