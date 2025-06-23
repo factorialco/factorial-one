@@ -1,3 +1,4 @@
+import { OneEllipsis } from "@/components/OneEllipsis"
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { useReducedMotion } from "@/lib/a11y"
 import { Link, useNavigation } from "@/lib/linkHandler"
@@ -210,7 +211,8 @@ const FavoriteItem = ({
             href={item.href}
             exactMatch={item.exactMatch}
             className={cn(
-              "flex w-full items-center gap-1.5 no-underline",
+              // w-[calc(100%-24px-2px)] - here 24px is the size of the dropdown button and 2 px is the gap
+              "flex w-[calc(100%-24px-2px)] items-center gap-1.5 no-underline",
               isItemDragging && "pointer-events-none"
             )}
             draggable={false}
@@ -227,9 +229,13 @@ const FavoriteItem = ({
             ) : item.avatar ? (
               <Avatar size="xsmall" avatar={item.avatar} />
             ) : null}
-            <span className="line-clamp-1 font-medium text-f1-foreground">
+            <OneEllipsis
+              tag="span"
+              className="line-clamp-1 font-medium text-f1-foreground"
+              lines={1}
+            >
               {item.label}
-            </span>
+            </OneEllipsis>
           </Link>
         </div>
         <div

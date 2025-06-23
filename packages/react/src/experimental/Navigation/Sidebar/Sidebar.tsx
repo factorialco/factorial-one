@@ -89,7 +89,7 @@ export function Sidebar({
       initial={false}
       aria-label={i18n.navigation.sidebar}
       className={cn(
-        "absolute bottom-0 left-0 top-0 z-10 flex w-[240px] flex-col transition-[background-color]",
+        "absolute bottom-0 left-0 top-0 z-10 flex w-[var(--fz-sidebar-width)] flex-col transition-[background-color]",
         sidebarState === "locked"
           ? "h-full"
           : cn(
@@ -120,7 +120,7 @@ export function Sidebar({
               aria-hidden="true"
               key="top-ref"
             />
-            {body}
+            <div className="w-[var(--fz-sidebar-width)]">{body}</div>
             <div
               ref={bottomRef}
               className="h-px"
