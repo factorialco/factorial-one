@@ -266,7 +266,7 @@ const FavoriteItem = ({
         </div>
       </>
     )
-  }, [item, active, isDropdownOpen, isItemDragging, dropdownItems])
+  }, [item, active, isDropdownOpen, isItemDragging, dropdownItems, tooltip])
 
   return isSortable ? (
     <Reorder.Item
@@ -677,6 +677,7 @@ function MenuContent({
     [
       hasFavorites,
       internalFavorites,
+      favoriteLabelsToIndex,
       handleRemoveFavorite,
       handleMoveFavorite,
       onFavoritesChange,
