@@ -56,41 +56,83 @@ export const Default: Story = {
       console.log("Content changed:", value)
     },
     initialEditorState: {
-      content:
-        "<p>This is some <strong>initial content</strong> with <em>formatting</em>.</p>",
+      content: {
+        type: "doc",
+        content: [
+          {
+            type: "paragraph",
+            attrs: {
+              textAlign: null,
+            },
+            content: [
+              {
+                type: "text",
+                text: "This is a document with mood tracking:",
+              },
+            ],
+          },
+          {
+            type: "moodTracker",
+            attrs: {
+              data: {
+                title: "Last week mood tracker:",
+                averageMoodComment:
+                  'Average feeling of "manolo" this week: Walking on sunshine',
+                days: [
+                  {
+                    day: "Monday",
+                    mood: 5,
+                    comment:
+                      "More training opportunities would help us grow our skills.",
+                  },
+                  {
+                    day: "Tuesday",
+                    mood: 5,
+                    comment: "-",
+                  },
+                  {
+                    day: "Wednesday",
+                    mood: 4,
+                    comment: "Great team collaboration today!",
+                  },
+                  {
+                    day: "Thursday",
+                    mood: 3,
+                    comment: "Average day, nothing special.",
+                  },
+                  {
+                    day: "Friday",
+                    mood: 5,
+                    comment: "Amazing presentation, very proud of the team!",
+                  },
+                  {
+                    day: "Saturday",
+                    mood: 4,
+                    comment: "Average day, nothing special.",
+                  },
+                  {
+                    day: "Sunday",
+                    mood: 2,
+                    comment: "Average day, nothing special.",
+                  },
+                ],
+              },
+            },
+          },
+          {
+            type: "paragraph",
+            attrs: {
+              textAlign: null,
+            },
+            content: [
+              {
+                type: "text",
+                text: "You can continue writing after the mood tracker...",
+              },
+            ],
+          },
+        ],
+      },
     },
-  },
-}
-
-export const SpanishLabels: Story = {
-  args: {
-    placeholder: "Escribe '/' para abrir la paleta de comandos...",
-    toolbarLabels: {
-      ...defaultToolbarLabels,
-      heading1: "Encabezado 1",
-      heading2: "Encabezado 2",
-      heading3: "Encabezado 3",
-      bulletList: "Lista de puntos",
-      orderedList: "Lista numerada",
-      taskList: "Lista de tareas",
-      codeBlock: "Bloque de código",
-      quote: "Cita",
-      divider: "Divisor",
-    },
-    slashCommandGroupLabels: {
-      textStyles: "Estilos de Texto",
-      lists: "Listas",
-      blocks: "Bloques",
-    },
-    onChange: (value) => {
-      console.log("Content changed:", value)
-    },
-    initialEditorState: {
-      content:
-        "<p>Este es contenido <strong>inicial</strong> con <em>formato</em>.</p>",
-    },
-  },
-  parameters: {
-    chromatic: { disableSnapshot: true },
   },
 }
