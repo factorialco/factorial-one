@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.104.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.104.0...factorial-one-react-v1.104.1) (2025-06-23)
+
+
+### Bug Fixes
+
+* **RichTextEditor:** update plainHtmlMode default values and logic ([#2137](https://github.com/factorialco/factorial-one/issues/2137)) ([8181fd3](https://github.com/factorialco/factorial-one/commit/8181fd3d704ca437c2710b9555fcf0f06607cfbe))
+
 ## [1.104.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.103.0...factorial-one-react-v1.104.0) (2025-06-23)
 
 
