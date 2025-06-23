@@ -211,39 +211,41 @@ const FavoriteItem = ({
     return (
       <>
         <div className="flex w-full items-center justify-between px-1.5 py-1.5">
-          <Link
-            onClick={item.onClick}
-            href={item.href}
-            exactMatch={item.exactMatch}
-            className={cn(
-              // w-[calc(100%-24px-2px)] - here 24px is the size of the dropdown button and 2 px is the gap
-              "flex w-[calc(100%-24px-2px)] items-center gap-1.5 no-underline",
-              isItemDragging && "pointer-events-none"
-            )}
-            draggable={false}
-          >
-            {item.type === "icon" ? (
-              <Icon
-                icon={item.icon}
-                size="md"
-                className={cn(
-                  "transition-colors",
-                  active ? "text-f1-icon-bold" : "text-f1-icon"
-                )}
-              />
-            ) : item.avatar ? (
-              <Avatar size="xsmall" avatar={item.avatar} />
-            ) : null}
-            <OptionalTooltip tooltip={tooltip}>
+          <OptionalTooltip tooltip={tooltip}>
+            <Link
+              onClick={item.onClick}
+              href={item.href}
+              exactMatch={item.exactMatch}
+              className={cn(
+                // w-[calc(100%-24px-2px)] - here 24px is the size of the dropdown button and 2 px is the gap
+                "flex w-[calc(100%-24px-2px)] items-center gap-1.5 no-underline",
+                isItemDragging && "pointer-events-none"
+              )}
+              draggable={false}
+            >
+              {item.type === "icon" ? (
+                <Icon
+                  icon={item.icon}
+                  size="md"
+                  className={cn(
+                    "transition-colors",
+                    active ? "text-f1-icon-bold" : "text-f1-icon"
+                  )}
+                />
+              ) : item.avatar ? (
+                <Avatar size="xsmall" avatar={item.avatar} />
+              ) : null}
+
               <OneEllipsis
                 tag="span"
                 className="line-clamp-1 font-medium text-f1-foreground"
                 lines={1}
+                noTooltip={!!tooltip}
               >
                 {item.label}
               </OneEllipsis>
-            </OptionalTooltip>
-          </Link>
+            </Link>
+          </OptionalTooltip>
         </div>
         <div
           className={cn(
