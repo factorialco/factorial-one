@@ -26,7 +26,7 @@ export const ItemTeaser = ({ title, avatar, description }: ItemTeaserProps) => {
           {description && description.length > 0 && (
             <div className="flex w-full flex-col text-base font-normal text-f1-foreground-secondary md:flex-row md:gap-1">
               {description.map((item, index) => (
-                <div key={index} className="flex min-w-0 flex-row gap-1">
+                <div key={index} className="flex min-w-0 gap-1">
                   <OneEllipsis>{item}</OneEllipsis>
                   {index < description.length - 1 && (
                     <span className="hidden md:inline"> · </span>
