@@ -208,6 +208,7 @@ const FavoriteItem = ({
       <>
         <div className="flex w-full items-center justify-between px-1.5 py-1.5">
           <Link
+            onClick={item.onClick}
             href={item.href}
             exactMatch={item.exactMatch}
             className={cn(
