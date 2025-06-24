@@ -2,7 +2,6 @@ import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { OneCard } from "@/experimental/OneCard"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import {
   getAnimationVariants,
   useGroups,
@@ -17,6 +16,7 @@ import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
+import { SummariesDefinition } from "../../../summary"
 import {
   CollectionProps,
   DataSource,

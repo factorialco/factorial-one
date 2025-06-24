@@ -9,7 +9,7 @@ import {
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { renderProperty } from "@/experimental/OneDataCollection/property-render"
 import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary"
 import {
   DataSource,
   GroupingDefinition,

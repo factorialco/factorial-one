@@ -2,14 +2,17 @@ import { Icon } from "@/components/Utilities/Icon"
 
 import { focusRing } from "@/lib/utils"
 
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { FiltersDefinition } from "../../Filters/types"
 import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
-import { RecordType, SortingsDefinition } from "../../types"
+import {
+  RecordType,
+  SortingsDefinition,
+  SummariesDefinition,
+} from "../../types"
 import {
   collectionVisualizations,
   Visualization,
