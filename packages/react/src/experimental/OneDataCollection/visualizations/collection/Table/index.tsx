@@ -23,7 +23,7 @@ import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { PropertyDefinition } from "../../../property-render"
+import { PropertyDefinition, renderProperty } from "../../../property-render"
 import {
   SortingKey,
   SortingsDefinition,
@@ -276,6 +276,13 @@ export const TableCollection = <
     })
   }
 
+  const renderCell = (
+    item: R,
+    column: TableColumnDefinition<R, Sortings, Summaries>
+  ) => {
+    return renderProperty(item, column, "table")
+  }
+
   const checkColumnWidth = source.selectable ? 52 : 0
 
   console.warn("summaryData", summaryData)
@@ -494,9 +501,11 @@ export const TableCollection = <
                       {column.summary &&
                       source.summaries &&
                       source.summaries[column.summary]?.type === "sum" ? (
-                        <div className="flex gap-1">{`${summaryData.data[column.summary]}`}</div>
+                        <div className="flex gap-1">
+                          {renderCell(summaryData.data, column)}
+                        </div>
                       ) : (
-                        "-"
+                        renderCell(summaryData.data, column)
                       )}
                     </div>
                   )}
