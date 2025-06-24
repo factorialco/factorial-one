@@ -18,10 +18,11 @@ import {
 } from "@/experimental/RichText/CoreEditor"
 import { AIBlockExtension } from "@/experimental/RichText/CoreEditor/Extensions/AIBlock"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
+import { JSONContent } from "@tiptap/react"
 
-interface AIBlockConfig {
+export interface AIBlockConfig {
   buttons: { type: string; emoji: string; label: string }[]
-  onClick: (type: string) => Promise<any>
+  onClick: (type: string) => Promise<JSONContent | null>
   title: string
 }
 

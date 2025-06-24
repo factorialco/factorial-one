@@ -23,10 +23,6 @@ interface MoodTrackerData {
     day: string
     mood: Pulse
     comment: string
-    action?: {
-      label: string
-      onClick: () => void
-    }
   }[]
 }
 
@@ -142,14 +138,7 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({ node }) => {
                       }}
                       className="flex flex-row items-center gap-2"
                     >
-                      <div
-                        className="flex items-center justify-center rounded-full"
-                        onClick={() => {
-                          if (day.action) {
-                            day.action.onClick()
-                          }
-                        }}
-                      >
+                      <div className="flex items-center justify-center rounded-full">
                         <Icon
                           icon={pulseIcon[day.mood]}
                           size="lg"

@@ -13,6 +13,7 @@ import {
   UnderlineExtension,
 } from "@/experimental/RichText/CoreEditor"
 import { Button } from "@/factorial-one"
+import { ChevronDown, ChevronUp, Reset } from "@/icons/app"
 import { JSONContent, Node } from "@tiptap/core"
 import {
   EditorContent,
@@ -42,6 +43,7 @@ interface AIBlockData {
   content?: JSONContent | null
   isLoading?: boolean
   selectedAction?: string
+  isCollapsed?: boolean
 }
 
 declare module "@tiptap/core" {
@@ -78,6 +80,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 }) => {
   const data = node.attrs.data as AIBlockData
   const [isLoading, setIsLoading] = useState(data?.isLoading || false)
+  const [isCollapsed, setIsCollapsed] = useState(data?.isCollapsed || false)
 
   const extensions = [
     StarterKitExtension,
@@ -91,7 +94,6 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     TextAlignExtension,
     LinkExtension,
     MoodTrackerExtension,
-    AIBlockExtension,
     PersistSelection,
   ]
   // Create a read-only editor for the generated content
@@ -121,6 +123,16 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     }
   }, [contentEditor, data?.content])
 
+  // Sync local loading state with node data
+  useEffect(() => {
+    setIsLoading(data?.isLoading || false)
+  }, [data?.isLoading])
+
+  // Sync local collapsed state with node data
+  useEffect(() => {
+    setIsCollapsed(data?.isCollapsed || false)
+  }, [data?.isCollapsed])
+
   if (!data || !data.config) return null
 
   const { config } = data
@@ -148,38 +160,66 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
   const handleClick = async (type: string) => {
     // Immediately update UI: hide buttons, change title, show loading
+    const updatedData = {
+      ...data,
+      isLoading: true,
+      selectedAction: type,
+      content: null, // Clear any existing content during loading
+    }
+
     updateAttributes({
-      data: {
-        ...data,
-        isLoading: true,
-        selectedAction: type,
-        content: null, // Clear any existing content
-      },
+      data: updatedData,
     })
-    setIsLoading(true)
 
     try {
       const newContent = await config.onClick(type)
+
+      // Ensure we preserve all state when updating with new content
       updateAttributes({
         data: {
           ...data,
           content: newContent,
           isLoading: false,
-          selectedAction: type,
+          selectedAction: type, // Keep the selected action
         },
       })
     } catch (error) {
       console.error("AIBlock error:", error)
+      // On error, keep the selected action but clear loading state
       updateAttributes({
         data: {
           ...data,
           isLoading: false,
-          selectedAction: type, // Keep the selected action even on error
+          selectedAction: type,
+          content: null, // Clear content on error
         },
       })
     }
+  }
 
-    setIsLoading(false)
+  const handleReset = () => {
+    // Reset the block to its initial state
+    updateAttributes({
+      data: {
+        ...data,
+        content: null,
+        isLoading: false,
+        selectedAction: undefined,
+        isCollapsed: false,
+      },
+    })
+  }
+
+  const handleToggleCollapse = () => {
+    const newCollapsedState = !isCollapsed
+
+    // Update the node attributes to persist the state
+    updateAttributes({
+      data: {
+        ...data,
+        isCollapsed: newCollapsedState,
+      },
+    })
   }
 
   return (
@@ -192,24 +232,62 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <motion.div className="flex flex-row items-center gap-2" layout>
-          <motion.span
-            className="text-lg"
-            animate={{
-              scale: isLoading ? [1, 1.1, 1] : 1,
-              rotate: isLoading ? [0, 5, -5, 0] : 0,
-            }}
-            transition={{
-              duration: isLoading ? 2 : 0.3,
-              repeat: isLoading ? Infinity : 0,
-              ease: "easeInOut",
-            }}
+        <motion.div
+          className="flex flex-row items-center justify-between gap-2"
+          layout
+        >
+          <div
+            className={`flex flex-row items-center gap-2 ${selectedAction && content && !isLoading ? "cursor-pointer" : ""}`}
+            onClick={
+              selectedAction && content && !isLoading
+                ? handleToggleCollapse
+                : undefined
+            }
           >
-            {displayEmoji}
-          </motion.span>
-          <p className="text-f1-text-primary text-lg font-semibold">
-            {displayTitle}
-          </p>
+            <motion.span
+              className="text-lg"
+              animate={{
+                scale: isLoading ? [1, 1.1, 1] : 1,
+                rotate: isLoading ? [0, 5, -5, 0] : 0,
+              }}
+              transition={{
+                duration: isLoading ? 2 : 0.3,
+                repeat: isLoading ? Infinity : 0,
+                ease: "easeInOut",
+              }}
+            >
+              {displayEmoji}
+            </motion.span>
+            <p className="text-f1-text-primary text-lg font-semibold">
+              {displayTitle}
+            </p>
+          </div>
+
+          <div className="flex flex-row items-center gap-1">
+            {/* Add collapse/expand button when content is present */}
+            {selectedAction && content && !isLoading && (
+              <Button
+                onClick={handleToggleCollapse}
+                variant="ghost"
+                size="sm"
+                hideLabel
+                label={isCollapsed ? "Expand" : "Collapse"}
+                icon={isCollapsed ? ChevronDown : ChevronUp}
+              />
+            )}
+
+            {/* Add reset button when content is present */}
+            {selectedAction && content && !isLoading && (
+              <Button
+                onClick={handleReset}
+                variant="ghost"
+                size="sm"
+                hideLabel
+                label="Reset"
+                icon={Reset}
+              />
+            )}
+          </div>
         </motion.div>
 
         {/* Show buttons only when not loading and no action selected */}
@@ -260,26 +338,39 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
             </motion.div>
           )}
 
-          {content && !isLoading && contentEditor && (
+          {content && !isLoading && !isCollapsed && contentEditor && (
             <motion.div
               key="content"
-              className=""
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              initial={{
+                height: 0,
+                opacity: 0,
+                scaleY: 0,
+              }}
+              animate={{
+                height: "auto",
+                opacity: 1,
+                scaleY: 1,
+              }}
+              exit={{
+                height: 0,
+                opacity: 0,
+                scaleY: 0,
+              }}
               transition={{
-                duration: 0.5,
-                ease: "easeOut",
-                type: "spring",
-                damping: 20,
-                stiffness: 300,
+                duration: 0.3,
+                ease: "easeInOut",
+                opacity: { duration: 0.2 },
+              }}
+              style={{
+                transformOrigin: "top",
+                overflow: "hidden",
               }}
             >
               <motion.div
                 className="text-f1-text-primary"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.3 }}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
               >
                 <EditorContent editor={contentEditor} />
               </motion.div>

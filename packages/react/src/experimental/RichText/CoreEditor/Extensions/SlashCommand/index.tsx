@@ -1,3 +1,4 @@
+import { AIBlockConfig } from "@/experimental/RichText/BasicTextEditor/extensions"
 import * as Popover from "@radix-ui/react-popover"
 import { Editor, Extension, ReactRenderer } from "@tiptap/react"
 import { Suggestion } from "@tiptap/suggestion"
@@ -11,12 +12,6 @@ import {
   SlashCommandGroupLabels,
 } from "./AvailableCommands"
 import { CommandList } from "./CommandList"
-
-interface AIBlockConfig {
-  buttons: { type: string; emoji: string; label: string }[]
-  onClick: (type: string) => Promise<any>
-  title: string
-}
 
 const createSlashCommandExtension = (
   labels: ToolbarLabels,

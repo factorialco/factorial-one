@@ -64,21 +64,48 @@ export const Default: Story = {
             setTimeout(() => {
               resolve({
                 type: "taskList",
-                attrs: {
-                  data: {
-                    title: "Task list",
-                    tasks: [
+                content: [
+                  {
+                    type: "taskItem",
+                    attrs: {
+                      checked: false,
+                    },
+                    content: [
                       {
-                        title: "Task 1",
-                        completed: false,
-                      },
-                      {
-                        title: "Task 2",
-                        completed: true,
+                        type: "paragraph",
+                        attrs: {
+                          textAlign: null,
+                        },
+                        content: [
+                          {
+                            type: "text",
+                            text: "Lista de ejemplo",
+                          },
+                        ],
                       },
                     ],
                   },
-                },
+                  {
+                    type: "taskItem",
+                    attrs: {
+                      checked: false,
+                    },
+                    content: [
+                      {
+                        type: "paragraph",
+                        attrs: {
+                          textAlign: null,
+                        },
+                        content: [
+                          {
+                            type: "text",
+                            text: "hola hola",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
               })
             }, 1000)
           })
@@ -99,23 +126,11 @@ export const Default: Story = {
                         mood: "superPositive",
                         comment:
                           "More training opportunities would help us grow our skills.",
-                        action: {
-                          label: "Edit",
-                          onClick: () => {
-                            console.log("Edit mood tracker Monday")
-                          },
-                        },
                       },
                       {
                         day: "Tuesday",
                         mood: "superPositive",
                         comment: "Great team collaboration today!",
-                        action: {
-                          label: "Edit",
-                          onClick: () => {
-                            console.log("Edit mood tracker Tuesday")
-                          },
-                        },
                       },
                     ],
                   },

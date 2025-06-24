@@ -1,3 +1,4 @@
+import { AIBlockConfig } from "@/experimental/RichText/BasicTextEditor/extensions"
 import { IconType } from "@/factorial-one"
 import {
   Ai,
@@ -30,12 +31,6 @@ interface SlashCommandGroupLabels {
   lists: string
   blocks: string
   [key: string]: string
-}
-
-interface AIBlockConfig {
-  buttons: { type: string; emoji: string; label: string }[]
-  onClick: (type: string) => Promise<any>
-  title: string
 }
 
 const availableCommands = (
