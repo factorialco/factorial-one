@@ -62,32 +62,48 @@ const getGroupedCommands = (
               command: (editor: Editor) => {
                 const { from, to } = editor.state.selection
 
-                // Insert AIBlock first
+                // Delete current selection and insert AIBlock + paragraph in one transaction
                 editor
                   .chain()
                   .focus()
                   .deleteRange({ from, to })
-                  .insertAIBlock({
-                    config: aiBlockConfig,
-                    content: null,
-                    isLoading: false,
-                  })
-                  .run()
-
-                // Then insert a paragraph after the AIBlock
-                setTimeout(() => {
-                  const { tr } = editor.state
-                  const pos = tr.selection.from
-                  editor
-                    .chain()
-                    .focus()
-                    .insertContentAt(pos, {
+                  .insertContent([
+                    {
+                      type: "aiBlock",
+                      attrs: {
+                        data: {
+                          config: aiBlockConfig,
+                          content: null,
+                          isLoading: false,
+                          selectedAction: undefined,
+                          isCollapsed: false,
+                        },
+                      },
+                    },
+                    {
                       type: "paragraph",
                       content: [],
-                    })
-                    .setTextSelection(pos + 1)
-                    .run()
-                }, 0)
+                    },
+                  ])
+                  .run()
+
+                // Position cursor in the paragraph after the AIBlock
+                setTimeout(() => {
+                  // Find the position after the AIBlock
+                  const currentPos = editor.state.selection.from
+                  const doc = editor.state.doc
+
+                  // Look for the paragraph node after the AIBlock
+                  let targetPos = currentPos
+                  doc.descendants((node, pos) => {
+                    if (node.type.name === "paragraph" && pos >= currentPos) {
+                      targetPos = pos + 1 // Position cursor inside the paragraph
+                      return false // Stop searching
+                    }
+                  })
+
+                  editor.chain().focus().setTextSelection(targetPos).run()
+                }, 10)
               },
               icon: Ai,
             },
