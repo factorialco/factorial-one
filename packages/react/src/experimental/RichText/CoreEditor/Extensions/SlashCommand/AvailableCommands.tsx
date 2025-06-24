@@ -1,4 +1,3 @@
-import { AIBlockConfig } from "@/experimental/RichText/BasicTextEditor/extensions"
 import { IconType } from "@/factorial-one"
 import {
   Ai,
@@ -14,6 +13,7 @@ import {
 } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { ToolbarLabels } from "../../Toolbar/types"
+import { AIBlockConfig } from "../AIBlock"
 
 interface CommandItem {
   title: string

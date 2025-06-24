@@ -32,7 +32,7 @@ export type AIButton = {
   label: string
 }
 
-interface AIBlockConfig {
+export interface AIBlockConfig {
   buttons: AIButton[]
   onClick: (type: string) => Promise<JSONContent | null>
   title: string

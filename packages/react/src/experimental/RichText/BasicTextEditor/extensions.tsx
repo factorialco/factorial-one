@@ -16,15 +16,11 @@ import {
   TypographyExtension,
   UnderlineExtension,
 } from "@/experimental/RichText/CoreEditor"
-import { AIBlockExtension } from "@/experimental/RichText/CoreEditor/Extensions/AIBlock"
+import {
+  AIBlockConfig,
+  AIBlockExtension,
+} from "@/experimental/RichText/CoreEditor/Extensions/AIBlock"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
-import { JSONContent } from "@tiptap/react"
-
-export interface AIBlockConfig {
-  buttons: { type: string; emoji: string; label: string }[]
-  onClick: (type: string) => Promise<JSONContent | null>
-  title: string
-}
 
 export const createBasicTextEditorExtensions = (
   placeholder: string,
