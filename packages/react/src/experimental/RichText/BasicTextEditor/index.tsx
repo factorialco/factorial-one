@@ -2,6 +2,7 @@ import {
   EditorBubbleMenu,
   ToolbarLabels,
 } from "@/experimental/RichText/CoreEditor"
+import { AIButton } from "@/experimental/RichText/CoreEditor/Extensions/AIBlock"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
 import { Editor, EditorContent, JSONContent, useEditor } from "@tiptap/react"
 import { forwardRef, useId, useImperativeHandle, useRef, useState } from "react"
@@ -17,12 +18,18 @@ interface BasicTextEditorProps {
   toolbarLabels: ToolbarLabels
   slashCommandGroupLabels?: SlashCommandGroupLabels
   readonly?: boolean
+  aiBlockConfig?: {
+    buttons: AIButton[]
+    onClick: (type: string) => Promise<JSONContent | null>
+    title: string
+  }
 }
 
 type BasicTextEditorHandle = {
   clear: () => void
   focus: () => void
   setContent: (content: string) => void
+  insertAIBlock: () => void
 }
 
 const BasicTextEditorComponent = forwardRef<
@@ -36,6 +43,7 @@ const BasicTextEditorComponent = forwardRef<
     toolbarLabels,
     slashCommandGroupLabels,
     readonly = false,
+    aiBlockConfig,
   },
   ref
 ) {
@@ -49,7 +57,8 @@ const BasicTextEditorComponent = forwardRef<
     extensions: createBasicTextEditorExtensions(
       placeholder,
       toolbarLabels,
-      slashCommandGroupLabels
+      slashCommandGroupLabels,
+      aiBlockConfig
     ),
     content: initialContent,
     onUpdate: ({ editor }: { editor: Editor }) => {
@@ -68,6 +77,15 @@ const BasicTextEditorComponent = forwardRef<
     setContent: (content: string) => {
       if (editor) {
         editor.commands.setContent(content)
+      }
+    },
+    insertAIBlock: () => {
+      if (editor && aiBlockConfig) {
+        editor.commands.insertAIBlock({
+          config: aiBlockConfig,
+          content: null,
+          isLoading: false,
+        })
       }
     },
   }))

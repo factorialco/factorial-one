@@ -19,6 +19,7 @@ export * from "./Mention"
 export * from "./Placeholder"
 
 // Custom extensions
+export * from "./AIBlock"
 export * from "./CustomTask"
 export * from "./MoodTracker"
 export * from "./PersistSelection"

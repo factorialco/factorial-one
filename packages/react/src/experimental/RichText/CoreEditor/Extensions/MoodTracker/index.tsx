@@ -23,6 +23,10 @@ interface MoodTrackerData {
     day: string
     mood: Pulse
     comment: string
+    action?: {
+      label: string
+      onClick: () => void
+    }
   }[]
 }
 
@@ -35,7 +39,7 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({ node }) => {
   return (
     <NodeViewWrapper contentEditable={false}>
       <div
-        className="editor-mood-tracker my-4 flex w-full flex-col gap-1 rounded bg-f1-background-selected-secondary p-3"
+        className="editor-mood-tracker my-3 flex w-full flex-col gap-1 rounded bg-f1-background-selected-secondary p-3"
         onClick={(e) => e.stopPropagation()}
       >
         <div
@@ -52,9 +56,9 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({ node }) => {
                 {data.title}
               </p>
               <div className="flex flex-row items-center">
-                {data.days.map((day) => (
+                {data.days.map((day, index) => (
                   <div
-                    key={day.mood}
+                    key={index}
                     className="-ml-1.5 flex items-center justify-center rounded-full bg-f1-background"
                   >
                     <Icon
@@ -138,7 +142,14 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({ node }) => {
                       }}
                       className="flex flex-row items-center gap-2"
                     >
-                      <div className="flex items-center justify-center rounded-full">
+                      <div
+                        className="flex items-center justify-center rounded-full"
+                        onClick={() => {
+                          if (day.action) {
+                            day.action.onClick()
+                          }
+                        }}
+                      >
                         <Icon
                           icon={pulseIcon[day.mood]}
                           size="lg"

@@ -12,9 +12,16 @@ import {
 } from "./AvailableCommands"
 import { CommandList } from "./CommandList"
 
+interface AIBlockConfig {
+  buttons: { type: string; emoji: string; label: string }[]
+  onClick: (type: string) => Promise<any>
+  title: string
+}
+
 const createSlashCommandExtension = (
   labels: ToolbarLabels,
-  groupLabels?: SlashCommandGroupLabels
+  groupLabels?: SlashCommandGroupLabels,
+  aiBlockConfig?: AIBlockConfig
 ) =>
   Extension.create({
     name: "slashCommand",
@@ -86,7 +93,7 @@ const createSlashCommandExtension = (
           ...this.options.suggestion,
           items: ({ query }: { query: string }) => {
             const normalizedQuery = query.toLowerCase().replace(/\s+/g, "")
-            const results = availableCommands(labels).filter(
+            const results = availableCommands(labels, aiBlockConfig).filter(
               (item: CommandItem) => {
                 const normalizedTitle = item.title
                   .toLowerCase()
@@ -182,7 +189,8 @@ const createSlashCommandExtension = (
                 // Get grouped commands for better organization
                 const groupedCommands = getGroupedCommands(
                   labels,
-                  finalGroupLabels
+                  finalGroupLabels,
+                  aiBlockConfig
                 )
 
                 // Filter groups based on query if available
@@ -253,7 +261,8 @@ const createSlashCommandExtension = (
                 // Get filtered groups for update as well
                 const groupedCommands = getGroupedCommands(
                   labels,
-                  finalGroupLabels
+                  finalGroupLabels,
+                  aiBlockConfig
                 )
                 let filteredGroups = groupedCommands
                 if (props.query && props.query.trim()) {

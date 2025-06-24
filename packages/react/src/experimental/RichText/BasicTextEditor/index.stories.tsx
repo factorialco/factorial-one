@@ -55,84 +55,107 @@ export const Default: Story = {
     onChange: (value) => {
       console.log("Content changed:", value)
     },
-    initialEditorState: {
-      content: {
-        type: "doc",
-        content: [
-          {
-            type: "paragraph",
-            attrs: {
-              textAlign: null,
-            },
-            content: [
-              {
-                type: "text",
-                text: "This is a document with mood tracking:",
-              },
-            ],
-          },
-          {
-            type: "moodTracker",
-            attrs: {
-              data: {
-                title: "Last week mood tracker:",
-                averageMoodComment:
-                  'Average feeling of "manolo" this week: Walking on sunshine',
-                days: [
-                  {
-                    day: "Monday",
-                    mood: "superPositive",
-                    comment:
-                      "More training opportunities would help us grow our skills.",
+
+    aiBlockConfig: {
+      title: "AI Pre-Meeting Helper",
+      onClick: (type) => {
+        if (type === "task-list") {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                type: "taskList",
+                attrs: {
+                  data: {
+                    title: "Task list",
+                    tasks: [
+                      {
+                        title: "Task 1",
+                        completed: false,
+                      },
+                      {
+                        title: "Task 2",
+                        completed: true,
+                      },
+                    ],
                   },
-                  {
-                    day: "Tuesday",
-                    mood: "superPositive",
-                    comment: "-",
+                },
+              })
+            }, 1000)
+          })
+        }
+        if (type === "mood-tracker") {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve({
+                type: "moodTracker",
+                attrs: {
+                  data: {
+                    title: "Last week mood tracker:",
+                    averageMoodComment:
+                      'Average feeling of "manolo" this week: Walking on sunshine',
+                    days: [
+                      {
+                        day: "Monday",
+                        mood: "superPositive",
+                        comment:
+                          "More training opportunities would help us grow our skills.",
+                        action: {
+                          label: "Edit",
+                          onClick: () => {
+                            console.log("Edit mood tracker Monday")
+                          },
+                        },
+                      },
+                      {
+                        day: "Tuesday",
+                        mood: "superPositive",
+                        comment: "Great team collaboration today!",
+                        action: {
+                          label: "Edit",
+                          onClick: () => {
+                            console.log("Edit mood tracker Tuesday")
+                          },
+                        },
+                      },
+                    ],
                   },
-                  {
-                    day: "Wednesday",
-                    mood: "positive",
-                    comment: "Great team collaboration today!",
-                  },
-                  {
-                    day: "Thursday",
-                    mood: "neutral",
-                    comment: "Average day, nothing special.",
-                  },
-                  {
-                    day: "Friday",
-                    mood: "superPositive",
-                    comment: "Amazing presentation, very proud of the team!",
-                  },
-                  {
-                    day: "Saturday",
-                    mood: "positive",
-                    comment: "Average day, nothing special.",
-                  },
-                  {
-                    day: "Sunday",
-                    mood: "negative",
-                    comment: "Average day, nothing special.",
-                  },
-                ],
-              },
-            },
-          },
-          {
-            type: "paragraph",
-            attrs: {
-              textAlign: null,
-            },
-            content: [
-              {
-                type: "text",
-                text: "You can continue writing after the mood tracker...",
-              },
-            ],
-          },
-        ],
+                },
+              })
+            }, 1000)
+          })
+        }
+
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              type: "paragraph",
+              content: [
+                {
+                  type: "text",
+                  text: "This is an example of a custom AI block",
+                },
+              ],
+            })
+          }, 1000)
+        })
       },
+      buttons: [
+        {
+          type: "factorial-format",
+          emoji: "🤖",
+          label: "Factorial format",
+        },
+        {
+          type: "mood-tracker",
+          emoji: "🌈",
+          label: "Mood tracker",
+        },
+        {
+          type: "task-list",
+          emoji: "📝",
+          label: "Task list (custom)",
+        },
+      ],
     },
   },
 }

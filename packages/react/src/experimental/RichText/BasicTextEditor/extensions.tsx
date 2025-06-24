@@ -16,12 +16,20 @@ import {
   TypographyExtension,
   UnderlineExtension,
 } from "@/experimental/RichText/CoreEditor"
+import { AIBlockExtension } from "@/experimental/RichText/CoreEditor/Extensions/AIBlock"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
+
+interface AIBlockConfig {
+  buttons: { type: string; emoji: string; label: string }[]
+  onClick: (type: string) => Promise<any>
+  title: string
+}
 
 export const createBasicTextEditorExtensions = (
   placeholder: string,
   toolbarLabels: ToolbarLabels,
-  groupLabels?: SlashCommandGroupLabels
+  groupLabels?: SlashCommandGroupLabels,
+  aiBlockConfig?: AIBlockConfig
 ) => [
   StarterKitExtension,
   UnderlineExtension,
@@ -34,8 +42,9 @@ export const createBasicTextEditorExtensions = (
   TextAlignExtension,
   LinkExtension,
   MoodTrackerExtension,
+  AIBlockExtension,
   PersistSelection,
   createPlaceholderExtension(placeholder),
   createAccessibilityExtension(placeholder),
-  createSlashCommandExtension(toolbarLabels, groupLabels),
+  createSlashCommandExtension(toolbarLabels, groupLabels, aiBlockConfig),
 ]

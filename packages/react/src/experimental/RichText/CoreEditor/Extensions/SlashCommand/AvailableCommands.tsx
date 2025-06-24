@@ -1,5 +1,6 @@
 import { IconType } from "@/factorial-one"
 import {
+  Ai,
   CheckDouble,
   Code,
   Heading1,
@@ -31,21 +32,74 @@ interface SlashCommandGroupLabels {
   [key: string]: string
 }
 
-const availableCommands = (labels: ToolbarLabels): CommandItem[] => {
+interface AIBlockConfig {
+  buttons: { type: string; emoji: string; label: string }[]
+  onClick: (type: string) => Promise<any>
+  title: string
+}
+
+const availableCommands = (
+  labels: ToolbarLabels,
+  aiBlockConfig?: AIBlockConfig
+): CommandItem[] => {
   // Get grouped commands and flatten them for backward compatibility
   const defaultGroupLabels: SlashCommandGroupLabels = {
     textStyles: "Text Styles",
     lists: "Lists",
     blocks: "Blocks",
   }
-  const groups = getGroupedCommands(labels, defaultGroupLabels)
+  const groups = getGroupedCommands(labels, defaultGroupLabels, aiBlockConfig)
   return groups.flatMap((group) => group.commands)
 }
 
 const getGroupedCommands = (
   labels: ToolbarLabels,
-  groupLabels: SlashCommandGroupLabels
+  groupLabels: SlashCommandGroupLabels,
+  aiBlockConfig?: AIBlockConfig
 ): CommandGroup[] => [
+  {
+    title: aiBlockConfig?.title || "AI Block",
+    commands: [
+      ...(aiBlockConfig
+        ? [
+            {
+              title: aiBlockConfig.title,
+              command: (editor: Editor) => {
+                const { from, to } = editor.state.selection
+
+                // Insert AIBlock first
+                editor
+                  .chain()
+                  .focus()
+                  .deleteRange({ from, to })
+                  .insertAIBlock({
+                    config: aiBlockConfig,
+                    content: null,
+                    isLoading: false,
+                  })
+                  .run()
+
+                // Then insert a paragraph after the AIBlock
+                setTimeout(() => {
+                  const { tr } = editor.state
+                  const pos = tr.selection.from
+                  editor
+                    .chain()
+                    .focus()
+                    .insertContentAt(pos, {
+                      type: "paragraph",
+                      content: [],
+                    })
+                    .setTextSelection(pos + 1)
+                    .run()
+                }, 0)
+              },
+              icon: Ai,
+            },
+          ]
+        : []),
+    ],
+  },
   {
     title: groupLabels.textStyles,
     commands: [
@@ -181,4 +235,9 @@ const getGroupedCommands = (
 ]
 
 export { availableCommands, getGroupedCommands }
-export type { CommandGroup, CommandItem, SlashCommandGroupLabels }
+export type {
+  AIBlockConfig,
+  CommandGroup,
+  CommandItem,
+  SlashCommandGroupLabels,
+}
