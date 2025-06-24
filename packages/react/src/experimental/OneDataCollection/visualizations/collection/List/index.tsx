@@ -5,6 +5,7 @@ import { useGroups } from "@/experimental/OneDataCollection/useGroups"
 
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { Skeleton } from "@/ui/skeleton"
@@ -67,6 +68,8 @@ export const ListCollection = <
   NavigationFilters,
   Grouping
 >) => {
+  const i18n = useI18n()
+
   const {
     data,
     paginationInfo,
@@ -175,7 +178,7 @@ export const ListCollection = <
             indeterminate={allSelectedStatus.indeterminate}
             onCheckedChange={handleSelectAll}
             disabled={isLoading}
-            title="[TODO] Select all"
+            title={i18n.collections.selectAll}
           />
         </div>
       )}

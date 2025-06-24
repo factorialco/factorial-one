@@ -295,7 +295,7 @@ export const TableCollection = <
                     checked={allSelectedStatus.checked}
                     indeterminate={allSelectedStatus.indeterminate}
                     onCheckedChange={handleSelectAll}
-                    title="Select all"
+                    title={t.collections.selectAll}
                     hideLabel
                     disabled={data?.records.length === 0}
                   />

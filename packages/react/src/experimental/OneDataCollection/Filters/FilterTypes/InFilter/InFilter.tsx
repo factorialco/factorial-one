@@ -211,7 +211,7 @@ export function InFilter<T extends string>({
       <div className="sticky bottom-0 left-0 right-0 flex items-center justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary bg-f1-background/80 p-2 backdrop-blur-[8px]">
         <Button
           variant="outline"
-          label="Select all"
+          label={i18n.collections.selectAll}
           onClick={handleSelectAll}
           disabled={
             filteredOptions.length === 0 ||

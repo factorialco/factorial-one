@@ -46,6 +46,7 @@ export const defaultTranslations = {
     cancel: "Cancel",
   },
   collections: {
+    selectAll: "Select all",
     sorting: {
       noSorting: "No sorting",
       toggleDirection: "Toggle sorting direction",

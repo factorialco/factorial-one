@@ -1,6 +1,7 @@
 import { Await } from "@/components/Utilities/Await"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { Counter } from "@/experimental/Information/Counter"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { ChevronToggle } from "@/ui/ChevronToggle/ChevronToggle"
 import { Skeleton } from "@/ui/skeleton"
@@ -29,6 +30,8 @@ export const GroupHeader = ({
   onSelectChange,
   className,
 }: GroupHeaderProps) => {
+  const i18n = useI18n()
+
   const [isOpen, setIsOpen] = useState(open)
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export const GroupHeader = ({
         <Checkbox
           checked={!!select}
           indeterminate={select === "indeterminate"}
-          title="Select all"
+          title={i18n.collections.selectAll}
           hideLabel
           onCheckedChange={(checked) => onSelectChange?.(checked)}
           stopPropagation
