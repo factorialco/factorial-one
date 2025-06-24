@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.105.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.104.2...factorial-one-react-v1.105.0) (2025-06-24)
+
+
+### Features
+
+* add summary stories and docs for OneDataCollection WIP ([#2075](https://github.com/factorialco/factorial-one/issues/2075)) ([844474d](https://github.com/factorialco/factorial-one/commit/844474d1bcda1f4da1b13bef30749988ea6e14e1))
+
 ## [1.104.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.104.1...factorial-one-react-v1.104.2) (2025-06-23)
 
 
