@@ -101,6 +101,7 @@ export const WithInfiniteScrollSummarySticky: Story = {
         delay: 500,
         paginationType: "infinite-scroll",
         perPage: 10,
+        useObservable: true,
       }),
     })
 

@@ -983,11 +983,13 @@ export function createDataAdapter<
                     pagination
                   ) as InfiniteScrollPaginatedResponse<TRecord>
 
+                const fetchData = fetch()
+
                 try {
                   observer.next({
                     loading: false,
                     error: null,
-                    data: fetch(),
+                    data: fetchData,
                   })
                   observer.complete()
                 } catch (error) {
@@ -1046,10 +1048,11 @@ export function createDataAdapter<
                 const fetch = () =>
                   filterData(data, filters, sortings) as TRecord[]
 
+                const summaries = calculateSummaries(fetch())
                 observer.next({
                   loading: false,
                   error: null,
-                  data: { records: fetch() },
+                  data: { records: fetch(), summaries: summaries as TRecord },
                 })
                 observer.complete()
               } catch (error) {
