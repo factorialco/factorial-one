@@ -494,7 +494,12 @@ export const TableCollection = <
                       {column.summary &&
                       source.summaries &&
                       source.summaries[column.summary]?.type === "sum" ? (
-                        <div className="flex gap-1">{`${summaryData.data[column.summary]}`}</div>
+                        <div className="flex gap-1">
+                          <span className="text-f1-foreground-secondary">
+                            {t.collections.summaries.types.sum}
+                          </span>
+                          {`${summaryData.data[column.summary]}`}
+                        </div>
                       ) : (
                         "-"
                       )}
