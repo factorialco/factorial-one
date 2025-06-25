@@ -18,6 +18,7 @@ import { SummariesDefinition } from "./summary"
 import { DataError } from "./useData"
 export * from "./grouping"
 export * from "./sortings"
+export * from "./summary"
 
 /**
  * Defines the structure and configuration of a data source for a collection.

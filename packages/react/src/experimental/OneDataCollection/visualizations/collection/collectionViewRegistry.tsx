@@ -1,11 +1,11 @@
 import { IconType } from "@/components/Utilities/Icon"
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { Kanban, List, Table } from "@/icons/app"
 import {
   FiltersDefinition,
   ItemActionsDefinition,
   NavigationFiltersDefinition,
   SortingsDefinition,
+  SummariesDefinition,
 } from "../../exports"
 import { GroupingDefinition, RecordType } from "../../types"
 import { CardCollection, CardCollectionProps } from "./Card"
