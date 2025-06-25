@@ -81,11 +81,13 @@ const BasicTextEditorComponent = forwardRef<
     },
     insertAIBlock: () => {
       if (editor && aiBlockConfig) {
-        editor.commands.insertAIBlock({
-          config: aiBlockConfig,
-          content: null,
-          isLoading: false,
-        })
+        editor.commands.insertAIBlock(
+          {
+            content: null,
+            selectedAction: undefined,
+          },
+          aiBlockConfig
+        )
       }
     },
   }))

@@ -39,7 +39,9 @@ export const createBasicTextEditorExtensions = (
   TextAlignExtension,
   LinkExtension,
   MoodTrackerExtension,
-  AIBlockExtension,
+  AIBlockExtension.configure({
+    currentConfig: aiBlockConfig,
+  }),
   PersistSelection,
   createPlaceholderExtension(placeholder),
   createAccessibilityExtension(placeholder),

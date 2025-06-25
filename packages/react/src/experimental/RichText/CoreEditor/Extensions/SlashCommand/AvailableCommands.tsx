@@ -60,53 +60,165 @@ const getGroupedCommands = (
             {
               title: aiBlockConfig.title,
               command: (editor: Editor) => {
-                const { from, to } = editor.state.selection
-
-                // Delete current selection and insert AIBlock + paragraph in one transaction
+                // Insert AI block and empty paragraph in one operation
                 editor
                   .chain()
                   .focus()
-                  .deleteRange({ from, to })
                   .insertContent([
                     {
                       type: "aiBlock",
                       attrs: {
                         data: {
-                          config: aiBlockConfig,
                           content: null,
-                          isLoading: false,
                           selectedAction: undefined,
-                          isCollapsed: false,
                         },
+                        config: aiBlockConfig,
                       },
                     },
                     {
                       type: "paragraph",
-                      content: [],
                     },
                   ])
                   .run()
 
-                // Position cursor in the paragraph after the AIBlock
+                // Position cursor in the paragraph after insertion
                 setTimeout(() => {
-                  // Find the position after the AIBlock
-                  const currentPos = editor.state.selection.from
-                  const doc = editor.state.doc
+                  const { state } = editor
+                  const { doc } = state
+                  let lastParagraphPos = null
 
-                  // Look for the paragraph node after the AIBlock
-                  let targetPos = currentPos
+                  // Find the last paragraph in the document (which should be the one we just inserted)
                   doc.descendants((node, pos) => {
-                    if (node.type.name === "paragraph" && pos >= currentPos) {
-                      targetPos = pos + 1 // Position cursor inside the paragraph
-                      return false // Stop searching
+                    if (node.type.name === "paragraph") {
+                      lastParagraphPos = pos + 1 // Position inside the paragraph
                     }
                   })
 
-                  editor.chain().focus().setTextSelection(targetPos).run()
+                  // Position cursor in the last paragraph
+                  if (lastParagraphPos !== null) {
+                    editor
+                      .chain()
+                      .focus()
+                      .setTextSelection(lastParagraphPos)
+                      .run()
+                  }
                 }, 10)
               },
               icon: Ai,
             },
+            // Add individual commands for each AI button
+            ...aiBlockConfig.buttons.map((button) => ({
+              title: button.label ?? "Generate",
+              command: async (editor: Editor) => {
+                // Insert AI block with the specific action already loading
+                editor
+                  .chain()
+                  .focus()
+                  .insertContent([
+                    {
+                      type: "aiBlock",
+                      attrs: {
+                        data: {
+                          content: null,
+                          selectedAction: button.type,
+                        },
+                        config: aiBlockConfig,
+                      },
+                    },
+                    {
+                      type: "paragraph",
+                    },
+                  ])
+                  .run()
+
+                // Execute the AI action with a small delay to ensure the component is mounted
+                setTimeout(async () => {
+                  try {
+                    const content = await aiBlockConfig.onClick(button.type)
+
+                    // Find the AIBlock we just inserted and update it with the result
+                    setTimeout(() => {
+                      const { state } = editor
+                      const { doc } = state
+                      let lastAIBlockPos = null
+
+                      // Find the last AIBlock (which should be the one we just inserted)
+                      doc.descendants((node, pos) => {
+                        if (
+                          node.type.name === "aiBlock" &&
+                          node.attrs.data?.selectedAction === button.type &&
+                          !node.attrs.data?.content
+                        ) {
+                          lastAIBlockPos = pos
+                        }
+                      })
+
+                      if (lastAIBlockPos !== null) {
+                        // Update the specific AIBlock with the generated content
+                        const tr = state.tr.setNodeMarkup(
+                          lastAIBlockPos,
+                          undefined,
+                          {
+                            data: {
+                              selectedAction: button.type,
+                              content: content,
+                            },
+                            config: aiBlockConfig,
+                          }
+                        )
+                        editor.view.dispatch(tr)
+
+                        // Position cursor in the paragraph after the AIBlock
+                        const node = doc.nodeAt(lastAIBlockPos)
+                        if (node) {
+                          let paragraphPos = lastAIBlockPos + node.nodeSize + 1
+                          editor
+                            .chain()
+                            .focus()
+                            .setTextSelection(paragraphPos)
+                            .run()
+                        }
+                      }
+                    }, 50)
+                  } catch (error) {
+                    console.error("AI action error:", error)
+                    // Update the AIBlock to show error state
+                    setTimeout(() => {
+                      const { state } = editor
+                      const { doc } = state
+                      let lastAIBlockPos = null
+
+                      // Find the last AIBlock that matches our criteria
+                      doc.descendants((node, pos) => {
+                        if (
+                          node.type.name === "aiBlock" &&
+                          node.attrs.data?.selectedAction === button.type &&
+                          !node.attrs.data?.content
+                        ) {
+                          lastAIBlockPos = pos
+                        }
+                      })
+
+                      if (lastAIBlockPos !== null) {
+                        const tr = state.tr.setNodeMarkup(
+                          lastAIBlockPos,
+                          undefined,
+                          {
+                            data: {
+                              selectedAction: button.type,
+                              content: null,
+                            },
+                            config: aiBlockConfig,
+                          }
+                        )
+                        editor.view.dispatch(tr)
+                      }
+                    }, 50)
+                  }
+                }, 100) // Small delay to ensure component is mounted and can detect loading state
+              },
+              icon: button.icon || Ai,
+            })),
           ]
         : []),
     ],

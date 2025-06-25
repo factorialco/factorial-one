@@ -1,3 +1,4 @@
+import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import {
   ColorExtension,
   CustomTaskExtension,
@@ -12,8 +13,9 @@ import {
   TypographyExtension,
   UnderlineExtension,
 } from "@/experimental/RichText/CoreEditor"
-import { Button } from "@/factorial-one"
-import { ChevronDown, ChevronUp, Reset } from "@/icons/app"
+import { Button, IconType } from "@/factorial-one"
+import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import { JSONContent, Node } from "@tiptap/core"
 import {
   EditorContent,
@@ -30,6 +32,7 @@ export type AIButton = {
   type: string
   emoji: string
   label: string
+  icon: IconType
 }
 
 export interface AIBlockConfig {
@@ -39,19 +42,22 @@ export interface AIBlockConfig {
 }
 
 interface AIBlockData {
-  config: AIBlockConfig
   content?: JSONContent | null
-  isLoading?: boolean
   selectedAction?: string
-  isCollapsed?: boolean
 }
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     aiBlock: {
-      insertAIBlock: (data: AIBlockData) => ReturnType
+      insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType
     }
   }
+}
+
+// Add interface for AIBlock node attributes
+interface AIBlockAttrs {
+  data: AIBlockData
+  config: AIBlockConfig
 }
 
 // Skeleton component for loading state
@@ -77,10 +83,36 @@ const TextSkeleton = () => (
 export const AIBlockView: React.FC<NodeViewProps> = ({
   node,
   updateAttributes,
+  deleteNode,
+  extension,
 }) => {
   const data = node.attrs.data as AIBlockData
-  const [isLoading, setIsLoading] = useState(data?.isLoading || false)
-  const [isCollapsed, setIsCollapsed] = useState(data?.isCollapsed || false)
+  // Use dynamic config from extension options instead of persisted config
+  const config =
+    (extension.options.currentConfig as AIBlockConfig) ||
+    (node.attrs.config as AIBlockConfig)
+
+  // Generate unique key for this block instance
+  const blockId = React.useRef(Math.random().toString(36).substr(2, 9)).current
+
+  // Local state - not persisted
+  const [isLoading, setIsLoading] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(false)
+
+  // Detect if this block was created from slash command (has selectedAction but no content)
+  // and set initial loading state only once
+  useEffect(() => {
+    if (data?.selectedAction && !data?.content && !isLoading) {
+      setIsLoading(true)
+    }
+  }, []) // Empty dependency array - only run once on mount
+
+  // Clear loading state when content arrives (from slash commands)
+  useEffect(() => {
+    if (data?.content && isLoading) {
+      setIsLoading(false)
+    }
+  }, [data?.content, isLoading])
 
   const extensions = [
     StarterKitExtension,
@@ -97,24 +129,34 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     PersistSelection,
   ]
   // Create a read-only editor for the generated content
-  const contentEditor = useEditor({
-    extensions: extensions,
-    content: data?.content || null,
-    editable: false,
-    editorProps: {
-      attributes: {
-        class: "prose prose-sm max-w-none focus:outline-none",
-        "data-testid": "ai-block-content",
+  const contentEditor = useEditor(
+    {
+      extensions: extensions,
+      content: data?.content || null,
+      editable: true,
+      editorProps: {
+        attributes: {
+          class: `ai-block-editor-${blockId}`,
+          "data-testid": `ai-block-content-${blockId}`,
+        },
       },
-      handleClick: () => true, // Prevent click events
-      handleKeyDown: () => true, // Prevent keyboard events
-      handleDOMEvents: {
-        focus: () => true, // Prevent focus
-        blur: () => true, // Prevent blur
-        mousedown: () => true, // Prevent mouse events
+      onUpdate: ({ editor }) => {
+        // Check if content is empty and automatically reset if it is
+        const isEmpty = editor.isEmpty
+
+        if (isEmpty && data?.selectedAction && !isLoading) {
+          // Reset the block to its initial state when content becomes empty
+          updateAttributes({
+            data: {
+              content: null,
+              selectedAction: undefined,
+            },
+          })
+        }
       },
     },
-  })
+    [blockId]
+  )
 
   // Update content editor when data changes
   useEffect(() => {
@@ -123,19 +165,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     }
   }, [contentEditor, data?.content])
 
-  // Sync local loading state with node data
-  useEffect(() => {
-    setIsLoading(data?.isLoading || false)
-  }, [data?.isLoading])
+  if (!data || !config) return null
 
-  // Sync local collapsed state with node data
-  useEffect(() => {
-    setIsCollapsed(data?.isCollapsed || false)
-  }, [data?.isCollapsed])
-
-  if (!data || !data.config) return null
-
-  const { config } = data
   const content = data.content
   const selectedAction = data.selectedAction
 
@@ -143,7 +174,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
   const getDisplayTitle = () => {
     if (selectedAction && content) {
       const selectedButton = config.buttons.find(
-        (button) => button.type === selectedAction
+        (button: AIButton) => button.type === selectedAction
       )
       return {
         title: selectedButton?.label || selectedAction,
@@ -159,73 +190,97 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
   const { title: displayTitle, emoji: displayEmoji } = getDisplayTitle()
 
   const handleClick = async (type: string) => {
-    // Immediately update UI: hide buttons, change title, show loading
-    const updatedData = {
-      ...data,
-      isLoading: true,
-      selectedAction: type,
-      content: null, // Clear any existing content during loading
-    }
+    // Set local loading state immediately
+    setIsLoading(true)
 
+    // Update only selectedAction in persisted data
     updateAttributes({
-      data: updatedData,
+      data: {
+        selectedAction: type,
+        content: null, // Clear content while loading
+      },
     })
 
     try {
       const newContent = await config.onClick(type)
 
-      // Ensure we preserve all state when updating with new content
+      // Update with new content and keep selectedAction
       updateAttributes({
         data: {
-          ...data,
           content: newContent,
-          isLoading: false,
-          selectedAction: type, // Keep the selected action
+          selectedAction: type,
         },
       })
     } catch (error) {
       console.error("AIBlock error:", error)
-      // On error, keep the selected action but clear loading state
+      // On error, clear content but keep selectedAction
       updateAttributes({
         data: {
-          ...data,
-          isLoading: false,
           selectedAction: type,
-          content: null, // Clear content on error
+          content: null,
         },
       })
+    } finally {
+      // Always clear loading state
+      setIsLoading(false)
     }
   }
 
   const handleReset = () => {
-    // Reset the block to its initial state
+    // Reset only persisted data
     updateAttributes({
       data: {
-        ...data,
         content: null,
-        isLoading: false,
         selectedAction: undefined,
-        isCollapsed: false,
       },
     })
+    // Reset local state
+    setIsLoading(false)
+    setIsCollapsed(false)
   }
 
   const handleToggleCollapse = () => {
-    const newCollapsedState = !isCollapsed
+    // Only update local state, don't persist collapse state
+    setIsCollapsed(!isCollapsed)
+  }
 
-    // Update the node attributes to persist the state
-    updateAttributes({
-      data: {
-        ...data,
-        isCollapsed: newCollapsedState,
-      },
+  // Generate dropdown items based on block state
+  const getDropdownItems = () => {
+    const items = []
+
+    // Add reset option if there's content and an action is selected
+    if (selectedAction && content && !isLoading) {
+      items.push({
+        label: "Reset",
+        description: "Clear content and start over",
+        onClick: handleReset,
+      })
+    }
+
+    // Add separator if we have other items
+    if (items.length > 0) {
+      items.push({
+        type: "separator" as const,
+      })
+    }
+
+    // Always add delete option
+    items.push({
+      label: "Delete Block",
+      icon: Delete,
+      critical: true,
+      onClick: () => deleteNode(),
     })
+
+    return items
   }
 
   return (
     <NodeViewWrapper contentEditable={false}>
       <motion.div
-        className="editor-ai-block my-4 flex w-full flex-col gap-4 rounded-md border border-solid border-f1-border-secondary bg-gradient-to-t from-f1-background to-[#F5F1FF] p-3 drop-shadow-sm"
+        className={cn(
+          "editor-ai-block my-4 flex w-full flex-col gap-4 rounded-md bg-gradient-to-t from-f1-background to-[#efeafa] p-3"
+        )}
         onClick={(e) => e.stopPropagation()}
         layout
         initial={{ opacity: 0, y: 20 }}
@@ -268,8 +323,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
             {selectedAction && content && !isLoading && (
               <Button
                 onClick={handleToggleCollapse}
-                variant="ghost"
-                size="sm"
+                variant="outline"
                 hideLabel
                 label={isCollapsed ? "Expand" : "Collapse"}
                 icon={isCollapsed ? ChevronDown : ChevronUp}
@@ -277,6 +331,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
             )}
 
             {/* Add reset button when content is present */}
+            {/* 
             {selectedAction && content && !isLoading && (
               <Button
                 onClick={handleReset}
@@ -286,7 +341,10 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
                 label="Reset"
                 icon={Reset}
               />
-            )}
+            )} 
+             */}
+
+            <Dropdown items={getDropdownItems()} />
           </div>
         </motion.div>
 
@@ -300,7 +358,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-              {config.buttons.map((button, index) => (
+              {config.buttons.map((button: AIButton, index: number) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, x: -20 }}
@@ -394,6 +452,12 @@ export const AIBlock = Node.create({
 
   draggable: false,
 
+  addOptions() {
+    return {
+      currentConfig: null,
+    }
+  },
+
   addAttributes() {
     return {
       data: {
@@ -409,6 +473,9 @@ export const AIBlock = Node.create({
           }
         },
       },
+      config: {
+        default: null,
+      },
     }
   },
 
@@ -422,7 +489,8 @@ export const AIBlock = Node.create({
 
   renderHTML({ HTMLAttributes, node }) {
     const data = node.attrs.data as AIBlockData
-    if (!data || !data.config) return ["div"]
+    const config = node.attrs.config as AIBlockConfig
+    if (!data || !config) return ["div"]
 
     return [
       "div",
@@ -431,7 +499,7 @@ export const AIBlock = Node.create({
         class: "ai-block",
         "data-ai-block": JSON.stringify(data),
       },
-      ["div", { class: "ai-block-content" }, `AI Block: ${data.config.title}`],
+      ["div", { class: "ai-block-content" }, `AI Block: ${config.title}`],
     ]
   },
 
@@ -442,11 +510,11 @@ export const AIBlock = Node.create({
   addCommands() {
     return {
       insertAIBlock:
-        (data: AIBlockData) =>
+        (data: AIBlockData, config: AIBlockConfig) =>
         ({ commands }) => {
           return commands.insertContent({
             type: this.name,
-            attrs: { data },
+            attrs: { data, config },
           })
         },
     }

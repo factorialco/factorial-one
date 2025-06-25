@@ -1,3 +1,4 @@
+import { AcademicCap, Archive, List } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { BasicTextEditor } from "./index"
 
@@ -142,15 +143,191 @@ export const Default: Story = {
 
         return new Promise((resolve) => {
           setTimeout(() => {
-            resolve({
-              type: "paragraph",
-              content: [
-                {
-                  type: "text",
-                  text: "This is an example of a custom AI block",
+            resolve([
+              {
+                type: "paragraph",
+                attrs: {
+                  textAlign: null,
                 },
-              ],
-            })
+                content: [
+                  {
+                    type: "text",
+                    text: "Key Insights",
+                    marks: [
+                      {
+                        type: "textStyle",
+                        attrs: {
+                          color: "rgb(81, 81, 100)",
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "bulletList",
+                content: [
+                  {
+                    type: "listItem",
+                    content: [
+                      {
+                        type: "paragraph",
+                        attrs: {
+                          textAlign: null,
+                        },
+                        content: [
+                          {
+                            type: "text",
+                            text: "The meeting highlighted the attendee's commitment to professional development, as evidenced by their engagement in training courses.",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    type: "listItem",
+                    content: [
+                      {
+                        type: "paragraph",
+                        attrs: {
+                          textAlign: null,
+                        },
+                        content: [
+                          {
+                            type: "text",
+                            text: "Salary stability was acknowledged, with no recent changes or fluctuations noted.",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "paragraph",
+                attrs: {
+                  textAlign: null,
+                },
+                content: [
+                  {
+                    type: "text",
+                    text: "Follow-up Questions",
+                    marks: [
+                      {
+                        type: "textStyle",
+                        attrs: {
+                          color: "rgb(81, 81, 100)",
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "bulletList",
+                content: [
+                  {
+                    type: "listItem",
+                    content: [
+                      {
+                        type: "paragraph",
+                        attrs: {
+                          textAlign: null,
+                        },
+                        content: [
+                          {
+                            type: "text",
+                            text: "What specific areas of professional development are you interested in pursuing further?",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    type: "listItem",
+                    content: [
+                      {
+                        type: "paragraph",
+                        attrs: {
+                          textAlign: null,
+                        },
+                        content: [
+                          {
+                            type: "text",
+                            text: "Are there any particular challenges you're facing that we should address?",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "paragraph",
+                attrs: {
+                  textAlign: null,
+                },
+                content: [
+                  {
+                    type: "text",
+                    text: "Actionable Items",
+                    marks: [
+                      {
+                        type: "textStyle",
+                        attrs: {
+                          color: "rgb(81, 81, 100)",
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "taskList",
+                content: [
+                  {
+                    type: "taskItem",
+                    attrs: {
+                      checked: false,
+                    },
+                    content: [
+                      {
+                        type: "paragraph",
+                        attrs: {
+                          textAlign: null,
+                        },
+                        content: [
+                          {
+                            type: "text",
+                            text: "Review potential opportunities for further professional development and training.",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    type: "taskItem",
+                    attrs: {
+                      checked: false,
+                    },
+                    content: [
+                      {
+                        type: "paragraph",
+                        attrs: {
+                          textAlign: null,
+                        },
+                        content: [
+                          {
+                            type: "text",
+                            text: "Discuss possible career progression paths in the next meeting.",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ])
           }, 1000)
         })
       },
@@ -159,16 +336,19 @@ export const Default: Story = {
           type: "factorial-format",
           emoji: "🤖",
           label: "Factorial format",
+          icon: AcademicCap,
         },
         {
           type: "mood-tracker",
           emoji: "🌈",
           label: "Mood tracker",
+          icon: Archive,
         },
         {
           type: "task-list",
           emoji: "📝",
           label: "Task list (custom)",
+          icon: List,
         },
       ],
     },
