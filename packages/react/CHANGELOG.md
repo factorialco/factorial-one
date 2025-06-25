@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.107.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.107.0...factorial-one-react-v1.107.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* set correct responsive for OneModal component with side position ([#2139](https://github.com/factorialco/factorial-one/issues/2139)) ([15e2e38](https://github.com/factorialco/factorial-one/commit/15e2e3849de1702d8000f2beafad193880d29096))
+
 ## [1.107.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.106.0...factorial-one-react-v1.107.0) (2025-06-25)
 
 
