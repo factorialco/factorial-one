@@ -6,6 +6,7 @@ import {
   Download,
   Envelope,
   Pencil,
+  Placeholder,
   Share,
   Star,
   Target,
@@ -436,6 +437,18 @@ export const RendererTypes: Story = {
                     value: {
                       firstName: item.name.split(" ")[0],
                       lastName: item.name.split(" ")[1],
+                      badge:
+                        item.index % 3 === 0
+                          ? {
+                              type: "module",
+                              module: "inbox",
+                            }
+                          : item.index % 3 === 1
+                            ? {
+                                type: "warning",
+                                icon: Placeholder,
+                              }
+                            : undefined,
                     },
                   }),
                   sorting: "name",

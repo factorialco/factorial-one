@@ -1,5 +1,89 @@
 # Changelog
 
+## [1.102.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.1...factorial-one-react-v1.102.2) (2025-06-20)
+
+
+### Bug Fixes
+
+* **datenavigator:** export ([#2102](https://github.com/factorialco/factorial-one/issues/2102)) ([c3e95c8](https://github.com/factorialco/factorial-one/commit/c3e95c809c869709a4894a0ac76331ad2f408841))
+
+## [1.102.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.102.0...factorial-one-react-v1.102.1) (2025-06-20)
+
+
+### Bug Fixes
+
+* **RichTextEditor:** change default plainHtmlMode to false and pass it to Footer component ([#2111](https://github.com/factorialco/factorial-one/issues/2111)) ([2b75ef9](https://github.com/factorialco/factorial-one/commit/2b75ef9bbcd3d33fd6173be1cd50795203e14770))
+
+## [1.102.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.101.1...factorial-one-react-v1.102.0) (2025-06-20)
+
+
+### Features
+
+* **RichTextEditor:** multiple secondary actions ([#2107](https://github.com/factorialco/factorial-one/issues/2107)) ([acadfab](https://github.com/factorialco/factorial-one/commit/acadfab4560db83b36f49dd85996573a78de0ee9))
+
+## [1.101.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.101.0...factorial-one-react-v1.101.1) (2025-06-20)
+
+
+### Bug Fixes
+
+* export ModuleAvatar ([#2113](https://github.com/factorialco/factorial-one/issues/2113)) ([7150e5c](https://github.com/factorialco/factorial-one/commit/7150e5cd108e7c415e4097168d99ec1444c9a0e9))
+
+## [1.101.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.100.0...factorial-one-react-v1.101.0) (2025-06-19)
+
+
+### Features
+
+* **icons:** add PersonMinus & PersonPlus icons ([#2104](https://github.com/factorialco/factorial-one/issues/2104)) ([cb9a4dd](https://github.com/factorialco/factorial-one/commit/cb9a4dd6ffb8d049e159bcd7c03d28f4d599d2a2))
+
+## [1.100.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.99.1...factorial-one-react-v1.100.0) (2025-06-19)
+
+
+### Features
+
+* add ClockBack icon ([#2106](https://github.com/factorialco/factorial-one/issues/2106)) ([77a7c30](https://github.com/factorialco/factorial-one/commit/77a7c30adbb789e174a1f2f8dac3ca94b5a09f98))
+
+## [1.99.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.99.0...factorial-one-react-v1.99.1) (2025-06-18)
+
+
+### Bug Fixes
+
+* add card view horizontal padding ([#2103](https://github.com/factorialco/factorial-one/issues/2103)) ([3c195da](https://github.com/factorialco/factorial-one/commit/3c195da15e1a1eed667b9801f498a329be966536))
+
+## [1.99.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.98.0...factorial-one-react-v1.99.0) (2025-06-17)
+
+
+### Features
+
+* **frame:** remember sidebar state between loads ([#2083](https://github.com/factorialco/factorial-one/issues/2083)) ([0447afd](https://github.com/factorialco/factorial-one/commit/0447afd85995dfd64719d1ca8dcaf2b2801fc587))
+
+## [1.98.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.2...factorial-one-react-v1.98.0) (2025-06-17)
+
+
+### Features
+
+* datacollection list view ([#1958](https://github.com/factorialco/factorial-one/issues/1958)) ([3cea88a](https://github.com/factorialco/factorial-one/commit/3cea88ac2c6ff84527fedecda9389e12a3eae86a))
+
+## [1.97.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.1...factorial-one-react-v1.97.2) (2025-06-17)
+
+
+### Bug Fixes
+
+* allow presets to be hidden ([#2093](https://github.com/factorialco/factorial-one/issues/2093)) ([7c145bf](https://github.com/factorialco/factorial-one/commit/7c145bf9aa24314601765506ea7e8930a5c7d87b))
+
+## [1.97.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.97.0...factorial-one-react-v1.97.1) (2025-06-16)
+
+
+### Bug Fixes
+
+* **RichTextEditor:** addresing some editor errors ([#2067](https://github.com/factorialco/factorial-one/issues/2067)) ([ae47adf](https://github.com/factorialco/factorial-one/commit/ae47adf66a360f19c85d8afcd9e5c6ab768b6694))
+
+## [1.97.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.96.1...factorial-one-react-v1.97.0) (2025-06-16)
+
+
+### Features
+
+* button loading spinner ([#2076](https://github.com/factorialco/factorial-one/issues/2076)) ([f782d57](https://github.com/factorialco/factorial-one/commit/f782d5735c8fc9b01706a4c886174f2cbca0415a))
+
 ## [1.96.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.96.0...factorial-one-react-v1.96.1) (2025-06-13)
 
 
