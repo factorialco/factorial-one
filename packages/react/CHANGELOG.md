@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.108.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.107.2...factorial-one-react-v1.108.0) (2025-06-25)
+
+
+### Features
+
+* **datacollections:** allow to define default selected items ([#2057](https://github.com/factorialco/factorial-one/issues/2057)) ([c2dc25e](https://github.com/factorialco/factorial-one/commit/c2dc25e8fab1efead5bf83fb4eadf5dfcf100f56))
+
 ## [1.107.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.107.1...factorial-one-react-v1.107.2) (2025-06-25)
 
 
