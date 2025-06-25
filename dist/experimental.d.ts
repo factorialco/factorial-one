@@ -979,6 +979,14 @@ export declare const CompanyTag: ForwardRefExoticComponent<Props_11 & RefAttribu
 
 declare type CompanyTagProps = ComponentProps<typeof CompanyTag>;
 
+declare type CompareToDef = {
+    label: string;
+    value: {
+        delta: number;
+        units: GranularityDefinitionKey;
+    } | ((value: DateRangeComplete) => DateRangeComplete | DateRangeComplete[]);
+};
+
 declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "item";
 }) | (ComponentProps<typeof DataList.PersonItem> & {
@@ -1203,6 +1211,8 @@ declare type DateNavigationOptions_2 = {
 declare type DateNavigatorFilterDefinition = NavigationFilterDefinitionBase<Date | DateRange | DateValue> & {
     type: "date-navigator";
 } & DateNavigationOptions_2;
+
+declare type DatePickerCompareTo = Record<GranularityDefinitionKey, CompareToDef[]>;
 
 export declare type DatePickerValue = {
     value: DateRangeComplete | undefined;
@@ -1783,6 +1793,7 @@ export declare interface GranularityDefinition {
         setViewDate: (date: Date) => void;
         viewDate: Date;
     }) => ReactNode;
+    add: (date: DateRangeComplete, delta: number) => DateRangeComplete;
     getPrevNext(date: DateRange, options: DateNavigationOptions): PrevNextDateNavigation;
 }
 
@@ -2461,16 +2472,17 @@ declare interface OneCardProps {
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, Summaries extends SummariesDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>>({ source, visualizations, onSelectItems, onBulkAction, emptyStates, }: {
+export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, Summaries extends SummariesDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>>({ source, visualizations, onSelectItems, onBulkAction, emptyStates, fullHeight, }: {
     source: DataSource<Record, Filters, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>;
     visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>>;
     onSelectItems?: OnSelectItemsCallback<Record, Filters>;
     onBulkAction?: OnBulkActionCallback<Record, Filters>;
     emptyStates?: CustomEmptyStates;
     onTotalItemsChange?: (totalItems: number) => void;
+    fullHeight?: boolean;
 }) => JSX.Element;
 
-export declare function OneDateNavigator({ onSelect, defaultValue, presets, granularities, hideNavigation, hideGoToCurrent, ...props }: OneDatePickerProps): JSX_2.Element;
+export declare function OneDateNavigator({ onSelect, defaultValue, presets, granularities, hideNavigation, hideGoToCurrent, compareTo, onCompareToChange, ...props }: OneDatePickerProps): JSX_2.Element;
 
 declare interface OneDatePickerPopupProps {
     onSelect?: (value: DatePickerValue | undefined) => void;
@@ -2485,6 +2497,8 @@ declare interface OneDatePickerPopupProps {
     children: React.ReactNode;
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
+    compareTo?: DatePickerCompareTo;
+    onCompareToChange?: (compareTo: DateRangeComplete | DateRangeComplete[] | undefined) => void;
 }
 
 export declare interface OneDatePickerProps extends Omit<OneDatePickerPopupProps, "children"> {

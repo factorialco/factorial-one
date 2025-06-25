@@ -237,9 +237,11 @@ declare const defaultTranslations: {
     readonly date: {
         readonly from: "From";
         readonly to: "To";
+        readonly none: "None";
         readonly date: "Date";
         readonly custom: "Custom period";
         readonly selectDate: "Select Date";
+        readonly compareTo: "Compare to";
         readonly presets: {
             readonly last7Days: "Last 7 days";
             readonly last30Days: "Last 30 days";
@@ -706,7 +708,7 @@ export declare interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> 
     closeLabel: string;
 }
 
-export declare function UpsellingPopover({ isOpen, setIsOpen, label, variant, size, showIcon, side, align, icon, mediaUrl, title, description, width, trackVisibility, actions, onClick, }: UpsellingPopoverProps): JSX_2.Element;
+export declare function UpsellingPopover({ isOpen, setIsOpen, label, variant, size, showIcon, side, align, icon, mediaUrl, title, description, width, trackVisibility, actions, onClick, hideLabel, }: UpsellingPopoverProps): JSX_2.Element;
 
 declare type UpsellingPopoverProps = {
     isOpen: boolean;
@@ -725,6 +727,7 @@ declare type UpsellingPopoverProps = {
     trackVisibility?: (visible: boolean) => void;
     actions?: Action[];
     onClick?: () => void;
+    hideLabel?: boolean;
 };
 
 export declare const UpsellRequestResponseDialog: ForwardRefExoticComponent<UpsellRequestResponseDialogProps & RefAttributes<HTMLDivElement>>;
