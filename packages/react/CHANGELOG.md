@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.107.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.106.0...factorial-one-react-v1.107.0) (2025-06-25)
+
+
+### Features
+
+* **avatars:** add badge tooltip ([#2148](https://github.com/factorialco/factorial-one/issues/2148)) ([a01bd70](https://github.com/factorialco/factorial-one/commit/a01bd700723d46a613145e207aa1d1391b1a5b1d))
+
 ## [1.106.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.105.4...factorial-one-react-v1.106.0) (2025-06-25)
 
 
