@@ -50,7 +50,7 @@ const AddBlockButton: React.FC<AddBlockButtonProps> = ({
     >
       <button
         onClick={handleClick}
-        className="shadow-sm flex h-6 w-6 cursor-pointer items-center justify-center rounded-sm border border-f1-border-secondary bg-f1-background-tertiary transition-colors hover:bg-f1-background-secondary"
+        className="shadow-sm flex h-5 w-5 cursor-pointer items-center justify-center rounded-xs border border-f1-border-secondary bg-f1-background-tertiary transition-colors hover:bg-f1-background-secondary"
         type="button"
         aria-label={labels.addBlock}
       >
@@ -133,6 +133,7 @@ const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
 
       try {
         let insertPos = -1
+        let currentNode: ProseMirrorNode | null = null
 
         // Find the node position by traversing the document
         view.state.doc.descendants((node, pos) => {
@@ -146,10 +147,10 @@ const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
             (domNode && domNode.contains && domNode.contains(targetElement)) ||
             (targetElement &&
               targetElement.contains &&
-              targetElement.contains(domNode as Node))
+              targetElement.contains(domNode))
           ) {
-            // For all nodes, insert after the entire node
-            insertPos = pos + node.nodeSize
+            currentNode = node as ProseMirrorNode
+            insertPos = pos
             return false // Stop traversing
           }
 
@@ -162,7 +163,8 @@ const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
 
           if (pos >= 0) {
             const resolvedPos = view.state.doc.resolve(pos)
-            insertPos = resolvedPos.after()
+            currentNode = resolvedPos.parent as ProseMirrorNode
+            insertPos = resolvedPos.pos
           }
         }
 
@@ -170,19 +172,37 @@ const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
           return
         }
 
-        // Make sure we have a valid insert position
-        if (insertPos > view.state.doc.content.size) {
-          insertPos = view.state.doc.content.size
+        // Check if current node is an empty paragraph
+        const isEmptyParagraph =
+          currentNode &&
+          currentNode.type.name === "paragraph" &&
+          (!currentNode.textContent || currentNode.textContent.trim() === "")
+
+        let tr
+        let newSelection
+
+        if (isEmptyParagraph) {
+          // If current paragraph is empty, just add "/" to it
+          const slashText = view.state.schema.text("/")
+          tr = view.state.tr.insert(insertPos + 1, slashText)
+          newSelection = TextSelection.create(tr.doc, insertPos + 2)
+        } else {
+          // If current line has content, create new paragraph with "/"
+          // For all nodes, insert after the entire node
+          const afterPos = insertPos + (currentNode?.nodeSize || 1)
+
+          // Make sure we have a valid insert position
+          const finalPos = Math.min(afterPos, view.state.doc.content.size)
+
+          const paragraph = view.state.schema.nodes.paragraph.create(null, [
+            view.state.schema.text("/"),
+          ])
+
+          tr = view.state.tr.insert(finalPos, paragraph)
+          newSelection = TextSelection.create(tr.doc, finalPos + 2)
         }
 
-        const paragraph = view.state.schema.nodes.paragraph.create(null, [
-          view.state.schema.text("/"),
-        ])
-
-        const tr = view.state.tr.insert(insertPos, paragraph)
-        const newSelection = TextSelection.create(tr.doc, insertPos + 2)
         tr.setSelection(newSelection)
-
         view.dispatch(tr)
 
         hideButton()
@@ -358,3 +378,12 @@ export const createAddBlockButtonExtension = (
 
 export const AddBlockButtonExtension = createAddBlockButtonExtension()
 export { AddBlockButton }
+
+// Use more specific typing for ProseMirror Node
+interface ProseMirrorNode {
+  type: {
+    name: string
+  }
+  textContent?: string
+  nodeSize: number
+}

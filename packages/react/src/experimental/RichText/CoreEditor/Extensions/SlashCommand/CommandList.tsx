@@ -121,7 +121,7 @@ const CommandList = forwardRef<CommandListHandle, CommandListProps>(
     return (
       <div
         ref={containerRef}
-        className="scrollbar-macos max-h-[528px] w-72 overflow-y-auto rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-md"
+        className="scrollbar-macos max-h-96 w-72 overflow-y-auto rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-md"
       >
         {commandsToRender.map((group, groupIndex) => (
           <div key={groupIndex}>
