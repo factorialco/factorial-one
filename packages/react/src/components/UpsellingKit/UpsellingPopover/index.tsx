@@ -22,6 +22,7 @@ type UpsellingPopoverProps = {
   trackVisibility?: (visible: boolean) => void
   actions?: Action[]
   onClick?: () => void
+  hideLabel?: boolean
 }
 
 export function UpsellingPopover({
@@ -41,6 +42,7 @@ export function UpsellingPopover({
   trackVisibility,
   actions,
   onClick,
+  hideLabel = false,
 }: UpsellingPopoverProps) {
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open)
@@ -58,6 +60,7 @@ export function UpsellingPopover({
           size={size}
           icon={showIcon ? icon : undefined}
           onClick={() => setIsOpen(isOpen)}
+          hideLabel={hideLabel}
         />
       </PopoverTrigger>
       <PopoverContent

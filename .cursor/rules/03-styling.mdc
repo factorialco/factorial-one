@@ -9,6 +9,9 @@ globs: "packages/react/src/**/*.css,packages/react/src/**/*.tsx"
 alwaysApply: false
 ---
 
+Avoid writing comments describing "what is it". Comments must be a rare thing, highlighting complex parts of the code.
+They must answer to question "Why?"
+
 # Styling Approach
 
 - Use **Tailwind CSS** with a custom configuration for primary styling.

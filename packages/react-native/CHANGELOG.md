@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.16.0...factorial-one-react-native-v0.17.0) (2025-06-25)
+
+
+### Features
+
+* add fullwith to buttons ([#2161](https://github.com/factorialco/factorial-one/issues/2161)) ([3b85e82](https://github.com/factorialco/factorial-one/commit/3b85e8237b98200375a703ac835462f513313c09))
+
 ## [0.16.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.15.0...factorial-one-react-native-v0.16.0) (2025-06-23)
 
 

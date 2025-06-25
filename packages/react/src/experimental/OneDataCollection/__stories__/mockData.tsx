@@ -25,6 +25,8 @@ import { Observable } from "zen-observable-ts"
 
 import { NewColor } from "@/experimental/Information/Tags/DotTag"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
+import { cn } from "@/lib/utils"
+
 import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
@@ -619,11 +621,13 @@ export const ExampleComponent = ({
   navigationFilters,
   totalItemSummary,
   visualizations,
+  fullHeight,
   dataAdapter,
 }: {
   useObservable?: boolean
   usePresets?: boolean
   frozenColumns?: 0 | 1 | 2
+  fullHeight?: boolean
   visualizations?: ReadonlyArray<
     Visualization<
       MockUser,
@@ -635,6 +639,7 @@ export const ExampleComponent = ({
       GroupingDefinition<MockUser>
     >
   >
+  dataAdapter?: DataAdapter<MockUser, FiltersType, NavigationFiltersDefinition>
   defaultSelectedItems?: SelectedItemsState
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
@@ -650,13 +655,11 @@ export const ExampleComponent = ({
   grouping?: GroupingDefinition<MockUser> | undefined
   currentGrouping?: GroupingState<MockUser, GroupingDefinition<MockUser>>
   paginationType?: PaginationType
-  dataAdapter?: DataAdapter<MockUser, FiltersType, NavigationFiltersDefinition>
 }) => {
   const mockVisualizations = getMockVisualizations({
     frozenColumns,
   })
 
-  console.log("dataAdapter", dataAdapter)
   const dataSource = useDataSource({
     filters,
     navigationFilters,
@@ -707,8 +710,9 @@ export const ExampleComponent = ({
   })
 
   return (
-    <div className="space-y-4">
+    <div className={cn("space-y-4", fullHeight && "max-h-full bg-[#fff]")}>
       <OneDataCollection
+        fullHeight={fullHeight}
         source={dataSource}
         onSelectItems={(selectedItems) =>
           console.log("Selected items", "->", selectedItems)

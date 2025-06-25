@@ -43,6 +43,13 @@ const toRangeString = (date: Date | DateRange | undefined | null) => {
   }
 }
 
+const add = (date: DateRangeComplete, delta: number): DateRangeComplete => {
+  return {
+    from: startOfMonth(addMonths(date.from, delta * 6)),
+    to: endOfMonth(addMonths(date.to, delta * 6)),
+  }
+}
+
 export function toHalfYearGranularityDateRange<
   T extends Date | DateRange | undefined | null,
 >(date: T): T extends Date | DateRange ? DateRangeComplete : T {
@@ -61,6 +68,7 @@ export function toHalfYearGranularityDateRange<
 
 export const halfyearGranularity: GranularityDefinition = {
   calendarView: "halfyear",
+  add,
   getPrevNext: (value, options) => {
     const dateRange = toHalfYearGranularityDateRange(value)
     if (!dateRange) {
@@ -68,14 +76,8 @@ export const halfyearGranularity: GranularityDefinition = {
     }
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [
-      startOfMonth(addMonths(from, -6)),
-      endOfMonth(addMonths(to, -6)),
-    ]
-    const [nextFrom, nextTo] = [
-      startOfMonth(addMonths(from, 6)),
-      endOfMonth(addMonths(to, 6)),
-    ]
+    const { from: prevFrom, to: prevTo } = add({ from, to }, -1)
+    const { from: nextFrom, to: nextTo } = add({ from, to }, 1)
 
     const minWithGranularity = options.min && startOfMonth(options.min)
     const maxWithGranularity = options.max && endOfMonth(options.max)

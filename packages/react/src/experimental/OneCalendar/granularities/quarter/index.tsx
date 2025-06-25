@@ -18,8 +18,16 @@ export function toQuarterGranularityDateRange<
   return toGranularityDateRange(date, startOfQuarter, endOfQuarter)
 }
 
+const add = (date: DateRangeComplete, delta: number): DateRangeComplete => {
+  return {
+    from: startOfQuarter(addMonths(date.from, delta * 3)),
+    to: endOfQuarter(addMonths(date.to, delta * 3)),
+  }
+}
+
 export const quarterGranularity: GranularityDefinition = {
   calendarView: "quarter",
+  add,
   getPrevNext: (value, options) => {
     const dateRange = toQuarterGranularityDateRange(value)
     if (!dateRange) {
@@ -27,14 +35,8 @@ export const quarterGranularity: GranularityDefinition = {
     }
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [
-      startOfQuarter(addMonths(from, -3)),
-      endOfQuarter(addMonths(to, -3)),
-    ]
-    const [nextFrom, nextTo] = [
-      startOfQuarter(addMonths(from, 3)),
-      endOfQuarter(addMonths(to, 3)),
-    ]
+    const { from: prevFrom, to: prevTo } = add({ from, to }, -1)
+    const { from: nextFrom, to: nextTo } = add({ from, to }, 1)
 
     const minWithGranularity = options.min && startOfQuarter(options.min)
     const maxWithGranularity = options.max && endOfQuarter(options.max)

@@ -284,11 +284,10 @@ export const TableCollection = <
 
   const checkColumnWidth = source.selectable ? 52 : 0
 
-  console.warn("summaryData", summaryData)
   return (
     <>
       <OneTable loading={isLoading}>
-        <TableHeader>
+        <TableHeader sticky={true}>
           <TableRow>
             {source.selectable && (
               <TableHead
@@ -537,7 +536,11 @@ export const TableCollection = <
         />
       )}
 
-      <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
+      <PagesPagination
+        paginationInfo={paginationInfo}
+        setPage={setPage}
+        className="pb-4"
+      />
     </>
   )
 }
