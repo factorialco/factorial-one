@@ -285,12 +285,14 @@ declare const Avatar_2: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.A
     color?: (typeof color)[number];
 } & React_2.RefAttributes<HTMLSpanElement>>;
 
-export declare type AvatarBadge = {
+export declare type AvatarBadge = ({
     type: "module";
     module: ModuleId;
 } | {
     type: Exclude<BadgeProps["type"], undefined>;
     icon: BadgeProps["icon"];
+}) & {
+    tooltip?: string;
 };
 
 export declare const AvatarList: {
@@ -1325,7 +1327,7 @@ declare type DropdownInternalProps = {
     items: DropdownItem[];
     icon?: IconType;
     size?: ButtonProps["size"];
-    children?: React.ReactNode;
+    children?: default_2.ReactNode;
     align?: "start" | "end";
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
@@ -1527,7 +1529,9 @@ declare type FavoriteMenuItem = ({
 } | {
     type: "avatar";
     avatar?: AvatarVariant;
-}) & NavigationItem;
+}) & {
+    tooltip?: string;
+} & NavigationItem;
 
 export declare const FILE_TYPES: {
     readonly PDF: "pdf";
@@ -3700,7 +3704,7 @@ declare interface SuccessMessageProps {
     buttonOnClick: () => void;
 }
 
-declare type SummariesDefinition = Record<string, {
+export declare type SummariesDefinition = Record<string, {
     type: SummaryType;
 }>;
 
@@ -3709,9 +3713,9 @@ export declare const SummariesWidget: ForwardRefExoticComponent<Omit<WidgetProps
 /**
  * Type helper to extract keys from a SummaryDefinition
  */
-declare type SummaryKey<Definition extends SummariesDefinition> = Definition extends readonly string[] ? Definition[number] : keyof Definition;
+export declare type SummaryKey<Definition extends SummariesDefinition> = Definition extends readonly string[] ? Definition[number] : keyof Definition;
 
-declare type SummaryType = "sum";
+export declare type SummaryType = "sum";
 
 export declare function Switch({ title, onCheckedChange, id, disabled, checked, value, hideLabel, presentational, ...rest }: SwitchProps): JSX_2.Element;
 

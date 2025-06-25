@@ -416,8 +416,7 @@ declare type LinkProps_2 = AnchorHTMLAttributes<HTMLAnchorElement> & {
 };
 
 declare const linkVariants: (props?: ({
-    variant?: "link" | "text" | undefined;
-    active?: boolean | undefined;
+    variant?: "link" | "unstyled" | undefined;
     disabled?: boolean | undefined;
 } & ({
     class?: ClassValue;
