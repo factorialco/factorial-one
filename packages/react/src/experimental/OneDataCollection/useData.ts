@@ -1,4 +1,3 @@
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { groupBy } from "lodash"
 import {
   useCallback,
@@ -20,6 +19,7 @@ import {
   NavigationFiltersState,
 } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
+import { SummariesDefinition } from "./summary"
 import {
   BaseFetchOptions,
   DataSource,
