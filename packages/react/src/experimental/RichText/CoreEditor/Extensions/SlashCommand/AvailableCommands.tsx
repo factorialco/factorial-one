@@ -171,7 +171,8 @@ const getGroupedCommands = (
                         // Position cursor in the paragraph after the AIBlock
                         const node = doc.nodeAt(lastAIBlockPos)
                         if (node) {
-                          let paragraphPos = lastAIBlockPos + node.nodeSize + 1
+                          const paragraphPos =
+                            lastAIBlockPos + node.nodeSize + 1
                           editor
                             .chain()
                             .focus()

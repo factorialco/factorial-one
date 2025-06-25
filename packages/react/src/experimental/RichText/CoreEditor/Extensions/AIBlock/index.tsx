@@ -159,6 +159,20 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
             data: {
               content: null,
               selectedAction: undefined,
+              selectedTitle: undefined,
+              selectedEmoji: undefined,
+            },
+          })
+        } else if (!isEmpty) {
+          // Update the node with the new content to trigger parent editor onChange
+          // Keep all existing selection data
+          const newContent = editor.getJSON()
+          updateAttributes({
+            data: {
+              content: newContent,
+              selectedAction: data?.selectedAction,
+              selectedTitle: data?.selectedTitle,
+              selectedEmoji: data?.selectedEmoji,
             },
           })
         }
@@ -178,17 +192,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
   // Get the display title and emoji
   const getDisplayTitle = () => {
-    console.log("AIBlock getDisplayTitle:", {
-      selectedTitle: data?.selectedTitle,
-      selectedEmoji: data?.selectedEmoji,
-      selectedAction,
-      config: config.title,
-      buttons: config.buttons,
-    })
-
     // Use persisted title and emoji if available
     if (data?.selectedTitle && data?.selectedEmoji) {
-      console.log("AIBlock using persisted title and emoji")
       return {
         title: data.selectedTitle,
         emoji: data.selectedEmoji,
@@ -200,10 +205,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
       const selectedButton = config.buttons.find(
         (button: AIButton) => button.type === selectedAction
       )
-      console.log("AIBlock fallback search:", {
-        selectedAction,
-        selectedButton,
-      })
+
       if (selectedButton) {
         return {
           title: selectedButton.label,
@@ -212,7 +214,6 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
       }
     }
 
-    console.log("AIBlock using default title")
     return {
       title: config.title,
       emoji: "🤖",
@@ -221,26 +222,11 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
   const { title: displayTitle, emoji: displayEmoji } = getDisplayTitle()
 
-  console.log("AIBlock render:", {
-    data,
-    selectedAction,
-    displayTitle,
-    displayEmoji,
-    configTitle: config.title,
-  })
-
   const handleClick = async (type: string) => {
     // Find the selected button to get its title and emoji
     const selectedButton = config.buttons.find(
       (button: AIButton) => button.type === type
     )
-
-    console.log("AIBlock handleClick:", {
-      type,
-      selectedButton,
-      buttons: config.buttons,
-    })
-
     // Set local loading state immediately
     setIsLoading(true)
 
@@ -252,7 +238,6 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
       content: null, // Clear content while loading
     }
 
-    console.log("AIBlock updating with data:", newData)
     updateAttributes({ data: newData })
 
     try {
@@ -266,10 +251,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
         selectedEmoji: selectedButton?.emoji || "🤖",
       }
 
-      console.log("AIBlock success, updating with final data:", finalData)
       updateAttributes({ data: finalData })
     } catch (error) {
-      console.error("AIBlock error:", error)
       // On error, clear content but keep selection data
       const errorData = {
         selectedAction: type,
@@ -278,7 +261,6 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
         content: null,
       }
 
-      console.log("AIBlock error, updating with error data:", errorData)
       updateAttributes({ data: errorData })
     } finally {
       // Always clear loading state
