@@ -104,7 +104,7 @@ const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
 
     const position = {
       top: rect.top + rect.height / 2,
-      left: editorRect.left - 5,
+      left: editorRect.left - 2,
     }
 
     // Create button element
