@@ -54,12 +54,6 @@ declare module "@tiptap/core" {
   }
 }
 
-// Add interface for AIBlock node attributes
-interface AIBlockAttrs {
-  data: AIBlockData
-  config: AIBlockConfig
-}
-
 // Skeleton component for loading state
 const TextSkeleton = () => (
   <div className="space-y-3">
