@@ -1,3 +1,4 @@
+import { BaseResponse } from "@/experimental/OneDataCollection/types.ts"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { OneDataCollection, useDataSource } from "../index"
 import {
@@ -26,8 +27,8 @@ export const NoDataExample: Story = {
       filters,
       dataAdapter: {
         fetchData: () =>
-          new Promise<(typeof mockUsers)[number][]>((resolve) => {
-            resolve([])
+          new Promise<BaseResponse<(typeof mockUsers)[number]>>((resolve) => {
+            resolve({ records: [] })
           }),
       },
     })

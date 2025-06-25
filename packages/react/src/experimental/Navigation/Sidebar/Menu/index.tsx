@@ -1,3 +1,4 @@
+import { OneEllipsis } from "@/components/OneEllipsis"
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { useReducedMotion } from "@/lib/a11y"
 import { Link, useNavigation } from "@/lib/linkHandler"
@@ -24,6 +25,7 @@ import {
 } from "../../../../icons/app"
 import { Avatar, AvatarVariant } from "../../../Information/Avatars/Avatar"
 import { Counter } from "../../../Information/Counter"
+import { Tooltip } from "../../../Overlays/Tooltip"
 import { Dropdown, DropdownItem } from "../../Dropdown"
 import { NavigationItem } from "../../utils"
 import { DragProvider, useDragContext } from "./DragContext"
@@ -42,8 +44,9 @@ type FavoriteMenuItem = (
       type: "avatar"
       avatar?: AvatarVariant
     }
-) &
-  NavigationItem
+) & {
+  tooltip?: string
+} & NavigationItem
 
 export interface MenuCategory {
   id: string
@@ -111,6 +114,7 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
 
 const FavoriteItem = ({
   item,
+  tooltip,
   dragConstraints,
   onRemove,
   index,
@@ -120,6 +124,7 @@ const FavoriteItem = ({
   isSortable = true,
 }: {
   item: FavoriteMenuItem
+  tooltip?: string
   dragConstraints?: RefObject<HTMLElement>
   onRemove?: (item: FavoriteMenuItem) => void
   index: number
@@ -206,31 +211,41 @@ const FavoriteItem = ({
     return (
       <>
         <div className="flex w-full items-center justify-between px-1.5 py-1.5">
-          <Link
-            href={item.href}
-            exactMatch={item.exactMatch}
-            className={cn(
-              "flex w-full items-center gap-1.5 no-underline",
-              isItemDragging && "pointer-events-none"
-            )}
-            draggable={false}
-          >
-            {item.type === "icon" ? (
-              <Icon
-                icon={item.icon}
-                size="md"
-                className={cn(
-                  "transition-colors",
-                  active ? "text-f1-icon-bold" : "text-f1-icon"
-                )}
-              />
-            ) : item.avatar ? (
-              <Avatar size="xsmall" avatar={item.avatar} />
-            ) : null}
-            <span className="line-clamp-1 font-medium text-f1-foreground">
-              {item.label}
-            </span>
-          </Link>
+          <OptionalTooltip tooltip={tooltip}>
+            <Link
+              onClick={item.onClick}
+              href={item.href}
+              exactMatch={item.exactMatch}
+              className={cn(
+                // w-[calc(100%-24px-2px)] - here 24px is the size of the dropdown button and 2 px is the gap
+                "flex w-[calc(100%-24px-2px)] items-center gap-1.5 no-underline",
+                isItemDragging && "pointer-events-none"
+              )}
+              draggable={false}
+            >
+              {item.type === "icon" ? (
+                <Icon
+                  icon={item.icon}
+                  size="md"
+                  className={cn(
+                    "transition-colors",
+                    active ? "text-f1-icon-bold" : "text-f1-icon"
+                  )}
+                />
+              ) : item.avatar ? (
+                <Avatar size="xsmall" avatar={item.avatar} />
+              ) : null}
+
+              <OneEllipsis
+                tag="span"
+                className="line-clamp-1 font-medium text-f1-foreground"
+                lines={1}
+                noTooltip={!!tooltip}
+              >
+                {item.label}
+              </OneEllipsis>
+            </Link>
+          </OptionalTooltip>
         </div>
         <div
           className={cn(
@@ -251,7 +266,7 @@ const FavoriteItem = ({
         </div>
       </>
     )
-  }, [item, active, isDropdownOpen, isItemDragging, dropdownItems])
+  }, [item, active, isDropdownOpen, isItemDragging, dropdownItems, tooltip])
 
   return isSortable ? (
     <Reorder.Item
@@ -621,12 +636,32 @@ function MenuContent({
    * Favorites content
    */
   const favoritesContentWrapperClasses = "flex flex-col gap-0.5"
+  const favoriteLabelsToIndex = useMemo(
+    () =>
+      internalFavorites.reduce<Record<string, Array<number>>>(
+        (acc, item, idx) => {
+          if (!(item.label in acc)) {
+            acc[item.label] = []
+          }
+          acc[item.label].push(idx)
+          return acc
+        },
+        {}
+      ),
+    [internalFavorites]
+  )
+
   const favoritesContent = useMemo(
     () =>
       hasFavorites &&
       internalFavorites.map((item, idx) => (
         <FavoriteItem
           isSortable={!disableDragging}
+          tooltip={
+            (favoriteLabelsToIndex[item.label] ?? []).length > 1
+              ? item.tooltip
+              : undefined
+          }
           key={`${item.href}-${item.label}`}
           item={item}
           dragConstraints={favoritesRef}
@@ -642,6 +677,7 @@ function MenuContent({
     [
       hasFavorites,
       internalFavorites,
+      favoriteLabelsToIndex,
       handleRemoveFavorite,
       handleMoveFavorite,
       onFavoritesChange,
@@ -752,3 +788,11 @@ function MenuContent({
     </div>
   )
 }
+
+const OptionalTooltip = ({
+  tooltip,
+  children,
+}: {
+  tooltip?: string
+  children: React.ReactNode
+}) => (tooltip ? <Tooltip description={tooltip}>{children}</Tooltip> : children)

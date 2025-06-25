@@ -96,6 +96,19 @@ export const Default: Story = {
           src: "https://github.com/dani-moreno.png",
         },
         href: "/people/dani-moreno",
+        tooltip: "Employee",
+      },
+      {
+        type: "avatar",
+        label: "Dani Moreno",
+        avatar: {
+          type: "person",
+          firstName: "Dani",
+          lastName: "Moreno",
+          src: "https://github.com/dani-moreno.png",
+        },
+        href: "/people/dani-moreno",
+        tooltip: "Days off",
       },
       {
         type: "avatar",
@@ -107,6 +120,7 @@ export const Default: Story = {
           src: "https://github.com/nlopin.png",
         },
         href: "/people/nik-lopin",
+        tooltip: "Employee",
       },
       {
         type: "avatar",

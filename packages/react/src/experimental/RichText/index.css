@@ -207,3 +207,7 @@ this is a hack to make the checkbox look like the one in the Checkbox component
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.editor-mood-tracker p {
+  @apply m-0;
+}

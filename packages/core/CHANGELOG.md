@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.18.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.17.0...factorial-one-core-v1.18.0) (2025-06-25)
+
+
+### Features
+
+* **Link:** Link styling and files structure ([#2127](https://github.com/factorialco/factorial-one/issues/2127)) ([c24d648](https://github.com/factorialco/factorial-one/commit/c24d6485190b9d3e4428f9afa7525ed0318b6262))
+
+## [1.17.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.16.0...factorial-one-core-v1.17.0) (2025-06-19)
+
+
+### Features
+
+* **icons:** add PersonMinus & PersonPlus icons ([#2104](https://github.com/factorialco/factorial-one/issues/2104)) ([cb9a4dd](https://github.com/factorialco/factorial-one/commit/cb9a4dd6ffb8d049e159bcd7c03d28f4d599d2a2))
+
+## [1.16.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.15.0...factorial-one-core-v1.16.0) (2025-06-19)
+
+
+### Features
+
+* add ClockBack icon ([#2106](https://github.com/factorialco/factorial-one/issues/2106)) ([77a7c30](https://github.com/factorialco/factorial-one/commit/77a7c30adbb789e174a1f2f8dac3ca94b5a09f98))
+
 ## [1.15.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.14.0...factorial-one-core-v1.15.0) (2025-06-05)
 
 

@@ -7,6 +7,7 @@ import { GroupingDefinition, GroupingState } from "../grouping"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "../sortings"
+import { SummariesDefinition } from "../summary"
 import { RecordType } from "../types"
 import { Visualization } from "../visualizations/collection"
 import { GroupingSelector } from "./components/GroupingSelector"
@@ -17,6 +18,7 @@ type SettingsProps<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -26,6 +28,7 @@ type SettingsProps<
       R,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -37,6 +40,7 @@ type SettingsProps<
   currentGrouping?: GroupingState<R, Grouping>
   onGroupingChange: (groupingState: GroupingState<R, Grouping>) => void
   sortings?: SortingsDefinition
+  summaries?: SummariesDefinition
   currentSortings: SortingsState<Sortings>
   onSortingsChange: (sortings: SortingsState<Sortings>) => void
 }
@@ -45,6 +49,7 @@ export const Settings = <
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -53,6 +58,7 @@ export const Settings = <
   currentVisualization,
   onVisualizationChange,
   grouping,
+  // summaries, // TODO: implement summaries selector
   currentGrouping,
   onGroupingChange,
   sortings,
@@ -62,6 +68,7 @@ export const Settings = <
   R,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping

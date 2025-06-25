@@ -78,7 +78,6 @@ export function FiltersControls<Filters extends FiltersDefinition>({
       ? getFilterType(schema[selectedFilterKey].type)
       : undefined
 
-  console.log("----", filterType?.formHeight)
   // gets the form height
   const formHeight = useMemo(() => {
     if (
@@ -116,10 +115,10 @@ export function FiltersControls<Filters extends FiltersDefinition>({
           side="bottom"
         >
           <div
-            className={cn(
-              "flex h-[min(448px,80vh)] flex-col",
-              formHeight && `h-[${formHeight}px]`
-            )}
+            className={cn("flex flex-col transition-all")}
+            style={{
+              height: formHeight || 388,
+            }}
           >
             <div className="flex min-h-0 flex-1">
               <FilterList

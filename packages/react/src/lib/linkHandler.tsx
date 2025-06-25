@@ -93,14 +93,18 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
 
   const Component = useMemo(
     () =>
-      forwardRef<HTMLAnchorElement>(function Component(props, ref) {
-        if (!component) {
-          return isDisabled ? (
-            <span ref={ref} {...props} />
-          ) : (
-            <a ref={ref} {...props} />
-          )
+      forwardRef<HTMLAnchorElement>(function Component(props: LinkProps, ref) {
+        if (isDisabled) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { href, target, rel, download, exactMatch, ...spanProps } =
+            props
+          return <span ref={ref} aria-disabled={true} {...spanProps} />
         }
+
+        if (!component) {
+          return <a ref={ref} {...props} />
+        }
+
         return component(props, ref)
       }),
     [component, isDisabled]

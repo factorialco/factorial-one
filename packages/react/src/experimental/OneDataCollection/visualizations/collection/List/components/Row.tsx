@@ -15,6 +15,7 @@ import { ItemActionsDropdown } from "../../../../ItemActions/ItemActionsDropdown
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { renderProperty } from "../../../../property-render"
 import { SortingsDefinition } from "../../../../sortings"
+import { SummariesDefinition } from "../../../../summary"
 import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
 import { actionsToDropdownItems } from "../../utils"
 import { ItemDefinition, ListPropertyDefinition } from "../types"
@@ -24,6 +25,7 @@ type RowProps<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -32,6 +34,7 @@ type RowProps<
     R,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -50,6 +53,7 @@ export const Row = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -64,6 +68,7 @@ export const Row = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
@@ -139,9 +144,10 @@ export const Row = <
         dropDownOpen && "md:bg-f1-background-hover"
       )}
     >
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-1 flex-row items-center gap-2">
         {source.selectable && id !== undefined && (
-          <div className="hidden items-center justify-end md:flex">
+          // z-10 is needed here to prevent the checkbox from not being selectable when itemHref is provided
+          <div className="z-10 hidden items-center justify-end md:flex">
             <Checkbox
               checked={selectedItems.has(id)}
               onCheckedChange={(checked) =>

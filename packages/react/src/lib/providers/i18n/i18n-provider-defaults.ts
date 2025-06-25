@@ -88,6 +88,11 @@ export const defaultTranslations = {
         retry: "Retry",
       },
     },
+    summaries: {
+      types: {
+        sum: "sum",
+      },
+    },
   },
   shortcut: "Shortcut",
   date: {

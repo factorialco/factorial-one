@@ -331,6 +331,7 @@ export const PersonTypeWithBadge: Story = {
           badge: {
             type: "warning",
             icon: Placeholder,
+            tooltip: "This is a tooltip",
           },
         },
       }),

@@ -34,6 +34,8 @@ jobs:
       - run: pnpm --filter @factorialco/factorial-one-core build
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
-          install_command: pnpm install
+          install_command: |
+            sed -i 's/"workspace:\*"/"latest"/g' packages/react/package.json
+            pnpm install --no-frozen-lockfile
           build_command: pnpm --filter @factorialco/factorial-one-react run build-storybook
           path: packages/react/storybook-static

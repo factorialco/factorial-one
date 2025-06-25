@@ -94,7 +94,7 @@ function ApplicationFrameContent({
             <motion.main
               id="content"
               className={cn(
-                "flex max-w-full flex-1 overflow-auto xs:py-1 xs:pr-1",
+                "relative flex max-w-full flex-1 overflow-auto xs:py-1 xs:pr-1",
                 sidebarState === "locked" ? "pl-0" : "xs:pl-1"
               )}
               layout

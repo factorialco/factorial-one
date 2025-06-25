@@ -29,19 +29,21 @@ export function Tooltip({
   shortcut,
 }: TooltipProps) {
   return (
-    <TooltipProvider>
-      <TooltipPrimitive>
-        <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent className={cn("max-w-xs", shortcut && "pr-1.5")}>
-          <div className="flex flex-col gap-0.5">
-            <div className="flex items-center gap-2">
-              {label && <p className="font-semibold">{label}</p>}
-              {shortcut && <Shortcut keys={shortcut} variant="inverse" />}
+    <>
+      <TooltipProvider>
+        <TooltipPrimitive>
+          <TooltipTrigger asChild>{children}</TooltipTrigger>
+          <TooltipContent className={cn("max-w-xs", shortcut && "pr-1.5")}>
+            <div className="flex flex-col gap-0.5">
+              <div className="flex items-center gap-2">
+                {label && <p className="font-semibold">{label}</p>}
+                {shortcut && <Shortcut keys={shortcut} variant="inverse" />}
+              </div>
+              {description && <p className="font-normal">{description}</p>}
             </div>
-            {description && <p className="font-normal">{description}</p>}
-          </div>
-        </TooltipContent>
-      </TooltipPrimitive>
-    </TooltipProvider>
+          </TooltipContent>
+        </TooltipPrimitive>
+      </TooltipProvider>
+    </>
   )
 }

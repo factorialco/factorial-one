@@ -1,9 +1,10 @@
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import {
   Avatar as AvatarComponent,
   AvatarFallback,
   AvatarImage,
 } from "@/ui/avatar"
-import { ComponentProps, forwardRef } from "react"
+import { ComponentProps, forwardRef, useMemo } from "react"
 import { Badge, BadgeProps } from "../../Badge"
 import { ModuleAvatar, ModuleAvatarProps } from "../../ModuleAvatar"
 import { AvatarBadge } from "../types"
@@ -78,55 +79,74 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
     const badgeSize = getBadgeSize(size)
     const moduleAvatarSize = getAvatarSize(size)
 
-    return (
-      <div className="relative inline-flex">
-        <div
-          className="h-fit w-fit"
-          style={
-            badge
-              ? {
-                  clipPath: getMask.get(
-                    type === "rounded" ? "rounded" : "base",
-                    size,
-                    badge.type === "module" ? "module" : "default"
-                  ),
-                }
-              : undefined
-          }
-        >
-          <AvatarComponent
-            size={size}
-            type={type}
-            color={avatarColor}
-            ref={ref}
-            role="img"
-            aria-hidden={!hasAria}
-            aria-label={ariaLabel}
-            aria-labelledby={ariaLabelledby}
-            data-a11y-color-contrast-ignore
-            className={
-              src
-                ? "bg-f1-background dark:bg-f1-background-inverse-secondary"
-                : ""
-            }
-          >
-            <AvatarImage src={src} alt={initials} />
-            <AvatarFallback data-a11y-color-contrast-ignore>
-              {initials}
-            </AvatarFallback>
-          </AvatarComponent>
-        </div>
-        {badge && (
-          <div className="absolute -bottom-0.5 -right-0.5">
+    const badgeContent = useMemo(
+      () =>
+        badge ? (
+          <>
             {badge.type === "module" && (
               <ModuleAvatar module={badge.module} size={moduleAvatarSize} />
             )}
             {badge.type !== "module" && (
               <Badge type={badge.type} icon={badge.icon} size={badgeSize} />
             )}
+          </>
+        ) : null,
+      [badge, badgeSize, moduleAvatarSize]
+    )
+
+    return (
+      <>
+        <div className="relative inline-flex">
+          <div
+            className="h-fit w-fit"
+            style={
+              badge
+                ? {
+                    clipPath: getMask.get(
+                      type === "rounded" ? "rounded" : "base",
+                      size,
+                      badge.type === "module" ? "module" : "default"
+                    ),
+                  }
+                : undefined
+            }
+          >
+            <AvatarComponent
+              size={size}
+              type={type}
+              color={avatarColor}
+              ref={ref}
+              role="img"
+              aria-hidden={!hasAria}
+              aria-label={ariaLabel}
+              aria-labelledby={ariaLabelledby}
+              data-a11y-color-contrast-ignore
+              className={
+                src
+                  ? "bg-f1-background dark:bg-f1-background-inverse-secondary"
+                  : ""
+              }
+            >
+              <AvatarImage src={src} alt={initials} />
+              <AvatarFallback data-a11y-color-contrast-ignore>
+                {initials}
+              </AvatarFallback>
+            </AvatarComponent>
           </div>
-        )}
-      </div>
+
+          {badge && (
+            <div className="absolute -bottom-0.5 -right-0.5">
+              {badge.tooltip ? (
+                <Tooltip description={badge.tooltip}>
+                  <div className="cursor-help">{badgeContent}</div>
+                </Tooltip>
+              ) : (
+                badgeContent
+              )}
+            </div>
+          )}
+        </div>
+      </>
     )
   }
 )

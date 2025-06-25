@@ -33,7 +33,7 @@ const ExtensionsConfiguration = ({
   setMentionSuggestions,
   placeholder,
   maxCharacters,
-  plainHtmlMode = true,
+  plainHtmlMode = false,
 }: ExtensionsConfigurationProps) => {
   return [
     StarterKitExtension,
@@ -41,11 +41,12 @@ const ExtensionsConfiguration = ({
     TextStyleExtension,
     ColorExtension,
     TypographyExtension,
-    ...(plainHtmlMode ? [HighlightExtension] : []),
     TextAlignExtension,
     LinkExtension,
     PersistSelection,
-    ...(plainHtmlMode ? [TaskListExtension, CustomTaskExtension] : []),
+    ...(!plainHtmlMode
+      ? [TaskListExtension, CustomTaskExtension, HighlightExtension]
+      : []),
     createPlaceholderExtension(placeholder),
     createCharacterCountExtension(maxCharacters),
     ...createMentionExtensions(

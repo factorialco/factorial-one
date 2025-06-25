@@ -23,7 +23,7 @@ export type ActionProps = {
    * @default "default"
    * @optional
    */
-  variant?: "default" | "outline"
+  variant?: "default" | "outline" | "promote"
 
   /**
    * The icon of the action

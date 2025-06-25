@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import { useNavigation } from "../../../lib/linkHandler"
-import { Link } from "./index"
+import { Link } from "../"
+import { useNavigation } from "../../../../lib/linkHandler"
 
 vi.mock("@/lib/linkHandler", async () => {
-  const module = await import("./__mocks__/linkHandler")
+  const module = await import("../__mocks__/linkHandler")
   return module
 })
 
@@ -16,7 +16,7 @@ describe("Link", () => {
 
   it("applies link variant by default", () => {
     render(<Link href="/test">Click me</Link>)
-    expect(screen.getByRole("link")).toHaveClass("text-f1-link")
+    expect(screen.getByRole("link")).toHaveClass("underline")
   })
 
   it("shows external link icon when target is _blank", () => {

@@ -19,7 +19,8 @@ const ScrollArea = React.forwardRef<
   >
     <ScrollAreaPrimitive.Viewport
       ref={viewportRef}
-      className="h-full w-full rounded-[inherit]"
+      className="size-full rounded-[inherit] [&>div]:!block"
+      tabIndex={0}
       data-scroll-container
     >
       {children}

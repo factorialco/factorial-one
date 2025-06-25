@@ -1,4 +1,3 @@
-import { useSidebar } from "@/experimental/exports"
 import { TabsProps } from "@/experimental/Navigation/Tabs"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent } from "@/ui/dialog"
@@ -37,7 +36,6 @@ export const OneModal: React.FC<OneModalProps> = ({
   isOpen,
   children,
 }) => {
-  const { sidebarState } = useSidebar()
   const [open, setOpen] = useState(isOpen)
 
   useEffect(() => {
@@ -83,9 +81,8 @@ export const OneModal: React.FC<OneModalProps> = ({
 
   if (isSidePosition) {
     contentClassName = cn(
-      "overflow-x-hidden flex flex-col fixed top-3 bottom-3 translate-y-0 translate-x-0 max-w-[539px] rounded-md border border-solid border-f1-border-secondary",
-      position === "left" &&
-        (sidebarState === "locked" ? "left-[248px]" : "left-3"),
+      "w-full overflow-x-hidden flex flex-col absolute top-3 bottom-3 translate-y-0 translate-x-0 max-w-[539px] rounded-md border border-solid border-f1-border-secondary",
+      position === "left" && "left-3",
       position === "right" && "left-auto right-3"
     )
   }

@@ -55,7 +55,7 @@ export const FavoriteButton = ({
             size="sm"
             key="favorite"
             icon={StarFilled}
-            className="text-[hsl(var(--promote-50))]"
+            className="text-[hsl(var(--promote-50))] outline-none"
             variants={iconVariants}
             initial={hasTransitioned ? "enterFromUnfavorite" : "initial"}
             animate="animate"
@@ -63,6 +63,9 @@ export const FavoriteButton = ({
             transition={{
               ease: [0.175, 0.885, 0.27, 2],
             }}
+            aria-hidden="true"
+            focusable={false}
+            tabIndex={-1}
           />
         ) : (
           <IconMotion
@@ -70,8 +73,12 @@ export const FavoriteButton = ({
             key="not-favorite"
             whileTap={{ scale: 0.8 }}
             icon={Star}
+            className="outline-none"
             variants={iconVariants}
             initial={hasTransitioned ? "enterFromFavorite" : "initial"}
+            aria-hidden="true"
+            focusable={false}
+            tabIndex={-1}
             animate="animate"
             exit="exit"
             transition={{

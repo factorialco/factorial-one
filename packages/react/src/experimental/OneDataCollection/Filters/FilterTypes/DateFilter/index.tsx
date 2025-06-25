@@ -44,10 +44,18 @@ export const dateFilter: FilterTypeDefinition<
     return granularity.toString(value)
   },
   formHeight: (context) => {
-    const view = context.schema.options.view
+    const view = context.schema.options.view ?? "day"
 
-    if (["day", "week"].includes(view ?? "")) {
+    if (["day", "week", "range"].includes(view)) {
       return 520
+    }
+
+    if (["month", "year"].includes(view)) {
+      return 420
+    }
+
+    if (["quarter", "halfyear"].includes(view)) {
+      return 460
     }
 
     return undefined

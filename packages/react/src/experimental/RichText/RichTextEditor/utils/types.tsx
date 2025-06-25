@@ -74,6 +74,8 @@ type secondaryActionType = (actionType | toggleActionType) & {
   type?: "button" | "switch"
 }
 
+type secondaryActionsType = secondaryActionType | secondaryActionType[]
+
 type subActionType = {
   label: string
   onClick: () => void
@@ -122,6 +124,7 @@ export type {
   lastIntentType,
   primaryActionType,
   resultType,
+  secondaryActionsType,
   secondaryActionType,
   subActionType,
 }

@@ -50,7 +50,7 @@ export const Toolbar = ({
   labels,
   darkMode = false,
   showEmojiPicker = true,
-  plainHtmlMode = true,
+  plainHtmlMode = false,
 }: ToolbarProps) => {
   // Format buttons configuration
   const formatButtons: ButtonConfig[] = [
@@ -155,7 +155,7 @@ export const Toolbar = ({
         shortcut: ["cmd", "alt", "7"],
       },
     },
-    ...(plainHtmlMode
+    ...(!plainHtmlMode
       ? [
           {
             key: "taskList",
