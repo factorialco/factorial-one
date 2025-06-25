@@ -1682,7 +1682,7 @@ declare type FilterTypeDefinition<Value = unknown, Options extends object = neve
     /**
      * The height of the filter form container in pixels
      */
-    formHeight?: number | ((props: FilterTypeContext<Options>) => number | undefined);
+    formHeight?: number;
 };
 
 declare type FilterTypeKey = keyof typeof filterTypes;
