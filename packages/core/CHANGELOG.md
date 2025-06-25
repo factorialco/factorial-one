@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.17.0...factorial-one-core-v1.18.0) (2025-06-25)
+
+
+### Features
+
+* **Link:** Link styling and files structure ([#2127](https://github.com/factorialco/factorial-one/issues/2127)) ([c24d648](https://github.com/factorialco/factorial-one/commit/c24d6485190b9d3e4428f9afa7525ed0318b6262))
+
 ## [1.17.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.16.0...factorial-one-core-v1.17.0) (2025-06-19)
 
 
