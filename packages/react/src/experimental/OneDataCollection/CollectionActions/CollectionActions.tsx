@@ -1,10 +1,12 @@
 import { Ellipsis } from "@/icons/app"
+import { useState } from "react"
 import { Button } from "../../../components/Actions/Button"
 import { Dropdown } from "../../Navigation/Dropdown"
 import {
   PrimaryActionsDefinition,
   SecondaryActionsItemDefinition,
 } from "../actions"
+
 type CollectionActionProps = {
   primaryActions?: ReturnType<PrimaryActionsDefinition>
   secondaryActions?: SecondaryActionsItemDefinition[]
@@ -21,6 +23,8 @@ export const CollectionActions = ({
     (action) => action.type !== "separator"
   )
   const dropdownActions = otherActions || []
+
+  const [open, onOpenChange] = useState(false)
 
   if (
     primaryActionsButton.length === 0 &&
@@ -55,8 +59,19 @@ export const CollectionActions = ({
       ))}
 
       {dropdownActions.length > 0 && (
-        <Dropdown items={dropdownActions} align="end">
-          <Button variant="outline" icon={Ellipsis} label="Actions" hideLabel />
+        <Dropdown
+          items={dropdownActions}
+          align="end"
+          open={open}
+          onOpenChange={onOpenChange}
+        >
+          <Button
+            variant="outline"
+            icon={Ellipsis}
+            label="Actions"
+            hideLabel
+            pressed={open}
+          />
         </Dropdown>
       )}
     </div>
