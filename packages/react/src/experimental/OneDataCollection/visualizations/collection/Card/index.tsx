@@ -295,7 +295,13 @@ export const CardCollection = <
     groupAllSelectedStatus,
     handleSelectItemChange,
     handleSelectGroupChange,
-  } = useSelectable(data, paginationInfo, source, onSelectItems)
+  } = useSelectable(
+    data,
+    paginationInfo,
+    source,
+    onSelectItems,
+    source.defaultSelectedItems
+  )
 
   /**
    * Groups

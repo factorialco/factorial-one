@@ -16,6 +16,7 @@ import {
   PaginationType,
   PresetsDefinition,
   RecordType,
+  SelectedItemsState,
   SortingsStateMultiple,
   useDataSource,
 } from "@/experimental/OneDataCollection/exports"
@@ -611,6 +612,7 @@ export const ExampleComponent = ({
   usePresets = false,
   frozenColumns = 0,
   selectable,
+  defaultSelectedItems,
   bulkActions,
   currentGrouping,
   grouping,
@@ -633,6 +635,7 @@ export const ExampleComponent = ({
       GroupingDefinition<MockUser>
     >
   >
+  defaultSelectedItems?: SelectedItemsState
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
@@ -693,6 +696,7 @@ export const ExampleComponent = ({
       },
     ],
     selectable,
+    defaultSelectedItems,
     bulkActions,
     totalItemSummary,
     dataAdapter: dataAdapter ?? {
