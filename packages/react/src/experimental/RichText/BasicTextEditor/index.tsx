@@ -6,6 +6,7 @@ import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Exte
 import { Editor, EditorContent, JSONContent, useEditor } from "@tiptap/react"
 import { forwardRef, useId, useImperativeHandle, useRef, useState } from "react"
 import { AIBlockConfig, AIBlockLabels } from "../CoreEditor/Extensions/AIBlock"
+import { MoodTrackerLabels } from "../CoreEditor/Extensions/MoodTracker"
 import "../index.css"
 import { createBasicTextEditorExtensions } from "./extensions"
 
@@ -20,6 +21,7 @@ interface BasicTextEditorProps {
   readonly?: boolean
   aiBlockConfig?: AIBlockConfig
   aiBlockLabels?: AIBlockLabels
+  moodTrackerLabels?: MoodTrackerLabels
 }
 
 type BasicTextEditorHandle = {
@@ -42,6 +44,7 @@ const BasicTextEditorComponent = forwardRef<
     readonly = false,
     aiBlockConfig,
     aiBlockLabels,
+    moodTrackerLabels,
   },
   ref
 ) {
@@ -57,7 +60,8 @@ const BasicTextEditorComponent = forwardRef<
       toolbarLabels,
       slashCommandGroupLabels,
       aiBlockConfig,
-      aiBlockLabels
+      aiBlockLabels,
+      moodTrackerLabels
     ),
     content: initialContent,
     onUpdate: ({ editor }: { editor: Editor }) => {
@@ -104,7 +108,7 @@ const BasicTextEditorComponent = forwardRef<
       id={editorId}
     >
       <div
-        className="scrollbar-macos relative w-full flex-grow overflow-y-scroll"
+        className="scrollbar-macos relative w-full flex-grow overflow-y-scroll pl-5"
         onClick={() => editor?.commands.focus()}
       >
         <EditorContent editor={editor} />

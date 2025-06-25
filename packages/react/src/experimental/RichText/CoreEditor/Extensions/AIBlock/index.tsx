@@ -13,8 +13,8 @@ import {
   TypographyExtension,
   UnderlineExtension,
 } from "@/experimental/RichText/CoreEditor"
-import { Button, IconType } from "@/factorial-one"
-import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
+import { Button, Icon, IconType } from "@/factorial-one"
+import { Ai, ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { JSONContent, Node } from "@tiptap/core"
 import {
@@ -216,7 +216,6 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
     return {
       title: config.title,
-      emoji: "🤖",
     }
   }
 
@@ -324,7 +323,10 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     <NodeViewWrapper contentEditable={false}>
       <motion.div
         className={cn(
-          "editor-ai-block my-4 flex w-full flex-col gap-4 rounded-md bg-gradient-to-t from-f1-background to-[#efeafa] p-3"
+          "editor-ai-block my-4 flex w-full flex-col gap-4 rounded-md border border-solid border-f1-border-secondary p-3",
+          !content &&
+            !isLoading &&
+            "bg-gradient-to-t from-f1-background to-[#efeafa]"
         )}
         onClick={(e) => e.stopPropagation()}
         layout
@@ -345,7 +347,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
             }
           >
             <motion.span
-              className="text-lg"
+              className="flex items-center text-lg"
               animate={{
                 scale: isLoading ? [1, 1.1, 1] : 1,
                 rotate: isLoading ? [0, 5, -5, 0] : 0,
@@ -356,7 +358,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
                 ease: "easeInOut",
               }}
             >
-              {displayEmoji}
+              {displayEmoji ?? <Icon icon={Ai} />}
             </motion.span>
             <p className="text-f1-text-primary text-lg font-semibold">
               {displayTitle}
@@ -411,7 +413,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
                     <Button
                       onClick={() => handleClick(button.type)}
                       variant="outline"
-                      size="sm"
+                      size="md"
                       emoji={button.emoji}
                       label={button.label}
                       disabled={isLoading}

@@ -4,8 +4,9 @@ import {
   pulseIcon,
   pulseIconStyle,
 } from "@/experimental/Information/Avatars/PulseAvatar"
+import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { Button } from "@/factorial-one"
-import { ChevronDown, ChevronUp } from "@/icons/app"
+import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { Node } from "@tiptap/core"
 import {
   NodeViewContent,
@@ -26,70 +27,125 @@ interface MoodTrackerData {
   }[]
 }
 
-export const MoodTrackerView: React.FC<NodeViewProps> = ({ node }) => {
+export interface MoodTrackerLabels {
+  deleteBlock: string
+  expand: string
+  collapse: string
+}
+
+export interface MoodTrackerConfig {
+  labels?: MoodTrackerLabels
+}
+
+declare module "@tiptap/core" {
+  interface Commands<ReturnType> {
+    moodTracker: {
+      insertMoodTracker: (
+        data: MoodTrackerData,
+        config?: MoodTrackerConfig
+      ) => ReturnType
+    }
+  }
+}
+
+export const MoodTrackerView: React.FC<NodeViewProps> = ({
+  node,
+  updateAttributes,
+  deleteNode,
+  extension,
+}) => {
   const [isOpen, setIsOpen] = useState(false)
   const data = node.attrs.data as MoodTrackerData
 
+  // Use dynamic config from extension options instead of persisted config
+  const config =
+    (extension.options.currentConfig as MoodTrackerConfig) ||
+    (node.attrs.config as MoodTrackerConfig) ||
+    {}
+
   if (!data) return null
+
+  const handleToggleCollapse = () => {
+    setIsOpen(!isOpen)
+  }
+
+  // Generate dropdown items
+  const getDropdownItems = [
+    {
+      label: config.labels?.deleteBlock || "Delete",
+      icon: Delete,
+      critical: true,
+      onClick: () => deleteNode(),
+    },
+  ]
 
   return (
     <NodeViewWrapper contentEditable={false}>
-      <div
-        className="editor-mood-tracker my-3 flex w-full flex-col gap-1 rounded bg-f1-background-selected-secondary p-3"
+      <motion.div
+        className="editor-mood-tracker my-4 flex w-full flex-col gap-4 rounded-md border border-solid border-f1-border-secondary p-3"
         onClick={(e) => e.stopPropagation()}
+        layout
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut" }}
       >
-        <div
-          className="flex cursor-pointer flex-row items-center justify-between"
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            setIsOpen(!isOpen)
-          }}
+        <motion.div
+          className="flex flex-row items-center justify-between gap-2"
+          layout
         >
-          <div className="flex flex-col gap-1">
-            <div className="flex flex-row items-center gap-3">
-              <p className="text-f1-text-primary text-md font-semibold">
-                {data.title}
-              </p>
-              <div className="flex flex-row items-center">
-                {data.days.map((day, index) => (
-                  <div
-                    key={index}
-                    className="-ml-1.5 flex items-center justify-center rounded-full bg-f1-background"
-                  >
-                    <Icon
-                      icon={pulseIcon[day.mood]}
-                      size="lg"
-                      className={pulseIconStyle({ pulse: day.mood })}
-                    />
-                  </div>
-                ))}
+          <div
+            className="flex cursor-pointer flex-row items-center gap-2"
+            onClick={handleToggleCollapse}
+          >
+            <div className="flex flex-col gap-1">
+              <div className="flex flex-row items-center gap-3">
+                <p className="text-f1-text-primary text-lg font-semibold">
+                  {data.title}
+                </p>
+                <div className="flex flex-row items-center">
+                  {data.days.map((day, index) => (
+                    <div
+                      key={index}
+                      className="-ml-1.5 flex items-center justify-center rounded-full bg-f1-background"
+                    >
+                      <Icon
+                        icon={pulseIcon[day.mood]}
+                        size="lg"
+                        className={pulseIconStyle({ pulse: day.mood })}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
+              <p>
+                <span className="text-f1-text-primary text-md font-normal">
+                  {data.averageMoodComment}
+                </span>
+              </p>
             </div>
-            <p>
-              <span className="text-f1-text-primary text-md font-normal">
-                {data.averageMoodComment}
-              </span>
-            </p>
           </div>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            label="Open"
-            hideLabel
-            icon={isOpen ? ChevronUp : ChevronDown}
-            onClick={(e) => {
-              e.preventDefault()
-              e.stopPropagation()
-              setIsOpen(!isOpen)
-            }}
-          />
-        </div>
+          <div className="flex flex-row items-center gap-1">
+            {/* Toggle button */}
+            <Button
+              onClick={handleToggleCollapse}
+              variant="outline"
+              hideLabel
+              label={
+                isOpen
+                  ? config.labels?.collapse || "Collapse"
+                  : config.labels?.expand || "Expand"
+              }
+              icon={isOpen ? ChevronUp : ChevronDown}
+            />
+            <Dropdown items={getDropdownItems} />
+          </div>
+        </motion.div>
 
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {isOpen && (
             <motion.div
+              key="content"
               initial={{
                 height: 0,
                 opacity: 0,
@@ -114,49 +170,55 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({ node }) => {
                 transformOrigin: "top",
                 overflow: "hidden",
               }}
-              className="pt-3"
             >
-              <div className="flex flex-col gap-2">
-                {data.days.map((day, index) => {
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{
-                        opacity: 0,
-                        y: -10,
-                        scale: 0.95,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                      }}
-                      transition={{
-                        delay: index * 0.05,
-                        duration: 0.2,
-                        ease: "easeOut",
-                      }}
-                      className="flex flex-row items-center gap-2"
-                    >
-                      <div className="flex items-center justify-center rounded-full">
-                        <Icon
-                          icon={pulseIcon[day.mood]}
-                          size="lg"
-                          className={pulseIconStyle({ pulse: day.mood })}
-                        />
-                      </div>
-                      <p className="text-f1-text-primary text-md font-normal">
-                        <span className="font-semibold">{day.day}:</span>{" "}
-                        {day.comment}
-                      </p>
-                    </motion.div>
-                  )
-                })}
-              </div>
+              <motion.div
+                className="text-f1-text-primary"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.3 }}
+              >
+                <div className="flex flex-col gap-2">
+                  {data.days.map((day, index) => {
+                    return (
+                      <motion.div
+                        key={index}
+                        initial={{
+                          opacity: 0,
+                          y: -10,
+                          scale: 0.95,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                          scale: 1,
+                        }}
+                        transition={{
+                          delay: index * 0.05,
+                          duration: 0.2,
+                          ease: "easeOut",
+                        }}
+                        className="flex flex-row items-center gap-2"
+                      >
+                        <div className="flex items-center justify-center rounded-full">
+                          <Icon
+                            icon={pulseIcon[day.mood]}
+                            size="lg"
+                            className={pulseIconStyle({ pulse: day.mood })}
+                          />
+                        </div>
+                        <p className="text-f1-text-primary text-md font-normal">
+                          <span className="font-semibold">{day.day}:</span>{" "}
+                          {day.comment}
+                        </p>
+                      </motion.div>
+                    )
+                  })}
+                </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
       <NodeViewContent style={{ display: "none" }} />
     </NodeViewWrapper>
   )
@@ -170,6 +232,14 @@ export const MoodTracker = Node.create({
   atom: true,
 
   selectable: false,
+
+  draggable: false,
+
+  addOptions() {
+    return {
+      currentConfig: null,
+    }
+  },
 
   addAttributes() {
     return {
@@ -185,6 +255,9 @@ export const MoodTracker = Node.create({
             "data-mood-tracker": JSON.stringify(attributes.data),
           }
         },
+      },
+      config: {
+        default: null,
       },
     }
   },
@@ -214,6 +287,19 @@ export const MoodTracker = Node.create({
 
   addNodeView() {
     return ReactNodeViewRenderer(MoodTrackerView)
+  },
+
+  addCommands() {
+    return {
+      insertMoodTracker:
+        (data: MoodTrackerData, config?: MoodTrackerConfig) =>
+        ({ commands }) => {
+          return commands.insertContent({
+            type: this.name,
+            attrs: { data, config },
+          })
+        },
+    }
   },
 })
 
