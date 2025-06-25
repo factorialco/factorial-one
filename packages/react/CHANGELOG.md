@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.105.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.105.3...factorial-one-react-v1.105.4) (2025-06-25)
+
+
+### Bug Fixes
+
+* resourceheader button fixes ([#2128](https://github.com/factorialco/factorial-one/issues/2128)) ([4568382](https://github.com/factorialco/factorial-one/commit/4568382fe7ab8cf4b0e8ef6445068cf1c95041e7))
+
 ## [1.105.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.105.2...factorial-one-react-v1.105.3) (2025-06-25)
 
 
