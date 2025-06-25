@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.109.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.108.1...factorial-one-react-v1.109.0) (2025-06-25)
+
+
+### Features
+
+* **datenavigator:** dateNavigation compareTo ([#2041](https://github.com/factorialco/factorial-one/issues/2041)) ([4971127](https://github.com/factorialco/factorial-one/commit/4971127d07c48c49912d02d133458b1bd0653ae9))
+
 ## [1.108.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.108.0...factorial-one-react-v1.108.1) (2025-06-25)
 
 
