@@ -1,7 +1,7 @@
 import { BadgeProps } from "../Badge"
 import { ModuleId } from "../ModuleAvatar"
 
-export type AvatarBadge =
+export type AvatarBadge = (
   | {
       type: "module"
       module: ModuleId
@@ -10,3 +10,6 @@ export type AvatarBadge =
       type: Exclude<BadgeProps["type"], undefined>
       icon: BadgeProps["icon"]
     }
+) & {
+  tooltip?: string
+}
