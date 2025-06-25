@@ -29,7 +29,7 @@ import {
   SortingsDefinition,
   SortingsState,
 } from "../../../sortings"
-import { SummariesDefinition, SummaryKey } from "../../../summary.ts"
+import { SummariesDefinition, SummaryKey } from "../../../summary"
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { isInfiniteScrollPagination, useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"

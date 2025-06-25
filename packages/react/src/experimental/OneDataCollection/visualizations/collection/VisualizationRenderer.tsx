@@ -5,12 +5,16 @@ import {
   OnSelectItemsCallback,
 } from "../../types"
 
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { FiltersDefinition } from "../../Filters/types"
 import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
-import { DataSource, RecordType, SortingsDefinition } from "../../types"
+import {
+  DataSource,
+  RecordType,
+  SortingsDefinition,
+  SummariesDefinition,
+} from "../../types"
 import {
   collectionVisualizations,
   VisualizacionTypeDefinition,

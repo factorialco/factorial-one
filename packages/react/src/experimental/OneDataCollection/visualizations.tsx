@@ -1,4 +1,3 @@
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
 import { Button } from "../../components/Actions/Button"
@@ -10,6 +9,7 @@ import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
+import { SummariesDefinition } from "./summary"
 import type {
   DataSource,
   GroupingDefinition,

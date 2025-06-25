@@ -1,5 +1,4 @@
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import {
   act,
   render,
@@ -17,6 +16,7 @@ import {
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
+import { SummariesDefinition } from "../../../summary"
 import type {
   BaseFetchOptions,
   DataSource,
