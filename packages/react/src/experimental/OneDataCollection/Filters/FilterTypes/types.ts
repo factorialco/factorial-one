@@ -42,4 +42,8 @@ export type FilterTypeDefinition<
    * The default options to render a filter of this type, for example max and min date for a date filter, the list of options for an in filter, etc
    */
   defaultOptions?: Options
+  /**
+   * The height of the filter form container in pixels
+   */
+  formHeight?: number
 }
