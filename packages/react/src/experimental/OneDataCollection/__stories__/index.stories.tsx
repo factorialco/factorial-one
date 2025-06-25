@@ -1,3 +1,4 @@
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import {
   Add,
   Ai,
@@ -687,6 +688,7 @@ const JsonVisualization = ({
       (typeof mockUsers)[number],
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
       NavigationFiltersDefinition,
       GroupingDefinition<(typeof mockUsers)[number]>
@@ -719,6 +721,7 @@ export const WithCustomJsonView: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       MockActions,
       NavigationFiltersDefinition,
       GroupingDefinition<MockUser>
@@ -1054,6 +1057,7 @@ export const WithSynchronousData: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<MockUser>,
       NavigationFiltersDefinition,
       GroupingDefinition<MockUser>
@@ -1064,7 +1068,14 @@ export const WithSynchronousData: Story = {
       dataAdapter: {
         fetchData: ({ filters, sortings, navigationFilters }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, sortings, navigationFilters)
+          return {
+            records: filterUsers(
+              mockUsers,
+              filters,
+              sortings,
+              navigationFilters
+            ),
+          }
         },
       },
     })
@@ -1256,6 +1267,7 @@ export const WithSyncSearch: Story = {
       (typeof mockUserData)[number],
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUserData)[number]>,
       NavigationFiltersDefinition,
       GroupingDefinition<(typeof mockUserData)[number]>
@@ -1314,7 +1326,7 @@ export const WithSyncSearch: Story = {
             })
           }
 
-          return filteredUsers
+          return { records: filteredUsers }
         },
       },
     })
@@ -1377,6 +1389,7 @@ export const WithAsyncSearch: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       MockActions,
       NavigationFiltersDefinition,
       GroupingDefinition<MockUser>
@@ -1467,7 +1480,7 @@ export const WithAsyncSearch: Story = {
                 })
               }
 
-              resolve(filteredUsers)
+              resolve({ records: filteredUsers })
             }, 1000) // Simulate 1 second delay for API response
           })
         },
@@ -1780,7 +1793,7 @@ export const TableWithNoFiltersAndSearch: Story = {
         },
       ],
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
     })
 
@@ -1885,7 +1898,7 @@ export const TableWithNoFilters: Story = {
             )
           }
 
-          return Promise.resolve(filteredUsers)
+          return Promise.resolve({ records: filteredUsers })
         },
       },
     })
@@ -1964,7 +1977,7 @@ export const TableWithSecondaryActions: Story = {
             )
           }
 
-          return Promise.resolve(filteredUsers)
+          return Promise.resolve({ records: filteredUsers })
         },
       },
     })

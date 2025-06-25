@@ -40,6 +40,7 @@ export const Dropdown = (props: DropdownProps) => {
       {...publicProps}
       open={open}
       onOpenChange={onOpenChange}
+      align="end"
     />
   )
 }
@@ -58,6 +59,7 @@ export const MobileDropdown = ({ items, children }: DropdownProps) => {
             icon={EllipsisHorizontal}
             variant="outline"
             size="lg"
+            pressed={open}
           />
         )}
       </DrawerTrigger>

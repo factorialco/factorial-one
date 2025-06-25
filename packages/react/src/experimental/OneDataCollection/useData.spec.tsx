@@ -1,4 +1,5 @@
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
@@ -39,6 +40,7 @@ type TestSource = DataSource<
   TestRecord,
   TestFilters,
   SortingsDefinition,
+  SummariesDefinition,
   ItemActionsDefinition<TestRecord>,
   NavigationFiltersDefinition,
   GroupingDefinition<TestRecord>
@@ -72,12 +74,12 @@ const createMockDataSource = (
         throw new Error("Observable not supported in paginated mode")
       }
       return {
-        records: result,
-        total: result.length,
+        records: result.records,
+        total: result.records.length,
         currentPage: options.pagination?.currentPage ?? 1,
         perPage: options.pagination?.perPage ?? 10,
         pagesCount: Math.ceil(
-          result.length / (options.pagination?.perPage ?? 10)
+          result.records.length / (options.pagination?.perPage ?? 10)
         ),
         type: "pages",
       }
@@ -112,7 +114,9 @@ describe("useData", () => {
 
   describe("with synchronous data", () => {
     it("should handle synchronous data immediately", () => {
-      const source = createMockDataSource(() => mockData)
+      const source = createMockDataSource(() => ({
+        records: mockData,
+      }))
 
       const { result } = renderHook(() => useData(source))
 
@@ -126,7 +130,10 @@ describe("useData", () => {
     })
 
     it("should handle synchronous paginated data", async () => {
-      const source = createMockDataSource(() => mockData, "pages")
+      const source = createMockDataSource(
+        () => ({ records: mockData }),
+        "pages"
+      )
 
       const { result } = renderHook(() => useData(source))
 
@@ -152,7 +159,7 @@ describe("useData", () => {
     it("should handle async data with loading states", async () => {
       const source = createMockDataSource(async () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
-        return mockData
+        return { records: mockData }
       })
 
       const { result } = renderHook(() => useData(source))
@@ -195,7 +202,11 @@ describe("useData", () => {
         return new Observable((subscriber) => {
           subscriber.next({ loading: true, data: null, error: null })
           setTimeout(() => {
-            subscriber.next({ loading: false, data: mockData, error: null })
+            subscriber.next({
+              loading: false,
+              data: { records: mockData },
+              error: null,
+            })
             subscriber.complete()
           }, 0)
         })
@@ -247,10 +258,11 @@ describe("useData", () => {
         search: "Test 1",
       }
       const source = createMockDataSource(
-        ({ filters }: { filters: FiltersState<TestFilters> }) =>
-          mockData.filter((item) =>
+        ({ filters }: { filters: FiltersState<TestFilters> }) => ({
+          records: mockData.filter((item) =>
             filters.search ? item.name.includes(filters.search) : true
-          )
+          ),
+        })
       )
 
       const { result } = renderHook(() => useData(source, { filters }))
@@ -266,10 +278,11 @@ describe("useData", () => {
         search: "Test 1",
       }
       const source = createMockDataSource(
-        ({ filters }: { filters: FiltersState<TestFilters> }) =>
-          mockData.filter((item) =>
+        ({ filters }: { filters: FiltersState<TestFilters> }) => ({
+          records: mockData.filter((item) =>
             filters.search ? item.name.includes(filters.search) : true
-          )
+          ),
+        })
       )
 
       const { result } = renderHook(() => useData(source, { filters }))
@@ -289,21 +302,27 @@ describe("useData", () => {
 
       // Create a source with a fetchData function that returns an observable
       const source = createMockDataSource(() => {
-        return new Observable<PromiseState<TestRecord[]>>((subscriber) => {
-          subscriptionCount++
-          subscriber.next({ loading: true, data: null, error: null })
+        return new Observable<PromiseState<BaseResponse<TestRecord>>>(
+          (subscriber) => {
+            subscriptionCount++
+            subscriber.next({ loading: true, data: null, error: null })
 
-          // Simulate async data loading
-          setTimeout(() => {
-            subscriber.next({ loading: false, data: mockData, error: null })
-            subscriber.complete()
-          }, 10)
+            // Simulate async data loading
+            setTimeout(() => {
+              subscriber.next({
+                loading: false,
+                data: { records: mockData },
+                error: null,
+              })
+              subscriber.complete()
+            }, 10)
 
-          // Return unsubscribe function that tracks when it's called
-          return () => {
-            unsubscribeCalls++
+            // Return unsubscribe function that tracks when it's called
+            return () => {
+              unsubscribeCalls++
+            }
           }
-        })
+        )
       })
 
       // Render the hook with initial filters

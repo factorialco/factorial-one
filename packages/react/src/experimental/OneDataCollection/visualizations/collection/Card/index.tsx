@@ -16,6 +16,7 @@ import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
+import { SummariesDefinition } from "../../../summary"
 import {
   CollectionProps,
   DataSource,
@@ -60,6 +61,7 @@ export type CardCollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -67,6 +69,7 @@ export type CardCollectionProps<
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping,
@@ -81,6 +84,7 @@ type GroupCardsProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -89,6 +93,7 @@ type GroupCardsProps<
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -106,6 +111,7 @@ const GroupCards = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -122,6 +128,7 @@ const GroupCards = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
@@ -212,6 +219,7 @@ export const CardCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -228,6 +236,7 @@ export const CardCollection = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping,
@@ -252,6 +261,7 @@ export const CardCollection = <
     Record,
     Filters,
     Sortings,
+    Summaries,
     NavigationFilters,
     Grouping
   >(
