@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.105.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.105.1...factorial-one-react-v1.105.2) (2025-06-25)
+
+
+### Bug Fixes
+
+* **favorites:** many small things ([#2141](https://github.com/factorialco/factorial-one/issues/2141)) ([29fe769](https://github.com/factorialco/factorial-one/commit/29fe7691ec9c277ee4ccf0fe0fbbaa3382402032))
+
 ## [1.105.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.105.0...factorial-one-react-v1.105.1) (2025-06-25)
 
 
