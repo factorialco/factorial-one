@@ -79,7 +79,7 @@ The callback receives the an object with the following properties:
 The `defaultSelectedItems` prop is an object that contains the default selected
 items.
 
-````tsx
+```tsx
 const { source, currentSelectable, setCurrentSelectable } = useDataCollection({
   ...
   selectable: (item) => item.id,
@@ -96,22 +96,23 @@ const { source, currentSelectable, setCurrentSelectable } = useDataCollection({
   },
   ...
 })
-
 ```
+
 #### Examples
 
 **Default selected items**
+
 <Canvas
   of={DataCollectionStories.WithSelectableAndDefaultSelectedItems}
   meta={DataCollectionStories}
 />
 
 **Default selected items and groups**
+
 <Canvas
   of={DataCollectionStories.WithSelectableAndDefaultSelectedGroups}
   meta={DataCollectionStories}
 />
-
 
 #### Why this complex structure?
 
@@ -149,7 +150,7 @@ know that the user unchecked the items 1,5,6 and 10 you should not remove them.
 This works in the same way for the groups.
 
 <Canvas
-  of={DataCollectionStories.WithPagination}
+  of={DataCollectionStories.WithPagesPagination}
   meta={DataCollectionStories}
 />
 
@@ -245,4 +246,3 @@ The callback receives the following parameters:
   of={DataCollectionStories.WithSelectableAndBulkActions}
   meta={DataCollectionStories}
 />
-````
