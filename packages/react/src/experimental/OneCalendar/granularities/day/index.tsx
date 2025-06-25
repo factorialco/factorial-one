@@ -23,8 +23,16 @@ export function toDayGranularityDateRange<
   return toGranularityDateRange(date, startOfDay, endOfDay)
 }
 
+const add = (date: DateRangeComplete, delta: number): DateRangeComplete => {
+  return {
+    from: startOfDay(addDays(date.from, delta)),
+    to: endOfDay(addDays(date.to, delta)),
+  }
+}
+
 export const dayGranularity: GranularityDefinition = {
   calendarView: "day",
+  add,
   getPrevNext: (value: DateRange, options) => {
     const dateRange = toDayGranularityDateRange(value)
     if (!dateRange) {
@@ -36,14 +44,8 @@ export const dayGranularity: GranularityDefinition = {
 
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [
-      startOfDay(addDays(from, -1)),
-      endOfDay(addDays(to, -1)),
-    ]
-    const [nextFrom, nextTo] = [
-      startOfDay(addDays(from, 1)),
-      endOfDay(addDays(to, 1)),
-    ]
+    const { from: prevFrom, to: prevTo } = add({ from, to }, -1)
+    const { from: nextFrom, to: nextTo } = add({ from, to }, 1)
 
     const minWithGranularity = options.min && startOfDay(options.min)
     const maxWithGranularity = options.max && endOfDay(options.max)
