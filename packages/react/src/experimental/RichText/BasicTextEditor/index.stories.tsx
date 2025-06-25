@@ -100,13 +100,21 @@ export const Default: Story = {
               },
             },
           },
+          {
+            type: "aiBlock",
+            attrs: {
+              data: {
+                content: null,
+                selectedAction: undefined,
+              },
+            },
+          },
         ],
       },
     },
 
     aiBlockConfig: {
       title: "AI Pre-Meeting Helper",
-      labels: defaultAIBlockLabels,
       onClick: () => {
         return new Promise((resolve) => {
           setTimeout(() => {

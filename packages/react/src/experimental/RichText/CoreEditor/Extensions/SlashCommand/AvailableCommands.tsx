@@ -1,6 +1,5 @@
 import { IconType } from "@/factorial-one"
 import {
-  Ai,
   CheckDouble,
   Code,
   Heading1,
@@ -17,7 +16,8 @@ import { AIBlockConfig } from "../AIBlock"
 
 interface CommandItem {
   title: string
-  icon: IconType
+  icon?: IconType
+  emoji?: string
   command: (editor: Editor) => void
 }
 
@@ -52,61 +52,13 @@ const getGroupedCommands = (
   groupLabels: SlashCommandGroupLabels,
   aiBlockConfig?: AIBlockConfig
 ): CommandGroup[] => [
-  {
-    title: aiBlockConfig?.title || "AI Block",
-    commands: [
-      ...(aiBlockConfig
-        ? [
-            {
-              title: aiBlockConfig.title,
-              command: (editor: Editor) => {
-                // Insert AI block and empty paragraph in one operation
-                editor
-                  .chain()
-                  .focus()
-                  .insertContent([
-                    {
-                      type: "aiBlock",
-                      attrs: {
-                        data: {
-                          content: null,
-                          selectedAction: undefined,
-                        },
-                        config: aiBlockConfig,
-                      },
-                    },
-                    {
-                      type: "paragraph",
-                    },
-                  ])
-                  .run()
-
-                // Position cursor in the paragraph after insertion
-                setTimeout(() => {
-                  const { state } = editor
-                  const { doc } = state
-                  let lastParagraphPos = null
-
-                  // Find the last paragraph in the document (which should be the one we just inserted)
-                  doc.descendants((node, pos) => {
-                    if (node.type.name === "paragraph") {
-                      lastParagraphPos = pos + 1 // Position inside the paragraph
-                    }
-                  })
-
-                  // Position cursor in the last paragraph
-                  if (lastParagraphPos !== null) {
-                    editor
-                      .chain()
-                      .focus()
-                      .setTextSelection(lastParagraphPos)
-                      .run()
-                  }
-                }, 10)
-              },
-              icon: Ai,
-            },
-            // Add individual commands for each AI button
+  // Only include AI Block group if config is provided
+  ...(aiBlockConfig
+    ? [
+        {
+          title: aiBlockConfig.title || "AI Block",
+          commands: [
+            // Add individual commands for each AI button using emoji
             ...aiBlockConfig.buttons.map((button) => ({
               title: button.label ?? "Generate",
               command: async (editor: Editor) => {
@@ -218,12 +170,12 @@ const getGroupedCommands = (
                   }
                 }, 100) // Small delay to ensure component is mounted and can detect loading state
               },
-              icon: button.icon || Ai,
+              emoji: button.emoji, // Use emoji instead of icon
             })),
-          ]
-        : []),
-    ],
-  },
+          ],
+        },
+      ]
+    : []),
   {
     title: groupLabels.textStyles,
     commands: [
@@ -344,11 +296,11 @@ const getGroupedCommands = (
       {
         title: labels.divider,
         command: (editor) => {
-          const { from } = editor.state.selection
+          const { from, to } = editor.state.selection
           editor
             .chain()
             .focus()
-            .setTextSelection({ from, to: from })
+            .setTextSelection({ from, to })
             .setHorizontalRule()
             .run()
         },

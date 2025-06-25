@@ -292,8 +292,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
   const getDropdownItems = () => {
     const items = []
 
-    // Add reset option if there's a selected title (meaning an option was selected)
-    if ((data?.selectedTitle || selectedAction) && !isLoading) {
+    // Add reset option only if there's config AND a selected title (meaning an option was selected)
+    if (config && (data?.selectedTitle || selectedAction) && !isLoading) {
       items.push({
         label: config.labels?.reset || "Reset",
         description: config.labels?.resetDescription || "Reset the block",
@@ -310,7 +310,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
     // Always add delete option
     items.push({
-      label: config.labels?.deleteBlock || "Delete",
+      label: config?.labels?.deleteBlock || "Delete",
       icon: Delete,
       critical: true,
       onClick: () => deleteNode(),

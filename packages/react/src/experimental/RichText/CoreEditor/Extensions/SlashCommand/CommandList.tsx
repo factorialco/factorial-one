@@ -154,10 +154,14 @@ const CommandList = forwardRef<CommandListHandle, CommandListProps>(
                     }}
                     onMouseEnter={() => setSelectedIndex(globalIndex)}
                   >
-                    <Icon
-                      icon={item.icon}
-                      className="text-f1-foreground-secondary"
-                    />
+                    {item.emoji ? (
+                      <span className="text-base">{item.emoji}</span>
+                    ) : item.icon ? (
+                      <Icon
+                        icon={item.icon}
+                        className="text-f1-foreground-secondary"
+                      />
+                    ) : null}
                     <p className="flex-grow text-sm font-medium text-f1-foreground">
                       {item.title}
                     </p>
