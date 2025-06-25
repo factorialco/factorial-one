@@ -133,7 +133,6 @@ const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
 
       try {
         let insertPos = -1
-        let foundNode = null
 
         // Find the node position by traversing the document
         view.state.doc.descendants((node, pos) => {
@@ -149,8 +148,6 @@ const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
               targetElement.contains &&
               targetElement.contains(domNode as Node))
           ) {
-            foundNode = node
-
             // For all nodes, insert after the entire node
             insertPos = pos + node.nodeSize
             return false // Stop traversing
