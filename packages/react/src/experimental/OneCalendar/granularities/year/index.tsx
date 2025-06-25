@@ -18,8 +18,16 @@ export function toYearGranularityDateRange<
   return toGranularityDateRange(date, startOfYear, endOfYear)
 }
 
+const add = (date: DateRangeComplete, delta: number): DateRangeComplete => {
+  return {
+    from: startOfYear(addYears(date.from, delta)),
+    to: endOfYear(addYears(date.to, delta)),
+  }
+}
+
 export const yearGranularity: GranularityDefinition = {
   calendarView: "year",
+  add,
   getPrevNext: (value, options) => {
     const dateRange = toYearGranularityDateRange(value)
     if (!dateRange) {
@@ -27,14 +35,8 @@ export const yearGranularity: GranularityDefinition = {
     }
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [
-      startOfYear(addYears(from, -1)),
-      endOfYear(addYears(to, -1)),
-    ]
-    const [nextFrom, nextTo] = [
-      startOfYear(addYears(from, 1)),
-      endOfYear(addYears(to, 1)),
-    ]
+    const { from: prevFrom, to: prevTo } = add({ from, to }, -1)
+    const { from: nextFrom, to: nextTo } = add({ from, to }, 1)
 
     const minWithGranularity = options.min && startOfYear(options.min)
     const maxWithGranularity = options.max && endOfYear(options.max)
