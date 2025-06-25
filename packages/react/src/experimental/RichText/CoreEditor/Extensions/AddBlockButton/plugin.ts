@@ -37,6 +37,7 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
   let hoveredElement: HTMLElement | null = null
   let mouseListenersAttached = false
   let hideTimeout: NodeJS.Timeout | null = null
+  let showTimeout: NodeJS.Timeout | null = null
   let isMouseOverButton = false
 
   const createButton = (
@@ -62,12 +63,12 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
 
     element.addEventListener("mouseleave", () => {
       isMouseOverButton = false
-      // Delay hiding when leaving the button
+      // Give user some time to move from element to button
       hideTimeout = setTimeout(() => {
         if (!isMouseOverButton && !hoveredElement) {
           hideButton()
         }
-      }, 800) // Longer delay when leaving the button
+      }, 200) // Small delay to allow moving to button
     })
 
     const root = createRoot(element)
@@ -102,7 +103,7 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
 
         view.dispatch(tr)
 
-        // Hide button after adding block
+        // Hide button immediately after adding block
         hideButton()
 
         // Focus the editor
@@ -197,6 +198,12 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
   const showButtonForElement = (element: HTMLElement) => {
     if (!view) return
 
+    // Clear any pending show timeout
+    if (showTimeout) {
+      clearTimeout(showTimeout)
+      showTimeout = null
+    }
+
     // Clear any pending hide timeout
     if (hideTimeout) {
       clearTimeout(hideTimeout)
@@ -233,6 +240,18 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
   const hideButton = () => {
     if (!view) return
 
+    // Clear any pending show timeout
+    if (showTimeout) {
+      clearTimeout(showTimeout)
+      showTimeout = null
+    }
+
+    // Clear any pending hide timeout
+    if (hideTimeout) {
+      clearTimeout(hideTimeout)
+      hideTimeout = null
+    }
+
     try {
       const state = addBlockButtonPluginKey.getState(
         view.state
@@ -253,26 +272,22 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
   }
 
   const scheduleHide = () => {
+    // Clear any existing timeout
     if (hideTimeout) {
       clearTimeout(hideTimeout)
     }
 
+    // Small delay to allow moving to button
     hideTimeout = setTimeout(() => {
       if (!isMouseOverButton && !hoveredElement) {
         hideButton()
       }
-    }, 500) // Increased delay to allow more time to move to button
+    }, 200)
   }
 
   const handleMouseEnter = (event: MouseEvent) => {
     const target = event.target as HTMLElement
     if (!target) return
-
-    // Clear any pending hide
-    if (hideTimeout) {
-      clearTimeout(hideTimeout)
-      hideTimeout = null
-    }
 
     // Find the closest block element
     let blockElement = target
@@ -325,8 +340,13 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
     // Clear hovered element
     hoveredElement = null
 
-    // Schedule hide with delay
+    // Hide immediately when leaving the editor area
     scheduleHide()
+  }
+
+  // Handle any user interaction that should hide the button
+  const handleUserInteraction = () => {
+    hideButton()
   }
 
   const attachMouseListeners = () => {
@@ -336,6 +356,13 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
     if (proseMirrorElement) {
       proseMirrorElement.addEventListener("mouseenter", handleMouseEnter, true)
       proseMirrorElement.addEventListener("mouseleave", handleMouseLeave, true)
+
+      // Hide button on any user interaction
+      proseMirrorElement.addEventListener("keydown", handleUserInteraction)
+      proseMirrorElement.addEventListener("click", handleUserInteraction)
+      proseMirrorElement.addEventListener("input", handleUserInteraction)
+      proseMirrorElement.addEventListener("focus", handleUserInteraction)
+
       mouseListenersAttached = true
     }
   }
@@ -355,6 +382,13 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
         handleMouseLeave,
         true
       )
+
+      // Remove interaction listeners
+      proseMirrorElement.removeEventListener("keydown", handleUserInteraction)
+      proseMirrorElement.removeEventListener("click", handleUserInteraction)
+      proseMirrorElement.removeEventListener("input", handleUserInteraction)
+      proseMirrorElement.removeEventListener("focus", handleUserInteraction)
+
       mouseListenersAttached = false
     }
   }
@@ -366,6 +400,14 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
         return { currentButton: null }
       },
       apply(tr, state: AddBlockButtonState): AddBlockButtonState {
+        // Hide button on any document changes (user typing, etc.)
+        if (tr.docChanged || tr.selectionSet) {
+          // Schedule hiding on next tick to avoid interfering with current transaction
+          setTimeout(() => {
+            hideButton()
+          }, 0)
+        }
+
         const meta = tr.getMeta(addBlockButtonPluginKey)
         if (meta && meta.type === "update") {
           return { currentButton: meta.currentButton }
@@ -392,10 +434,14 @@ export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
         },
         destroy: () => {
           try {
-            // Clear any pending timeouts
+            // Clear all pending timeouts
             if (hideTimeout) {
               clearTimeout(hideTimeout)
               hideTimeout = null
+            }
+            if (showTimeout) {
+              clearTimeout(showTimeout)
+              showTimeout = null
             }
 
             detachMouseListeners()
