@@ -8,7 +8,7 @@ afterEach(() => {
 
 vi.stubGlobal("CSS", { supports: () => true })
 
-vi.stubGlobal("matchMedia", (query) => ({
+vi.stubGlobal("matchMedia", (query: string) => ({
   matches: false,
   media: query,
   onchange: null,
@@ -18,6 +18,36 @@ vi.stubGlobal("matchMedia", (query) => ({
   removeEventListener: vi.fn(),
   dispatchEvent: vi.fn(),
 }))
+
+// Mock ResizeObserver
+vi.stubGlobal("ResizeObserver", {
+  observe: vi.fn(),
+  disconnect: vi.fn(),
+})
+
+// Mock getComputedStyle for the OneEllipsis component
+// ... existing code ...
+vi.stubGlobal("ResizeObserver", {
+  observe: vi.fn(),
+  disconnect: vi.fn(),
+})
+
+// Mock getComputedStyle to return a more complete object
+vi.stubGlobal("getComputedStyle", (elt: Element) => {
+  const style = (elt as HTMLElement)?.style
+
+  return {
+    ...style,
+    lineHeight: "20px",
+    getPropertyValue: (prop: string) => {
+      if (prop in style) {
+        // @ts-expect-error TS7010: Prop can be any
+        return style[prop]
+      }
+      return ""
+    },
+  }
+})
 
 // Add pointer event polyfills for testing environment
 if (typeof window !== "undefined") {

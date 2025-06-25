@@ -314,85 +314,87 @@ export const CardCollection = <
   )
 
   return (
-    <>
-      {isInitialLoading ? (
-        <CardGrid>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <Card key={i}>
-              <CardHeader>
-                <CardTitle aria-label="Loading card">
-                  <Skeleton className="h-4 w-3/4" />
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {cardProperties.map((property) => (
-                  <div key={String(property.label)} className="space-y-1">
-                    <Skeleton className="h-3 w-1/4" />
-                    <Skeleton className="h-3 w-1/2" />
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          ))}
-        </CardGrid>
-      ) : (
-        <>
-          {data?.type === "grouped" &&
-            data.groups.map((group) => {
-              return (
-                <>
-                  <GroupHeader
-                    label={group.label}
-                    itemCount={group.itemCount}
-                    onOpenChange={(open) => setGroupOpen(group.key, open)}
-                    open={openGroups[group.key]}
-                    selectable={!!source.selectable}
-                    showOpenChange={collapsible}
-                    select={
-                      groupAllSelectedStatus[group.key]?.checked
-                        ? true
-                        : groupAllSelectedStatus[group.key]?.indeterminate
-                          ? "indeterminate"
-                          : false
-                    }
-                    onSelectChange={(checked) =>
-                      handleSelectGroupChange(group, checked)
-                    }
-                  />
-                  <AnimatePresence>
-                    {openGroups[group.key] && (
-                      <GroupCards
-                        key={group.key}
-                        source={source}
-                        items={group.records}
-                        selectedItems={selectedItems}
-                        handleSelectItemChange={handleSelectItemChange}
-                        title={title}
-                        cardProperties={cardProperties}
-                        description={description}
-                        avatar={avatar}
-                      />
-                    )}
-                  </AnimatePresence>
-                </>
-              )
-            })}
+    <div className="flex min-h-0 flex-1 flex-col gap-4 border-solid border-[#f00]">
+      <div className="overflow-auto">
+        {isInitialLoading ? (
+          <CardGrid>
+            {Array.from({ length: 8 }).map((_, i) => (
+              <Card key={i}>
+                <CardHeader>
+                  <CardTitle aria-label="Loading card">
+                    <Skeleton className="h-4 w-3/4" />
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {cardProperties.map((property) => (
+                    <div key={String(property.label)} className="space-y-1">
+                      <Skeleton className="h-3 w-1/4" />
+                      <Skeleton className="h-3 w-1/2" />
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            ))}
+          </CardGrid>
+        ) : (
+          <>
+            {data?.type === "grouped" &&
+              data.groups.map((group) => {
+                return (
+                  <>
+                    <GroupHeader
+                      label={group.label}
+                      itemCount={group.itemCount}
+                      onOpenChange={(open) => setGroupOpen(group.key, open)}
+                      open={openGroups[group.key]}
+                      selectable={!!source.selectable}
+                      showOpenChange={collapsible}
+                      select={
+                        groupAllSelectedStatus[group.key]?.checked
+                          ? true
+                          : groupAllSelectedStatus[group.key]?.indeterminate
+                            ? "indeterminate"
+                            : false
+                      }
+                      onSelectChange={(checked) =>
+                        handleSelectGroupChange(group, checked)
+                      }
+                    />
+                    <AnimatePresence>
+                      {openGroups[group.key] && (
+                        <GroupCards
+                          key={group.key}
+                          source={source}
+                          items={group.records}
+                          selectedItems={selectedItems}
+                          handleSelectItemChange={handleSelectItemChange}
+                          title={title}
+                          cardProperties={cardProperties}
+                          description={description}
+                          avatar={avatar}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </>
+                )
+              })}
 
-          {data?.type === "flat" && (
-            <GroupCards
-              source={source}
-              items={data.records}
-              selectedItems={selectedItems}
-              handleSelectItemChange={handleSelectItemChange}
-              title={title}
-              cardProperties={cardProperties}
-              description={description}
-              avatar={avatar}
-            />
-          )}
-        </>
-      )}
+            {data?.type === "flat" && (
+              <GroupCards
+                source={source}
+                items={data.records}
+                selectedItems={selectedItems}
+                handleSelectItemChange={handleSelectItemChange}
+                title={title}
+                cardProperties={cardProperties}
+                description={description}
+                avatar={avatar}
+              />
+            )}
+          </>
+        )}
+      </div>
       <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
-    </>
+    </div>
   )
 }

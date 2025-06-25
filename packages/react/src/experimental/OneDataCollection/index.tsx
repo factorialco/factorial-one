@@ -249,6 +249,7 @@ export const OneDataCollection = <
   onSelectItems,
   onBulkAction,
   emptyStates,
+  fullHeight,
 }: {
   source: DataSource<
     Record,
@@ -274,6 +275,7 @@ export const OneDataCollection = <
   onBulkAction?: OnBulkActionCallback<Record, Filters>
   emptyStates?: CustomEmptyStates
   onTotalItemsChange?: (totalItems: number) => void
+  fullHeight?: boolean
 }): JSX.Element => {
   const {
     // Filters
@@ -472,7 +474,11 @@ export const OneDataCollection = <
 
   return (
     <div
-      className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
+      className={cn(
+        "flex flex-col gap-4",
+        layout === "standard" && "-mx-6",
+        fullHeight && "h-full"
+      )}
     >
       {((totalItems !== undefined && totalItemSummary(totalItems)) ||
         navigationFilters) && (
@@ -505,7 +511,9 @@ export const OneDataCollection = <
           </div>
         </div>
       )}
-      <div className="flex flex-col gap-4 px-6">
+      <div
+        className={cn("flex flex-col gap-4 px-6", fullHeight && "max-h-full")}
+      >
         <Filters.Root
           schema={filters}
           filters={currentFilters}
@@ -571,38 +579,35 @@ export const OneDataCollection = <
         </Filters.Root>
       </div>
 
-      <div>
-        {emptyState ? (
-          <div className="flex flex-col items-center justify-center">
-            <OneEmptyState
-              emoji={emptyState.emoji}
-              title={emptyState.title}
-              description={emptyState.description}
-              actions={emptyState.actions}
+      {emptyState ? (
+        <div className="flex flex-1 flex-col items-center justify-center">
+          <OneEmptyState
+            emoji={emptyState.emoji}
+            title={emptyState.title}
+            description={emptyState.description}
+            actions={emptyState.actions}
+          />
+        </div>
+      ) : (
+        <>
+          <VisualizationRenderer
+            visualization={visualizations[currentVisualization]}
+            source={source}
+            onSelectItems={onSelectItemsLocal}
+            onLoadData={onLoadData}
+            onLoadError={onLoadError}
+          />
+          {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
+            <OneActionBar
+              isOpen={showActionBar}
+              selectedNumber={selectedItemsCount}
+              primaryActions={bulkActions.primary}
+              secondaryActions={bulkActions?.secondary}
+              onUnselect={() => clearSelectedItemsFunc?.()}
             />
-          </div>
-        ) : (
-          <>
-            <VisualizationRenderer
-              visualization={visualizations[currentVisualization]}
-              source={source}
-              onSelectItems={onSelectItemsLocal}
-              onLoadData={onLoadData}
-              onLoadError={onLoadError}
-            />
-            {bulkActions?.primary &&
-              (bulkActions?.primary || []).length > 0 && (
-                <OneActionBar
-                  isOpen={showActionBar}
-                  selectedNumber={selectedItemsCount}
-                  primaryActions={bulkActions.primary}
-                  secondaryActions={bulkActions?.secondary}
-                  onUnselect={() => clearSelectedItemsFunc?.()}
-                />
-              )}
-          </>
-        )}
-      </div>
+          )}
+        </>
+      )}
     </div>
   )
 }
