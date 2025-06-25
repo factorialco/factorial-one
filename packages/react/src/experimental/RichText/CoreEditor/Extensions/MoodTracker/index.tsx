@@ -50,7 +50,6 @@ declare module "@tiptap/core" {
 
 export const MoodTrackerView: React.FC<NodeViewProps> = ({
   node,
-  updateAttributes,
   deleteNode,
   extension,
 }) => {

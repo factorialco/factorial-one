@@ -1,4 +1,3 @@
-import { Editor } from "@tiptap/react"
 import { Plugin, PluginKey, TextSelection } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
 import React from "react"
@@ -18,10 +17,7 @@ export interface AddBlockButtonState {
   } | null
 }
 
-export const createAddBlockButtonPlugin = (
-  editor: Editor,
-  config?: AddBlockButtonConfig
-) => {
+export const createAddBlockButtonPlugin = (config?: AddBlockButtonConfig) => {
   // If disabled, return empty plugin
   if (config?.enabled === false) {
     return new Plugin({
@@ -30,7 +26,7 @@ export const createAddBlockButtonPlugin = (
         init(): AddBlockButtonState {
           return { currentButton: null }
         },
-        apply(tr, state: AddBlockButtonState): AddBlockButtonState {
+        apply(_, state: AddBlockButtonState): AddBlockButtonState {
           return state
         },
       },
@@ -121,7 +117,6 @@ export const createAddBlockButtonPlugin = (
     try {
       root.render(
         React.createElement(AddBlockButton, {
-          editor,
           position,
           nodePos,
           config: config || { enabled: true },
@@ -387,7 +382,7 @@ export const createAddBlockButtonPlugin = (
       }, 100)
 
       return {
-        update: (view, prevState) => {
+        update: () => {
           // Re-attach listeners if needed
           if (!mouseListenersAttached) {
             setTimeout(() => {

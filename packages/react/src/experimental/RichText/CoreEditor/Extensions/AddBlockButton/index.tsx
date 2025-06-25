@@ -17,7 +17,7 @@ export const createAddBlockButtonExtension = (
 
       addProseMirrorPlugins() {
         try {
-          return [createAddBlockButtonPlugin(this.editor, this.options.config)]
+          return [createAddBlockButtonPlugin(this.options.config)]
         } catch (error) {
           console.error("Error creating AddBlockButton plugin:", error)
           return []

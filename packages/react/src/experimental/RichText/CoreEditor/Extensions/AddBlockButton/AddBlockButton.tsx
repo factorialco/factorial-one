@@ -1,12 +1,10 @@
 import { Button } from "@/factorial-one"
 import { Plus } from "@/icons/app"
 import { cn } from "@/lib/utils"
-import { Editor } from "@tiptap/react"
 import React, { useEffect, useState } from "react"
 import { AddBlockButtonConfig } from "./types"
 
 interface AddBlockButtonProps {
-  editor: Editor
   position: { top: number; left: number }
   nodePos: number
   config?: AddBlockButtonConfig
@@ -14,7 +12,6 @@ interface AddBlockButtonProps {
 }
 
 export const AddBlockButton: React.FC<AddBlockButtonProps> = ({
-  editor,
   position,
   nodePos,
   config,
