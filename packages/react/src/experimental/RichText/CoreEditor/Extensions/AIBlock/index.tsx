@@ -4,7 +4,6 @@ import {
   CustomTaskExtension,
   HighlightExtension,
   LinkExtension,
-  MoodTrackerExtension,
   PersistSelection,
   StarterKitExtension,
   TaskListExtension,
@@ -69,18 +68,15 @@ declare module "@tiptap/core" {
 const TextSkeleton = () => (
   <div className="space-y-3">
     <div className="flex space-x-2">
-      <div className="h-4 w-16 animate-pulse rounded bg-f1-background-secondary"></div>
-      <div className="h-4 w-32 animate-pulse rounded bg-f1-background-secondary"></div>
+      <div className="h-4 w-16 animate-pulse rounded bg-f1-background-secondary" />
+      <div className="h-4 w-32 animate-pulse rounded bg-f1-background-secondary" />
     </div>
     <div className="space-y-2">
-      <div className="h-3 w-full animate-pulse rounded bg-f1-background-secondary"></div>
-      <div className="h-3 w-4/5 animate-pulse rounded bg-f1-background-secondary"></div>
-      <div className="h-3 w-3/4 animate-pulse rounded bg-f1-background-secondary"></div>
-    </div>
-    <div className="flex space-x-2 pt-2">
-      <div className="h-2 w-4 animate-pulse rounded bg-f1-background-secondary"></div>
-      <div className="h-2 w-20 animate-pulse rounded bg-f1-background-secondary"></div>
-      <div className="h-2 w-12 animate-pulse rounded bg-f1-background-secondary"></div>
+      <div className="h-4 w-full animate-pulse rounded bg-f1-background-secondary" />
+      <div className="h-4 w-4/5 animate-pulse rounded bg-f1-background-secondary" />
+      <div className="h-4 w-3/4 animate-pulse rounded bg-f1-background-secondary" />
+      <div className="h-4 w-full animate-pulse rounded bg-f1-background-secondary" />
+      <div className="h-4 w-1/2 animate-pulse rounded bg-f1-background-secondary" />
     </div>
   </div>
 )
@@ -103,7 +99,6 @@ const useContentEditor = (
       HighlightExtension,
       TextAlignExtension,
       LinkExtension,
-      MoodTrackerExtension,
       PersistSelection,
     ],
     []
@@ -266,12 +261,13 @@ const AIBlockHeader: React.FC<AIBlockHeaderProps> = ({
         <Button
           onClick={onToggleCollapse}
           variant="outline"
+          size="sm"
           hideLabel
           label={isCollapsed ? "Expand" : "Collapse"}
           icon={isCollapsed ? ChevronDown : ChevronUp}
         />
       )}
-      <Dropdown items={onDropdownAction([])} />
+      <Dropdown items={onDropdownAction([])} size="sm" />
     </div>
   </motion.div>
 )

@@ -136,8 +136,9 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
                   : config.labels?.expand || "Expand"
               }
               icon={isOpen ? ChevronUp : ChevronDown}
+              size="sm"
             />
-            <Dropdown items={getDropdownItems} />
+            <Dropdown items={getDropdownItems} size="sm" />
           </div>
         </motion.div>
 
