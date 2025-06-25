@@ -41,8 +41,7 @@ vi.stubGlobal("getComputedStyle", (elt: Element) => {
     lineHeight: "20px",
     getPropertyValue: (prop: string) => {
       if (prop in style) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
+        // @ts-expect-error TS7010: Prop can be any
         return style[prop]
       }
       return ""

@@ -189,7 +189,13 @@ export const TableCollection = <
     handleSelectItemChange,
     handleSelectAll,
     handleSelectGroupChange,
-  } = useSelectable(data, paginationInfo, source, onSelectItems)
+  } = useSelectable(
+    data,
+    paginationInfo,
+    source,
+    onSelectItems,
+    source.defaultSelectedItems
+  )
   const summaryData = useMemo(() => {
     console.warn("summariesData", summariesData)
     console.warn("source.summaries", source.summaries)
@@ -278,7 +284,6 @@ export const TableCollection = <
 
   const checkColumnWidth = source.selectable ? 52 : 0
 
-  console.warn("summaryData", summaryData)
   return (
     <>
       <OneTable loading={isLoading}>

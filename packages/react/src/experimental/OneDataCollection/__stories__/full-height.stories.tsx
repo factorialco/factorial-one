@@ -20,11 +20,15 @@ type Story = StoryObj<typeof meta>
 export const Basic: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },
+    layout: "fullscreen",
   },
   render: () => <ExampleComponent frozenColumns={2} fullHeight />,
 }
 
 export const WithPagination: Story = {
+  parameters: {
+    layout: "fullscreen",
+  },
   render: () => {
     const paginatedMockUsers = generateMockUsers(50)
     const dataAdapter = createDataAdapter({

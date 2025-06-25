@@ -16,6 +16,7 @@ import {
   PaginationType,
   PresetsDefinition,
   RecordType,
+  SelectedItemsState,
   SortingsStateMultiple,
   useDataSource,
 } from "@/experimental/OneDataCollection/exports"
@@ -23,8 +24,8 @@ import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
 
 import { NewColor } from "@/experimental/Information/Tags/DotTag"
-import { cn } from "@/lib/utils"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
+import { cn } from "@/lib/utils"
 
 import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
@@ -613,6 +614,7 @@ export const ExampleComponent = ({
   usePresets = false,
   frozenColumns = 0,
   selectable,
+  defaultSelectedItems,
   bulkActions,
   currentGrouping,
   grouping,
@@ -638,6 +640,7 @@ export const ExampleComponent = ({
     >
   >
   dataAdapter?: DataAdapter<MockUser, FiltersType, NavigationFiltersDefinition>
+  defaultSelectedItems?: SelectedItemsState
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
@@ -657,7 +660,6 @@ export const ExampleComponent = ({
     frozenColumns,
   })
 
-  console.log("dataAdapter", dataAdapter)
   const dataSource = useDataSource({
     filters,
     navigationFilters,
@@ -697,6 +699,7 @@ export const ExampleComponent = ({
       },
     ],
     selectable,
+    defaultSelectedItems,
     bulkActions,
     totalItemSummary,
     dataAdapter: dataAdapter ?? {
@@ -707,7 +710,7 @@ export const ExampleComponent = ({
   })
 
   return (
-    <div className={cn("space-y-4", fullHeight && "absolute inset-0 top-10")}>
+    <div className={cn("space-y-4", fullHeight && "max-h-full bg-[#fff]")}>
       <OneDataCollection
         fullHeight={fullHeight}
         source={dataSource}

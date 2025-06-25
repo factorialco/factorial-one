@@ -512,10 +512,7 @@ export const OneDataCollection = <
         </div>
       )}
       <div
-        className={cn(
-          "flex min-h-0 flex-col gap-4 px-6",
-          fullHeight && "max-h-full"
-        )}
+        className={cn("flex flex-col gap-4 px-6", fullHeight && "max-h-full")}
       >
         <Filters.Root
           schema={filters}

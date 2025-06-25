@@ -48,7 +48,6 @@ function TableBase({ children, loading = false }: TableProps) {
     <TableContext.Provider
       value={{ isScrolled, setIsScrolled, isScrolledRight, setIsScrolledRight }}
     >
-
       <div ref={containerRef} className="relative h-full w-full overflow-auto">
         <TableRoot
           className={cn(loading && "select-none opacity-50 transition-opacity")}
