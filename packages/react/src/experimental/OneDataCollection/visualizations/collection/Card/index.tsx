@@ -46,7 +46,7 @@ const findNextMultiple = (n: number): number => {
 
 const CardGrid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {children}
     </div>
   )
@@ -54,6 +54,27 @@ const CardGrid = ({ children }: { children: React.ReactNode }) => {
 
 /**
  * Group Cards: Renders
+ */
+
+export type CardCollectionProps<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+> = CollectionProps<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping,
+  CardVisualizationOptions<Record, Filters, Sortings>
+>
+
+/**
+ * Group Cards: Renders the cards for a group
  */
 
 type GroupCardsProps<
@@ -311,7 +332,6 @@ export const CardCollection = <
               return (
                 <>
                   <GroupHeader
-                    className="p-4"
                     label={group.label}
                     itemCount={group.itemCount}
                     onOpenChange={(open) => setGroupOpen(group.key, open)}
@@ -356,6 +376,8 @@ export const CardCollection = <
               handleSelectItemChange={handleSelectItemChange}
               title={title}
               cardProperties={cardProperties}
+              description={description}
+              avatar={avatar}
             />
           )}
         </>

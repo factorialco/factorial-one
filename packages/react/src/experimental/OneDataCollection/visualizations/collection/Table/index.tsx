@@ -1,11 +1,12 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
-import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination/PagesPagination"
+import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   getAnimationVariants,
   useGroups,
 } from "@/experimental/OneDataCollection/useGroups"
+import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
 import {
   OneTable,
   TableBody,
@@ -15,16 +16,8 @@ import {
   TableRow,
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
-import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
-import {
-  ComponentProps,
-  Fragment,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
+import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition } from "../../../property-render"
@@ -74,6 +67,23 @@ export type TableVisualizationOptions<
   frozenColumns?: 0 | 1 | 2
 }
 
+export type TableCollectionProps<
+  R extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<R>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<R>,
+> = CollectionProps<
+  R,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping,
+  TableVisualizationOptions<R, Filters, Sortings>
+>
+
 export const TableCollection = <
   R extends RecordType,
   Filters extends FiltersDefinition,
@@ -105,8 +115,6 @@ export const TableCollection = <
     )
   )
 
-  const loadingIndicatorRef = useRef<HTMLDivElement>(null)
-
   const {
     data,
     paginationInfo,
@@ -122,36 +130,13 @@ export const TableCollection = <
 
   const { currentSortings, setCurrentSortings, isLoading } = source
 
-  useEffect(() => {
-    if (
-      !isInfiniteScrollPagination(paginationInfo) ||
-      !paginationInfo.hasMore
-    ) {
-      return
-    }
-
-    const loadingIndicator = loadingIndicatorRef.current
-    if (!loadingIndicator) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !isLoading && !isLoadingMore) {
-          loadMore()
-        }
-      },
-      {
-        root: null, // viewport
-        rootMargin: "200px",
-        threshold: 0.1,
-      }
-    )
-
-    observer.observe(loadingIndicator)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [paginationInfo, isLoadingMore, loadMore, isLoading])
+  // Infinite scroll pagination
+  const { loadingIndicatorRef } = useInfiniteScrollPagination(
+    paginationInfo,
+    isLoading,
+    isLoadingMore,
+    loadMore
+  )
 
   useEffect(() => {
     onLoadData({
@@ -237,15 +222,13 @@ export const TableCollection = <
     defaultOpenGroups
   )
 
+  const skeletonColumns =
+    columns.length + (source.itemActions ? 1 : 0) + (source.selectable ? 1 : 0)
   /*
    * Initial loading
    */
   if (isInitialLoading) {
-    return (
-      <OneTable.Skeleton
-        columns={columns.length + (source.itemActions ? 1 : 0)}
-      />
-    )
+    return <OneTable.Skeleton columns={skeletonColumns} />
   }
 
   // Enforce that sorting is only used when sortings are defined
@@ -260,9 +243,6 @@ export const TableCollection = <
   }
 
   const checkColumnWidth = source.selectable ? 52 : 0
-
-  const skeletonColumns =
-    columns.length + (source.itemActions ? 1 : 0) + (source.selectable ? 1 : 0)
 
   return (
     <>
@@ -414,18 +394,6 @@ export const TableCollection = <
                 />
               )
             })}
-
-          {paginationInfo?.type === "infinite-scroll" &&
-            isLoadingMore &&
-            Array.from({ length: 5 }).map((_, rowIndex) => (
-              <TableRow key={`skeleton-row-${rowIndex}`}>
-                {Array.from({ length: skeletonColumns }).map((_, colIndex) => (
-                  <TableCell key={`skeleton-cell-${rowIndex}-${colIndex}`}>
-                    <Skeleton className="h-4 w-full" />
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
         </TableBody>
       </OneTable>
 

@@ -249,7 +249,7 @@ export type BaseDataAdapter<
   NavigationFilters extends NavigationFiltersDefinition,
 > = {
   /** Indicates this adapter doesn't use pagination */
-  paginationType?: never
+  paginationType?: never | undefined
   /**
    * Function to fetch data based on filter options
    * @param options - The filter options to apply when fetching data
@@ -454,6 +454,10 @@ export type DataSource<
   setCurrentNavigationFilters: React.Dispatch<
     React.SetStateAction<NavigationFiltersState<NavigationFilters>>
   >
+  /** Current state of applied grouping */
+  currentGrouping?: Grouping["mandatory"] extends true
+    ? Exclude<GroupingState<Record, Grouping>, undefined>
+    : GroupingState<Record, Grouping>
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<Record, Grouping>>
