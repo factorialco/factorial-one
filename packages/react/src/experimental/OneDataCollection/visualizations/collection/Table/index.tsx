@@ -189,7 +189,13 @@ export const TableCollection = <
     handleSelectItemChange,
     handleSelectAll,
     handleSelectGroupChange,
-  } = useSelectable(data, paginationInfo, source, onSelectItems)
+  } = useSelectable(
+    data,
+    paginationInfo,
+    source,
+    onSelectItems,
+    source.defaultSelectedItems
+  )
   const summaryData = useMemo(() => {
     console.warn("summariesData", summariesData)
     console.warn("source.summaries", source.summaries)
