@@ -23,6 +23,7 @@ export type ButtonInternalProps = Pick<
     size?: "sm" | "md" | "lg"
     append?: React.ReactNode
     appendButton?: React.ReactNode
+    extra?: React.HTMLAttributes<HTMLButtonElement>
   }
 
 const iconVariants = cva({
@@ -81,6 +82,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
       append,
       appendButton,
       className,
+      extra,
       ...props
     },
     ref
@@ -137,6 +139,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
         appendButton={appendButton}
         className={cn(className, "relative")}
         {...props}
+        {...extra}
         aria-busy={isLoading}
       >
         {isLoading && (
