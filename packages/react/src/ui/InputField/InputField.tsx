@@ -41,45 +41,57 @@ const inputFieldWrapperVariants = cva({
   },
 })
 
-export type InputFieldProps<T> = {
-  label: string // Required for accessibility purpose
-  labelIcon?: IconType
-  hideLabel?: boolean
-  placeholder?: string
-  onClickPlaceholder?: () => void
-  onClickChildren?: () => void
-  onClickContent?: () => void
-  value: T | undefined
-  onChange?: (value: T) => void
-  size?: InputFieldSize
-  error?: string | string[] | boolean
-  disabled?: boolean
-  className?: string
-  required?: boolean
-  readonly?: boolean
-  clearable?: boolean
-  onClear?: () => void
-  onFocus?: () => void
-  onBlur?: () => void
-  children: React.ReactNode & {
+export type InputFieldProps<T> = // label or placeholder is required
+  (
+    | {
+        label: string
+        placeholder?: string
+      }
+    | {
+        label?: string
+        placeholder: string
+      }
+  ) & {
+    labelIcon?: IconType
+    hideLabel?: boolean
+    hidePlaceholder?: boolean
+    onClickPlaceholder?: () => void
+    onClickChildren?: () => void
+    onClickContent?: () => void
+    value: T | undefined
+    onChange?: (value: T) => void
+    size?: InputFieldSize
+    error?: string | string[] | boolean
+    disabled?: boolean
+    className?: string
+    required?: boolean
+    readonly?: boolean
+    clearable?: boolean
+    onClear?: () => void
     onFocus?: () => void
     onBlur?: () => void
-    onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void
-    onChange?: (
-      value: T | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => void
-    value?: T
+    children: React.ReactNode & {
+      onFocus?: () => void
+      onBlur?: () => void
+      onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void
+      onChange?: (
+        value: T | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      ) => void
+      value?: T
+    }
+    icon?: IconType
+    isEmpty?: (value: T | undefined) => boolean
+    emptyValue?: T
+    maxLength?: number
+    hideMaxLength?: boolean
+    append?: React.ReactNode
+    lengthProvider?: (value: T | undefined) => number
   }
-  icon?: IconType
-  isEmpty?: (value: T | undefined) => boolean
-  emptyValue?: T
-  maxLength?: number
-  hideMaxLength?: boolean
-  append?: React.ReactNode
-  lengthProvider?: (value: T | undefined) => number
-}
 
-const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
+const InputField = forwardRef<
+  HTMLDivElement,
+  InputFieldProps<string | undefined>
+>(
   (
     {
       children,
@@ -102,6 +114,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       maxLength,
       hideMaxLength = false,
       append,
+      hidePlaceholder = false,
       onClickPlaceholder,
       onClickChildren,
       onClickContent,
@@ -156,7 +169,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               className={cn("flex min-w-0 flex-1 flex-row gap-4")}
               data-testid="input-field-top"
             >
-              {!hideLabel && (
+              {!hideLabel && label && (
                 <Label
                   label={label}
                   required={required}
@@ -195,7 +208,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
             />
           )}
           <div className="relative flex w-full gap-2" onClick={onClickContent}>
-            <div onClick={onClickChildren}>
+            <div onClick={onClickChildren} className="w-full">
               {cloneElement(children as React.ReactElement, {
                 onChange: handleChange,
                 onBlur: props.onBlur,
@@ -203,10 +216,11 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 disabled: noEdit,
                 readonly,
                 value: localValue,
+                "aria-label": label || placeholder,
               })}
             </div>
 
-            {placeholder && isEmpty(localValue) && (
+            {placeholder && !hidePlaceholder && isEmpty(localValue) && (
               <div
                 className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start text-f1-foreground-secondary"
                 onClick={onClickPlaceholder}
@@ -215,12 +229,16 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               </div>
             )}
           </div>
-          {clearable && !noEdit && !isEmpty(localValue) && (
-            <Icon
-              className="hover:text-f1-foreground-primary h-5 w-5 shrink-0 cursor-pointer text-f1-foreground-secondary"
-              onClick={handleClear}
-              icon={CrossedCircle}
-            />
+          {clearable && !noEdit && (
+            <div className="h-5 w-5 shrink-0">
+              {!isEmpty(localValue) && (
+                <Icon
+                  className="hover:text-f1-foreground-primary h-5 w-5 cursor-pointer text-f1-foreground-secondary"
+                  onClick={handleClear}
+                  icon={CrossedCircle}
+                />
+              )}
+            </div>
           )}
           {append && <div className="flex gap-2">{append}</div>}
         </div>

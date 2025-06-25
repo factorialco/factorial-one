@@ -60,19 +60,19 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
       return (
         <div
-          className="absolute right-2 top-0.5 hidden h-full flex-col group-focus-within:flex group-hover:flex"
+          className="-mt-1 hidden h-full flex-col group-focus-within:flex group-hover:flex"
           onClick={(e) => e.preventDefault()}
         >
           <div
             onClick={handleStep("increase")}
-            className="h-4 cursor-pointer"
+            className="h-3 cursor-pointer"
             role="button"
           >
             <Icon size="sm" icon={ChevronUp} />
           </div>
           <div
             onClick={handleStep("decrease")}
-            className="h-4 cursor-pointer"
+            className="h-3 cursor-pointer"
             role="button"
           >
             <Icon size="sm" icon={ChevronDown} />
@@ -99,8 +99,8 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           className="group-focus-within:pr-5 group-hover:pr-5"
           onChange={(e) => handleChange(e.target.value)}
           {...props}
+          append={<Arrows />}
         />
-        <Arrows />
       </div>
     )
   }

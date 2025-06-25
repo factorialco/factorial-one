@@ -56,6 +56,7 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
         disabled={props.disabled}
         onChange={onChangeLocal}
         role="searchbox"
+        size="sm"
         autoFocus={props.autoFocus}
         clearable={clearable}
       />

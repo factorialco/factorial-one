@@ -4,7 +4,19 @@ import { ComponentProps, HTMLInputTypeAttribute } from "react"
 
 export type InputProps = Pick<
   ComponentProps<typeof ShadcnInput>,
-  "ref" | "disabled" | "size" | "onChange" | "value" | "placeholder"
+  | "ref"
+  | "disabled"
+  | "size"
+  | "onChange"
+  | "value"
+  | "placeholder"
+  | "clearable"
+  | "maxLength"
+  | "label"
+  | "labelIcon"
+  | "icon"
+  | "error"
+  | "hideLabel"
 > & {
   type?: Exclude<HTMLInputTypeAttribute, "number">
 }
