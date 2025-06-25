@@ -7,7 +7,7 @@ const meta: Meta<typeof UpsellingBanner> = {
   parameters: {
     layout: "padded",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "no-sidebar"],
   argTypes: {
     primaryAction: {
       control: "object",

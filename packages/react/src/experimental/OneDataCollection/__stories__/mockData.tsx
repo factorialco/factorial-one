@@ -1,5 +1,6 @@
 import {
   BaseFetchOptions,
+  BaseResponse,
   BulkActionDefinition,
   DataAdapter,
   FilterDefinition,
@@ -15,6 +16,7 @@ import {
   PaginationType,
   PresetsDefinition,
   RecordType,
+  SelectedItemsState,
   SortingsStateMultiple,
   useDataSource,
 } from "@/experimental/OneDataCollection/exports"
@@ -22,6 +24,7 @@ import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
 
 import { NewColor } from "@/experimental/Information/Tags/DotTag"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
@@ -240,6 +243,7 @@ export const getMockVisualizations = (options?: {
     MockUser,
     FiltersType,
     typeof sortings,
+    SummariesDefinition,
     ItemActionsDefinition<MockUser>,
     NavigationFiltersDefinition,
     GroupingDefinition<MockUser>
@@ -511,7 +515,7 @@ export const createObservableDataFetch = (delay = 0) => {
     sortings: sortingsState,
     navigationFilters,
   }: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>) =>
-    new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
+    new Observable<PromiseState<BaseResponse<MockUser>>>((observer) => {
       observer.next({
         loading: true,
         error: null,
@@ -519,15 +523,36 @@ export const createObservableDataFetch = (delay = 0) => {
       })
 
       const timeoutId = setTimeout(() => {
+        const filteredData = filterUsers(
+          mockUsers,
+          filters,
+          sortingsState,
+          navigationFilters
+        )
+
+        // Calculate summaries like in createPromiseDataFetch
+        const summaries = {
+          salary: filteredData.reduce((total, user) => {
+            return total + (user.salary || 0)
+          }, 0),
+          userCount: filteredData.length,
+          averageSalary:
+            filteredData.filter((user) => user.salary !== undefined).length > 0
+              ? filteredData.reduce(
+                  (sum, user) => sum + (user.salary || 0),
+                  0
+                ) /
+                filteredData.filter((user) => user.salary !== undefined).length
+              : 0,
+        }
+
         observer.next({
           loading: false,
           error: null,
-          data: filterUsers(
-            mockUsers,
-            filters,
-            sortingsState,
-            navigationFilters
-          ),
+          data: {
+            records: filteredData,
+            summaries: summaries as unknown as MockUser,
+          },
         })
         observer.complete()
       }, delay)
@@ -543,17 +568,37 @@ export const createPromiseDataFetch = (delay = 500) => {
     search,
     navigationFilters,
   }: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>) =>
-    new Promise<MockUser[]>((resolve) => {
+    new Promise<BaseResponse<MockUser>>((resolve) => {
       setTimeout(() => {
-        resolve(
-          filterUsers(
-            mockUsers,
-            filters,
-            sortingsState,
-            navigationFilters,
-            search
-          )
+        const filteredData = filterUsers(
+          mockUsers,
+          filters,
+          sortingsState,
+          navigationFilters,
+          search
         )
+
+        const summaries = {
+          salary: filteredData.reduce((total, user) => {
+            return total + (user.salary || 0)
+          }, 0),
+
+          userCount: filteredData.length,
+
+          averageSalary:
+            filteredData.filter((user) => user.salary !== undefined).length > 0
+              ? filteredData.reduce(
+                  (sum, user) => sum + (user.salary || 0),
+                  0
+                ) /
+                filteredData.filter((user) => user.salary !== undefined).length
+              : 0,
+        }
+
+        resolve({
+          records: filteredData,
+          summaries: summaries as unknown as (typeof mockUsers)[number],
+        })
       }, delay)
     })
 }
@@ -567,6 +612,7 @@ export const ExampleComponent = ({
   usePresets = false,
   frozenColumns = 0,
   selectable,
+  defaultSelectedItems,
   bulkActions,
   currentGrouping,
   grouping,
@@ -583,11 +629,13 @@ export const ExampleComponent = ({
       MockUser,
       FiltersType,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<MockUser>,
       NavigationFiltersDefinition,
       GroupingDefinition<MockUser>
     >
   >
+  defaultSelectedItems?: SelectedItemsState
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
@@ -648,6 +696,7 @@ export const ExampleComponent = ({
       },
     ],
     selectable,
+    defaultSelectedItems,
     bulkActions,
     totalItemSummary,
     dataAdapter: dataAdapter ?? {
@@ -707,6 +756,20 @@ export function createDataAdapter<
   TFilters,
   TNavigationFilters
 > {
+  // Create a function to calculate summaries for a dataset
+  const calculateSummaries = (records: TRecord[]): Partial<TRecord> => {
+    // Calculate the sum of all salaries
+    const totalSalary = records.reduce((total, record) => {
+      return total + (record.salary || 0)
+    }, 0)
+
+    // Return a record-like object with the calculated summaries
+    return {
+      salary: totalSalary, // Cast to any as TRecord might have different types
+      // Add other summary calculations as needed
+    } as Partial<TRecord>
+  }
+
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
@@ -716,7 +779,7 @@ export function createDataAdapter<
       perPage?: number
       cursor?: string | null
     }
-  ): TRecord[] | PaginatedResponse<TRecord> => {
+  ): TRecord[] | PaginatedResponse<TRecord> | BaseResponse<TRecord> => {
     let filteredRecords = [...records]
 
     // Apply text search if available
@@ -789,6 +852,9 @@ export function createDataAdapter<
       })
     }
 
+    // Calculate summaries for the ENTIRE dataset (not just the paginated portion)
+    const summaries = calculateSummaries(filteredRecords)
+
     // Apply pagination if needed
     if (pagination && paginationType === "pages") {
       const { currentPage = 1 } = pagination
@@ -806,6 +872,7 @@ export function createDataAdapter<
         currentPage,
         perPage: pageSize,
         pagesCount: Math.ceil(filteredRecords.length / pageSize),
+        summaries: summaries as TRecord, // Include summaries
       }
     } else if (pagination && paginationType === "infinite-scroll") {
       const pageSize = pagination.perPage || perPage
@@ -820,14 +887,16 @@ export function createDataAdapter<
       )
 
       return {
-        type: "infinite-scroll" as const, // Use const assertion to help TypeScript
+        type: "infinite-scroll" as const,
         records: paginatedRecords,
         total: filteredRecords.length,
         cursor: String(nextCursor),
         perPage: pageSize,
         hasMore: nextCursor < filteredRecords.length,
+        summaries: summaries as TRecord, // Include summaries
       }
     }
+
     return filteredRecords
   }
 
@@ -918,11 +987,13 @@ export function createDataAdapter<
                     pagination
                   ) as InfiniteScrollPaginatedResponse<TRecord>
 
+                const fetchData = fetch()
+
                 try {
                   observer.next({
                     loading: false,
                     error: null,
-                    data: fetch(),
+                    data: fetchData,
                   })
                   observer.complete()
                 } catch (error) {
@@ -968,41 +1039,55 @@ export function createDataAdapter<
   const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
     fetchData: ({ filters, sortings }) => {
       if (useObservable) {
-        return new Observable<PromiseState<TRecord[]>>((observer) => {
-          observer.next({
-            loading: true,
-            error: null,
-            data: null,
-          })
+        return new Observable<PromiseState<BaseResponse<TRecord>>>(
+          (observer) => {
+            observer.next({
+              loading: true,
+              error: null,
+              data: null,
+            })
 
-          setTimeout(() => {
-            try {
-              const fetch = () =>
-                filterData(data, filters, sortings) as TRecord[]
+            setTimeout(() => {
+              try {
+                const fetch = () =>
+                  filterData(data, filters, sortings) as TRecord[]
 
-              observer.next({
-                loading: false,
-                error: null,
-                data: fetch(),
-              })
-              observer.complete()
-            } catch (error) {
-              observer.next({
-                loading: false,
-                error:
-                  error instanceof Error ? error : new Error(String(error)),
-                data: null,
-              })
-              observer.complete()
-            }
-          }, delay)
-        })
+                const summaries = calculateSummaries(fetch())
+                observer.next({
+                  loading: false,
+                  error: null,
+                  data: { records: fetch(), summaries: summaries as TRecord },
+                })
+                observer.complete()
+              } catch (error) {
+                observer.next({
+                  loading: false,
+                  error:
+                    error instanceof Error ? error : new Error(String(error)),
+                  data: null,
+                })
+                observer.complete()
+              }
+            }, delay)
+          }
+        )
       }
 
-      return new Promise<TRecord[]>((resolve, reject) => {
+      return new Promise<BaseResponse<TRecord>>((resolve, reject) => {
         setTimeout(() => {
           try {
-            resolve(filterData(data, filters, sortings) as TRecord[])
+            const result = filterData(data, filters, sortings)
+            // If the result is an array, we need to wrap it with summaries
+            const recordsData = Array.isArray(result)
+              ? result
+              : "records" in result
+                ? result.records
+                : []
+            const summaries = calculateSummaries(recordsData)
+            resolve({
+              records: recordsData,
+              summaries: summaries as TRecord,
+            })
           } catch (error) {
             reject(error)
           }

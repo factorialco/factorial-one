@@ -45,5 +45,5 @@ export type FilterTypeDefinition<
   /**
    * The height of the filter form container in pixels
    */
-  formHeight?: number | ((props: FilterTypeContext<Options>) => number)
+  formHeight?: number
 }

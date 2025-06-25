@@ -15,7 +15,7 @@ const meta = {
       story: { inline: false, height: "720px" },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "no-sidebar"],
   decorators: [
     (Story) => (
       <ApplicationFrame

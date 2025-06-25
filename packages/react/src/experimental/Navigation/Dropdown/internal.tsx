@@ -5,6 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
+import React, { useState } from "react"
 import { Button, ButtonProps } from "../../../components/Actions/Button"
 import { IconType } from "../../../components/Utilities/Icon"
 import { EllipsisHorizontal } from "../../../icons/app"
@@ -80,10 +81,17 @@ export function DropdownInternal({
   align = "start",
   size,
   children,
-  open,
-  onOpenChange,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
   ...rest
 }: DropdownInternalProps) {
+  const [internalOpen, setInternalOpen] = useState(false)
+
+  const isControlled =
+    controlledOpen !== undefined && controlledOnOpenChange !== undefined
+  const open = isControlled ? controlledOpen : internalOpen
+  const onOpenChange = isControlled ? controlledOnOpenChange : setInternalOpen
+
   return (
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
@@ -96,6 +104,7 @@ export function DropdownInternal({
             label="..."
             round
             variant="outline"
+            pressed={open}
           />
         )}
       </DropdownMenuTrigger>

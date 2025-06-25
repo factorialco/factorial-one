@@ -79,11 +79,15 @@ type OneEllipsisProps = {
   className?: string
   lines?: number
   children: string
+  noTooltip?: boolean
   tag?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span"
 }
 
 const OneEllipsis = forwardRef<HTMLDivElement, OneEllipsisProps>(
-  ({ className, lines = 1, children, ...props }, forwardedRef) => {
+  (
+    { className, lines = 1, children, noTooltip = false, ...props },
+    forwardedRef
+  ) => {
     const [hasEllipsis, setHasEllipsis] = useState(false)
 
     const internalRef = useRef<HTMLDivElement>(null)
@@ -105,7 +109,7 @@ const OneEllipsis = forwardRef<HTMLDivElement, OneEllipsisProps>(
       // eslint-disable-next-line react-hooks/exhaustive-deps -- We dont want to track props as dependencies
     }, [className, lines, children, ref])
 
-    return hasEllipsis ? (
+    return hasEllipsis && !noTooltip ? (
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>

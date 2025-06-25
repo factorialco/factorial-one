@@ -73,28 +73,15 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run this when the popover is opened
   }, [isOpen])
 
-  const filterType =
-    selectedFilterKey && schema[selectedFilterKey]
-      ? getFilterType(schema[selectedFilterKey].type)
-      : undefined
-
-  console.log("----", filterType?.formHeight)
   // gets the form height
   const formHeight = useMemo(() => {
-    if (
-      !selectedFilterKey ||
-      !schema[selectedFilterKey] ||
-      !filterType?.formHeight
-    ) {
-      return undefined
-    }
+    const maxHeight = Object.entries(schema).reduce((max, [_, value]) => {
+      const filterType = getFilterType(value.type)
+      return Math.max(max, filterType?.formHeight || 380)
+    }, 0)
 
-    return typeof filterType.formHeight === "function"
-      ? filterType.formHeight({
-          schema: schema[selectedFilterKey] as unknown as FilterTypeSchema,
-        })
-      : filterType.formHeight
-  }, [selectedFilterKey, schema, filterType])
+    return maxHeight
+  }, [schema])
 
   return (
     <div className="flex items-center gap-2">
@@ -116,10 +103,10 @@ export function FiltersControls<Filters extends FiltersDefinition>({
           side="bottom"
         >
           <div
-            className={cn(
-              "flex h-[min(448px,80vh)] flex-col",
-              formHeight && `h-[${formHeight}px]`
-            )}
+            className={cn("flex flex-col transition-all")}
+            style={{
+              height: formHeight || 388,
+            }}
           >
             <div className="flex min-h-0 flex-1">
               <FilterList

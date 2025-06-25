@@ -3,12 +3,14 @@ import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import type { SortingsDefinition } from "./sortings"
+import type { SummariesDefinition } from "./summary"
 import {
   DataSource,
   GroupingDefinition,
   OnSelectItemsCallback,
   PaginationInfo,
   RecordType,
+  SelectedItemsState,
 } from "./types"
 import { Data, GROUP_ID_SYMBOL, GroupRecord, WithGroupId } from "./useData"
 
@@ -35,6 +37,7 @@ export function useSelectable<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -45,11 +48,13 @@ export function useSelectable<
     R,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
   >,
-  onSelectItems?: OnSelectItemsCallback<R, Filters>
+  onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
+  defaultSelectedItems: SelectedItemsState | undefined
 ): UseSelectable<R> {
   const isGrouped = data.type === "grouped"
   const isPaginated = paginationInfo !== null
@@ -67,18 +72,46 @@ export function useSelectable<
   )
 
   /**
+   * Set the default selected items and groups
+   */
+  useEffect(() => {
+    if (!defaultSelectedItems) {
+      return
+    }
+
+    if (isGrouped) {
+      for (const defaultGroup of defaultSelectedItems.groups || []) {
+        const group = data.groups.find(
+          (group) => group.key === defaultGroup.groupId
+        )
+        if (group) {
+          handleSelectGroupChange(group, defaultGroup.checked)
+        }
+      }
+    }
+
+    for (const item of defaultSelectedItems.items || []) {
+      const record = data.records.find((record) => record.id === item.id)
+      if (record) {
+        handleSelectItemChange(record, item.checked)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the defaultSelectedItems
+  }, [JSON.stringify(defaultSelectedItems), data.records])
+
+  /**
    * Get the list of selected and unselected items from the itemsState for performance reasons
    */
   const [selectedItems, unselectedItems] = useMemo(() => {
     const selected = new Map()
     const unselected = new Map()
-    itemsState.forEach((value, id) => {
+    for (const [id, value] of itemsState.entries()) {
       if (value.checked) {
         selected.set(id, value.item)
       } else {
         unselected.set(id, value.item)
       }
-    })
+    }
     return [selected, unselected]
   }, [itemsState])
 
@@ -93,13 +126,13 @@ export function useSelectable<
     const selected = new Map()
     const unselected = new Map()
 
-    groupsState.forEach((value, id) => {
+    for (const [id, value] of groupsState.entries()) {
       if (value.checked) {
         selected.set(id, value.group)
       } else {
         unselected.set(id, value.group)
       }
-    })
+    }
     return [selected, unselected]
   }, [groupsState])
 
@@ -131,9 +164,9 @@ export function useSelectable<
 
     setGroupsState((current) => {
       const newState = new Map(current)
-      groups.forEach((group) => {
+      for (const group of groups) {
         newState.set(group.key, { group, checked })
-      })
+      }
       return newState
     })
   }
@@ -241,7 +274,7 @@ export function useSelectable<
     const items = Array.isArray(item) ? item : [item]
 
     let updated = 0
-    items.forEach((item) => {
+    for (const item of items) {
       const id = source.selectable && source.selectable(item)
       if (id === undefined) {
         return
@@ -254,7 +287,7 @@ export function useSelectable<
 
       updated++
       itemsState.set(id, { item, checked })
-    })
+    }
 
     if (updated > 0) {
       setItemsState((current) => new Map(current))
@@ -309,7 +342,7 @@ export function useSelectable<
    */
   useEffect(() => {
     if (isGrouped) {
-      data.groups.forEach((group) => {
+      for (const group of data.groups) {
         // If the group was loaded before, we can't change the state
         const groupChecked =
           groupAllSelectedStatus[group.key]?.checked || isAllSelected
@@ -323,7 +356,7 @@ export function useSelectable<
 
         // Apply the status to the new loaded group items
         handleSelectItemChange(group.records, groupChecked, true)
-      })
+      }
     } else {
       // For the flattened data, we need to check if the item was loaded before
       handleSelectItemChange(data.records, isAllSelected, true)

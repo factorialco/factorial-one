@@ -14,9 +14,11 @@ import {
   SortingsState,
   SortingsStateMultiple,
 } from "./sortings"
+import { SummariesDefinition } from "./summary"
 import { DataError } from "./useData"
 export * from "./grouping"
 export * from "./sortings"
+export * from "./summary"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
@@ -29,11 +31,13 @@ export * from "./sortings"
  * @template PrimaryActions - The available primary actions that can be performed on the collection
  * @template SecondaryActions - The available actions that can be performed on the collection
  * @template OtherActions - The available actions that can be performed on the collection
+ * @template Summaries - The available summaries for the collection
  */
 export type DataSourceDefinition<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -63,10 +67,16 @@ export type DataSourceDefinition<
   /** Available sorting fields. If not provided, sorting is not allowed. */
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
+  /** Available summaries fields. If not provided, summaries is not allowed. */
+  summaries?: Summaries & {
+    label?: string // Optional label for the summaries row
+  }
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters, NavigationFilters>
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
+  /** Default selected items */
+  defaultSelectedItems?: SelectedItemsState
   /** Bulk actions that can be performed on the collection */
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<Record, Filters>>[1]
@@ -111,7 +121,10 @@ export type PresetsDefinition<Filters extends FiltersDefinition> =
  * Base response type for collection data
  * @template Record - The type of records in the collection
  */
-export type BaseResponse<Record> = Record[]
+export type BaseResponse<Record> = {
+  records: Record[]
+  summaries?: Record // Optional summaries data
+}
 
 /**
  * Defines the available pagination types used throughout the application.
@@ -129,6 +142,7 @@ export type PaginationType = "pages" | "infinite-scroll"
  * @property {TRecord[]} records The list of records for the current page.
  * @property {number} total The total number of records available.
  * @property {number} perPage The number of records displayed per page.
+ * @property {TRecord} [summaries] Optional summaries data for the collection.
  */
 export type BasePaginatedResponse<TRecord> = {
   /** The records for the current page */
@@ -137,6 +151,8 @@ export type BasePaginatedResponse<TRecord> = {
   total: number
   /** Number of records per page */
   perPage: number
+  /** Optional summaries data */
+  summaries?: TRecord
 }
 
 /**
@@ -334,6 +350,15 @@ export type BulkActionDefinition = {
  */
 export type ExtractPropertyKeys<RecordType> = keyof RecordType
 
+/**
+ * Represents the selected items by id
+ */
+export type SelectedItemsState = {
+  allSelected?: boolean | "indeterminate"
+  items?: ReadonlyArray<{ id: string; checked: boolean }>
+  groups?: ReadonlyArray<{ groupId: string; checked: boolean }>
+}
+
 export type OnSelectItemsCallback<
   R extends RecordType,
   Filters extends FiltersDefinition,
@@ -381,6 +406,7 @@ export type CollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -391,6 +417,7 @@ export type CollectionProps<
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -413,6 +440,7 @@ export type DataSource<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -420,6 +448,7 @@ export type DataSource<
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
@@ -451,6 +480,10 @@ export type DataSource<
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<Record, Grouping>>
   >
+  /** Current summaries data */
+  currentSummaries?: Record
+  /** Function to update the current summaries data */
+  setCurrentSummaries?: React.Dispatch<React.SetStateAction<Record | undefined>>
 }
 
 /**

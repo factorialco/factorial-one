@@ -34,7 +34,6 @@ const InboxListBase = <T extends { id: string }>({
 
   return (
     <SectionList<T>
-      className="flex-1"
       sections={sections}
       contentContainerStyle={{
         paddingBottom: safeBottom,
