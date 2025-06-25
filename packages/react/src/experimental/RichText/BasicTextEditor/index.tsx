@@ -108,7 +108,7 @@ const BasicTextEditorComponent = forwardRef<
       id={editorId}
     >
       <div
-        className="scrollbar-macos relative w-full flex-grow overflow-y-scroll pl-5"
+        className="scrollbar-macos relative w-full flex-grow overflow-y-scroll"
         onClick={() => editor?.commands.focus()}
       >
         <EditorContent editor={editor} />
