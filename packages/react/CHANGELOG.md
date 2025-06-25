@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.105.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.105.0...factorial-one-react-v1.105.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* refactor summary module imports for consistency ([#2143](https://github.com/factorialco/factorial-one/issues/2143)) ([c54a1ba](https://github.com/factorialco/factorial-one/commit/c54a1ba9f4e48bcb819fb7d0385556bcf94bf0e2))
+
 ## [1.105.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.104.2...factorial-one-react-v1.105.0) (2025-06-24)
 
 
