@@ -44,6 +44,8 @@ export interface AIBlockConfig {
 interface AIBlockData {
   content?: JSONContent | null
   selectedAction?: string
+  selectedTitle?: string
+  selectedEmoji?: string
 }
 
 declare module "@tiptap/core" {
@@ -93,20 +95,24 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
   const [isLoading, setIsLoading] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)
 
+  // Get persisted values
+  const content = data?.content
+  const selectedAction = data?.selectedAction
+
   // Detect if this block was created from slash command (has selectedAction but no content)
   // and set initial loading state only once
   useEffect(() => {
-    if (data?.selectedAction && !data?.content && !isLoading) {
+    if (selectedAction && !content && !isLoading) {
       setIsLoading(true)
     }
   }, []) // Empty dependency array - only run once on mount
 
   // Clear loading state when content arrives (from slash commands)
   useEffect(() => {
-    if (data?.content && isLoading) {
+    if (content && isLoading) {
       setIsLoading(false)
     }
-  }, [data?.content, isLoading])
+  }, [content, isLoading])
 
   const extensions = [
     StarterKitExtension,
@@ -161,20 +167,29 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
   if (!data || !config) return null
 
-  const content = data.content
-  const selectedAction = data.selectedAction
-
   // Get the display title and emoji
   const getDisplayTitle = () => {
-    if (selectedAction && content) {
+    // Use persisted title and emoji if available
+    if (data?.selectedTitle && data?.selectedEmoji) {
+      return {
+        title: data.selectedTitle,
+        emoji: data.selectedEmoji,
+      }
+    }
+
+    // Fallback to searching in current buttons (for backwards compatibility)
+    if (selectedAction) {
       const selectedButton = config.buttons.find(
         (button: AIButton) => button.type === selectedAction
       )
-      return {
-        title: selectedButton?.label || selectedAction,
-        emoji: selectedButton?.emoji || "🤖",
+      if (selectedButton) {
+        return {
+          title: selectedButton.label,
+          emoji: selectedButton.emoji,
+        }
       }
     }
+
     return {
       title: config.title,
       emoji: "🤖",
@@ -184,13 +199,20 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
   const { title: displayTitle, emoji: displayEmoji } = getDisplayTitle()
 
   const handleClick = async (type: string) => {
+    // Find the selected button to get its title and emoji
+    const selectedButton = config.buttons.find(
+      (button: AIButton) => button.type === type
+    )
+
     // Set local loading state immediately
     setIsLoading(true)
 
-    // Update only selectedAction in persisted data
+    // Update with selectedAction, title, and emoji in persisted data
     updateAttributes({
       data: {
         selectedAction: type,
+        selectedTitle: selectedButton?.label || type,
+        selectedEmoji: selectedButton?.emoji || "🤖",
         content: null, // Clear content while loading
       },
     })
@@ -198,19 +220,23 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     try {
       const newContent = await config.onClick(type)
 
-      // Update with new content and keep selectedAction
+      // Update with new content and keep all selection data
       updateAttributes({
         data: {
           content: newContent,
           selectedAction: type,
+          selectedTitle: selectedButton?.label || type,
+          selectedEmoji: selectedButton?.emoji || "🤖",
         },
       })
     } catch (error) {
       console.error("AIBlock error:", error)
-      // On error, clear content but keep selectedAction
+      // On error, clear content but keep selection data
       updateAttributes({
         data: {
           selectedAction: type,
+          selectedTitle: selectedButton?.label || type,
+          selectedEmoji: selectedButton?.emoji || "🤖",
           content: null,
         },
       })
@@ -226,6 +252,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
       data: {
         content: null,
         selectedAction: undefined,
+        selectedTitle: undefined,
+        selectedEmoji: undefined,
       },
     })
     // Reset local state
@@ -242,8 +270,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
   const getDropdownItems = () => {
     const items = []
 
-    // Add reset option if there's content and an action is selected
-    if (selectedAction && content && !isLoading) {
+    // Add reset option if there's a selected title (meaning an option was selected)
+    if ((data?.selectedTitle || selectedAction) && !isLoading) {
       items.push({
         label: "Reset",
         description: "Clear content and start over",
@@ -314,15 +342,17 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
           <div className="flex flex-row items-center gap-1">
             {/* Add collapse/expand button when content is present */}
-            {selectedAction && content && !isLoading && (
-              <Button
-                onClick={handleToggleCollapse}
-                variant="outline"
-                hideLabel
-                label={isCollapsed ? "Expand" : "Collapse"}
-                icon={isCollapsed ? ChevronDown : ChevronUp}
-              />
-            )}
+            {(data?.selectedTitle || selectedAction) &&
+              content &&
+              !isLoading && (
+                <Button
+                  onClick={handleToggleCollapse}
+                  variant="outline"
+                  hideLabel
+                  label={isCollapsed ? "Expand" : "Collapse"}
+                  icon={isCollapsed ? ChevronDown : ChevronUp}
+                />
+              )}
 
             {/* Add reset button when content is present */}
             {/* 
@@ -342,39 +372,42 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
           </div>
         </motion.div>
 
-        {/* Show buttons only when not loading and no action selected */}
+        {/* Show buttons only when not loading, no option selected, and no content */}
         <AnimatePresence>
-          {!isLoading && !selectedAction && (
-            <motion.div
-              className="relative flex flex-row flex-wrap items-center gap-2"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              {config.buttons.map((button: AIButton, index: number) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{
-                    delay: index * 0.1,
-                    duration: 0.3,
-                    ease: "easeOut",
-                  }}
-                >
-                  <Button
-                    onClick={() => handleClick(button.type)}
-                    variant="outline"
-                    size="sm"
-                    emoji={button.emoji}
-                    label={button.label}
-                    disabled={isLoading}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
+          {!isLoading &&
+            !data?.selectedTitle &&
+            !selectedAction &&
+            !content && (
+              <motion.div
+                className="relative flex flex-row flex-wrap items-center gap-2"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                {config.buttons.map((button: AIButton, index: number) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      delay: index * 0.1,
+                      duration: 0.3,
+                      ease: "easeOut",
+                    }}
+                  >
+                    <Button
+                      onClick={() => handleClick(button.type)}
+                      variant="outline"
+                      size="sm"
+                      emoji={button.emoji}
+                      label={button.label}
+                      disabled={isLoading}
+                    />
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
         </AnimatePresence>
 
         <AnimatePresence mode="wait">
