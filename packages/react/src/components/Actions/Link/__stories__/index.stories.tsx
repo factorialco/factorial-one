@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { ComponentProps } from "react"
 import { expect, within } from "storybook/test"
-import { Link } from "./index"
+import { Link } from ".."
 
 const meta = {
   title: "Link",
@@ -18,7 +18,7 @@ const meta = {
     },
   },
   args: {
-    children: "This is a link",
+    children: "Link",
     href: "/foo",
     "data-test": "foo",
   },
@@ -34,22 +34,24 @@ export const Default: Story = {
     const link = canvas.getByRole("link")
     await expect(link.dataset.test).toBe("foo")
   },
-}
-export const TargetBlank: Story = {
-  args: {
-    target: "_blank",
-    children: "This link opens in a new tab",
-  },
-}
-
-export const AsText: Story = {
-  args: {
-    variant: "text",
-  },
+  render: (args) => (
+    <p>
+      Do not click this <Link {...args} /> because it goes nowhere.
+    </p>
+  ),
 }
 
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-  },
+export const Variants: Story = {
+  render: (args) => (
+    <div className="[&>h3]:mt-5 [&>h3]:pb-2">
+      <h3 className="!m-0">Basic usage</h3>
+      <Link {...args} variant="link" />
+      <h3>External link</h3>
+      <Link {...args} variant="link" target="_blank" />
+      <h3>Unstyled</h3>
+      <Link {...args} variant="unstyled" />
+      <h3>Disabled</h3>
+      <Link {...args} variant="link" disabled />
+    </div>
+  ),
 }

@@ -11,11 +11,14 @@ import {
   OneTable,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
+import { cn } from "@/lib/utils"
+import { Skeleton } from "@/ui/skeleton.tsx"
 import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
@@ -26,6 +29,7 @@ import {
   SortingsDefinition,
   SortingsState,
 } from "../../../sortings"
+import { SummariesDefinition, SummaryKey } from "../../../summary"
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { isInfiniteScrollPagination, useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
@@ -52,18 +56,26 @@ export type WithOptionalSorting<
 export type TableColumnDefinition<
   R extends RecordType,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
 > = WithOptionalSorting<R, Sortings> &
   Pick<
     ComponentProps<typeof TableHead>,
     "hidden" | "info" | "infoIcon" | "sticky" | "width"
-  >
+  > & {
+    /**
+     * Optional summary configuration for this column
+     * References a key in the Summaries definition, similar to how sorting works
+     */
+    summary?: SummaryKey<Summaries>
+  }
 
 export type TableVisualizationOptions<
   R extends RecordType,
   _Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
 > = {
-  columns: ReadonlyArray<TableColumnDefinition<R, Sortings>>
+  columns: ReadonlyArray<TableColumnDefinition<R, Sortings, Summaries>>
   frozenColumns?: 0 | 1 | 2
 }
 
@@ -71,6 +83,7 @@ export type TableCollectionProps<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -78,16 +91,18 @@ export type TableCollectionProps<
   R,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping,
-  TableVisualizationOptions<R, Filters, Sortings>
+  TableVisualizationOptions<R, Filters, Sortings, Summaries>
 >
 
 export const TableCollection = <
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -102,16 +117,25 @@ export const TableCollection = <
   R,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping,
-  TableVisualizationOptions<R, Filters, Sortings>
+  TableVisualizationOptions<R, Filters, Sortings, Summaries>
 >) => {
   const t = useI18n()
   // Created a motion component for the row
   const [MotionRow] = useState(() =>
     motion.create(
-      Row<R, Filters, Sortings, ItemActions, NavigationFilters, Grouping>
+      Row<
+        R,
+        Filters,
+        Sortings,
+        Summaries,
+        ItemActions,
+        NavigationFilters,
+        Grouping
+      >
     )
   )
 
@@ -122,11 +146,15 @@ export const TableCollection = <
     isInitialLoading,
     isLoadingMore,
     loadMore,
-  } = useData<R, Filters, Sortings, NavigationFilters, Grouping>(source, {
-    onError: (error) => {
-      onLoadError(error)
-    },
-  })
+    summaries: summariesData,
+  } = useData<R, Filters, Sortings, Summaries, NavigationFilters, Grouping>(
+    source,
+    {
+      onError: (error) => {
+        onLoadError(error)
+      },
+    }
+  )
 
   const { currentSortings, setCurrentSortings, isLoading } = source
 
@@ -162,6 +190,18 @@ export const TableCollection = <
     handleSelectAll,
     handleSelectGroupChange,
   } = useSelectable(data, paginationInfo, source, onSelectItems)
+  const summaryData = useMemo(() => {
+    console.warn("summariesData", summariesData)
+    console.warn("source.summaries", source.summaries)
+    // Early return if no summaries configuration or summaries data is available
+    if (!summariesData || !source.summaries) return null
+
+    return {
+      data: summariesData as R,
+      sticky: true,
+      label: source.summaries?.label,
+    }
+  }, [summariesData, source.summaries])
 
   /**
    * Determine the sort state of a column
@@ -238,6 +278,7 @@ export const TableCollection = <
 
   const checkColumnWidth = source.selectable ? 52 : 0
 
+  console.warn("summaryData", summaryData)
   return (
     <>
       <OneTable loading={isLoading}>
@@ -388,7 +429,98 @@ export const TableCollection = <
                 />
               )
             })}
+          {paginationInfo?.type === "infinite-scroll" &&
+            isLoadingMore &&
+            Array.from({ length: 5 }).map((_, rowIndex) => (
+              <TableRow key={`skeleton-row-${rowIndex}`}>
+                {Array.from({ length: skeletonColumns }).map((_, colIndex) => (
+                  <TableCell key={`skeleton-cell-${rowIndex}-${colIndex}`}>
+                    <Skeleton className="h-4 w-full" />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
         </TableBody>
+        {/* TODO: maybe as new component? */}
+        {summaryData && (
+          <TableFooter>
+            <TableRow
+              className={cn(
+                summaryData.sticky &&
+                  "sticky bottom-0 z-10 bg-f1-background shadow-[0_-1px_0_0_var(--f1-border-secondary)] hover:bg-f1-background",
+                "font-medium"
+              )}
+            >
+              {source.selectable && (
+                <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
+                  {summaryData.label && (
+                    <div className="font-medium text-f1-foreground-secondary">
+                      {summaryData.label}
+                    </div>
+                  )}
+                </TableCell>
+              )}
+              {columns.map((column, cellIndex) => (
+                <TableCell
+                  key={`summary-${String(column.label)}`}
+                  firstCell={cellIndex === 0}
+                  width={column.width}
+                  sticky={
+                    cellIndex < frozenColumnsLeft
+                      ? {
+                          left: columns
+                            .slice(0, Math.max(0, cellIndex))
+                            .reduce(
+                              (acc, column) => acc + (column.width ?? 0),
+                              checkColumnWidth
+                            ),
+                        }
+                      : undefined
+                  }
+                >
+                  {cellIndex === 0 &&
+                  !source.selectable &&
+                  summaryData.label ? (
+                    <div className="font-medium text-f1-foreground-secondary">
+                      {summaryData.label}
+                    </div>
+                  ) : (
+                    <div
+                      className={cn(
+                        column.align === "right" ? "justify-end" : "",
+                        "flex"
+                      )}
+                    >
+                      {column.summary &&
+                      source.summaries &&
+                      source.summaries[column.summary]?.type === "sum" ? (
+                        <div className="flex gap-1">
+                          <span className="text-f1-foreground-secondary">
+                            {t.collections.summaries.types.sum}
+                          </span>
+                          {`${summaryData.data[column.summary]}`}
+                        </div>
+                      ) : (
+                        "-"
+                      )}
+                    </div>
+                  )}
+                </TableCell>
+              ))}
+              {source.itemActions && (
+                <TableCell
+                  key="summary-actions"
+                  width={68}
+                  sticky={{
+                    right: 0,
+                  }}
+                >
+                  {""}
+                </TableCell>
+              )}
+            </TableRow>
+          </TableFooter>
+        )}
       </OneTable>
 
       {isInfiniteScrollPagination(paginationInfo) && paginationInfo.hasMore && (

@@ -87,7 +87,7 @@ const meta = {
       control: "boolean",
       description:
         "Controls if the task list is allowed in the editor, this is needed if the text lives outside of the display component",
-      defaultValue: true,
+      defaultValue: false,
     },
   },
 } satisfies Meta<typeof RichTextEditor>
@@ -300,7 +300,7 @@ export const Blank: Story = {
     initialEditorState: undefined,
     mentionsConfig: undefined,
     maxCharacters: undefined,
-    plainHtmlMode: false,
+    plainHtmlMode: true,
   },
 }
 

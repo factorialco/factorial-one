@@ -132,7 +132,7 @@ export const BasicActionsExample: Story = {
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
       itemActions: createUserActions(),
     })
@@ -194,7 +194,7 @@ export const CardActionsExample: Story = {
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
       //secondaryActions: buildActions(),
       itemActions: createUserActions(),

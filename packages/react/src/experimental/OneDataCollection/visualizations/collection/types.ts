@@ -3,6 +3,7 @@ import type { FiltersDefinition } from "../../Filters/types"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { SortingsDefinition } from "../../sortings"
+import { SummariesDefinition } from "../../summary"
 import type {
   DataSource,
   GroupingDefinition,
@@ -27,6 +28,7 @@ export type Visualization<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -41,7 +43,7 @@ export type Visualization<
       /** Table-based visualization type */
       type: "table"
       /** Configuration options for table visualization */
-      options: TableVisualizationOptions<Record, Filters, Sortings>
+      options: TableVisualizationOptions<Record, Filters, Sortings, Summaries>
     }
   | {
       /** List-based visualization type */
@@ -65,6 +67,7 @@ export type Visualization<
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping
@@ -77,6 +80,7 @@ export type Visualization<
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type VisualizationType = Visualization<
+  any,
   any,
   any,
   any,
@@ -98,6 +102,7 @@ export type VisualizationProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -108,6 +113,7 @@ export type VisualizationProps<
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
