@@ -19,6 +19,8 @@ interface FiltersControlsProps<Filters extends FiltersDefinition> {
   hideLabel?: boolean
 }
 
+const DEFAULT_FORM_HEIGHT = 388
+
 export function FiltersControls<Filters extends FiltersDefinition>({
   schema,
   filters,
@@ -77,7 +79,7 @@ export function FiltersControls<Filters extends FiltersDefinition>({
   const formHeight = useMemo(() => {
     const maxHeight = Object.entries(schema).reduce((max, [_, value]) => {
       const filterType = getFilterType(value.type)
-      return Math.max(max, filterType?.formHeight || 380)
+      return Math.max(max, filterType?.formHeight || DEFAULT_FORM_HEIGHT)
     }, 0)
 
     return maxHeight
@@ -105,7 +107,7 @@ export function FiltersControls<Filters extends FiltersDefinition>({
           <div
             className={cn("flex flex-col transition-all")}
             style={{
-              height: formHeight || 388,
+              height: formHeight || DEFAULT_FORM_HEIGHT,
             }}
           >
             <div className="flex min-h-0 flex-1">

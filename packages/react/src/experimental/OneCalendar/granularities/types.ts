@@ -53,6 +53,9 @@ export interface GranularityDefinition {
     setViewDate: (date: Date) => void
     viewDate: Date
   }) => ReactNode
+  // Adds a delta to a date range
+  add: (date: DateRangeComplete, delta: number) => DateRangeComplete
+  // Gets the previous and next date range from a date range
   getPrevNext(
     date: DateRange,
     options: DateNavigationOptions

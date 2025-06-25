@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.110.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.109.0...factorial-one-react-v1.110.0) (2025-06-25)
+
+
+### Features
+
+* **datacollection:** Full height and scrollable visualizations ([484a8b7](https://github.com/factorialco/factorial-one/commit/484a8b724b4d134ab8ccf8da7bfbc41755602396))
+
+## [1.109.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.108.1...factorial-one-react-v1.109.0) (2025-06-25)
+
+
+### Features
+
+* **datenavigator:** dateNavigation compareTo ([#2041](https://github.com/factorialco/factorial-one/issues/2041)) ([4971127](https://github.com/factorialco/factorial-one/commit/4971127d07c48c49912d02d133458b1bd0653ae9))
+
+## [1.108.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.108.0...factorial-one-react-v1.108.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* add hidelable to upselling kit popover ([#2146](https://github.com/factorialco/factorial-one/issues/2146)) ([1b06366](https://github.com/factorialco/factorial-one/commit/1b06366ca790da5e286a1dfefe3b261b6d271094))
+
 ## [1.108.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.107.2...factorial-one-react-v1.108.0) (2025-06-25)
 
 

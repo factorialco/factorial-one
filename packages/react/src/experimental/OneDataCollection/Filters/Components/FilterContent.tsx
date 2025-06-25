@@ -1,6 +1,5 @@
 "use client"
 
-import { cn } from "@/lib/utils"
 import { FilterDefinitionsByType, getFilterType } from "../FilterTypes"
 import type {
   FilterDefinition,
@@ -78,7 +77,7 @@ export function FilterContent<Definition extends FiltersDefinition>({
   }
 
   return (
-    <div className={cn("relative flex w-full flex-col gap-1")}>
+    <div className="relative flex w-full flex-col gap-1">
       <div className="relative flex h-full flex-col justify-between overflow-y-auto">
         {renderFilterForm(filter, currentValue, (value) =>
           onFilterChange(selectedFilterKey, value)
