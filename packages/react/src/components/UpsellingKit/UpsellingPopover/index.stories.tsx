@@ -90,7 +90,7 @@ export const Default: Story = {
       },
     ],
   },
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "no-sidebar"],
   render: (args) => {
     const [isOpen, setIsOpen] = useState(false)
 
@@ -168,7 +168,7 @@ export const WithUpsellingButton: Story = {
       },
     ],
   },
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "no-sidebar"],
   render: (args) => {
     const [isOpen, setIsOpen] = useState(false)
 
