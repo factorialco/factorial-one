@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.108.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.108.0...factorial-one-react-v1.108.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* add hidelable to upselling kit popover ([#2146](https://github.com/factorialco/factorial-one/issues/2146)) ([1b06366](https://github.com/factorialco/factorial-one/commit/1b06366ca790da5e286a1dfefe3b261b6d271094))
+
 ## [1.108.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.107.2...factorial-one-react-v1.108.0) (2025-06-25)
 
 
