@@ -5,7 +5,7 @@ type Action = {
   label: string
   onClick: () => void
   icon?: IconType
-  variant?: "default" | "outline"
+  variant?: "default" | "outline" | "promote"
 }
 
 export type WidgetEmptyStateProps = {

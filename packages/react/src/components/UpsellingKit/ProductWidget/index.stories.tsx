@@ -33,7 +33,7 @@ export const Default: Story = {
       },
     ],
   },
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "no-sidebar"],
   argTypes: {
     mediaUrl: {
       control: "text",
@@ -123,5 +123,5 @@ export const WithUpsellingButton: Story = {
       },
     ],
   },
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "no-sidebar"],
 }

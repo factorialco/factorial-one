@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.108.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.108.0...factorial-one-react-v1.108.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* add hidelable to upselling kit popover ([#2146](https://github.com/factorialco/factorial-one/issues/2146)) ([1b06366](https://github.com/factorialco/factorial-one/commit/1b06366ca790da5e286a1dfefe3b261b6d271094))
+
+## [1.108.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.107.2...factorial-one-react-v1.108.0) (2025-06-25)
+
+
+### Features
+
+* **datacollections:** allow to define default selected items ([#2057](https://github.com/factorialco/factorial-one/issues/2057)) ([c2dc25e](https://github.com/factorialco/factorial-one/commit/c2dc25e8fab1efead5bf83fb4eadf5dfcf100f56))
+
+## [1.107.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.107.1...factorial-one-react-v1.107.2) (2025-06-25)
+
+
+### Bug Fixes
+
+* remove upselling kit stories from sidebar ([#2136](https://github.com/factorialco/factorial-one/issues/2136)) ([8952b49](https://github.com/factorialco/factorial-one/commit/8952b49cf21b594cfea5797037f68b868d5d4647))
+
 ## [1.107.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.107.0...factorial-one-react-v1.107.1) (2025-06-25)
 
 
