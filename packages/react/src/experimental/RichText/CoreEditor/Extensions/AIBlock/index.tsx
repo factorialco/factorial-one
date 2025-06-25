@@ -114,7 +114,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     if (selectedAction && !content && !isLoading) {
       setIsLoading(true)
     }
-  }, []) // Empty dependency array - only run once on mount
+  }, [selectedAction, content, isLoading]) // Empty dependency array - only run once on mount
 
   // Clear loading state when content arrives (from slash commands)
   useEffect(() => {
@@ -253,6 +253,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
       updateAttributes({ data: finalData })
     } catch (error) {
+      console.error("AIBlock error:", error)
       // On error, clear content but keep selection data
       const errorData = {
         selectedAction: type,
