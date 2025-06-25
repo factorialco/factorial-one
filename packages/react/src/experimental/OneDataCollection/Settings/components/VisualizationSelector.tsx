@@ -2,16 +2,21 @@ import { Icon } from "@/components/Utilities/Icon"
 
 import { focusRing } from "@/lib/utils"
 
-import { IconType } from "@/components/Utilities/Icon"
-import { Kanban, Table } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { FiltersDefinition } from "../../Filters/types"
 import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
-import { RecordType, SortingsDefinition } from "../../types"
-import { Visualization } from "../../visualizations/collection"
+import {
+  RecordType,
+  SortingsDefinition,
+  SummariesDefinition,
+} from "../../types"
+import {
+  collectionVisualizations,
+  Visualization,
+} from "../../visualizations/collection"
 
 /**
  * A component that renders a selector for switching between different visualization types.
@@ -31,6 +36,7 @@ export const VisualizationSelector = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -44,6 +50,7 @@ export const VisualizationSelector = <
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -58,21 +65,37 @@ export const VisualizationSelector = <
     onVisualizationChange(index)
   }
 
-  return (
-    <div className="grid grid-cols-2">
-      {visualizations.map((visualization, index) => {
-        const isSelected = currentVisualization === index
-        const IconVisualization: IconType =
-          visualization.type === "custom"
-            ? visualization.icon
-            : visualization.type === "table"
-              ? Table
-              : Kanban
+  const getVisualizationMeta = (
+    visualization: Visualization<
+      Record,
+      Filters,
+      Sortings,
+      Summaries,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
+  ) => {
+    if (visualization.type === "custom") {
+      return {
+        icon: visualization.icon,
+        label: visualization.label,
+      }
+    }
 
-        const label =
-          visualization.type === "custom"
-            ? visualization.label
-            : i18n.collections.visualizations[visualization.type]
+    const visualizationType = collectionVisualizations[visualization.type]
+
+    return {
+      icon: visualizationType.icon,
+      label: i18n.collections.visualizations[visualization.type],
+    }
+  }
+  return (
+    <div className="grid grid-cols-2 p-2">
+      {visualizations.map((visualization, index) => {
+        const { icon, label } = getVisualizationMeta(visualization)
+
+        const isSelected = currentVisualization === index
 
         return (
           <button
@@ -84,7 +107,7 @@ export const VisualizationSelector = <
             key={visualization.type}
             onClick={() => handleVisualizationChange(index)}
           >
-            <Icon icon={IconVisualization} />
+            <Icon icon={icon} />
             {label}
           </button>
         )

@@ -50,7 +50,7 @@ const meta = {
     secondaryAction: {
       control: "object",
       description:
-        "Configures the secondary action button (usually cancel or discard)",
+        "Configures the secondary action button (usually cancel or discard) or switch actions, you can also pass an array of actions",
     },
     maxCharacters: {
       control: "number",
@@ -87,7 +87,7 @@ const meta = {
       control: "boolean",
       description:
         "Controls if the task list is allowed in the editor, this is needed if the text lives outside of the display component",
-      defaultValue: true,
+      defaultValue: false,
     },
   },
 } satisfies Meta<typeof RichTextEditor>
@@ -231,13 +231,21 @@ export const Default: Story = {
         },
       ],
     },
-    secondaryAction: {
-      type: "switch",
-      label: "Cancel",
-      onClick: () => {},
-      variant: "outline",
-      checked: true,
-    },
+    secondaryAction: [
+      {
+        type: "switch",
+        label: "Cancel",
+        onClick: () => {},
+        variant: "outline",
+        checked: true,
+      },
+      {
+        type: "button",
+        label: "Discard",
+        onClick: () => {},
+        variant: "outline",
+      },
+    ],
     toolbarLabels: {
       bold: "Bold",
       italic: "Italic",
@@ -292,7 +300,7 @@ export const Blank: Story = {
     initialEditorState: undefined,
     mentionsConfig: undefined,
     maxCharacters: undefined,
-    plainHtmlMode: false,
+    plainHtmlMode: true,
   },
 }
 

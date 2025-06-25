@@ -46,12 +46,23 @@ export const defaultTranslations = {
     cancel: "Cancel",
   },
   collections: {
+    sorting: {
+      noSorting: "No sorting",
+      toggleDirection: "Toggle sorting direction",
+      sortBy: "Sort by",
+    },
+    grouping: {
+      noGrouping: "No grouping",
+      groupBy: "Group by",
+      toggleDirection: "Toggle direction",
+    },
     actions: {
       actions: "Actions",
     },
     visualizations: {
       table: "Table view",
       card: "Card view",
+      list: "List view",
       pagination: {
         of: "of",
       },
@@ -75,6 +86,11 @@ export const defaultTranslations = {
         title: "Error",
         description: "An error occurred while loading the data",
         retry: "Retry",
+      },
+    },
+    summaries: {
+      types: {
+        sum: "sum",
       },
     },
   },

@@ -1,3 +1,4 @@
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import {
   Add,
   Ai,
@@ -6,6 +7,7 @@ import {
   Download,
   Envelope,
   Pencil,
+  Placeholder,
   Share,
   Star,
   Target,
@@ -27,6 +29,8 @@ import {
   filters,
   filterUsers,
   generateMockUsers,
+  getMockVisualizations,
+  MockUser,
   mockUsers,
   PERFORMANCE_SCORE_MOCK,
   PROJECTS_MOCK,
@@ -434,6 +438,18 @@ export const RendererTypes: Story = {
                     value: {
                       firstName: item.name.split(" ")[0],
                       lastName: item.name.split(" ")[1],
+                      badge:
+                        item.index % 3 === 0
+                          ? {
+                              type: "module",
+                              module: "inbox",
+                            }
+                          : item.index % 3 === 1
+                            ? {
+                                type: "warning",
+                                icon: Placeholder,
+                              }
+                            : undefined,
                     },
                   }),
                   sorting: "name",
@@ -624,6 +640,7 @@ const JsonVisualization = ({
       (typeof mockUsers)[number],
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
       NavigationFiltersDefinition,
       GroupingDefinition<(typeof mockUsers)[number]>
@@ -656,6 +673,7 @@ export const WithCustomJsonView: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       MockActions,
       NavigationFiltersDefinition,
       GroupingDefinition<MockUser>
@@ -835,51 +853,13 @@ export const WithMultipleVisualizations: Story = {
       }),
     })
 
-    return (
-      <OneDataCollection
-        source={source}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
-        ]}
-      />
+    const visualizations = Object.values(
+      getMockVisualizations({
+        frozenColumns: 0,
+      })
     )
+
+    return <OneDataCollection source={source} visualizations={visualizations} />
   },
 }
 
@@ -887,6 +867,10 @@ export const WithPagesPagination: Story = {
   render: () => {
     // Create a fixed set of paginated users so we're not regenerating them on every render
     const paginatedMockUsers = generateMockUsers(50)
+
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
 
     const source = useDataSource({
       filters,
@@ -921,44 +905,9 @@ export const WithPagesPagination: Story = {
           console.log(`Bulk action: ${action}`, "->", selectedItems)
         }}
         visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
+          mockVisualizations.table,
+          mockVisualizations.card,
+          mockVisualizations.list,
         ]}
       />
     )
@@ -1052,13 +1001,18 @@ export const WithInfiniteScrollPagination: Story = {
 
 export const WithSynchronousData: Story = {
   render: () => {
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
+
     const source = useDataSource<
-      (typeof mockUsers)[number],
+      MockUser,
       typeof filters,
       typeof sortings,
-      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      SummariesDefinition,
+      ItemActionsDefinition<MockUser>,
       NavigationFiltersDefinition,
-      GroupingDefinition<(typeof mockUsers)[number]>
+      GroupingDefinition<MockUser>
     >({
       filters,
       sortings,
@@ -1066,7 +1020,14 @@ export const WithSynchronousData: Story = {
       dataAdapter: {
         fetchData: ({ filters, sortings, navigationFilters }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, sortings, navigationFilters)
+          return {
+            records: filterUsers(
+              mockUsers,
+              filters,
+              sortings,
+              navigationFilters
+            ),
+          }
         },
       },
     })
@@ -1075,33 +1036,9 @@ export const WithSynchronousData: Story = {
       <OneDataCollection
         source={source}
         visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
+          mockVisualizations.table,
+          mockVisualizations.list,
+          mockVisualizations.card,
         ]}
       />
     )
@@ -1282,6 +1219,7 @@ export const WithSyncSearch: Story = {
       (typeof mockUserData)[number],
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUserData)[number]>,
       NavigationFiltersDefinition,
       GroupingDefinition<(typeof mockUserData)[number]>
@@ -1340,7 +1278,7 @@ export const WithSyncSearch: Story = {
             })
           }
 
-          return filteredUsers
+          return { records: filteredUsers }
         },
       },
     })
@@ -1403,6 +1341,7 @@ export const WithAsyncSearch: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       MockActions,
       NavigationFiltersDefinition,
       GroupingDefinition<MockUser>
@@ -1493,7 +1432,7 @@ export const WithAsyncSearch: Story = {
                 })
               }
 
-              resolve(filteredUsers)
+              resolve({ records: filteredUsers })
             }, 1000) // Simulate 1 second delay for API response
           })
         },
@@ -1806,7 +1745,7 @@ export const TableWithNoFiltersAndSearch: Story = {
         },
       ],
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
     })
 
@@ -1911,7 +1850,7 @@ export const TableWithNoFilters: Story = {
             )
           }
 
-          return Promise.resolve(filteredUsers)
+          return Promise.resolve({ records: filteredUsers })
         },
       },
     })
@@ -1990,7 +1929,7 @@ export const TableWithSecondaryActions: Story = {
             )
           }
 
-          return Promise.resolve(filteredUsers)
+          return Promise.resolve({ records: filteredUsers })
         },
       },
     })

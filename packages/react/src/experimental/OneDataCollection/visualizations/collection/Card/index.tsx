@@ -16,6 +16,7 @@ import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
+import { SummariesDefinition } from "../../../summary"
 import {
   CollectionProps,
   DataSource,
@@ -46,7 +47,7 @@ const findNextMultiple = (n: number): number => {
 
 const CardGrid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {children}
     </div>
   )
@@ -56,10 +57,34 @@ const CardGrid = ({ children }: { children: React.ReactNode }) => {
  * Group Cards: Renders
  */
 
+export type CardCollectionProps<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+> = CollectionProps<
+  Record,
+  Filters,
+  Sortings,
+  Summaries,
+  ItemActions,
+  NavigationFilters,
+  Grouping,
+  CardVisualizationOptions<Record, Filters, Sortings>
+>
+
+/**
+ * Group Cards: Renders the cards for a group
+ */
+
 type GroupCardsProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -68,6 +93,7 @@ type GroupCardsProps<
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -85,6 +111,7 @@ const GroupCards = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -101,6 +128,7 @@ const GroupCards = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
@@ -191,6 +219,7 @@ export const CardCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -207,6 +236,7 @@ export const CardCollection = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping,
@@ -231,6 +261,7 @@ export const CardCollection = <
     Record,
     Filters,
     Sortings,
+    Summaries,
     NavigationFilters,
     Grouping
   >(
@@ -305,7 +336,6 @@ export const CardCollection = <
               return (
                 <>
                   <GroupHeader
-                    className="p-4"
                     label={group.label}
                     itemCount={group.itemCount}
                     onOpenChange={(open) => setGroupOpen(group.key, open)}
@@ -350,6 +380,8 @@ export const CardCollection = <
               handleSelectItemChange={handleSelectItemChange}
               title={title}
               cardProperties={cardProperties}
+              description={description}
+              avatar={avatar}
             />
           )}
         </>

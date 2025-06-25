@@ -140,7 +140,7 @@ const meta: Meta = {
     showSearchBox: false,
   },
   tags: ["autodocs", "experimental"],
-} satisfies Meta<typeof Select>
+} satisfies Meta<typeof SelectWithHooks>
 
 export default meta
 type Story = StoryObj<typeof meta>

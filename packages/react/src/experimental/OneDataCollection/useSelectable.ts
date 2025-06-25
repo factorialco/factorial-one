@@ -3,6 +3,7 @@ import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import type { SortingsDefinition } from "./sortings"
+import type { SummariesDefinition } from "./summary"
 import {
   DataSource,
   GroupingDefinition,
@@ -35,6 +36,7 @@ export function useSelectable<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -45,6 +47,7 @@ export function useSelectable<
     R,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -282,8 +285,8 @@ export function useSelectable<
   const areAllKnownItemsSelected = useMemo(
     () =>
       (paginationInfo && selectedCount === paginationInfo.total) ||
-      (!paginationInfo && selectedCount === data.records.length),
-    [paginationInfo, selectedCount, data.records.length]
+      (!paginationInfo && selectedCount === data.records?.length),
+    [paginationInfo, selectedCount, data.records?.length]
   )
 
   const isAllSelected = useMemo(
@@ -347,7 +350,7 @@ export function useSelectable<
 
   useEffect(() => {
     // Notify the parent component about the selected items
-    const totalItems = paginationInfo?.total ?? data.records.length
+    const totalItems = paginationInfo?.total ?? (data.records?.length || 0)
 
     const selectedItemsCount = allSelectedCheck
       ? totalItems - unselectedCount
@@ -387,7 +390,7 @@ export function useSelectable<
     groupsState,
     groupAllSelectedStatus,
     paginationInfo?.total,
-    data.records.length,
+    data.records?.length,
   ])
 
   return {

@@ -3,15 +3,18 @@ import type { FiltersDefinition } from "../../Filters/types"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { SortingsDefinition } from "../../sortings"
+import { SummariesDefinition } from "../../summary"
 import type {
   DataSource,
   GroupingDefinition,
   OnLoadDataCallback,
   OnLoadErrorCallback,
+  OnSelectItemsCallback,
   RecordType,
 } from "../../types"
 import type { CardVisualizationOptions } from "../../visualizations/collection/Card"
 import type { TableVisualizationOptions } from "../../visualizations/collection/Table"
+import { ListVisualizationOptions } from "./List/types"
 
 /**
  * Represents a visualization configuration for displaying collection data.
@@ -25,6 +28,7 @@ export type Visualization<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -39,23 +43,31 @@ export type Visualization<
       /** Table-based visualization type */
       type: "table"
       /** Configuration options for table visualization */
-      options: TableVisualizationOptions<Record, Filters, Sortings>
+      options: TableVisualizationOptions<Record, Filters, Sortings, Summaries>
     }
   | {
-      /** Custom visualization type */
-      type: "custom"
+      /** List-based visualization type */
+      type: "list"
+      /** Configuration options for list visualization */
+      options: ListVisualizationOptions<Record, Filters, Sortings>
+    }
+  | {
       /** Human-readable label for the visualization */
       label: string
       /** Icon to represent the visualization in UI */
       icon: IconType
+      /** Custom visualization type */
+      type: "custom"
       /** Custom component to render the visualization */
       component: (props: {
+        onSelectItems: OnSelectItemsCallback<Record, Filters>
         onLoadData: OnLoadDataCallback<Record, Filters>
         onLoadError: OnLoadErrorCallback
         source: DataSource<
           Record,
           Filters,
           Sortings,
+          Summaries,
           ItemActions,
           NavigationFilters,
           Grouping
@@ -68,6 +80,7 @@ export type Visualization<
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type VisualizationType = Visualization<
+  any,
   any,
   any,
   any,
@@ -89,6 +102,7 @@ export type VisualizationProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -99,6 +113,7 @@ export type VisualizationProps<
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping

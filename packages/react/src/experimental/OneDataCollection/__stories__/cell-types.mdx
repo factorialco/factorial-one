@@ -341,7 +341,8 @@ render: (item) => ({
 
 ### person
 
-Renders a person avatar
+Renders a person avatar. It supports badge (regular or module) and a tooltip in
+the badge. Useful to display information about the member of the badge.
 
 #### Value type
 
@@ -350,6 +351,18 @@ type value = {
     firstName: string
     lastName: string
     src?: string // the avatar image
+    badge?: AvatarBadge
+}
+
+type AvatarBadge = ({
+    type: 'module'
+    module: ModuleId
+} | {
+    type: 'badge'
+    icon: IconType
+
+}) & {
+  tooltip?: string // This is the tooltip for the badge
 }
 ```
 
@@ -369,9 +382,57 @@ render: (item) => ({
   }}
 />
 
+**With badge and badgetooltip**
+
+<Canvas
+  of={CellTypesDataCollectionStories.PersonTypeWithBadge}
+  meta={CellTypesDataCollectionStories}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'person'
+    value: {
+        firstName: 'John',
+        lastName: 'Doe',
+        src: '/pth/to/the/avatar.png'
+        badge: {
+            type: 'warning',
+            icon: Placeholder
+            tooltip: 'This is a tooltip'
+        }
+    }
+})
+`,
+  }}
+/>
+
+**With module badge**
+
+<Canvas
+  of={CellTypesDataCollectionStories.PersonTypeWithModuleBadge}
+  meta={CellTypesDataCollectionStories}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'person'
+    value: {
+        firstName: 'John',
+        lastName: 'Doe',
+        src: '/pth/to/the/avatar.png'
+        badge: {
+            type: 'module',
+            module: 'inbox'
+        }
+    }
+})
+`,
+  }}
+/>
+
 ### company
 
-Renders a company avatar
+Renders a company avatar. It supports the same badge as the person type (check
+it for more details).
 
 #### Value type
 
@@ -379,7 +440,9 @@ Renders a company avatar
 type value = {
     name: string
     src?: string // the avatar image
+    badge?: AvatarBadge
 }
+// Check PersonType for the AvatarBadge type
 ```
 
 <Canvas
@@ -399,7 +462,8 @@ render: (item) => ({
 
 ### team
 
-Renders a team avatar
+Renders a team avatar. It supports the same badge as the person type (check it
+for more details).
 
 #### Value type
 
@@ -407,7 +471,9 @@ Renders a team avatar
 type value = {
     name: string
     src?: string // the avatar image
+    badge?: AvatarBadge
 }
+// Check PersonType for the AvatarBadge type
 ```
 
 Example:
