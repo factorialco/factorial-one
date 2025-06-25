@@ -1,4 +1,4 @@
-import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import {
   ColorExtension,
   CustomTaskExtension,
@@ -18,6 +18,7 @@ import { Ai, ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { JSONContent, Node } from "@tiptap/core"
 import {
+  Editor,
   EditorContent,
   NodeViewContent,
   NodeViewProps,
@@ -88,8 +89,8 @@ const useContentEditor = (
   data: AIBlockData | undefined,
   isLoading: boolean,
   blockId: string,
-  updateAttributes: (attrs: any) => void
-) => {
+  updateAttributes: (attrs: { data: AIBlockData }) => void
+): Editor | null => {
   const extensions = useMemo(
     () => [
       StarterKitExtension,
@@ -219,7 +220,7 @@ interface AIBlockHeaderProps {
   canCollapse: boolean
   isCollapsed: boolean
   onToggleCollapse: () => void
-  onDropdownAction: (items: any[]) => any[]
+  onDropdownAction: (items: DropdownItem[]) => DropdownItem[]
 }
 
 const AIBlockHeader: React.FC<AIBlockHeaderProps> = ({
@@ -325,7 +326,7 @@ interface AIContentSectionProps {
   isLoading: boolean
   hasContent: boolean
   isCollapsed: boolean
-  contentEditor: any
+  contentEditor: Editor | null
 }
 
 const AIContentSection: React.FC<AIContentSectionProps> = ({
@@ -473,8 +474,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     setIsCollapsed(!isCollapsed)
   }, [isCollapsed, setIsCollapsed])
 
-  const getDropdownItems = useCallback(() => {
-    const items = []
+  const getDropdownItems = useCallback((): DropdownItem[] => {
+    const items: DropdownItem[] = []
 
     if (config && (data?.selectedTitle || data?.selectedAction) && !isLoading) {
       items.push({
