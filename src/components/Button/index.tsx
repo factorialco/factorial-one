@@ -119,6 +119,7 @@ export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   className?: string;
   accessibilityHint?: string;
   showBadge?: boolean;
+  fullWidth?: boolean;
 }
 
 export const Button = forwardRef<View, ButtonProps>(function Button(
@@ -136,6 +137,7 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
     className,
     accessibilityHint,
     showBadge = false,
+    fullWidth = false,
   },
   ref,
 ) {
@@ -162,7 +164,7 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
   const shouldShowPressed = isPressed && !isDisabled;
 
   return (
-    <View className="flex items-start">
+    <View className={`flex ${fullWidth ? "flex-1" : "item-start"}`}>
       <Pressable
         ref={ref}
         disabled={isDisabled}
