@@ -187,13 +187,15 @@ const useDisplayInfo = (
   selectedAction: string | undefined
 ) => {
   return useMemo(() => {
-    if (data?.selectedTitle && data?.selectedEmoji) {
+    // Always prioritize saved title and emoji if they exist
+    if (data?.selectedTitle || data?.selectedEmoji) {
       return {
-        title: data.selectedTitle,
+        title: data.selectedTitle || config.title,
         emoji: data.selectedEmoji,
       }
     }
 
+    // Only fall back to searching in config if no saved data exists
     if (selectedAction) {
       const selectedButton = config.buttons.find(
         (button: AIButton) => button.type === selectedAction
@@ -414,6 +416,29 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     blockId,
     updateAttributes
   )
+
+  // Ensure selectedTitle and selectedEmoji are persisted for copy/paste
+  useEffect(() => {
+    if (
+      data?.selectedAction &&
+      (!data?.selectedTitle || !data?.selectedEmoji) &&
+      config?.buttons
+    ) {
+      const selectedButton = config.buttons.find(
+        (button: AIButton) => button.type === data.selectedAction
+      )
+
+      if (selectedButton) {
+        updateAttributes({
+          data: {
+            ...data,
+            selectedTitle: selectedButton.label,
+            selectedEmoji: selectedButton.emoji,
+          },
+        })
+      }
+    }
+  }, [data, config, updateAttributes])
 
   const handleClick = useCallback(
     async (type: string) => {
