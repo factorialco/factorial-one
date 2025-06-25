@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.110.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.109.0...factorial-one-react-v1.110.0) (2025-06-25)
+
+
+### Features
+
+* **datacollection:** Full height and scrollable visualizations ([484a8b7](https://github.com/factorialco/factorial-one/commit/484a8b724b4d134ab8ccf8da7bfbc41755602396))
+
 ## [1.109.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.108.1...factorial-one-react-v1.109.0) (2025-06-25)
 
 
