@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.105.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.105.2...factorial-one-react-v1.105.3) (2025-06-25)
+
+
+### Bug Fixes
+
+* pressed state for collection actions ([#2130](https://github.com/factorialco/factorial-one/issues/2130)) ([2b63d49](https://github.com/factorialco/factorial-one/commit/2b63d4973bf3778745f71af56ee35ce857cdefc5))
+
 ## [1.105.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.105.1...factorial-one-react-v1.105.2) (2025-06-25)
 
 
