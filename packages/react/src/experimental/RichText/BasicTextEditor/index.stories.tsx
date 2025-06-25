@@ -48,17 +48,27 @@ const defaultSlashCommandGroupLabels = {
   blocks: "Blocks",
 }
 
+const defaultAIBlockLabels = {
+  reset: "Reset",
+  resetDescription: "Clear content and start over",
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+}
+
 export const Default: Story = {
   args: {
     placeholder: "Enter '/' to open the command palette...",
     toolbarLabels: defaultToolbarLabels,
     slashCommandGroupLabels: defaultSlashCommandGroupLabels,
+    aiBlockLabels: defaultAIBlockLabels,
     onChange: (value) => {
       console.log("Content changed:", value)
     },
 
     aiBlockConfig: {
       title: "AI Pre-Meeting Helper",
+      labels: defaultAIBlockLabels,
       onClick: (type) => {
         if (type === "task-list") {
           return new Promise((resolve) => {

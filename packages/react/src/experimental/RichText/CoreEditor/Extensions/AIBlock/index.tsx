@@ -35,10 +35,19 @@ export type AIButton = {
   icon: IconType
 }
 
+export interface AIBlockLabels {
+  reset: string
+  resetDescription: string
+  deleteBlock: string
+  expand: string
+  collapse: string
+}
+
 export interface AIBlockConfig {
   buttons: AIButton[]
   onClick: (type: string) => Promise<JSONContent | null>
   title: string
+  labels?: AIBlockLabels
 }
 
 interface AIBlockData {
@@ -169,8 +178,17 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
   // Get the display title and emoji
   const getDisplayTitle = () => {
+    console.log("AIBlock getDisplayTitle:", {
+      selectedTitle: data?.selectedTitle,
+      selectedEmoji: data?.selectedEmoji,
+      selectedAction,
+      config: config.title,
+      buttons: config.buttons,
+    })
+
     // Use persisted title and emoji if available
     if (data?.selectedTitle && data?.selectedEmoji) {
+      console.log("AIBlock using persisted title and emoji")
       return {
         title: data.selectedTitle,
         emoji: data.selectedEmoji,
@@ -182,6 +200,10 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
       const selectedButton = config.buttons.find(
         (button: AIButton) => button.type === selectedAction
       )
+      console.log("AIBlock fallback search:", {
+        selectedAction,
+        selectedButton,
+      })
       if (selectedButton) {
         return {
           title: selectedButton.label,
@@ -190,6 +212,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
       }
     }
 
+    console.log("AIBlock using default title")
     return {
       title: config.title,
       emoji: "🤖",
@@ -198,48 +221,65 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
   const { title: displayTitle, emoji: displayEmoji } = getDisplayTitle()
 
+  console.log("AIBlock render:", {
+    data,
+    selectedAction,
+    displayTitle,
+    displayEmoji,
+    configTitle: config.title,
+  })
+
   const handleClick = async (type: string) => {
     // Find the selected button to get its title and emoji
     const selectedButton = config.buttons.find(
       (button: AIButton) => button.type === type
     )
 
+    console.log("AIBlock handleClick:", {
+      type,
+      selectedButton,
+      buttons: config.buttons,
+    })
+
     // Set local loading state immediately
     setIsLoading(true)
 
     // Update with selectedAction, title, and emoji in persisted data
-    updateAttributes({
-      data: {
-        selectedAction: type,
-        selectedTitle: selectedButton?.label || type,
-        selectedEmoji: selectedButton?.emoji || "🤖",
-        content: null, // Clear content while loading
-      },
-    })
+    const newData = {
+      selectedAction: type,
+      selectedTitle: selectedButton?.label || type,
+      selectedEmoji: selectedButton?.emoji || "🤖",
+      content: null, // Clear content while loading
+    }
+
+    console.log("AIBlock updating with data:", newData)
+    updateAttributes({ data: newData })
 
     try {
       const newContent = await config.onClick(type)
 
       // Update with new content and keep all selection data
-      updateAttributes({
-        data: {
-          content: newContent,
-          selectedAction: type,
-          selectedTitle: selectedButton?.label || type,
-          selectedEmoji: selectedButton?.emoji || "🤖",
-        },
-      })
+      const finalData = {
+        content: newContent,
+        selectedAction: type,
+        selectedTitle: selectedButton?.label || type,
+        selectedEmoji: selectedButton?.emoji || "🤖",
+      }
+
+      console.log("AIBlock success, updating with final data:", finalData)
+      updateAttributes({ data: finalData })
     } catch (error) {
       console.error("AIBlock error:", error)
       // On error, clear content but keep selection data
-      updateAttributes({
-        data: {
-          selectedAction: type,
-          selectedTitle: selectedButton?.label || type,
-          selectedEmoji: selectedButton?.emoji || "🤖",
-          content: null,
-        },
-      })
+      const errorData = {
+        selectedAction: type,
+        selectedTitle: selectedButton?.label || type,
+        selectedEmoji: selectedButton?.emoji || "🤖",
+        content: null,
+      }
+
+      console.log("AIBlock error, updating with error data:", errorData)
+      updateAttributes({ data: errorData })
     } finally {
       // Always clear loading state
       setIsLoading(false)
@@ -273,8 +313,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     // Add reset option if there's a selected title (meaning an option was selected)
     if ((data?.selectedTitle || selectedAction) && !isLoading) {
       items.push({
-        label: "Reset",
-        description: "Clear content and start over",
+        label: config.labels?.reset || "Reset",
+        description: config.labels?.resetDescription || "Reset the block",
         onClick: handleReset,
       })
     }
@@ -288,7 +328,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
     // Always add delete option
     items.push({
-      label: "Delete Block",
+      label: config.labels?.deleteBlock || "Delete",
       icon: Delete,
       critical: true,
       onClick: () => deleteNode(),
@@ -349,25 +389,14 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
                   onClick={handleToggleCollapse}
                   variant="outline"
                   hideLabel
-                  label={isCollapsed ? "Expand" : "Collapse"}
+                  label={
+                    isCollapsed
+                      ? config.labels?.expand || "Expand"
+                      : config.labels?.collapse || "Collapse"
+                  }
                   icon={isCollapsed ? ChevronDown : ChevronUp}
                 />
               )}
-
-            {/* Add reset button when content is present */}
-            {/* 
-            {selectedAction && content && !isLoading && (
-              <Button
-                onClick={handleReset}
-                variant="ghost"
-                size="sm"
-                hideLabel
-                label="Reset"
-                icon={Reset}
-              />
-            )} 
-             */}
-
             <Dropdown items={getDropdownItems()} />
           </div>
         </motion.div>
