@@ -7,6 +7,7 @@ import {
 import { BreadcrumbItem } from "@/experimental/Navigation/Header/Breadcrumbs/internal/BreadcrumbItem"
 import CrossIcon from "@/icons/app/Cross"
 import { cn } from "@/lib/utils"
+import { BreadcrumbList } from "@/ui/breadcrumb"
 import { DialogTitle } from "@/ui/dialog"
 import { DrawerTitle } from "@/ui/drawer"
 import { useOneModal } from "../OneModalProvider"
@@ -71,16 +72,18 @@ export const OneModalHeader = ({
     if (!module) return null
 
     return (
-      <BreadcrumbItem
-        item={{
-          id: module.id,
-          label: module.label,
-          href: module.href,
-          module: module.id,
-        }}
-        isLast={false}
-        isFirst={true}
-      />
+      <BreadcrumbList>
+        <BreadcrumbItem
+          item={{
+            id: module.id,
+            label: module.label,
+            href: module.href,
+            module: module.id,
+          }}
+          isLast={false}
+          isFirst={true}
+        />
+      </BreadcrumbList>
     )
   }
 

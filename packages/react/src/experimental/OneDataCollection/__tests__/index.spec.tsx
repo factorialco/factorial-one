@@ -17,7 +17,9 @@ import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import { SortingsDefinition } from "../sortings"
+import { SummariesDefinition } from "../summary"
 import type {
+  BaseResponse,
   DataSource,
   GroupingDefinition,
   PaginatedFetchOptions,
@@ -49,14 +51,16 @@ describe("Collections", () => {
                 throw new Error("Email is not a valid filter")
               }
 
-              return mockData.filter((user) => {
-                if (filters.name && typeof filters.name === "string") {
-                  return user.name
-                    .toLowerCase()
-                    .includes(filters.name.toLowerCase())
-                }
-                return true
-              })
+              return {
+                records: mockData.filter((user) => {
+                  if (filters.name && typeof filters.name === "string") {
+                    return user.name
+                      .toLowerCase()
+                      .includes(filters.name.toLowerCase())
+                  }
+                  return true
+                }),
+              }
             },
           },
         }),
@@ -90,10 +94,12 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: async () => [
-              { name: "John Doe", email: "john@example.com" },
-              { name: "Jane Smith", email: "jane@example.com" },
-            ],
+            fetchData: async () => ({
+              records: [
+                { name: "John Doe", email: "john@example.com" },
+                { name: "Jane Smith", email: "jane@example.com" },
+              ],
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -141,7 +147,7 @@ describe("Collections", () => {
           dataAdapter: {
             fetchData: () =>
               new Observable<
-                PromiseState<Array<{ name: string; role: string }>>
+                PromiseState<BaseResponse<{ name: string; role: string }>>
               >((observer) => {
                 observer.next({
                   loading: true,
@@ -153,10 +159,12 @@ describe("Collections", () => {
                   observer.next({
                     loading: false,
                     error: null,
-                    data: [
-                      { name: "John Doe", role: "Senior Engineer" },
-                      { name: "Jane Smith", role: "Product Manager" },
-                    ],
+                    data: {
+                      records: [
+                        { name: "John Doe", role: "Senior Engineer" },
+                        { name: "Jane Smith", role: "Product Manager" },
+                      ],
+                    },
                   })
                   observer.complete()
                 }, 0)
@@ -245,7 +253,7 @@ describe("Collections", () => {
                 )
               }
 
-              return filtered
+              return { records: filtered }
             },
           },
         }),
@@ -282,7 +290,7 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: async () => [{ name: "John" }],
+            fetchData: async () => ({ records: [{ name: "John" }] }),
           },
         }),
       { wrapper: TestWrapper }
@@ -306,6 +314,7 @@ describe("Collections", () => {
         Item,
         FiltersDefinition,
         SortingsDefinition,
+        SummariesDefinition,
         ItemActionsDefinition<Item>,
         NavigationFiltersDefinition,
         GroupingDefinition<Item>
@@ -315,6 +324,7 @@ describe("Collections", () => {
         Item,
         FiltersDefinition,
         SortingsDefinition,
+        SummariesDefinition,
         NavigationFiltersDefinition,
         GroupingDefinition<Item>
       >(source)
@@ -338,7 +348,7 @@ describe("Collections", () => {
         useDataSource({
           dataAdapter: {
             fetchData: () =>
-              new Observable<PromiseState<Item[]>>((observer) => {
+              new Observable<PromiseState<BaseResponse<Item>>>((observer) => {
                 observer.next({
                   loading: true,
                   error: null,
@@ -349,20 +359,22 @@ describe("Collections", () => {
                   observer.next({
                     loading: false,
                     error: null,
-                    data: [
-                      {
-                        name: "John Doe",
-                        role: "Senior Engineer",
-                        department: "Engineering",
-                        email: "john@example.com",
-                      },
-                      {
-                        name: "Jane Smith",
-                        role: "Product Manager",
-                        department: "Product",
-                        email: "jane@example.com",
-                      },
-                    ],
+                    data: {
+                      records: [
+                        {
+                          name: "John Doe",
+                          role: "Senior Engineer",
+                          department: "Engineering",
+                          email: "john@example.com",
+                        },
+                        {
+                          name: "Jane Smith",
+                          role: "Product Manager",
+                          department: "Product",
+                          email: "jane@example.com",
+                        },
+                      ],
+                    },
                   })
                   observer.complete()
                 }, 0)
@@ -426,6 +438,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
+          SummariesDefinition,
           ItemActionsDefinition<Person>,
           NavigationFiltersDefinition,
           GroupingDefinition<Person>
@@ -445,7 +458,7 @@ describe("Collections", () => {
                 })
               }
 
-              return sorted
+              return { records: sorted }
             },
           },
           sortings: {
@@ -557,6 +570,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
+          SummariesDefinition,
           ItemActionsDefinition<Person>,
           NavigationFiltersDefinition,
           GroupingDefinition<Person>
@@ -646,15 +660,18 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
+          SummariesDefinition,
           ItemActionsDefinition<Person>,
           NavigationFiltersDefinition,
           GroupingDefinition<Person>
         >({
           dataAdapter: {
-            fetchData: async () => [
-              { id: 1, name: "John Doe" },
-              { id: 2, name: "Alice Brown" },
-            ],
+            fetchData: async () => ({
+              records: [
+                { id: 1, name: "John Doe" },
+                { id: 2, name: "Alice Brown" },
+              ],
+            }),
           },
           sortings: {
             name: {
@@ -690,6 +707,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
+          SummariesDefinition,
           ItemActionsDefinition<Person>,
           NavigationFiltersDefinition,
           GroupingDefinition<Person>
@@ -714,7 +732,7 @@ describe("Collections", () => {
                 })
               }
 
-              return sorted
+              return { records: sorted }
             },
           },
           sortings: {
@@ -847,7 +865,7 @@ describe("Collections", () => {
                 )
               }
 
-              return filtered
+              return { records: filtered }
             },
           },
         })
@@ -938,12 +956,15 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
+          SummariesDefinition,
           ItemActionsDefinition<Person>,
           NavigationFiltersDefinition,
           GroupingDefinition<Person>
         >({
           dataAdapter: {
-            fetchData: async () => mockData,
+            fetchData: async () => ({
+              records: mockData,
+            }),
           },
           itemActions: (item) => [
             {
@@ -1058,21 +1079,24 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
+          SummariesDefinition,
           ItemActionsDefinition<Person>,
           NavigationFiltersDefinition,
           GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ search }) => {
-              if (!search) return mockData
+              if (!search) return { records: mockData }
 
               const searchLower = search.toLowerCase()
-              return mockData.filter(
-                (person) =>
-                  person.name.toLowerCase().includes(searchLower) ||
-                  person.email.toLowerCase().includes(searchLower) ||
-                  person.role.toLowerCase().includes(searchLower)
-              )
+              return {
+                records: mockData.filter(
+                  (person) =>
+                    person.name.toLowerCase().includes(searchLower) ||
+                    person.email.toLowerCase().includes(searchLower) ||
+                    person.role.toLowerCase().includes(searchLower)
+                ),
+              }
             },
           },
           search: {
@@ -1149,6 +1173,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
+          SummariesDefinition,
           ItemActionsDefinition<Person>,
           NavigationFiltersDefinition,
           GroupingDefinition<Person>

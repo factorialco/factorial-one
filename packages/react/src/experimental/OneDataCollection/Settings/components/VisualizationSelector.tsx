@@ -8,7 +8,11 @@ import { FiltersDefinition } from "../../Filters/types"
 import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
-import { RecordType, SortingsDefinition } from "../../types"
+import {
+  RecordType,
+  SortingsDefinition,
+  SummariesDefinition,
+} from "../../types"
 import {
   collectionVisualizations,
   Visualization,
@@ -32,6 +36,7 @@ export const VisualizationSelector = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -45,6 +50,7 @@ export const VisualizationSelector = <
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -64,6 +70,7 @@ export const VisualizationSelector = <
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping

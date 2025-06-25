@@ -14,6 +14,7 @@ import { PagesPagination } from "../../../components/PagesPagination"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
+import { SummariesDefinition } from "../../../summary"
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { isInfiniteScrollPagination, useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
@@ -27,6 +28,7 @@ export type ListCollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -34,6 +36,7 @@ export type ListCollectionProps<
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping,
@@ -44,6 +47,7 @@ export const ListCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -58,6 +62,7 @@ export const ListCollection = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
@@ -69,7 +74,14 @@ export const ListCollection = <
     isInitialLoading,
     isLoadingMore,
     loadMore,
-  } = useData<Record, Filters, Sortings, NavigationFilters, Grouping>(source, {
+  } = useData<
+    Record,
+    Filters,
+    Sortings,
+    Summaries,
+    NavigationFilters,
+    Grouping
+  >(source, {
     onError: (error) => {
       onLoadError(error)
     },

@@ -1,6 +1,5 @@
-import { cn, focusRing } from "@/lib/utils"
 import { useState } from "react"
-import { Icon } from "../../../components/Utilities/Icon"
+import { Button } from "../../../components/Actions/Button"
 import { Ellipsis } from "../../../icons/app"
 import { Dropdown, DropdownItem } from "../../Navigation/Dropdown"
 
@@ -39,17 +38,14 @@ export const ItemActionsDropdown = ({
         onOpenChange?.(open)
       }}
     >
-      <button
-        title="Actions"
-        className={cn(
-          "flex h-8 w-8 items-center justify-center rounded text-f1-icon-bold hover:bg-f1-background-secondary",
-          open && "bg-f1-background-secondary",
-          focusRing("focus-visible:ring-inset")
-        )}
-      >
-        <Icon icon={Ellipsis} />
-        <label className="sr-only">Actions</label>
-      </button>
+      <Button
+        icon={Ellipsis}
+        label="Actions"
+        hideLabel
+        round
+        variant="ghost"
+        pressed={open}
+      />
     </Dropdown>
   )
 }
