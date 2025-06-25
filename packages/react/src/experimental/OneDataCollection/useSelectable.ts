@@ -72,23 +72,25 @@ export function useSelectable<
    * Set the default selected items and groups
    */
   useEffect(() => {
-    if (defaultSelectedItems) {
-      if (isGrouped) {
-        for (const defaultGroup of defaultSelectedItems.groups || []) {
-          const group = data.groups.find(
-            (group) => group.key === defaultGroup.groupId
-          )
-          if (group) {
-            handleSelectGroupChange(group, defaultGroup.checked)
-          }
+    if (!defaultSelectedItems) {
+      return
+    }
+
+    if (isGrouped) {
+      for (const defaultGroup of defaultSelectedItems.groups || []) {
+        const group = data.groups.find(
+          (group) => group.key === defaultGroup.groupId
+        )
+        if (group) {
+          handleSelectGroupChange(group, defaultGroup.checked)
         }
       }
+    }
 
-      for (const item of defaultSelectedItems.items || []) {
-        const record = data.records.find((record) => record.id === item.id)
-        if (record) {
-          handleSelectItemChange(record, item.checked)
-        }
+    for (const item of defaultSelectedItems.items || []) {
+      const record = data.records.find((record) => record.id === item.id)
+      if (record) {
+        handleSelectItemChange(record, item.checked)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the defaultSelectedItems
