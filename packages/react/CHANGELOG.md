@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.113.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.112.0...factorial-one-react-v1.113.0) (2025-06-26)
+
+
+### Features
+
+* export tooltip ([#2167](https://github.com/factorialco/factorial-one/issues/2167)) ([9a70440](https://github.com/factorialco/factorial-one/commit/9a70440394bebf36a24341ce8f8052b21747d6d5))
+
 ## [1.112.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.111.0...factorial-one-react-v1.112.0) (2025-06-26)
 
 
