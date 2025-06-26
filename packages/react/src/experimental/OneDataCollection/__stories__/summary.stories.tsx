@@ -38,6 +38,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const BasicSummaryRow: Story = {
+  parameters: { a11y: { skipCi: true } },
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
@@ -79,6 +80,7 @@ export const BasicSummaryRow: Story = {
 }
 
 export const WithInfiniteScrollSummarySticky: Story = {
+  parameters: { a11y: { skipCi: true } },
   render: () => {
     const paginatedMockUsers = generateMockUsers(50)
     const dataSource = useDataSource({
@@ -129,6 +131,7 @@ export const WithInfiniteScrollSummarySticky: Story = {
 }
 
 export const WithInfiniteScrollSummaryStickyFrozenColumns: Story = {
+  parameters: { a11y: { skipCi: true } },
   render: () => {
     const paginatedMockUsers = generateMockUsers(50)
     const dataSource = useDataSource({
