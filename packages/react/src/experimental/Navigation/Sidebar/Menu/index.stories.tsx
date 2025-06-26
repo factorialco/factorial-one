@@ -105,7 +105,7 @@ export const Default: Story = {
           type: "person",
           firstName: "Dani",
           lastName: "Moreno",
-          src: "https://github.com/dani-moreno.png",
+          src: "/avatars/person05.jpg",
         },
         href: "/people/dani-moreno",
         tooltip: "Days off",

@@ -9,11 +9,11 @@ import {
   Office,
   Star,
 } from "@/icons/app"
+import cat from "@storybook-static/avatars/person04.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
 import { OneCard } from "./OneCard"
-import cat from "/avatars/person04.jpg"
 
 const meta = {
   component: OneCard,
