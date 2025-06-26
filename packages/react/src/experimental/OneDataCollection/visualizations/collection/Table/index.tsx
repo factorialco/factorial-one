@@ -445,6 +445,17 @@ export const TableCollection = <
                 ))}
               </TableRow>
             ))}
+          {isInfiniteScrollPagination(paginationInfo) &&
+            paginationInfo.hasMore && (
+              <tr>
+                <td
+                  colSpan={columns.length + (source.selectable ? 1 : 0)}
+                  ref={loadingIndicatorRef}
+                  className="h-10 w-full"
+                  aria-hidden="true"
+                ></td>
+              </tr>
+            )}
         </TableBody>
         {/* TODO: maybe as new component? */}
         {summaryData && (
@@ -527,15 +538,6 @@ export const TableCollection = <
           </TableFooter>
         )}
       </OneTable>
-
-      {isInfiniteScrollPagination(paginationInfo) && paginationInfo.hasMore && (
-        <div
-          ref={loadingIndicatorRef}
-          className="h-10 w-full"
-          aria-hidden="true"
-        />
-      )}
-
       <PagesPagination
         paginationInfo={paginationInfo}
         setPage={setPage}
