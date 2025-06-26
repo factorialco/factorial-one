@@ -88,7 +88,6 @@ export const WithInfiniteScrollSummarySticky: Story = {
   render: () => {
     const paginatedMockUsers = generateMockUsers(50)
     const dataSource = useDataSource({
-      filters,
       sortings,
       presets: filterPresets,
       summaries: {
