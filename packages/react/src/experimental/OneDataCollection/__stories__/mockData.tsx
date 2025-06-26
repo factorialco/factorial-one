@@ -361,6 +361,11 @@ export const getMockVisualizations = (options?: {
           type: "person",
           firstName: item.name.split(" ")[0],
           lastName: item.name.split(" ")[1],
+          badge: {
+            type: "module",
+            module: "inbox",
+            tooltip: "Inbox",
+          },
         },
       }),
       fields: [
