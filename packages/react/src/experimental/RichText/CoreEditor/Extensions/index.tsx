@@ -14,11 +14,13 @@ export * from "./TextAlign"
 
 // Dynamic extensions (require configuration)
 export * from "./Accessibility"
+export * from "./AddBlockButton"
 export * from "./CharacterCount"
 export * from "./Mention"
 export * from "./Placeholder"
 
 // Custom extensions
+export * from "./AIBlock"
 export * from "./CustomTask"
 export * from "./MoodTracker"
 export * from "./PersistSelection"

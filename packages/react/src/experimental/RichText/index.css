@@ -51,7 +51,7 @@
 
 .ProseMirror a,
 .rich-text-display-container a {
-  @apply font-medium text-f1-foreground-accent no-underline;
+  @apply cursor-pointer font-medium text-f1-foreground-accent no-underline;
 }
 
 .ProseMirror strong,

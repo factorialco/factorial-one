@@ -5,6 +5,8 @@ import {
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
 import { Editor, EditorContent, JSONContent, useEditor } from "@tiptap/react"
 import { forwardRef, useId, useImperativeHandle, useRef, useState } from "react"
+import { AIBlockConfig, AIBlockLabels } from "../CoreEditor/Extensions/AIBlock"
+import { MoodTrackerLabels } from "../CoreEditor/Extensions/MoodTracker"
 import "../index.css"
 import { createBasicTextEditorExtensions } from "./extensions"
 
@@ -14,15 +16,22 @@ interface BasicTextEditorProps {
   initialEditorState?: {
     content: JSONContent | string
   }
-  toolbarLabels: ToolbarLabels
-  slashCommandGroupLabels?: SlashCommandGroupLabels
   readonly?: boolean
+  aiBlockConfig?: AIBlockConfig
+
+  labels: {
+    toolbarLabels: ToolbarLabels
+    slashCommandGroupLabels?: SlashCommandGroupLabels
+    aiBlockLabels?: AIBlockLabels
+    moodTrackerLabels?: MoodTrackerLabels
+  }
 }
 
 type BasicTextEditorHandle = {
   clear: () => void
   focus: () => void
   setContent: (content: string) => void
+  insertAIBlock: () => void
 }
 
 const BasicTextEditorComponent = forwardRef<
@@ -33,12 +42,18 @@ const BasicTextEditorComponent = forwardRef<
     onChange,
     placeholder,
     initialEditorState,
-    toolbarLabels,
-    slashCommandGroupLabels,
     readonly = false,
+    labels,
+    aiBlockConfig,
   },
   ref
 ) {
+  const {
+    toolbarLabels,
+    slashCommandGroupLabels,
+    aiBlockLabels,
+    moodTrackerLabels,
+  } = labels
   const containerRef = useRef<HTMLDivElement>(null)
   const editorId = useId()
 
@@ -49,7 +64,10 @@ const BasicTextEditorComponent = forwardRef<
     extensions: createBasicTextEditorExtensions(
       placeholder,
       toolbarLabels,
-      slashCommandGroupLabels
+      slashCommandGroupLabels,
+      aiBlockConfig,
+      aiBlockLabels,
+      moodTrackerLabels
     ),
     content: initialContent,
     onUpdate: ({ editor }: { editor: Editor }) => {
@@ -68,6 +86,21 @@ const BasicTextEditorComponent = forwardRef<
     setContent: (content: string) => {
       if (editor) {
         editor.commands.setContent(content)
+      }
+    },
+    insertAIBlock: () => {
+      if (editor && aiBlockConfig) {
+        const enhancedConfig = aiBlockLabels
+          ? { ...aiBlockConfig, labels: aiBlockLabels }
+          : aiBlockConfig
+
+        editor.commands.insertAIBlock(
+          {
+            content: null,
+            selectedAction: undefined,
+          },
+          enhancedConfig
+        )
       }
     },
   }))

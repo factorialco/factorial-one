@@ -12,10 +12,12 @@ import {
 } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { ToolbarLabels } from "../../Toolbar/types"
+import { AIBlockConfig } from "../AIBlock"
 
 interface CommandItem {
   title: string
-  icon: IconType
+  icon?: IconType
+  emoji?: string
   command: (editor: Editor) => void
 }
 
@@ -31,21 +33,149 @@ interface SlashCommandGroupLabels {
   [key: string]: string
 }
 
-const availableCommands = (labels: ToolbarLabels): CommandItem[] => {
+const availableCommands = (
+  labels: ToolbarLabels,
+  aiBlockConfig?: AIBlockConfig
+): CommandItem[] => {
   // Get grouped commands and flatten them for backward compatibility
   const defaultGroupLabels: SlashCommandGroupLabels = {
     textStyles: "Text Styles",
     lists: "Lists",
     blocks: "Blocks",
   }
-  const groups = getGroupedCommands(labels, defaultGroupLabels)
+  const groups = getGroupedCommands(labels, defaultGroupLabels, aiBlockConfig)
   return groups.flatMap((group) => group.commands)
 }
 
 const getGroupedCommands = (
   labels: ToolbarLabels,
-  groupLabels: SlashCommandGroupLabels
+  groupLabels: SlashCommandGroupLabels,
+  aiBlockConfig?: AIBlockConfig
 ): CommandGroup[] => [
+  // Only include AI Block group if config is provided
+  ...(aiBlockConfig
+    ? [
+        {
+          title: aiBlockConfig.title,
+          commands: [
+            // Add individual commands for each AI button using emoji
+            ...aiBlockConfig.buttons.map((button) => ({
+              title: button.label,
+              command: async (editor: Editor) => {
+                // Insert AI block with the specific action already loading
+                editor
+                  .chain()
+                  .focus()
+                  .insertContent([
+                    {
+                      type: "aiBlock",
+                      attrs: {
+                        data: {
+                          content: null,
+                          selectedAction: button.type,
+                        },
+                        config: aiBlockConfig,
+                      },
+                    },
+                    {
+                      type: "paragraph",
+                    },
+                  ])
+                  .run()
+
+                // Execute the AI action with a small delay to ensure the component is mounted
+                setTimeout(async () => {
+                  try {
+                    const content = await aiBlockConfig.onClick(button.type)
+
+                    // Find the AIBlock we just inserted and update it with the result
+                    setTimeout(() => {
+                      const { state } = editor
+                      const { doc } = state
+                      let lastAIBlockPos = null
+
+                      // Find the last AIBlock (which should be the one we just inserted)
+                      doc.descendants((node, pos) => {
+                        if (
+                          node.type.name === "aiBlock" &&
+                          node.attrs.data?.selectedAction === button.type &&
+                          !node.attrs.data?.content
+                        ) {
+                          lastAIBlockPos = pos
+                        }
+                      })
+
+                      if (lastAIBlockPos !== null) {
+                        // Update the specific AIBlock with the generated content
+                        const tr = state.tr.setNodeMarkup(
+                          lastAIBlockPos,
+                          undefined,
+                          {
+                            data: {
+                              selectedAction: button.type,
+                              content: content,
+                            },
+                            config: aiBlockConfig,
+                          }
+                        )
+                        editor.view.dispatch(tr)
+
+                        // Position cursor in the paragraph after the AIBlock
+                        const node = doc.nodeAt(lastAIBlockPos)
+                        if (node) {
+                          const paragraphPos =
+                            lastAIBlockPos + node.nodeSize + 1
+                          editor
+                            .chain()
+                            .focus()
+                            .setTextSelection(paragraphPos)
+                            .run()
+                        }
+                      }
+                    }, 50)
+                  } catch (error) {
+                    console.error("AI action error:", error)
+                    // Update the AIBlock to show error state
+                    setTimeout(() => {
+                      const { state } = editor
+                      const { doc } = state
+                      let lastAIBlockPos = null
+
+                      // Find the last AIBlock that matches our criteria
+                      doc.descendants((node, pos) => {
+                        if (
+                          node.type.name === "aiBlock" &&
+                          node.attrs.data?.selectedAction === button.type &&
+                          !node.attrs.data?.content
+                        ) {
+                          lastAIBlockPos = pos
+                        }
+                      })
+
+                      if (lastAIBlockPos !== null) {
+                        const tr = state.tr.setNodeMarkup(
+                          lastAIBlockPos,
+                          undefined,
+                          {
+                            data: {
+                              selectedAction: button.type,
+                              content: null,
+                            },
+                            config: aiBlockConfig,
+                          }
+                        )
+                        editor.view.dispatch(tr)
+                      }
+                    }, 50)
+                  }
+                }, 100) // Small delay to ensure component is mounted and can detect loading state
+              },
+              emoji: button.emoji, // Use emoji instead of icon
+            })),
+          ],
+        },
+      ]
+    : []),
   {
     title: groupLabels.textStyles,
     commands: [
@@ -166,11 +296,11 @@ const getGroupedCommands = (
       {
         title: labels.divider,
         command: (editor) => {
-          const { from } = editor.state.selection
+          const { from, to } = editor.state.selection
           editor
             .chain()
             .focus()
-            .setTextSelection({ from, to: from })
+            .setTextSelection({ from, to })
             .setHorizontalRule()
             .run()
         },
@@ -181,4 +311,9 @@ const getGroupedCommands = (
 ]
 
 export { availableCommands, getGroupedCommands }
-export type { CommandGroup, CommandItem, SlashCommandGroupLabels }
+export type {
+  AIBlockConfig,
+  CommandGroup,
+  CommandItem,
+  SlashCommandGroupLabels,
+}

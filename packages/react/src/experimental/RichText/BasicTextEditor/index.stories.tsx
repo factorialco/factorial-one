@@ -1,3 +1,4 @@
+import { AcademicCap, List } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { BasicTextEditor } from "./index"
 
@@ -47,30 +48,37 @@ const defaultSlashCommandGroupLabels = {
   blocks: "Blocks",
 }
 
+const defaultAIBlockLabels = {
+  reset: "Reset",
+  resetDescription: "Clear content and start over",
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+}
+
+const defaultMoodTrackerLabels = {
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+}
+
 export const Default: Story = {
   args: {
     placeholder: "Enter '/' to open the command palette...",
-    toolbarLabels: defaultToolbarLabels,
-    slashCommandGroupLabels: defaultSlashCommandGroupLabels,
+    labels: {
+      toolbarLabels: defaultToolbarLabels,
+      slashCommandGroupLabels: defaultSlashCommandGroupLabels,
+      aiBlockLabels: defaultAIBlockLabels,
+      moodTrackerLabels: defaultMoodTrackerLabels,
+    },
     onChange: (value) => {
       console.log("Content changed:", value)
     },
+
     initialEditorState: {
       content: {
         type: "doc",
         content: [
-          {
-            type: "paragraph",
-            attrs: {
-              textAlign: null,
-            },
-            content: [
-              {
-                type: "text",
-                text: "This is a document with mood tracking:",
-              },
-            ],
-          },
           {
             type: "moodTracker",
             attrs: {
@@ -88,51 +96,92 @@ export const Default: Story = {
                   {
                     day: "Tuesday",
                     mood: "superPositive",
-                    comment: "-",
-                  },
-                  {
-                    day: "Wednesday",
-                    mood: "positive",
                     comment: "Great team collaboration today!",
-                  },
-                  {
-                    day: "Thursday",
-                    mood: "neutral",
-                    comment: "Average day, nothing special.",
-                  },
-                  {
-                    day: "Friday",
-                    mood: "superPositive",
-                    comment: "Amazing presentation, very proud of the team!",
-                  },
-                  {
-                    day: "Saturday",
-                    mood: "positive",
-                    comment: "Average day, nothing special.",
-                  },
-                  {
-                    day: "Sunday",
-                    mood: "negative",
-                    comment: "Average day, nothing special.",
                   },
                 ],
               },
             },
           },
           {
-            type: "paragraph",
+            type: "aiBlock",
             attrs: {
-              textAlign: null,
-            },
-            content: [
-              {
-                type: "text",
-                text: "You can continue writing after the mood tracker...",
+              data: {
+                content: null,
+                selectedAction: undefined,
               },
-            ],
+            },
           },
         ],
       },
+    },
+
+    aiBlockConfig: {
+      title: "AI Pre-Meeting Helper",
+      onClick: () => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              type: "taskList",
+              content: [
+                {
+                  type: "taskItem",
+                  attrs: {
+                    checked: false,
+                  },
+                  content: [
+                    {
+                      type: "paragraph",
+                      attrs: {
+                        textAlign: null,
+                      },
+                      content: [
+                        {
+                          type: "text",
+                          text: "Lista de ejemplo",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  type: "taskItem",
+                  attrs: {
+                    checked: false,
+                  },
+                  content: [
+                    {
+                      type: "paragraph",
+                      attrs: {
+                        textAlign: null,
+                      },
+                      content: [
+                        {
+                          type: "text",
+                          text: "hola hola",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            })
+          }, 1000)
+        })
+      },
+      buttons: [
+        {
+          type: "factorial-format",
+          emoji: "🤖",
+          label: "Factorial format",
+          icon: AcademicCap,
+        },
+        {
+          type: "task-list",
+          emoji: "📝",
+          label: "Task list (custom)",
+          icon: List,
+        },
+      ],
     },
   },
 }

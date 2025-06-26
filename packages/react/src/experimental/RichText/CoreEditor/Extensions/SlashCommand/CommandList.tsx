@@ -121,7 +121,7 @@ const CommandList = forwardRef<CommandListHandle, CommandListProps>(
     return (
       <div
         ref={containerRef}
-        className="scrollbar-macos max-h-[528px] w-72 overflow-y-auto rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-md"
+        className="scrollbar-macos max-h-96 w-72 overflow-y-auto rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-md"
       >
         {commandsToRender.map((group, groupIndex) => (
           <div key={groupIndex}>
@@ -154,10 +154,14 @@ const CommandList = forwardRef<CommandListHandle, CommandListProps>(
                     }}
                     onMouseEnter={() => setSelectedIndex(globalIndex)}
                   >
-                    <Icon
-                      icon={item.icon}
-                      className="text-f1-foreground-secondary"
-                    />
+                    {item.emoji ? (
+                      <span className="text-base">{item.emoji}</span>
+                    ) : item.icon ? (
+                      <Icon
+                        icon={item.icon}
+                        className="text-f1-foreground-secondary"
+                      />
+                    ) : null}
                     <p className="flex-grow text-sm font-medium text-f1-foreground">
                       {item.title}
                     </p>
