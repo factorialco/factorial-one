@@ -4,8 +4,6 @@ import {
   createDataAdapter,
   createPromiseDataFetch,
   ExampleComponent,
-  filterPresets,
-  filters,
   generateMockUsers,
   sortings,
 } from "./mockData"
@@ -20,10 +18,6 @@ const meta = {
     useObservable: {
       control: "boolean",
       description: "Use Observable for data fetching",
-    },
-    usePresets: {
-      control: "boolean",
-      description: "Include filter presets",
     },
     onSelectItems: {
       action: "onSelectItems",
@@ -89,7 +83,6 @@ export const WithInfiniteScrollSummarySticky: Story = {
     const paginatedMockUsers = generateMockUsers(50)
     const dataSource = useDataSource({
       sortings,
-      presets: filterPresets,
       summaries: {
         salary: {
           type: "sum",
@@ -139,9 +132,7 @@ export const WithInfiniteScrollSummaryStickyFrozenColumns: Story = {
   render: () => {
     const paginatedMockUsers = generateMockUsers(50)
     const dataSource = useDataSource({
-      filters,
       sortings,
-      presets: filterPresets,
       summaries: {
         salary: {
           type: "sum",
