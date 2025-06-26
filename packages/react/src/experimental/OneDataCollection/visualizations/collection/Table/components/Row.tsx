@@ -99,7 +99,7 @@ const RowComponentInner = <
       {source.selectable && (
         <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
           {id !== undefined && (
-            <div className="flex items-center justify-end">
+            <div className="pointer-events-auto flex items-center justify-end">
               <Checkbox
                 checked={selectedItems.has(id)}
                 onCheckedChange={onCheckedChange}
@@ -150,7 +150,10 @@ const RowComponentInner = <
           href={itemHref}
           onClick={itemOnClick}
         >
-          <ItemActionsDropdown items={actionsToDropdownItems(itemActions)} />
+          <ItemActionsDropdown
+            items={actionsToDropdownItems(itemActions)}
+            className="pointer-events-auto"
+          />
         </TableCell>
       )}
     </TableRow>

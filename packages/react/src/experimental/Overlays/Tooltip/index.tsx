@@ -32,7 +32,9 @@ export function Tooltip({
     <>
       <TooltipProvider>
         <TooltipPrimitive>
-          <TooltipTrigger asChild>{children}</TooltipTrigger>
+          <TooltipTrigger asChild className="pointer-events-auto">
+            {children}
+          </TooltipTrigger>
           <TooltipContent className={cn("max-w-xs", shortcut && "pr-1.5")}>
             <div className="flex flex-col gap-0.5">
               <div className="flex items-center gap-2">

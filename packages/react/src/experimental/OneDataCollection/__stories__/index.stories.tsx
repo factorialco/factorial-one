@@ -255,6 +255,7 @@ export const WithLinkedItems: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      selectable: (item) => item.id,
       itemActions: (item) => [
         {
           label: "Edit",
@@ -301,7 +302,18 @@ export const WithLinkedItems: Story = {
                 columns: [
                   {
                     label: "Name",
-                    render: (item) => item.name,
+                    render: (item) => ({
+                      type: "person",
+                      value: {
+                        firstName: item.name.split(" ")[0],
+                        lastName: item.name.split(" ")[1],
+                        badge: {
+                          type: "module",
+                          module: "inbox",
+                          tooltip: "Inbox",
+                        },
+                      },
+                    }),
                     sorting: "name",
                   },
                   {
