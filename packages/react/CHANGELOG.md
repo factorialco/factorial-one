@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.112.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.111.0...factorial-one-react-v1.112.0) (2025-06-26)
+
+
+### Features
+
+* **RichTextEditor:** add AIBlock extension and integrate into Basic text editor ([#2145](https://github.com/factorialco/factorial-one/issues/2145)) ([9338520](https://github.com/factorialco/factorial-one/commit/93385209a520fca58045d36c66a002dc702b45c7))
+
 ## [1.111.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.110.0...factorial-one-react-v1.111.0) (2025-06-25)
 
 
