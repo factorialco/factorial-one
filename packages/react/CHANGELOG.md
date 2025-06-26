@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.113.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.0...factorial-one-react-v1.113.1) (2025-06-26)
+
+
+### Bug Fixes
+
+* **datacollection:** tooltip when link ([#2169](https://github.com/factorialco/factorial-one/issues/2169)) ([5602a08](https://github.com/factorialco/factorial-one/commit/5602a08cfa6f04a3617a376d030c8a03bc38ba17))
+
 ## [1.113.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.112.0...factorial-one-react-v1.113.0) (2025-06-26)
 
 
