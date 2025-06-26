@@ -75,6 +75,7 @@ export const BasicSummaryRow: Story = {
                   render: (item) => item.salary,
                 },
               ],
+              frozenColumns: 1,
             },
           },
         ]}
@@ -106,8 +107,9 @@ export const WithInfiniteScrollSummarySticky: Story = {
     })
 
     return (
-      <div className="space-y-4" style={{ height: "500px", overflow: "auto" }}>
+      <div style={{ height: 500 }}>
         <OneDataCollection
+          fullHeight
           source={dataSource}
           visualizations={[
             {
@@ -125,6 +127,61 @@ export const WithInfiniteScrollSummarySticky: Story = {
                     render: (item) => item.salary,
                   },
                 ],
+              },
+            },
+          ]}
+        />
+      </div>
+    )
+  },
+}
+
+export const WithInfiniteScrollSummaryStickyFrozenColumns: Story = {
+  render: () => {
+    const paginatedMockUsers = generateMockUsers(50)
+    const dataSource = useDataSource({
+      filters,
+      sortings,
+      presets: filterPresets,
+      summaries: {
+        salary: {
+          type: "sum",
+          label: "Total",
+        },
+      },
+      dataAdapter: createDataAdapter({
+        data: paginatedMockUsers,
+        delay: 500,
+        paginationType: "infinite-scroll",
+        perPage: 10,
+        useObservable: true,
+      }),
+    })
+
+    return (
+      <div style={{ height: 500 }}>
+        <OneDataCollection
+          fullHeight
+          source={dataSource}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Email", render: (item) => item.email },
+                  { label: "Email2", render: (item) => item.email },
+                  { label: "Role", render: (item) => item.role },
+                  { label: "Role2", render: (item) => item.role },
+                  { label: "Department", render: (item) => item.department },
+                  {
+                    label: "Salary",
+                    summary: "salary",
+                    align: "right",
+                    render: (item) => item.salary,
+                  },
+                ],
+                frozenColumns: 1,
               },
             },
           ]}
