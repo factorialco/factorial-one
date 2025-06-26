@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.113.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.1...factorial-one-react-v1.113.2) (2025-06-26)
+
+
+### Bug Fixes
+
+* refactor infinite scroll loading and add sticky summary row ([#2172](https://github.com/factorialco/factorial-one/issues/2172)) ([2036c30](https://github.com/factorialco/factorial-one/commit/2036c30aa1b3df429e5580548ef48bb11450da36))
+
 ## [1.113.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.0...factorial-one-react-v1.113.1) (2025-06-26)
 
 
