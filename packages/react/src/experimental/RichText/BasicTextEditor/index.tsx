@@ -16,12 +16,15 @@ interface BasicTextEditorProps {
   initialEditorState?: {
     content: JSONContent | string
   }
-  toolbarLabels: ToolbarLabels
-  slashCommandGroupLabels?: SlashCommandGroupLabels
   readonly?: boolean
   aiBlockConfig?: AIBlockConfig
-  aiBlockLabels?: AIBlockLabels
-  moodTrackerLabels?: MoodTrackerLabels
+
+  labels: {
+    toolbarLabels: ToolbarLabels
+    slashCommandGroupLabels?: SlashCommandGroupLabels
+    aiBlockLabels?: AIBlockLabels
+    moodTrackerLabels?: MoodTrackerLabels
+  }
 }
 
 type BasicTextEditorHandle = {
@@ -39,15 +42,18 @@ const BasicTextEditorComponent = forwardRef<
     onChange,
     placeholder,
     initialEditorState,
-    toolbarLabels,
-    slashCommandGroupLabels,
     readonly = false,
+    labels,
     aiBlockConfig,
-    aiBlockLabels,
-    moodTrackerLabels,
   },
   ref
 ) {
+  const {
+    toolbarLabels,
+    slashCommandGroupLabels,
+    aiBlockLabels,
+    moodTrackerLabels,
+  } = labels
   const containerRef = useRef<HTMLDivElement>(null)
   const editorId = useId()
 

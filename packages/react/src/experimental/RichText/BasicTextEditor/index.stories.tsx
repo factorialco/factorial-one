@@ -65,10 +65,12 @@ const defaultMoodTrackerLabels = {
 export const Default: Story = {
   args: {
     placeholder: "Enter '/' to open the command palette...",
-    toolbarLabels: defaultToolbarLabels,
-    slashCommandGroupLabels: defaultSlashCommandGroupLabels,
-    aiBlockLabels: defaultAIBlockLabels,
-    moodTrackerLabels: defaultMoodTrackerLabels,
+    labels: {
+      toolbarLabels: defaultToolbarLabels,
+      slashCommandGroupLabels: defaultSlashCommandGroupLabels,
+      aiBlockLabels: defaultAIBlockLabels,
+      moodTrackerLabels: defaultMoodTrackerLabels,
+    },
     onChange: (value) => {
       console.log("Content changed:", value)
     },

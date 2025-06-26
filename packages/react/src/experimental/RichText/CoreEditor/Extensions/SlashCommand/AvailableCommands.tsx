@@ -56,11 +56,11 @@ const getGroupedCommands = (
   ...(aiBlockConfig
     ? [
         {
-          title: aiBlockConfig.title || "AI Block",
+          title: aiBlockConfig.title,
           commands: [
             // Add individual commands for each AI button using emoji
             ...aiBlockConfig.buttons.map((button) => ({
-              title: button.label ?? "Generate",
+              title: button.label,
               command: async (editor: Editor) => {
                 // Insert AI block with the specific action already loading
                 editor

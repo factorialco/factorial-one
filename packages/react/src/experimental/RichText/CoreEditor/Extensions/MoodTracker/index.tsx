@@ -178,41 +178,39 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
                 transition={{ delay: 0.1, duration: 0.3 }}
               >
                 <div className="flex flex-col gap-2">
-                  {data.days.map((day, index) => {
-                    return (
-                      <motion.div
-                        key={index}
-                        initial={{
-                          opacity: 0,
-                          y: -10,
-                          scale: 0.95,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                          scale: 1,
-                        }}
-                        transition={{
-                          delay: index * 0.05,
-                          duration: 0.2,
-                          ease: "easeOut",
-                        }}
-                        className="flex flex-row items-center gap-2"
-                      >
-                        <div className="flex items-center justify-center rounded-full">
-                          <Icon
-                            icon={pulseIcon[day.mood]}
-                            size="lg"
-                            className={pulseIconStyle({ pulse: day.mood })}
-                          />
-                        </div>
-                        <p className="text-f1-text-primary text-md font-normal">
-                          <span className="font-semibold">{day.day}:</span>{" "}
-                          {day.comment}
-                        </p>
-                      </motion.div>
-                    )
-                  })}
+                  {data.days.map((day, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{
+                        opacity: 0,
+                        y: -10,
+                        scale: 0.95,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        scale: 1,
+                      }}
+                      transition={{
+                        delay: index * 0.05,
+                        duration: 0.2,
+                        ease: "easeOut",
+                      }}
+                      className="flex flex-row items-center gap-2"
+                    >
+                      <div className="flex items-center justify-center rounded-full">
+                        <Icon
+                          icon={pulseIcon[day.mood]}
+                          size="lg"
+                          className={pulseIconStyle({ pulse: day.mood })}
+                        />
+                      </div>
+                      <p className="text-f1-text-primary text-md font-normal">
+                        <span className="font-semibold">{day.day}:</span>{" "}
+                        {day.comment}
+                      </p>
+                    </motion.div>
+                  ))}
                 </div>
               </motion.div>
             </motion.div>
