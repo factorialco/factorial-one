@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.113.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.2...factorial-one-react-v1.113.3) (2025-06-27)
+
+
+### Bug Fixes
+
+* export provider defaults ([#2175](https://github.com/factorialco/factorial-one/issues/2175)) ([12cdef2](https://github.com/factorialco/factorial-one/commit/12cdef268b1c6d9bd50b1d5a9f1b8109092121a1))
+
 ## [1.113.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.1...factorial-one-react-v1.113.2) (2025-06-26)
 
 
