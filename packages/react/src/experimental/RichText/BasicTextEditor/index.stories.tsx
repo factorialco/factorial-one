@@ -62,6 +62,13 @@ const defaultMoodTrackerLabels = {
   collapse: "Collapse",
 }
 
+const defaultLiveCompanionLabels = {
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+  topicsWithCommentary: "topics with commentary",
+}
+
 export const Default: Story = {
   args: {
     placeholder: "Enter '/' to open the command palette...",
@@ -70,6 +77,7 @@ export const Default: Story = {
       slashCommandGroupLabels: defaultSlashCommandGroupLabels,
       aiBlockLabels: defaultAIBlockLabels,
       moodTrackerLabels: defaultMoodTrackerLabels,
+      liveCompanionLabels: defaultLiveCompanionLabels,
     },
     onChange: (value) => {
       console.log("Content changed:", value)
@@ -79,6 +87,15 @@ export const Default: Story = {
       content: {
         type: "doc",
         content: [
+          {
+            type: "heading",
+            content: [
+              {
+                type: "text",
+                text: "Titulo de la meeting",
+              },
+            ],
+          },
           {
             type: "moodTracker",
             attrs: {
@@ -103,6 +120,65 @@ export const Default: Story = {
             },
           },
           {
+            type: "liveCompanion",
+            attrs: {
+              data: {
+                title: "Meeting live companion topics",
+                topics: [
+                  {
+                    title: "Project Timeline",
+                    comments: [
+                      {
+                        user: "Ana",
+                        comment: "We should extend the deadline by two weeks.",
+                      },
+                      {
+                        user: "Carlos",
+                        comment: "I agree, we need more time for testing.",
+                      },
+                      {
+                        user: "María",
+                        comment: "Let's adjust the roadmap accordingly.",
+                      },
+                    ],
+                  },
+                  {
+                    title: "Resource Allocation",
+                    comments: [
+                      {
+                        user: "David",
+                        comment:
+                          "We need more developers for the front-end work.",
+                      },
+                      {
+                        user: "Elena",
+                        comment: "I can help part-time with the UI components.",
+                      },
+                    ],
+                  },
+                  {
+                    title: "Technical Approach",
+                    comments: [
+                      {
+                        user: "Pablo",
+                        comment:
+                          "Let's use the new API for better performance.",
+                      },
+                      {
+                        user: "Sofía",
+                        comment: "The documentation is ready for review.",
+                      },
+                      {
+                        user: "Luis",
+                        comment: "I've prepared some examples for the team.",
+                      },
+                    ],
+                  },
+                ],
+              },
+            },
+          },
+          {
             type: "aiBlock",
             attrs: {
               data: {
@@ -110,6 +186,9 @@ export const Default: Story = {
                 selectedAction: undefined,
               },
             },
+          },
+          {
+            type: "paragraph",
           },
         ],
       },

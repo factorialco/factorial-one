@@ -6,6 +6,7 @@ import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Exte
 import { Editor, EditorContent, JSONContent, useEditor } from "@tiptap/react"
 import { forwardRef, useId, useImperativeHandle, useRef, useState } from "react"
 import { AIBlockConfig, AIBlockLabels } from "../CoreEditor/Extensions/AIBlock"
+import { LiveCompanionLabels } from "../CoreEditor/Extensions/LiveCompanion"
 import { MoodTrackerLabels } from "../CoreEditor/Extensions/MoodTracker"
 import "../index.css"
 import { createBasicTextEditorExtensions } from "./extensions"
@@ -24,6 +25,7 @@ interface BasicTextEditorProps {
     slashCommandGroupLabels?: SlashCommandGroupLabels
     aiBlockLabels?: AIBlockLabels
     moodTrackerLabels?: MoodTrackerLabels
+    liveCompanionLabels?: LiveCompanionLabels
   }
 }
 
@@ -53,6 +55,7 @@ const BasicTextEditorComponent = forwardRef<
     slashCommandGroupLabels,
     aiBlockLabels,
     moodTrackerLabels,
+    liveCompanionLabels,
   } = labels
   const containerRef = useRef<HTMLDivElement>(null)
   const editorId = useId()
@@ -67,7 +70,8 @@ const BasicTextEditorComponent = forwardRef<
       slashCommandGroupLabels,
       aiBlockConfig,
       aiBlockLabels,
-      moodTrackerLabels
+      moodTrackerLabels,
+      liveCompanionLabels
     ),
     content: initialContent,
     onUpdate: ({ editor }: { editor: Editor }) => {
