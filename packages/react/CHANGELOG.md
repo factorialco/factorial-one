@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.113.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.4...factorial-one-react-v1.113.5) (2025-06-27)
+
+
+### Bug Fixes
+
+* update TableHead sticky row background layering ([#2179](https://github.com/factorialco/factorial-one/issues/2179)) ([3a96259](https://github.com/factorialco/factorial-one/commit/3a96259eff35d5418ad36fa338f81b806ccc9f73))
+
 ## [1.113.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.3...factorial-one-react-v1.113.4) (2025-06-27)
 
 
