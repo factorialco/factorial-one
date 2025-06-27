@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.114.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.6...factorial-one-react-v1.114.0) (2025-06-27)
+
+
+### Features
+
+* **RichTextEditor:** add LiveCompanion extension ([#2176](https://github.com/factorialco/factorial-one/issues/2176)) ([7242f65](https://github.com/factorialco/factorial-one/commit/7242f6563f99156d11bc0b06f0298726bd0724ac))
+
 ## [1.113.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.5...factorial-one-react-v1.113.6) (2025-06-27)
 
 
