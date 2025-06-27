@@ -1,4 +1,7 @@
+import { cn, focusRing } from "@/lib/utils"
+import type { VariantProps } from "cva"
 import React, { ReactNode } from "react"
+import { actionVariants } from "./variants"
 
 export interface ActionCommonProps {
   children: ReactNode
@@ -14,6 +17,7 @@ export interface ActionCommonProps {
 
   disabled?: boolean
   //loading?: boolean
+  pressed?: boolean
 
   className?: string
 }
@@ -23,7 +27,11 @@ export interface LinkActionProps {
   target?: "_blank" | "_self" | "_parent" | "_top"
 }
 
-export type ActionProps = ActionCommonProps & Partial<LinkActionProps>
+type ActionVariantProps = VariantProps<typeof actionVariants>
+
+export type ActionProps = ActionCommonProps &
+  Partial<LinkActionProps> &
+  ActionVariantProps
 
 export const Action = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
@@ -40,20 +48,31 @@ export const Action = React.forwardRef<
       onFocus,
       onBlur,
       disabled,
+      //loading,
+      pressed,
       className,
       href,
       target,
+      variant,
+      size = "md",
     },
     ref
   ) => {
     const isLink = !!href
+    const defaultVariant = isLink ? variant || "link" : variant || "default"
+    const defaultSize = defaultVariant === "link" ? "zero" : size
+    const variantClasses = actionVariants({
+      variant: defaultVariant,
+      size: defaultSize,
+      pressed,
+    })
 
     const innerContent = (
-      <>
+      <div className="main">
         {prepend && !prependOutside && prepend}
-        {children}
+        <span>{children}</span>
         {append && !appendOutside && append}
-      </>
+      </div>
     )
 
     const mainElement = isLink ? (
@@ -64,7 +83,7 @@ export const Action = React.forwardRef<
           onClick={onClick}
           onFocus={onFocus}
           onBlur={onBlur}
-          className={className}
+          className={cn(variantClasses, className)}
         >
           {innerContent}
         </span>
@@ -77,7 +96,7 @@ export const Action = React.forwardRef<
           onFocus={onFocus}
           onBlur={onBlur}
           rel={target === "_blank" ? "noopener noreferrer" : undefined}
-          className={className}
+          className={cn(variantClasses, focusRing(), className)}
         >
           {innerContent}
         </a>
@@ -89,7 +108,8 @@ export const Action = React.forwardRef<
         onFocus={onFocus}
         onBlur={onBlur}
         disabled={disabled}
-        className={className}
+        data-pressed={pressed}
+        className={cn(variantClasses, focusRing(), className)}
       >
         {innerContent}
       </button>
@@ -108,3 +128,5 @@ export const Action = React.forwardRef<
     return mainElement
   }
 )
+
+Action.displayName = "Action"
