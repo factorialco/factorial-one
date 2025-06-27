@@ -42,7 +42,7 @@ export const DaytimeHomeLayout: Story = {
         employeeFirstName: "Saul",
         employeeLastName: "Goodman",
         title: "Good morning, Saul!",
-        employeeAvatar: "https://github.com/sauldom102.png",
+        employeeAvatar: "/avatars/person05.jpg",
       }}
     >
       <HomeLayout {...DefaultHomeLayoutStory.args} />
@@ -68,7 +68,7 @@ export const DaytimeHomeLayoutWithDescription: Story = {
         employeeLastName: "Goodman",
         title: "Good morning, Saul!",
         description: "How are you feeling today?",
-        employeeAvatar: "https://github.com/sauldom102.png",
+        employeeAvatar: "/avatars/person04.jpg",
       }}
     >
       <HomeLayout {...DefaultHomeLayoutStory.args} />
@@ -96,7 +96,7 @@ export const DaytimeHomeLayoutWithMood: Story = {
         description: "How are you feeling today?",
         pulse: "positive",
         onPulseClick: () => {},
-        employeeAvatar: "https://github.com/sauldom102.png",
+        employeeAvatar: "/avatars/person03.jpg",
       }}
     >
       <HomeLayout {...DefaultHomeLayoutStory.args} />
@@ -124,7 +124,7 @@ export const DaytimeHomeLayoutWithMoodNotSet: Story = {
         description: "How are you feeling today?",
         pulse: undefined,
         onPulseClick: () => {},
-        employeeAvatar: "https://github.com/sauldom102.png",
+        employeeAvatar: "/avatars/person05.jpg",
       }}
     >
       <HomeLayout {...DefaultHomeLayoutStory.args} />

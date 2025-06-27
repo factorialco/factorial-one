@@ -1,5 +1,5 @@
+import cat from "@storybook-static/avatars/person04.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import cat from "../../../../../../storybook-assets/cat.jpeg"
 import { PostEvent } from "./index"
 
 const meta: Meta<typeof PostEvent> = {

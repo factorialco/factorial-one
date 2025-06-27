@@ -167,7 +167,7 @@ export const Metadata: Story = {
             type: "person",
             firstName: "Josep Jaume",
             lastName: "Rey",
-            src: "https://github.com/josepjaume.png",
+            src: "/avatars/person02.jpg",
           },
           text: "Josep Jaume Rey",
         },
@@ -260,7 +260,7 @@ export const WithDropdownAction: Story = {
             type: "person",
             firstName: "Ana",
             lastName: "Martínez",
-            src: "https://github.com/anamartinez.png",
+            src: "/avatars/person03.jpg",
           },
           text: "Ana Martínez",
         },
@@ -276,7 +276,7 @@ export const CompanyHeader: Story = {
     avatar: {
       type: "company",
       name: "Factorial",
-      src: "https://github.com/factorialco.png",
+      src: "/avatars/factorial.png",
     },
     secondaryActions: [
       {
@@ -323,7 +323,7 @@ export const PersonHeader: Story = {
       type: "person",
       firstName: "René",
       lastName: "Galindo",
-      src: "https://github.com/renegalindo.png",
+      src: "/avatars/person04.jpg",
     },
     metadata: [
       {
@@ -334,7 +334,7 @@ export const PersonHeader: Story = {
             type: "person",
             firstName: "Ilya",
             lastName: "Zayats",
-            src: "https://github.com/somebody32.png",
+            src: "/avatars/person05.jpg",
           },
           text: "ilya Zayats",
         },
@@ -346,6 +346,7 @@ export const PersonHeader: Story = {
           variant: {
             type: "team",
             name: "Product design",
+            src: "/avatars/team02.jpg",
           },
           text: "Product design",
         },
@@ -416,7 +417,7 @@ export const TeamHeader: Story = {
             type: "person",
             firstName: "Josep Jaume",
             lastName: "Rey",
-            src: "https://github.com/josepjaume.png",
+            src: "/avatars/person01.jpg",
           },
           text: "Josep Jaume Rey",
         },
@@ -477,7 +478,7 @@ export const NoDescription: Story = {
             type: "person",
             firstName: "Josep Jaume",
             lastName: "Rey",
-            src: "https://github.com/josepjaume.png",
+            src: "/avatars/person08.jpg",
           },
           text: "Josep Jaume Rey",
         },
