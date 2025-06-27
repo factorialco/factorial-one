@@ -1,11 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react"
-import type { ComponentProps } from "react"
+import type { Meta, StoryObj } from "@storybook/react-vite"
 import React from "react"
 import { expect, within } from "storybook/test"
 import { Add, Archive, Delete, Save } from "../../../icons/app"
 import { Button } from "./index"
-
-type ButtonProps = ComponentProps<typeof Button>
 
 const meta = {
   title: "Button",
@@ -109,7 +106,7 @@ export const Default: Story = {
 }
 
 export const Variants: Story = {
-  render: (args: any) => (
+  render: (args) => (
     <div className="flex gap-2">
       <Button {...args} variant="default" label="Default" />
       <Button {...args} variant="outline" label="Outline" />
@@ -123,7 +120,7 @@ export const Variants: Story = {
 }
 
 export const IconVariants: Story = {
-  render: (args: any) => (
+  render: (args) => (
     <div className="flex flex-col gap-6">
       <div>
         <div style={{ fontWeight: 600, marginBottom: 8 }}>With icon</div>
@@ -208,7 +205,7 @@ export const IconVariants: Story = {
 
 // Size Variants
 export const Sizes: Story = {
-  render: (args: any) => (
+  render: (args) => (
     <div className="flex items-center gap-4">
       <Button {...args} size="lg" label="Large" />
       <Button {...args} size="md" label="Medium" />
@@ -238,7 +235,7 @@ export const AsyncAction: Story = {
     label: "Save Changes",
     icon: Save,
   },
-  render: (args: any) => {
+  render: (args) => {
     const onClick = async () => {
       await new Promise((resolve) => setTimeout(resolve, 2000))
       alert("Changes saved!")
@@ -268,7 +265,7 @@ export const OnlyEmoji: Story = {
 }
 
 export const States: Story = {
-  render: (args: any) => {
+  render: (args) => {
     const [asyncLoading, setAsyncLoading] = React.useState(false)
     return (
       <div className="flex gap-2">
@@ -292,7 +289,7 @@ export const States: Story = {
 }
 
 export const AsyncLoading: Story = {
-  render: (args: any) => {
+  render: (args) => {
     const [asyncLoading, setAsyncLoading] = React.useState(false)
     return (
       <Button
