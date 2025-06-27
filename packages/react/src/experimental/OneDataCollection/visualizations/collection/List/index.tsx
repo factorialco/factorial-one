@@ -1,9 +1,9 @@
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
-import { useGroups } from "@/experimental/OneDataCollection/useGroups"
+import { useGroups } from "@/experimental/OneDataCollection/hooks/useGroups"
 
-import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
+import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/hooks/useInfiniteScrollPagination"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
@@ -11,12 +11,15 @@ import { useEffect } from "react"
 import { Spinner } from "../../../../Information/Spinner"
 import { PagesPagination } from "../../../components/PagesPagination"
 import type { FiltersDefinition } from "../../../Filters/types"
+import {
+  isInfiniteScrollPagination,
+  useData,
+} from "../../../hooks/useData/useData"
+import { useSelectable } from "../../../hooks/useSelectable"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
 import { SummariesDefinition } from "../../../summary"
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
-import { isInfiniteScrollPagination, useData } from "../../../useData"
-import { useSelectable } from "../../../useSelectable"
 import { ListGroup } from "./components/ListGroup"
 import { ListVisualizationOptions } from "./types"
 

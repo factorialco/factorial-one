@@ -11,15 +11,15 @@ import { Observable } from "zen-observable-ts"
 import {
   PromiseState,
   promiseToObservable,
-} from "../../lib/promise-to-observable"
-import type { FiltersDefinition, FiltersState } from "./Filters/types"
-import { ItemActionsDefinition } from "./item-actions"
+} from "../../../../lib/promise-to-observable"
+import type { FiltersDefinition, FiltersState } from "../../Filters/types"
+import { ItemActionsDefinition } from "../../item-actions"
 import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
-} from "./navigationFilters/types"
-import { SortingsDefinition } from "./sortings"
-import { SummariesDefinition } from "./summary"
+} from "../../navigationFilters/types"
+import { SortingsDefinition } from "../../sortings"
+import { SummariesDefinition } from "../../summary"
 import {
   BaseFetchOptions,
   DataSource,
@@ -32,7 +32,7 @@ import {
   PromiseOrObservable,
   RecordType,
   SortingsStateMultiple,
-} from "./types"
+} from "../../types"
 
 /**
  * Represents an error that occurred during data fetching

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { RecordType } from "./types"
-import { GroupRecord } from "./useData"
+import { RecordType } from "../types"
+import { GroupRecord } from "./useData/useData"
 
 export const useGroups = <R extends RecordType>(
   groups: GroupRecord<R>[],

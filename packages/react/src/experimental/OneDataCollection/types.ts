@@ -4,6 +4,7 @@ import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { GroupingDefinition, GroupingState } from "./grouping"
+import { DataError } from "./hooks/useData/useData"
 import { ItemActionsDefinition } from "./item-actions"
 import {
   NavigationFiltersDefinition,
@@ -15,7 +16,6 @@ import {
   SortingsStateMultiple,
 } from "./sortings"
 import { SummariesDefinition } from "./summary"
-import { DataError } from "./useData"
 export * from "./grouping"
 export * from "./sortings"
 export * from "./summary"

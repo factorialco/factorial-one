@@ -7,7 +7,6 @@ import {
   ItemActionsDefinition,
 } from "@/experimental/OneDataCollection/item-actions"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { renderProperty } from "@/experimental/OneDataCollection/property-render"
 import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary"
 import {
@@ -15,6 +14,7 @@ import {
   GroupingDefinition,
   RecordType,
 } from "@/experimental/OneDataCollection/types"
+import { renderProperty } from "@/experimental/OneDataCollection/visualizations/property/property-render"
 import { TableCell, TableRow } from "@/experimental/OneTable"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"

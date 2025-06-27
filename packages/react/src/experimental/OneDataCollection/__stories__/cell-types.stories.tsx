@@ -1,7 +1,10 @@
 import { NewColor } from "@/experimental/Information/Tags/DotTag"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { Placeholder } from "../../../icons/app"
-import { PropertyDefinition, renderProperty } from "../property-render"
+import {
+  PropertyDefinition,
+  renderProperty,
+} from "../visualizations/property/property-render"
 
 function Cell({
   item,

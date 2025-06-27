@@ -1,6 +1,7 @@
 export type * from "./actions"
 export type * from "./Filters/exports"
-export { OneDataCollection, useDataSource } from "./index"
+export { useDataSource } from "./hooks/useDataSource"
+export { OneDataCollection } from "./index"
 export type * from "./item-actions"
 export type * from "./navigationFilters/types"
 export type * from "./sortings"

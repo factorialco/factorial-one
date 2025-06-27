@@ -1,8 +1,8 @@
 import { ReactNode } from "react"
-import { RecordType } from "./types"
-import { VisualizationType } from "./visualizations/collection/types"
-import { propertyRenderers } from "./visualizations/property"
-import { PropertyRendererMetadata } from "./visualizations/property/types"
+import { propertyRenderers } from "."
+import { RecordType } from "../../types"
+import { VisualizationType } from "../collection/types"
+import { PropertyRendererMetadata } from "./types"
 
 /**
  * The definition of a renderer.

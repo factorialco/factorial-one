@@ -1,3 +1,4 @@
+export { renderProperty } from "./property-render"
 import { PropertyRenderer } from "./types.ts"
 import { AlertTagCell } from "./types/alertTag.tsx"
 import { AmountCell } from "./types/amount.tsx"
