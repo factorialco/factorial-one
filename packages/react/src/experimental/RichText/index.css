@@ -91,6 +91,13 @@
   @apply ml-5;
 }
 
+.ProseMirror .f1-ordered-list p,
+.rich-text-display-container .f1-ordered-list p,
+.ProseMirror .f1-bullet-list p,
+.rich-text-display-container .f1-bullet-list p {
+  @apply ml-2;
+}
+
 .ProseMirror li,
 .rich-text-display-container li {
   @apply mb-2;
