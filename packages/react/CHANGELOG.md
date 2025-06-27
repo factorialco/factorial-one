@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.113.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.5...factorial-one-react-v1.113.6) (2025-06-27)
+
+
+### Bug Fixes
+
+* fix more modal issues ([#2174](https://github.com/factorialco/factorial-one/issues/2174)) ([9fb908d](https://github.com/factorialco/factorial-one/commit/9fb908d8b559ef3ac888bff32e60c4167a7a881e))
+
 ## [1.113.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.4...factorial-one-react-v1.113.5) (2025-06-27)
 
 
