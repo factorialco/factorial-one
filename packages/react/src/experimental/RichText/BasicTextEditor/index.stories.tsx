@@ -66,7 +66,8 @@ const defaultLiveCompanionLabels = {
   deleteBlock: "Delete",
   expand: "Expand",
   collapse: "Collapse",
-  topicsWithCommentary: "topics with commentary",
+  oneTopicWithCommentary: "topic with commentary",
+  multipleTopicsWithCommentary: "topics with commentary",
 }
 
 export const Default: Story = {
@@ -136,41 +137,18 @@ export const Default: Story = {
                         user: "Carlos",
                         comment: "I agree, we need more time for testing.",
                       },
-                      {
-                        user: "María",
-                        comment: "Let's adjust the roadmap accordingly.",
-                      },
                     ],
                   },
                   {
-                    title: "Resource Allocation",
+                    title: "Project Timeline 2",
                     comments: [
                       {
-                        user: "David",
-                        comment:
-                          "We need more developers for the front-end work.",
+                        user: "Ana",
+                        comment: "We should extend the deadline by two weeks.",
                       },
                       {
-                        user: "Elena",
-                        comment: "I can help part-time with the UI components.",
-                      },
-                    ],
-                  },
-                  {
-                    title: "Technical Approach",
-                    comments: [
-                      {
-                        user: "Pablo",
-                        comment:
-                          "Let's use the new API for better performance.",
-                      },
-                      {
-                        user: "Sofía",
-                        comment: "The documentation is ready for review.",
-                      },
-                      {
-                        user: "Luis",
-                        comment: "I've prepared some examples for the team.",
+                        user: "Carlos",
+                        comment: "I agree, we need more time for testing.",
                       },
                     ],
                   },
@@ -181,10 +159,7 @@ export const Default: Story = {
           {
             type: "aiBlock",
             attrs: {
-              data: {
-                content: null,
-                selectedAction: undefined,
-              },
+              data: {},
             },
           },
           {

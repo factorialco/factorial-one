@@ -28,7 +28,8 @@ export interface LiveCompanionLabels {
   deleteBlock: string
   expand: string
   collapse: string
-  topicsWithCommentary: string
+  oneTopicWithCommentary: string
+  multipleTopicsWithCommentary: string
 }
 
 export interface LiveCompanionConfig {
@@ -101,7 +102,10 @@ export const LiveCompanionView: React.FC<NodeViewProps> = ({
                 </p>
               </div>
               <p className="text-f1-text-secondary text-sm">
-                {data.topics.length} {config.labels?.topicsWithCommentary || ""}
+                {data.topics.length}{" "}
+                {data.topics.length === 1
+                  ? config.labels?.oneTopicWithCommentary || ""
+                  : config.labels?.multipleTopicsWithCommentary || ""}
               </p>
             </div>
           </div>
