@@ -2,7 +2,10 @@ import { cn } from "@/lib/utils"
 import { cva } from "cva"
 
 const baseButton =
-  "group relative inline-flex items-center justify-center gap-1 whitespace-nowrap rounded border-none p-0 text-base font-medium shadow-[0_2px_6px_-1px_rgba(13,22,37,.04),inset_0_-2px_4px_rgba(13,22,37,.04)] transition-colors [&_.main]:transform-gpu [&_.main]:transition-transform [&_.main]:duration-100 active:[&_.main]:translate-y-px [&_.main]:flex [&_.main]:items-center [&_.main]:justify-center"
+  "group relative inline-flex items-center justify-center gap-1 whitespace-nowrap rounded border-none p-0 text-base font-medium shadow-[0_2px_6px_-1px_rgba(13,22,37,.04),inset_0_-2px_4px_rgba(13,22,37,.04)] transition-colors [&_.main]:transform-gpu [&_.main]:transition-transform [&_.main]:duration-100 active:[&_.main]:translate-y-px [&_.main]:flex [&_.main]:items-center [&_.main]:justify-center disabled:opacity-30 disabled:cursor-not-allowed"
+
+const baseLink =
+  "relative flex-row font-medium h-fit [&[aria-disabled=true]]:pointer-events-none [&[aria-disabled=true]]:cursor-not-allowed [&[aria-disabled=true]]:opacity-30 transition-colors"
 
 export const actionVariants = cva({
   base: "inline-flex items-center gap-1 text-base font-medium transition-colors",
@@ -50,13 +53,14 @@ export const actionVariants = cva({
         "active:bg-f1-background-tertiary active:shadow-[inset_0_2px_6px_0_rgba(13,22,37,.15)] active:after:opacity-70 active:after:ring-f1-border-hover",
         "data-[pressed=true]:bg-f1-background-tertiary data-[pressed=true]:shadow-[inset_0_2px_6px_0_rgba(13,22,37,.15)] data-[pressed=true]:after:opacity-70 data-[pressed=true]:after:ring-f1-border-hover"
       ),
-      link: "flex-row font-medium text-f1-foreground underline decoration-f1-border-hover decoration-1 underline-offset-[5px] transition-all visited:text-f1-foreground hover:text-f1-foreground hover:decoration-f1-border-bold active:text-f1-foreground [&[aria-disabled=true]]:pointer-events-none [&[aria-disabled=true]]:cursor-not-allowed [&[aria-disabled=true]]:opacity-30",
-    },
-    size: {
-      zero: "p-0",
-      sm: "rounded-sm text-sm [&_.main]:h-6 [&_.main]:px-2",
-      md: "rounded text-base [&_.main]:h-8 [&_.main]:px-3",
-      lg: "rounded-md text-lg [&_.main]:h-10 [&_.main]:px-4",
+      link: cn(
+        baseLink,
+        "text-f1-foreground underline decoration-f1-border-hover decoration-1 underline-offset-[5px] visited:text-f1-foreground hover:text-f1-foreground hover:decoration-f1-border-bold active:text-f1-foreground"
+      ),
+      mention: cn(
+        baseLink,
+        "bg-f1-background-accent !px-1.5 font-medium text-f1-foreground-accent"
+      ),
     },
     pressed: {
       true: "[&_.main]:translate-y-px",
@@ -65,7 +69,148 @@ export const actionVariants = cva({
   },
   defaultVariants: {
     variant: "default",
-    size: "md",
     pressed: false,
+  },
+})
+
+export const buttonSizeVariants = cva({
+  variants: {
+    size: {
+      sm: "rounded-sm text-sm [&_.main]:h-6 [&_.main]:px-2",
+      md: "rounded text-base [&_.main]:h-8 [&_.main]:px-3",
+      lg: "rounded-md text-lg [&_.main]:h-10 [&_.main]:px-4",
+    },
+  },
+  defaultVariants: { size: "md" },
+})
+
+export const linkSizeVariants = cva({
+  base: "rounded-sm p-0",
+  variants: {
+    size: {
+      sm: "text-base",
+      md: "text-base",
+      lg: "text-lg",
+    },
+  },
+  defaultVariants: { size: "md" },
+})
+
+export const iconVariants = cva({
+  base: "transition-colors",
+  variants: {
+    variant: {
+      default: "",
+      outline: "",
+      neutral: "",
+      critical: "",
+      ghost: "",
+      promote: "",
+      outlinePromote: "",
+      link: "",
+      mention: "",
+    },
+    mode: {
+      default: "",
+      only: "",
+    },
+  },
+  compoundVariants: [
+    {
+      variant: "default",
+      mode: "default",
+      class: "[&>svg]:text-f1-icon-inverse dark:[&>svg]:text-f1-icon-bold/80",
+    },
+    {
+      variant: "outline",
+      mode: "default",
+      class: "[&>svg]:text-f1-icon",
+    },
+    {
+      variant: "neutral",
+      mode: "default",
+      class: "[&>svg]:text-f1-icon",
+    },
+    {
+      variant: "critical",
+      mode: "default",
+      class:
+        "[&>svg]:text-f1-icon-critical-bold group-hover:[&>svg]:text-f1-icon-inverse group-active:[&>svg]:text-f1-icon-inverse group-data-[pressed=true]:[&>svg]:text-f1-icon-inverse dark:group-hover:[&>svg]:text-f1-icon-bold/80 dark:group-active:[&>svg]:text-f1-icon-bold/80 dark:group-data-[pressed=true]:[&>svg]:text-f1-icon-bold/80",
+    },
+    {
+      variant: "ghost",
+      mode: "default",
+      class: "[&>svg]:text-f1-icon",
+    },
+    {
+      variant: "promote",
+      mode: "default",
+      class: "[&>svg]:text-f1-icon-promote",
+    },
+    {
+      variant: "outlinePromote",
+      mode: "default",
+      class: "[&>svg]:text-f1-icon-promote",
+    },
+    {
+      variant: "link",
+      mode: "default",
+      class: "[&>svg]:text-f1-icon",
+    },
+    {
+      variant: "mention",
+      mode: "default",
+      class: "[&>svg]:text-f1-icon-accent",
+    },
+    {
+      variant: "default",
+      mode: "only",
+      class: "[&>svg]:text-f1-icon-inverse dark:[&>svg]:text-f1-icon-bold",
+    },
+    {
+      variant: "outline",
+      mode: "only",
+      class: "[&>svg]:text-f1-icon-bold",
+    },
+    {
+      variant: "neutral",
+      mode: "only",
+      class: "[&>svg]:text-f1-icon-bold",
+    },
+    {
+      variant: "critical",
+      mode: "only",
+      class:
+        "[&>svg]:text-f1-icon-critical-bold group-hover:[&>svg]:text-f1-icon-inverse group-active:[&>svg]:text-f1-icon-inverse group-data-[pressed=true]:[&>svg]:text-f1-icon-inverse dark:group-hover:[&>svg]:text-f1-icon-bold/80 dark:group-active:[&>svg]:text-f1-icon-bold/80 dark:group-data-[pressed=true]:[&>svg]:text-f1-icon-bold/80",
+    },
+    {
+      variant: "ghost",
+      mode: "only",
+      class: "[&>svg]:text-f1-icon-bold",
+    },
+    {
+      variant: "promote",
+      mode: "only",
+      class: "[&>svg]:text-f1-icon-promote",
+    },
+    {
+      variant: "outlinePromote",
+      mode: "only",
+      class: "[&>svg]:text-f1-icon-promote",
+    },
+    {
+      variant: "link",
+      mode: "only",
+      class: "[&>svg]:text-f1-icon",
+    },
+    {
+      variant: "mention",
+      mode: "default",
+      class: "[&>svg]:text-f1-icon-accent",
+    },
+  ],
+  defaultVariants: {
+    variant: "default",
+    mode: "default",
   },
 })

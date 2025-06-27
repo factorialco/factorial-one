@@ -1,7 +1,16 @@
+import { Icon } from "@/components/Utilities/Icon"
+import { Spinner } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
+import { Skeleton } from "@/ui/skeleton"
 import type { VariantProps } from "cva"
+import { AnimatePresence, motion } from "motion/react"
 import React, { ReactNode } from "react"
-import { actionVariants } from "./variants"
+import {
+  actionVariants,
+  buttonSizeVariants,
+  iconVariants,
+  linkSizeVariants,
+} from "./variants"
 
 export interface ActionCommonProps {
   children: ReactNode
@@ -16,10 +25,11 @@ export interface ActionCommonProps {
   onBlur?: () => void
 
   disabled?: boolean
-  //loading?: boolean
+  loading?: boolean
   pressed?: boolean
 
   className?: string
+  size?: "sm" | "md" | "lg"
 }
 
 export interface LinkActionProps {
@@ -48,7 +58,7 @@ export const Action = React.forwardRef<
       onFocus,
       onBlur,
       disabled,
-      //loading,
+      loading,
       pressed,
       className,
       href,
@@ -59,20 +69,49 @@ export const Action = React.forwardRef<
     ref
   ) => {
     const isLink = !!href
+    const isLinkStyled = variant === "link" || variant === "mention"
     const defaultVariant = isLink ? variant || "link" : variant || "default"
-    const defaultSize = defaultVariant === "link" ? "zero" : size
     const variantClasses = actionVariants({
       variant: defaultVariant,
-      size: defaultSize,
       pressed,
     })
+    const sizeClasses = isLinkStyled
+      ? linkSizeVariants({ size })
+      : buttonSizeVariants({ size })
 
     const innerContent = (
-      <div className="main">
-        {prepend && !prependOutside && prepend}
-        <span>{children}</span>
-        {append && !appendOutside && append}
-      </div>
+      <>
+        <div
+          className={cn(
+            "main flex items-center justify-center gap-1",
+            loading && "opacity-0",
+            iconVariants({ variant: defaultVariant })
+          )}
+        >
+          {prepend && !prependOutside && prepend}
+          <span>{children}</span>
+          {append && !appendOutside && append}
+        </div>
+        <AnimatePresence>
+          {loading && !isLinkStyled && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.7 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.7 }}
+              transition={{ duration: 0.1, ease: "easeInOut" }}
+              className={cn(
+                "absolute inset-0 flex items-center justify-center",
+                iconVariants({ variant: defaultVariant, mode: "only" })
+              )}
+            >
+              <Icon icon={Spinner} className="animate-spin" />
+            </motion.div>
+          )}
+          {loading && isLinkStyled && (
+            <Skeleton className="absolute inset-0 my-auto h-full w-full" />
+          )}
+        </AnimatePresence>
+      </>
     )
 
     const mainElement = isLink ? (
@@ -83,7 +122,7 @@ export const Action = React.forwardRef<
           onClick={onClick}
           onFocus={onFocus}
           onBlur={onBlur}
-          className={cn(variantClasses, className)}
+          className={cn(variantClasses, sizeClasses, className)}
         >
           {innerContent}
         </span>
@@ -96,7 +135,8 @@ export const Action = React.forwardRef<
           onFocus={onFocus}
           onBlur={onBlur}
           rel={target === "_blank" ? "noopener noreferrer" : undefined}
-          className={cn(variantClasses, focusRing(), className)}
+          className={cn(variantClasses, sizeClasses, focusRing(), className)}
+          aria-busy={loading}
         >
           {innerContent}
         </a>
@@ -109,7 +149,8 @@ export const Action = React.forwardRef<
         onBlur={onBlur}
         disabled={disabled}
         data-pressed={pressed}
-        className={cn(variantClasses, focusRing(), className)}
+        className={cn(variantClasses, sizeClasses, focusRing(), className)}
+        aria-busy={loading}
       >
         {innerContent}
       </button>

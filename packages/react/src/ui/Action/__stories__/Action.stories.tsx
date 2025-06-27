@@ -1,3 +1,5 @@
+import { Icon } from "@/components/Utilities/Icon"
+import { Placeholder } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Action } from "../Action"
 
@@ -28,9 +30,19 @@ const meta: Meta<typeof Action> = {
       control: {
         type: "select",
       },
-      options: ["zero", "sm", "md", "lg"],
+      options: ["sm", "md", "lg"],
     },
     pressed: {
+      control: {
+        type: "boolean",
+      },
+    },
+    loading: {
+      control: {
+        type: "boolean",
+      },
+    },
+    disabled: {
       control: {
         type: "boolean",
       },
@@ -92,14 +104,14 @@ export const Disabled: Story = {
 export const WithPrepend: Story = {
   args: {
     children: "Action with Prepend",
-    prepend: "→",
+    prepend: <Icon icon={Placeholder} />,
   },
 }
 
 export const WithAppend: Story = {
   args: {
     children: "Action with Append",
-    append: "←",
+    append: <Icon icon={Placeholder} />,
   },
 }
 
@@ -113,16 +125,35 @@ export const LinkDisabled: Story = {
 }
 
 export const AllVariants: Story = {
-  render: () => (
+  render: (args) => (
     <div className="flex flex-wrap gap-4">
-      <Action variant="default">Default</Action>
-      <Action variant="outline">Outline</Action>
-      <Action variant="neutral">Neutral</Action>
-      <Action variant="critical">Critical</Action>
-      <Action variant="ghost">Ghost</Action>
-      <Action variant="promote">Promote</Action>
-      <Action variant="outlinePromote">Outline Promote</Action>
-      <Action variant="link">Link</Action>
+      <Action variant="default" {...args}>
+        Default
+      </Action>
+      <Action variant="outline" {...args}>
+        Outline
+      </Action>
+      <Action variant="neutral" {...args}>
+        Neutral
+      </Action>
+      <Action variant="critical" {...args}>
+        Critical
+      </Action>
+      <Action variant="ghost" {...args}>
+        Ghost
+      </Action>
+      <Action variant="promote" {...args}>
+        Promote
+      </Action>
+      <Action variant="outlinePromote" {...args}>
+        Outline Promote
+      </Action>
+      <Action variant="link" {...args}>
+        Link
+      </Action>
+      <Action variant="mention" {...args}>
+        Mention
+      </Action>
     </div>
   ),
 }
