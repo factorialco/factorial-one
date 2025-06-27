@@ -62,6 +62,14 @@ const defaultMoodTrackerLabels = {
   collapse: "Collapse",
 }
 
+const defaultLiveCompanionLabels = {
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+  oneTopicWithCommentary: "topic with commentary",
+  multipleTopicsWithCommentary: "topics with commentary",
+}
+
 export const Default: Story = {
   args: {
     placeholder: "Enter '/' to open the command palette...",
@@ -70,6 +78,7 @@ export const Default: Story = {
       slashCommandGroupLabels: defaultSlashCommandGroupLabels,
       aiBlockLabels: defaultAIBlockLabels,
       moodTrackerLabels: defaultMoodTrackerLabels,
+      liveCompanionLabels: defaultLiveCompanionLabels,
     },
     onChange: (value) => {
       console.log("Content changed:", value)
@@ -79,6 +88,15 @@ export const Default: Story = {
       content: {
         type: "doc",
         content: [
+          {
+            type: "heading",
+            content: [
+              {
+                type: "text",
+                text: "Titulo de la meeting",
+              },
+            ],
+          },
           {
             type: "moodTracker",
             attrs: {
@@ -103,13 +121,49 @@ export const Default: Story = {
             },
           },
           {
-            type: "aiBlock",
+            type: "liveCompanion",
             attrs: {
               data: {
-                content: null,
-                selectedAction: undefined,
+                title: "Meeting live companion topics",
+                topics: [
+                  {
+                    title: "Project Timeline",
+                    comments: [
+                      {
+                        user: "Ana",
+                        comment: "We should extend the deadline by two weeks.",
+                      },
+                      {
+                        user: "Carlos",
+                        comment: "I agree, we need more time for testing.",
+                      },
+                    ],
+                  },
+                  {
+                    title: "Project Timeline 2",
+                    comments: [
+                      {
+                        user: "Ana",
+                        comment: "We should extend the deadline by two weeks.",
+                      },
+                      {
+                        user: "Carlos",
+                        comment: "I agree, we need more time for testing.",
+                      },
+                    ],
+                  },
+                ],
               },
             },
+          },
+          {
+            type: "aiBlock",
+            attrs: {
+              data: {},
+            },
+          },
+          {
+            type: "paragraph",
           },
         ],
       },
