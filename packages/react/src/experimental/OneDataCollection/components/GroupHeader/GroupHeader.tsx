@@ -42,7 +42,7 @@ export const GroupHeader = ({
 
   return (
     <div
-      className={cn("flex items-center gap-2", className)}
+      className={cn("pointer-events-auto flex items-center gap-2", className)}
       onClick={handleOpenChange}
     >
       {selectable && (

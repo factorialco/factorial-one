@@ -59,6 +59,7 @@ export function TableCell({
   const isSticky = isStickyLeft || isStickyRight
   const stickyLeft = sticky?.left
   const stickyRight = sticky?.right
+  
 
   const colWidth = getColWidth(width)
 
