@@ -6,6 +6,10 @@
   --ds-sidebar-width: 240px;
 }
 
+div[role="dialog"] {
+  overflow-wrap: anywhere;
+}
+
 .scrollbar-macos {
   /* For Firefox */
   scrollbar-width: thin;

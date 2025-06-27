@@ -35,11 +35,13 @@ const DialogContent = React.forwardRef<
     withTraslateAnimation?: boolean
   }
 >(({ className, children, withTraslateAnimation = true, ...props }, ref) => {
-  const [container, setContainer] = useState<HTMLElement | null>(null)
+  const [container, setContainer] = useState<HTMLElement | null>()
 
   useEffect(() => {
     setContainer(document.getElementById("content"))
   }, [])
+
+  if (container === undefined) return null
 
   return (
     <DialogPortal container={container}>
