@@ -1,12 +1,12 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination"
-import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   getAnimationVariants,
   useGroups,
-} from "@/experimental/OneDataCollection/useGroups"
-import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
+} from "@/experimental/OneDataCollection/hooks/useGroups"
+import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/hooks/useInfiniteScrollPagination"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   OneTable,
   TableBody,
@@ -22,8 +22,12 @@ import { Skeleton } from "@/ui/skeleton.tsx"
 import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
+import {
+  isInfiniteScrollPagination,
+  useData,
+} from "../../../hooks/useData/useData"
+import { useSelectable } from "../../../hooks/useSelectable"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { PropertyDefinition } from "../../../property-render"
 import {
   SortingKey,
   SortingsDefinition,
@@ -31,8 +35,7 @@ import {
 } from "../../../sortings"
 import { SummariesDefinition, SummaryKey } from "../../../summary"
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
-import { isInfiniteScrollPagination, useData } from "../../../useData"
-import { useSelectable } from "../../../useSelectable"
+import { PropertyDefinition } from "../../property/property-render"
 import { statusToChecked } from "../utils"
 import { Row } from "./components/Row"
 

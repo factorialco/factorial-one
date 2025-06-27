@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { PropertyDefinition } from "../../property-render"
+import { PropertyDefinition } from "./property-render"
 import { VisualizationType } from "../collection"
 
 /**

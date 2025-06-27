@@ -1,3 +1,4 @@
+export { renderProperty } from "./property-render"
 import { PropertyRenderer } from "./types.ts"
 import { AmountCell } from "./types/amount.tsx"
 import { AvatarListCell } from "./types/avatarList.tsx"

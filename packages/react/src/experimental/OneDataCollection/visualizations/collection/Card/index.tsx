@@ -1,20 +1,20 @@
 import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { OneCard } from "@/experimental/OneCard"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
-import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   getAnimationVariants,
   useGroups,
-} from "@/experimental/OneDataCollection/useGroups"
-import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
+} from "@/experimental/OneDataCollection/hooks/useGroups"
+import { useSelectable } from "@/experimental/OneDataCollection/hooks/useSelectable"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useMemo } from "react"
 import { PagesPagination } from "../../../components/PagesPagination"
 import type { FiltersDefinition } from "../../../Filters/types"
+import { useData } from "../../../hooks/useData/useData"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
 import { SummariesDefinition } from "../../../summary"
 import {
@@ -23,7 +23,10 @@ import {
   GroupingDefinition,
   RecordType,
 } from "../../../types"
-import { useData } from "../../../useData"
+import {
+  PropertyDefinition,
+  renderProperty,
+} from "../../property/property-render"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
 

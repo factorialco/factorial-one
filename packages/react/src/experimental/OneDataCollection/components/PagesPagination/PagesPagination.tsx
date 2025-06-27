@@ -1,8 +1,8 @@
 import { OnePagination } from "@/experimental/OnePagination"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
+import { isPageBasedPagination } from "../../hooks/useData/useData"
 import { PaginationInfo } from "../../types"
-import { isPageBasedPagination } from "../../useData"
 
 export const PagesPagination = ({
   paginationInfo,

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
-import { PaginationInfo } from "../exports"
-import { isInfiniteScrollPagination } from "./useData"
+import { PaginationInfo } from "../../exports"
+import { isInfiniteScrollPagination } from "./useData/useData"
 
 export const useInfiniteScrollPagination = (
   paginationInfo: PaginationInfo | null,

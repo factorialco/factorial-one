@@ -15,10 +15,10 @@ import {
 } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { GroupingDefinition } from "../grouping"
+import { useData } from "../hooks/useData/useData"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
-import { useData } from "../useData"
 import {
   createDataAdapter,
   createPromiseDataFetch,

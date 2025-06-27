@@ -3,7 +3,6 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { motion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
-import { useDebounceValue } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
 
@@ -14,202 +13,28 @@ import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
 import * as Filters from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { DataError } from "./hooks/useData/useData"
+import { CustomEmptyStates, useEmptyState } from "./hooks/useEmptyState"
 import { ItemActionsDefinition } from "./item-actions"
 import { navigationFilterTypes } from "./navigationFilters"
-import {
-  NavigationFiltersDefinition,
-  NavigationFiltersState,
-} from "./navigationFilters/types"
+import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { Search } from "./search"
 import { Settings } from "./Settings"
-import { SortingsDefinition, SortingsState } from "./sortings"
+import { SortingsDefinition } from "./sortings"
 import { SummariesDefinition } from "./summary"
 import type {
   BulkActionDefinition,
-  CollectionSearchOptions,
   DataSource,
-  DataSourceDefinition,
   GroupingDefinition,
-  GroupingState,
   OnBulkActionCallback,
   OnLoadDataCallback,
   OnSelectItemsCallback,
   RecordType,
 } from "./types"
-import { DataError } from "./useData"
-import { CustomEmptyStates, useEmptyState } from "./useEmptyState"
+export { useDataSource } from "./hooks/useDataSource"
 
 import type { Visualization } from "./visualizations/collection"
 import { VisualizationRenderer } from "./visualizations/collection"
-/**
- * A hook that manages data source state and filtering capabilities for a collection.
- * It creates and returns a reusable data source that can be shared across different
- * visualizations and components.
- *
- * This hook is intentionally separated from the rendering components to:
- * 1. Enable sharing the same data source across multiple components
- * 2. Allow for state management outside the rendering layer
- * 3. Support more complex data filtering, querying, and pagination logic
- * 4. Provide a clean separation between data management and visualization
- *
- * @template Record - The type of records in the collection
- * @template Filters - The definition of available filters for the collection
- * @template ItemActions - The definition of available item actions
- * @template Actions - The definition of available actions for the collection
- *
- * @param options - Configuration object containing:
- *   - filters: Optional filter configurations for the collection
- *   - currentFilters: Initial state of the filters
- *   - dataAdapter: Adapter for data fetching and manipulation
- *   - itemActions: Optional item actions available
- *   - actions: Optional DataCollection actions
- *   - presets: Optional filter presets
- * @param deps - Dependency array for memoization, similar to useEffect dependencies
- *
- * @returns A DataSource object containing:
- * - filters: The available filter configurations
- * - currentFilters: The current state of the filters
- * - setCurrentFilters: Function to update the filter state
- * - dataAdapter: The data adapter for fetching/manipulating data
- * - itemActions: Available actions for records (items)
- * - actions: Available actions for the collection
- * - presets: Available filter presets
- */
-export const useDataSource = <
-  Record extends RecordType,
-  FiltersSchema extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
-  NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
->(
-  {
-    currentFilters: initialCurrentFilters = {},
-    currentGrouping: initialCurrentGrouping,
-    filters,
-    navigationFilters,
-    search,
-    defaultSorting,
-    summaries,
-    dataAdapter,
-    grouping,
-    ...rest
-  }: DataSourceDefinition<
-    Record,
-    FiltersSchema,
-    Sortings,
-    Summaries,
-    ItemActions,
-    NavigationFilters,
-    Grouping
-  >,
-  deps: ReadonlyArray<unknown> = []
-): DataSource<
-  Record,
-  FiltersSchema,
-  Sortings,
-  Summaries,
-  ItemActions,
-  NavigationFilters,
-  Grouping
-> => {
-  const [currentFilters, setCurrentFilters] = useState<
-    FiltersState<FiltersSchema>
-  >(initialCurrentFilters)
-
-  const [currentNavigationFilters, setCurrentNavigationFilters] = useState<
-    NavigationFiltersState<NavigationFilters>
-  >(() => {
-    if (!navigationFilters) {
-      return {} as NavigationFiltersState<NavigationFilters>
-    }
-
-    return Object.fromEntries(
-      Object.entries(navigationFilters).map(([key, filter]) => {
-        const filterType = navigationFilterTypes[filter.type]
-        return [
-          key,
-          filterType.valueConverter
-            ? filterType.valueConverter(filter.defaultValue, filter)
-            : filter.defaultValue,
-        ]
-      })
-    ) as NavigationFiltersState<NavigationFilters>
-  })
-
-  const [currentSortings, setCurrentSortings] =
-    useState<SortingsState<Sortings> | null>(defaultSorting || null)
-
-  const searchOptions = {
-    enabled: false,
-    sync: false,
-    ...search,
-  } satisfies CollectionSearchOptions
-
-  const [currentSearch, setCurrentSearch] = useState<string | undefined>()
-
-  const [debouncedCurrentSearch, setDebouncedCurrentSearch] = useDebounceValue<
-    string | undefined
-  >(currentSearch, 200)
-
-  useEffect(() => {
-    if (searchOptions.sync) return
-    setDebouncedCurrentSearch(currentSearch)
-  }, [currentSearch, searchOptions.sync, setDebouncedCurrentSearch])
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedFilters = useMemo(() => filters, deps)
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedSummaries = useMemo(() => summaries, deps)
-
-  const [isLoading, setIsLoading] = useState(false)
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
-
-  const defaultGrouping = grouping?.mandatory
-    ? {
-        field: Object.keys(
-          grouping.groupBy
-        )[0] as keyof typeof grouping.groupBy,
-        order: "asc" as const,
-      }
-    : undefined
-
-  const [currentGrouping, setCurrentGrouping] = useState<
-    GroupingState<Record, Grouping>
-  >(initialCurrentGrouping ?? defaultGrouping)
-
-  // For mandatory grouping, ensure we have a valid grouping state
-  if (grouping?.mandatory && !currentGrouping?.field) {
-    throw new Error("Grouping is mandatory but no grouping state is set")
-  }
-
-  return {
-    filters: memoizedFilters,
-    currentFilters,
-    setCurrentFilters,
-    currentSortings,
-    setCurrentSortings,
-    summaries: memoizedSummaries,
-    search,
-    currentSearch,
-    setCurrentSearch,
-    debouncedCurrentSearch,
-    isLoading,
-    setIsLoading,
-    dataAdapter: memoizedDataAdapter,
-    navigationFilters,
-    currentNavigationFilters,
-    setCurrentNavigationFilters,
-    setCurrentGrouping,
-    currentGrouping,
-    grouping,
-    ...rest,
-  }
-}
 
 const MotionIcon = motion.create(Icon)
 

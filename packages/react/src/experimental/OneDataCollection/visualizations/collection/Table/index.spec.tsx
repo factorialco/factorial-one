@@ -14,6 +14,7 @@ import {
   I18nProvider,
 } from "../../../../../lib/providers/i18n"
 import type { FiltersDefinition } from "../../../Filters/types"
+import { useData } from "../../../hooks/useData/useData"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
 import { SummariesDefinition } from "../../../summary"
@@ -25,7 +26,6 @@ import type {
   PaginatedResponse,
   PaginationType,
 } from "../../../types"
-import { useData } from "../../../useData"
 import { TableCollection } from "./index"
 
 type TestFilters = FiltersDefinition

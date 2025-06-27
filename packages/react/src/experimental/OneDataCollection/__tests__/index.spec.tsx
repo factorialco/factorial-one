@@ -13,6 +13,7 @@ import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../../lib/promise-to-observable"
 import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
 import type { FiltersDefinition } from "../Filters/types"
+import { GROUP_ID_SYMBOL, useData, WithGroupId } from "../hooks/useData/useData"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
@@ -26,7 +27,6 @@ import type {
   PaginatedResponse,
   SortingsState,
 } from "../types"
-import { GROUP_ID_SYMBOL, useData, WithGroupId } from "../useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>

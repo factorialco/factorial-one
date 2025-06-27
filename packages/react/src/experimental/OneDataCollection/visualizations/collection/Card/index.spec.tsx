@@ -6,10 +6,10 @@ import { describe, expect, it, vi } from "vitest"
 import { I18nProvider } from "../../../../../lib/providers/i18n"
 import { defaultTranslations } from "../../../../../lib/providers/i18n/i18n-provider-defaults"
 import type { FiltersDefinition } from "../../../Filters/types"
+import { useData } from "../../../hooks/useData/useData"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
 import type { DataSource, GroupingDefinition } from "../../../types"
-import { useData } from "../../../useData"
 import { CardCollection } from "./index"
 
 type Person = {

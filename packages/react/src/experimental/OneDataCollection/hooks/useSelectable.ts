@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import type { FiltersDefinition } from "./Filters/types"
-import { ItemActionsDefinition } from "./item-actions"
-import { NavigationFiltersDefinition } from "./navigationFilters/types"
-import type { SortingsDefinition } from "./sortings"
-import type { SummariesDefinition } from "./summary"
+import type { FiltersDefinition } from "../Filters/types"
+import { ItemActionsDefinition } from "../item-actions"
+import { NavigationFiltersDefinition } from "../navigationFilters/types"
+import type { SortingsDefinition } from "../sortings"
+import type { SummariesDefinition } from "../summary"
 import {
   DataSource,
   GroupingDefinition,
@@ -11,8 +11,13 @@ import {
   PaginationInfo,
   RecordType,
   SelectedItemsState,
-} from "./types"
-import { Data, GROUP_ID_SYMBOL, GroupRecord, WithGroupId } from "./useData"
+} from "../types"
+import {
+  Data,
+  GROUP_ID_SYMBOL,
+  GroupRecord,
+  WithGroupId,
+} from "./useData/useData"
 
 export type AllSelectionStatus = {
   checked: boolean

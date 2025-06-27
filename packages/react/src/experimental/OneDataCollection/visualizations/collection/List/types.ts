@@ -4,8 +4,8 @@ import {
   SortingKey,
   SortingsDefinition,
 } from "@/experimental/OneDataCollection/sortings"
-import { PropertyDefinition } from "../../../property-render"
 import { RecordType } from "../../../types"
+import { PropertyDefinition } from "../../property/property-render"
 
 export type WithOptionalSorting<
   Record,
