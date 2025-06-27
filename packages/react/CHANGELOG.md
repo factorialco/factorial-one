@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.113.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.3...factorial-one-react-v1.113.4) (2025-06-27)
+
+
+### Bug Fixes
+
+* append with merge in data collection ([#2177](https://github.com/factorialco/factorial-one/issues/2177)) ([19843d4](https://github.com/factorialco/factorial-one/commit/19843d4d1e97f594218416813e49b1ccb1a4b27e))
+
 ## [1.113.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.2...factorial-one-react-v1.113.3) (2025-06-27)
 
 
