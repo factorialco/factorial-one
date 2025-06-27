@@ -196,9 +196,7 @@ export function TableHead({
           : undefined
       }
     >
-      {isSticky && (
-        <div className="absolute inset-x-0 top-0 z-[-1] h-px w-full bg-f1-border-secondary" />
-      )}
+      <div className="absolute inset-x-0 top-0 z-[1] h-px w-full bg-f1-border-secondary" />
       <AnimatePresence>
         {((isStickyLeft && isScrolled) ||
           (isStickyRight && isScrolledRight)) && (
