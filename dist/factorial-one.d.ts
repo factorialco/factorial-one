@@ -42,6 +42,16 @@ canBeBlurred?: boolean;
 blurArea?: "l" | "r" | "lr";
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
+export declare const Await: <T>({ resolve, fallback, error: errorFallback, children, }: AwaitProps<T>) => ReactNode;
+
+declare type AwaitProps<T> = {
+    resolve: Promise<T> | T;
+    fallback: ReactNode;
+    error?: ReactNode;
+    className?: string;
+    children: (value: T) => ReactNode;
+};
+
 export declare const BarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig> & {
 type?: "simple" | "stacked" | "stacked-by-sign";
 label?: boolean;
@@ -58,7 +68,7 @@ values: {
 
 declare type BaseAction = {
     label: string;
-    onClick: () => Promise<void>;
+    onClick: () => Promise<void> | void;
 };
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
@@ -175,12 +185,23 @@ declare const defaultTranslations: {
         readonly cancel: "Cancel";
     };
     readonly collections: {
+        readonly sorting: {
+            readonly noSorting: "No sorting";
+            readonly toggleDirection: "Toggle sorting direction";
+            readonly sortBy: "Sort by";
+        };
+        readonly grouping: {
+            readonly noGrouping: "No grouping";
+            readonly groupBy: "Group by";
+            readonly toggleDirection: "Toggle direction";
+        };
         readonly actions: {
             readonly actions: "Actions";
         };
         readonly visualizations: {
             readonly table: "Table view";
             readonly card: "Card view";
+            readonly list: "List view";
             readonly pagination: {
                 readonly of: "of";
             };
@@ -206,14 +227,21 @@ declare const defaultTranslations: {
                 readonly retry: "Retry";
             };
         };
+        readonly summaries: {
+            readonly types: {
+                readonly sum: "sum";
+            };
+        };
     };
     readonly shortcut: "Shortcut";
     readonly date: {
         readonly from: "From";
         readonly to: "To";
+        readonly none: "None";
         readonly date: "Date";
         readonly custom: "Custom period";
         readonly selectDate: "Select Date";
+        readonly compareTo: "Compare to";
         readonly presets: {
             readonly last7Days: "Last 7 days";
             readonly last30Days: "Last 30 days";
@@ -392,8 +420,7 @@ declare type LinkProps_2 = AnchorHTMLAttributes<HTMLAnchorElement> & {
 };
 
 declare const linkVariants: (props?: ({
-    variant?: "link" | "text" | undefined;
-    active?: boolean | undefined;
+    variant?: "link" | "unstyled" | undefined;
     disabled?: boolean | undefined;
 } & ({
     class?: ClassValue;
@@ -655,9 +682,9 @@ export declare interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> 
      */
     showIcon?: boolean;
     /**
-     * Function to be executed when the button is clicked. Must return a Promise.
+     * Function to be executed when the button is clicked
      */
-    onRequest?: () => Promise<void>;
+    onRequest?: () => Promise<void> | void;
     /**
      * Whether to show the confirmation dialog after the request
      */
@@ -684,7 +711,7 @@ export declare interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> 
     closeLabel: string;
 }
 
-export declare function UpsellingPopover({ isOpen, setIsOpen, label, variant, size, showIcon, side, align, icon, mediaUrl, title, description, width, trackVisibility, actions, onClick, }: UpsellingPopoverProps): JSX_2.Element;
+export declare function UpsellingPopover({ isOpen, setIsOpen, label, variant, size, showIcon, side, align, icon, mediaUrl, title, description, width, trackVisibility, actions, onClick, hideLabel, }: UpsellingPopoverProps): JSX_2.Element;
 
 declare type UpsellingPopoverProps = {
     isOpen: boolean;
@@ -703,6 +730,7 @@ declare type UpsellingPopoverProps = {
     trackVisibility?: (visible: boolean) => void;
     actions?: Action[];
     onClick?: () => void;
+    hideLabel?: boolean;
 };
 
 export declare const UpsellRequestResponseDialog: ForwardRefExoticComponent<UpsellRequestResponseDialogProps & RefAttributes<HTMLDivElement>>;
@@ -751,6 +779,24 @@ declare global {
         XRay: {
             enable: (filter?: ComponentTypes[]) => void;
             disable: () => void;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        aiBlock: {
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        moodTracker: {
+            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
 }
