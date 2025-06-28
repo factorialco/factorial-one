@@ -32,6 +32,11 @@ import {
   MoodTrackerLabels,
 } from "@/experimental/RichText/CoreEditor/Extensions/MoodTracker"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
+import {
+  TranscriptConfig,
+  TranscriptExtension,
+  TranscriptLabels,
+} from "@/experimental/RichText/CoreEditor/Extensions/Transcript"
 
 export const createBasicTextEditorExtensions = (
   placeholder: string,
@@ -40,7 +45,8 @@ export const createBasicTextEditorExtensions = (
   aiBlockConfig?: AIBlockConfig,
   aiBlockLabels?: AIBlockLabels,
   moodTrackerLabels?: MoodTrackerLabels,
-  liveCompanionLabels?: LiveCompanionLabels
+  liveCompanionLabels?: LiveCompanionLabels,
+  transcriptLabels?: TranscriptLabels
 ) => {
   // Create enhanced config with labels if both are provided
   const enhancedAIBlockConfig =
@@ -55,6 +61,10 @@ export const createBasicTextEditorExtensions = (
   // Create enhanced LiveCompanion config with labels
   const enhancedLiveCompanionConfig: LiveCompanionConfig | undefined =
     liveCompanionLabels ? { labels: liveCompanionLabels } : undefined
+
+  // Create enhanced Transcript config with labels
+  const enhancedTranscriptConfig: TranscriptConfig | undefined =
+    transcriptLabels ? { labels: transcriptLabels } : undefined
 
   return [
     StarterKitExtension,
@@ -72,6 +82,9 @@ export const createBasicTextEditorExtensions = (
     }),
     LiveCompanionExtension.configure({
       currentConfig: enhancedLiveCompanionConfig,
+    }),
+    TranscriptExtension.configure({
+      currentConfig: enhancedTranscriptConfig,
     }),
     AIBlockExtension.configure({
       currentConfig: enhancedAIBlockConfig,

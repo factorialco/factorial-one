@@ -1,6 +1,7 @@
 import { AcademicCap, List } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { BasicTextEditor } from "./index"
+import { useRef } from "react"
+import { BasicTextEditor, BasicTextEditorHandle, Message, User } from "./index"
 
 const meta: Meta<typeof BasicTextEditor> = {
   title: "Rich text/BasicTextEditor",
@@ -70,6 +71,14 @@ const defaultLiveCompanionLabels = {
   multipleTopicsWithCommentary: "topics with commentary",
 }
 
+const defaultTranscriptLabels = {
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+  messagesCount: "messages",
+  messagesCountSingular: "message",
+}
+
 export const Default: Story = {
   args: {
     placeholder: "Enter '/' to open the command palette...",
@@ -79,6 +88,7 @@ export const Default: Story = {
       aiBlockLabels: defaultAIBlockLabels,
       moodTrackerLabels: defaultMoodTrackerLabels,
       liveCompanionLabels: defaultLiveCompanionLabels,
+      transcriptLabels: defaultTranscriptLabels,
     },
     onChange: (value) => {
       console.log("Content changed:", value)
@@ -151,6 +161,53 @@ export const Default: Story = {
                         comment: "I agree, we need more time for testing.",
                       },
                     ],
+                  },
+                ],
+              },
+            },
+          },
+          {
+            type: "transcript",
+            attrs: {
+              data: {
+                title: "Meeting Transcript",
+                messages: [
+                  {
+                    userId: "user1",
+                    text: "Hello everyone, let's start our weekly planning meeting.",
+                    dateTime: "2023-11-15T09:00:00Z",
+                  },
+                  {
+                    userId: "user2",
+                    text: "I've completed the design mockups for the new feature.",
+                    dateTime: "2023-11-15T09:02:30Z",
+                  },
+                  {
+                    userId: "user3",
+                    text: "Great! I can start implementing it tomorrow.",
+                    dateTime: "2023-11-15T09:04:15Z",
+                  },
+                  {
+                    userId: "user1",
+                    text: "Perfect. Let's aim to have a prototype by Friday.",
+                    dateTime: "2023-11-15T09:05:45Z",
+                  },
+                ],
+                users: [
+                  {
+                    id: "user1",
+                    fullname: "Maria Rodriguez",
+                    imageUrl: "https://i.pravatar.cc/150?u=maria",
+                  },
+                  {
+                    id: "user2",
+                    fullname: "Alex Chen",
+                    imageUrl: "https://i.pravatar.cc/150?u=alex",
+                  },
+                  {
+                    id: "user3",
+                    fullname: "David Kim",
+                    imageUrl: "https://i.pravatar.cc/150?u=david",
                   },
                 ],
               },
@@ -238,4 +295,71 @@ export const Default: Story = {
       ],
     },
   },
+}
+
+// Example of using the imperative handle to add a transcript
+const EditorWithTranscriptButton = () => {
+  const editorRef = useRef<BasicTextEditorHandle>(null)
+
+  const addTranscript = () => {
+    const users: User[] = [
+      {
+        id: "user1",
+        fullname: "John Doe",
+        imageUrl: "https://i.pravatar.cc/150?u=john",
+      },
+      {
+        id: "user2",
+        fullname: "Jane Smith",
+        imageUrl: "https://i.pravatar.cc/150?u=jane",
+      },
+    ]
+
+    const messages: Message[] = [
+      {
+        userId: "user1",
+        text: "Hello everyone! Let's discuss the new feature implementation.",
+        dateTime: new Date().toISOString(),
+      },
+      {
+        userId: "user2",
+        text: "I have some ideas about the UI design we could use.",
+        dateTime: new Date().toISOString(),
+      },
+      {
+        userId: "user1",
+        text: "Great! Please share your thoughts.",
+        dateTime: new Date().toISOString(),
+      },
+    ]
+
+    editorRef.current?.insertTranscript("Team Discussion", users, messages)
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <button
+        onClick={addTranscript}
+        className="bg-blue-500 text-white hover:bg-blue-600 rounded px-4 py-2"
+      >
+        Add Transcript Block
+      </button>
+
+      <div className="border-gray-300 h-[600px] rounded border p-4">
+        <BasicTextEditor
+          ref={editorRef}
+          placeholder="Start typing or click the button above to add a transcript..."
+          labels={{
+            toolbarLabels: defaultToolbarLabels,
+            transcriptLabels: defaultTranscriptLabels,
+          }}
+          onChange={() => {}}
+        />
+      </div>
+    </div>
+  )
+}
+
+export const WithImperativeTranscript: Story = {
+  render: () => <EditorWithTranscriptButton />,
 }
