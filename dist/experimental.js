@@ -87887,7 +87887,7 @@ const xje = (e, t, n) => wt.create({
                   initial: { opacity: 0, y: -10 },
                   animate: { opacity: 1, y: 0 },
                   transition: { delay: 0.1, duration: 0.3 },
-                  children: /* @__PURE__ */ d("div", { className: "flex flex-col gap-4", children: r.messages.map((v, y) => {
+                  children: /* @__PURE__ */ d("div", { className: "scrollbar-macos flex max-h-[500px] flex-col gap-4 overflow-y-auto", children: r.messages.map((v, y) => {
                     const k = c(v.userId);
                     return /* @__PURE__ */ w(
                       ae.div,
