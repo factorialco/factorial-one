@@ -69,12 +69,13 @@ export const Action = React.forwardRef<
     ref
   ) => {
     const isLink = !!href
-    const isLinkStyled = variant === "link" || variant === "mention"
     const defaultVariant = isLink ? variant || "link" : variant || "default"
     const variantClasses = actionVariants({
       variant: defaultVariant,
       pressed,
     })
+    const isLinkStyled =
+      defaultVariant === "link" || defaultVariant === "mention"
     const sizeClasses = isLinkStyled
       ? linkSizeVariants({ size })
       : buttonSizeVariants({ size })

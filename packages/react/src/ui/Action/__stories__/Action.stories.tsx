@@ -63,18 +63,12 @@ export const Basic: Story = {
   },
 }
 
-export const WithClick: Story = {
-  args: {
-    children: "Clickable Action",
-    onClick: () => alert("Action clicked!"),
-  },
-}
-
 export const AsLink: Story = {
   args: {
     children: "Link Action",
     href: "https://example.com",
     target: "_blank",
+    append: <Icon icon={Placeholder} size="sm" />,
   },
 }
 
@@ -108,10 +102,11 @@ export const WithPrepend: Story = {
   },
 }
 
-export const WithAppend: Story = {
+export const WithAppendOutside: Story = {
   args: {
     children: "Action with Append",
     append: <Icon icon={Placeholder} />,
+    appendOutside: true,
   },
 }
 
