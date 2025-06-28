@@ -87495,7 +87495,7 @@ const fLe = (e, t, n) => bt.create({
                       /* @__PURE__ */ w("p", { className: "text-f1-text-secondary text-sm", children: [
                         r.messages.length,
                         " ",
-                        r.messages.length === 1 ? ((m = o.labels) == null ? void 0 : m.messagesCountSingular) || "message" : ((h = o.labels) == null ? void 0 : h.messagesCount) || "messages"
+                        r.messages.length === 1 ? ((m = o.labels) == null ? void 0 : m.messagesCountSingular) || "" : ((h = o.labels) == null ? void 0 : h.messagesCount) || ""
                       ] })
                     ] })
                   }
