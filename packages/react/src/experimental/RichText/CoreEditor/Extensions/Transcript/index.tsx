@@ -186,7 +186,7 @@ export const TranscriptView: React.FC<NodeViewProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.3 }}
               >
-                <div className="flex flex-col gap-4">
+                <div className="scrollbar-macos flex max-h-[500px] flex-col gap-4 overflow-y-auto">
                   {data.messages.map((message, index) => {
                     const user = getUserById(message.userId)
                     return (
