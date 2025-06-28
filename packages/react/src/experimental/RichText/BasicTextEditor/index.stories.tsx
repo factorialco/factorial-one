@@ -36,6 +36,7 @@ const defaultToolbarLabels = {
   bullet: "Bullet",
   ordered: "Ordered",
   task: "Task",
+  details: "drop-down",
   linkPlaceholder: "Enter URL...",
   linkLabel: "Link",
   linkPaste: "Paste",
@@ -70,6 +71,144 @@ const defaultLiveCompanionLabels = {
   multipleTopicsWithCommentary: "topics with commentary",
 }
 
+const defaultTranscriptLabels = {
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+  messagesCount: "messages",
+  messagesCountSingular: "message",
+}
+
+const initialContent = {
+  type: "doc",
+  content: [
+    {
+      type: "heading",
+      content: [
+        {
+          type: "text",
+          text: "Titulo de la meeting",
+        },
+      ],
+    },
+    {
+      type: "moodTracker",
+      attrs: {
+        data: {
+          title: "Last week mood tracker:",
+          averageMoodComment:
+            'Average feeling of "manolo" this week: Walking on sunshine',
+          days: [
+            {
+              day: "Monday",
+              mood: "superPositive",
+              comment:
+                "More training opportunities would help us grow our skills.",
+            },
+            {
+              day: "Tuesday",
+              mood: "superPositive",
+              comment: "Great team collaboration today!",
+            },
+          ],
+        },
+      },
+    },
+    {
+      type: "liveCompanion",
+      attrs: {
+        data: {
+          title: "Meeting live companion topics",
+          topics: [
+            {
+              title: "Project Timeline",
+              comments: [
+                {
+                  user: "Ana",
+                  comment: "We should extend the deadline by two weeks.",
+                },
+                {
+                  user: "Carlos",
+                  comment: "I agree, we need more time for testing.",
+                },
+              ],
+            },
+            {
+              title: "Project Timeline 2",
+              comments: [
+                {
+                  user: "Ana",
+                  comment: "We should extend the deadline by two weeks.",
+                },
+                {
+                  user: "Carlos",
+                  comment: "I agree, we need more time for testing.",
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
+    {
+      type: "transcript",
+      attrs: {
+        data: {
+          title: "Meeting Transcript",
+          messages: [
+            {
+              userId: "user1",
+              text: "Hello everyone, let's start our weekly planning meeting.",
+              dateTime: "2023-11-15T09:00:00Z",
+            },
+            {
+              userId: "user2",
+              text: "I've completed the design mockups for the new feature.",
+              dateTime: "2023-11-15T09:02:30Z",
+            },
+            {
+              userId: "user3",
+              text: "Great! I can start implementing it tomorrow.",
+              dateTime: "2023-11-15T09:04:15Z",
+            },
+            {
+              userId: "user1",
+              text: "Perfect. Let's aim to have a prototype by Friday.",
+              dateTime: "2023-11-15T09:05:45Z",
+            },
+          ],
+          users: [
+            {
+              id: "user1",
+              fullname: "Maria Rodriguez",
+              imageUrl: "https://i.pravatar.cc/150?u=maria",
+            },
+            {
+              id: "user2",
+              fullname: "Alex Chen",
+              imageUrl: "https://i.pravatar.cc/150?u=alex",
+            },
+            {
+              id: "user3",
+              fullname: "David Kim",
+              imageUrl: "https://i.pravatar.cc/150?u=david",
+            },
+          ],
+        },
+      },
+    },
+    {
+      type: "aiBlock",
+      attrs: {
+        data: {},
+      },
+    },
+    {
+      type: "paragraph",
+    },
+  ],
+}
+
 export const Default: Story = {
   args: {
     placeholder: "Enter '/' to open the command palette...",
@@ -79,94 +218,14 @@ export const Default: Story = {
       aiBlockLabels: defaultAIBlockLabels,
       moodTrackerLabels: defaultMoodTrackerLabels,
       liveCompanionLabels: defaultLiveCompanionLabels,
+      transcriptLabels: defaultTranscriptLabels,
     },
     onChange: (value) => {
       console.log("Content changed:", value)
     },
 
     initialEditorState: {
-      content: {
-        type: "doc",
-        content: [
-          {
-            type: "heading",
-            content: [
-              {
-                type: "text",
-                text: "Titulo de la meeting",
-              },
-            ],
-          },
-          {
-            type: "moodTracker",
-            attrs: {
-              data: {
-                title: "Last week mood tracker:",
-                averageMoodComment:
-                  'Average feeling of "manolo" this week: Walking on sunshine',
-                days: [
-                  {
-                    day: "Monday",
-                    mood: "superPositive",
-                    comment:
-                      "More training opportunities would help us grow our skills.",
-                  },
-                  {
-                    day: "Tuesday",
-                    mood: "superPositive",
-                    comment: "Great team collaboration today!",
-                  },
-                ],
-              },
-            },
-          },
-          {
-            type: "liveCompanion",
-            attrs: {
-              data: {
-                title: "Meeting live companion topics",
-                topics: [
-                  {
-                    title: "Project Timeline",
-                    comments: [
-                      {
-                        user: "Ana",
-                        comment: "We should extend the deadline by two weeks.",
-                      },
-                      {
-                        user: "Carlos",
-                        comment: "I agree, we need more time for testing.",
-                      },
-                    ],
-                  },
-                  {
-                    title: "Project Timeline 2",
-                    comments: [
-                      {
-                        user: "Ana",
-                        comment: "We should extend the deadline by two weeks.",
-                      },
-                      {
-                        user: "Carlos",
-                        comment: "I agree, we need more time for testing.",
-                      },
-                    ],
-                  },
-                ],
-              },
-            },
-          },
-          {
-            type: "aiBlock",
-            attrs: {
-              data: {},
-            },
-          },
-          {
-            type: "paragraph",
-          },
-        ],
-      },
+      content: initialContent,
     },
 
     aiBlockConfig: {

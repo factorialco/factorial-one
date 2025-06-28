@@ -8,6 +8,11 @@ import { forwardRef, useId, useImperativeHandle, useRef, useState } from "react"
 import { AIBlockConfig, AIBlockLabels } from "../CoreEditor/Extensions/AIBlock"
 import { LiveCompanionLabels } from "../CoreEditor/Extensions/LiveCompanion"
 import { MoodTrackerLabels } from "../CoreEditor/Extensions/MoodTracker"
+import {
+  Message,
+  TranscriptLabels,
+  User,
+} from "../CoreEditor/Extensions/Transcript"
 import "../index.css"
 import { createBasicTextEditorExtensions } from "./extensions"
 
@@ -26,6 +31,7 @@ interface BasicTextEditorProps {
     aiBlockLabels?: AIBlockLabels
     moodTrackerLabels?: MoodTrackerLabels
     liveCompanionLabels?: LiveCompanionLabels
+    transcriptLabels?: TranscriptLabels
   }
 }
 
@@ -34,6 +40,7 @@ type BasicTextEditorHandle = {
   focus: () => void
   setContent: (content: string) => void
   insertAIBlock: () => void
+  insertTranscript: (title: string, users: User[], messages: Message[]) => void
 }
 
 const BasicTextEditorComponent = forwardRef<
@@ -56,6 +63,7 @@ const BasicTextEditorComponent = forwardRef<
     aiBlockLabels,
     moodTrackerLabels,
     liveCompanionLabels,
+    transcriptLabels,
   } = labels
   const containerRef = useRef<HTMLDivElement>(null)
   const editorId = useId()
@@ -71,7 +79,8 @@ const BasicTextEditorComponent = forwardRef<
       aiBlockConfig,
       aiBlockLabels,
       moodTrackerLabels,
-      liveCompanionLabels
+      liveCompanionLabels,
+      transcriptLabels
     ),
     content: initialContent,
     onUpdate: ({ editor }: { editor: Editor }) => {
@@ -107,6 +116,22 @@ const BasicTextEditorComponent = forwardRef<
         )
       }
     },
+    insertTranscript: (title: string, users: User[], messages: Message[]) => {
+      if (editor) {
+        const enhancedConfig = transcriptLabels
+          ? { labels: transcriptLabels }
+          : undefined
+
+        editor.commands.insertTranscript(
+          {
+            title,
+            users,
+            messages,
+          },
+          enhancedConfig
+        )
+      }
+    },
   }))
 
   if (!editor) return null
@@ -136,5 +161,6 @@ const BasicTextEditorComponent = forwardRef<
   )
 })
 
+export type { Message, User } from "../CoreEditor/Extensions/Transcript"
 export { BasicTextEditorComponent as BasicTextEditor }
 export type { BasicTextEditorHandle, BasicTextEditorProps }
