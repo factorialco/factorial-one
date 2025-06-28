@@ -95,6 +95,7 @@ export const TranscriptView: React.FC<NodeViewProps> = ({
       const date = new Date(dateTimeStr)
       return format(date, "HH:mm")
     } catch (e) {
+      console.error(e)
       return dateTimeStr
     }
   }
