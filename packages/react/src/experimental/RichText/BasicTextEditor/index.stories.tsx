@@ -70,6 +70,17 @@ const defaultLiveCompanionLabels = {
   multipleTopicsWithCommentary: "topics with commentary",
 }
 
+const defaultAIChatLabels = {
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+  placeholder: "Ask me anything...",
+  sendMessage: "Send",
+  emptyChat: "Start a conversation",
+  userTitle: "You",
+  assistantTitle: "AI Assistant",
+}
+
 export const Default: Story = {
   args: {
     placeholder: "Enter '/' to open the command palette...",
@@ -79,6 +90,7 @@ export const Default: Story = {
       aiBlockLabels: defaultAIBlockLabels,
       moodTrackerLabels: defaultMoodTrackerLabels,
       liveCompanionLabels: defaultLiveCompanionLabels,
+      aiChatLabels: defaultAIChatLabels,
     },
     onChange: (value) => {
       console.log("Content changed:", value)
@@ -89,86 +101,19 @@ export const Default: Story = {
         type: "doc",
         content: [
           {
-            type: "heading",
-            content: [
-              {
-                type: "text",
-                text: "Titulo de la meeting",
-              },
-            ],
-          },
-          {
-            type: "moodTracker",
-            attrs: {
-              data: {
-                title: "Last week mood tracker:",
-                averageMoodComment:
-                  'Average feeling of "manolo" this week: Walking on sunshine',
-                days: [
-                  {
-                    day: "Monday",
-                    mood: "superPositive",
-                    comment:
-                      "More training opportunities would help us grow our skills.",
-                  },
-                  {
-                    day: "Tuesday",
-                    mood: "superPositive",
-                    comment: "Great team collaboration today!",
-                  },
-                ],
-              },
-            },
-          },
-          {
-            type: "liveCompanion",
-            attrs: {
-              data: {
-                title: "Meeting live companion topics",
-                topics: [
-                  {
-                    title: "Project Timeline",
-                    comments: [
-                      {
-                        user: "Ana",
-                        comment: "We should extend the deadline by two weeks.",
-                      },
-                      {
-                        user: "Carlos",
-                        comment: "I agree, we need more time for testing.",
-                      },
-                    ],
-                  },
-                  {
-                    title: "Project Timeline 2",
-                    comments: [
-                      {
-                        user: "Ana",
-                        comment: "We should extend the deadline by two weeks.",
-                      },
-                      {
-                        user: "Carlos",
-                        comment: "I agree, we need more time for testing.",
-                      },
-                    ],
-                  },
-                ],
-              },
-            },
-          },
-          {
-            type: "aiBlock",
-            attrs: {
-              data: {},
-            },
-          },
-          {
-            type: "paragraph",
+            type: "aiChat",
           },
         ],
       },
     },
-
+    aiChatConfig: {
+      onSendMessage: async (message: string) => {
+        // Simulate network delay
+        await new Promise((resolve) => setTimeout(resolve, 1500))
+        // Return the same fixed response for testing
+        return `I'm a fixed test response to demonstrate the chat functionality. No matter what you type, I will always respond with this same message.`
+      },
+    },
     aiBlockConfig: {
       title: "AI Pre-Meeting Helper",
       onClick: () => {

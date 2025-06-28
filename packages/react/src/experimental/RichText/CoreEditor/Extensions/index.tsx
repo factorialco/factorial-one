@@ -25,3 +25,6 @@ export * from "./CustomTask"
 export * from "./MoodTracker"
 export * from "./PersistSelection"
 export * from "./SlashCommand"
+
+// Export AIChat extension
+export * from "./AIChat"

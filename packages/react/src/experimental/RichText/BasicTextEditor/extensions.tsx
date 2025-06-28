@@ -23,6 +23,11 @@ import {
   AIBlockLabels,
 } from "@/experimental/RichText/CoreEditor/Extensions/AIBlock"
 import {
+  AIChatConfig,
+  AIChatExtension,
+  AIChatLabels,
+} from "@/experimental/RichText/CoreEditor/Extensions/AIChat"
+import {
   LiveCompanionConfig,
   LiveCompanionExtension,
   LiveCompanionLabels,
@@ -40,7 +45,9 @@ export const createBasicTextEditorExtensions = (
   aiBlockConfig?: AIBlockConfig,
   aiBlockLabels?: AIBlockLabels,
   moodTrackerLabels?: MoodTrackerLabels,
-  liveCompanionLabels?: LiveCompanionLabels
+  liveCompanionLabels?: LiveCompanionLabels,
+  aiChatConfig?: AIChatConfig,
+  aiChatLabels?: AIChatLabels
 ) => {
   // Create enhanced config with labels if both are provided
   const enhancedAIBlockConfig =
@@ -55,6 +62,15 @@ export const createBasicTextEditorExtensions = (
   // Create enhanced LiveCompanion config with labels
   const enhancedLiveCompanionConfig: LiveCompanionConfig | undefined =
     liveCompanionLabels ? { labels: liveCompanionLabels } : undefined
+
+  // Create enhanced AIChat config with labels
+  const enhancedAIChatConfig: AIChatConfig | undefined =
+    aiChatConfig || aiChatLabels
+      ? {
+          ...aiChatConfig,
+          labels: aiChatLabels,
+        }
+      : {}
 
   return [
     StarterKitExtension,
@@ -76,6 +92,9 @@ export const createBasicTextEditorExtensions = (
     AIBlockExtension.configure({
       currentConfig: enhancedAIBlockConfig,
     }),
+    AIChatExtension.configure({
+      currentConfig: enhancedAIChatConfig,
+    }),
     AddBlockButtonExtension,
     PersistSelection,
     createPlaceholderExtension(placeholder),
@@ -83,7 +102,8 @@ export const createBasicTextEditorExtensions = (
     createSlashCommandExtension(
       toolbarLabels,
       groupLabels,
-      enhancedAIBlockConfig
+      enhancedAIBlockConfig,
+      enhancedAIChatConfig
     ),
   ]
 }

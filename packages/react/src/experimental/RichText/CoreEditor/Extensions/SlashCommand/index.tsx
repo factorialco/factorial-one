@@ -6,6 +6,7 @@ import { createRoot, Root } from "react-dom/client"
 import { ToolbarLabels } from "../../Toolbar/types"
 import {
   AIBlockConfig,
+  AIChatConfig,
   availableCommands,
   CommandItem,
   getGroupedCommands,
@@ -16,7 +17,8 @@ import { CommandList } from "./CommandList"
 const createSlashCommandExtension = (
   labels: ToolbarLabels,
   groupLabels?: SlashCommandGroupLabels,
-  aiBlockConfig?: AIBlockConfig
+  aiBlockConfig?: AIBlockConfig,
+  aiChatConfig?: AIChatConfig
 ) =>
   Extension.create({
     name: "slashCommand",
@@ -88,14 +90,16 @@ const createSlashCommandExtension = (
           ...this.options.suggestion,
           items: ({ query }: { query: string }) => {
             const normalizedQuery = query.toLowerCase().replace(/\s+/g, "")
-            const results = availableCommands(labels, aiBlockConfig).filter(
-              (item: CommandItem) => {
-                const normalizedTitle = item.title
-                  .toLowerCase()
-                  .replace(/\s+/g, "")
-                return normalizedTitle.includes(normalizedQuery)
-              }
-            )
+            const results = availableCommands(
+              labels,
+              aiBlockConfig,
+              aiChatConfig
+            ).filter((item: CommandItem) => {
+              const normalizedTitle = item.title
+                .toLowerCase()
+                .replace(/\s+/g, "")
+              return normalizedTitle.includes(normalizedQuery)
+            })
             return results.length > 0 ? results : []
           },
           render: () => {
@@ -185,7 +189,8 @@ const createSlashCommandExtension = (
                 const groupedCommands = getGroupedCommands(
                   labels,
                   finalGroupLabels,
-                  aiBlockConfig
+                  aiBlockConfig,
+                  aiChatConfig
                 )
 
                 // Filter groups based on query if available
@@ -257,7 +262,8 @@ const createSlashCommandExtension = (
                 const groupedCommands = getGroupedCommands(
                   labels,
                   finalGroupLabels,
-                  aiBlockConfig
+                  aiBlockConfig,
+                  aiChatConfig
                 )
                 let filteredGroups = groupedCommands
                 if (props.query && props.query.trim()) {

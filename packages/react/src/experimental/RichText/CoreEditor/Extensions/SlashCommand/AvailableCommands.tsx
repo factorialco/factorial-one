@@ -13,6 +13,7 @@ import {
 import { Editor } from "@tiptap/react"
 import { ToolbarLabels } from "../../Toolbar/types"
 import { AIBlockConfig } from "../AIBlock"
+import { AIChatConfig } from "../AIChat"
 
 interface CommandItem {
   title: string
@@ -35,7 +36,8 @@ interface SlashCommandGroupLabels {
 
 const availableCommands = (
   labels: ToolbarLabels,
-  aiBlockConfig?: AIBlockConfig
+  aiBlockConfig?: AIBlockConfig,
+  aiChatConfig?: AIChatConfig
 ): CommandItem[] => {
   // Get grouped commands and flatten them for backward compatibility
   const defaultGroupLabels: SlashCommandGroupLabels = {
@@ -43,14 +45,20 @@ const availableCommands = (
     lists: "Lists",
     blocks: "Blocks",
   }
-  const groups = getGroupedCommands(labels, defaultGroupLabels, aiBlockConfig)
+  const groups = getGroupedCommands(
+    labels,
+    defaultGroupLabels,
+    aiBlockConfig,
+    aiChatConfig
+  )
   return groups.flatMap((group) => group.commands)
 }
 
 const getGroupedCommands = (
   labels: ToolbarLabels,
   groupLabels: SlashCommandGroupLabels,
-  aiBlockConfig?: AIBlockConfig
+  aiBlockConfig?: AIBlockConfig,
+  aiChatConfig?: AIChatConfig
 ): CommandGroup[] => [
   // Only include AI Block group if config is provided
   ...(aiBlockConfig
@@ -172,6 +180,40 @@ const getGroupedCommands = (
               },
               emoji: button.emoji, // Use emoji instead of icon
             })),
+          ],
+        },
+      ]
+    : []),
+  // Add AI Chat command if config is provided
+  ...(aiChatConfig || true
+    ? [
+        {
+          title: "AI Chat",
+          commands: [
+            {
+              title: "Start a chat conversation",
+              command: (editor: Editor) => {
+                editor
+                  .chain()
+                  .focus()
+                  .insertContent([
+                    {
+                      type: "aiChat",
+                      attrs: {
+                        data: {
+                          messages: [],
+                        },
+                        config: aiChatConfig || {},
+                      },
+                    },
+                    {
+                      type: "paragraph",
+                    },
+                  ])
+                  .run()
+              },
+              emoji: "💬", // Chat bubble emoji
+            },
           ],
         },
       ]
@@ -313,6 +355,7 @@ const getGroupedCommands = (
 export { availableCommands, getGroupedCommands }
 export type {
   AIBlockConfig,
+  AIChatConfig,
   CommandGroup,
   CommandItem,
   SlashCommandGroupLabels,

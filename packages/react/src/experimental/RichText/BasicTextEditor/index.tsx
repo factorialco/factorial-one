@@ -6,6 +6,7 @@ import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Exte
 import { Editor, EditorContent, JSONContent, useEditor } from "@tiptap/react"
 import { forwardRef, useId, useImperativeHandle, useRef, useState } from "react"
 import { AIBlockConfig, AIBlockLabels } from "../CoreEditor/Extensions/AIBlock"
+import { AIChatConfig, AIChatLabels } from "../CoreEditor/Extensions/AIChat"
 import { LiveCompanionLabels } from "../CoreEditor/Extensions/LiveCompanion"
 import { MoodTrackerLabels } from "../CoreEditor/Extensions/MoodTracker"
 import "../index.css"
@@ -19,6 +20,7 @@ interface BasicTextEditorProps {
   }
   readonly?: boolean
   aiBlockConfig?: AIBlockConfig
+  aiChatConfig?: AIChatConfig
 
   labels: {
     toolbarLabels: ToolbarLabels
@@ -26,6 +28,7 @@ interface BasicTextEditorProps {
     aiBlockLabels?: AIBlockLabels
     moodTrackerLabels?: MoodTrackerLabels
     liveCompanionLabels?: LiveCompanionLabels
+    aiChatLabels?: AIChatLabels
   }
 }
 
@@ -34,6 +37,7 @@ type BasicTextEditorHandle = {
   focus: () => void
   setContent: (content: string) => void
   insertAIBlock: () => void
+  insertAIChat: () => void
 }
 
 const BasicTextEditorComponent = forwardRef<
@@ -47,6 +51,7 @@ const BasicTextEditorComponent = forwardRef<
     readonly = false,
     labels,
     aiBlockConfig,
+    aiChatConfig,
   },
   ref
 ) {
@@ -56,6 +61,7 @@ const BasicTextEditorComponent = forwardRef<
     aiBlockLabels,
     moodTrackerLabels,
     liveCompanionLabels,
+    aiChatLabels,
   } = labels
   const containerRef = useRef<HTMLDivElement>(null)
   const editorId = useId()
@@ -71,7 +77,9 @@ const BasicTextEditorComponent = forwardRef<
       aiBlockConfig,
       aiBlockLabels,
       moodTrackerLabels,
-      liveCompanionLabels
+      liveCompanionLabels,
+      aiChatConfig,
+      aiChatLabels
     ),
     content: initialContent,
     onUpdate: ({ editor }: { editor: Editor }) => {
@@ -102,6 +110,21 @@ const BasicTextEditorComponent = forwardRef<
           {
             content: null,
             selectedAction: undefined,
+          },
+          enhancedConfig
+        )
+      }
+    },
+    insertAIChat: () => {
+      if (editor) {
+        const enhancedConfig =
+          aiChatConfig && aiChatLabels
+            ? { ...aiChatConfig, labels: aiChatLabels }
+            : aiChatConfig || {}
+
+        editor.commands.insertAIChat(
+          {
+            messages: [],
           },
           enhancedConfig
         )
