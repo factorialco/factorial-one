@@ -32,7 +32,6 @@ export interface ToolbarLabels {
   linkLabel: string
   linkPaste: string
   close: string
-  details: string
   [key: string]: string
 }
 
