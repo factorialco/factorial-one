@@ -87464,8 +87464,8 @@ const fLe = (e, t, n) => bt.create({
     try {
       const y = new Date(v);
       return In(y, "HH:mm");
-    } catch {
-      return v;
+    } catch (y) {
+      return console.error(y), v;
     }
   };
   return /* @__PURE__ */ w(dd, { contentEditable: !1, children: [
