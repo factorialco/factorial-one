@@ -126,8 +126,8 @@ export const TranscriptView: React.FC<NodeViewProps> = ({
               <p className="text-f1-text-secondary text-sm">
                 {data.messages.length}{" "}
                 {data.messages.length === 1
-                  ? config.labels?.messagesCountSingular || "message"
-                  : config.labels?.messagesCount || "messages"}
+                  ? config.labels?.messagesCountSingular || ""
+                  : config.labels?.messagesCount || ""}
               </p>
             </div>
           </div>
