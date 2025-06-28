@@ -224,7 +224,7 @@ this is a hack to make the checkbox look like the one in the Checkbox component
 }
 
 .rich-text-details summary {
-  @apply font-semibold;
+  @apply text-lg font-semibold;
 }
 
 .rich-text-details summary::marker {
@@ -232,7 +232,7 @@ this is a hack to make the checkbox look like the one in the Checkbox component
 }
 
 .rich-text-details > button {
-  @apply flex h-5 w-5 items-center justify-center rounded-xs bg-f1-background;
+  @apply flex h-6 w-6 items-center justify-center rounded-xs bg-f1-background;
 }
 
 .rich-text-details > button:hover {
