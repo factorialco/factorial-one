@@ -1,5 +1,6 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { Spinner } from "@/icons/app"
+import { Link } from "@/lib/linkHandler"
 import { cn, focusRing } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import type { VariantProps } from "cva"
@@ -43,31 +44,25 @@ export type ActionProps = ActionCommonProps &
   Partial<LinkActionProps> &
   ActionVariantProps
 
-export const Action = React.forwardRef<
-  HTMLButtonElement | HTMLAnchorElement,
-  ActionProps
->(
-  (
-    {
-      children,
-      prepend,
-      append,
-      prependOutside,
-      appendOutside,
-      onClick,
-      onFocus,
-      onBlur,
-      disabled,
-      loading,
-      pressed,
-      className,
-      href,
-      target,
-      variant,
-      size = "md",
-    },
-    ref
-  ) => {
+export const Action = React.forwardRef<HTMLElement, ActionProps>(
+  ({
+    children,
+    prepend,
+    append,
+    prependOutside,
+    appendOutside,
+    onClick,
+    onFocus,
+    onBlur,
+    disabled,
+    loading,
+    pressed,
+    className,
+    href,
+    target,
+    variant,
+    size = "md",
+  }) => {
     const isLink = !!href
     const defaultVariant = isLink ? variant || "link" : variant || "default"
     const variantClasses = actionVariants({
@@ -115,7 +110,29 @@ export const Action = React.forwardRef<
       </>
     )
 
-    const mainElement = isLink ? (
+    const Comp = isLink ? Link : "button"
+    const CompProps = {
+      //ref: ref as React.Ref<HTMLElement>,
+      onClick,
+      onFocus,
+      onBlur,
+      disabled,
+      className: cn(variantClasses, sizeClasses, focusRing(), className),
+      ariaBusy: loading,
+      ...(isLink
+        ? {
+            href,
+            target,
+            rel: target === "_blank" ? "noopener noreferrer" : undefined,
+          }
+        : {}),
+      ...(isLink && disabled ? { "aria-disabled": true } : {}),
+      ...(!isLink && pressed ? { "data-pressed": true } : {}),
+    }
+
+    const mainElement = <Comp {...CompProps}>{innerContent}</Comp>
+
+    /*const mainElement = isLink ? (
       disabled ? (
         <span
           ref={ref as React.Ref<HTMLAnchorElement>}
@@ -155,7 +172,7 @@ export const Action = React.forwardRef<
       >
         {innerContent}
       </button>
-    )
+    )*/
 
     if (prependOutside || appendOutside) {
       return (
