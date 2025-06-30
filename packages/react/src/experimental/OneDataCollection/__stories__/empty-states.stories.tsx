@@ -1,10 +1,14 @@
 import { BaseResponse } from "@/experimental/OneDataCollection/types.ts"
+import { PromiseState } from "@/lib/promise-to-observable"
 import { Meta, StoryObj } from "@storybook/react-vite"
+import { useMemo, useState } from "react"
+import { Observable } from "zen-observable-ts"
 import { OneDataCollection, useDataSource } from "../index"
 import {
   createPromiseDataFetch,
   filters,
   getMockVisualizations,
+  MockUser,
   mockUsers,
   sortings,
 } from "./mockData"
@@ -23,56 +27,88 @@ type Story = StoryObj<typeof meta>
 // Basic story showing all action types
 export const NoDataExample: Story = {
   render: () => {
-    const dataSource = useDataSource({
-      filters,
-      dataAdapter: {
+    const [data, setData] = useState<MockUser[]>([])
+    const dataAdapter = useMemo(() => {
+      return {
         fetchData: () =>
-          new Promise<BaseResponse<(typeof mockUsers)[number]>>((resolve) => {
-            resolve({ records: [] })
+          new Observable<PromiseState<BaseResponse<MockUser>>>((subscriber) => {
+            subscriber.next({
+              loading: false,
+              data: { records: data },
+            })
           }),
+      }
+    }, [data])
+
+    const dataSource = useDataSource(
+      {
+        filters,
+        dataAdapter,
       },
-    })
+      [dataAdapter]
+    )
 
     return (
-      <OneDataCollection
-        source={dataSource}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  width: 140,
-                  render: (item) => ({
-                    type: "person",
-                    value: {
-                      firstName: item.name.split(" ")[0],
-                      lastName: item.name.split(" ")[1],
-                    },
-                  }),
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
+      <>
+        <div>
+          <button
+            onClick={() => {
+              console.log("fetching data2", data)
+              setData(mockUsers)
+            }}
+          >
+            Fetch data
+          </button>
+
+          <button
+            onClick={() => {
+              setData([])
+            }}
+          >
+            Empty data
+          </button>
+        </div>
+
+        <OneDataCollection
+          source={dataSource}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  {
+                    label: "Name",
+                    width: 140,
+                    render: (item) => ({
+                      type: "person",
+                      value: {
+                        firstName: item.name.split(" ")[0],
+                        lastName: item.name.split(" ")[1],
+                      },
+                    }),
+                    sorting: "name",
+                  },
+                  {
+                    label: "Email",
+                    render: (item) => item.email,
+                    sorting: "email",
+                  },
+                  {
+                    label: "Role",
+                    render: (item) => item.role,
+                    sorting: "role",
+                  },
+                  {
+                    label: "Department",
+                    render: (item) => item.department,
+                    sorting: "department",
+                  },
+                ],
+              },
             },
-          },
-        ]}
-      />
+          ]}
+        />
+      </>
     )
   },
 }

@@ -167,7 +167,10 @@ export const useDataSource = <
   const [isLoading, setIsLoading] = useState(false)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
+  const memoizedDataAdapter = useMemo(() => {
+    console.log("memoizedDataAdapter", dataAdapter)
+    return dataAdapter
+  }, deps)
 
   const defaultGrouping = grouping?.mandatory
     ? {
@@ -470,7 +473,12 @@ export const OneDataCollection = <
   useEffect(() => {
     setEmptyStateType(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- This is intentional we should remove the empty state when the filters, search, navigation filters change
-  }, [currentFilters, currentSearch, currentNavigationFilters])
+  }, [
+    currentFilters,
+    currentSearch,
+    currentNavigationFilters,
+    source.dataAdapter,
+  ])
 
   return (
     <div
