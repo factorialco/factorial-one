@@ -222,7 +222,7 @@ export const ListCollection = <
                     onOpenChange={(open) => setGroupOpen(group.key, open)}
                   />
                   <AnimatePresence>
-                    {openGroups[group.key] && (
+                    {(!collapsible || openGroups[group.key]) && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
