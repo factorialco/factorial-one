@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.115.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.114.0...factorial-one-react-v1.115.0) (2025-06-30)
+
+
+### Features
+
+* add support for AlertTag cell type in data collection ([#2186](https://github.com/factorialco/factorial-one/issues/2186)) ([038e6cc](https://github.com/factorialco/factorial-one/commit/038e6cc88fa09cd162bc17b357ca74631148570e))
+
 ## [1.114.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.6...factorial-one-react-v1.114.0) (2025-06-27)
 
 
