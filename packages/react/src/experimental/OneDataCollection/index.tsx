@@ -167,10 +167,7 @@ export const useDataSource = <
   const [isLoading, setIsLoading] = useState(false)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedDataAdapter = useMemo(() => {
-    console.log("memoizedDataAdapter", dataAdapter)
-    return dataAdapter
-  }, deps)
+  const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
 
   const defaultGrouping = grouping?.mandatory
     ? {
@@ -587,6 +584,17 @@ export const OneDataCollection = <
         </Filters.Root>
       </div>
 
+      {/* Visualization renderer must be always mounted to react (load data) even if empty state is shown */}
+      <div className={cn(emptyState && "hidden")}>
+        <VisualizationRenderer
+          visualization={visualizations[currentVisualization]}
+          source={source}
+          onSelectItems={onSelectItemsLocal}
+          onLoadData={onLoadData}
+          onLoadError={onLoadError}
+        />
+      </div>
+
       {emptyState ? (
         <div className="flex flex-1 flex-col items-center justify-center">
           <OneEmptyState
@@ -598,13 +606,6 @@ export const OneDataCollection = <
         </div>
       ) : (
         <>
-          <VisualizationRenderer
-            visualization={visualizations[currentVisualization]}
-            source={source}
-            onSelectItems={onSelectItemsLocal}
-            onLoadData={onLoadData}
-            onLoadError={onLoadError}
-          />
           {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
             <OneActionBar
               isOpen={showActionBar}

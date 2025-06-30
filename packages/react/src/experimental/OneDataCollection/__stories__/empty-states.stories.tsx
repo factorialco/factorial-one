@@ -1,9 +1,16 @@
-import { BaseResponse } from "@/experimental/OneDataCollection/types.ts"
+import {
+  FiltersState,
+  NavigationFiltersDefinition,
+} from "@/experimental/exports"
+import {
+  BaseResponse,
+  DataAdapter,
+} from "@/experimental/OneDataCollection/types.ts"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Meta, StoryObj } from "@storybook/react-vite"
-import { useMemo, useState } from "react"
 import { Observable } from "zen-observable-ts"
 import { OneDataCollection, useDataSource } from "../index"
+import { CustomEmptyStates } from "../useEmptyState"
 import {
   createPromiseDataFetch,
   filters,
@@ -24,182 +31,82 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const BaseExampleComponent = ({
+  dataAdapter,
+  currentFilters,
+  emptyStates,
+}: {
+  dataAdapter: DataAdapter<
+    MockUser,
+    typeof filters,
+    NavigationFiltersDefinition
+  >
+  currentFilters?: FiltersState<typeof filters>
+  emptyStates?: CustomEmptyStates
+}) => {
+  const dataSource = useDataSource({
+    filters,
+    dataAdapter,
+    currentFilters,
+    sortings,
+  })
+
+  const mockVisualizations = getMockVisualizations()
+
+  return (
+    <OneDataCollection
+      source={dataSource}
+      visualizations={[mockVisualizations.table]}
+      emptyStates={emptyStates}
+    />
+  )
+}
+
 // Basic story showing all action types
 export const NoDataExample: Story = {
   render: () => {
-    const [data, setData] = useState<MockUser[]>([])
-    const dataAdapter = useMemo(() => {
-      return {
-        fetchData: () =>
-          new Observable<PromiseState<BaseResponse<MockUser>>>((subscriber) => {
-            subscriber.next({
-              loading: false,
-              data: { records: data },
-            })
-          }),
-      }
-    }, [data])
-
-    const dataSource = useDataSource(
-      {
-        filters,
-        dataAdapter,
-      },
-      [dataAdapter]
-    )
+    const dataAdapter = {
+      fetchData: () =>
+        new Observable<PromiseState<BaseResponse<MockUser>>>((subscriber) => {
+          subscriber.next({
+            loading: false,
+            data: { records: [] },
+          })
+        }),
+    }
 
     return (
-      <>
-        <div>
-          <button
-            onClick={() => {
-              console.log("fetching data2", data)
-              setData(mockUsers)
-            }}
-          >
-            Fetch data
-          </button>
-
-          <button
-            onClick={() => {
-              setData([])
-            }}
-          >
-            Empty data
-          </button>
-        </div>
-
-        <OneDataCollection
-          source={dataSource}
-          visualizations={[
-            {
-              type: "table",
-              options: {
-                columns: [
-                  {
-                    label: "Name",
-                    width: 140,
-                    render: (item) => ({
-                      type: "person",
-                      value: {
-                        firstName: item.name.split(" ")[0],
-                        lastName: item.name.split(" ")[1],
-                      },
-                    }),
-                    sorting: "name",
-                  },
-                  {
-                    label: "Email",
-                    render: (item) => item.email,
-                    sorting: "email",
-                  },
-                  {
-                    label: "Role",
-                    render: (item) => item.role,
-                    sorting: "role",
-                  },
-                  {
-                    label: "Department",
-                    render: (item) => item.department,
-                    sorting: "department",
-                  },
-                ],
-              },
-            },
-          ]}
-        />
-      </>
+      <BaseExampleComponent
+        dataAdapter={dataAdapter}
+        currentFilters={{ search: "Joey Tribbiani" }}
+      />
     )
   },
 }
 
 export const NoResultsExample: Story = {
   render: () => {
-    const dataSource = useDataSource({
-      dataAdapter: {
-        fetchData: createPromiseDataFetch(),
-      },
-      filters: {
-        search: {
-          type: "search",
-          label: "Search",
-        },
-        department: {
-          type: "in",
-          label: "Department",
-          options: {
-            options: [
-              { value: "Engineering", label: "Engineering" },
-              { value: "Product", label: "Product" },
-              { value: "Design", label: "Design" },
-              { value: "Marketing", label: "Marketing" },
-            ],
-          },
-        },
-      },
-      currentFilters: {
-        search: "Joey Tribbiani",
-      },
-      sortings,
-    })
-
-    const mockVisualizations = getMockVisualizations()
-    return (
-      <OneDataCollection
-        source={dataSource}
-        visualizations={[mockVisualizations.table, mockVisualizations.card]}
-      />
-    )
+    const dataAdapter = {
+      fetchData: createPromiseDataFetch(),
+    }
+    return <BaseExampleComponent dataAdapter={dataAdapter} />
   },
 }
 
 export const ErrorExample: Story = {
   render: () => {
-    const dataSource = useDataSource({
-      dataAdapter: {
-        fetchData: () => Promise.reject(new Error("Error loading the users")),
-      },
-      filters,
-      currentFilters: { search: "Joey Tribbiani" },
-    })
-    return (
-      <OneDataCollection
-        source={dataSource}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [],
-            },
-          },
-        ]}
-      />
-    )
+    const dataAdapter = {
+      fetchData: () => Promise.reject(new Error("Error loading the users")),
+    }
+    return <BaseExampleComponent dataAdapter={dataAdapter} />
   },
 }
 
 export const CustomMessagesAndActions: Story = {
   render: () => {
-    const dataSource = useDataSource({
-      dataAdapter: { fetchData: createPromiseDataFetch() },
-      filters: {
-        search: { type: "search", label: "Search" },
-        department: {
-          type: "in",
-          label: "Department",
-          options: {
-            options: [
-              { value: "Engineering", label: "Engineering" },
-              { value: "Product", label: "Product" },
-              { value: "Design", label: "Design" },
-              { value: "Marketing", label: "Marketing" },
-            ],
-          },
-        },
-      },
-      currentFilters: { search: "Joey Tribbiani" },
-      sortings,
-    })
+    const dataAdapter = {
+      fetchData: createPromiseDataFetch(),
+    }
 
     const emptyStates = {
       "no-data": {
@@ -231,13 +138,59 @@ export const CustomMessagesAndActions: Story = {
       },
     }
 
-    const mockVisualizations = getMockVisualizations()
     return (
-      <OneDataCollection
-        source={dataSource}
-        visualizations={[mockVisualizations.table, mockVisualizations.card]}
+      <BaseExampleComponent
+        dataAdapter={dataAdapter}
+        currentFilters={{ search: "Joey Tribbiani" }}
         emptyStates={emptyStates}
       />
     )
+  },
+}
+
+const intervalObservable = new Observable<PromiseState<BaseResponse<MockUser>>>(
+  (observer) => {
+    let count = 0
+    const intervalId = setInterval(() => {
+      observer.next({
+        loading: false,
+        data: { records: mockUsers.slice(0, count) },
+      })
+      count++
+      if (count > 5) {
+        observer.complete()
+      }
+    }, 2000)
+
+    // Teardown logic
+    return () => clearInterval(intervalId)
+  }
+)
+
+// Example: subscribe and log emitted values
+intervalObservable.subscribe({
+  next(value) {
+    console.log("Emitted:", value)
+  },
+  error(err) {
+    console.error("Error:", err)
+  },
+  complete() {
+    console.log("Completed!")
+  },
+})
+
+export const EmptyToDataExample: Story = {
+  parameters: {
+    chromatic: {
+      skipSnapshot: true,
+    },
+  },
+  render: () => {
+    const dataAdapter = {
+      fetchData: () => intervalObservable,
+    }
+
+    return <BaseExampleComponent dataAdapter={dataAdapter} />
   },
 }

@@ -196,7 +196,6 @@ export const CardActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve({ records: mockUsers }),
       },
-      //secondaryActions: buildActions(),
       itemActions: createUserActions(),
     })
 
