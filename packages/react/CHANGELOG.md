@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.116.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.1...factorial-one-react-v1.116.2) (2025-06-30)
+
+
+### Bug Fixes
+
+* **button:** focus trap ([#2196](https://github.com/factorialco/factorial-one/issues/2196)) ([913abf6](https://github.com/factorialco/factorial-one/commit/913abf6e6cf7ef5820768e422afb81837cec1179))
+
 ## [1.116.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.0...factorial-one-react-v1.116.1) (2025-06-30)
 
 
