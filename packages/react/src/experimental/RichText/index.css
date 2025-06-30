@@ -220,7 +220,7 @@ this is a hack to make the checkbox look like the one in the Checkbox component
 }
 
 .rich-text-details {
-  @apply my-3 flex gap-2 py-2 transition-all;
+  @apply my-0 flex gap-2 py-1 transition-all;
 }
 
 .rich-text-details summary {
