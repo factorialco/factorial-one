@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.116.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.0...factorial-one-react-v1.116.1) (2025-06-30)
+
+
+### Bug Fixes
+
+* **datacollection:** click over group header in table. Card and list group header paddings ([#2192](https://github.com/factorialco/factorial-one/issues/2192)) ([05b8e5c](https://github.com/factorialco/factorial-one/commit/05b8e5ca9cbebde9cc0fdf532529d764c6fcc3ef))
+
 ## [1.116.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.115.0...factorial-one-react-v1.116.0) (2025-06-30)
 
 
