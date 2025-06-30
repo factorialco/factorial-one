@@ -1,6 +1,7 @@
 import { IconType } from "@/factorial-one"
 import {
   CheckDouble,
+  ChevronDown,
   Code,
   Heading1,
   Heading2,
@@ -267,6 +268,19 @@ const getGroupedCommands = (
   {
     title: groupLabels.blocks,
     commands: [
+      {
+        title: labels.details,
+        command: (editor) => {
+          const { from, to } = editor.state.selection
+          editor
+            .chain()
+            .focus()
+            .setTextSelection({ from, to })
+            .setDetails()
+            .run()
+        },
+        icon: ChevronDown,
+      },
       {
         title: labels.codeBlock,
         command: (editor) => {

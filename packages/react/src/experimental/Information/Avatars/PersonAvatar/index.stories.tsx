@@ -40,7 +40,7 @@ export const Default: Story = {
 export const WithImage: Story = {
   args: {
     ...Default.args,
-    src: "https://github.com/dani-moreno.png",
+    src: "/avatars/person04.jpg",
   },
 }
 

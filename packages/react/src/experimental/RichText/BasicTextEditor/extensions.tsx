@@ -5,6 +5,9 @@ import {
   createPlaceholderExtension,
   createSlashCommandExtension,
   CustomTaskExtension,
+  DetailsContentExtension,
+  DetailsExtension,
+  DetailsSummaryExtension,
   HighlightExtension,
   LinkExtension,
   MoodTrackerExtension,
@@ -23,10 +26,20 @@ import {
   AIBlockLabels,
 } from "@/experimental/RichText/CoreEditor/Extensions/AIBlock"
 import {
+  LiveCompanionConfig,
+  LiveCompanionExtension,
+  LiveCompanionLabels,
+} from "@/experimental/RichText/CoreEditor/Extensions/LiveCompanion"
+import {
   MoodTrackerConfig,
   MoodTrackerLabels,
 } from "@/experimental/RichText/CoreEditor/Extensions/MoodTracker"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
+import {
+  TranscriptConfig,
+  TranscriptExtension,
+  TranscriptLabels,
+} from "@/experimental/RichText/CoreEditor/Extensions/Transcript"
 
 export const createBasicTextEditorExtensions = (
   placeholder: string,
@@ -34,7 +47,9 @@ export const createBasicTextEditorExtensions = (
   groupLabels?: SlashCommandGroupLabels,
   aiBlockConfig?: AIBlockConfig,
   aiBlockLabels?: AIBlockLabels,
-  moodTrackerLabels?: MoodTrackerLabels
+  moodTrackerLabels?: MoodTrackerLabels,
+  liveCompanionLabels?: LiveCompanionLabels,
+  transcriptLabels?: TranscriptLabels
 ) => {
   // Create enhanced config with labels if both are provided
   const enhancedAIBlockConfig =
@@ -45,6 +60,14 @@ export const createBasicTextEditorExtensions = (
   // Create enhanced MoodTracker config with labels
   const enhancedMoodTrackerConfig: MoodTrackerConfig | undefined =
     moodTrackerLabels ? { labels: moodTrackerLabels } : undefined
+
+  // Create enhanced LiveCompanion config with labels
+  const enhancedLiveCompanionConfig: LiveCompanionConfig | undefined =
+    liveCompanionLabels ? { labels: liveCompanionLabels } : undefined
+
+  // Create enhanced Transcript config with labels
+  const enhancedTranscriptConfig: TranscriptConfig | undefined =
+    transcriptLabels ? { labels: transcriptLabels } : undefined
 
   return [
     StarterKitExtension,
@@ -57,8 +80,17 @@ export const createBasicTextEditorExtensions = (
     HighlightExtension,
     TextAlignExtension,
     LinkExtension,
+    DetailsExtension,
+    DetailsSummaryExtension,
+    DetailsContentExtension,
     MoodTrackerExtension.configure({
       currentConfig: enhancedMoodTrackerConfig,
+    }),
+    LiveCompanionExtension.configure({
+      currentConfig: enhancedLiveCompanionConfig,
+    }),
+    TranscriptExtension.configure({
+      currentConfig: enhancedTranscriptConfig,
     }),
     AIBlockExtension.configure({
       currentConfig: enhancedAIBlockConfig,

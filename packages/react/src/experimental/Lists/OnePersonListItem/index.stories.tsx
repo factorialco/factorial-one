@@ -1,6 +1,6 @@
+import avatar from "@storybook-static/avatars/person03.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
-import avatar from "../../../../storybook-assets/avatar.jpeg"
 import { Check, Placeholder } from "../../../icons/app"
 import { OnePersonListItem } from "./index"
 

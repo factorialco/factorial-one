@@ -715,7 +715,12 @@ export const ExampleComponent = ({
   })
 
   return (
-    <div className={cn("space-y-4", fullHeight && "max-h-full bg-[#fff]")}>
+    <div
+      className={cn(
+        "space-y-4",
+        fullHeight && "max-h-full max-w-full bg-[#fff]"
+      )}
+    >
       <OneDataCollection
         fullHeight={fullHeight}
         source={dataSource}

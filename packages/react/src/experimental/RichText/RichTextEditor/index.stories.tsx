@@ -158,17 +158,17 @@ const users = [
   {
     id: 1,
     label: "Raúl Sigüenza Sánchez",
-    href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
+    href: "/avatars/person01.jpg",
   },
   {
     id: 2,
     label: "Jacob Bamio Cordero",
-    href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
+    href: "/avatars/person02.jpg",
   },
   {
     id: 3,
     label: "Xavier Val Parejo",
-    href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
+    href: "/avatars/person03.jpg",
   },
 ]
 

@@ -104,6 +104,9 @@ const useContentEditor = (
     []
   )
 
+  // Add a debounce ref to prevent frequent updates
+  const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
   const editor = useEditor(
     {
       extensions,
@@ -118,26 +121,45 @@ const useContentEditor = (
       onUpdate: ({ editor }) => {
         const isEmpty = editor.isEmpty
 
-        if (isEmpty && data?.selectedAction && !isLoading) {
-          updateAttributes({
-            data: {
-              content: null,
-              selectedAction: undefined,
-              selectedTitle: undefined,
-              selectedEmoji: undefined,
-            },
-          })
-        } else if (!isEmpty) {
-          const newContent = editor.getJSON()
-          updateAttributes({
-            data: {
-              content: newContent,
-              selectedAction: data?.selectedAction,
-              selectedTitle: data?.selectedTitle,
-              selectedEmoji: data?.selectedEmoji,
-            },
-          })
+        // Clear any pending update
+        if (updateTimeoutRef.current) {
+          clearTimeout(updateTimeoutRef.current)
         }
+
+        // Debounce updates to avoid rapid re-renders
+        updateTimeoutRef.current = setTimeout(() => {
+          // Save current selection for restoration
+          const { from, to } = editor.state.selection
+
+          if (isEmpty && data?.selectedAction && !isLoading) {
+            updateAttributes({
+              data: {
+                content: null,
+                selectedAction: undefined,
+                selectedTitle: undefined,
+                selectedEmoji: undefined,
+              },
+            })
+          } else if (!isEmpty) {
+            const newContent = editor.getJSON()
+            updateAttributes({
+              data: {
+                content: newContent,
+                selectedAction: data?.selectedAction,
+                selectedTitle: data?.selectedTitle,
+                selectedEmoji: data?.selectedEmoji,
+              },
+            })
+          }
+
+          // Allow time for the update to complete before restoring selection
+          setTimeout(() => {
+            // Only restore if editor is still mounted and focused
+            if (editor && editor.isFocused) {
+              editor.commands.setTextSelection({ from, to })
+            }
+          }, 10)
+        }, 300) // Debounce delay
       },
     },
     [blockId]
@@ -145,9 +167,29 @@ const useContentEditor = (
 
   useEffect(() => {
     if (editor && data?.content) {
+      // Preserve selection when setting content
+      const { from, to } = editor.state.selection
+      const hadSelection = from !== to
+
       editor.commands.setContent(data.content)
+
+      // Restore selection if there was one
+      if (hadSelection && editor.isFocused) {
+        setTimeout(() => {
+          editor.commands.setTextSelection({ from, to })
+        }, 10)
+      }
     }
   }, [editor, data?.content])
+
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (updateTimeoutRef.current) {
+        clearTimeout(updateTimeoutRef.current)
+      }
+    }
+  }, [])
 
   return editor
 }
@@ -352,17 +394,14 @@ const AIContentSection: React.FC<AIContentSectionProps> = ({
         initial={{
           height: 0,
           opacity: 0,
-          scaleY: 0,
         }}
         animate={{
           height: "auto",
           opacity: 1,
-          scaleY: 1,
         }}
         exit={{
           height: 0,
           opacity: 0,
-          scaleY: 0,
         }}
         transition={{
           duration: 0.3,
@@ -374,14 +413,9 @@ const AIContentSection: React.FC<AIContentSectionProps> = ({
           overflow: "hidden",
         }}
       >
-        <motion.div
-          className="text-f1-text-primary"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
-        >
+        <div className="text-f1-text-primary">
           <EditorContent editor={contentEditor} />
-        </motion.div>
+        </div>
       </motion.div>
     )}
   </AnimatePresence>
