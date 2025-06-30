@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.116.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.115.0...factorial-one-react-v1.116.0) (2025-06-30)
+
+
+### Features
+
+* **RichTextEditor:** add Transcript and details extension ([#2189](https://github.com/factorialco/factorial-one/issues/2189)) ([bd8033d](https://github.com/factorialco/factorial-one/commit/bd8033df537c79bba08ddf4d00354169068d856c))
+
 ## [1.115.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.114.0...factorial-one-react-v1.115.0) (2025-06-30)
 
 
