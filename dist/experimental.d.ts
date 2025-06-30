@@ -1,4 +1,5 @@
 import { AlertAvatarProps as AlertAvatarProps_2 } from '../exports';
+import { AlertTagCellValue } from './types/alertTag.tsx';
 import { AmountCellValue } from './types/amount.tsx';
 import { AnchorHTMLAttributes } from 'react';
 import { AreaChartWidgetProps } from './AreaChartWidget';
@@ -505,6 +506,7 @@ export declare type BasicTextEditorHandle = {
     focus: () => void;
     setContent: (content: string) => void;
     insertAIBlock: () => void;
+    insertTranscript: (title: string, users: User[], messages: Message[]) => void;
 };
 
 export declare interface BasicTextEditorProps {
@@ -523,6 +525,8 @@ export declare interface BasicTextEditorProps {
         slashCommandGroupLabels?: SlashCommandGroupLabels;
         aiBlockLabels?: AIBlockLabels;
         moodTrackerLabels?: MoodTrackerLabels;
+        liveCompanionLabels?: LiveCompanionLabels;
+        transcriptLabels?: TranscriptLabels;
     };
 }
 
@@ -627,15 +631,50 @@ export declare interface ButtonConfig {
 }
 
 declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round" | "className" | "pressed"> & DataAttributes & {
+    /**
+     * Callback fired when the button is clicked. Supports async functions for loading state.
+     */
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
+    /**
+     * The visible label for the button. Required for accessibility.
+     */
     label: string;
+    /**
+     * Indicates that an action is in progress. Shows a loading spinner and blocks interaction.
+     */
     loading?: boolean;
+    /**
+     * Adds an icon to the button, combined with the label for better clarity and recognition.
+     */
     icon?: IconType;
+    /**
+     * Adds an emoji to the button, can be used as a special case of icon-only button.
+     */
     emoji?: string;
+    /**
+     * Hides the label visually (for icon-only or emoji-only buttons), but keeps it accessible for screen readers.
+     */
     hideLabel?: boolean;
+    /**
+     * Sets the button size. 'lg' for mobile, 'md' for desktop, 'sm' for compact/secondary actions.
+     */
     size?: "sm" | "md" | "lg";
+    /**
+     * Appends a React node after the button content (for custom UI extensions).
+     */
     append?: React.ReactNode;
+    /**
+     * Appends a React node as a separate button, visually grouped with the main button.
+     */
     appendButton?: React.ReactNode;
+    /**
+     * If true, the button is inactive and does not respond to user interaction.
+     */
+    disabled?: boolean;
+    /**
+     * If true, the button is visually active or selected (pressed state).
+     */
+    pressed?: boolean;
 };
 
 declare type ButtonProps = Omit<ButtonInternalProps, (typeof privateProps)[number]>;
@@ -2048,6 +2087,14 @@ declare type ListVisualizationOptions<R extends RecordType, _Filters extends Fil
     fields: ReadonlyArray<ListPropertyDefinition<R, Sortings>>;
 };
 
+declare interface LiveCompanionLabels {
+    deleteBlock: string;
+    expand: string;
+    collapse: string;
+    oneTopicWithCommentary: string;
+    multipleTopicsWithCommentary: string;
+}
+
 declare interface LoadingStateProps {
     label: string;
 }
@@ -2107,6 +2154,12 @@ export declare interface MenuProps {
     onCollapse?: (category: MenuCategory, isOpen: boolean) => void;
     onSort?: (categories: MenuCategory[]) => void;
     onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void;
+}
+
+export declare interface Message {
+    userId: string;
+    text: string;
+    dateTime: string;
 }
 
 declare type Metadata = SimpleMetadata | AvatarListMetadata | StatusMetadata | UserMetadata | CompanyMetadata | TeamMetadata | TagMetadata;
@@ -3064,6 +3117,7 @@ declare const propertyRenderers: {
     readonly amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
     readonly avatarList: (args: AvatarListCellValue) => JSX_2.Element;
     readonly status: (args: StatusCellValue) => JSX_2.Element;
+    readonly alertTag: (args: AlertTagCellValue) => JSX_2.Element;
     readonly person: (args: PersonCellValue) => JSX_2.Element;
     readonly company: (args: CompanyCellValue) => JSX_2.Element;
     readonly team: (args: TeamCellValue) => JSX_2.Element;
@@ -3288,7 +3342,7 @@ declare interface ReactionProps {
     emoji: string;
     initialCount: number;
     hasReacted?: boolean;
-    users?: User[];
+    users?: User_2[];
     onInteraction?: (emoji: string) => void;
 }
 
@@ -4135,6 +4189,14 @@ declare type TooltipProps = {
     description: string;
 });
 
+declare interface TranscriptLabels {
+    deleteBlock: string;
+    expand: string;
+    collapse: string;
+    messagesCount: string;
+    messagesCountSingular: string;
+}
+
 declare interface TwoColumnsItemType {
     title: string;
     info: string | ReactNode;
@@ -4200,7 +4262,13 @@ export { useForm }
 
 export declare function useFormSchema<Schema extends SchemaType, FormData extends InferSchema<Schema>>(schema: Schema, options: UseFormProps<FormData>, onSubmit: OnSubmitHandler<FormData>): FormType<Schema, FormData>;
 
-declare interface User {
+export declare interface User {
+    id: string;
+    fullname: string;
+    imageUrl: string;
+}
+
+declare interface User_2 {
     name: string;
 }
 
@@ -4443,8 +4511,21 @@ declare module "@tiptap/core" {
 }
 
 
-declare namespace Calendar {
-    var displayName: string;
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        transcript: {
+            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
+        };
+    }
 }
 
 
@@ -4454,4 +4535,9 @@ declare module "@tiptap/core" {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
+}
+
+
+declare namespace Calendar {
+    var displayName: string;
 }
