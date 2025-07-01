@@ -359,9 +359,10 @@ export const CardCollection = <
                       onSelectChange={(checked) =>
                         handleSelectGroupChange(group, checked)
                       }
+                      className="px-6 pb-2 pt-4"
                     />
                     <AnimatePresence>
-                      {openGroups[group.key] && (
+                      {(!collapsible || openGroups[group.key]) && (
                         <GroupCards
                           key={group.key}
                           source={source}

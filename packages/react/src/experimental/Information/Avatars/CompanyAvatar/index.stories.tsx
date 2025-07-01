@@ -30,7 +30,7 @@ export const WithImage: Story = {
     chromatic: { disableSnapshot: true },
   },
   args: {
-    src: "https://avatars.githubusercontent.com/u/21041797?s=48&v=4",
+    src: "/avatars/factorial.png",
   },
 }
 
@@ -39,7 +39,7 @@ export const WithModuleBadge: Story = {
     chromatic: { disableSnapshot: true },
   },
   args: {
-    src: "https://avatars.githubusercontent.com/u/21041797?s=48&v=4",
+    src: "/avatars/factorial.png",
     badge: {
       type: "module",
       module: "inbox",

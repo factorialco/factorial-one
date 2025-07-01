@@ -207,7 +207,7 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
                       </div>
                       <p className="text-f1-text-primary text-md font-normal">
                         <span className="font-semibold">{day.day}:</span>{" "}
-                        {day.comment}
+                        {day.comment || "-"}
                       </p>
                     </motion.div>
                   ))}
