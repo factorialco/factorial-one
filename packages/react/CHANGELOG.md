@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.117.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.3...factorial-one-react-v1.117.0) (2025-07-01)
+
+
+### Features
+
+* **datacollection:** sticky group header in table ([#2185](https://github.com/factorialco/factorial-one/issues/2185)) ([d1b782f](https://github.com/factorialco/factorial-one/commit/d1b782f2d74d45e3be0fc135ed116575ec46254b))
+
 ## [1.116.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.2...factorial-one-react-v1.116.3) (2025-07-01)
 
 
