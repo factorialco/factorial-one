@@ -36,6 +36,7 @@ export interface ActionCommonProps {
 export interface LinkActionProps {
   href: string
   target?: "_blank" | "_self" | "_parent" | "_top"
+  title?: string
 }
 
 type ActionVariantProps = VariantProps<typeof actionVariants>
@@ -61,6 +62,7 @@ export const Action = React.forwardRef<HTMLElement, ActionProps>(
       className,
       href,
       target,
+      title,
       variant,
       size = "md",
     },
@@ -130,6 +132,7 @@ export const Action = React.forwardRef<HTMLElement, ActionProps>(
         target={target}
         rel={target === "_blank" ? "noopener noreferrer" : undefined}
         aria-disabled={disabled}
+        aria-label={title}
       >
         {innerContent}
       </Link>
