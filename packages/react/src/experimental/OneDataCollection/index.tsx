@@ -585,7 +585,7 @@ export const OneDataCollection = <
       </div>
 
       {/* Visualization renderer must be always mounted to react (load data) even if empty state is shown */}
-      <div className={cn(emptyState && "hidden")}>
+      <div className={cn(emptyState && "hidden", fullHeight && "h-full")}>
         <VisualizationRenderer
           visualization={visualizations[currentVisualization]}
           source={source}

@@ -75,12 +75,7 @@ export const NoDataExample: Story = {
         }),
     }
 
-    return (
-      <BaseExampleComponent
-        dataAdapter={dataAdapter}
-        currentFilters={{ search: "Joey Tribbiani" }}
-      />
-    )
+    return <BaseExampleComponent dataAdapter={dataAdapter} />
   },
 }
 
@@ -89,7 +84,12 @@ export const NoResultsExample: Story = {
     const dataAdapter = {
       fetchData: createPromiseDataFetch(),
     }
-    return <BaseExampleComponent dataAdapter={dataAdapter} />
+    return (
+      <BaseExampleComponent
+        dataAdapter={dataAdapter}
+        currentFilters={{ search: "Joey Tribbiani" }}
+      />
+    )
   },
 }
 
