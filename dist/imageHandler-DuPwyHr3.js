@@ -3097,7 +3097,7 @@ const rW = Tn({
           },
           onKeyDown: (b) => {
             var m;
-            b.preventDefault(), (b.key === "Enter" || b.key === " ") && ((m = p.current) == null || m.click());
+            (b.key === "Enter" || b.key === " ") && (b.preventDefault(), (m = p.current) == null || m.click());
           },
           children: /* @__PURE__ */ E(
             "button",

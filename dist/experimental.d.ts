@@ -1,4 +1,5 @@
 import { AlertAvatarProps as AlertAvatarProps_2 } from '../exports';
+import { AlertTagCellValue } from './types/alertTag.tsx';
 import { AmountCellValue } from './types/amount.tsx';
 import { AnchorHTMLAttributes } from 'react';
 import { AreaChartWidgetProps } from './AreaChartWidget';
@@ -505,6 +506,7 @@ export declare type BasicTextEditorHandle = {
     focus: () => void;
     setContent: (content: string) => void;
     insertAIBlock: () => void;
+    insertTranscript: (title: string, users: User[], messages: Message[]) => void;
 };
 
 export declare interface BasicTextEditorProps {
@@ -524,6 +526,7 @@ export declare interface BasicTextEditorProps {
         aiBlockLabels?: AIBlockLabels;
         moodTrackerLabels?: MoodTrackerLabels;
         liveCompanionLabels?: LiveCompanionLabels;
+        transcriptLabels?: TranscriptLabels;
     };
 }
 
@@ -2153,6 +2156,12 @@ export declare interface MenuProps {
     onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void;
 }
 
+export declare interface Message {
+    userId: string;
+    text: string;
+    dateTime: string;
+}
+
 declare type Metadata = SimpleMetadata | AvatarListMetadata | StatusMetadata | UserMetadata | CompanyMetadata | TeamMetadata | TagMetadata;
 
 declare type MetadataAction = {
@@ -3108,6 +3117,7 @@ declare const propertyRenderers: {
     readonly amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
     readonly avatarList: (args: AvatarListCellValue) => JSX_2.Element;
     readonly status: (args: StatusCellValue) => JSX_2.Element;
+    readonly alertTag: (args: AlertTagCellValue) => JSX_2.Element;
     readonly person: (args: PersonCellValue) => JSX_2.Element;
     readonly company: (args: CompanyCellValue) => JSX_2.Element;
     readonly team: (args: TeamCellValue) => JSX_2.Element;
@@ -3332,7 +3342,7 @@ declare interface ReactionProps {
     emoji: string;
     initialCount: number;
     hasReacted?: boolean;
-    users?: User[];
+    users?: User_2[];
     onInteraction?: (emoji: string) => void;
 }
 
@@ -4179,6 +4189,14 @@ declare type TooltipProps = {
     description: string;
 });
 
+declare interface TranscriptLabels {
+    deleteBlock: string;
+    expand: string;
+    collapse: string;
+    messagesCount: string;
+    messagesCountSingular: string;
+}
+
 declare interface TwoColumnsItemType {
     title: string;
     info: string | ReactNode;
@@ -4244,7 +4262,13 @@ export { useForm }
 
 export declare function useFormSchema<Schema extends SchemaType, FormData extends InferSchema<Schema>>(schema: Schema, options: UseFormProps<FormData>, onSubmit: OnSubmitHandler<FormData>): FormType<Schema, FormData>;
 
-declare interface User {
+export declare interface User {
+    id: string;
+    fullname: string;
+    imageUrl: string;
+}
+
+declare interface User_2 {
     name: string;
 }
 
@@ -4491,6 +4515,15 @@ declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         liveCompanion: {
             insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        transcript: {
+            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
         };
     }
 }
