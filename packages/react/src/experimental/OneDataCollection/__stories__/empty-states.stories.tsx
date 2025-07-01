@@ -5,7 +5,7 @@ import {
 import {
   BaseResponse,
   DataAdapter,
-} from "@/experimental/OneDataCollection/types.ts"
+} from "@/experimental/OneDataCollection/types"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { Observable } from "zen-observable-ts"
