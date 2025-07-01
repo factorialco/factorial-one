@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.117.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.117.0...factorial-one-react-v1.117.1) (2025-07-01)
+
+
+### Bug Fixes
+
+* adding table row hover styles in onedatacollection footer ([#2199](https://github.com/factorialco/factorial-one/issues/2199)) ([2d0e5c2](https://github.com/factorialco/factorial-one/commit/2d0e5c236b1328e8e675e9a79f33fcfbbde46d80))
+
 ## [1.117.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.3...factorial-one-react-v1.117.0) (2025-07-01)
 
 
