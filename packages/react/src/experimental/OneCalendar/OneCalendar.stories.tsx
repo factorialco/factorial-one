@@ -9,14 +9,25 @@ import {
   startOfWeek,
   startOfYear,
 } from "date-fns"
+import MockDate from "mockdate"
 import { useState } from "react"
 import { OneCalendar } from "./OneCalendar"
 import { DateRange } from "./types"
 
+const mockDate = new Date(2025, 6, 30)
+const mockTodayDate = new Date(2025, 5, 30)
 const meta = {
   title: "Calendar",
   component: OneCalendar,
   tags: ["autodocs"],
+  async beforeEach() {
+    MockDate.set(mockTodayDate)
+
+    // 👇 Reset the Date after each story
+    return () => {
+      MockDate.reset()
+    }
+  },
 } satisfies Meta<typeof OneCalendar>
 
 export default meta
@@ -51,7 +62,7 @@ export const MonthSingle: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date(2025, 6, 30)
+      const now = mockDate
       const start = new Date(now.getFullYear(), now.getMonth(), 1)
       return {
         from: start,
@@ -85,7 +96,7 @@ export const MonthRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date(2025, 6, 30)
+      const now = mockDate
       const start = new Date(now.getFullYear(), now.getMonth(), 1)
       const end = new Date(now.getFullYear(), now.getMonth() + 4, 1)
       return {
@@ -120,7 +131,7 @@ export const YearSingle: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date(2025, 6, 30)
+      const now = mockDate
       return {
         from: startOfYear(now),
         to: endOfYear(now),
@@ -153,7 +164,7 @@ export const YearRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date(2025, 6, 30)
+      const now = mockDate
       const start = startOfYear(now)
       const end = endOfYear(new Date(now.getFullYear() + 4, 0, 1))
       return {
@@ -188,7 +199,7 @@ export const DaySingle: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const defaultDate = new Date(2025, 6, 30)
+      const defaultDate = mockDate
       return {
         from: defaultDate,
         to: defaultDate,
@@ -227,7 +238,7 @@ export const DayRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const start = new Date(2025, 6, 30)
+      const start = mockDate
       const end = new Date(
         start.getFullYear(),
         start.getMonth(),
@@ -271,7 +282,7 @@ export const Week: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date(2025, 6, 30)
+      const now = mockDate
       const start = startOfWeek(now, { weekStartsOn: 1 })
       return {
         from: start,
@@ -309,7 +320,7 @@ export const QuarterSingle: Story = {
   },
   render: (args) => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(() => {
-      const now = new Date(2025, 6, 30)
+      const now = mockDate
       const quarterStartMonth = Math.floor(now.getMonth() / 3) * 3
       return new Date(now.getFullYear(), quarterStartMonth, 1)
     })
@@ -355,7 +366,7 @@ export const QuarterRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date(2025, 6, 30)
+      const now = mockDate
       const currentQuarter = Math.floor(now.getMonth() / 3)
       const currentQuarterStartMonth = currentQuarter * 3
       const nextQuarter = (currentQuarter + 2) % 4
@@ -398,7 +409,7 @@ export const HalfYearSingle: Story = {
   },
   render: (args) => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(() => {
-      const now = new Date(2025, 6, 30)
+      const now = mockDate
       const halfYearStartMonth = Math.floor(now.getMonth() / 6) * 6
       return new Date(now.getFullYear(), halfYearStartMonth, 1)
     })
@@ -447,7 +458,7 @@ export const HalfYearRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date(2025, 6, 30)
+      const now = mockDate
       const currentHalfYear = Math.floor(now.getMonth() / 6)
       const currentHalfYearStartMonth = currentHalfYear * 6
       const endYear = now.getFullYear() + Math.floor((currentHalfYear + 2) / 2)
@@ -541,8 +552,8 @@ export const WithMinAndMaxDay: Story = {
   args: {
     mode: "single",
     view: "day",
-    minDate: new Date(2025, 6, 30),
-    maxDate: addDays(new Date(2025, 6, 30), 30),
+    minDate: mockDate,
+    maxDate: addDays(mockDate, 30),
   },
 }
 
@@ -550,8 +561,8 @@ export const WithMinAndMaxWeek: Story = {
   args: {
     mode: "single",
     view: "week",
-    minDate: new Date(2025, 6, 30),
-    maxDate: addDays(new Date(2025, 6, 30), 30),
+    minDate: mockDate,
+    maxDate: addDays(mockDate, 30),
   },
 }
 
@@ -559,8 +570,8 @@ export const WithMinAndMaxMonth: Story = {
   args: {
     mode: "single",
     view: "month",
-    minDate: new Date(2025, 6, 30),
-    maxDate: addDays(new Date(2025, 6, 30), 30),
+    minDate: mockDate,
+    maxDate: addDays(mockDate, 30),
   },
 }
 
@@ -568,16 +579,16 @@ export const WithMinAndMaxHalfYear: Story = {
   args: {
     mode: "single",
     view: "halfyear",
-    minDate: new Date(2025, 6, 30),
-    maxDate: addMonths(new Date(2025, 6, 30), 24),
+    minDate: mockDate,
+    maxDate: addMonths(mockDate, 24),
   },
 }
 export const WithMinAndMaxQuarter: Story = {
   args: {
     mode: "single",
     view: "quarter",
-    minDate: new Date(2025, 6, 30),
-    maxDate: addMonths(new Date(2025, 6, 30), 6),
+    minDate: mockDate,
+    maxDate: addMonths(mockDate, 6),
   },
 }
 
@@ -585,7 +596,7 @@ export const WithMinAndMaxYear: Story = {
   args: {
     mode: "single",
     view: "year",
-    minDate: new Date(2025, 6, 30),
-    maxDate: addYears(new Date(2025, 6, 30), 2),
+    minDate: mockDate,
+    maxDate: addYears(mockDate, 2),
   },
 }
