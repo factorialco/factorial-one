@@ -21,9 +21,9 @@ export interface ActionCommonProps {
   prependOutside?: boolean
   appendOutside?: boolean
 
-  onClick?: () => void
-  onFocus?: () => void
-  onBlur?: () => void
+  onClick?: (event?: React.MouseEvent<HTMLElement>) => void
+  onFocus?: (event?: React.FocusEvent<HTMLElement>) => void
+  onBlur?: (event?: React.FocusEvent<HTMLElement>) => void
 
   disabled?: boolean
   loading?: boolean
