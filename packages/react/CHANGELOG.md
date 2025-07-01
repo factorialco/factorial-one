@@ -1,5 +1,47 @@
 # Changelog
 
+## [1.116.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.1...factorial-one-react-v1.116.2) (2025-06-30)
+
+
+### Bug Fixes
+
+* **button:** focus trap ([#2196](https://github.com/factorialco/factorial-one/issues/2196)) ([913abf6](https://github.com/factorialco/factorial-one/commit/913abf6e6cf7ef5820768e422afb81837cec1179))
+
+## [1.116.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.0...factorial-one-react-v1.116.1) (2025-06-30)
+
+
+### Bug Fixes
+
+* **datacollection:** click over group header in table. Card and list group header paddings ([#2192](https://github.com/factorialco/factorial-one/issues/2192)) ([05b8e5c](https://github.com/factorialco/factorial-one/commit/05b8e5ca9cbebde9cc0fdf532529d764c6fcc3ef))
+
+## [1.116.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.115.0...factorial-one-react-v1.116.0) (2025-06-30)
+
+
+### Features
+
+* **RichTextEditor:** add Transcript and details extension ([#2189](https://github.com/factorialco/factorial-one/issues/2189)) ([bd8033d](https://github.com/factorialco/factorial-one/commit/bd8033df537c79bba08ddf4d00354169068d856c))
+
+## [1.115.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.114.0...factorial-one-react-v1.115.0) (2025-06-30)
+
+
+### Features
+
+* add support for AlertTag cell type in data collection ([#2186](https://github.com/factorialco/factorial-one/issues/2186)) ([038e6cc](https://github.com/factorialco/factorial-one/commit/038e6cc88fa09cd162bc17b357ca74631148570e))
+
+## [1.114.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.6...factorial-one-react-v1.114.0) (2025-06-27)
+
+
+### Features
+
+* **RichTextEditor:** add LiveCompanion extension ([#2176](https://github.com/factorialco/factorial-one/issues/2176)) ([7242f65](https://github.com/factorialco/factorial-one/commit/7242f6563f99156d11bc0b06f0298726bd0724ac))
+
+## [1.113.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.5...factorial-one-react-v1.113.6) (2025-06-27)
+
+
+### Bug Fixes
+
+* fix more modal issues ([#2174](https://github.com/factorialco/factorial-one/issues/2174)) ([9fb908d](https://github.com/factorialco/factorial-one/commit/9fb908d8b559ef3ac888bff32e60c4167a7a881e))
+
 ## [1.113.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.113.4...factorial-one-react-v1.113.5) (2025-06-27)
 
 

@@ -408,6 +408,22 @@ export const TagType: Story = {
   },
 }
 
+export const AlertTagType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Alert Tag",
+      render: () => ({
+        type: "alertTag",
+        value: {
+          level: "critical",
+          label: "Critical",
+        },
+      }),
+    },
+  },
+}
+
 export const DotTagType: Story = {
   args: {
     item: mockItem,
