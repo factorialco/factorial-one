@@ -9,8 +9,8 @@ import {
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { Observable } from "zen-observable-ts"
+import { CustomEmptyStates } from "../hooks/useEmptyState"
 import { OneDataCollection, useDataSource } from "../index"
-import { CustomEmptyStates } from "../useEmptyState"
 import {
   createPromiseDataFetch,
   filters,
