@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.116.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.2...factorial-one-react-v1.116.3) (2025-07-01)
+
+
+### Bug Fixes
+
+* **datacollection:** empty state recover visualizacion on dataFetch observable emits next ([#2197](https://github.com/factorialco/factorial-one/issues/2197)) ([d21687b](https://github.com/factorialco/factorial-one/commit/d21687b4f413ba41a81c0f838449d8d9c80717a6))
+
 ## [1.116.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.116.1...factorial-one-react-v1.116.2) (2025-06-30)
 
 
