@@ -362,9 +362,12 @@ export const TableCollection = <
               const itemCount = group.itemCount
               return (
                 <Fragment key={`group-${group.key}`}>
-                  <TableRow key={`group-header-${group.key}`}>
+                  <TableRow key={`group-header-${group.key}`} sticky>
                     <TableCell
-                      colSpan={columns.length + (source.selectable ? 1 : 0)}
+                      sticky={{ left: 0 }}
+                      colSpan={
+                        (frozenColumnsLeft || 1) + (source.selectable ? 1 : 0)
+                      }
                     >
                       <GroupHeader
                         className="px-4"
@@ -381,6 +384,15 @@ export const TableCollection = <
                         open={openGroups[group.key]}
                         onOpenChange={(open) => setGroupOpen(group.key, open)}
                       />
+                    </TableCell>
+                    <TableCell
+                      colSpan={
+                        columns.length -
+                        (frozenColumnsLeft || 1) +
+                        (source.selectable ? 1 : 0)
+                      }
+                    >
+                      &nbsp;
                     </TableCell>
                   </TableRow>
 
