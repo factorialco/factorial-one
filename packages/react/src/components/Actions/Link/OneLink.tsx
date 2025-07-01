@@ -12,8 +12,7 @@ const privateProps = [
   "pressed",
 ] as const
 
-export interface LinkProps
-  extends Omit<ActionProps, (typeof privateProps)[number]> {
+export type LinkProps = Omit<ActionProps, (typeof privateProps)[number]> & {
   stopPropagation?: boolean
 }
 
@@ -33,11 +32,16 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     }
   }
 
+  const publicProps = privateProps.reduce((acc, key) => {
+    const { [key]: _, ...rest } = acc
+    return rest
+  }, props as ActionProps)
+
   return (
     <Action
       ref={ref}
-      {...props}
-      variant={props.variant}
+      {...publicProps}
+      variant={publicProps.variant}
       onClick={handleClick}
       append={external ? <Icon icon={ExternalLink} size="sm" /> : undefined}
     >
