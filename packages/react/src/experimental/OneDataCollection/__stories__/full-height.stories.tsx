@@ -53,6 +53,9 @@ export const WithPagination: Story = {
 
 export const WithPaginationAndGrouping: Story = {
   ...WithPagination,
+  parameters: {
+    chromatic: { disableSnapshot: false },
+  },
   render: () => {
     const paginatedMockUsers = generateMockUsers(50)
     const dataAdapter = createDataAdapter({
