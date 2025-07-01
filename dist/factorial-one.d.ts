@@ -78,15 +78,50 @@ export declare const Button: ForwardRefExoticComponent<ButtonProps & RefAttribut
 declare const Button_2: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
 declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round" | "className" | "pressed"> & DataAttributes & {
+    /**
+     * Callback fired when the button is clicked. Supports async functions for loading state.
+     */
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
+    /**
+     * The visible label for the button. Required for accessibility.
+     */
     label: string;
+    /**
+     * Indicates that an action is in progress. Shows a loading spinner and blocks interaction.
+     */
     loading?: boolean;
+    /**
+     * Adds an icon to the button, combined with the label for better clarity and recognition.
+     */
     icon?: IconType;
+    /**
+     * Adds an emoji to the button, can be used as a special case of icon-only button.
+     */
     emoji?: string;
+    /**
+     * Hides the label visually (for icon-only or emoji-only buttons), but keeps it accessible for screen readers.
+     */
     hideLabel?: boolean;
+    /**
+     * Sets the button size. 'lg' for mobile, 'md' for desktop, 'sm' for compact/secondary actions.
+     */
     size?: "sm" | "md" | "lg";
+    /**
+     * Appends a React node after the button content (for custom UI extensions).
+     */
     append?: React.ReactNode;
+    /**
+     * Appends a React node as a separate button, visually grouped with the main button.
+     */
     appendButton?: React.ReactNode;
+    /**
+     * If true, the button is inactive and does not respond to user interaction.
+     */
+    disabled?: boolean;
+    /**
+     * If true, the button is visually active or selected (pressed state).
+     */
+    pressed?: boolean;
 };
 
 export declare type ButtonProps = Omit<ButtonInternalProps, (typeof privateProps)[number]>;
@@ -137,7 +172,7 @@ declare type DefaultAction = {
     onClick: () => void;
 };
 
-declare const defaultTranslations: {
+export declare const defaultTranslations: {
     readonly approvals: {
         readonly history: "Approval history";
         readonly statuses: {
@@ -795,8 +830,17 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        moodTracker: {
-            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        transcript: {
+            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
         };
     }
 }
@@ -804,4 +848,13 @@ declare module "@tiptap/core" {
 
 declare namespace Calendar {
     var displayName: string;
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        moodTracker: {
+            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
+        };
+    }
 }

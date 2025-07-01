@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.113.2",
+  "version": "1.116.2",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -163,6 +163,9 @@
     "@tiptap/extension-bubble-menu": "^2.11.5",
     "@tiptap/extension-character-count": "^2.11.5",
     "@tiptap/extension-color": "^2.11.5",
+    "@tiptap/extension-details": "^2.23.0",
+    "@tiptap/extension-details-content": "^2.23.0",
+    "@tiptap/extension-details-summary": "^2.23.0",
     "@tiptap/extension-highlight": "^2.11.5",
     "@tiptap/extension-link": "^2.11.5",
     "@tiptap/extension-mention": "^2.11.5",

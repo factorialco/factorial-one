@@ -3097,7 +3097,7 @@ const iW = Tn({
           },
           onKeyDown: (b) => {
             var m;
-            b.preventDefault(), (b.key === "Enter" || b.key === " ") && ((m = p.current) == null || m.click());
+            (b.key === "Enter" || b.key === " ") && (b.preventDefault(), (m = p.current) == null || m.click());
           },
           children: /* @__PURE__ */ E(
             "button",
@@ -39731,10 +39731,10 @@ const N1e = D1e, j1e = $1e, Rk = k.forwardRef(({ className: e, ...t }, n) => /* 
 ));
 Rk.displayName = Pk.displayName;
 const Ik = k.forwardRef(({ className: e, children: t, withTraslateAnimation: n = !0, ...r }, i) => {
-  const [o, a] = it(null);
+  const [o, a] = it();
   return wt(() => {
     a(document.getElementById("content"));
-  }, []), /* @__PURE__ */ ye(j1e, { container: o, children: [
+  }, []), o === void 0 ? null : /* @__PURE__ */ ye(j1e, { container: o, children: [
     /* @__PURE__ */ E(Rk, {}),
     /* @__PURE__ */ E(
       Ek,
