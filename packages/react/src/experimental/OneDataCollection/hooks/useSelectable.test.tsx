@@ -1,8 +1,8 @@
 import { act, renderHook, waitFor } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 import { DataSource, PaginationInfo } from "../types"
-import { Data, GROUP_ID_SYMBOL } from "../useData"
-import { useSelectable } from "../useSelectable"
+import { Data, GROUP_ID_SYMBOL } from "./useData/useData"
+import { useSelectable } from "./useSelectable"
 
 type TestRecord = {
   id: number
@@ -35,7 +35,15 @@ describe("useSelectable", () => {
     setCurrentGrouping: () => {},
     isLoading: false,
     setIsLoading: () => {},
-  } as unknown as DataSource<TestRecord, never, never, never, never, never>
+  } as unknown as DataSource<
+    TestRecord,
+    never,
+    never,
+    never,
+    never,
+    never,
+    never
+  >
 
   describe("Flat data", () => {
     const mockData: Data<TestRecord> = {
@@ -48,7 +56,7 @@ describe("useSelectable", () => {
 
     it("should handle item selection", async () => {
       const { result } = renderHook(() =>
-        useSelectable(mockData, null, mockSource)
+        useSelectable(mockData, null, mockSource, () => {}, undefined)
       )
 
       act(() => {
@@ -110,7 +118,7 @@ describe("useSelectable", () => {
 
     it("should handle group selection", async () => {
       const { result } = renderHook(() =>
-        useSelectable(mockGroupedData, null, mockSource)
+        useSelectable(mockGroupedData, null, mockSource, () => {}, undefined)
       )
 
       act(() => {
@@ -128,7 +136,7 @@ describe("useSelectable", () => {
 
     it("should handle select all in grouped data", async () => {
       const { result } = renderHook(() =>
-        useSelectable(mockGroupedData, null, mockSource)
+        useSelectable(mockGroupedData, null, mockSource, () => {}, undefined)
       )
 
       act(() => {
@@ -170,14 +178,14 @@ describe("useSelectable", () => {
       }
 
       const paginationInfo: PaginationInfo = {
+        type: "pages",
         total: 3,
-        currentPage: 1,
         perPage: 2,
-        pagesCount: 2,
       }
 
       const { result, rerender } = renderHook(
-        ({ data }) => useSelectable(data, paginationInfo, mockSource),
+        ({ data }) =>
+          useSelectable(data, paginationInfo, mockSource, () => {}, undefined),
         { initialProps: { data: initialGroupedData } }
       )
 

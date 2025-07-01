@@ -1,13 +1,13 @@
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
+import type { PromiseState } from "@/lib/promise-to-observable"
 import { act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
-import type { PromiseState } from "../../../lib/promise-to-observable"
-import type { FiltersState } from "../Filters/types"
-import { GroupingDefinition } from "../grouping"
-import { ItemActionsDefinition } from "../item-actions"
-import { SortingsDefinition } from "../sortings"
+import type { FiltersState } from "../../Filters/types"
+import { GroupingDefinition } from "../../grouping"
+import { ItemActionsDefinition } from "../../item-actions"
+import { SortingsDefinition } from "../../sortings"
 import type {
   BaseDataAdapter,
   BaseFetchOptions,
@@ -16,8 +16,8 @@ import type {
   PaginatedDataAdapter,
   PaginatedResponse,
   RecordType,
-} from "../types"
-import { GROUP_ID_SYMBOL, useData, WithGroupId } from "./useData/useData"
+} from "../../types"
+import { GROUP_ID_SYMBOL, useData, WithGroupId } from "./useData"
 interface TestRecord extends RecordType {
   id: number
   name: string
