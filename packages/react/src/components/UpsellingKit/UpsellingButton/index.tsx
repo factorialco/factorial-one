@@ -51,6 +51,10 @@ export interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> {
    * The label to be displayed in the close button of the confirmation dialog
    */
   closeLabel: string
+  /**
+   * Callback to notify when the modal state changes (open/closed)
+   */
+  onModalStateChange?: (isOpen: boolean) => void
 }
 
 type ResponseStatus = "success" | "error" | null
@@ -67,6 +71,7 @@ export function UpsellingButton({
   nextSteps,
   closeLabel,
   variant = "promote",
+  onModalStateChange,
   ...props
 }: UpsellingButtonProps) {
   const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
@@ -79,13 +84,20 @@ export function UpsellingButton({
         await onRequest()
         if (showConfirmation) {
           setResponseStatus("success")
+          onModalStateChange?.(true)
         }
       } catch {
         setResponseStatus("error")
+        onModalStateChange?.(true)
       } finally {
         setInternalLoading(false)
       }
     }
+  }
+
+  const handleModalClose = () => {
+    setResponseStatus(null)
+    onModalStateChange?.(false)
   }
 
   const isLoading = externalLoading || internalLoading
@@ -104,7 +116,7 @@ export function UpsellingButton({
       {showConfirmation && responseStatus && (
         <UpsellRequestResponseDialog
           open={true}
-          onClose={() => setResponseStatus(null)}
+          onClose={handleModalClose}
           success={responseStatus === "success"}
           errorMessage={errorMessage}
           successMessage={successMessage}
