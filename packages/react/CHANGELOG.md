@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.117.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.117.1...factorial-one-react-v1.117.2) (2025-07-02)
+
+
+### Bug Fixes
+
+* decouple upsell dialog from button ([#2209](https://github.com/factorialco/factorial-one/issues/2209)) ([4e7858b](https://github.com/factorialco/factorial-one/commit/4e7858b45f4ff346d1be538734418a2025547149))
+
 ## [1.117.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.117.0...factorial-one-react-v1.117.1) (2025-07-01)
 
 
