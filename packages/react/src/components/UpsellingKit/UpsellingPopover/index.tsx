@@ -127,11 +127,11 @@ export function UpsellingPopover({
             width={width}
             trackVisibility={trackVisibility}
             actions={modifiedActions}
+            showConfirmation={false}
           />
         </PopoverContent>
       </Popover>
 
-      {/* Render modal outside of popover */}
       {currentAction?.type === "upsell" &&
         currentAction.showConfirmation &&
         responseStatus && (

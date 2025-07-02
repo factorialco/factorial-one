@@ -44,6 +44,7 @@ type ProductWidgetProps = {
   width?: string
   trackVisibility?: (visible: boolean) => void
   actions?: Action[]
+  showConfirmation?: boolean
 }
 
 export function ProductWidget({
@@ -55,6 +56,7 @@ export function ProductWidget({
   width,
   trackVisibility,
   actions,
+  showConfirmation = true,
 }: ProductWidgetProps) {
   const [isDismissed, setIsDismissed] = useState(false)
 
@@ -131,7 +133,9 @@ export function ProductWidget({
                     loadingState={action.loadingState}
                     nextSteps={action.nextSteps}
                     closeLabel={action.closeLabel}
-                    showConfirmation={false}
+                    showConfirmation={
+                      showConfirmation && action.showConfirmation
+                    }
                     variant={action.variant}
                   />
                 ) : (
