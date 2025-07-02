@@ -13,6 +13,15 @@ import {
   Target,
   Upload,
 } from "@/icons/app"
+import {
+  DEPARTMENTS_MOCK,
+  DOT_TAG_COLORS_MOCK,
+  getMockValue,
+  PERFORMANCE_SCORE_MOCK,
+  PROJECTS_MOCK,
+  START_DATE_MOCK,
+  YEARS_OF_EXPERIENCIE_MOCK,
+} from "@/mocks"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { GroupingDefinition } from "../grouping"
 import { OneDataCollection, useDataSource } from "../index"
@@ -22,8 +31,6 @@ import { useData } from "../useData"
 import {
   createDataAdapter,
   createPromiseDataFetch,
-  DEPARTMENTS_MOCK,
-  DOT_TAG_COLORS_MOCK,
   ExampleComponent,
   filterPresets,
   filters,
@@ -32,11 +39,7 @@ import {
   getMockVisualizations,
   MockUser,
   mockUsers,
-  PERFORMANCE_SCORE_MOCK,
-  PROJECTS_MOCK,
   sortings,
-  START_DATE_MOCK,
-  YEARS_OF_EXPERIENCIE_MOCK,
 } from "./mockData"
 
 const meta = {
@@ -105,15 +108,12 @@ export const BasicTableView: Story = {
         enabled: true,
       },
       dataAdapter: {
-        fetchData: ({ filters, sortings }) => {
-          console.log("fetchData", filters, sortings)
-
+        fetchData: ({ filters, sortings, search }) => {
           filters.department?.map((department) => {
             console.log("department", department)
           })
-          return createPromiseDataFetch()({ filters, sortings })
+          return createPromiseDataFetch()({ filters, sortings, search })
         },
-        //createPromiseDataFetch(),
       },
       itemActions: (item) => [
         {
@@ -488,10 +488,7 @@ export const RendererTypes: Story = {
                     type: "dotTag",
                     value: {
                       label: item.email,
-                      color:
-                        DOT_TAG_COLORS_MOCK[
-                          item.index % DOT_TAG_COLORS_MOCK.length
-                        ],
+                      color: getMockValue(DOT_TAG_COLORS_MOCK, item.index),
                     },
                   }),
                   sorting: "email",
@@ -1232,7 +1229,7 @@ export const WithSyncSearch: Story = {
         name: "John Doe",
         email: "john@example.com",
         role: "Senior Engineer",
-        department: DEPARTMENTS_MOCK[0],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 0),
         status: "active",
         isStarred: true,
       },
@@ -1241,7 +1238,7 @@ export const WithSyncSearch: Story = {
         name: "Jane Smith",
         email: "jane@example.com",
         role: "Product Manager",
-        department: DEPARTMENTS_MOCK[1],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 1),
         status: "active",
         isStarred: false,
       },
@@ -1250,7 +1247,7 @@ export const WithSyncSearch: Story = {
         name: "Alice Johnson",
         email: "alice@example.com",
         role: "UX Designer",
-        department: DEPARTMENTS_MOCK[2],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 2),
         status: "active",
         isStarred: false,
       },
@@ -1259,7 +1256,7 @@ export const WithSyncSearch: Story = {
         name: "Bob Brown",
         email: "bob@example.com",
         role: "Developer",
-        department: DEPARTMENTS_MOCK[0],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 0),
         status: "inactive",
         isStarred: true,
       },
@@ -1268,7 +1265,7 @@ export const WithSyncSearch: Story = {
         name: "Emma Wilson",
         email: "emma@example.com",
         role: "Marketing Lead",
-        department: DEPARTMENTS_MOCK[3],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 3),
         status: "active",
         isStarred: false,
       },
@@ -1566,13 +1563,16 @@ export const TableColumnProperties: Story = {
             : index % 3 === 1
               ? "Designer"
               : "Manager",
-        department: DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length],
+        department: getMockValue(
+          DEPARTMENTS_MOCK as unknown as string[],
+          index
+        ),
         status: index % 4 === 0 ? "inactive" : "active",
         isStarred: index % 5 === 0,
         salary: 50000 + index * 1000,
         location:
           index % 3 === 0 ? "Remote" : index % 3 === 1 ? "Office" : "Hybrid",
-        startDate: START_DATE_MOCK[index % START_DATE_MOCK.length]
+        startDate: getMockValue(START_DATE_MOCK, index)
           .toISOString()
           .split("T")[0],
         performance:
@@ -1585,8 +1585,7 @@ export const TableColumnProperties: Story = {
                 : index % 5 === 3
                   ? "Below Average"
                   : "Needs Improvement",
-        yearsExperience:
-          YEARS_OF_EXPERIENCIE_MOCK[index % YEARS_OF_EXPERIENCIE_MOCK.length],
+        yearsExperience: getMockValue(YEARS_OF_EXPERIENCIE_MOCK, index),
         team: ["Alpha", "Beta", "Gamma", "Delta", "Epsilon"][index % 5],
         certifications:
           index % 3 === 0
@@ -1608,9 +1607,8 @@ export const TableColumnProperties: Story = {
             : index % 3 === 1
               ? "English, French, German"
               : "English, Mandarin",
-        projects: PROJECTS_MOCK[index % PROJECTS_MOCK.length],
-        performanceScore:
-          PERFORMANCE_SCORE_MOCK[index % PERFORMANCE_SCORE_MOCK.length],
+        projects: getMockValue(PROJECTS_MOCK, index),
+        performanceScore: getMockValue(PERFORMANCE_SCORE_MOCK, index),
         lastReview: new Date(2023, index % 12, 1 + (index % 28))
           .toISOString()
           .split("T")[0],

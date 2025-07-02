@@ -4,7 +4,7 @@ interface SelectTopActionsProps {
   showSearchBox?: boolean
   searchBoxPlaceholder?: string
   onSearchChange: (value: string) => void
-  searchValue: string
+  searchValue: string | undefined
   searchInputRef: React.RefObject<HTMLInputElement>
 }
 

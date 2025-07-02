@@ -126,9 +126,17 @@ function useDataFetchState<Record>() {
  * Custom hook for handling pagination state
  */
 function usePaginationState() {
-  const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
+  const [paginationInfo, setPaginationInfo2] = useState<PaginationInfo | null>(
     null
   )
+  const setPaginationInfo = useCallback(
+    (paginationInfo: PaginationInfo) => {
+      console.log("setPaginationInfo", paginationInfo)
+      setPaginationInfo2(paginationInfo)
+    },
+    [setPaginationInfo2]
+  )
+
   return { paginationInfo, setPaginationInfo }
 }
 
@@ -229,6 +237,7 @@ export function useData<
     currentGrouping,
     grouping,
   } = source
+
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
@@ -241,6 +250,13 @@ export function useData<
   } = useDataFetchState<R>()
 
   const { paginationInfo, setPaginationInfo } = usePaginationState()
+
+  const [test, setTest] = useState(0)
+
+  useEffect(() => {
+    setTest(test + 1)
+    console.log("test", test)
+  }, [paginationInfo])
 
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
@@ -307,6 +323,7 @@ export function useData<
                   : rawData.length + result.records.length < result.total,
             }),
           })
+
           setTotalItems(result.total)
         }
       } else {
@@ -439,6 +456,7 @@ export function useData<
     navigationFilters: NavigationFiltersState<NavigationFilters>
     appendMode?: boolean
     cursor?: string | null
+    search?: string | undefined
   }
 
   const fetchDataAndUpdate = useCallback(
@@ -446,6 +464,7 @@ export function useData<
       filters,
       currentPage = 1,
       navigationFilters,
+      search,
       appendMode = false,
       cursor = null,
     }: FetchDataParams<Filters, NavigationFilters>) => {
@@ -477,7 +496,7 @@ export function useData<
 
         const baseFetchOptions: BaseFetchOptions<Filters, NavigationFilters> = {
           filters,
-          search: searchValue,
+          search,
           sortings,
           navigationFilters,
         }
@@ -495,23 +514,22 @@ export function useData<
               : defaultPerPage
 
           // Use appropriate pagination type based on dataAdapter configuration
-          if (dataAdapter.paginationType === "pages") {
-            return dataAdapter.fetchData({
-              ...baseFetchOptions,
-              pagination: { currentPage, perPage: perPageValue },
-            })
-          } else if (dataAdapter.paginationType === "infinite-scroll") {
-            // For infinite scroll, use the cursor parameter directly
-            return dataAdapter.fetchData({
-              ...baseFetchOptions,
-              pagination: { cursor, perPage: perPageValue },
-            })
-          } else {
-            return dataAdapter.fetchData({
-              ...baseFetchOptions,
-              pagination: {},
-            }) as PromiseOrObservable<ResultType>
-          }
+          return dataAdapter.fetchData({
+            ...baseFetchOptions,
+            pagination: {
+              ...(dataAdapter.paginationType === "pages"
+                ? {
+                    currentPage,
+                    perPage: perPageValue,
+                  }
+                : dataAdapter.paginationType === "infinite-scroll"
+                  ? {
+                      cursor,
+                      perPage: perPageValue,
+                    }
+                  : {}),
+            },
+          }) as PromiseOrObservable<ResultType>
         }
 
         const result = fetcher()
@@ -552,7 +570,6 @@ export function useData<
       dataAdapter,
       currentSortings,
       currentGrouping,
-      searchValue,
       handleFetchSuccess,
       setIsLoading,
     ]
@@ -571,10 +588,12 @@ export function useData<
       fetchDataAndUpdate({
         filters: mergedFilters,
         currentPage: page,
+        search: searchValue,
         navigationFilters: currentNavigationFilters,
       })
     },
     [
+      searchValue,
       fetchDataAndUpdate,
       mergedFilters,
       setIsLoading,
@@ -608,6 +627,7 @@ export function useData<
         navigationFilters: currentNavigationFilters,
         appendMode: true,
         cursor: currentCursor,
+        search: searchValue,
       })
     }
   }, [
@@ -616,6 +636,7 @@ export function useData<
     mergedFilters,
     paginationInfo,
     currentNavigationFilters,
+    searchValue,
     setIsLoading,
     setIsLoadingMore,
   ])
@@ -630,6 +651,7 @@ export function useData<
         filters: mergedFilters,
         currentPage: initialPosition,
         navigationFilters: currentNavigationFilters,
+        search: searchValue,
         cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
       })
     }
@@ -638,8 +660,8 @@ export function useData<
     mergedFilters,
     setIsLoading,
     currentNavigationFilters,
-
     dataAdapter.paginationType,
+    searchValue,
   ])
 
   useEffect(() => {

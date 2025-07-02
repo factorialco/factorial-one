@@ -45,9 +45,14 @@ type SelectContentWithChildrenProps = SelectItemProps & {
 }
 
 // Union the types to create a discriminated union to avoid use children and items at the same time
-type SelectContentProps =
+type SelectContentProps = (
   | SelectContentWithItemsProps
   | SelectContentWithChildrenProps
+) & {
+  onScrollBottom?: () => void
+  onScrollTop?: () => void
+  isLoadingMore?: boolean
+}
 
 const SelectContent = forwardRef<
   ElementRef<typeof SelectPrimitive.Content>,
@@ -60,6 +65,9 @@ const SelectContent = forwardRef<
       children,
       position = "popper",
       emptyMessage,
+      onScrollBottom,
+      onScrollTop,
+      isLoadingMore,
       ...props
     },
     ref
@@ -186,6 +194,8 @@ const SelectContent = forwardRef<
               "flex flex-col overflow-y-auto",
               asList ? "max-h-full" : "max-h-[300px]"
             )}
+            onScrollBottom={onScrollBottom}
+            onScrollTop={onScrollTop}
           >
             {asList ? (
               viewportContent

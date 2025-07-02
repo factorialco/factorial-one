@@ -1,5 +1,17 @@
 import { Icon } from "@/components/Utilities/Icon"
+import {
+  DataSource,
+  FiltersDefinition,
+  GroupingDefinition,
+  ItemActionsDefinition,
+  NavigationFiltersDefinition,
+  RecordType,
+  SortingsDefinition,
+  SummariesDefinition,
+  useDataSource,
+} from "@/experimental/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { useData } from "@/experimental/OneDataCollection/useData"
 import { ChevronDown } from "@/icons/app"
 import {
   SelectContent,
@@ -32,21 +44,36 @@ export type SelectProps<T, R = any> = {
   onChange: (value: T, item?: R) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
-  options: SelectItemProps<T, R>[]
   children?: React.ReactNode
   disabled?: boolean
   open?: boolean
   showSearchBox?: boolean
   searchBoxPlaceholder?: string
   onSearchChange?: (value: string) => void
-  externalSearch?: boolean
   searchValue?: string
   onOpenChange?: (open: boolean) => void
   searchEmptyMessage?: string
   className?: string
   selectContentClassName?: string
   actions?: Action[]
-}
+} & (
+  | {
+      source: DataSource<
+        RecordType,
+        FiltersDefinition,
+        SortingsDefinition,
+        SummariesDefinition,
+        ItemActionsDefinition<RecordType>,
+        NavigationFiltersDefinition,
+        GroupingDefinition<RecordType>
+      >
+      options: (item: R) => SelectItemProps<T, R>
+    }
+  | {
+      source?: never
+      options: SelectItemProps<T, R>[]
+    }
+)
 
 const SelectItem = <T,>({ item }: { item: SelectItemObject<T> }) => {
   return (
@@ -108,45 +135,120 @@ const SelectComponent = forwardRef(function Select<T, R>(
     showSearchBox,
     onSearchChange,
     searchBoxPlaceholder,
-    externalSearch,
     searchEmptyMessage,
     className,
     selectContentClassName,
     actions,
+    source,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
-  const selectedOption = options.find(
-    (option): option is Exclude<typeof option, { type: "separator" }> =>
-      option.type !== "separator" && option.value === value
-  )
-
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const [searchValue, setSearchValue] = useState(
-    (props as { searchValue?: string }).searchValue || ""
-  )
   const [openLocal, setOpenLocal] = useState(open)
 
-  const filteredOptions = useMemo(() => {
-    if (externalSearch) {
-      return options
-    }
+  // const isLocalSourceOptions = (
+  //   options: SelectItemProps<T, R>[] | ((item: R) => SelectItemProps<T, R>)
+  // ): options is SelectItemProps<T, R>[] => {
+  //   return Array.isArray(options)
+  // }
 
-    const res = options.filter(
-      (option) =>
-        option.type === "separator" ||
-        !searchValue ||
-        option.label.toLowerCase().includes(searchValue.toLowerCase())
+  // const localSource = useMemo(() => {
+  //   const localSource = !isLocalSourceOptions(options)
+  //     ? {
+  //         ...source,
+  //         currentSearch: props.searchValue,
+  //         dataAdapter: {
+  //           ...source?.dataAdapter,
+  //           paginationType: "infinite-scroll",
+  //           perPage: 10,
+  //         },
+  //         search: showSearchBox
+  //           ? {
+  //               enabled: showSearchBox,
+  //               sync: false,
+  //             }
+  //           : undefined,
+  //       }
+  //     : /*
+  //        * If the options are local, we need to create a local source from the options
+  //        * to manage them as a "real" source
+  //        */
+  //       // TODO Convert this to a real useDataSource to populate the state management
+  //       {
+  //         currentFilters: {},
+  //         currentNavigationFilters: {},
+  //         currentGrouping: undefined,
+  //         setCurrentFilters: () => {},
+  //         setCurrentSortings: () => {},
+  //         setCurrentNavigationFilters: () => {},
+  //         isLoading,
+  //         currentSearch: props.searchValue,
+  //         setIsLoading,
+  //         dataAdapter: {
+  //           fetchData: ({ search }: { search?: string }) => {
+  //             return Promise.resolve({
+  //               records: options.filter(
+  //                 (option) =>
+  //                   option.type === "separator" ||
+  //                   !search ||
+  //                   option.label.toLowerCase().includes(search.toLowerCase())
+  //               ),
+  //             })
+  //           },
+  //         },
+  //       }
+
+  //   return localSource
+  // }, [])
+
+  const localSource = useDataSource({
+    ...source,
+    currentSearch: props.searchValue,
+    dataAdapter: {
+      ...source?.dataAdapter,
+      paginationType: "infinite-scroll",
+      perPage: 10,
+    },
+    search: showSearchBox
+      ? {
+          enabled: showSearchBox,
+          sync: false,
+        }
+      : undefined,
+  })
+
+  const optionMapper = useCallback(
+    (item: R) => {
+      if (typeof options === "function") {
+        return options(item)
+      }
+      return item
+    },
+    [options]
+  )
+
+  const { data, isInitialLoading, loadMore, isLoadingMore } =
+    useData(localSource)
+
+  const { currentSearch, setCurrentSearch } = localSource
+
+  const [selectedOption, setSelectedOption] = useState<
+    SelectItemObject<T, R> | undefined
+  >(undefined)
+
+  useEffect(() => {
+    const foundOption = data.records.find(
+      (option): option is Exclude<typeof option, { type: "separator" }> => {
+        const mappedOption = optionMapper(option as R)
+        return mappedOption.type !== "separator" && mappedOption.value === value
+      }
     )
-
-    setTimeout(() => {
-      searchInputRef.current?.focus()
-    }, 0)
-
-    return res
-  }, [options, externalSearch, searchValue])
+    if (foundOption) {
+      setSelectedOption(foundOption)
+    }
+  }, [data.records, value, optionMapper])
 
   useEffect(() => {
     if (open) {
@@ -156,18 +258,23 @@ const SelectComponent = forwardRef(function Select<T, R>(
 
   const onSearchChangeLocal = useCallback(
     (value: string) => {
-      setSearchValue(value)
+      setCurrentSearch(value)
       onSearchChange?.(value)
     },
-    [setSearchValue, onSearchChange]
+    [setCurrentSearch, onSearchChange]
   )
 
   const onValueChange = (changedValue: string) => {
     // Resets the search value when the option is selected
-    setSearchValue("")
-    const foundOption = options.find(
-      (option): option is SelectItemObject<T, R> =>
-        option.type !== "separator" && String(option.value) === changedValue
+    setCurrentSearch(undefined)
+    const foundOption = data.records.find(
+      (option): option is SelectItemObject<T, R> => {
+        const mappedOption = optionMapper(option as R)
+        return (
+          mappedOption.type !== "separator" &&
+          String(mappedOption.value) === changedValue
+        )
+      }
     )
     if (foundOption) {
       onChange?.(foundOption.value, foundOption.item)
@@ -182,75 +289,90 @@ const SelectComponent = forwardRef(function Select<T, R>(
     }, 0)
   }
 
-  const items: VirtualItem[] = useMemo(
-    () =>
-      filteredOptions.map((option, index) =>
-        option.type === "separator"
-          ? {
-              height: 1,
-              item: <SelectSeparator key={`separator-${index}`} />,
-            }
-          : {
-              height: option.description ? 64 : 32,
-              item: <SelectItem key={String(option.value)} item={option} />,
-              value: String(option.value),
-            }
-      ),
-    [filteredOptions]
-  )
+  const items: VirtualItem[] = useMemo(() => {
+    return data.records.map((option, index) => {
+      const mappedOption = optionMapper(option as R)
+      return mappedOption.type === "separator"
+        ? {
+            height: 1,
+            item: <SelectSeparator key={`separator-${index}`} />,
+          }
+        : {
+            height: option.description ? 64 : 32,
+            item: (
+              <SelectItem
+                key={String(mappedOption.value)}
+                item={mappedOption}
+              />
+            ),
+            value: String(mappedOption.value),
+          }
+    })
+  }, [data.records, optionMapper])
 
   return (
-    <SelectPrimitive
-      onValueChange={onValueChange}
-      value={value !== undefined && value !== null ? String(value) : undefined}
-      disabled={disabled}
-      open={open}
-      onOpenChange={onOpenChangeLocal}
-      {...props}
-    >
-      <SelectTrigger ref={ref} asChild>
-        {children || (
-          <button
-            aria-label="Select unfoldable"
-            className={cn(
-              defaultTrigger,
-              className,
-              focusRing("focus-visible:border-f1-border-hover")
-            )}
-          >
-            <SelectValuePrimitive placeholder={placeholder} asChild>
-              {selectedOption && <SelectValue item={selectedOption} />}
-            </SelectValuePrimitive>
-            <div className="flex h-6 w-6 items-center justify-center">
-              <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
-                <Icon
-                  icon={ChevronDown}
-                  size="sm"
-                  className="rounded-2xs bg-f1-background-secondary p-0.5"
-                />
+    <>
+      <SelectPrimitive
+        onValueChange={onValueChange}
+        value={
+          value !== undefined && value !== null ? String(value) : undefined
+        }
+        disabled={disabled}
+        open={open}
+        onOpenChange={onOpenChangeLocal}
+        {...props}
+      >
+        <SelectTrigger ref={ref} asChild>
+          {children || (
+            <button
+              aria-label="Select unfoldable"
+              className={cn(
+                defaultTrigger,
+                className,
+                focusRing("focus-visible:border-f1-border-hover")
+              )}
+            >
+              <SelectValuePrimitive placeholder={placeholder} asChild>
+                {isInitialLoading
+                  ? "[TODO] Loading...."
+                  : selectedOption && <SelectValue item={selectedOption} />}
+              </SelectValuePrimitive>
+              <div className="flex h-6 w-6 items-center justify-center">
+                <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
+                  <Icon
+                    icon={ChevronDown}
+                    size="sm"
+                    className="rounded-2xs bg-f1-background-secondary p-0.5"
+                  />
+                </div>
               </div>
-            </div>
-          </button>
+            </button>
+          )}
+        </SelectTrigger>
+        currentSearch: {currentSearch}
+        {openLocal && (
+          <SelectContent
+            items={items}
+            className={selectContentClassName}
+            emptyMessage={searchEmptyMessage}
+            bottom={<SelectBottomActions actions={actions} />}
+            top={
+              <SelectTopActions
+                searchInputRef={searchInputRef}
+                searchValue={currentSearch}
+                onSearchChange={onSearchChangeLocal}
+                searchBoxPlaceholder={searchBoxPlaceholder}
+                showSearchBox={showSearchBox}
+              />
+            }
+            onScrollBottom={() => {
+              loadMore()
+            }}
+            isLoadingMore={isLoadingMore}
+          ></SelectContent>
         )}
-      </SelectTrigger>
-      {openLocal && (
-        <SelectContent
-          items={items}
-          className={selectContentClassName}
-          emptyMessage={searchEmptyMessage}
-          bottom={<SelectBottomActions actions={actions} />}
-          top={
-            <SelectTopActions
-              searchInputRef={searchInputRef}
-              searchValue={searchValue}
-              onSearchChange={onSearchChangeLocal}
-              searchBoxPlaceholder={searchBoxPlaceholder}
-              showSearchBox={showSearchBox}
-            />
-          }
-        ></SelectContent>
-      )}
-    </SelectPrimitive>
+      </SelectPrimitive>
+    </>
   )
 })
 
