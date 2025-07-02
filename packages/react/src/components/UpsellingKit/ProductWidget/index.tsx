@@ -131,7 +131,7 @@ export function ProductWidget({
                     loadingState={action.loadingState}
                     nextSteps={action.nextSteps}
                     closeLabel={action.closeLabel}
-                    showConfirmation={action.showConfirmation}
+                    showConfirmation={false}
                     variant={action.variant}
                   />
                 ) : (
