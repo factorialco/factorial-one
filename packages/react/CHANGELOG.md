@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.118.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.117.2...factorial-one-react-v1.118.0) (2025-07-03)
+
+
+### Features
+
+* add skeleton while product banner data is loading ([38fd151](https://github.com/factorialco/factorial-one/commit/38fd15153f179a0566338d58d8ca6cef017053da))
+
 ## [1.117.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.117.1...factorial-one-react-v1.117.2) (2025-07-02)
 
 
