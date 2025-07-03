@@ -135,7 +135,7 @@ const BasicTextEditorComponent = forwardRef<
 
   const tippyOptions = useMemo(
     () => ({
-      offset: [0, 4] as [number, number],
+      offset: [0, 2] as [number, number],
     }),
     []
   )
