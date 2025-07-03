@@ -1,4 +1,5 @@
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { RichTextDisplay } from "@/experimental/RichText/RichTextDisplay"
 import { Button } from "@/factorial-one"
 import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { Node } from "@tiptap/core"
@@ -200,7 +201,7 @@ const ChatView: React.FC<NodeViewProps> = ({
                         <div
                           className={`max-w-[80%] rounded-md px-3 py-2 ${bubbleClasses}`}
                         >
-                          <p className="whitespace-pre-line">{msg.message}</p>
+                          <RichTextDisplay content={msg.message} />
                           {msg.dateTime && (
                             <span className="text-f1-text-tertiary mt-1 block text-right text-xs">
                               {formatDateTime(msg.dateTime)}
