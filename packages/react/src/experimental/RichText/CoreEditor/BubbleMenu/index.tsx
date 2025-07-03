@@ -37,8 +37,10 @@ export const EditorBubbleMenu = ({
       editor={editor}
       shouldShow={({ state }) => {
         const { selection } = state
-        // Hide when a node (like AIBlock, Transcript, etc.) is selected
-        return !(selection instanceof NodeSelection)
+        if (selection instanceof NodeSelection || selection.empty) {
+          return false
+        }
+        return true
       }}
     >
       {!isToolbarOpen && (
