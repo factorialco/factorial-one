@@ -95266,7 +95266,7 @@ const _qe = (t) => {
   }));
   const b = ve(
     () => ({
-      offset: [0, 5]
+      offset: [0, 4]
     }),
     []
   ), M = Le(
@@ -95296,7 +95296,7 @@ const _qe = (t) => {
           /* @__PURE__ */ d(At, { label: (p == null ? void 0 : p.addBelowTitle) || "", children: /* @__PURE__ */ d(
             "div",
             {
-              className: "flex h-5 w-5 cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover",
+              className: "flex h-5 w-[18px] cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover",
               onClick: _,
               children: /* @__PURE__ */ d(
                 Si,
@@ -95327,7 +95327,7 @@ const _qe = (t) => {
         ] })
       }
     ),
-    /* @__PURE__ */ d(hb, { editor: x, className: "[&>div]:w-full [&>div]:px-10" }),
+    /* @__PURE__ */ d(hb, { editor: x, className: "[&>div]:w-full [&>div]:pl-10" }),
     /* @__PURE__ */ d(
       N7,
       {
