@@ -1,10 +1,14 @@
 import { Icon } from "@/components/Utilities/Icon"
 import {
+  BaseFetchOptions,
+  BaseResponse,
   DataSource,
   FiltersDefinition,
   GroupingDefinition,
   ItemActionsDefinition,
   NavigationFiltersDefinition,
+  PaginatedDataAdapter,
+  PromiseOrObservable,
   RecordType,
   SortingsDefinition,
   SummariesDefinition,
@@ -13,6 +17,7 @@ import {
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { useData } from "@/experimental/OneDataCollection/useData"
 import { ChevronDown } from "@/icons/app"
+import { DeepOmit } from "@/lib/utility-types"
 import {
   SelectContent,
   SelectItem as SelectItemPrimitive,
@@ -57,14 +62,17 @@ export type SelectProps<T, R = unknown> = {
   actions?: Action[]
 } & (
   | {
-      source: DataSource<
-        R extends RecordType ? R : RecordType,
-        FiltersDefinition,
-        SortingsDefinition,
-        SummariesDefinition,
-        ItemActionsDefinition<RecordType>,
-        NavigationFiltersDefinition,
-        GroupingDefinition<RecordType>
+      source: DeepOmit<
+        DataSource<
+          R,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<RecordType>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<RecordType>
+        >,
+        "dataAdapter.paginationType"
       >
       mapOptions: (item: R) => SelectItemProps<T, R>
       options?: never
@@ -150,48 +158,53 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
 
   const [openLocal, setOpenLocal] = useState(open)
 
-  const isLocalSourceOptions = useCallback(
-    (
-      options: SelectItemProps<T, R>[] | ((item: R) => SelectItemProps<T, R>)
-    ): options is SelectItemProps<T, R>[] => {
-      return Array.isArray(options)
-    },
-    []
-  )
-
-  const localSource = useDataSource({
-    ...source,
-    currentSearch: props.searchValue,
-    dataAdapter: isLocalSourceOptions(options)
-      ? {
-          fetchData: ({ search }: { search?: string }) => {
+  const dataAdapter = useMemo(() => {
+    return source
+      ? ({
+          ...source.dataAdapter,
+          // Forces the infinite-scroll pagination type
+          paginationType: "infinite-scroll" as const,
+          perPage: 10,
+        } as PaginatedDataAdapter<
+          R extends RecordType ? R : RecordType,
+          FiltersDefinition,
+          NavigationFiltersDefinition
+        >)
+      : {
+          fetchData: ({
+            search,
+          }: BaseFetchOptions<
+            FiltersDefinition,
+            NavigationFiltersDefinition
+          >): PromiseOrObservable<
+            BaseResponse<R extends RecordType ? R : RecordType>
+          > => {
             return Promise.resolve({
               records: options.filter(
                 (option) =>
                   option.type === "separator" ||
                   !search ||
                   option.label.toLowerCase().includes(search.toLowerCase())
-              ),
+              ) as unknown as (R extends RecordType ? R : RecordType)[],
             })
           },
         }
-      : {
-          ...source.dataAdapter,
-          // Forces the infinite-scroll pagination type
-          paginationType: "infinite-scroll",
-          perPage: 10,
-        },
+  }, [options, source])
+
+  const localSource = useDataSource({
+    ...source,
+    dataAdapter,
     search: showSearchBox
       ? {
           enabled: showSearchBox,
-          sync: false,
+          sync: !source,
         }
       : undefined,
   })
 
   const optionMapper = useCallback(
     (item: R): SelectItemProps<T, R> => {
-      if (!isLocalSourceOptions(options)) {
+      if (source) {
         if (!mapOptions) {
           throw new Error("mapOptions is required when using a source")
         }
@@ -200,7 +213,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
       // At this point, we are sure that options is an array of SelectItemProps<T, R>
       return item as unknown as SelectItemProps<T, R>
     },
-    [options, mapOptions, isLocalSourceOptions]
+    [mapOptions, source]
   )
 
   const { data, isInitialLoading, loadMore, isLoadingMore } =

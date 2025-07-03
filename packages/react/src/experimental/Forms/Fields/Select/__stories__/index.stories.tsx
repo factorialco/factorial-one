@@ -24,7 +24,7 @@ const SelectWithHooks = (props: SelectProps<string>) => {
   const [localValue, setLocalValue] = useState(props.value)
   const [, setSearchValue] = useState("")
   // Sets a click handler to change the label's value
-  const handleOnChange = (value: string, item?: Record<string, string>) => {
+  const handleOnChange = (value: string, item?: unknown) => {
     setLocalValue(value)
     console.log("selected value:", value, "- selected item:", item)
   }
@@ -245,13 +245,38 @@ export const WithDataSource: Story = {
       },
     })
 
-    return <SelectWithHooks source={source} {...args} />
+    const { options: _, ...rest } = args
+
+    const [localValue, setLocalValue] = useState(args.value)
+    const [, setSearchValue] = useState("")
+    // Sets a click handler to change the label's value
+    const handleOnChange = (value: string, item?: unknown) => {
+      setLocalValue(value)
+      console.log("selected value:", value, "- selected item:", item)
+    }
+
+    const handleOnSearchChange = (value: string) => {
+      setSearchValue(value)
+      console.log("searchValue", value)
+    }
+
+    return (
+      <div className="w-48">
+        <Select<string, (typeof mockItems)[number]>
+          {...rest}
+          source={source}
+          value={localValue}
+          onChange={handleOnChange}
+          onSearchChange={handleOnSearchChange}
+        />
+      </div>
+    )
   },
   args: {
     placeholder: "Select a value",
     showSearchBox: true,
     onChange: fn(),
-    options: (item: (typeof mockItems)[number]) => ({
+    mapOptions: (item: (typeof mockItems)[number]) => ({
       value: item.value,
       label: item.label,
       icon: item.icon,
