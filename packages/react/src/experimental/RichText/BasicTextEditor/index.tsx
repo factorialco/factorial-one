@@ -135,7 +135,7 @@ const BasicTextEditorComponent = forwardRef<
 
   const tippyOptions = useMemo(
     () => ({
-      offset: [0, 5] as [number, number],
+      offset: [0, 4] as [number, number],
     }),
     []
   )
@@ -186,7 +186,7 @@ const BasicTextEditorComponent = forwardRef<
         <div className="flex flex-row">
           <Tooltip label={dragHandleLabels?.addBelowTitle || ""}>
             <div
-              className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover"
+              className="flex h-5 w-[18px] cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover"
               onClick={handlePlusClick}
             >
               <Icon
@@ -213,7 +213,7 @@ const BasicTextEditorComponent = forwardRef<
         </div>
       </DragHandle>
 
-      <EditorContent editor={editor} className="[&>div]:w-full [&>div]:px-10" />
+      <EditorContent editor={editor} className="[&>div]:w-full [&>div]:pl-10" />
 
       <EditorBubbleMenu
         editor={editor}
