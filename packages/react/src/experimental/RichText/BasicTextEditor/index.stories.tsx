@@ -89,10 +89,14 @@ const initialContent = {
   content: [
     {
       type: "heading",
+      attrs: {
+        textAlign: null,
+        level: 1,
+      },
       content: [
         {
           type: "text",
-          text: "Titulo de la meeting",
+          text: "Titulo de la meeting ",
         },
       ],
     },
@@ -117,6 +121,8 @@ const initialContent = {
             },
           ],
         },
+        config: null,
+        isOpen: true,
       },
     },
     {
@@ -153,6 +159,8 @@ const initialContent = {
             },
           ],
         },
+        config: null,
+        isOpen: false,
       },
     },
     {
@@ -200,16 +208,23 @@ const initialContent = {
             },
           ],
         },
+        config: null,
+        isOpen: false,
       },
     },
     {
       type: "aiBlock",
       attrs: {
         data: {},
+        config: null,
+        isCollapsed: false,
       },
     },
     {
       type: "paragraph",
+      attrs: {
+        textAlign: null,
+      },
     },
   ],
 }

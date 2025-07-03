@@ -51,8 +51,9 @@ export const LiveCompanionView: React.FC<NodeViewProps> = ({
   node,
   deleteNode,
   extension,
+  updateAttributes,
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState<boolean>(node.attrs.isOpen ?? false)
   const data = node.attrs.data as LiveCompanionData
 
   // Use dynamic config from extension options instead of persisted config
@@ -64,7 +65,9 @@ export const LiveCompanionView: React.FC<NodeViewProps> = ({
   if (!data) return null
 
   const handleToggleCollapse = () => {
-    setIsOpen(!isOpen)
+    const newState = !isOpen
+    setIsOpen(newState)
+    updateAttributes({ isOpen: newState })
   }
 
   // Generate dropdown items
@@ -236,7 +239,7 @@ export const LiveCompanion = Node.create({
 
   atom: true,
 
-  selectable: false,
+  selectable: true,
 
   draggable: true,
 
@@ -263,6 +266,9 @@ export const LiveCompanion = Node.create({
       },
       config: {
         default: null,
+      },
+      isOpen: {
+        default: false,
       },
     }
   },

@@ -1,4 +1,5 @@
 import { BubbleMenu, Editor } from "@tiptap/react"
+import { NodeSelection } from "prosemirror-state"
 import { Toolbar } from "../Toolbar"
 import { ToolbarLabels } from "../Toolbar/types"
 
@@ -34,6 +35,11 @@ export const EditorBubbleMenu = ({
         zIndex: 9999,
       }}
       editor={editor}
+      shouldShow={({ state }) => {
+        const { selection } = state
+        // Hide when a node (like AIBlock, Transcript, etc.) is selected
+        return !(selection instanceof NodeSelection)
+      }}
     >
       {!isToolbarOpen && (
         <div className="dark z-50 flex w-max flex-row items-center rounded-lg border border-solid border-f1-border bg-f1-background p-1 drop-shadow-sm">
