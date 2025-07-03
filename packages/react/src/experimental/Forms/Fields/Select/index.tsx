@@ -148,69 +148,35 @@ const SelectComponent = forwardRef(function Select<T, R>(
 
   const [openLocal, setOpenLocal] = useState(open)
 
-  // const isLocalSourceOptions = (
-  //   options: SelectItemProps<T, R>[] | ((item: R) => SelectItemProps<T, R>)
-  // ): options is SelectItemProps<T, R>[] => {
-  //   return Array.isArray(options)
-  // }
-
-  // const localSource = useMemo(() => {
-  //   const localSource = !isLocalSourceOptions(options)
-  //     ? {
-  //         ...source,
-  //         currentSearch: props.searchValue,
-  //         dataAdapter: {
-  //           ...source?.dataAdapter,
-  //           paginationType: "infinite-scroll",
-  //           perPage: 10,
-  //         },
-  //         search: showSearchBox
-  //           ? {
-  //               enabled: showSearchBox,
-  //               sync: false,
-  //             }
-  //           : undefined,
-  //       }
-  //     : /*
-  //        * If the options are local, we need to create a local source from the options
-  //        * to manage them as a "real" source
-  //        */
-  //       // TODO Convert this to a real useDataSource to populate the state management
-  //       {
-  //         currentFilters: {},
-  //         currentNavigationFilters: {},
-  //         currentGrouping: undefined,
-  //         setCurrentFilters: () => {},
-  //         setCurrentSortings: () => {},
-  //         setCurrentNavigationFilters: () => {},
-  //         isLoading,
-  //         currentSearch: props.searchValue,
-  //         setIsLoading,
-  //         dataAdapter: {
-  //           fetchData: ({ search }: { search?: string }) => {
-  //             return Promise.resolve({
-  //               records: options.filter(
-  //                 (option) =>
-  //                   option.type === "separator" ||
-  //                   !search ||
-  //                   option.label.toLowerCase().includes(search.toLowerCase())
-  //               ),
-  //             })
-  //           },
-  //         },
-  //       }
-
-  //   return localSource
-  // }, [])
+  const isLocalSourceOptions = (
+    options: SelectItemProps<T, R>[] | ((item: R) => SelectItemProps<T, R>)
+  ): options is SelectItemProps<T, R>[] => {
+    return Array.isArray(options)
+  }
 
   const localSource = useDataSource({
     ...source,
     currentSearch: props.searchValue,
-    dataAdapter: {
-      ...source?.dataAdapter,
-      paginationType: "infinite-scroll",
-      perPage: 10,
-    },
+    dataAdapter:
+      isLocalSourceOptions(options) || !source
+        ? {
+            fetchData: ({ search }: { search?: string }) => {
+              return Promise.resolve({
+                records: options.filter(
+                  (option) =>
+                    option.type === "separator" ||
+                    !search ||
+                    option.label.toLowerCase().includes(search.toLowerCase())
+                ),
+              })
+            },
+          }
+        : {
+            ...source.dataAdapter,
+            // Forces the infinite-scroll pagination type
+            paginationType: "infinite-scroll",
+            perPage: 10,
+          },
     search: showSearchBox
       ? {
           enabled: showSearchBox,
@@ -310,6 +276,10 @@ const SelectComponent = forwardRef(function Select<T, R>(
     })
   }, [data.records, optionMapper])
 
+  const handleScrollBottom = () => {
+    loadMore()
+  }
+
   return (
     <>
       <SelectPrimitive
@@ -365,9 +335,7 @@ const SelectComponent = forwardRef(function Select<T, R>(
                 showSearchBox={showSearchBox}
               />
             }
-            onScrollBottom={() => {
-              loadMore()
-            }}
+            onScrollBottom={handleScrollBottom}
             isLoadingMore={isLoadingMore}
           ></SelectContent>
         )}

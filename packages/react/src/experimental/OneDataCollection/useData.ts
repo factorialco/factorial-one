@@ -126,17 +126,9 @@ function useDataFetchState<Record>() {
  * Custom hook for handling pagination state
  */
 function usePaginationState() {
-  const [paginationInfo, setPaginationInfo2] = useState<PaginationInfo | null>(
+  const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
     null
   )
-  const setPaginationInfo = useCallback(
-    (paginationInfo: PaginationInfo) => {
-      console.log("setPaginationInfo", paginationInfo)
-      setPaginationInfo2(paginationInfo)
-    },
-    [setPaginationInfo2]
-  )
-
   return { paginationInfo, setPaginationInfo }
 }
 
@@ -251,11 +243,14 @@ export function useData<
 
   const { paginationInfo, setPaginationInfo } = usePaginationState()
 
-  const [test, setTest] = useState(0)
+  const paginationInfoRef = useRef(paginationInfo)
 
+  // We need to use a ref to get the latest paginationInfo value
+  // because the paginationInfo is updated asynchronously
+  // and we need to use the latest value in the callback functions
+  // like loadMore, setPage, etc.
   useEffect(() => {
-    setTest(test + 1)
-    console.log("test", test)
+    paginationInfoRef.current = paginationInfo
   }, [paginationInfo])
 
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
@@ -604,18 +599,19 @@ export function useData<
 
   // In loadMore function
   const loadMore = useCallback(() => {
-    if (!paginationInfo || isLoading) return
+    const currentPaginationInfo = paginationInfoRef.current
+    if (!currentPaginationInfo || isLoading) return
 
-    if (!isInfiniteScrollPagination(paginationInfo)) {
+    if (!isInfiniteScrollPagination(currentPaginationInfo)) {
       console.warn(
         "loadMore is only applicable for infinite-scroll pagination type"
       )
       return
     }
 
-    if (paginationInfo.hasMore) {
+    if (currentPaginationInfo.hasMore) {
       // Extract the cursor from paginationInfo
-      const currentCursor = paginationInfo.cursor
+      const currentCursor = currentPaginationInfo.cursor
 
       setIsLoadingMore(true)
       setIsLoading(true)
@@ -634,7 +630,7 @@ export function useData<
     fetchDataAndUpdate,
     isLoading,
     mergedFilters,
-    paginationInfo,
+    paginationInfoRef.current,
     currentNavigationFilters,
     searchValue,
     setIsLoading,
