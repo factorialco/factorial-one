@@ -507,6 +507,7 @@ export declare type BasicTextEditorHandle = {
     setContent: (content: string) => void;
     insertAIBlock: () => void;
     insertTranscript: (title: string, users: User[], messages: Message[]) => void;
+    insertChat: (title: string, messages: ChatMessage[]) => void;
 };
 
 export declare interface BasicTextEditorProps {
@@ -527,6 +528,7 @@ export declare interface BasicTextEditorProps {
         moodTrackerLabels?: MoodTrackerLabels;
         liveCompanionLabels?: LiveCompanionLabels;
         transcriptLabels?: TranscriptLabels;
+        chatLabels?: ChatLabels;
         dragHandleLabels?: DragHandleLabels;
     };
 }
@@ -846,6 +848,20 @@ declare type ChartItem<K extends ChartConfig> = {
 };
 
 export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_16 & RefAttributes<HTMLDivElement>>;
+
+declare interface ChatLabels {
+    deleteBlock: string;
+    expand: string;
+    collapse: string;
+    messagesCount: string;
+    messagesCountSingular: string;
+}
+
+declare interface ChatMessage {
+    role: "user" | "assistant";
+    message: string;
+    dateTime?: string;
+}
 
 export declare type ChatWidgetEmptyStateProps = Props_16;
 
@@ -4512,6 +4528,15 @@ declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         aiBlock: {
             insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        chat: {
+            insertChat: (data: ChatData, config?: ChatConfig) => ReturnType;
         };
     }
 }
