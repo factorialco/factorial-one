@@ -83,7 +83,7 @@ export const createBasicTextEditorExtensions = (
 
   // Create enhanced Chat config with labels
   const enhancedChatConfig: ChatConfig | undefined = chatLabels
-    ? { labels: chatLabels as any }
+    ? { labels: chatLabels }
     : undefined
 
   return [
