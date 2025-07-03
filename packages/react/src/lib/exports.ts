@@ -1,5 +1,6 @@
 export { Await } from "../components/Utilities/Await/Await"
 export * from "./a11y"
+export { categorizeItemsByDate } from "./date"
 export * from "./emojis"
 export { PrivacyModeProvider, usePrivacyMode } from "./privacyMode"
 export { buildTranslations } from "./providers/i18n"
