@@ -94810,7 +94810,7 @@ const Nqe = (t) => {
     a(y), i({ isOpen: y });
   }, c = [
     {
-      label: ((f = s.labels) == null ? void 0 : f.deleteBlock) || "Delete",
+      label: ((f = s.labels) == null ? void 0 : f.deleteBlock) || "",
       icon: Xs,
       critical: !0,
       onClick: () => e()
@@ -94851,7 +94851,7 @@ const Nqe = (t) => {
                       /* @__PURE__ */ w("p", { className: "text-f1-text-secondary text-sm", children: [
                         o.messages.length,
                         " ",
-                        o.messages.length === 1 ? ((m = s.labels) == null ? void 0 : m.messagesCountSingular) || "message" : ((h = s.labels) == null ? void 0 : h.messagesCount) || "messages"
+                        o.messages.length === 1 ? (m = s.labels) == null ? void 0 : m.messagesCountSingular : (h = s.labels) == null ? void 0 : h.messagesCount
                       ] })
                     ] })
                   }
@@ -94863,7 +94863,7 @@ const Nqe = (t) => {
                       onClick: l,
                       variant: "outline",
                       hideLabel: !0,
-                      label: r ? ((p = s.labels) == null ? void 0 : p.collapse) || "Collapse" : ((g = s.labels) == null ? void 0 : g.expand) || "Expand",
+                      label: r ? ((p = s.labels) == null ? void 0 : p.collapse) || "" : ((g = s.labels) == null ? void 0 : g.expand) || "",
                       icon: r ? Oo : Cn,
                       size: "sm"
                     }
