@@ -619,7 +619,7 @@ export const AIBlock = Node.create({
   group: "block",
   atom: true,
   selectable: false,
-  draggable: false,
+  draggable: true,
 
   addOptions() {
     return {

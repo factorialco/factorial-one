@@ -231,7 +231,7 @@ export const MoodTracker = Node.create({
 
   selectable: false,
 
-  draggable: false,
+  draggable: true,
 
   addOptions() {
     return {

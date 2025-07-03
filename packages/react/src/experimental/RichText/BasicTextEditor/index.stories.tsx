@@ -79,6 +79,11 @@ const defaultTranscriptLabels = {
   messagesCountSingular: "message",
 }
 
+const defaultDragHandleLabels = {
+  addBelowTitle: "Click to add below",
+  moveTitle: "Drag to move",
+}
+
 const initialContent = {
   type: "doc",
   content: [
@@ -219,6 +224,7 @@ export const Default: Story = {
       moodTrackerLabels: defaultMoodTrackerLabels,
       liveCompanionLabels: defaultLiveCompanionLabels,
       transcriptLabels: defaultTranscriptLabels,
+      dragHandleLabels: defaultDragHandleLabels,
     },
     onChange: (value) => {
       console.log("Content changed:", value)

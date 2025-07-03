@@ -253,7 +253,7 @@ export const Transcript = Node.create({
 
   selectable: false,
 
-  draggable: false,
+  draggable: true,
 
   addOptions() {
     return {
