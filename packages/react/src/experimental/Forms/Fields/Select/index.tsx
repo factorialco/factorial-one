@@ -38,8 +38,7 @@ import type { SelectItemObject, SelectItemProps } from "./types"
 
 export * from "./types"
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Allow to pass anything as item */
-export type SelectProps<T, R = any> = {
+export type SelectProps<T, R = unknown> = {
   placeholder?: string
   onChange: (value: T, item?: R) => void
   value?: T
@@ -59,7 +58,7 @@ export type SelectProps<T, R = any> = {
 } & (
   | {
       source: DataSource<
-        RecordType,
+        R extends RecordType ? R : RecordType,
         FiltersDefinition,
         SortingsDefinition,
         SummariesDefinition,
@@ -67,10 +66,12 @@ export type SelectProps<T, R = any> = {
         NavigationFiltersDefinition,
         GroupingDefinition<RecordType>
       >
-      options: (item: R) => SelectItemProps<T, R>
+      mapOptions: (item: R) => SelectItemProps<T, R>
+      options?: never
     }
   | {
       source?: never
+      mapOptions?: never
       options: SelectItemProps<T, R>[]
     }
 )
@@ -122,12 +123,13 @@ const SelectValue = forwardRef<
 const defaultTrigger =
   "flex h-10 w-full items-center justify-between rounded-md border border-solid border-f1-border bg-f1-background pl-3 pr-2 py-2.5 transition-colors placeholder:text-f1-foreground-secondary hover:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1"
 
-const SelectComponent = forwardRef(function Select<T, R>(
+const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   {
     placeholder,
-    options = [],
     onChange,
     value,
+    options = [],
+    mapOptions,
     children,
     disabled,
     open,
@@ -148,35 +150,37 @@ const SelectComponent = forwardRef(function Select<T, R>(
 
   const [openLocal, setOpenLocal] = useState(open)
 
-  const isLocalSourceOptions = (
-    options: SelectItemProps<T, R>[] | ((item: R) => SelectItemProps<T, R>)
-  ): options is SelectItemProps<T, R>[] => {
-    return Array.isArray(options)
-  }
+  const isLocalSourceOptions = useCallback(
+    (
+      options: SelectItemProps<T, R>[] | ((item: R) => SelectItemProps<T, R>)
+    ): options is SelectItemProps<T, R>[] => {
+      return Array.isArray(options)
+    },
+    []
+  )
 
   const localSource = useDataSource({
     ...source,
     currentSearch: props.searchValue,
-    dataAdapter:
-      isLocalSourceOptions(options) || !source
-        ? {
-            fetchData: ({ search }: { search?: string }) => {
-              return Promise.resolve({
-                records: options.filter(
-                  (option) =>
-                    option.type === "separator" ||
-                    !search ||
-                    option.label.toLowerCase().includes(search.toLowerCase())
-                ),
-              })
-            },
-          }
-        : {
-            ...source.dataAdapter,
-            // Forces the infinite-scroll pagination type
-            paginationType: "infinite-scroll",
-            perPage: 10,
+    dataAdapter: isLocalSourceOptions(options)
+      ? {
+          fetchData: ({ search }: { search?: string }) => {
+            return Promise.resolve({
+              records: options.filter(
+                (option) =>
+                  option.type === "separator" ||
+                  !search ||
+                  option.label.toLowerCase().includes(search.toLowerCase())
+              ),
+            })
           },
+        }
+      : {
+          ...source.dataAdapter,
+          // Forces the infinite-scroll pagination type
+          paginationType: "infinite-scroll",
+          perPage: 10,
+        },
     search: showSearchBox
       ? {
           enabled: showSearchBox,
@@ -186,13 +190,17 @@ const SelectComponent = forwardRef(function Select<T, R>(
   })
 
   const optionMapper = useCallback(
-    (item: R) => {
-      if (typeof options === "function") {
-        return options(item)
+    (item: R): SelectItemProps<T, R> => {
+      if (!isLocalSourceOptions(options)) {
+        if (!mapOptions) {
+          throw new Error("mapOptions is required when using a source")
+        }
+        return mapOptions(item)
       }
-      return item
+      // At this point, we are sure that options is an array of SelectItemProps<T, R>
+      return item as unknown as SelectItemProps<T, R>
     },
-    [options]
+    [options, mapOptions, isLocalSourceOptions]
   )
 
   const { data, isInitialLoading, loadMore, isLoadingMore } =
@@ -204,17 +212,36 @@ const SelectComponent = forwardRef(function Select<T, R>(
     SelectItemObject<T, R> | undefined
   >(undefined)
 
-  useEffect(() => {
-    const foundOption = data.records.find(
-      (option): option is Exclude<typeof option, { type: "separator" }> => {
-        const mappedOption = optionMapper(option as R)
-        return mappedOption.type !== "separator" && mappedOption.value === value
+  /**
+   * Finds an option in the data records by value and returns the mapped option
+   * @param value - The value to find
+   * @returns The option if found, undefined otherwise
+   */
+  const findOption = useCallback(
+    (value: string | T | undefined): SelectItemObject<T, R> | undefined => {
+      if (value === undefined) {
+        return undefined
       }
-    )
+      for (const option of data.records) {
+        const mappedOption = optionMapper(option as R)
+        if (
+          mappedOption.type !== "separator" &&
+          String(mappedOption.value) === value
+        ) {
+          return mappedOption
+        }
+      }
+      return undefined
+    },
+    [data.records, optionMapper]
+  )
+
+  useEffect(() => {
+    const foundOption = findOption(value)
     if (foundOption) {
       setSelectedOption(foundOption)
     }
-  }, [data.records, value, optionMapper])
+  }, [data.records, value, optionMapper, findOption])
 
   useEffect(() => {
     if (open) {
@@ -230,18 +257,11 @@ const SelectComponent = forwardRef(function Select<T, R>(
     [setCurrentSearch, onSearchChange]
   )
 
-  const onValueChange = (changedValue: string) => {
+  const onValueChange = (changedValue: string | undefined) => {
     // Resets the search value when the option is selected
     setCurrentSearch(undefined)
-    const foundOption = data.records.find(
-      (option): option is SelectItemObject<T, R> => {
-        const mappedOption = optionMapper(option as R)
-        return (
-          mappedOption.type !== "separator" &&
-          String(mappedOption.value) === changedValue
-        )
-      }
-    )
+    const foundOption = findOption(changedValue)
+
     if (foundOption) {
       onChange?.(foundOption.value, foundOption.item)
     }
