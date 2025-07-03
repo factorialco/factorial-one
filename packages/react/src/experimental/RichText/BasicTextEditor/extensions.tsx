@@ -25,6 +25,10 @@ import {
   AIBlockLabels,
 } from "@/experimental/RichText/CoreEditor/Extensions/AIBlock"
 import {
+  ChatConfig,
+  ChatExtension,
+} from "@/experimental/RichText/CoreEditor/Extensions/Chat"
+import {
   LiveCompanionConfig,
   LiveCompanionExtension,
   LiveCompanionLabels,
@@ -40,6 +44,14 @@ import {
   TranscriptLabels,
 } from "@/experimental/RichText/CoreEditor/Extensions/Transcript"
 
+type LocalChatLabels = {
+  deleteBlock: string
+  expand: string
+  collapse: string
+  messagesCount: string
+  messagesCountSingular: string
+}
+
 export const createBasicTextEditorExtensions = (
   placeholder: string,
   toolbarLabels: ToolbarLabels,
@@ -48,7 +60,8 @@ export const createBasicTextEditorExtensions = (
   aiBlockLabels?: AIBlockLabels,
   moodTrackerLabels?: MoodTrackerLabels,
   liveCompanionLabels?: LiveCompanionLabels,
-  transcriptLabels?: TranscriptLabels
+  transcriptLabels?: TranscriptLabels,
+  chatLabels?: LocalChatLabels
 ) => {
   // Create enhanced config with labels if both are provided
   const enhancedAIBlockConfig =
@@ -67,6 +80,11 @@ export const createBasicTextEditorExtensions = (
   // Create enhanced Transcript config with labels
   const enhancedTranscriptConfig: TranscriptConfig | undefined =
     transcriptLabels ? { labels: transcriptLabels } : undefined
+
+  // Create enhanced Chat config with labels
+  const enhancedChatConfig: ChatConfig | undefined = chatLabels
+    ? { labels: chatLabels as any }
+    : undefined
 
   return [
     StarterKitExtension,
@@ -90,6 +108,9 @@ export const createBasicTextEditorExtensions = (
     }),
     TranscriptExtension.configure({
       currentConfig: enhancedTranscriptConfig,
+    }),
+    ChatExtension.configure({
+      currentConfig: enhancedChatConfig,
     }),
     AIBlockExtension.configure({
       currentConfig: enhancedAIBlockConfig,

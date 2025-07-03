@@ -79,6 +79,14 @@ const defaultTranscriptLabels = {
   messagesCountSingular: "message",
 }
 
+const defaultChatLabels = {
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+  messagesCount: "messages",
+  messagesCountSingular: "message",
+}
+
 const defaultDragHandleLabels = {
   addBelowTitle: "Click to add below",
   moveTitle: "Drag to move",
@@ -213,6 +221,30 @@ const initialContent = {
       },
     },
     {
+      type: "chat",
+      attrs: {
+        data: {
+          title: "Conversation with Assistant",
+          messages: [
+            {
+              role: "user",
+              message: "Hi Assistant, can you help me with the report?",
+            },
+            {
+              role: "assistant",
+              message: "Sure! What do you need exactly?",
+            },
+            {
+              role: "user",
+              message: "A summary of this week's tasks.",
+            },
+          ],
+        },
+        config: null,
+        isOpen: true,
+      },
+    },
+    {
       type: "aiBlock",
       attrs: {
         data: {},
@@ -239,6 +271,7 @@ export const Default: Story = {
       moodTrackerLabels: defaultMoodTrackerLabels,
       liveCompanionLabels: defaultLiveCompanionLabels,
       transcriptLabels: defaultTranscriptLabels,
+      chatLabels: defaultChatLabels,
       dragHandleLabels: defaultDragHandleLabels,
     },
     onChange: (value) => {
