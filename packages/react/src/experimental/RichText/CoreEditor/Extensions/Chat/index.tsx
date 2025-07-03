@@ -69,7 +69,7 @@ const ChatView: React.FC<NodeViewProps> = ({
 
   const dropdownItems = [
     {
-      label: config.labels?.deleteBlock || "Delete",
+      label: config.labels?.deleteBlock || "",
       icon: Delete,
       critical: true,
       onClick: () => deleteNode(),
@@ -114,8 +114,8 @@ const ChatView: React.FC<NodeViewProps> = ({
               <p className="text-f1-text-secondary text-sm">
                 {data.messages.length}{" "}
                 {data.messages.length === 1
-                  ? config.labels?.messagesCountSingular || "message"
-                  : config.labels?.messagesCount || "messages"}
+                  ? config.labels?.messagesCountSingular
+                  : config.labels?.messagesCount}
               </p>
             </div>
           </div>
@@ -127,8 +127,8 @@ const ChatView: React.FC<NodeViewProps> = ({
               hideLabel
               label={
                 isOpen
-                  ? config.labels?.collapse || "Collapse"
-                  : config.labels?.expand || "Expand"
+                  ? config.labels?.collapse || ""
+                  : config.labels?.expand || ""
               }
               icon={isOpen ? ChevronUp : ChevronDown}
               size="sm"
