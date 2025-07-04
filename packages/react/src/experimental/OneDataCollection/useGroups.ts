@@ -19,7 +19,7 @@ export const useGroups = <R extends RecordType>(
       },
       {} as Record<string, boolean>
     )
-    if (Object.values(defaultOpenGroups).length > 0) {
+    if (Object.values(defaultValue).length > 0) {
       setOpenGroups(defaultValue)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only run on deep changes
