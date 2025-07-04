@@ -1,4 +1,4 @@
-import { Delete } from "@/icons/app"
+import { Delete, Download, Pencil, Star } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import {
   GroupingDefinition,
@@ -400,6 +400,84 @@ export const SelectableGrouping: Story = {
     <ExampleComponent
       frozenColumns={2}
       selectable={(item) => item.id}
+      grouping={{
+        mandatory: true,
+        collapsible: true,
+        defaultOpenGroups: ["Engineering"],
+        groupBy: {
+          department: {
+            name: "Department",
+            label: (groupId) => groupId,
+            itemCount: async (groupId) => {
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+              return mockUsers.filter((user) => user.department === groupId)
+                .length
+            },
+          },
+        },
+      }}
+    />
+  ),
+}
+
+export const SelectableGroupingAndActions: Story = {
+  render: () => (
+    <ExampleComponent
+      frozenColumns={2}
+      selectable={(item) => item.id}
+      bulkActions={({ allSelected }) => {
+        return {
+          primary: [
+            {
+              label: allSelected ? "Edit All" : "Edit",
+              icon: Pencil,
+              id: "edit-all",
+            },
+            {
+              label: "Download",
+              icon: Download,
+              id: "download",
+            },
+            {
+              label: allSelected ? "Delete All" : "Delete",
+              icon: Delete,
+              id: "delete-all",
+              critical: true,
+            },
+            {
+              label: "Another primary action",
+              icon: Delete,
+              id: "delete-all2",
+            },
+          ],
+          secondary: [
+            ...(allSelected
+              ? [
+                  {
+                    label: "Star All",
+                    icon: Star,
+                    id: "star-all",
+                  },
+                ]
+              : [
+                  {
+                    label: "Star",
+                    icon: Star,
+                    id: "star",
+                  },
+                ]),
+            ...(allSelected === "indeterminate"
+              ? [
+                  {
+                    label: "Apply to all except unselected",
+                    icon: Star,
+                    id: "star-all",
+                  },
+                ]
+              : []),
+          ],
+        }
+      }}
       grouping={{
         mandatory: true,
         collapsible: true,
