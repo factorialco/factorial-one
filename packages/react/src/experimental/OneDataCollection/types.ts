@@ -432,20 +432,20 @@ export type CollectionProps<
 /**
  * Represents a data source with filtering capabilities and data fetching functionality.
  * Extends DataSourceDefinition with runtime properties for state management.
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  * @template ItemActions - The available actions that can be performed on records
  */
 export type DataSource<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
+  Grouping extends GroupingDefinition<R>,
 > = DataSourceDefinition<
-  Record,
+  R,
   Filters,
   Sortings,
   Summaries,
@@ -474,16 +474,18 @@ export type DataSource<
   >
   /** Current state of applied grouping */
   currentGrouping?: Grouping["mandatory"] extends true
-    ? Exclude<GroupingState<Record, Grouping>, undefined>
-    : GroupingState<Record, Grouping>
+    ? Exclude<GroupingState<R, Grouping>, undefined>
+    : GroupingState<R, Grouping>
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
-    React.SetStateAction<GroupingState<Record, Grouping>>
+    React.SetStateAction<GroupingState<R, Grouping>>
   >
   /** Current summaries data */
-  currentSummaries?: Record
+  currentSummaries?: R
   /** Function to update the current summaries data */
-  setCurrentSummaries?: React.Dispatch<React.SetStateAction<Record | undefined>>
+  setCurrentSummaries?: React.Dispatch<React.SetStateAction<R | undefined>>
+  /** Function to provide an id for a record, necessary for append mode */
+  idProvider?: (item: R, index?: number) => string | number | symbol
 }
 
 /**

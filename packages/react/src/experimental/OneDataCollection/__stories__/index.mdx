@@ -292,6 +292,19 @@ loader or spinner appears near the bottom to indicate loading progress.
 > is essential to detect scroll events or trigger the intersection observer used
 > for loading more data.
 
+> Important: Required to provide an `idProvider` to the `source` prop if the
+> record type does not have an `id` property (default behavior). This is
+> required to avoid duplicate items when appending data.
+>
+> Example:
+>
+> ```tsx
+> const dataSource: DataSource = {
+>   idProvider: (item, index) => item.myId,
+>   ...
+> }
+> ```
+
 ```tsx
 <div style={{ height: '900px', overflow: 'auto' }}>
   <OneDataCollection
