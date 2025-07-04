@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.18.0...factorial-one-core-v1.19.0) (2025-07-04)
+
+
+### Features
+
+* **Icons:** new icons missing from Gamma ([#2221](https://github.com/factorialco/factorial-one/issues/2221)) ([528674b](https://github.com/factorialco/factorial-one/commit/528674bc0115abbab8d8520614c5f4d22ed3f1c8))
+
 ## [1.18.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.17.0...factorial-one-core-v1.18.0) (2025-06-25)
 
 
