@@ -1,9 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
-import { Select, SelectProps } from "./index"
+import { Select, SelectProps } from "../index"
 
 import { IconType } from "@/components/Utilities/Icon"
+import { useDataSource } from "@/experimental/OneDataCollection"
+import { FiltersDefinition } from "@/experimental/OneDataCollection/Filters/types"
+import { GroupingDefinition } from "@/experimental/OneDataCollection/grouping"
+import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary"
 import { Appearance, Circle, Desktop, Plus } from "@/icons/app"
+import {
+  FIRST_NAMES_MOCK,
+  getMockValue,
+  MOCK_ICONS,
+  SURNAMES_MOCK,
+} from "@/mocks"
 import { useState } from "react"
 
 // Wraps the Select component with a hook to show the selected value
@@ -11,7 +24,7 @@ const SelectWithHooks = (props: SelectProps<string>) => {
   const [localValue, setLocalValue] = useState(props.value)
   const [, setSearchValue] = useState("")
   // Sets a click handler to change the label's value
-  const handleOnChange = (value: string, item?: Record<string, string>) => {
+  const handleOnChange = (value: string, item?: unknown) => {
     setLocalValue(value)
     console.log("selected value:", value, "- selected item:", item)
   }
@@ -78,10 +91,6 @@ const meta: Meta = {
     showSearchBox: {
       description:
         "Shows a search box. The component will filter the items by name and by description unless searchFunc will be in use",
-    },
-    externalSearch: {
-      description:
-        "Disable the internal filtering when the search box delegating the filtering in the parent. Useful for async data",
     },
     searchValue: {
       description: "Default value for the search box",
@@ -171,19 +180,111 @@ export const WithActions: Story = {
   },
 }
 
+const mockItems = Array.from({ length: 10000 }, (_, i) => ({
+  value: `option-${i}`,
+  label: `${getMockValue(FIRST_NAMES_MOCK, i)} ${getMockValue(SURNAMES_MOCK, i)}`,
+  icon: getMockValue(MOCK_ICONS, i),
+  description: `Description for option ${i}`,
+}))
+
 export const LargeList: Story = {
   args: {
     ...WithSearchBox.args,
+    value: "option-4",
     options: [
       ...(meta.args?.options || []),
       { type: "separator" },
-      ...Array.from({ length: 10000 }, (_, i) => ({
-        value: `option-${i}`,
-        label: `Option ${i}`,
-        icon: Circle,
-        description: `Description for option ${i}`,
-      })),
+      ...mockItems,
     ],
+  },
+}
+
+export const WithDataSource: Story = {
+  render: (args) => {
+    const source = useDataSource<
+      (typeof mockItems)[number],
+      FiltersDefinition,
+      SortingsDefinition,
+      SummariesDefinition,
+      ItemActionsDefinition<(typeof mockItems)[number]>,
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockItems)[number]>
+    >({
+      dataAdapter: {
+        paginationType: "infinite-scroll",
+        fetchData: (options) => {
+          const { search, pagination } = options
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const pageSize = pagination.perPage ?? 10
+              const cursor = "cursor" in pagination ? pagination.cursor : null
+              const nextCursor = cursor ? Number(cursor) + pageSize : pageSize
+
+              const results = mockItems.filter(
+                (item) =>
+                  !search ||
+                  item.label.toLowerCase().includes(search.toLowerCase())
+              )
+
+              const paginatedResults = results.slice(
+                cursor ? Number(cursor) : 0,
+                nextCursor
+              )
+
+              const res = {
+                type: "infinite-scroll" as const,
+                cursor: String(nextCursor),
+                perPage: pageSize,
+                hasMore: nextCursor < results.length,
+                records: paginatedResults,
+                total: results.length,
+              }
+              resolve(res)
+            }, 100)
+          })
+        },
+      },
+    })
+
+    const { options: _, mapOptions, ...rest } = args
+
+    const [localValue, setLocalValue] = useState(args.value)
+    const [, setSearchValue] = useState("")
+    // Sets a click handler to change the label's value
+    const handleOnChange = (value: string, item?: unknown) => {
+      setLocalValue(value)
+      console.log("selected value:", value, "- selected item:", item)
+    }
+
+    const handleOnSearchChange = (value: string) => {
+      setSearchValue(value)
+      console.log("searchValue", value)
+    }
+
+    return (
+      <div className="w-48">
+        <Select<string, (typeof mockItems)[number]>
+          {...rest}
+          source={source}
+          mapOptions={mapOptions}
+          value={localValue}
+          onChange={handleOnChange}
+          onSearchChange={handleOnSearchChange}
+        />
+      </div>
+    )
+  },
+  args: {
+    placeholder: "Select a value",
+    showSearchBox: true,
+    onChange: fn(),
+    value: "option-2",
+    mapOptions: (item: (typeof mockItems)[number]) => ({
+      value: item.value,
+      label: item.label,
+      icon: item.icon,
+      description: item.description,
+    }),
   },
 }
 

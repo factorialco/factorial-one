@@ -188,6 +188,7 @@ export const useDataSource = <
   }
 
   return {
+    ...rest,
     filters: memoizedFilters,
     currentFilters,
     setCurrentFilters,
@@ -207,7 +208,6 @@ export const useDataSource = <
     setCurrentGrouping,
     currentGrouping,
     grouping,
-    ...rest,
   }
 }
 

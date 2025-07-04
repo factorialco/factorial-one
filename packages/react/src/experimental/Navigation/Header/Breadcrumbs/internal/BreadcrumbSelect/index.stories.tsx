@@ -71,61 +71,42 @@ export const WithSearchbox: Story = {
   },
 }
 
-export const AsyncData: Story = {
-  args: {
-    ...Default.args,
-    options: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      return [
-        {
-          value: "recruitment",
-          label: "Recruitment",
-        },
-        {
-          value: "candidates",
-          label: "Candidates",
-          icon: Search,
-        },
-      ]
-    },
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Demonstrates loading options asynchronously. Shows a loading state while data is being fetched.",
-      },
-    },
-  },
-}
-
-export const AsyncDataWithSearchbox: Story = {
-  args: {
-    ...WithSearchbox.args,
-    externalSearch: true,
-    options: async (search?: string) => {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      return [
-        {
-          value: "recruitment",
-          label: "Recruitment",
-        },
-        {
-          value: "candidates",
-          label: "Candidates",
-          icon: Search,
-        },
-      ].filter((option) =>
-        option.label.toLowerCase().includes(search?.toLowerCase() || "")
-      )
-    },
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Combines async data loading with search functionality. The search is handled externally, making it suitable for server-side filtering.",
-      },
-    },
-  },
-}
+// export const AsyncData: Story = {
+//   args: {
+//     value: "recruitment",
+//     onChange: (value: string) => {
+//       console.log("onChange BreadcrumbSelect", value)
+//     },
+//     source: useDataSource({
+//       dataAdapter: {
+//         fetchData: async () => {
+//           await new Promise((resolve) => setTimeout(resolve, 1000))
+//           return [
+//             {
+//               value: "recruitment",
+//               label: "Recruitment",
+//             },
+//             {
+//               value: "candidates",
+//               label: "Candidates",
+//               icon: Search,
+//             },
+//           ]
+//         },
+//       },
+//     }),
+//     mapOptions: (item: { value: string; label: string; icon?: IconType }) => ({
+//       value: item.value,
+//       label: item.label,
+//       icon: item.icon,
+//     }),
+//   },
+//   parameters: {
+//     docs: {
+//       description: {
+//         story:
+//           "Demonstrates loading options asynchronously. Shows a loading state while data is being fetched.",
+//       },
+//     },
+//   },
+// }
