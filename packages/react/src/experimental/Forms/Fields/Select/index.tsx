@@ -35,6 +35,7 @@ import {
   useRef,
   useState,
 } from "react"
+import { ProgressSpinner } from "storybook/internal/components"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
@@ -244,6 +245,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
           return mappedOption
         }
       }
+      console.warn("No option found for value:", value)
       return undefined
     },
     [data.records, optionMapper]
@@ -336,10 +338,9 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
               )}
             >
               <SelectValuePrimitive placeholder={placeholder} asChild>
-                {isInitialLoading
-                  ? "[TODO] Loading...."
-                  : selectedOption && <SelectValue item={selectedOption} />}
+                {selectedOption && <SelectValue item={selectedOption} />}
               </SelectValuePrimitive>
+              {isInitialLoading && <ProgressSpinner />}
               <div className="flex h-6 w-6 items-center justify-center">
                 <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
                   <Icon
@@ -352,7 +353,6 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
             </button>
           )}
         </SelectTrigger>
-        currentSearch: {currentSearch}
         {openLocal && (
           <SelectContent
             items={items}

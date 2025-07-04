@@ -276,6 +276,7 @@ export const WithDataSource: Story = {
     placeholder: "Select a value",
     showSearchBox: true,
     onChange: fn(),
+    value: "option-2",
     mapOptions: (item: (typeof mockItems)[number]) => ({
       value: item.value,
       label: item.label,

@@ -16,6 +16,11 @@ export const SelectTopActions = ({
   searchInputRef,
 }: SelectTopActionsProps) => {
   if (!showSearchBox) return null
+
+  const handleBlur = () => {
+    console.log("blur")
+  }
+
   return (
     <div className="px-2 pt-2">
       <F1SearchBox
@@ -25,6 +30,7 @@ export const SelectTopActions = ({
         value={searchValue}
         key="search-input"
         ref={searchInputRef}
+        onBlur={handleBlur}
       />
     </div>
   )
