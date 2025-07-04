@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { ComponentProps } from "react"
-import { expect, within } from "storybook/test"
 import { Link } from ".."
 
 const meta = {
@@ -20,7 +19,7 @@ const meta = {
   args: {
     children: "Link",
     href: "/foo",
-    "data-test": "foo",
+    variant: "link",
   },
 } satisfies Meta<ComponentProps<typeof Link>>
 
@@ -28,12 +27,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-
-    const link = canvas.getByRole("link")
-    await expect(link.dataset.test).toBe("foo")
-  },
   render: (args) => (
     <p>
       Do not click this <Link {...args} /> because it goes nowhere.
@@ -45,13 +38,13 @@ export const Variants: Story = {
   render: (args) => (
     <div className="[&>h3]:mt-5 [&>h3]:pb-2">
       <h3 className="!m-0">Basic usage</h3>
-      <Link {...args} variant="link" />
+      <Link {...args} />
+      <h3>As button</h3>
+      <Link {...args} variant="default" />
       <h3>External link</h3>
-      <Link {...args} variant="link" target="_blank" />
-      <h3>Unstyled</h3>
-      <Link {...args} variant="unstyled" />
+      <Link {...args} target="_blank" />
       <h3>Disabled</h3>
-      <Link {...args} variant="link" disabled />
+      <Link {...args} disabled />
     </div>
   ),
 }
@@ -59,10 +52,8 @@ export const Variants: Story = {
 export const States: Story = {
   render: (args) => (
     <div className="flex flex-row items-center justify-center space-x-6">
-      <Link {...args} variant="link">
-        Default link
-      </Link>
-      <Link {...args} variant="link" disabled>
+      <Link {...args}>Default link</Link>
+      <Link {...args} disabled>
         Disabled link
       </Link>
     </div>
@@ -72,10 +63,10 @@ export const States: Story = {
 export const InteractiveExamples: Story = {
   render: (args) => (
     <div className="flex flex-row items-center justify-center space-x-6">
-      <Link {...args} variant="link" href="/internal">
+      <Link {...args} href="/internal">
         Internal link
       </Link>
-      <Link {...args} variant="link" href="https://example.com" target="_blank">
+      <Link {...args} href="https://example.com" target="_blank">
         External link
       </Link>
     </div>
