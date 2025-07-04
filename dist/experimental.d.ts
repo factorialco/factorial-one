@@ -529,7 +529,6 @@ export declare interface BasicTextEditorProps {
         liveCompanionLabels?: LiveCompanionLabels;
         transcriptLabels?: TranscriptLabels;
         chatLabels?: ChatLabels;
-        dragHandleLabels?: DragHandleLabels;
     };
 }
 
@@ -1417,11 +1416,6 @@ export declare type DotTagProps = {
 } | {
     customColor: string;
 });
-
-declare interface DragHandleLabels {
-    addBelowTitle: string;
-    moveTitle: string;
-}
 
 export declare const Dropdown: (props: DropdownProps) => JSX_2.Element;
 
