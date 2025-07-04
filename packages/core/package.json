@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-core",
-  "version": "1.18.0",
+  "version": "1.19.0",
   "description": "Core tokens and utilities for Factorial One Design System",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
