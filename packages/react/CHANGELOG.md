@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.118.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.118.1...factorial-one-react-v1.118.2) (2025-07-04)
+
+
+### Bug Fixes
+
+* set correct selectable count when there is grouping ([#2223](https://github.com/factorialco/factorial-one/issues/2223)) ([eb43a39](https://github.com/factorialco/factorial-one/commit/eb43a39783d4a314928922fef55fd5dd63c2e668))
+
 ## [1.118.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.118.0...factorial-one-react-v1.118.1) (2025-07-04)
 
 
