@@ -95598,7 +95598,7 @@ const Nqe = (t) => {
           /* @__PURE__ */ d(
             "div",
             {
-              className: "flex h-5 w-[18px] cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover",
+              className: "flex h-5 w-[16px] cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover",
               onClick: _,
               children: /* @__PURE__ */ d(
                 Si,
@@ -95615,7 +95615,7 @@ const Nqe = (t) => {
             {
               "data-drag-handle": !0,
               draggable: !0,
-              className: "flex h-5 w-5 cursor-grab items-center justify-center rounded-2xs hover:bg-f1-background-hover",
+              className: "flex h-5 w-[16px] cursor-grab items-center justify-center rounded-2xs hover:bg-f1-background-hover",
               children: /* @__PURE__ */ d(
                 Si,
                 {
