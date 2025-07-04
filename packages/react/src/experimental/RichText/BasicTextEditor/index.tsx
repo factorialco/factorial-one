@@ -1,4 +1,3 @@
-import { Tooltip } from "@/experimental/exports"
 import {
   EditorBubbleMenu,
   ToolbarLabels,
@@ -30,11 +29,6 @@ import {
 import "../index.css"
 import { createBasicTextEditorExtensions } from "./extensions"
 
-interface DragHandleLabels {
-  addBelowTitle: string
-  moveTitle: string
-}
-
 interface BasicTextEditorProps {
   onChange: (value: { json: JSONContent | null; html: string | null }) => void
   placeholder: string
@@ -50,7 +44,6 @@ interface BasicTextEditorProps {
     liveCompanionLabels?: LiveCompanionLabels
     transcriptLabels?: TranscriptLabels
     chatLabels?: ChatLabels
-    dragHandleLabels?: DragHandleLabels
   }
 }
 
@@ -85,7 +78,6 @@ const BasicTextEditorComponent = forwardRef<
     liveCompanionLabels,
     transcriptLabels,
     chatLabels,
-    dragHandleLabels,
   } = labels
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -194,32 +186,28 @@ const BasicTextEditorComponent = forwardRef<
         onNodeChange={handleNodeChange}
       >
         <div className="flex flex-row">
-          <Tooltip label={dragHandleLabels?.addBelowTitle || ""}>
-            <div
-              className="flex h-5 w-[18px] cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover"
-              onClick={handlePlusClick}
-            >
-              <Icon
-                icon={Plus}
-                size="sm"
-                className="text-f1-foreground-tertiary"
-              />
-            </div>
-          </Tooltip>
+          <div
+            className="flex h-5 w-[18px] cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover"
+            onClick={handlePlusClick}
+          >
+            <Icon
+              icon={Plus}
+              size="sm"
+              className="text-f1-foreground-tertiary"
+            />
+          </div>
 
-          <Tooltip label={dragHandleLabels?.moveTitle || ""}>
-            <div
-              data-drag-handle
-              draggable
-              className="flex h-5 w-5 cursor-grab items-center justify-center rounded-2xs hover:bg-f1-background-hover"
-            >
-              <Icon
-                icon={Handle}
-                size="xs"
-                className="text-f1-foreground-tertiary"
-              />
-            </div>
-          </Tooltip>
+          <div
+            data-drag-handle
+            draggable
+            className="flex h-5 w-5 cursor-grab items-center justify-center rounded-2xs hover:bg-f1-background-hover"
+          >
+            <Icon
+              icon={Handle}
+              size="xs"
+              className="text-f1-foreground-tertiary"
+            />
+          </div>
         </div>
       </DragHandle>
 
