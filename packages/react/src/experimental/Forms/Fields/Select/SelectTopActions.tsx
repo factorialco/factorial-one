@@ -6,6 +6,8 @@ interface SelectTopActionsProps {
   onSearchChange: (value: string) => void
   searchValue: string | undefined
   searchInputRef: React.RefObject<HTMLInputElement>
+  onFocus?: () => void
+  onBlur?: () => void
 }
 
 export const SelectTopActions = ({
@@ -14,13 +16,10 @@ export const SelectTopActions = ({
   onSearchChange,
   searchValue,
   searchInputRef,
+  onFocus,
+  onBlur,
 }: SelectTopActionsProps) => {
   if (!showSearchBox) return null
-
-  const handleBlur = () => {
-    console.log("blur")
-  }
-
   return (
     <div className="px-2 pt-2">
       <F1SearchBox
@@ -30,7 +29,8 @@ export const SelectTopActions = ({
         value={searchValue}
         key="search-input"
         ref={searchInputRef}
-        onBlur={handleBlur}
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
     </div>
   )

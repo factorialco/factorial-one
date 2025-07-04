@@ -245,7 +245,6 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
           return mappedOption
         }
       }
-      console.warn("No option found for value:", value)
       return undefined
     },
     [data.records, optionMapper]
@@ -314,6 +313,12 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   const handleScrollBottom = () => {
     loadMore()
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      searchInputRef.current?.focus()
+    }, 0)
+  }, [data])
 
   return (
     <>

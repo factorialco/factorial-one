@@ -170,6 +170,35 @@ describe("Select", () => {
     expect(screen.getByText("Option 2")).toBeInTheDocument()
   })
 
+  it("maintains focus on search input during data loading", async () => {
+    const user = userEvent.setup()
+    const handleSearchChange = vi.fn()
+
+    render(
+      <Select
+        options={mockOptions}
+        onChange={() => {}}
+        showSearchBox
+        onSearchChange={handleSearchChange}
+      />
+    )
+
+    await openSelect(user)
+
+    const searchInput = screen.getByRole("searchbox")
+
+    // Focus the search input
+    await user.click(searchInput)
+    expect(searchInput).toHaveFocus()
+
+    // Type to trigger search (which would normally cause a re-render)
+    await user.type(searchInput, "test")
+
+    // The search input should still have focus after the search
+    expect(searchInput).toHaveFocus()
+    expect(handleSearchChange).toHaveBeenCalledWith("test")
+  })
+
   it("disables select when disabled prop is true", () => {
     render(<Select options={mockOptions} onChange={() => {}} disabled />)
 
