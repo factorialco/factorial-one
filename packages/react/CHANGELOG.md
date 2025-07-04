@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.118.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.118.0...factorial-one-react-v1.118.1) (2025-07-04)
+
+
+### Bug Fixes
+
+* data collection defaultOpenGroups as true ([#2220](https://github.com/factorialco/factorial-one/issues/2220)) ([8ae61d7](https://github.com/factorialco/factorial-one/commit/8ae61d77aba2f343f02acc1a010805083911641b))
+
 ## [1.118.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.117.2...factorial-one-react-v1.118.0) (2025-07-03)
 
 
