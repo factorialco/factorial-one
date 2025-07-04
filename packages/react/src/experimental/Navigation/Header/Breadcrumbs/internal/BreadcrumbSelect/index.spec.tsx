@@ -82,6 +82,10 @@ describe("BreadcrumbSelect", () => {
 
     await openSelect(user)
 
+    await waitFor(() => {
+      expect(screen.getByText("Option 2")).toBeInTheDocument()
+    })
+
     user.click(screen.getByText("Option 2"))
     await new Promise((resolve) => setTimeout(resolve, 100))
 

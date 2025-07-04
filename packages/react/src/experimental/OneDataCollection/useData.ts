@@ -598,44 +598,48 @@ export function useData<
   )
 
   // In loadMore function
-  const loadMore = useCallback(() => {
-    const currentPaginationInfo = paginationInfoRef.current
-    if (!currentPaginationInfo || isLoading) return
+  const loadMore = useCallback(
+    () => {
+      const currentPaginationInfo = paginationInfoRef.current
+      if (!currentPaginationInfo || isLoading) return
 
-    if (!isInfiniteScrollPagination(currentPaginationInfo)) {
-      console.warn(
-        "loadMore is only applicable for infinite-scroll pagination type"
-      )
-      return
-    }
+      if (!isInfiniteScrollPagination(currentPaginationInfo)) {
+        console.warn(
+          "loadMore is only applicable for infinite-scroll pagination type"
+        )
+        return
+      }
 
-    if (currentPaginationInfo.hasMore) {
-      // Extract the cursor from paginationInfo
-      const currentCursor = currentPaginationInfo.cursor
+      if (currentPaginationInfo.hasMore) {
+        // Extract the cursor from paginationInfo
+        const currentCursor = currentPaginationInfo.cursor
 
-      setIsLoadingMore(true)
-      setIsLoading(true)
-      isLoadingMoreRef.current = true
+        setIsLoadingMore(true)
+        setIsLoading(true)
+        isLoadingMoreRef.current = true
 
-      // Use named parameters
-      fetchDataAndUpdate({
-        filters: mergedFilters,
-        navigationFilters: currentNavigationFilters,
-        appendMode: true,
-        cursor: currentCursor,
-        search: searchValue,
-      })
-    }
-  }, [
-    fetchDataAndUpdate,
-    isLoading,
-    mergedFilters,
-    paginationInfoRef.current,
-    currentNavigationFilters,
-    searchValue,
-    setIsLoading,
-    setIsLoadingMore,
-  ])
+        // Use named parameters
+        fetchDataAndUpdate({
+          filters: mergedFilters,
+          navigationFilters: currentNavigationFilters,
+          appendMode: true,
+          cursor: currentCursor,
+          search: searchValue,
+        })
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps --
+    [
+      fetchDataAndUpdate,
+      isLoading,
+      mergedFilters,
+      paginationInfoRef.current,
+      currentNavigationFilters,
+      searchValue,
+      setIsLoading,
+      setIsLoadingMore,
+    ]
+  )
 
   useEffect(() => {
     if (!isLoadingMoreRef.current) {

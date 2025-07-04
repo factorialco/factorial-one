@@ -190,6 +190,7 @@ const mockItems = Array.from({ length: 10000 }, (_, i) => ({
 export const LargeList: Story = {
   args: {
     ...WithSearchBox.args,
+    value: "option-4",
     options: [
       ...(meta.args?.options || []),
       { type: "separator" },
@@ -245,7 +246,7 @@ export const WithDataSource: Story = {
       },
     })
 
-    const { options: _, ...rest } = args
+    const { options: _, mapOptions, ...rest } = args
 
     const [localValue, setLocalValue] = useState(args.value)
     const [, setSearchValue] = useState("")
@@ -265,6 +266,7 @@ export const WithDataSource: Story = {
         <Select<string, (typeof mockItems)[number]>
           {...rest}
           source={source}
+          mapOptions={mapOptions}
           value={localValue}
           onChange={handleOnChange}
           onSearchChange={handleOnSearchChange}

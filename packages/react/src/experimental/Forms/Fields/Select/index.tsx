@@ -44,6 +44,13 @@ import type { SelectItemObject, SelectItemProps } from "./types"
 
 export * from "./types"
 
+/**
+ * Select component for choosing from a list of options.
+ *
+ * @template T - The type of the emitted  value
+ * @template R - The type of the record/item data (used with data source)
+ *
+ */
 export type SelectProps<T, R = unknown> = {
   placeholder?: string
   onChange: (value: T, item?: R) => void
@@ -65,17 +72,19 @@ export type SelectProps<T, R = unknown> = {
   | {
       source: DeepOmit<
         DataSource<
-          R,
+          R extends RecordType ? R : RecordType,
           FiltersDefinition,
           SortingsDefinition,
           SummariesDefinition,
-          ItemActionsDefinition<RecordType>,
+          ItemActionsDefinition<R extends RecordType ? R : RecordType>,
           NavigationFiltersDefinition,
-          GroupingDefinition<RecordType>
+          GroupingDefinition<R extends RecordType ? R : RecordType>
         >,
         "dataAdapter.paginationType"
       >
-      mapOptions: (item: R) => SelectItemProps<T, R>
+      mapOptions: (
+        item: R extends RecordType ? R : RecordType
+      ) => SelectItemProps<T, R>
       options?: never
     }
   | {
@@ -180,31 +189,34 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
           >): PromiseOrObservable<
             BaseResponse<R extends RecordType ? R : RecordType>
           > => {
-            return Promise.resolve({
+            return {
               records: options.filter(
                 (option) =>
                   option.type === "separator" ||
                   !search ||
                   option.label.toLowerCase().includes(search.toLowerCase())
               ) as unknown as (R extends RecordType ? R : RecordType)[],
-            })
+            }
           },
         }
   }, [options, source])
 
-  const localSource = useDataSource({
-    ...source,
-    dataAdapter,
-    search: showSearchBox
-      ? {
-          enabled: showSearchBox,
-          sync: !source,
-        }
-      : undefined,
-  })
+  const localSource = useDataSource(
+    {
+      ...source,
+      dataAdapter,
+      search: showSearchBox
+        ? {
+            enabled: showSearchBox,
+            sync: !source,
+          }
+        : undefined,
+    },
+    [options]
+  )
 
   const optionMapper = useCallback(
-    (item: R): SelectItemProps<T, R> => {
+    (item: R extends RecordType ? R : RecordType): SelectItemProps<T, R> => {
       if (source) {
         if (!mapOptions) {
           throw new Error("mapOptions is required when using a source")
@@ -237,7 +249,9 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
         return undefined
       }
       for (const option of data.records) {
-        const mappedOption = optionMapper(option as R)
+        const mappedOption = optionMapper(
+          option as R extends RecordType ? R : RecordType
+        )
         if (
           mappedOption.type !== "separator" &&
           String(mappedOption.value) === value
@@ -291,7 +305,9 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
 
   const items: VirtualItem[] = useMemo(() => {
     return data.records.map((option, index) => {
-      const mappedOption = optionMapper(option as R)
+      const mappedOption = optionMapper(
+        option as R extends RecordType ? R : RecordType
+      )
       return mappedOption.type === "separator"
         ? {
             height: 1,
