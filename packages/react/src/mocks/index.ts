@@ -167,6 +167,29 @@ export const DOT_TAG_COLORS_MOCK: NewColor[] = [
   "indigo",
 ]
 
+export const PERFORMANCE_LITERAL_MOCK = [
+  "Exceptional",
+  "Above Average",
+  "Average",
+  "Below Average",
+  "Needs Improvement",
+]
+
+export const TEAMS_MOCK = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon"]
+export const CERTIFICATIONS_MOCK = [
+  "AWS, Google Cloud",
+  "Azure, MongoDB",
+  "Kubernetes, Docker",
+]
+
+export const LANGUAGES_MOCK = [
+  "English, Spanish",
+  "English, French, German",
+  "English, Mandarin",
+]
+
+export const EDUCATION_MOCK = ["Ph.D.", "Master's", "Bachelor's", "Associate's"]
+
 export const getMockValue = <T>(mock: T[], index: number): T => {
   return mock[index % mock.length]
 }
