@@ -185,7 +185,7 @@ export const BasicActionsExample: Story = {
 export const CardActionsExample: Story = {
   parameters: {
     a11y: {
-      skipCI: true,
+      skipCi: true,
     },
     chromatic: {
       disableSnapshot: true,
