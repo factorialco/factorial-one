@@ -187,7 +187,7 @@ const BasicTextEditorComponent = forwardRef<
       >
         <div className="flex flex-row">
           <div
-            className="flex h-5 w-[18px] cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover"
+            className="flex h-5 w-[16px] cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover"
             onClick={handlePlusClick}
           >
             <Icon
@@ -200,7 +200,7 @@ const BasicTextEditorComponent = forwardRef<
           <div
             data-drag-handle
             draggable
-            className="flex h-5 w-5 cursor-grab items-center justify-center rounded-2xs hover:bg-f1-background-hover"
+            className="flex h-5 w-[16px] cursor-grab items-center justify-center rounded-2xs hover:bg-f1-background-hover"
           >
             <Icon
               icon={Handle}
