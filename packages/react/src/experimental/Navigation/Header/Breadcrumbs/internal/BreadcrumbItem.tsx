@@ -88,15 +88,19 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
     // Different renders depending on the breadcrumbtype
     const contents: Record<ContentType, ReactNode> = {
       loading: <BreadcrumbSkeleton />,
-      select: "type" in item && item.type === "select" && (
-        <BreadcrumbSelect
-          options={item.options}
-          defaultItem={item.defaultItem}
-          onChange={item.onChange}
-          value={item.value}
-          showSearchBox={item.searchbox}
-        />
-      ),
+      select: "type" in item &&
+        item.type === "select" &&
+        item.source &&
+        item.mapOptions && (
+          <BreadcrumbSelect
+            source={item.source}
+            mapOptions={item.mapOptions}
+            defaultItem={item.defaultItem}
+            onChange={item.onChange}
+            value={item.value}
+            showSearchBox={item.searchbox}
+          />
+        ),
       page: (
         <BreadcrumbPage aria-hidden="true" className="p-0">
           {content}

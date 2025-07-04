@@ -628,7 +628,7 @@ export function useData<
         })
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps --
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
     [
       fetchDataAndUpdate,
       isLoading,

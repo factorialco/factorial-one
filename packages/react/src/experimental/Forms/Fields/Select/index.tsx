@@ -168,6 +168,10 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
 
   const [openLocal, setOpenLocal] = useState(open)
 
+  const [localValue, setLocalValue] = useState(
+    value || props.defaultItem?.value
+  )
+
   const dataAdapter = useMemo(() => {
     return source
       ? ({
@@ -265,11 +269,11 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   )
 
   useEffect(() => {
-    const foundOption = findOption(value)
+    const foundOption = findOption(localValue)
     if (foundOption) {
       setSelectedOption(foundOption)
     }
-  }, [data.records, value, optionMapper, findOption])
+  }, [data.records, localValue, optionMapper, findOption])
 
   useEffect(() => {
     if (open) {
@@ -288,6 +292,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   const onValueChange = (changedValue: string | undefined) => {
     // Resets the search value when the option is selected
     setCurrentSearch(undefined)
+    setLocalValue(changedValue as T)
     const foundOption = findOption(changedValue)
 
     if (foundOption) {
