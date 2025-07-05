@@ -17,7 +17,6 @@ export * from "./TextAlign"
 
 // Dynamic extensions (require configuration)
 export * from "./Accessibility"
-export * from "./AddBlockButton"
 export * from "./CharacterCount"
 export * from "./Mention"
 export * from "./Placeholder"

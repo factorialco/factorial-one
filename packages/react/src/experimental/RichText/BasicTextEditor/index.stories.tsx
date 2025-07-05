@@ -79,15 +79,27 @@ const defaultTranscriptLabels = {
   messagesCountSingular: "message",
 }
 
+const defaultChatLabels = {
+  deleteBlock: "Delete",
+  expand: "Expand",
+  collapse: "Collapse",
+  messagesCount: "messages",
+  messagesCountSingular: "message",
+}
+
 const initialContent = {
   type: "doc",
   content: [
     {
       type: "heading",
+      attrs: {
+        textAlign: null,
+        level: 1,
+      },
       content: [
         {
           type: "text",
-          text: "Titulo de la meeting",
+          text: "Titulo de la meeting ",
         },
       ],
     },
@@ -112,6 +124,8 @@ const initialContent = {
             },
           ],
         },
+        config: null,
+        isOpen: true,
       },
     },
     {
@@ -148,6 +162,8 @@ const initialContent = {
             },
           ],
         },
+        config: null,
+        isOpen: false,
       },
     },
     {
@@ -195,16 +211,47 @@ const initialContent = {
             },
           ],
         },
+        config: null,
+        isOpen: false,
+      },
+    },
+    {
+      type: "chat",
+      attrs: {
+        data: {
+          title: "Conversation with Assistant",
+          messages: [
+            {
+              role: "user",
+              message: "Hi Assistant, can you help me with the report?",
+            },
+            {
+              role: "assistant",
+              message: "Sure! What do you need exactly?",
+            },
+            {
+              role: "user",
+              message: "A summary of this week's tasks.",
+            },
+          ],
+        },
+        config: null,
+        isOpen: true,
       },
     },
     {
       type: "aiBlock",
       attrs: {
         data: {},
+        config: null,
+        isCollapsed: false,
       },
     },
     {
       type: "paragraph",
+      attrs: {
+        textAlign: null,
+      },
     },
   ],
 }
@@ -219,6 +266,7 @@ export const Default: Story = {
       moodTrackerLabels: defaultMoodTrackerLabels,
       liveCompanionLabels: defaultLiveCompanionLabels,
       transcriptLabels: defaultTranscriptLabels,
+      chatLabels: defaultChatLabels,
     },
     onChange: (value) => {
       console.log("Content changed:", value)

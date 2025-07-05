@@ -3,9 +3,22 @@ import {
   ToolbarLabels,
 } from "@/experimental/RichText/CoreEditor"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
+import { Icon } from "@/factorial-one"
+import { Handle, Plus } from "@/icons/app"
+import DragHandle from "@tiptap/extension-drag-handle-react"
+import { Node } from "@tiptap/pm/model"
 import { Editor, EditorContent, JSONContent, useEditor } from "@tiptap/react"
-import { forwardRef, useId, useImperativeHandle, useRef, useState } from "react"
+import {
+  forwardRef,
+  useCallback,
+  useId,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import { AIBlockConfig, AIBlockLabels } from "../CoreEditor/Extensions/AIBlock"
+import { ChatLabels, ChatMessage } from "../CoreEditor/Extensions/Chat"
 import { LiveCompanionLabels } from "../CoreEditor/Extensions/LiveCompanion"
 import { MoodTrackerLabels } from "../CoreEditor/Extensions/MoodTracker"
 import {
@@ -19,9 +32,7 @@ import { createBasicTextEditorExtensions } from "./extensions"
 interface BasicTextEditorProps {
   onChange: (value: { json: JSONContent | null; html: string | null }) => void
   placeholder: string
-  initialEditorState?: {
-    content: JSONContent | string
-  }
+  initialEditorState?: { content: JSONContent | string }
   readonly?: boolean
   aiBlockConfig?: AIBlockConfig
 
@@ -32,6 +43,7 @@ interface BasicTextEditorProps {
     moodTrackerLabels?: MoodTrackerLabels
     liveCompanionLabels?: LiveCompanionLabels
     transcriptLabels?: TranscriptLabels
+    chatLabels?: ChatLabels
   }
 }
 
@@ -41,6 +53,7 @@ type BasicTextEditorHandle = {
   setContent: (content: string) => void
   insertAIBlock: () => void
   insertTranscript: (title: string, users: User[], messages: Message[]) => void
+  insertChat: (title: string, messages: ChatMessage[]) => void
 }
 
 const BasicTextEditorComponent = forwardRef<
@@ -64,11 +77,13 @@ const BasicTextEditorComponent = forwardRef<
     moodTrackerLabels,
     liveCompanionLabels,
     transcriptLabels,
+    chatLabels,
   } = labels
+
   const containerRef = useRef<HTMLDivElement>(null)
+  const hoveredRef = useRef<{ pos: number; nodeSize: number } | null>(null)
   const editorId = useId()
 
-  // Capture initial content only once, not affected by prop changes
   const [initialContent] = useState(() => initialEditorState?.content || "")
 
   const editor = useEditor({
@@ -80,15 +95,16 @@ const BasicTextEditorComponent = forwardRef<
       aiBlockLabels,
       moodTrackerLabels,
       liveCompanionLabels,
-      transcriptLabels
+      transcriptLabels,
+      chatLabels
     ),
     content: initialContent,
     onUpdate: ({ editor }: { editor: Editor }) => {
-      if (editor.isEmpty) {
-        onChange({ json: null, html: null })
-      } else {
-        onChange({ json: editor.getJSON(), html: editor.getHTML() })
-      }
+      onChange(
+        editor.isEmpty
+          ? { json: null, html: null }
+          : { json: editor.getJSON(), html: editor.getHTML() }
+      )
     },
     editable: !readonly,
   })
@@ -96,58 +112,106 @@ const BasicTextEditorComponent = forwardRef<
   useImperativeHandle(ref, () => ({
     clear: () => editor?.commands.clearContent(),
     focus: () => editor?.commands.focus(),
-    setContent: (content: string) => {
-      if (editor) {
-        editor.commands.setContent(content)
-      }
-    },
+    setContent: (content) => editor?.commands.setContent(content),
     insertAIBlock: () => {
-      if (editor && aiBlockConfig) {
-        const enhancedConfig = aiBlockLabels
-          ? { ...aiBlockConfig, labels: aiBlockLabels }
-          : aiBlockConfig
-
-        editor.commands.insertAIBlock(
-          {
-            content: null,
-            selectedAction: undefined,
-          },
-          enhancedConfig
-        )
-      }
+      if (!editor || !aiBlockConfig) return
+      const cfg = aiBlockLabels
+        ? { ...aiBlockConfig, labels: aiBlockLabels }
+        : aiBlockConfig
+      editor.commands.insertAIBlock(
+        { content: null, selectedAction: undefined },
+        cfg
+      )
     },
-    insertTranscript: (title: string, users: User[], messages: Message[]) => {
-      if (editor) {
-        const enhancedConfig = transcriptLabels
-          ? { labels: transcriptLabels }
-          : undefined
-
-        editor.commands.insertTranscript(
-          {
-            title,
-            users,
-            messages,
-          },
-          enhancedConfig
-        )
-      }
+    insertTranscript: (title, users, messages) => {
+      if (!editor) return
+      const cfg = transcriptLabels ? { labels: transcriptLabels } : undefined
+      editor.commands.insertTranscript({ title, users, messages }, cfg)
+    },
+    insertChat: (title, messages) => {
+      if (!editor) return
+      const cfg = chatLabels ? { labels: chatLabels } : undefined
+      editor.commands.insertChat({ title, messages }, cfg)
     },
   }))
+
+  const tippyOptions = useMemo(
+    () => ({
+      offset: [0, 2] as [number, number],
+    }),
+    []
+  )
+
+  const handleNodeChange = useCallback(
+    ({ node, pos }: { node: Node | null; pos: number; editor: Editor }) => {
+      hoveredRef.current = node ? { pos, nodeSize: node.nodeSize } : null
+    },
+    []
+  )
+
+  const handlePlusClick = useCallback(() => {
+    const hovered = hoveredRef.current
+    if (!hovered || !editor) return
+
+    const { pos, nodeSize } = hovered
+    const node = editor.state.doc.nodeAt(pos)
+
+    if (node && node.content.size === 0) {
+      editor
+        .chain()
+        .focus()
+        .setTextSelection(pos + 1)
+        .insertContent("/")
+        .run()
+    } else {
+      const afterBlock = pos + nodeSize
+
+      editor
+        .chain()
+        .focus()
+        .insertContentAt(afterBlock, { type: "paragraph" })
+        .setTextSelection(afterBlock + 1)
+        .insertContent("/")
+        .run()
+    }
+  }, [editor])
 
   if (!editor) return null
 
   return (
-    <div
-      ref={containerRef}
-      className="relative flex h-full w-full flex-row overflow-hidden"
-      id={editorId}
-    >
-      <div
-        className="scrollbar-macos relative w-full flex-grow overflow-y-scroll"
-        onClick={() => editor?.commands.focus()}
+    <div className="relative w-full" ref={containerRef} id={editorId}>
+      <DragHandle
+        editor={editor}
+        tippyOptions={tippyOptions}
+        onNodeChange={handleNodeChange}
       >
-        <EditorContent editor={editor} />
-      </div>
+        <div className="flex flex-row">
+          <div
+            className="flex h-5 w-[16px] cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover"
+            onClick={handlePlusClick}
+          >
+            <Icon
+              icon={Plus}
+              size="sm"
+              className="text-f1-foreground-tertiary"
+            />
+          </div>
+
+          <div
+            data-drag-handle
+            draggable
+            className="flex h-5 w-[16px] cursor-grab items-center justify-center rounded-2xs hover:bg-f1-background-hover"
+          >
+            <Icon
+              icon={Handle}
+              size="xs"
+              className="text-f1-foreground-tertiary"
+            />
+          </div>
+        </div>
+      </DragHandle>
+
+      <EditorContent editor={editor} className="[&>div]:w-full [&>div]:pl-10" />
 
       <EditorBubbleMenu
         editor={editor}

@@ -1,10 +1,5 @@
-import { Icon } from "@/components/Utilities/Icon"
-import {
-  Pulse,
-  pulseIcon,
-  pulseIconStyle,
-} from "@/experimental/Information/Avatars/PulseAvatar"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { RichTextDisplay } from "@/experimental/RichText/RichTextDisplay"
 import { Button } from "@/factorial-one"
 import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { Node } from "@tiptap/core"
@@ -14,53 +9,54 @@ import {
   NodeViewWrapper,
   ReactNodeViewRenderer,
 } from "@tiptap/react"
+import { format } from "date-fns"
 import { AnimatePresence, motion } from "motion/react"
 import React, { useState } from "react"
 
-interface MoodTrackerData {
-  title: string
-  averageMoodComment: string
-  days: {
-    day: string
-    mood: Pulse
-    comment: string
-  }[]
+export interface ChatMessage {
+  role: "user" | "assistant"
+  message: string
+  dateTime?: string
 }
 
-export interface MoodTrackerLabels {
+export interface ChatData {
+  title: string
+  messages: ChatMessage[]
+}
+
+export interface ChatLabels {
   deleteBlock: string
   expand: string
   collapse: string
+  messagesCount: string
+  messagesCountSingular: string
 }
 
-export interface MoodTrackerConfig {
-  labels?: MoodTrackerLabels
+export interface ChatConfig {
+  labels?: ChatLabels
 }
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
-    moodTracker: {
-      insertMoodTracker: (
-        data: MoodTrackerData,
-        config?: MoodTrackerConfig
-      ) => ReturnType
+    chat: {
+      insertChat: (data: ChatData, config?: ChatConfig) => ReturnType
     }
   }
 }
 
-export const MoodTrackerView: React.FC<NodeViewProps> = ({
+const ChatView: React.FC<NodeViewProps> = ({
   node,
   deleteNode,
   extension,
   updateAttributes,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(node.attrs.isOpen ?? false)
-  const data = node.attrs.data as MoodTrackerData
+  const data = node.attrs.data as ChatData
 
-  // Use dynamic config from extension options instead of persisted config
+  // Dynamic config from extension options
   const config =
-    (extension.options.currentConfig as MoodTrackerConfig) ||
-    (node.attrs.config as MoodTrackerConfig) ||
+    (extension.options.currentConfig as ChatConfig) ||
+    (node.attrs.config as ChatConfig) ||
     {}
 
   if (!data) return null
@@ -71,20 +67,30 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
     updateAttributes({ isOpen: newState })
   }
 
-  // Generate dropdown items
-  const getDropdownItems = [
+  const dropdownItems = [
     {
-      label: config.labels?.deleteBlock || "Delete",
+      label: config.labels?.deleteBlock || "",
       icon: Delete,
       critical: true,
       onClick: () => deleteNode(),
     },
   ]
 
+  const formatDateTime = (dateTimeStr?: string): string | undefined => {
+    if (!dateTimeStr) return undefined
+    try {
+      const date = new Date(dateTimeStr)
+      return format(date, "HH:mm")
+    } catch (e) {
+      console.error(e)
+      return dateTimeStr
+    }
+  }
+
   return (
     <NodeViewWrapper contentEditable={false}>
       <motion.div
-        className="editor-mood-tracker my-4 flex w-full flex-col gap-4 rounded-md border border-solid border-f1-border-secondary p-3"
+        className="editor-chat my-4 flex w-full flex-col gap-4 rounded-md border border-solid border-f1-border-secondary p-3"
         onClick={(e) => e.stopPropagation()}
         layout
         initial={{ opacity: 0, y: 20 }}
@@ -104,44 +110,30 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
                 <p className="text-f1-text-primary text-lg font-semibold">
                   {data.title}
                 </p>
-                <div className="flex flex-row items-center">
-                  {data.days.map((day, index) => (
-                    <div
-                      key={index}
-                      className="-ml-1.5 flex items-center justify-center rounded-full bg-f1-background"
-                    >
-                      <Icon
-                        icon={pulseIcon[day.mood]}
-                        size="lg"
-                        className={pulseIconStyle({ pulse: day.mood })}
-                      />
-                    </div>
-                  ))}
-                </div>
               </div>
-              <p>
-                <span className="text-f1-text-primary text-md font-normal">
-                  {data.averageMoodComment}
-                </span>
+              <p className="text-f1-text-secondary text-sm">
+                {data.messages.length}{" "}
+                {data.messages.length === 1
+                  ? config.labels?.messagesCountSingular
+                  : config.labels?.messagesCount}
               </p>
             </div>
           </div>
 
           <div className="flex flex-row items-center gap-1">
-            {/* Toggle button */}
             <Button
               onClick={handleToggleCollapse}
               variant="outline"
               hideLabel
               label={
                 isOpen
-                  ? config.labels?.collapse || "Collapse"
-                  : config.labels?.expand || "Expand"
+                  ? config.labels?.collapse || ""
+                  : config.labels?.expand || ""
               }
               icon={isOpen ? ChevronUp : ChevronDown}
               size="sm"
             />
-            <Dropdown items={getDropdownItems} size="sm" />
+            <Dropdown items={dropdownItems} size="sm" />
           </div>
         </motion.div>
 
@@ -180,40 +172,45 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.3 }}
               >
-                <div className="flex flex-col gap-2">
-                  {data.days.map((day, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{
-                        opacity: 0,
-                        y: -10,
-                        scale: 0.95,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                      }}
-                      transition={{
-                        delay: index * 0.05,
-                        duration: 0.2,
-                        ease: "easeOut",
-                      }}
-                      className="flex flex-row items-center gap-2"
-                    >
-                      <div className="flex items-center justify-center rounded-full">
-                        <Icon
-                          icon={pulseIcon[day.mood]}
-                          size="lg"
-                          className={pulseIconStyle({ pulse: day.mood })}
-                        />
-                      </div>
-                      <p className="text-f1-text-primary text-md font-normal">
-                        <span className="font-semibold">{day.day}:</span>{" "}
-                        {day.comment || "-"}
-                      </p>
-                    </motion.div>
-                  ))}
+                <div className="scrollbar-macos flex max-h-[500px] flex-col gap-4 overflow-y-auto">
+                  {data.messages.map((msg, idx) => {
+                    const isUser = msg.role === "user"
+                    const bubbleClasses = isUser
+                      ? "bg-f1-background-secondary text-f1-foreground"
+                      : "bg-f1-background text-f1-foreground border border-f1-border border-solid"
+                    return (
+                      <motion.div
+                        key={idx}
+                        initial={{
+                          opacity: 0,
+                          y: -10,
+                          scale: 0.95,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          y: 0,
+                          scale: 1,
+                        }}
+                        transition={{
+                          delay: idx * 0.05,
+                          duration: 0.2,
+                          ease: "easeOut",
+                        }}
+                        className={`flex ${isUser ? "justify-end" : "justify-start"}`}
+                      >
+                        <div
+                          className={`max-w-[80%] rounded-md px-3 py-2 ${bubbleClasses}`}
+                        >
+                          <RichTextDisplay content={msg.message} />
+                          {msg.dateTime && (
+                            <span className="text-f1-text-tertiary mt-1 block text-right text-xs">
+                              {formatDateTime(msg.dateTime)}
+                            </span>
+                          )}
+                        </div>
+                      </motion.div>
+                    )
+                  })}
                 </div>
               </motion.div>
             </motion.div>
@@ -225,8 +222,8 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
   )
 }
 
-export const MoodTracker = Node.create({
-  name: "moodTracker",
+export const Chat = Node.create({
+  name: "chat",
 
   group: "block",
 
@@ -246,14 +243,14 @@ export const MoodTracker = Node.create({
     return {
       data: {
         default: null,
-        parseHTML: (element) => {
-          const dataAttr = element.getAttribute("data-mood-tracker")
-          return dataAttr ? JSON.parse(dataAttr) : null
+        parseHTML: (element: HTMLElement) => {
+          const attr = element.getAttribute("data-chat")
+          return attr ? JSON.parse(attr) : null
         },
-        renderHTML: (attributes) => {
-          if (!attributes.data) return {}
+        renderHTML: (attrs: { data: ChatData }) => {
+          if (!attrs.data) return {}
           return {
-            "data-mood-tracker": JSON.stringify(attributes.data),
+            "data-chat": JSON.stringify(attrs.data),
           }
         },
       },
@@ -269,34 +266,34 @@ export const MoodTracker = Node.create({
   parseHTML() {
     return [
       {
-        tag: "div[data-mood-tracker]",
+        tag: "div[data-chat]",
       },
     ]
   },
 
   renderHTML({ HTMLAttributes, node }) {
-    const data = node.attrs.data as MoodTrackerData
+    const data = node.attrs.data as ChatData
     if (!data) return ["div"]
 
     return [
       "div",
       {
         ...HTMLAttributes,
-        class: "mood-tracker-block",
-        "data-mood-tracker": JSON.stringify(data),
+        class: "chat-block",
+        "data-chat": JSON.stringify(data),
       },
-      ["div", { class: "mood-tracker-content" }, `Mood Tracker: ${data.title}`],
+      ["div", { class: "chat-content" }, `Chat: ${data.title}`],
     ]
   },
 
   addNodeView() {
-    return ReactNodeViewRenderer(MoodTrackerView)
+    return ReactNodeViewRenderer(ChatView)
   },
 
   addCommands() {
     return {
-      insertMoodTracker:
-        (data: MoodTrackerData, config?: MoodTrackerConfig) =>
+      insertChat:
+        (data: ChatData, config?: ChatConfig) =>
         ({ commands }) => {
           return commands.insertContent({
             type: this.name,
@@ -307,4 +304,4 @@ export const MoodTracker = Node.create({
   },
 })
 
-export const MoodTrackerExtension = MoodTracker
+export const ChatExtension = Chat
