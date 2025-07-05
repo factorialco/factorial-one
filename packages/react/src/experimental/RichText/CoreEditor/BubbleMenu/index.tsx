@@ -1,4 +1,4 @@
-import { BubbleMenu, Editor } from "@tiptap/react"
+import { BubbleMenu, Editor, isTextSelection } from "@tiptap/react"
 import { NodeSelection } from "prosemirror-state"
 import { Toolbar } from "../Toolbar"
 import { ToolbarLabels } from "../Toolbar/types"
@@ -35,11 +35,31 @@ export const EditorBubbleMenu = ({
         zIndex: 9999,
       }}
       editor={editor}
-      shouldShow={({ state }) => {
-        const { selection } = state
-        if (selection instanceof NodeSelection || selection.empty) {
+      shouldShow={({ view, state, from, to }) => {
+        const { doc, selection } = state
+        const { empty } = selection
+
+        if (selection instanceof NodeSelection) {
           return false
         }
+        const isEmptyTextBlock =
+          !doc.textBetween(from, to).length && isTextSelection(state.selection)
+
+        const isChildOfMenu = document
+          .getElementById(editorId)
+          ?.contains(document.activeElement)
+
+        const hasEditorFocus = view.hasFocus() || isChildOfMenu
+
+        if (
+          !hasEditorFocus ||
+          empty ||
+          isEmptyTextBlock ||
+          !editor.isEditable
+        ) {
+          return false
+        }
+
         return true
       }}
     >
