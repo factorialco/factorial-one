@@ -1,9 +1,9 @@
+import { Icon } from "@/components/Utilities/Icon"
 import {
   EditorBubbleMenu,
   ToolbarLabels,
 } from "@/experimental/RichText/CoreEditor"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
-import { Icon } from "@/factorial-one"
 import { Handle, Plus } from "@/icons/app"
 import DragHandle from "@tiptap/extension-drag-handle-react"
 import { Node } from "@tiptap/pm/model"
