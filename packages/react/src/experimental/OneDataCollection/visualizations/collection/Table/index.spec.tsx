@@ -89,6 +89,7 @@ const createTestSource = (
   },
   currentGrouping: undefined,
   setCurrentGrouping: vi.fn(),
+  getPaginationType: () => "pages",
 })
 
 // Test wrapper component that provides I18nProvider
@@ -362,6 +363,7 @@ describe("TableCollection", () => {
           options: BaseFetchOptions<TestFilters, TestNavigationFilters>
         ) => Promise<PaginatedResponse<Person>>,
       },
+      getPaginationType: () => paginationType ?? "no-pagination",
     })
 
     it("renders pagination controls when pages pagination is enabled", async () => {
