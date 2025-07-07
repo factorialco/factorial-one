@@ -1,3 +1,5 @@
+import { Button } from "@/components/Actions/Button"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import {
   ColorExtension,
@@ -12,7 +14,6 @@ import {
   TypographyExtension,
   UnderlineExtension,
 } from "@/experimental/RichText/CoreEditor"
-import { Button, Icon, IconType } from "@/factorial-one"
 import { Ai, ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { JSONContent, Node } from "@tiptap/core"
