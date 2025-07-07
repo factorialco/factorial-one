@@ -570,7 +570,7 @@ declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
  */
 export declare function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps): JSX_2.Element;
 
-export declare function BreadcrumbSelect({ ...props }: BreadcrumbSelectProps): JSX_2.Element;
+export declare function BreadcrumbSelect<T = string, R = unknown>({ ...props }: BreadcrumbSelectProps<T, R>): JSX_2.Element;
 
 declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     type: "select";
@@ -589,7 +589,7 @@ declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     options: SelectItemProps<string>[];
 });
 
-export declare type BreadcrumbSelectProps = SelectProps<string>;
+export declare type BreadcrumbSelectProps<T = string, R = unknown> = SelectProps<T, R>;
 
 export declare interface BreadcrumbsProps {
     /** Array of breadcrumb items to display */
@@ -1190,6 +1190,7 @@ export declare type DataSource<Record extends RecordType, Filters extends Filter
     currentSummaries?: Record;
     /** Function to update the current summaries data */
     setCurrentSummaries?: React.Dispatch<React.SetStateAction<Record | undefined>>;
+    getPaginationType: () => PaginationType;
 };
 
 /**
@@ -2922,8 +2923,9 @@ export declare type PaginationInfo = Omit<PageBasedPaginatedResponse<unknown> | 
  * Defines the available pagination types used throughout the application.
  * - "pages": Represents traditional page-based navigation with numbered pages.
  * - "infinite-scroll": Represents continuous loading of content as the user scrolls.
+ * - "no-pagination": Represents a collection that does not use pagination.
  */
-export declare type PaginationType = "pages" | "infinite-scroll";
+export declare type PaginationType = "pages" | "infinite-scroll" | "no-pagination";
 
 export declare const PersonAvatar: {
     ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: PersonAvatarProps): JSX_2.Element;
@@ -3591,7 +3593,7 @@ export declare type SelectItemProps<T, R = unknown> = SelectItemObject<T, R> | {
  */
 export declare type SelectProps<T, R = unknown> = {
     placeholder?: string;
-    onChange: (value: T, item?: R) => void;
+    onChange: (value: T, origialItem?: R, option?: SelectItemObject<T, R>) => void;
     value?: T;
     defaultItem?: SelectItemObject<T, R>;
     children?: React.ReactNode;
@@ -4524,8 +4526,8 @@ declare global {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        liveCompanion: {
-            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        aiBlock: {
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType;
         };
     }
 }
@@ -4533,8 +4535,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        aiBlock: {
-            insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
     }
 }
