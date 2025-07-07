@@ -199,7 +199,7 @@ export const LargeList: Story = {
   },
 }
 
-export const WithDataSource: Story = {
+export const WithDataSourcePaginated: Story = {
   render: (args) => {
     const source = useDataSource<
       (typeof mockItems)[number],
@@ -238,6 +238,80 @@ export const WithDataSource: Story = {
                 hasMore: nextCursor < results.length,
                 records: paginatedResults,
                 total: results.length,
+              }
+              resolve(res)
+            }, 100)
+          })
+        },
+      },
+    })
+
+    const { options: _, mapOptions, ...rest } = args
+
+    const [localValue, setLocalValue] = useState(args.value)
+    const [, setSearchValue] = useState("")
+    // Sets a click handler to change the label's value
+    const handleOnChange = (value: string, item?: unknown) => {
+      setLocalValue(value)
+      console.log("selected value:", value, "- selected item:", item)
+    }
+
+    const handleOnSearchChange = (value: string) => {
+      setSearchValue(value)
+      console.log("searchValue", value)
+    }
+
+    return (
+      <div className="w-48">
+        <Select<string, (typeof mockItems)[number]>
+          {...rest}
+          source={source}
+          mapOptions={mapOptions}
+          value={localValue}
+          onChange={handleOnChange}
+          onSearchChange={handleOnSearchChange}
+        />
+      </div>
+    )
+  },
+  args: {
+    placeholder: "Select a value",
+    showSearchBox: true,
+    onChange: fn(),
+    value: "option-2",
+    mapOptions: (item: (typeof mockItems)[number]) => ({
+      value: item.value,
+      label: item.label,
+      icon: item.icon,
+      description: item.description,
+    }),
+  },
+}
+
+export const WithDataSourceNotPaginated: Story = {
+  render: (args) => {
+    const source = useDataSource<
+      (typeof mockItems)[number],
+      FiltersDefinition,
+      SortingsDefinition,
+      SummariesDefinition,
+      ItemActionsDefinition<(typeof mockItems)[number]>,
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockItems)[number]>
+    >({
+      dataAdapter: {
+        fetchData: (options) => {
+          const { search } = options
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const results = mockItems.filter(
+                (item) =>
+                  !search ||
+                  item.label.toLowerCase().includes(search.toLowerCase())
+              )
+
+              const res = {
+                records: results,
               }
               resolve(res)
             }, 100)

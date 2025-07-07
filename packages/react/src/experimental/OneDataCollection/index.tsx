@@ -208,6 +208,9 @@ export const useDataSource = <
     setCurrentGrouping,
     currentGrouping,
     grouping,
+    getPaginationType: () => {
+      return dataAdapter.paginationType || "no-pagination"
+    },
   }
 }
 

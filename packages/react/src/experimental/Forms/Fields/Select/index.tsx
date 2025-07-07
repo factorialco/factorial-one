@@ -53,7 +53,7 @@ export * from "./types"
  */
 export type SelectProps<T, R = unknown> = {
   placeholder?: string
-  onChange: (value: T, item?: R) => void
+  onChange: (value: T, origialItem?: R, option?: SelectItemObject<T, R>) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
   children?: React.ReactNode
@@ -173,13 +173,17 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   )
 
   const dataAdapter = useMemo(() => {
+    if (
+      source &&
+      !["infinite-scroll", "no-pagination"].includes(source.getPaginationType())
+    ) {
+      throw new Error(
+        "Select component only supports `infinite-scroll` or `no-pagination` pagination types"
+      )
+    }
+
     return source
-      ? ({
-          ...source.dataAdapter,
-          // Forces the infinite-scroll pagination type
-          paginationType: "infinite-scroll" as const,
-          perPage: 10,
-        } as PaginatedDataAdapter<
+      ? (source.dataAdapter as PaginatedDataAdapter<
           R extends RecordType ? R : RecordType,
           FiltersDefinition,
           NavigationFiltersDefinition
@@ -271,6 +275,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   useEffect(() => {
     const foundOption = findOption(localValue)
     if (foundOption) {
+      onChange?.(foundOption.value, foundOption.item, foundOption)
       setSelectedOption(foundOption)
     }
   }, [data.records, localValue, optionMapper, findOption])
@@ -296,7 +301,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
     const foundOption = findOption(changedValue)
 
     if (foundOption) {
-      onChange?.(foundOption.value, foundOption.item)
+      onChange?.(foundOption.value, foundOption.item, foundOption)
     }
   }
 

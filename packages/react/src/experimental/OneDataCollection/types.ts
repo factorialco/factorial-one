@@ -130,8 +130,9 @@ export type BaseResponse<Record> = {
  * Defines the available pagination types used throughout the application.
  * - "pages": Represents traditional page-based navigation with numbered pages.
  * - "infinite-scroll": Represents continuous loading of content as the user scrolls.
+ * - "no-pagination": Represents a collection that does not use pagination.
  */
-export type PaginationType = "pages" | "infinite-scroll"
+export type PaginationType = "pages" | "infinite-scroll" | "no-pagination"
 
 /**
  * Represents a base structure for paginated API responses, providing
@@ -484,6 +485,7 @@ export type DataSource<
   currentSummaries?: Record
   /** Function to update the current summaries data */
   setCurrentSummaries?: React.Dispatch<React.SetStateAction<Record | undefined>>
+  getPaginationType: () => PaginationType
 }
 
 /**

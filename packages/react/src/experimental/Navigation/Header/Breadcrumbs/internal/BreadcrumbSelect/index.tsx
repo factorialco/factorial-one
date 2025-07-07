@@ -2,11 +2,17 @@ import { motion } from "motion/react"
 import { useState } from "react"
 import { Icon } from "../../../../../../components/Utilities/Icon"
 import { ChevronDown } from "../../../../../../icons/app"
-import { Select, SelectProps } from "../../../../../Forms/Fields/Select"
+import {
+  Select,
+  SelectItemObject,
+  SelectProps,
+} from "../../../../../Forms/Fields/Select"
 
-export type BreadcrumbSelectProps = SelectProps<string>
+export type BreadcrumbSelectProps<R = unknown> = SelectProps<string, R>
 
-export function BreadcrumbSelect({ ...props }: BreadcrumbSelectProps) {
+export function BreadcrumbSelect<R = unknown>({
+  ...props
+}: BreadcrumbSelectProps<R>) {
   const [localOpen, setLocalOpen] = useState(props.open)
 
   const onOpenChangeLocal = (open: boolean) => {
@@ -14,10 +20,19 @@ export function BreadcrumbSelect({ ...props }: BreadcrumbSelectProps) {
     props.onOpenChange?.(open)
   }
 
-  const selectedLabel = "TODO"
+  const [selectedLabel, setSelectedLabel] = useState(props.placeholder)
+
+  const handleChange = (
+    value: string,
+    item?: R,
+    option?: SelectItemObject<string, R>
+  ) => {
+    setSelectedLabel(option?.label || props.placeholder)
+    props.onChange?.(value, item, option)
+  }
 
   return (
-    <Select {...props} onOpenChange={onOpenChangeLocal}>
+    <Select {...props} onOpenChange={onOpenChangeLocal} onChange={handleChange}>
       <button
         className="flex h-6 items-center justify-between rounded-sm border px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary"
         role="combobox"
