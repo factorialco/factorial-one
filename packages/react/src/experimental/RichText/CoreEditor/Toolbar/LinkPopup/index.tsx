@@ -1,5 +1,5 @@
+import { Icon } from "@/components/Utilities/Icon"
 import { Badge } from "@/experimental/exports"
-import { Icon } from "@/factorial-one"
 import {
   Alert,
   Check,

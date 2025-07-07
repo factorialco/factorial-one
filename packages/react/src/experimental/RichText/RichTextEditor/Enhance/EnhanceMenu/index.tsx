@@ -1,4 +1,4 @@
-import { Icon } from "@/factorial-one"
+import { Icon } from "@/components/Utilities/Icon"
 import { Ai, ChevronRight } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Input } from "@/ui/input"

@@ -1,4 +1,4 @@
-import { IconType } from "@/factorial-one"
+import { IconType } from "@/components/Utilities/Icon"
 import { cn } from "@/lib/utils"
 import * as Popover from "@radix-ui/react-popover"
 import { AnimatePresence, motion } from "motion/react"
