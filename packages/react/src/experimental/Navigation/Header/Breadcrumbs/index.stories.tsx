@@ -1,13 +1,9 @@
-import { SelectItemProps } from "@/experimental/exports"
 import {
   FiltersDefinition,
-  GroupingDefinition,
-  ItemActionsDefinition,
   NavigationFiltersDefinition,
-  SortingsDefinition,
-  SummariesDefinition,
-  useDataSource,
-} from "@/experimental/OneDataCollection/exports"
+  PaginatedFetchOptions,
+  SelectItemProps,
+} from "@/experimental/exports"
 import { IconType } from "@/factorial-one"
 import { Documents, Recruitment } from "@/icons/modules"
 import {
@@ -122,22 +118,19 @@ const mockItemsLargeDataset = Array.from({ length: 10000 }, (_, i) => ({
   icon: getMockValue(MOCK_ICONS, i),
   description: `Description for option ${i}`,
 }))
+type MockItemLargeDataset = (typeof mockItemsLargeDataset)[number]
 
 export const WithSelectBreadcrumbWithDatasource: Story = {
   render: () => {
-    type MockItem = (typeof mockItemsLargeDataset)[number]
-    const source = useDataSource<
-      MockItem,
-      FiltersDefinition,
-      SortingsDefinition,
-      SummariesDefinition,
-      ItemActionsDefinition<MockItem>,
-      NavigationFiltersDefinition,
-      GroupingDefinition<MockItem>
-    >({
+    const source = {
       dataAdapter: {
         paginationType: "infinite-scroll",
-        fetchData: (options) => {
+        fetchData: (
+          options: PaginatedFetchOptions<
+            FiltersDefinition,
+            NavigationFiltersDefinition
+          >
+        ) => {
           const { search, pagination } = options
           return new Promise((resolve) => {
             setTimeout(() => {
@@ -169,7 +162,7 @@ export const WithSelectBreadcrumbWithDatasource: Story = {
           })
         },
       },
-    })
+    }
 
     return (
       <Breadcrumbs
@@ -191,7 +184,9 @@ export const WithSelectBreadcrumbWithDatasource: Story = {
             searchbox: true,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             source: source as any,
-            mapOptions: (item): SelectItemProps<string, MockItem> => ({
+            mapOptions: (
+              item
+            ): SelectItemProps<string, MockItemLargeDataset> => ({
               value: item.value as string,
               label: item.label as string,
               icon: item.icon as IconType,

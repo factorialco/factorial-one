@@ -12,7 +12,7 @@ import { DropdownItemObject } from "@/experimental/Navigation/Dropdown"
 import { NavigationItem } from "@/experimental/Navigation/utils"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
-  DataSource,
+  DataSourceDefinition,
   GroupingDefinition,
   RecordType,
   SortingsDefinition,
@@ -45,7 +45,7 @@ type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   defaultItem?: SelectItemObject<string>
 } & (
     | {
-        source: DataSource<
+        source: DataSourceDefinition<
           RecordType,
           FiltersDefinition,
           SortingsDefinition,

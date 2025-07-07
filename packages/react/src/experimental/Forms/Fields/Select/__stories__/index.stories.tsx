@@ -3,13 +3,9 @@ import { fn } from "storybook/test"
 import { Select, SelectProps } from "../index"
 
 import { IconType } from "@/components/Utilities/Icon"
-import { useDataSource } from "@/experimental/OneDataCollection"
 import { FiltersDefinition } from "@/experimental/OneDataCollection/Filters/types"
-import { GroupingDefinition } from "@/experimental/OneDataCollection/grouping"
-import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary"
+import { PaginatedFetchOptions } from "@/experimental/OneDataCollection/types"
 import { Appearance, Circle, Desktop, Plus } from "@/icons/app"
 import {
   FIRST_NAMES_MOCK,
@@ -200,19 +196,20 @@ export const LargeList: Story = {
 }
 
 export const WithDataSourcePaginated: Story = {
-  render: (args) => {
-    const source = useDataSource<
-      (typeof mockItems)[number],
-      FiltersDefinition,
-      SortingsDefinition,
-      SummariesDefinition,
-      ItemActionsDefinition<(typeof mockItems)[number]>,
-      NavigationFiltersDefinition,
-      GroupingDefinition<(typeof mockItems)[number]>
-    >({
+  args: {
+    placeholder: "Select a value",
+    showSearchBox: true,
+    onChange: fn(),
+    value: "option-2",
+    source: {
       dataAdapter: {
         paginationType: "infinite-scroll",
-        fetchData: (options) => {
+        fetchData: (
+          options: PaginatedFetchOptions<
+            FiltersDefinition,
+            NavigationFiltersDefinition
+          >
+        ) => {
           const { search, pagination } = options
           return new Promise((resolve) => {
             setTimeout(() => {
@@ -244,41 +241,7 @@ export const WithDataSourcePaginated: Story = {
           })
         },
       },
-    })
-
-    const { options: _, mapOptions, ...rest } = args
-
-    const [localValue, setLocalValue] = useState(args.value)
-    const [, setSearchValue] = useState("")
-    // Sets a click handler to change the label's value
-    const handleOnChange = (value: string, item?: unknown) => {
-      setLocalValue(value)
-      console.log("selected value:", value, "- selected item:", item)
-    }
-
-    const handleOnSearchChange = (value: string) => {
-      setSearchValue(value)
-      console.log("searchValue", value)
-    }
-
-    return (
-      <div className="w-48">
-        <Select<string, (typeof mockItems)[number]>
-          {...rest}
-          source={source}
-          mapOptions={mapOptions}
-          value={localValue}
-          onChange={handleOnChange}
-          onSearchChange={handleOnSearchChange}
-        />
-      </div>
-    )
-  },
-  args: {
-    placeholder: "Select a value",
-    showSearchBox: true,
-    onChange: fn(),
-    value: "option-2",
+    },
     mapOptions: (item: (typeof mockItems)[number]) => ({
       value: item.value,
       label: item.label,
@@ -289,18 +252,19 @@ export const WithDataSourcePaginated: Story = {
 }
 
 export const WithDataSourceNotPaginated: Story = {
-  render: (args) => {
-    const source = useDataSource<
-      (typeof mockItems)[number],
-      FiltersDefinition,
-      SortingsDefinition,
-      SummariesDefinition,
-      ItemActionsDefinition<(typeof mockItems)[number]>,
-      NavigationFiltersDefinition,
-      GroupingDefinition<(typeof mockItems)[number]>
-    >({
+  args: {
+    placeholder: "Select a value",
+    showSearchBox: true,
+    onChange: fn(),
+    value: "option-2",
+    source: {
       dataAdapter: {
-        fetchData: (options) => {
+        fetchData: (
+          options: PaginatedFetchOptions<
+            FiltersDefinition,
+            NavigationFiltersDefinition
+          >
+        ) => {
           const { search } = options
           return new Promise((resolve) => {
             setTimeout(() => {
@@ -318,41 +282,7 @@ export const WithDataSourceNotPaginated: Story = {
           })
         },
       },
-    })
-
-    const { options: _, mapOptions, ...rest } = args
-
-    const [localValue, setLocalValue] = useState(args.value)
-    const [, setSearchValue] = useState("")
-    // Sets a click handler to change the label's value
-    const handleOnChange = (value: string, item?: unknown) => {
-      setLocalValue(value)
-      console.log("selected value:", value, "- selected item:", item)
-    }
-
-    const handleOnSearchChange = (value: string) => {
-      setSearchValue(value)
-      console.log("searchValue", value)
-    }
-
-    return (
-      <div className="w-48">
-        <Select<string, (typeof mockItems)[number]>
-          {...rest}
-          source={source}
-          mapOptions={mapOptions}
-          value={localValue}
-          onChange={handleOnChange}
-          onSearchChange={handleOnSearchChange}
-        />
-      </div>
-    )
-  },
-  args: {
-    placeholder: "Select a value",
-    showSearchBox: true,
-    onChange: fn(),
-    value: "option-2",
+    },
     mapOptions: (item: (typeof mockItems)[number]) => ({
       value: item.value,
       label: item.label,

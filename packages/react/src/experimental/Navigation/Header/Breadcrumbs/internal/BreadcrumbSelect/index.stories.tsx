@@ -1,13 +1,4 @@
 import {
-  FiltersDefinition,
-  GroupingDefinition,
-  ItemActionsDefinition,
-  NavigationFiltersDefinition,
-  SortingsDefinition,
-  SummariesDefinition,
-} from "@/experimental/exports"
-import { useDataSource } from "@/experimental/OneDataCollection"
-import {
   FIRST_NAMES_MOCK,
   MOCK_ICONS,
   SURNAMES_MOCK,
@@ -101,19 +92,12 @@ const mockItems = Array.from({ length: 30 }, (_, i) => ({
   description: `Description for option ${i}`,
 }))
 
-export const AsyncData: StoryObj<
-  typeof BreadcrumbSelect<string, (typeof mockItems)[number]>
-> = {
-  render: (args) => {
-    const source = useDataSource<
-      (typeof mockItems)[number],
-      FiltersDefinition,
-      SortingsDefinition,
-      SummariesDefinition,
-      ItemActionsDefinition<(typeof mockItems)[number]>,
-      NavigationFiltersDefinition,
-      GroupingDefinition<(typeof mockItems)[number]>
-    >({
+type MockItem = (typeof mockItems)[number]
+
+export const AsyncData: StoryObj<typeof BreadcrumbSelect<string, MockItem>> = {
+  args: {
+    value: "option-3",
+    source: {
       dataAdapter: {
         fetchData: async (options) => {
           const { search } = options
@@ -133,26 +117,12 @@ export const AsyncData: StoryObj<
           })
         },
       },
-    })
-    const mapOptions = (
-      item: (typeof mockItems)[number]
-    ): SelectItemProps<string, (typeof mockItems)[number]> => ({
+    },
+    mapOptions: (item: MockItem): SelectItemProps<string, MockItem> => ({
       value: item.value,
       label: item.label,
       icon: item.icon,
-    })
-
-    return (
-      <BreadcrumbSelect<string, (typeof mockItems)[number]>
-        {...args}
-        options={undefined}
-        source={source}
-        mapOptions={mapOptions}
-      />
-    )
-  },
-  args: {
-    value: "option-3",
+    }),
     onChange: (value: string) => {
       console.log("onChange BreadcrumbSelect", value)
     },
@@ -174,20 +144,18 @@ const mockItemsLargeDataset = Array.from({ length: 10000 }, (_, i) => ({
   description: `Description for option ${i}`,
 }))
 
+type MockItemLargeDataSet = (typeof mockItemsLargeDataset)[number]
+
 export const AsyncDataWithLargeDataset: StoryObj<
   typeof BreadcrumbSelect<string, (typeof mockItems)[number]>
 > = {
-  render: (args) => {
-    type MockItem = (typeof mockItemsLargeDataset)[number]
-    const source = useDataSource<
-      MockItem,
-      FiltersDefinition,
-      SortingsDefinition,
-      SummariesDefinition,
-      ItemActionsDefinition<MockItem>,
-      NavigationFiltersDefinition,
-      GroupingDefinition<MockItem>
-    >({
+  args: {
+    defaultItem: {
+      value: "option-3",
+      label: "Arnau Pérez",
+      icon: Search,
+    },
+    source: {
       dataAdapter: {
         paginationType: "infinite-scroll",
         fetchData: (options) => {
@@ -222,28 +190,14 @@ export const AsyncDataWithLargeDataset: StoryObj<
           })
         },
       },
-    })
-    const mapOptions = (item: MockItem): SelectItemProps<string, MockItem> => ({
+    },
+    mapOptions: (
+      item: MockItemLargeDataSet
+    ): SelectItemProps<string, MockItemLargeDataSet> => ({
       value: item.value,
       label: item.label,
       icon: item.icon,
-    })
-
-    return (
-      <BreadcrumbSelect<string, MockItem>
-        {...args}
-        options={undefined}
-        source={source}
-        mapOptions={mapOptions}
-      />
-    )
-  },
-  args: {
-    defaultItem: {
-      value: "option-3",
-      label: "Arnau Pérez",
-      icon: Search,
-    },
+    }),
     showSearchBox: true,
     onChange: (value: string) => {
       console.log("onChange BreadcrumbSelect", value)

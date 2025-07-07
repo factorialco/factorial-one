@@ -2,7 +2,7 @@ import { Icon } from "@/components/Utilities/Icon"
 import {
   BaseFetchOptions,
   BaseResponse,
-  DataSource,
+  DataSourceDefinition,
   FiltersDefinition,
   GroupingDefinition,
   ItemActionsDefinition,
@@ -71,7 +71,7 @@ export type SelectProps<T, R = unknown> = {
   actions?: Action[]
 } & (
   | {
-      source: DataSource<
+      source: DataSourceDefinition<
         R extends RecordType ? R : RecordType,
         FiltersDefinition,
         SortingsDefinition,
@@ -171,10 +171,10 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
     value || props.defaultItem?.value
   )
 
-  const dataAdapter = useMemo(() => {
+  const dataSource = useMemo(() => {
     if (
       source &&
-      !["infinite-scroll", undefined].includes(
+      !["infinite-scroll", "no-pagination"].includes(
         getDataSourcePaginationType(source.dataAdapter)
       )
     ) {
@@ -183,37 +183,39 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
       )
     }
 
-    return source
-      ? (source.dataAdapter as PaginatedDataAdapter<
-          R extends RecordType ? R : RecordType,
-          FiltersDefinition,
-          NavigationFiltersDefinition
-        >)
-      : {
-          fetchData: ({
-            search,
-          }: BaseFetchOptions<
+    return {
+      ...source,
+      dataAdapter: source
+        ? (source.dataAdapter as PaginatedDataAdapter<
+            R extends RecordType ? R : RecordType,
             FiltersDefinition,
             NavigationFiltersDefinition
-          >): PromiseOrObservable<
-            BaseResponse<R extends RecordType ? R : RecordType>
-          > => {
-            return {
-              records: options.filter(
-                (option) =>
-                  option.type === "separator" ||
-                  !search ||
-                  option.label.toLowerCase().includes(search.toLowerCase())
-              ) as unknown as (R extends RecordType ? R : RecordType)[],
-            }
+          >)
+        : {
+            fetchData: ({
+              search,
+            }: BaseFetchOptions<
+              FiltersDefinition,
+              NavigationFiltersDefinition
+            >): PromiseOrObservable<
+              BaseResponse<R extends RecordType ? R : RecordType>
+            > => {
+              return {
+                records: options.filter(
+                  (option) =>
+                    option.type === "separator" ||
+                    !search ||
+                    option.label.toLowerCase().includes(search.toLowerCase())
+                ) as unknown as (R extends RecordType ? R : RecordType)[],
+              }
+            },
           },
-        }
+    }
   }, [options, source])
 
   const localSource = useDataSource(
     {
-      ...source,
-      dataAdapter,
+      ...dataSource,
       search: showSearchBox
         ? {
             enabled: showSearchBox,
