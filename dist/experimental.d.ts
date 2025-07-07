@@ -1190,7 +1190,6 @@ export declare type DataSource<Record extends RecordType, Filters extends Filter
     currentSummaries?: Record;
     /** Function to update the current summaries data */
     setCurrentSummaries?: React.Dispatch<React.SetStateAction<Record | undefined>>;
-    getPaginationType: () => PaginationType;
 };
 
 /**
@@ -1349,10 +1348,6 @@ declare const daytimePageVariants: (props?: ({
     class?: never;
     className?: ClassValue;
 })) | undefined) => string;
-
-declare type DeepOmit<TObject, TKey extends string> = TKey extends `${infer TKeyFirst}.${infer TKeyRest}` ? {
-    [k in keyof TObject]: k extends TKeyFirst ? DeepOmit<TObject[k], TKeyRest> : TObject[k];
-} : Omit<TObject, TKey>;
 
 export declare const DetailsItem: ForwardRefExoticComponent<DetailsItemType & RefAttributes<HTMLDivElement>>;
 
@@ -3610,7 +3605,7 @@ export declare type SelectProps<T, R = unknown> = {
     selectContentClassName?: string;
     actions?: Action[];
 } & ({
-    source: DeepOmit<DataSource<R extends RecordType ? R : RecordType, FiltersDefinition, SortingsDefinition, SummariesDefinition, ItemActionsDefinition<R extends RecordType ? R : RecordType>, NavigationFiltersDefinition, GroupingDefinition<R extends RecordType ? R : RecordType>>, "dataAdapter.paginationType">;
+    source: DataSource<R extends RecordType ? R : RecordType, FiltersDefinition, SortingsDefinition, SummariesDefinition, ItemActionsDefinition<R extends RecordType ? R : RecordType>, NavigationFiltersDefinition, GroupingDefinition<R extends RecordType ? R : RecordType>>;
     mapOptions: (item: R extends RecordType ? R : RecordType) => SelectItemProps<T, R>;
     options?: never;
 } | {
