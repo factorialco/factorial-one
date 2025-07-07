@@ -243,15 +243,19 @@ export function useData<
 
   const { paginationInfo, setPaginationInfo } = usePaginationState()
 
-  const paginationInfoRef = useRef(paginationInfo)
-
   // We need to use a ref to get the latest paginationInfo value
   // because the paginationInfo is updated asynchronously
   // and we need to use the latest value in the callback functions
   // like loadMore, setPage, etc.
+  const paginationInfoRef = useRef(paginationInfo)
   useEffect(() => {
     paginationInfoRef.current = paginationInfo
   }, [paginationInfo])
+
+  const currentSearchRef = useRef(currentSearch)
+  useEffect(() => {
+    currentSearchRef.current = currentSearch
+  }, [currentSearch])
 
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
@@ -263,12 +267,12 @@ export function useData<
     [currentFilters, filters]
   )
 
-  const deferredSearch = useDeferredValue(currentSearch)
+  const deferredSearch = useDeferredValue(currentSearchRef.current)
 
   const searchValue = !search?.enabled
     ? undefined
     : search?.sync
-      ? currentSearch
+      ? currentSearchRef.current
       : deferredSearch
 
   const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
@@ -289,7 +293,8 @@ export function useData<
         // Update pagination info based on the pagination type
         if (
           paginationType &&
-          ["pages", "infinite-scroll"].includes(paginationType)
+          ["pages", "infinite-scroll"].includes(paginationType) &&
+          paginationType !== "no-pagination"
         ) {
           // For page-based pagination
           setPaginationInfo({

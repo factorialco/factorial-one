@@ -8,11 +8,11 @@ import {
   SelectProps,
 } from "../../../../../Forms/Fields/Select"
 
-export type BreadcrumbSelectProps<R = unknown> = SelectProps<string, R>
+export type BreadcrumbSelectProps<T = string, R = unknown> = SelectProps<T, R>
 
-export function BreadcrumbSelect<R = unknown>({
+export function BreadcrumbSelect<T = string, R = unknown>({
   ...props
-}: BreadcrumbSelectProps<R>) {
+}: BreadcrumbSelectProps<T, R>) {
   const [localOpen, setLocalOpen] = useState(props.open)
 
   const onOpenChangeLocal = (open: boolean) => {
@@ -23,16 +23,20 @@ export function BreadcrumbSelect<R = unknown>({
   const [selectedLabel, setSelectedLabel] = useState(props.placeholder)
 
   const handleChange = (
-    value: string,
+    value: T,
     item?: R,
-    option?: SelectItemObject<string, R>
+    option?: SelectItemObject<T, R>
   ) => {
     setSelectedLabel(option?.label || props.placeholder)
     props.onChange?.(value, item, option)
   }
 
   return (
-    <Select {...props} onOpenChange={onOpenChangeLocal} onChange={handleChange}>
+    <Select<T, R>
+      {...props}
+      onOpenChange={onOpenChangeLocal}
+      onChange={handleChange}
+    >
       <button
         className="flex h-6 items-center justify-between rounded-sm border px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary"
         role="combobox"

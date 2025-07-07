@@ -214,6 +214,8 @@ export const WithDataSourcePaginated: Story = {
         paginationType: "infinite-scroll",
         fetchData: (options) => {
           const { search, pagination } = options
+
+          console.log("search", search)
           return new Promise((resolve) => {
             setTimeout(() => {
               const pageSize = pagination.perPage ?? 10

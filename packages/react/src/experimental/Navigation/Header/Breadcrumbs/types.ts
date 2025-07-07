@@ -6,16 +6,7 @@ import {
 import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { DropdownItemObject } from "@/experimental/Navigation/Dropdown"
 import { NavigationItem } from "@/experimental/Navigation/utils"
-import { FiltersDefinition } from "@/experimental/OneDataCollection/Filters/types"
-import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
-import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import {
-  DataSource,
-  GroupingDefinition,
-  RecordType,
-  SortingsDefinition,
-  SummariesDefinition,
-} from "@/experimental/OneDataCollection/types"
+import { DataSource, RecordType } from "@/experimental/OneDataCollection/types"
 import { BreadcrumbSelectProps } from "./internal/BreadcrumbSelect"
 
 type BreadcrumbBaseItemType = NavigationItem & {
@@ -43,15 +34,7 @@ type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   defaultItem?: SelectItemObject<string>
 } & (
     | {
-        source: DataSource<
-          RecordType,
-          FiltersDefinition,
-          SortingsDefinition,
-          SummariesDefinition,
-          ItemActionsDefinition<RecordType>,
-          NavigationFiltersDefinition,
-          GroupingDefinition<RecordType>
-        >
+        source: DataSource
         mapOptions: (item: RecordType) => SelectItemProps<string>
         options?: never
       }

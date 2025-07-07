@@ -90,16 +90,18 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
       loading: <BreadcrumbSkeleton />,
       select: "type" in item &&
         item.type === "select" &&
-        item.source &&
-        item.mapOptions && (
-          <BreadcrumbSelect
-            source={item.source}
-            mapOptions={item.mapOptions}
-            defaultItem={item.defaultItem}
-            onChange={item.onChange}
-            value={item.value}
-            showSearchBox={item.searchbox}
-          />
+        (item.options || item.source) && (
+          <>
+            <BreadcrumbSelect
+              source={item.source}
+              options={item.options}
+              mapOptions={item.mapOptions}
+              defaultItem={item.defaultItem}
+              onChange={item.onChange}
+              value={item.value}
+              showSearchBox={item.searchbox}
+            />
+          </>
         ),
       page: (
         <BreadcrumbPage aria-hidden="true" className="p-0">

@@ -15,7 +15,10 @@ import {
 } from "@/mocks"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Search } from "../../../../../../icons/app"
-import { SelectItemProps } from "../../../../../Forms/Fields/Select"
+import {
+  SelectItemObject,
+  SelectItemProps,
+} from "../../../../../Forms/Fields/Select"
 import { BreadcrumbSelect } from "./index"
 const meta: Meta<typeof BreadcrumbSelect> = {
   title: "Navigation/BreadcrumbSelect",
@@ -25,7 +28,7 @@ const meta: Meta<typeof BreadcrumbSelect> = {
 
 export default meta
 
-type Story = StoryObj<typeof BreadcrumbSelect>
+type Story = StoryObj<typeof BreadcrumbSelect<string, unknown>>
 
 export const Default: Story = {
   args: {
@@ -60,8 +63,12 @@ export const Default: Story = {
 export const WithSearchbox: Story = {
   args: {
     value: "recruitment",
-    onChange: (value: string) => {
-      console.log("onChange BreadcrumbSelect", value)
+    onChange: (
+      value: string,
+      item?: unknown,
+      option?: SelectItemObject<string, unknown>
+    ) => {
+      console.log("onChange BreadcrumbSelect", value, item, option)
     },
     searchBoxPlaceholder: "Search",
     showSearchBox: true,
@@ -87,15 +94,17 @@ export const WithSearchbox: Story = {
   },
 }
 
-export const AsyncData: Story = {
-  render: (args) => {
-    const mockItems = Array.from({ length: 30 }, (_, i) => ({
-      value: `option-${i}`,
-      label: `${getMockValue(FIRST_NAMES_MOCK, i)} ${getMockValue(SURNAMES_MOCK, i)}`,
-      icon: getMockValue(MOCK_ICONS, i),
-      description: `Description for option ${i}`,
-    }))
+const mockItems = Array.from({ length: 30 }, (_, i) => ({
+  value: `option-${i}`,
+  label: `${getMockValue(FIRST_NAMES_MOCK, i)} ${getMockValue(SURNAMES_MOCK, i)}`,
+  icon: getMockValue(MOCK_ICONS, i),
+  description: `Description for option ${i}`,
+}))
 
+export const AsyncData: StoryObj<
+  typeof BreadcrumbSelect<string, (typeof mockItems)[number]>
+> = {
+  render: (args) => {
     const source = useDataSource<
       (typeof mockItems)[number],
       FiltersDefinition,
@@ -134,15 +143,108 @@ export const AsyncData: Story = {
     })
 
     return (
-      <BreadcrumbSelect<(typeof mockItems)[number]>
+      <BreadcrumbSelect<string, (typeof mockItems)[number]>
+        {...args}
+        options={undefined}
         source={source}
         mapOptions={mapOptions}
-        {...args}
       />
     )
   },
   args: {
     value: "option-3",
+    onChange: (value: string) => {
+      console.log("onChange BreadcrumbSelect", value)
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates loading options asynchronously. Shows a loading state while data is being fetched.",
+      },
+    },
+  },
+}
+
+const mockItemsLargeDataset = Array.from({ length: 10000 }, (_, i) => ({
+  value: `option-${i}`,
+  label: `${getMockValue(FIRST_NAMES_MOCK, i)} ${getMockValue(SURNAMES_MOCK, i)}`,
+  icon: getMockValue(MOCK_ICONS, i),
+  description: `Description for option ${i}`,
+}))
+
+export const AsyncDataWithLargeDataset: StoryObj<
+  typeof BreadcrumbSelect<string, (typeof mockItems)[number]>
+> = {
+  render: (args) => {
+    type MockItem = (typeof mockItemsLargeDataset)[number]
+    const source = useDataSource<
+      MockItem,
+      FiltersDefinition,
+      SortingsDefinition,
+      SummariesDefinition,
+      ItemActionsDefinition<MockItem>,
+      NavigationFiltersDefinition,
+      GroupingDefinition<MockItem>
+    >({
+      dataAdapter: {
+        paginationType: "infinite-scroll",
+        fetchData: (options) => {
+          const { search, pagination } = options
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const pageSize = pagination.perPage ?? 10
+              const cursor = "cursor" in pagination ? pagination.cursor : null
+              const nextCursor = cursor ? Number(cursor) + pageSize : pageSize
+
+              const results = mockItemsLargeDataset.filter(
+                (item) =>
+                  !search ||
+                  item.label.toLowerCase().includes(search.toLowerCase())
+              )
+
+              const paginatedResults = results.slice(
+                cursor ? Number(cursor) : 0,
+                nextCursor
+              )
+
+              const res = {
+                type: "infinite-scroll" as const,
+                cursor: String(nextCursor),
+                perPage: pageSize,
+                hasMore: nextCursor < results.length,
+                records: paginatedResults,
+                total: results.length,
+              }
+              resolve(res)
+            }, 100)
+          })
+        },
+      },
+    })
+    const mapOptions = (item: MockItem): SelectItemProps<string, MockItem> => ({
+      value: item.value,
+      label: item.label,
+      icon: item.icon,
+    })
+
+    return (
+      <BreadcrumbSelect<string, MockItem>
+        {...args}
+        options={undefined}
+        source={source}
+        mapOptions={mapOptions}
+      />
+    )
+  },
+  args: {
+    defaultItem: {
+      value: "option-3",
+      label: "Arnau Pérez",
+      icon: Search,
+    },
+    showSearchBox: true,
     onChange: (value: string) => {
       console.log("onChange BreadcrumbSelect", value)
     },
