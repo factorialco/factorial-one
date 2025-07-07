@@ -18,7 +18,6 @@ import {
   useState,
 } from "react"
 import { AIBlockConfig, AIBlockLabels } from "../CoreEditor/Extensions/AIBlock"
-import { ChatLabels, ChatMessage } from "../CoreEditor/Extensions/Chat"
 import { LiveCompanionLabels } from "../CoreEditor/Extensions/LiveCompanion"
 import { MoodTrackerLabels } from "../CoreEditor/Extensions/MoodTracker"
 import {
@@ -43,7 +42,6 @@ interface BasicTextEditorProps {
     moodTrackerLabels?: MoodTrackerLabels
     liveCompanionLabels?: LiveCompanionLabels
     transcriptLabels?: TranscriptLabels
-    chatLabels?: ChatLabels
   }
 }
 
@@ -53,7 +51,6 @@ type BasicTextEditorHandle = {
   setContent: (content: string) => void
   insertAIBlock: () => void
   insertTranscript: (title: string, users: User[], messages: Message[]) => void
-  insertChat: (title: string, messages: ChatMessage[]) => void
 }
 
 const BasicTextEditorComponent = forwardRef<
@@ -77,7 +74,6 @@ const BasicTextEditorComponent = forwardRef<
     moodTrackerLabels,
     liveCompanionLabels,
     transcriptLabels,
-    chatLabels,
   } = labels
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -95,8 +91,7 @@ const BasicTextEditorComponent = forwardRef<
       aiBlockLabels,
       moodTrackerLabels,
       liveCompanionLabels,
-      transcriptLabels,
-      chatLabels
+      transcriptLabels
     ),
     content: initialContent,
     onUpdate: ({ editor }: { editor: Editor }) => {
@@ -127,11 +122,6 @@ const BasicTextEditorComponent = forwardRef<
       if (!editor) return
       const cfg = transcriptLabels ? { labels: transcriptLabels } : undefined
       editor.commands.insertTranscript({ title, users, messages }, cfg)
-    },
-    insertChat: (title, messages) => {
-      if (!editor) return
-      const cfg = chatLabels ? { labels: chatLabels } : undefined
-      editor.commands.insertChat({ title, messages }, cfg)
     },
   }))
 
