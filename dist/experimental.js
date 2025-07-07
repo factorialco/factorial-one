@@ -20166,7 +20166,7 @@ const LK = ({
   fe(() => {
     const B = ee(S);
     B && (n == null || n(B.value, B.item, B), X(B));
-  }, [O.records, S, L, ee]), fe(() => {
+  }, [O.records, S, L, ee, n]), fe(() => {
     var B;
     l && ((B = b.current) == null || B.focus());
   }, [l]);
