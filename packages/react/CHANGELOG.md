@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.119.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.0...factorial-one-react-v1.119.1) (2025-07-07)
+
+
+### Bug Fixes
+
+* update BasicTextEditor and added drag extension ([#2212](https://github.com/factorialco/factorial-one/issues/2212)) ([5dc53ed](https://github.com/factorialco/factorial-one/commit/5dc53ed8e00731b493d143435f46cebd46a04601))
+
 ## [1.119.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.118.2...factorial-one-react-v1.119.0) (2025-07-04)
 
 
