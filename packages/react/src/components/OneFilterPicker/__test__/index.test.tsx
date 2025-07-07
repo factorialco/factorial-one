@@ -1,9 +1,11 @@
-import { defaultTranslations, I18nProvider } from "@/lib/providers/i18n"
+import "@testing-library/jest-dom/vitest"
 import userEvent from "@testing-library/user-event"
+import React from "react"
 import { describe, expect, it, vi } from "vitest"
+import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
 import { render, screen, waitFor, within } from "../../../test-utils"
-import * as Filters from "./index"
-import type { FiltersDefinition } from "./types"
+import { OneFilterPicker } from "../index"
+import type { FiltersDefinition } from "../types"
 
 const definition = {
   department: {
@@ -35,11 +37,11 @@ describe("Filters", () => {
 
       render(
         <TestWrapper>
-          <Filters.Root schema={definition} filters={{}} onChange={onChange}>
-            <Filters.Controls />
-            <Filters.Presets />
-            <Filters.ChipsList />
-          </Filters.Root>
+          <OneFilterPicker
+            filters={definition}
+            value={{}}
+            onChange={onChange}
+          />
         </TestWrapper>
       )
 
@@ -68,18 +70,14 @@ describe("Filters", () => {
       // Render with initial state
       render(
         <TestWrapper>
-          <Filters.Root
-            schema={definition}
-            filters={{
+          <OneFilterPicker
+            filters={definition}
+            value={{
               search: "test",
               department: ["engineering"],
             }}
             onChange={onChange}
-          >
-            <Filters.Controls />
-            <Filters.Presets />
-            <Filters.ChipsList />
-          </Filters.Root>
+          ></OneFilterPicker>
         </TestWrapper>
       )
 
@@ -104,11 +102,11 @@ describe("Filters", () => {
 
       render(
         <TestWrapper>
-          <Filters.Root schema={definition} filters={{}} onChange={onChange}>
-            <Filters.Controls />
-            <Filters.Presets />
-            <Filters.ChipsList />
-          </Filters.Root>
+          <OneFilterPicker
+            filters={definition}
+            value={{}}
+            onChange={onChange}
+          />
         </TestWrapper>
       )
 
@@ -185,18 +183,14 @@ describe("Filters", () => {
       // Render with initial filters
       const { rerender } = render(
         <TestWrapper>
-          <Filters.Root
-            schema={definition}
-            filters={{
+          <OneFilterPicker
+            filters={definition}
+            value={{
               department: ["engineering"],
               search: "test",
             }}
             onChange={onChange}
-          >
-            <Filters.Controls />
-            <Filters.Presets />
-            <Filters.ChipsList />
-          </Filters.Root>
+          />
         </TestWrapper>
       )
 
@@ -214,17 +208,13 @@ describe("Filters", () => {
       // Simulate the update
       rerender(
         <TestWrapper>
-          <Filters.Root
-            schema={definition}
-            filters={{
+          <OneFilterPicker
+            filters={definition}
+            value={{
               search: "test",
             }}
             onChange={onChange}
-          >
-            <Filters.Controls />
-            <Filters.Presets />
-            <Filters.ChipsList />
-          </Filters.Root>
+          />
         </TestWrapper>
       )
 
@@ -240,15 +230,11 @@ describe("Filters", () => {
       // Start with engineering selected
       const { rerender } = render(
         <TestWrapper>
-          <Filters.Root
-            schema={definition}
-            filters={{ department: ["engineering"] }}
+          <OneFilterPicker
+            filters={definition}
+            value={{ department: ["engineering"] }}
             onChange={onChange}
-          >
-            <Filters.Controls />
-            <Filters.Presets />
-            <Filters.ChipsList />
-          </Filters.Root>
+          />
         </TestWrapper>
       )
 
@@ -271,15 +257,11 @@ describe("Filters", () => {
       // Update the component with the new state
       rerender(
         <TestWrapper>
-          <Filters.Root
-            schema={definition}
-            filters={{ department: ["design"] }}
+          <OneFilterPicker
+            filters={definition}
+            value={{ department: ["design"] }}
             onChange={onChange}
-          >
-            <Filters.Controls />
-            <Filters.Presets />
-            <Filters.ChipsList />
-          </Filters.Root>
+          />
         </TestWrapper>
       )
 
@@ -308,16 +290,12 @@ describe("Presets", () => {
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={definition}
-          filters={{}}
+        <OneFilterPicker
+          filters={definition}
+          value={{}}
           presets={presets}
           onChange={onChange}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
@@ -342,16 +320,12 @@ describe("Presets", () => {
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={definition}
-          filters={{}}
+        <OneFilterPicker
+          filters={definition}
+          value={{}}
           presets={presets}
           onChange={onChange}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
@@ -379,16 +353,12 @@ describe("Presets", () => {
     // Render with filters matching the first preset
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={definition}
-          filters={{ department: ["engineering"] }}
+        <OneFilterPicker
+          filters={definition}
+          value={{ department: ["engineering"] }}
           presets={presets}
           onChange={onChange}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
@@ -423,16 +393,12 @@ describe("Presets", () => {
 
     const { rerender } = render(
       <TestWrapper>
-        <Filters.Root
-          schema={definition}
-          filters={{}}
+        <OneFilterPicker
+          filters={definition}
+          value={{}}
           presets={presets}
           onChange={onChange}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
@@ -444,16 +410,12 @@ describe("Presets", () => {
     // Simulate the update
     rerender(
       <TestWrapper>
-        <Filters.Root
-          schema={definition}
-          filters={{ department: ["engineering"] }}
+        <OneFilterPicker
+          filters={definition}
+          value={{ department: ["engineering"] }}
           presets={presets}
           onChange={onChange}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
@@ -478,16 +440,12 @@ describe("Presets", () => {
 
     const { rerender } = render(
       <TestWrapper>
-        <Filters.Root
-          schema={definition}
-          filters={{}}
+        <OneFilterPicker
+          filters={definition}
+          value={{}}
           presets={presets}
           onChange={onChange}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
@@ -501,16 +459,12 @@ describe("Presets", () => {
     // Simulate the update
     rerender(
       <TestWrapper>
-        <Filters.Root
-          schema={definition}
-          filters={{ department: ["engineering"] }}
+        <OneFilterPicker
+          filters={definition}
+          value={{ department: ["engineering"] }}
           presets={presets}
           onChange={onChange}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
@@ -550,16 +504,12 @@ describe("Presets", () => {
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={definition}
-          filters={{}}
+        <OneFilterPicker
+          filters={definition}
+          value={{}}
           presets={presets}
           onChange={onChange}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
@@ -585,8 +535,8 @@ describe("Filters Type Safety", () => {
     // Valid usage - this should type check
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={
+        <OneFilterPicker
+          filters={
             {
               status: {
                 type: "in",
@@ -600,20 +550,16 @@ describe("Filters Type Safety", () => {
               },
             } as const
           }
-          filters={{ status: ["active"] }}
+          value={{ status: ["active"] }}
           onChange={() => {}}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={
+        <OneFilterPicker
+          filters={
             {
               status: {
                 // @ts-expect-error - Invalid filter type in definition
@@ -622,20 +568,16 @@ describe("Filters Type Safety", () => {
               },
             } as const
           }
-          filters={{}}
+          value={{}}
           onChange={() => {}}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={
+        <OneFilterPicker
+          filters={
             {
               // @ts-expect-error - Missing options in "in" filter
               status: {
@@ -644,20 +586,16 @@ describe("Filters Type Safety", () => {
               },
             } as const
           }
-          filters={{}}
+          value={{}}
           onChange={() => {}}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={
+        <OneFilterPicker
+          filters={
             {
               status: {
                 type: "in",
@@ -672,20 +610,16 @@ describe("Filters Type Safety", () => {
             } as const
           }
           // @ts-expect-error - Wrong value type for "in" filter (string instead of string[])
-          filters={{ status: "active" }}
+          value={{ status: "active" }}
           onChange={() => {}}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={
+        <OneFilterPicker
+          filters={
             {
               status: {
                 type: "in",
@@ -700,20 +634,16 @@ describe("Filters Type Safety", () => {
             } as const
           }
           // @ts-expect-error - Invalid filter key in filters state
-          filters={{ invalid: ["something"] }}
+          value={{ invalid: ["something"] }}
           onChange={() => {}}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={
+        <OneFilterPicker
+          filters={
             {
               status: {
                 type: "in",
@@ -728,20 +658,16 @@ describe("Filters Type Safety", () => {
             } as const
           }
           // @ts-expect-error - Invalid value in options array
-          filters={{ status: ["nonexistent"] }}
+          value={{ status: ["nonexistent"] }}
           onChange={() => {}}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={
+        <OneFilterPicker
+          filters={
             {
               // @ts-expect-error - Missing required options in "in" filter
               status: {
@@ -750,13 +676,9 @@ describe("Filters Type Safety", () => {
               },
             } as const
           }
-          filters={{}}
+          value={{}}
           onChange={() => {}}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
   })
@@ -765,8 +687,8 @@ describe("Filters Type Safety", () => {
     // Valid usage - this should type check
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={
+        <OneFilterPicker
+          filters={
             {
               status: {
                 type: "in",
@@ -780,7 +702,7 @@ describe("Filters Type Safety", () => {
               },
             } as const
           }
-          filters={{}}
+          value={{}}
           presets={[
             {
               label: "Active Only",
@@ -788,18 +710,14 @@ describe("Filters Type Safety", () => {
             },
           ]}
           onChange={() => {}}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
 
     render(
       <TestWrapper>
-        <Filters.Root
-          schema={
+        <OneFilterPicker
+          filters={
             {
               status: {
                 type: "in",
@@ -813,7 +731,7 @@ describe("Filters Type Safety", () => {
               },
             } as const
           }
-          filters={{}}
+          value={{}}
           presets={[
             {
               label: "Invalid Preset",
@@ -822,11 +740,7 @@ describe("Filters Type Safety", () => {
             },
           ]}
           onChange={() => {}}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        />
       </TestWrapper>
     )
   })

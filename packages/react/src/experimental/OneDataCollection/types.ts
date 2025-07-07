@@ -1,8 +1,12 @@
+import type {
+  FiltersDefinition,
+  FiltersState,
+  PresetsDefinition,
+} from "@/components/OneFilterPicker/types"
 import { IconType } from "@/factorial-one"
 import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
-import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { GroupingDefinition, GroupingState } from "./grouping"
 import { ItemActionsDefinition } from "./item-actions"
 import {
@@ -98,24 +102,6 @@ export type CollectionSearchOptions = {
   /** Debounce time for search */
   debounceTime?: number
 }
-
-/**
- * Defines preset filter configurations that can be applied to a collection.
- * @template Filters - The available filter configurations
- */
-export type PresetDefinition<Filters extends FiltersDefinition> = {
-  /** Display name for the preset */
-  label: string
-  /** Filter configuration to apply when this preset is selected */
-  filter: FiltersState<Filters>
-  /** Function to count the number of items that match the filter */
-  itemsCount?: (
-    filters: FiltersState<Filters>
-  ) => Promise<number | undefined> | number | undefined
-}
-
-export type PresetsDefinition<Filters extends FiltersDefinition> =
-  PresetDefinition<Filters>[]
 
 /**
  * Base response type for collection data

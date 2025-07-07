@@ -1,26 +1,26 @@
 import { Button } from "@/components/Actions/Button"
 import { AnimatePresence } from "motion/react"
-import { useI18n } from "../../../../lib/providers/i18n"
+import { useI18n } from "../../../lib/providers/i18n"
 import {
   FilterDefinitionsByType,
   FilterTypeDefinition,
   FilterTypeSchema,
   getFilterType,
-} from "../FilterTypes"
+} from "../filterTypes"
 import type { FiltersDefinition, FiltersState, FilterValue } from "../types"
 import { FilterChipButton } from "./FilterChipButton"
 
 interface FiltersChipsListProps<Filters extends FiltersDefinition> {
-  schema: Filters
-  filters: FiltersState<Filters>
+  filters: Filters
+  value: FiltersState<Filters>
   onFilterSelect: (key: keyof Filters) => void
   onFilterRemove: (key: keyof Filters) => void
   onClearAll: () => void
 }
 
 export function FiltersChipsList<Filters extends FiltersDefinition>({
-  schema,
   filters,
+  value,
   onFilterSelect,
   onFilterRemove,
   onClearAll,
@@ -28,8 +28,8 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
   const i18n = useI18n()
 
   const activeFilterKeys = Object.keys(filters).filter((key) => {
-    const filterValue = filters[key as keyof Filters]
-    const filterSchema = schema[key as keyof Filters]
+    const filterValue = value[key as keyof Filters]
+    const filterSchema = filters[key as keyof Filters]
     return (
       (filterSchema.type === "in" &&
         Array.isArray(filterValue) &&
@@ -45,12 +45,12 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
       <div className="flex flex-wrap items-center gap-2">
         <AnimatePresence presenceAffectsLayout initial={false}>
           {activeFilterKeys.map((key) => {
-            const filterSchema = schema[key]
+            const filterSchema = filters[key]
             if (!filters[key]) {
               return null
             }
 
-            const currentValue = filters[key]
+            const currentValue = value[key]
 
             const filterType = getFilterType(filterSchema.type)
             type FilterType = FilterDefinitionsByType[typeof filterSchema.type]

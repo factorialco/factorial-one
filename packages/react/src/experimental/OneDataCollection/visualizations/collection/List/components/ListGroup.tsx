@@ -1,4 +1,4 @@
-import { FiltersDefinition } from "../../../../Filters/types"
+import { FiltersDefinition } from "../../../../../../components/OneFilterPicker/types"
 import { ItemActionsDefinition } from "../../../../item-actions"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { SortingsDefinition } from "../../../../sortings"

@@ -1,6 +1,6 @@
 "use client"
 
-import { FilterDefinitionsByType, getFilterType } from "../FilterTypes"
+import { FilterDefinitionsByType, getFilterType } from "../filterTypes"
 import type {
   FilterDefinition,
   FiltersDefinition,

@@ -1,47 +1,31 @@
-import { createContext, useContext, useEffect, useState } from "react"
-import { PresetsDefinition } from "../types"
-import { FiltersChipsList as FiltersChipsListComponent } from "./Components/FiltersChipsList"
-import { FiltersControls as FiltersControlsComponent } from "./Components/FiltersControls"
-import { FiltersPresets as FiltersPresetsComponent } from "./Components/FiltersPresets"
+import { useContext, useEffect, useState } from "react"
+import { FiltersChipsList as FiltersChipsListComponent } from "./components/FiltersChipsList"
+import { FiltersControls as FiltersControlsComponent } from "./components/FiltersControls"
+import { FiltersPresets as FiltersPresetsComponent } from "./components/FiltersPresets"
+import { FiltersContext } from "./context"
+import { PresetsDefinition } from "./types"
 
+import { cn } from "@/lib/utils"
 import type { FiltersDefinition, FiltersState } from "./types"
 
 /**
  * Props for the Filters component.
  * @template Definition - The type defining the structure of available filters
  */
-export interface FiltersRootProps<Definition extends FiltersDefinition> {
+export interface OneFilterPickerRootProps<
+  Definition extends FiltersDefinition,
+> {
   /** The definition of available filters and their configurations */
-  schema?: Definition
+  filters?: Definition
   /** Current state of applied filters */
-  filters: FiltersState<Definition>
+  value: FiltersState<Definition>
   /** Optional preset configurations that users can select */
   presets?: PresetsDefinition<Definition>
   /** Callback fired when filters are changed */
   onChange: (value: FiltersState<Definition>) => void
   /** The children of the component */
-  children: React.ReactNode
+  children?: React.ReactNode
 }
-
-type FiltersContextType<Definition extends FiltersDefinition> = {
-  schema: Definition | undefined
-  filters: FiltersState<Definition>
-  presets?: PresetsDefinition<Definition>
-  removeFilterValue: (key: keyof Definition) => void
-  setFiltersValue: (filters: FiltersState<Definition>) => void
-  isFiltersOpen: boolean
-  setIsFiltersOpen: (isOpen: boolean) => void
-}
-
-const FiltersContext = createContext<FiltersContextType<FiltersDefinition>>({
-  schema: {},
-  filters: {},
-  presets: [],
-  removeFilterValue: () => {},
-  setFiltersValue: () => {},
-  isFiltersOpen: false,
-  setIsFiltersOpen: () => {},
-})
 
 /**
  * A comprehensive filtering interface that manages multiple filter types.
@@ -105,16 +89,16 @@ const FiltersContext = createContext<FiltersContextType<FiltersDefinition>>({
  */
 const FiltersRoot = <Definition extends FiltersDefinition>({
   filters,
-  schema,
+  value,
   children,
   ...props
-}: FiltersRootProps<Definition>) => {
+}: OneFilterPickerRootProps<Definition>) => {
   const [isFiltersOpen, setIsFiltersOpen] = useState(false)
 
-  const [localFiltersValue, setLocalFiltersValue] = useState(filters)
+  const [localFiltersValue, setLocalFiltersValue] = useState(value)
 
   useEffect(() => {
-    setLocalFiltersValue(filters)
+    setLocalFiltersValue(value)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We deep compare the filters object
   }, [JSON.stringify(filters)])
 
@@ -135,11 +119,11 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
       value={{
         ...props,
         presets: props.presets as PresetsDefinition<FiltersDefinition>,
-        filters: localFiltersValue,
-        schema: schema,
+        value: localFiltersValue,
+        filters: filters,
         removeFilterValue,
-        setFiltersValue: (filters: FiltersState<FiltersDefinition>) =>
-          setFiltersValue(filters as FiltersState<Definition>),
+        setFiltersValue: (value: FiltersState<FiltersDefinition>) =>
+          setFiltersValue(value as FiltersState<Definition>),
         isFiltersOpen,
         setIsFiltersOpen,
       }}
@@ -148,14 +132,14 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
     </FiltersContext.Provider>
   )
 }
-FiltersRoot.displayName = "Filters.Root"
+FiltersRoot.displayName = "OneFilterPicker.Root"
 
 /**
  * Filter controls
  */
 const FiltersControls = () => {
   const {
-    schema,
+    value,
     filters,
     isFiltersOpen,
     setIsFiltersOpen,
@@ -164,10 +148,10 @@ const FiltersControls = () => {
   } = useContext(FiltersContext)
 
   return (
-    schema && (
+    filters && (
       <FiltersControlsComponent
-        schema={schema}
         filters={filters}
+        value={value}
         onChange={setFiltersValue}
         onOpenChange={setIsFiltersOpen}
         isOpen={isFiltersOpen}
@@ -176,19 +160,19 @@ const FiltersControls = () => {
     )
   )
 }
-FiltersControls.displayName = "Filters.Controls"
+FiltersControls.displayName = "OneFilterPicker.Controls"
 
 /**
  * Filter presets
  */
 const FiltersPresets = () => {
-  const { presets, filters, setFiltersValue } = useContext(FiltersContext)
+  const { presets, value, setFiltersValue } = useContext(FiltersContext)
 
   return (
     presets && (
       <FiltersPresetsComponent
         presets={presets}
-        filters={filters}
+        value={value}
         onPresetsChange={setFiltersValue}
       />
     )
@@ -201,7 +185,7 @@ FiltersPresets.displayName = "Filters.Presets"
  */
 const FiltersChipsList = () => {
   const {
-    schema,
+    value,
     filters,
     setIsFiltersOpen,
     removeFilterValue,
@@ -209,10 +193,10 @@ const FiltersChipsList = () => {
   } = useContext(FiltersContext)
 
   return (
-    schema && (
+    filters && (
       <FiltersChipsListComponent
-        schema={schema}
         filters={filters}
+        value={value}
         onFilterSelect={() => setIsFiltersOpen(true)}
         onFilterRemove={removeFilterValue}
         onClearAll={() => setFiltersValue({})}
@@ -220,13 +204,65 @@ const FiltersChipsList = () => {
     )
   )
 }
-FiltersChipsList.displayName = "Filters.ChipsList"
+FiltersChipsList.displayName = "OneFilterPicker.ChipsList"
 
+/**
+ * OneFiltersPicker component to use as a single component
+ */
+const OneFilterPicker = <Definition extends FiltersDefinition>(
+  props: OneFilterPickerRootProps<Definition>
+) => {
+  return (
+    <FiltersRoot {...props}>
+      <div
+        className={cn(
+          "flex items-center justify-between gap-4",
+          !props.filters && "justify-end"
+        )}
+      >
+        {props.filters && (
+          <div className="flex min-w-0 flex-1 gap-1">
+            <FiltersControls />
+            <FiltersPresets />
+          </div>
+        )}
+        {props.children && (
+          <div className="flex shrink-0 items-center gap-2">
+            {props.children}
+          </div>
+        )}
+      </div>
+      <FiltersChipsList />
+    </FiltersRoot>
+  )
+}
+OneFilterPicker.displayName = "OneFilterPicker"
+
+/**
+ * Export the components as named exports to allow to customize the layout
+ *
+ * @example
+ * ```tsx
+ * <OneFiltersPicker>
+ *   <div className="flex flex-col gap-2">
+ *     <OneFiltersPicker.Controls />
+ *     <OneFiltersPicker.Presets />
+ *     <div className="flex flex-col gap-2">
+ *       {children}
+ *     </div>
+ *   </div>
+ *  <OneFiltersPicker.ChipsList />
+ * </OneFiltersPicker>
+ *
+ * Use OneFilterPicker as a single component to get a default layout
+ * ```tsx
+ * <OneFilterPicker />
+ * ```
+ */
 export {
   FiltersChipsList as ChipsList,
   FiltersControls as Controls,
+  OneFilterPicker,
   FiltersPresets as Presets,
   FiltersRoot as Root,
 }
-
-export type { FiltersRootProps as RootProps }

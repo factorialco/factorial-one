@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import type { FiltersDefinition } from "./Filters/types"
+import type { FiltersDefinition } from "../../components/OneFilterPicker/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import type { SortingsDefinition } from "./sortings"

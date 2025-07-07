@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton.tsx"
 import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
-import type { FiltersDefinition } from "../../../Filters/types"
+import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition } from "../../../property-render"
 import {
@@ -197,8 +197,6 @@ export const TableCollection = <
     source.defaultSelectedItems
   )
   const summaryData = useMemo(() => {
-    console.warn("summariesData", summariesData)
-    console.warn("source.summaries", source.summaries)
     // Early return if no summaries configuration or summaries data is available
     if (!summariesData || !source.summaries) return null
 
