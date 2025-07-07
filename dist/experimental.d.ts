@@ -3594,6 +3594,7 @@ export declare type SelectItemProps<T, R = unknown> = SelectItemObject<T, R> | {
 export declare type SelectProps<T, R = unknown> = {
     placeholder?: string;
     onChange: (value: T, origialItem?: R, option?: SelectItemObject<T, R>) => void;
+    onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void;
     value?: T;
     defaultItem?: SelectItemObject<T, R>;
     children?: React.ReactNode;
@@ -4551,15 +4552,15 @@ declare module "@tiptap/core" {
 }
 
 
+declare namespace Calendar {
+    var displayName: string;
+}
+
+
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
-}
-
-
-declare namespace Calendar {
-    var displayName: string;
 }
