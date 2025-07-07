@@ -93,9 +93,11 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
         (item.options || item.source) && (
           <>
             <BreadcrumbSelect
-              source={item.source}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              source={item.source as any}
               options={item.options}
-              mapOptions={item.mapOptions}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              mapOptions={item.mapOptions as any}
               defaultItem={item.defaultItem}
               onChange={item.onChange}
               value={item.value}

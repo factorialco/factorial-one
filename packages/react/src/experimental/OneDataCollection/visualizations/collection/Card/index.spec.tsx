@@ -76,7 +76,6 @@ const createTestSource = (
   navigationFilters: undefined,
   currentGrouping: undefined,
   setCurrentGrouping: vi.fn(),
-  getPaginationType: () => "pages",
 })
 
 describe("CardCollection", () => {
@@ -375,7 +374,6 @@ describe("CardCollection", () => {
             total: largeDataSet.length,
           }),
         },
-        getPaginationType: () => "pages" as const,
       }
 
       render(
@@ -432,7 +430,6 @@ describe("CardCollection", () => {
         navigationFilters: undefined,
         currentGrouping: undefined,
         setCurrentGrouping: vi.fn(),
-        getPaginationType: () => "pages" as const,
         dataAdapter: {
           paginationType: "pages" as const,
           fetchData: async () => ({

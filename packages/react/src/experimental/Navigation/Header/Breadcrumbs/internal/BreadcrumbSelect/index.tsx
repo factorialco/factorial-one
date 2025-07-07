@@ -27,8 +27,11 @@ export function BreadcrumbSelect<T = string, R = unknown>({
     item?: R,
     option?: SelectItemObject<T, R>
   ) => {
-    setSelectedLabel(option?.label || props.placeholder)
     props.onChange?.(value, item, option)
+  }
+
+  const handleChangeSelectedOption = (option: SelectItemObject<T, R>) => {
+    setSelectedLabel(option.label)
   }
 
   return (
@@ -36,6 +39,7 @@ export function BreadcrumbSelect<T = string, R = unknown>({
       {...props}
       onOpenChange={onOpenChangeLocal}
       onChange={handleChange}
+      onChangeSelectedOption={handleChangeSelectedOption}
     >
       <button
         className="flex h-6 items-center justify-between rounded-sm border px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary"

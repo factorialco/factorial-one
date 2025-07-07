@@ -1,12 +1,23 @@
 import { IconType } from "@/components/Utilities/Icon"
 import {
+  FiltersDefinition,
+  ItemActionsDefinition,
+} from "@/experimental/exports"
+import {
   SelectItemObject,
   SelectItemProps,
 } from "@/experimental/Forms/Fields/Select"
 import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { DropdownItemObject } from "@/experimental/Navigation/Dropdown"
 import { NavigationItem } from "@/experimental/Navigation/utils"
-import { DataSource, RecordType } from "@/experimental/OneDataCollection/types"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import {
+  DataSource,
+  GroupingDefinition,
+  RecordType,
+  SortingsDefinition,
+  SummariesDefinition,
+} from "@/experimental/OneDataCollection/types"
 import { BreadcrumbSelectProps } from "./internal/BreadcrumbSelect"
 
 type BreadcrumbBaseItemType = NavigationItem & {
@@ -34,7 +45,15 @@ type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   defaultItem?: SelectItemObject<string>
 } & (
     | {
-        source: DataSource
+        source: DataSource<
+          RecordType,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<RecordType>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<RecordType>
+        >
         mapOptions: (item: RecordType) => SelectItemProps<string>
         options?: never
       }

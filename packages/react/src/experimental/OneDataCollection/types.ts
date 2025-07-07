@@ -485,7 +485,6 @@ export type DataSource<
   currentSummaries?: Record
   /** Function to update the current summaries data */
   setCurrentSummaries?: React.Dispatch<React.SetStateAction<Record | undefined>>
-  getPaginationType: () => PaginationType
 }
 
 /**

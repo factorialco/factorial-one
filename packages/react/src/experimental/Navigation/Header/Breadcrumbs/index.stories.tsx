@@ -189,7 +189,8 @@ export const WithSelectBreadcrumbWithDatasource: Story = {
             id: "my-entity",
             type: "select",
             searchbox: true,
-            source,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            source: source as any,
             mapOptions: (item): SelectItemProps<string, MockItem> => ({
               value: item.value as string,
               label: item.label as string,

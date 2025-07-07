@@ -16,8 +16,8 @@ import {
 } from "@/experimental/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { useData } from "@/experimental/OneDataCollection/useData"
+import { getDataSourcePaginationType } from "@/experimental/OneDataCollection/useDataSource"
 import { ChevronDown } from "@/icons/app"
-import { DeepOmit } from "@/lib/utility-types"
 import {
   SelectContent,
   SelectItem as SelectItemPrimitive,
@@ -54,6 +54,7 @@ export * from "./types"
 export type SelectProps<T, R = unknown> = {
   placeholder?: string
   onChange: (value: T, origialItem?: R, option?: SelectItemObject<T, R>) => void
+  onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
   children?: React.ReactNode
@@ -70,17 +71,14 @@ export type SelectProps<T, R = unknown> = {
   actions?: Action[]
 } & (
   | {
-      source: DeepOmit<
-        DataSource<
-          R extends RecordType ? R : RecordType,
-          FiltersDefinition,
-          SortingsDefinition,
-          SummariesDefinition,
-          ItemActionsDefinition<R extends RecordType ? R : RecordType>,
-          NavigationFiltersDefinition,
-          GroupingDefinition<R extends RecordType ? R : RecordType>
-        >,
-        "dataAdapter.paginationType"
+      source: DataSource<
+        R extends RecordType ? R : RecordType,
+        FiltersDefinition,
+        SortingsDefinition,
+        SummariesDefinition,
+        ItemActionsDefinition<R extends RecordType ? R : RecordType>,
+        NavigationFiltersDefinition,
+        GroupingDefinition<R extends RecordType ? R : RecordType>
       >
       mapOptions: (
         item: R extends RecordType ? R : RecordType
@@ -145,6 +143,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   {
     placeholder,
     onChange,
+    onChangeSelectedOption,
     value,
     options = [],
     mapOptions,
@@ -175,7 +174,9 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   const dataAdapter = useMemo(() => {
     if (
       source &&
-      !["infinite-scroll", "no-pagination"].includes(source.getPaginationType())
+      !["infinite-scroll", undefined].includes(
+        getDataSourcePaginationType(source.dataAdapter)
+      )
     ) {
       throw new Error(
         "Select component only supports `infinite-scroll` or `no-pagination` pagination types"
@@ -275,10 +276,10 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   useEffect(() => {
     const foundOption = findOption(localValue)
     if (foundOption) {
-      onChange?.(foundOption.value, foundOption.item, foundOption)
+      onChangeSelectedOption?.(foundOption)
       setSelectedOption(foundOption)
     }
-  }, [data.records, localValue, optionMapper, findOption])
+  }, [data.records, localValue, optionMapper, findOption, onChange])
 
   useEffect(() => {
     if (open) {

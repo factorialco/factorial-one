@@ -104,7 +104,6 @@ const createMockDataSource = (
     navigationFilters: undefined,
     currentGrouping: undefined,
     setCurrentGrouping: vi.fn(),
-    getPaginationType: () => paginationType ?? "no-pagination",
   }
 }
 
@@ -423,7 +422,6 @@ describe("useData", () => {
         navigationFilters: undefined,
         currentGrouping: undefined,
         setCurrentGrouping: vi.fn(),
-        getPaginationType: () => "pages" as const,
       }
 
       // Render the hook

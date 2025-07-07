@@ -14,11 +14,26 @@ import {
   DataSourceDefinition,
   GroupingDefinition,
   GroupingState,
+  PaginationType,
   RecordType,
   SortingsDefinition,
   SortingsState,
   SummariesDefinition,
 } from "./types"
+
+/**
+ * Get the pagination type of a data adapter
+ * @param dataAdapter - The data adapter to get the pagination type of
+ * @returns The pagination type of the data adapter
+ */
+
+export const getDataSourcePaginationType = <
+  D extends { paginationType?: PaginationType | undefined | never },
+>(
+  dataAdapter: D
+): PaginationType => {
+  return dataAdapter.paginationType ?? "no-pagination"
+}
 
 /**
  * A hook that manages data source state and filtering capabilities for a collection.
@@ -187,8 +202,5 @@ export const useDataSource = <
     setCurrentGrouping,
     currentGrouping,
     grouping,
-    getPaginationType: () => {
-      return dataAdapter.paginationType || "no-pagination"
-    },
   }
 }
