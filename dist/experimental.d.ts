@@ -580,7 +580,7 @@ declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     value?: string;
     defaultItem?: SelectItemObject<string>;
 } & ({
-    source: DataSource<RecordType, FiltersDefinition, SortingsDefinition, SummariesDefinition, ItemActionsDefinition<RecordType>, NavigationFiltersDefinition, GroupingDefinition<RecordType>>;
+    source: DataSourceDefinition<RecordType, FiltersDefinition, SortingsDefinition, SummariesDefinition, ItemActionsDefinition<RecordType>, NavigationFiltersDefinition, GroupingDefinition<RecordType>>;
     mapOptions: (item: RecordType) => SelectItemProps<string>;
     options?: never;
 } | {
@@ -3605,7 +3605,7 @@ export declare type SelectProps<T, R = unknown> = {
     selectContentClassName?: string;
     actions?: Action[];
 } & ({
-    source: DataSource<R extends RecordType ? R : RecordType, FiltersDefinition, SortingsDefinition, SummariesDefinition, ItemActionsDefinition<R extends RecordType ? R : RecordType>, NavigationFiltersDefinition, GroupingDefinition<R extends RecordType ? R : RecordType>>;
+    source: DataSourceDefinition<R extends RecordType ? R : RecordType, FiltersDefinition, SortingsDefinition, SummariesDefinition, ItemActionsDefinition<R extends RecordType ? R : RecordType>, NavigationFiltersDefinition, GroupingDefinition<R extends RecordType ? R : RecordType>>;
     mapOptions: (item: R extends RecordType ? R : RecordType) => SelectItemProps<T, R>;
     options?: never;
 } | {

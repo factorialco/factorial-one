@@ -61180,25 +61180,27 @@ const DIe = ({
   const _ = Te(null), [M, S] = Y(d), [$, N] = Y(
     r || ((G = w.defaultItem) == null ? void 0 : G.value)
   ), D = Ae(() => {
-    if (k && !["infinite-scroll", void 0].includes(
+    if (k && !["infinite-scroll", "no-pagination"].includes(
       vDe(k.dataAdapter)
     ))
       throw new Error(
         "Select component only supports `infinite-scroll` or `no-pagination` pagination types"
       );
-    return k ? k.dataAdapter : {
-      fetchData: ({
-        search: J
-      }) => ({
-        records: a.filter(
-          (oe) => oe.type === "separator" || !J || oe.label.toLowerCase().includes(J.toLowerCase())
-        )
-      })
+    return {
+      ...k,
+      dataAdapter: k ? k.dataAdapter : {
+        fetchData: ({
+          search: J
+        }) => ({
+          records: a.filter(
+            (oe) => oe.type === "separator" || !J || oe.label.toLowerCase().includes(J.toLowerCase())
+          )
+        })
+      }
     };
   }, [a, k]), L = yDe(
     {
-      ...k,
-      dataAdapter: D,
+      ...D,
       search: f ? {
         enabled: f,
         sync: !k
