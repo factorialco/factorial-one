@@ -143,6 +143,7 @@ export function UpsellingPopover({
             successMessage={currentAction.successMessage}
             nextSteps={currentAction.nextSteps}
             closeLabel={currentAction.closeLabel}
+            portalContainer={null}
           />
         )}
     </>

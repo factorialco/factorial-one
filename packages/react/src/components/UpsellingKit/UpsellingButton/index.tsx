@@ -55,6 +55,10 @@ export interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> {
    * Callback to notify when the modal state changes (open/closed)
    */
   onModalStateChange?: (isOpen: boolean) => void
+  /**
+   * Portal container for the confirmation dialog
+   */
+  portalContainer?: HTMLElement | null
 }
 
 type ResponseStatus = "success" | "error" | null
@@ -72,6 +76,7 @@ export function UpsellingButton({
   closeLabel,
   variant = "promote",
   onModalStateChange,
+  portalContainer,
   ...props
 }: UpsellingButtonProps) {
   const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
@@ -122,6 +127,7 @@ export function UpsellingButton({
           successMessage={successMessage}
           nextSteps={nextSteps}
           closeLabel={closeLabel}
+          portalContainer={portalContainer}
         />
       )}
     </>

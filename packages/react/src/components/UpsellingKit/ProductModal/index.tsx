@@ -37,6 +37,7 @@ type ProductModalProps = {
   closeLabel: string
   primaryAction?: Action
   secondaryAction?: Action
+  portalContainer?: HTMLElement | null
 }
 
 type Action = {
@@ -64,6 +65,7 @@ export function ProductModal({
   modalTitle,
   modalIcon,
   secondaryAction,
+  portalContainer,
 }: ProductModalProps) {
   const [isModalOpen, setIsOpen] = useState(isOpen)
   const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
@@ -144,6 +146,7 @@ export function ProductModal({
           successMessage={successMessage}
           nextSteps={nextSteps}
           closeLabel={closeLabel}
+          portalContainer={portalContainer}
         />
       )}
     </>
