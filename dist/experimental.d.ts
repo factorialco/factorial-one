@@ -1205,13 +1205,15 @@ export declare type DataSource<Record extends RecordType, Filters extends Filter
  * @template OtherActions - The available actions that can be performed on the collection
  * @template Summaries - The available summaries for the collection
  */
-export declare type DataSourceDefinition<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, Summaries extends SummariesDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>> = {
+export declare type DataSourceDefinition<Record extends RecordType = RecordType, Filters extends FiltersDefinition = FiltersDefinition, Sortings extends SortingsDefinition = SortingsDefinition, Summaries extends SummariesDefinition = SummariesDefinition, ItemActions extends ItemActionsDefinition<Record> = ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition = NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record> = GroupingDefinition<Record>> = {
     /** Available filter configurations */
     filters?: Filters;
-    /** Navigation filters */
-    navigationFilters?: NavigationFilters;
+    /** Current state of applied filters */
+    currentFilters?: FiltersState<Filters>;
     /** Predefined filter configurations that can be applied */
     presets?: PresetsDefinition<Filters>;
+    /** Navigation filters */
+    navigationFilters?: NavigationFilters;
     /** URL for a single item in the collection */
     itemUrl?: (item: Record) => string | undefined;
     /** Click handler for a single item in the collection */
@@ -1224,9 +1226,6 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     secondaryActions?: SecondaryActionsDefinition;
     /** Search configuration */
     search?: CollectionSearchOptions;
-    /** Current state of applied filters */
-    currentFilters?: FiltersState<Filters>;
-    /** Current state of applied navigation filter */
     /** Available sorting fields. If not provided, sorting is not allowed. */
     sortings?: Sortings;
     defaultSorting?: SortingsState<Sortings>;
@@ -4251,7 +4250,7 @@ declare type URL_2 = string;
  * 3. Support more complex data filtering, querying, and pagination logic
  * 4. Provide a clean separation between data management and visualization
  *
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The definition of available filters for the collection
  * @template ItemActions - The definition of available item actions
  * @template Actions - The definition of available actions for the collection
@@ -4274,7 +4273,7 @@ declare type URL_2 = string;
  * - actions: Available actions for the collection
  * - presets: Available filter presets
  */
-export declare const useDataSource: <Record extends RecordType, FiltersSchema extends FiltersDefinition, Sortings extends SortingsDefinition, Summaries extends SummariesDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>>({ currentFilters: initialCurrentFilters, currentGrouping: initialCurrentGrouping, filters, navigationFilters, search, defaultSorting, summaries, dataAdapter, grouping, ...rest }: DataSourceDefinition<Record, FiltersSchema, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>, deps?: ReadonlyArray<unknown>) => DataSource<Record, FiltersSchema, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>;
+export declare const useDataSource: <R extends RecordType = RecordType, FiltersSchema extends FiltersDefinition = FiltersDefinition, Sortings extends SortingsDefinition = SortingsDefinition, Summaries extends SummariesDefinition = SummariesDefinition, ItemActions extends ItemActionsDefinition<R> = ItemActionsDefinition<R>, NavigationFilters extends NavigationFiltersDefinition = NavigationFiltersDefinition, Grouping extends GroupingDefinition<R> = GroupingDefinition<R>>({ currentFilters: initialCurrentFilters, currentGrouping: initialCurrentGrouping, filters, navigationFilters, search, defaultSorting, summaries, dataAdapter, grouping, ...rest }: DataSourceDefinition<R, FiltersSchema, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>, deps?: ReadonlyArray<unknown>) => DataSource<R, FiltersSchema, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>;
 
 export { useForm }
 
