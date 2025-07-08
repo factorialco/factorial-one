@@ -3,9 +3,7 @@ import { fn } from "storybook/test"
 import { Select, SelectProps } from "../index"
 
 import { IconType } from "@/components/Utilities/Icon"
-import { FiltersDefinition } from "@/experimental/OneDataCollection/Filters/types"
-import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { PaginatedFetchOptions } from "@/experimental/OneDataCollection/types"
+import { createDataSourceDefinition } from "@/experimental/OneDataCollection/useDataSource"
 import { Appearance, Circle, Desktop, Plus } from "@/icons/app"
 import {
   FIRST_NAMES_MOCK,
@@ -183,6 +181,8 @@ const mockItems = Array.from({ length: 10000 }, (_, i) => ({
   description: `Description for option ${i}`,
 }))
 
+type MockItem = (typeof mockItems)[number]
+
 export const LargeList: Story = {
   args: {
     ...WithSearchBox.args,
@@ -201,15 +201,10 @@ export const WithDataSourcePaginated: Story = {
     showSearchBox: true,
     onChange: fn(),
     value: "option-2",
-    source: {
+    source: createDataSourceDefinition<MockItem>({
       dataAdapter: {
         paginationType: "infinite-scroll",
-        fetchData: (
-          options: PaginatedFetchOptions<
-            FiltersDefinition,
-            NavigationFiltersDefinition
-          >
-        ) => {
+        fetchData: (options) => {
           const { search, pagination } = options
           return new Promise((resolve) => {
             setTimeout(() => {
@@ -241,8 +236,8 @@ export const WithDataSourcePaginated: Story = {
           })
         },
       },
-    },
-    mapOptions: (item: (typeof mockItems)[number]) => ({
+    }),
+    mapOptions: (item: MockItem) => ({
       value: item.value,
       label: item.label,
       icon: item.icon,
@@ -257,14 +252,9 @@ export const WithDataSourceNotPaginated: Story = {
     showSearchBox: true,
     onChange: fn(),
     value: "option-2",
-    source: {
+    source: createDataSourceDefinition<MockItem>({
       dataAdapter: {
-        fetchData: (
-          options: PaginatedFetchOptions<
-            FiltersDefinition,
-            NavigationFiltersDefinition
-          >
-        ) => {
+        fetchData: (options) => {
           const { search } = options
           return new Promise((resolve) => {
             setTimeout(() => {
@@ -282,7 +272,7 @@ export const WithDataSourceNotPaginated: Story = {
           })
         },
       },
-    },
+    }),
     mapOptions: (item: (typeof mockItems)[number]) => ({
       value: item.value,
       label: item.label,

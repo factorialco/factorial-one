@@ -36,6 +36,45 @@ export const getDataSourcePaginationType = <
 }
 
 /**
+ * Create a data source definition from a data source definition
+ * This function is a helper to allow to infer the type of the data source definition
+ * from the data source definition.
+ *
+ * @param definition - The data source definition to create from
+ * @returns The created data source definition
+ */
+export const createDataSourceDefinition = <
+  R extends RecordType = RecordType,
+  FiltersSchema extends FiltersDefinition = FiltersDefinition,
+  Sortings extends SortingsDefinition = SortingsDefinition,
+  Summaries extends SummariesDefinition = SummariesDefinition,
+  ItemActions extends ItemActionsDefinition<R> = ItemActionsDefinition<R>,
+  NavigationFilters extends
+    NavigationFiltersDefinition = NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
+>(
+  definition: DataSourceDefinition<
+    R,
+    FiltersSchema,
+    Sortings,
+    Summaries,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
+): DataSourceDefinition<
+  R,
+  FiltersSchema,
+  Sortings,
+  Summaries,
+  ItemActions,
+  NavigationFilters,
+  Grouping
+> => {
+  return definition
+}
+
+/**
  * A hook that manages data source state and filtering capabilities for a collection.
  * It creates and returns a reusable data source that can be shared across different
  * visualizations and components.
@@ -46,7 +85,7 @@ export const getDataSourcePaginationType = <
  * 3. Support more complex data filtering, querying, and pagination logic
  * 4. Provide a clean separation between data management and visualization
  *
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The definition of available filters for the collection
  * @template ItemActions - The definition of available item actions
  * @template Actions - The definition of available actions for the collection
@@ -70,13 +109,14 @@ export const getDataSourcePaginationType = <
  * - presets: Available filter presets
  */
 export const useDataSource = <
-  Record extends RecordType,
-  FiltersSchema extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
-  NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
+  R extends RecordType = RecordType,
+  FiltersSchema extends FiltersDefinition = FiltersDefinition,
+  Sortings extends SortingsDefinition = SortingsDefinition,
+  Summaries extends SummariesDefinition = SummariesDefinition,
+  ItemActions extends ItemActionsDefinition<R> = ItemActionsDefinition<R>,
+  NavigationFilters extends
+    NavigationFiltersDefinition = NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
@@ -90,7 +130,7 @@ export const useDataSource = <
     grouping,
     ...rest
   }: DataSourceDefinition<
-    Record,
+    R,
     FiltersSchema,
     Sortings,
     Summaries,
@@ -100,7 +140,7 @@ export const useDataSource = <
   >,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<
-  Record,
+  R,
   FiltersSchema,
   Sortings,
   Summaries,
@@ -173,7 +213,7 @@ export const useDataSource = <
     : undefined
 
   const [currentGrouping, setCurrentGrouping] = useState<
-    GroupingState<Record, Grouping>
+    GroupingState<R, Grouping>
   >(initialCurrentGrouping ?? defaultGrouping)
 
   // For mandatory grouping, ensure we have a valid grouping state

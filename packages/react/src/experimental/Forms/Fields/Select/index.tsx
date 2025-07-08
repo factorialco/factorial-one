@@ -281,7 +281,13 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
       onChangeSelectedOption?.(foundOption)
       setSelectedOption(foundOption)
     }
-  }, [data.records, localValue, optionMapper, findOption, onChange])
+  }, [
+    data.records,
+    localValue,
+    optionMapper,
+    findOption,
+    onChangeSelectedOption,
+  ])
 
   useEffect(() => {
     if (open) {
@@ -354,7 +360,9 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
       <SelectPrimitive
         onValueChange={onValueChange}
         value={
-          value !== undefined && value !== null ? String(value) : undefined
+          localValue !== undefined && localValue !== null
+            ? String(localValue)
+            : undefined
         }
         disabled={disabled}
         open={open}
