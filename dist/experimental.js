@@ -61233,7 +61233,13 @@ const DIe = ({
   fe(() => {
     const J = Z($);
     J && (i == null || i(J), ee(J));
-  }, [R.records, $, O, Z, n]), fe(() => {
+  }, [
+    R.records,
+    $,
+    O,
+    Z,
+    i
+  ]), fe(() => {
     var J;
     d && ((J = _.current) == null || J.focus());
   }, [d]);
