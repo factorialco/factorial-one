@@ -34,20 +34,26 @@ export * from "./summary"
  * @template Summaries - The available summaries for the collection
  */
 export type DataSourceDefinition<
-  Record extends RecordType,
-  Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
-  NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
+  Record extends RecordType = RecordType,
+  Filters extends FiltersDefinition = FiltersDefinition,
+  Sortings extends SortingsDefinition = SortingsDefinition,
+  Summaries extends SummariesDefinition = SummariesDefinition,
+  ItemActions extends
+    ItemActionsDefinition<Record> = ItemActionsDefinition<Record>,
+  NavigationFilters extends
+    NavigationFiltersDefinition = NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record> = GroupingDefinition<Record>,
 > = {
   /** Available filter configurations */
   filters?: Filters
-  /** Navigation filters */
-  navigationFilters?: NavigationFilters
+  /** Current state of applied filters */
+  currentFilters?: FiltersState<Filters>
   /** Predefined filter configurations that can be applied */
   presets?: PresetsDefinition<Filters>
+
+  /** Navigation filters */
+  navigationFilters?: NavigationFilters
+
   /** URL for a single item in the collection */
   itemUrl?: (item: Record) => string | undefined
   /** Click handler for a single item in the collection */
@@ -60,10 +66,7 @@ export type DataSourceDefinition<
   secondaryActions?: SecondaryActionsDefinition
   /** Search configuration */
   search?: CollectionSearchOptions
-  /** Current state of applied filters */
-  currentFilters?: FiltersState<Filters>
-  /** Current state of applied navigation filter */
-  // currentNavigationFilter?: NavigationFilterValue<NavigationFilter>
+
   /** Available sorting fields. If not provided, sorting is not allowed. */
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
@@ -73,6 +76,7 @@ export type DataSourceDefinition<
   }
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters, NavigationFilters>
+
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
   /** Default selected items */
@@ -130,8 +134,9 @@ export type BaseResponse<Record> = {
  * Defines the available pagination types used throughout the application.
  * - "pages": Represents traditional page-based navigation with numbered pages.
  * - "infinite-scroll": Represents continuous loading of content as the user scrolls.
+ * - "no-pagination": Represents a collection that does not use pagination.
  */
-export type PaginationType = "pages" | "infinite-scroll"
+export type PaginationType = "pages" | "infinite-scroll" | "no-pagination"
 
 /**
  * Represents a base structure for paginated API responses, providing

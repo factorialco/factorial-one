@@ -11,6 +11,8 @@ type F1SearchBoxProps = {
   clearable?: boolean
   autoFocus?: boolean
   onChange?: (value: string) => void
+  onBlur?: () => void
+  onFocus?: () => void
 }
 
 const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
@@ -19,6 +21,8 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
       value,
       threshold = 0,
       onChange,
+      onBlur,
+      onFocus,
       debounceTime = 0,
       clearable = false,
       ...props
@@ -58,6 +62,8 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
         role="searchbox"
         autoFocus={props.autoFocus}
         clearable={clearable}
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
     )
   }

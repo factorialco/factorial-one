@@ -1,5 +1,25 @@
 import { Icon } from "@/components/Utilities/Icon"
+import {
+  BaseFetchOptions,
+  BaseResponse,
+  DataSourceDefinition,
+  FiltersDefinition,
+  GroupingDefinition,
+  ItemActionsDefinition,
+  NavigationFiltersDefinition,
+  PaginatedDataAdapter,
+  PromiseOrObservable,
+  RecordType,
+  SortingsDefinition,
+  Spinner,
+  SummariesDefinition,
+  useDataSource,
+} from "@/experimental/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
+import { useData, WithGroupId } from "@/experimental/OneDataCollection/useData"
+import { getDataSourcePaginationType } from "@/experimental/OneDataCollection/useDataSource"
+import { useGroups } from "@/experimental/OneDataCollection/useGroups"
 import { ChevronDown } from "@/icons/app"
 import {
   SelectContent,
@@ -26,27 +46,53 @@ import type { SelectItemObject, SelectItemProps } from "./types"
 
 export * from "./types"
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Allow to pass anything as item */
-export type SelectProps<T, R = any> = {
+/**
+ * Select component for choosing from a list of options.
+ *
+ * @template T - The type of the emitted  value
+ * @template R - The type of the record/item data (used with data source)
+ *
+ */
+export type SelectProps<T, R = unknown> = {
   placeholder?: string
-  onChange: (value: T, item?: R) => void
+  onChange: (value: T, origialItem?: R, option?: SelectItemObject<T, R>) => void
+  onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
-  options: SelectItemProps<T, R>[]
   children?: React.ReactNode
   disabled?: boolean
   open?: boolean
   showSearchBox?: boolean
   searchBoxPlaceholder?: string
   onSearchChange?: (value: string) => void
-  externalSearch?: boolean
   searchValue?: string
   onOpenChange?: (open: boolean) => void
   searchEmptyMessage?: string
   className?: string
   selectContentClassName?: string
   actions?: Action[]
-}
+} & (
+  | {
+      source: DataSourceDefinition<
+        R extends RecordType ? R : RecordType,
+        FiltersDefinition,
+        SortingsDefinition,
+        SummariesDefinition,
+        ItemActionsDefinition<R extends RecordType ? R : RecordType>,
+        NavigationFiltersDefinition,
+        GroupingDefinition<R extends RecordType ? R : RecordType>
+      >
+      mapOptions: (
+        item: R extends RecordType ? R : RecordType
+      ) => SelectItemProps<T, R>
+      options?: never
+    }
+  | {
+      source?: never
+      mapOptions?: never
+      options: SelectItemProps<T, R>[]
+    }
+)
 
 const SelectItem = <T,>({ item }: { item: SelectItemObject<T> }) => {
   return (
@@ -95,12 +141,14 @@ const SelectValue = forwardRef<
 const defaultTrigger =
   "flex h-10 w-full items-center justify-between rounded-md border border-solid border-f1-border bg-f1-background pl-3 pr-2 py-2.5 transition-colors placeholder:text-f1-foreground-secondary hover:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1"
 
-const SelectComponent = forwardRef(function Select<T, R>(
+const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   {
     placeholder,
-    options = [],
     onChange,
+    onChangeSelectedOption,
     value,
+    options = [],
+    mapOptions,
     children,
     disabled,
     open,
@@ -108,45 +156,140 @@ const SelectComponent = forwardRef(function Select<T, R>(
     showSearchBox,
     onSearchChange,
     searchBoxPlaceholder,
-    externalSearch,
     searchEmptyMessage,
     className,
     selectContentClassName,
     actions,
+    source,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
-  const selectedOption = options.find(
-    (option): option is Exclude<typeof option, { type: "separator" }> =>
-      option.type !== "separator" && option.value === value
-  )
-
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const [searchValue, setSearchValue] = useState(
-    (props as { searchValue?: string }).searchValue || ""
-  )
   const [openLocal, setOpenLocal] = useState(open)
 
-  const filteredOptions = useMemo(() => {
-    if (externalSearch) {
-      return options
+  const [localValue, setLocalValue] = useState(
+    value || props.defaultItem?.value
+  )
+
+  const dataSource = useMemo(() => {
+    if (
+      source &&
+      !["infinite-scroll", "no-pagination"].includes(
+        getDataSourcePaginationType(source.dataAdapter)
+      )
+    ) {
+      throw new Error(
+        "Select component only supports `infinite-scroll` or `no-pagination` pagination types"
+      )
     }
 
-    const res = options.filter(
-      (option) =>
-        option.type === "separator" ||
-        !searchValue ||
-        option.label.toLowerCase().includes(searchValue.toLowerCase())
-    )
+    return {
+      ...source,
+      dataAdapter: source
+        ? (source.dataAdapter as PaginatedDataAdapter<
+            R extends RecordType ? R : RecordType,
+            FiltersDefinition,
+            NavigationFiltersDefinition
+          >)
+        : {
+            fetchData: ({
+              search,
+            }: BaseFetchOptions<
+              FiltersDefinition,
+              NavigationFiltersDefinition
+            >): PromiseOrObservable<
+              BaseResponse<R extends RecordType ? R : RecordType>
+            > => {
+              return {
+                records: options.filter(
+                  (option) =>
+                    option.type === "separator" ||
+                    !search ||
+                    option.label.toLowerCase().includes(search.toLowerCase())
+                ) as unknown as (R extends RecordType ? R : RecordType)[],
+              }
+            },
+          },
+    }
+  }, [options, source])
 
-    setTimeout(() => {
-      searchInputRef.current?.focus()
-    }, 0)
+  const localSource = useDataSource(
+    {
+      ...dataSource,
+      search: showSearchBox
+        ? {
+            enabled: showSearchBox,
+            sync: !source,
+          }
+        : undefined,
+    },
+    [options]
+  )
 
-    return res
-  }, [options, externalSearch, searchValue])
+  const optionMapper = useCallback(
+    (item: R extends RecordType ? R : RecordType): SelectItemProps<T, R> => {
+      if (source) {
+        if (!mapOptions) {
+          throw new Error("mapOptions is required when using a source")
+        }
+        return mapOptions(item)
+      }
+      // At this point, we are sure that options is an array of SelectItemProps<T, R>
+      return item as unknown as SelectItemProps<T, R>
+    },
+    [mapOptions, source]
+  )
+
+  const { data, isInitialLoading, loadMore, isLoadingMore } =
+    useData(localSource)
+
+  const { currentSearch, setCurrentSearch } = localSource
+
+  const [selectedOption, setSelectedOption] = useState<
+    SelectItemObject<T, R> | undefined
+  >(undefined)
+
+  /**
+   * Finds an option in the data records by value and returns the mapped option
+   * @param value - The value to find
+   * @returns The option if found, undefined otherwise
+   */
+  const findOption = useCallback(
+    (value: string | T | undefined): SelectItemObject<T, R> | undefined => {
+      if (value === undefined) {
+        return undefined
+      }
+      for (const option of data.records) {
+        const mappedOption = optionMapper(
+          option as R extends RecordType ? R : RecordType
+        )
+        if (
+          mappedOption.type !== "separator" &&
+          String(mappedOption.value) === value
+        ) {
+          return mappedOption
+        }
+      }
+      return undefined
+    },
+    [data.records, optionMapper]
+  )
+
+  useEffect(() => {
+    const foundOption = findOption(localValue)
+    if (foundOption) {
+      onChangeSelectedOption?.(foundOption)
+      setSelectedOption(foundOption)
+    }
+  }, [
+    data.records,
+    localValue,
+    optionMapper,
+    findOption,
+    onChangeSelectedOption,
+  ])
 
   useEffect(() => {
     if (open) {
@@ -156,21 +299,20 @@ const SelectComponent = forwardRef(function Select<T, R>(
 
   const onSearchChangeLocal = useCallback(
     (value: string) => {
-      setSearchValue(value)
+      setCurrentSearch(value)
       onSearchChange?.(value)
     },
-    [setSearchValue, onSearchChange]
+    [setCurrentSearch, onSearchChange]
   )
 
-  const onValueChange = (changedValue: string) => {
+  const onValueChange = (changedValue: string | undefined) => {
     // Resets the search value when the option is selected
-    setSearchValue("")
-    const foundOption = options.find(
-      (option): option is SelectItemObject<T, R> =>
-        option.type !== "separator" && String(option.value) === changedValue
-    )
+    setCurrentSearch(undefined)
+    setLocalValue(changedValue as T)
+    const foundOption = findOption(changedValue)
+
     if (foundOption) {
-      onChange?.(foundOption.value, foundOption.item)
+      onChange?.(foundOption.value, foundOption.item, foundOption)
     }
   }
 
@@ -182,75 +324,145 @@ const SelectComponent = forwardRef(function Select<T, R>(
     }, 0)
   }
 
-  const items: VirtualItem[] = useMemo(
-    () =>
-      filteredOptions.map((option, index) =>
-        option.type === "separator"
+  const collapsible = localSource.grouping?.collapsible
+  const defaultOpenGroups = localSource.grouping?.defaultOpenGroups
+  const { openGroups, setGroupOpen } = useGroups(
+    data?.type === "grouped" ? data.groups : [],
+    defaultOpenGroups
+  )
+
+  const getItems = useCallback(
+    (
+      records: WithGroupId<R extends RecordType ? R : RecordType>[]
+    ): VirtualItem[] => {
+      return records.map((option, index) => {
+        const mappedOption = optionMapper(
+          option as R extends RecordType ? R : RecordType
+        )
+        return mappedOption.type === "separator"
           ? {
               height: 1,
               item: <SelectSeparator key={`separator-${index}`} />,
             }
           : {
               height: option.description ? 64 : 32,
-              item: <SelectItem key={String(option.value)} item={option} />,
-              value: String(option.value),
+              item: (
+                <SelectItem
+                  key={String(mappedOption.value)}
+                  item={mappedOption}
+                />
+              ),
+              value: String(mappedOption.value),
             }
-      ),
-    [filteredOptions]
+      })
+    },
+    [optionMapper]
   )
 
-  return (
-    <SelectPrimitive
-      onValueChange={onValueChange}
-      value={value !== undefined && value !== null ? String(value) : undefined}
-      disabled={disabled}
-      open={open}
-      onOpenChange={onOpenChangeLocal}
-      {...props}
-    >
-      <SelectTrigger ref={ref} asChild>
-        {children || (
-          <button
-            aria-label="Select unfoldable"
-            className={cn(
-              defaultTrigger,
-              className,
-              focusRing("focus-visible:border-f1-border-hover")
-            )}
-          >
-            <SelectValuePrimitive placeholder={placeholder} asChild>
-              {selectedOption && <SelectValue item={selectedOption} />}
-            </SelectValuePrimitive>
-            <div className="flex h-6 w-6 items-center justify-center">
-              <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
-                <Icon
-                  icon={ChevronDown}
-                  size="sm"
-                  className="rounded-2xs bg-f1-background-secondary p-0.5"
-                />
-              </div>
-            </div>
-          </button>
-        )}
-      </SelectTrigger>
-      {openLocal && (
-        <SelectContent
-          items={items}
-          className={selectContentClassName}
-          emptyMessage={searchEmptyMessage}
-          bottom={<SelectBottomActions actions={actions} />}
-          top={
-            <SelectTopActions
-              searchInputRef={searchInputRef}
-              searchValue={searchValue}
-              onSearchChange={onSearchChangeLocal}
-              searchBoxPlaceholder={searchBoxPlaceholder}
-              showSearchBox={showSearchBox}
+  const items: VirtualItem[] = useMemo(() => {
+    if (data.type === "grouped") {
+      const items: VirtualItem[] = []
+
+      data.groups.map((group) => {
+        items.push({
+          height: 30,
+          item: (
+            <GroupHeader
+              label={group.label}
+              itemCount={group.itemCount}
+              onOpenChange={(open) => setGroupOpen(group.key, open)}
+              open={openGroups[group.key]}
+              // showOpenChange={collapsible}
             />
-          }
-        ></SelectContent>
-      )}
-    </SelectPrimitive>
+          ),
+        })
+        items.push(...getItems(group.records))
+      })
+      return items
+    }
+    return getItems(data.records)
+  }, [data.records, data.type, data?.groups, getItems])
+
+  const handleScrollBottom = () => {
+    loadMore()
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      searchInputRef.current?.focus()
+    }, 0)
+  }, [data])
+
+  return (
+    <>
+      <SelectPrimitive
+        onValueChange={onValueChange}
+        value={
+          localValue !== undefined && localValue !== null
+            ? String(localValue)
+            : undefined
+        }
+        disabled={disabled}
+        open={open}
+        onOpenChange={onOpenChangeLocal}
+        {...props}
+      >
+        <SelectTrigger ref={ref} asChild>
+          {children || (
+            <button
+              aria-label="Select unfoldable"
+              className={cn(
+                defaultTrigger,
+                className,
+                focusRing("focus-visible:border-f1-border-hover")
+              )}
+            >
+              {isInitialLoading ? (
+                <>
+                  <Spinner size="small" /> {placeholder}
+                </>
+              ) : (
+                <SelectValuePrimitive placeholder={placeholder} asChild>
+                  {selectedOption && <SelectValue item={selectedOption} />}
+                </SelectValuePrimitive>
+              )}
+
+              <div className="flex h-6 w-6 items-center justify-center">
+                <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
+                  <Icon
+                    icon={ChevronDown}
+                    size="sm"
+                    className="rounded-2xs bg-f1-background-secondary p-0.5"
+                  />
+                </div>
+              </div>
+            </button>
+          )}
+        </SelectTrigger>
+        {openLocal && (
+          <SelectContent
+            items={items}
+            className={selectContentClassName}
+            emptyMessage={searchEmptyMessage}
+            bottom={<SelectBottomActions actions={actions} />}
+            top={
+              <SelectTopActions
+                searchInputRef={searchInputRef}
+                searchValue={currentSearch}
+                onSearchChange={onSearchChangeLocal}
+                searchBoxPlaceholder={searchBoxPlaceholder}
+                showSearchBox={showSearchBox}
+                grouping={localSource.grouping}
+                currentGrouping={localSource.currentGrouping}
+                onGroupingChange={localSource.setCurrentGrouping}
+              />
+            }
+            onScrollBottom={handleScrollBottom}
+            isLoadingMore={isLoadingMore}
+          ></SelectContent>
+        )}
+      </SelectPrimitive>
+    </>
   )
 })
 

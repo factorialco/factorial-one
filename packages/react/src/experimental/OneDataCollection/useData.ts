@@ -229,6 +229,7 @@ export function useData<
     currentGrouping,
     grouping,
   } = source
+
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
@@ -242,6 +243,15 @@ export function useData<
 
   const { paginationInfo, setPaginationInfo } = usePaginationState()
 
+  // We need to use a ref to get the latest paginationInfo value
+  // because the paginationInfo is updated asynchronously
+  // and we need to use the latest value in the callback functions
+  // like loadMore, setPage, etc.
+  const paginationInfoRef = useRef(paginationInfo)
+  useEffect(() => {
+    paginationInfoRef.current = paginationInfo
+  }, [paginationInfo])
+
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 
@@ -254,11 +264,22 @@ export function useData<
 
   const deferredSearch = useDeferredValue(currentSearch)
 
-  const searchValue = !search?.enabled
-    ? undefined
-    : search?.sync
-      ? currentSearch
-      : deferredSearch
+  // We need to use a ref to get the latest search value
+  // because the search value is updated asynchronously
+  // and we need to use the latest value in the callback functions
+  // like loadMore, setPage, etc.
+  const searchValue = useRef<string | undefined>(undefined)
+  useEffect(
+    () => {
+      searchValue.current = !search?.enabled
+        ? undefined
+        : search?.sync
+          ? currentSearch
+          : deferredSearch
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
+    [currentSearch, deferredSearch, search?.enabled, search?.sync]
+  )
 
   const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
 
@@ -278,7 +299,8 @@ export function useData<
         // Update pagination info based on the pagination type
         if (
           paginationType &&
-          ["pages", "infinite-scroll"].includes(paginationType)
+          ["pages", "infinite-scroll"].includes(paginationType) &&
+          paginationType !== "no-pagination"
         ) {
           // For page-based pagination
           setPaginationInfo({
@@ -307,6 +329,7 @@ export function useData<
                   : rawData.length + result.records.length < result.total,
             }),
           })
+
           setTotalItems(result.total)
         }
       } else {
@@ -439,6 +462,7 @@ export function useData<
     navigationFilters: NavigationFiltersState<NavigationFilters>
     appendMode?: boolean
     cursor?: string | null
+    search?: string | undefined
   }
 
   const fetchDataAndUpdate = useCallback(
@@ -446,6 +470,7 @@ export function useData<
       filters,
       currentPage = 1,
       navigationFilters,
+      search,
       appendMode = false,
       cursor = null,
     }: FetchDataParams<Filters, NavigationFilters>) => {
@@ -477,7 +502,7 @@ export function useData<
 
         const baseFetchOptions: BaseFetchOptions<Filters, NavigationFilters> = {
           filters,
-          search: searchValue,
+          search,
           sortings,
           navigationFilters,
         }
@@ -495,23 +520,22 @@ export function useData<
               : defaultPerPage
 
           // Use appropriate pagination type based on dataAdapter configuration
-          if (dataAdapter.paginationType === "pages") {
-            return dataAdapter.fetchData({
-              ...baseFetchOptions,
-              pagination: { currentPage, perPage: perPageValue },
-            })
-          } else if (dataAdapter.paginationType === "infinite-scroll") {
-            // For infinite scroll, use the cursor parameter directly
-            return dataAdapter.fetchData({
-              ...baseFetchOptions,
-              pagination: { cursor, perPage: perPageValue },
-            })
-          } else {
-            return dataAdapter.fetchData({
-              ...baseFetchOptions,
-              pagination: {},
-            }) as PromiseOrObservable<ResultType>
-          }
+          return dataAdapter.fetchData({
+            ...baseFetchOptions,
+            pagination: {
+              ...(dataAdapter.paginationType === "pages"
+                ? {
+                    currentPage,
+                    perPage: perPageValue,
+                  }
+                : dataAdapter.paginationType === "infinite-scroll"
+                  ? {
+                      cursor,
+                      perPage: perPageValue,
+                    }
+                  : {}),
+            },
+          }) as PromiseOrObservable<ResultType>
         }
 
         const result = fetcher()
@@ -552,7 +576,6 @@ export function useData<
       dataAdapter,
       currentSortings,
       currentGrouping,
-      searchValue,
       handleFetchSuccess,
       setIsLoading,
     ]
@@ -571,10 +594,13 @@ export function useData<
       fetchDataAndUpdate({
         filters: mergedFilters,
         currentPage: page,
+        search: searchValue.current,
         navigationFilters: currentNavigationFilters,
       })
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
     [
+      searchValue.current,
       fetchDataAndUpdate,
       mergedFilters,
       setIsLoading,
@@ -584,63 +610,75 @@ export function useData<
   )
 
   // In loadMore function
-  const loadMore = useCallback(() => {
-    if (!paginationInfo || isLoading) return
+  const loadMore = useCallback(
+    () => {
+      const currentPaginationInfo = paginationInfoRef.current
+      if (!currentPaginationInfo || isLoading) return
 
-    if (!isInfiniteScrollPagination(paginationInfo)) {
-      console.warn(
-        "loadMore is only applicable for infinite-scroll pagination type"
-      )
-      return
-    }
+      if (!isInfiniteScrollPagination(currentPaginationInfo)) {
+        console.warn(
+          "loadMore is only applicable for infinite-scroll pagination type"
+        )
+        return
+      }
 
-    if (paginationInfo.hasMore) {
-      // Extract the cursor from paginationInfo
-      const currentCursor = paginationInfo.cursor
+      if (currentPaginationInfo.hasMore) {
+        // Extract the cursor from paginationInfo
+        const currentCursor = currentPaginationInfo.cursor
 
-      setIsLoadingMore(true)
-      setIsLoading(true)
-      isLoadingMoreRef.current = true
+        setIsLoadingMore(true)
+        setIsLoading(true)
+        isLoadingMoreRef.current = true
 
-      // Use named parameters
-      fetchDataAndUpdate({
-        filters: mergedFilters,
-        navigationFilters: currentNavigationFilters,
-        appendMode: true,
-        cursor: currentCursor,
-      })
-    }
-  }, [
-    fetchDataAndUpdate,
-    isLoading,
-    mergedFilters,
-    paginationInfo,
-    currentNavigationFilters,
-    setIsLoading,
-    setIsLoadingMore,
-  ])
+        // Use named parameters
+        fetchDataAndUpdate({
+          filters: mergedFilters,
+          navigationFilters: currentNavigationFilters,
+          appendMode: true,
+          cursor: currentCursor,
+          search: searchValue.current,
+        })
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
+    [
+      fetchDataAndUpdate,
+      isLoading,
+      mergedFilters,
+      paginationInfoRef.current,
+      currentNavigationFilters,
+      searchValue.current,
+      setIsLoading,
+      setIsLoadingMore,
+    ]
+  )
 
-  useEffect(() => {
-    if (!isLoadingMoreRef.current) {
-      setIsLoading(true)
-      // Explicitly pass 0 as the initial position for infinite scroll
-      const initialPosition =
-        dataAdapter.paginationType === "infinite-scroll" ? 0 : 1
-      fetchDataAndUpdate({
-        filters: mergedFilters,
-        currentPage: initialPosition,
-        navigationFilters: currentNavigationFilters,
-        cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
-      })
-    }
-  }, [
-    fetchDataAndUpdate,
-    mergedFilters,
-    setIsLoading,
-    currentNavigationFilters,
-
-    dataAdapter.paginationType,
-  ])
+  useEffect(
+    () => {
+      if (!isLoadingMoreRef.current) {
+        setIsLoading(true)
+        // Explicitly pass 0 as the initial position for infinite scroll
+        const initialPosition =
+          dataAdapter.paginationType === "infinite-scroll" ? 0 : 1
+        fetchDataAndUpdate({
+          filters: mergedFilters,
+          currentPage: initialPosition,
+          navigationFilters: currentNavigationFilters,
+          search: searchValue.current,
+          cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
+        })
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
+    [
+      fetchDataAndUpdate,
+      mergedFilters,
+      setIsLoading,
+      currentNavigationFilters,
+      dataAdapter.paginationType,
+      searchValue.current,
+    ]
+  )
 
   useEffect(() => {
     return () => {
