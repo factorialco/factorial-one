@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.119.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.2...factorial-one-react-v1.119.3) (2025-07-09)
+
+
+### Bug Fixes
+
+* **avatar:** add no translate attribute for avatars ([#2228](https://github.com/factorialco/factorial-one/issues/2228)) ([f7bc69a](https://github.com/factorialco/factorial-one/commit/f7bc69ac2d574da096cebcbab94ccdf7ea2c3eb7))
+
 ## [1.119.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.1...factorial-one-react-v1.119.2) (2025-07-09)
 
 
