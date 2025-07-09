@@ -1,5 +1,6 @@
 import { DateRange } from "@/experimental/OneCalendar/types"
 import dateFilter, { DateFilterDefinition } from "./DateFilter"
+import eqFilter, { EqFilterDefinition } from "./EqFilter"
 import inFilter, { InFilterDefinition } from "./InFilter"
 import searchFilter, { SearchFilterDefinition } from "./SearchFilter"
 import { FilterTypeDefinition } from "./types"
@@ -9,12 +10,14 @@ import { FilterTypeDefinition } from "./types"
  */
 export type FilterDefinitionsByType<T = unknown> = {
   in: InFilterDefinition<T>
+  eq: EqFilterDefinition<T>
   search: SearchFilterDefinition
   date: DateFilterDefinition
 }
 
 export const filterTypes = {
   in: inFilter,
+  eq: eqFilter,
   search: searchFilter,
   date: dateFilter,
 } as const
@@ -22,6 +25,7 @@ export const filterTypes = {
 /**
  * Extracts the appropriate value type for a given filter:
  * - InFilter -> Array of selected values of type T
+ * - EqFilter -> Single selected value of type T or null
  * - SearchFilter -> Search string
  *
  * This type is used to ensure type safety when working with filter values.
@@ -30,11 +34,13 @@ export const filterTypes = {
 export type FilterValue<T extends FilterDefinition> =
   T extends InFilterDefinition<infer U>
     ? U[]
-    : T extends SearchFilterDefinition
-      ? string
-      : T extends DateFilterDefinition
-        ? DateRange | Date | undefined
-        : never
+    : T extends EqFilterDefinition<infer U>
+      ? U | null
+      : T extends SearchFilterDefinition
+        ? string
+        : T extends DateFilterDefinition
+          ? DateRange | Date | undefined
+          : never
 
 /**
  * Base definition for all filter types.
