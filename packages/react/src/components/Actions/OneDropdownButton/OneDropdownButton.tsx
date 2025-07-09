@@ -65,6 +65,7 @@ const OneDropdownButton = ({
           icon={selectedItem.icon}
           label={selectedItem.label}
           data-testid="button-main"
+          className="flex-1"
           {...props}
           appendButton={
             <DropdownInternal

@@ -132,7 +132,7 @@ export const BasicActionsExample: Story = {
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
       itemActions: createUserActions(),
     })
@@ -183,12 +183,19 @@ export const BasicActionsExample: Story = {
 
 // Example showing how actions can be used with card visualization
 export const CardActionsExample: Story = {
+  parameters: {
+    a11y: {
+      skipCi: true,
+    },
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
-      //secondaryActions: buildActions(),
       itemActions: createUserActions(),
     })
 

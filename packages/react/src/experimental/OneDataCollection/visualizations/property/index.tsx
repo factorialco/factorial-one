@@ -1,4 +1,5 @@
 import { PropertyRenderer } from "./types.ts"
+import { AlertTagCell } from "./types/alertTag.tsx"
 import { AmountCell } from "./types/amount.tsx"
 import { AvatarListCell } from "./types/avatarList.tsx"
 import { CompanyCell } from "./types/company.tsx"
@@ -26,6 +27,7 @@ export const propertyRenderers = {
   amount: AmountCell,
   avatarList: AvatarListCell,
   status: StatusCell,
+  alertTag: AlertTagCell,
   person: PersonCell,
   company: CompanyCell,
   team: TeamCell,

@@ -16,14 +16,14 @@ import { ComponentProps, useState } from "react"
 import { EmojiImage } from "../../../../lib/emojis"
 import { BaseAvatar } from "../BaseAvatar"
 
-type Pulse =
+export type Pulse =
   | "superNegative"
   | "negative"
   | "neutral"
   | "positive"
   | "superPositive"
 
-const pulseIcon: Record<Pulse, IconType> = {
+export const pulseIcon: Record<Pulse, IconType> = {
   superNegative: FaceSuperNegative,
   negative: FaceNegative,
   neutral: FaceNeutral,
@@ -31,7 +31,7 @@ const pulseIcon: Record<Pulse, IconType> = {
   superPositive: FaceSuperPositive,
 }
 
-const iconStyle = cva({
+export const pulseIconStyle = cva({
   variants: {
     pulse: {
       superNegative: "text-[hsl(theme(colors.radical.50))]",
@@ -154,7 +154,7 @@ export const PulseAvatar = ({
                 >
                   <Icon
                     icon={pulseIcon[pulse]}
-                    className={iconStyle({ pulse })}
+                    className={pulseIconStyle({ pulse })}
                   />
                 </Button>
               </div>

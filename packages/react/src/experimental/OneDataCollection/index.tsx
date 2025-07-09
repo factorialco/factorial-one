@@ -8,6 +8,7 @@ import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
 
 import { OneEmptyState } from "@/experimental/OneEmptyState"
+import { experimentalComponent } from "@/lib/experimental"
 import { Skeleton } from "@/ui/skeleton"
 import { OneActionBar } from "../OneActionBar"
 import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
@@ -23,6 +24,7 @@ import {
 import { Search } from "./search"
 import { Settings } from "./Settings"
 import { SortingsDefinition, SortingsState } from "./sortings"
+import { SummariesDefinition } from "./summary"
 import type {
   BulkActionDefinition,
   CollectionSearchOptions,
@@ -78,6 +80,7 @@ export const useDataSource = <
   Record extends RecordType,
   FiltersSchema extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -89,6 +92,7 @@ export const useDataSource = <
     navigationFilters,
     search,
     defaultSorting,
+    summaries,
     dataAdapter,
     grouping,
     ...rest
@@ -96,6 +100,7 @@ export const useDataSource = <
     Record,
     FiltersSchema,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -105,6 +110,7 @@ export const useDataSource = <
   Record,
   FiltersSchema,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
@@ -156,6 +162,9 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedSummaries = useMemo(() => summaries, deps)
+
   const [isLoading, setIsLoading] = useState(false)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -185,6 +194,7 @@ export const useDataSource = <
     setCurrentFilters,
     currentSortings,
     setCurrentSortings,
+    summaries: memoizedSummaries,
     search,
     currentSearch,
     setCurrentSearch,
@@ -226,10 +236,11 @@ const MotionIcon = motion.create(Icon)
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export const OneDataCollection = <
+const OneDataCollectionComp = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -239,11 +250,13 @@ export const OneDataCollection = <
   onSelectItems,
   onBulkAction,
   emptyStates,
+  fullHeight,
 }: {
   source: DataSource<
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -253,6 +266,7 @@ export const OneDataCollection = <
       Record,
       Filters,
       Sortings,
+      Summaries,
       ItemActions,
       NavigationFilters,
       Grouping
@@ -262,6 +276,7 @@ export const OneDataCollection = <
   onBulkAction?: OnBulkActionCallback<Record, Filters>
   emptyStates?: CustomEmptyStates
   onTotalItemsChange?: (totalItems: number) => void
+  fullHeight?: boolean
 }): JSX.Element => {
   const {
     // Filters
@@ -456,11 +471,20 @@ export const OneDataCollection = <
   useEffect(() => {
     setEmptyStateType(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- This is intentional we should remove the empty state when the filters, search, navigation filters change
-  }, [currentFilters, currentSearch, currentNavigationFilters])
+  }, [
+    currentFilters,
+    currentSearch,
+    currentNavigationFilters,
+    source.dataAdapter,
+  ])
 
   return (
     <div
-      className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
+      className={cn(
+        "flex flex-col gap-4",
+        layout === "standard" && "-mx-6",
+        fullHeight && "h-full"
+      )}
     >
       {((totalItems !== undefined && totalItemSummary(totalItems)) ||
         navigationFilters) && (
@@ -493,7 +517,9 @@ export const OneDataCollection = <
           </div>
         </div>
       )}
-      <div className="flex flex-col gap-4 px-6">
+      <div
+        className={cn("flex flex-col gap-4 px-6", fullHeight && "max-h-full")}
+      >
         <Filters.Root
           schema={filters}
           filters={currentFilters}
@@ -559,38 +585,49 @@ export const OneDataCollection = <
         </Filters.Root>
       </div>
 
-      <div>
-        {emptyState ? (
-          <div className="flex flex-col items-center justify-center">
-            <OneEmptyState
-              emoji={emptyState.emoji}
-              title={emptyState.title}
-              description={emptyState.description}
-              actions={emptyState.actions}
-            />
-          </div>
-        ) : (
-          <>
-            <VisualizationRenderer
-              visualization={visualizations[currentVisualization]}
-              source={source}
-              onSelectItems={onSelectItemsLocal}
-              onLoadData={onLoadData}
-              onLoadError={onLoadError}
-            />
-            {bulkActions?.primary &&
-              (bulkActions?.primary || []).length > 0 && (
-                <OneActionBar
-                  isOpen={showActionBar}
-                  selectedNumber={selectedItemsCount}
-                  primaryActions={bulkActions.primary}
-                  secondaryActions={bulkActions?.secondary}
-                  onUnselect={() => clearSelectedItemsFunc?.()}
-                />
-              )}
-          </>
-        )}
+      {/* Visualization renderer must be always mounted to react (load data) even if empty state is shown */}
+      <div className={cn(emptyState && "hidden", fullHeight && "h-full")}>
+        <VisualizationRenderer
+          visualization={visualizations[currentVisualization]}
+          source={source}
+          onSelectItems={onSelectItemsLocal}
+          onLoadData={onLoadData}
+          onLoadError={onLoadError}
+        />
       </div>
+
+      {emptyState ? (
+        <div className="flex flex-1 flex-col items-center justify-center">
+          <OneEmptyState
+            emoji={emptyState.emoji}
+            title={emptyState.title}
+            description={emptyState.description}
+            actions={emptyState.actions}
+          />
+        </div>
+      ) : (
+        <>
+          {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
+            <OneActionBar
+              isOpen={showActionBar}
+              selectedNumber={selectedItemsCount}
+              primaryActions={bulkActions.primary}
+              secondaryActions={bulkActions?.secondary}
+              onUnselect={() => clearSelectedItemsFunc?.()}
+            />
+          )}
+        </>
+      )}
     </div>
   )
 }
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+const OneDataCollection = experimentalComponent(
+  "OneDataCollection",
+  OneDataCollectionComp
+)
+
+export { OneDataCollection }

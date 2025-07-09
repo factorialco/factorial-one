@@ -16,6 +16,7 @@ import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
+import { SummariesDefinition } from "../../../summary"
 import {
   CollectionProps,
   DataSource,
@@ -46,7 +47,7 @@ const findNextMultiple = (n: number): number => {
 
 const CardGrid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {children}
     </div>
   )
@@ -60,6 +61,7 @@ export type CardCollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -67,6 +69,7 @@ export type CardCollectionProps<
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping,
@@ -81,6 +84,7 @@ type GroupCardsProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -89,6 +93,7 @@ type GroupCardsProps<
     Record,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -106,6 +111,7 @@ const GroupCards = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -122,6 +128,7 @@ const GroupCards = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping
@@ -212,6 +219,7 @@ export const CardCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
@@ -228,6 +236,7 @@ export const CardCollection = <
   Record,
   Filters,
   Sortings,
+  Summaries,
   ItemActions,
   NavigationFilters,
   Grouping,
@@ -252,6 +261,7 @@ export const CardCollection = <
     Record,
     Filters,
     Sortings,
+    Summaries,
     NavigationFilters,
     Grouping
   >(
@@ -285,7 +295,13 @@ export const CardCollection = <
     groupAllSelectedStatus,
     handleSelectItemChange,
     handleSelectGroupChange,
-  } = useSelectable(data, paginationInfo, source, onSelectItems)
+  } = useSelectable(
+    data,
+    paginationInfo,
+    source,
+    onSelectItems,
+    source.defaultSelectedItems
+  )
 
   /**
    * Groups
@@ -298,85 +314,88 @@ export const CardCollection = <
   )
 
   return (
-    <>
-      {isInitialLoading ? (
-        <CardGrid>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <Card key={i}>
-              <CardHeader>
-                <CardTitle aria-label="Loading card">
-                  <Skeleton className="h-4 w-3/4" />
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {cardProperties.map((property) => (
-                  <div key={String(property.label)} className="space-y-1">
-                    <Skeleton className="h-3 w-1/4" />
-                    <Skeleton className="h-3 w-1/2" />
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          ))}
-        </CardGrid>
-      ) : (
-        <>
-          {data?.type === "grouped" &&
-            data.groups.map((group) => {
-              return (
-                <>
-                  <GroupHeader
-                    label={group.label}
-                    itemCount={group.itemCount}
-                    onOpenChange={(open) => setGroupOpen(group.key, open)}
-                    open={openGroups[group.key]}
-                    selectable={!!source.selectable}
-                    showOpenChange={collapsible}
-                    select={
-                      groupAllSelectedStatus[group.key]?.checked
-                        ? true
-                        : groupAllSelectedStatus[group.key]?.indeterminate
-                          ? "indeterminate"
-                          : false
-                    }
-                    onSelectChange={(checked) =>
-                      handleSelectGroupChange(group, checked)
-                    }
-                  />
-                  <AnimatePresence>
-                    {openGroups[group.key] && (
-                      <GroupCards
-                        key={group.key}
-                        source={source}
-                        items={group.records}
-                        selectedItems={selectedItems}
-                        handleSelectItemChange={handleSelectItemChange}
-                        title={title}
-                        cardProperties={cardProperties}
-                        description={description}
-                        avatar={avatar}
-                      />
-                    )}
-                  </AnimatePresence>
-                </>
-              )
-            })}
+    <div className="flex min-h-0 flex-1 flex-col gap-4">
+      <div className="overflow-auto">
+        {isInitialLoading ? (
+          <CardGrid>
+            {Array.from({ length: 8 }).map((_, i) => (
+              <Card key={i}>
+                <CardHeader>
+                  <CardTitle aria-label="Loading card">
+                    <Skeleton className="h-4 w-3/4" />
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-2">
+                  {cardProperties.map((property) => (
+                    <div key={String(property.label)} className="space-y-1">
+                      <Skeleton className="h-3 w-1/4" />
+                      <Skeleton className="h-3 w-1/2" />
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            ))}
+          </CardGrid>
+        ) : (
+          <>
+            {data?.type === "grouped" &&
+              data.groups.map((group) => {
+                return (
+                  <>
+                    <GroupHeader
+                      label={group.label}
+                      itemCount={group.itemCount}
+                      onOpenChange={(open) => setGroupOpen(group.key, open)}
+                      open={openGroups[group.key]}
+                      selectable={!!source.selectable}
+                      showOpenChange={collapsible}
+                      select={
+                        groupAllSelectedStatus[group.key]?.checked
+                          ? true
+                          : groupAllSelectedStatus[group.key]?.indeterminate
+                            ? "indeterminate"
+                            : false
+                      }
+                      onSelectChange={(checked) =>
+                        handleSelectGroupChange(group, checked)
+                      }
+                      className="px-6 pb-2 pt-4"
+                    />
+                    <AnimatePresence>
+                      {(!collapsible || openGroups[group.key]) && (
+                        <GroupCards
+                          key={group.key}
+                          source={source}
+                          items={group.records}
+                          selectedItems={selectedItems}
+                          handleSelectItemChange={handleSelectItemChange}
+                          title={title}
+                          cardProperties={cardProperties}
+                          description={description}
+                          avatar={avatar}
+                        />
+                      )}
+                    </AnimatePresence>
+                  </>
+                )
+              })}
 
-          {data?.type === "flat" && (
-            <GroupCards
-              source={source}
-              items={data.records}
-              selectedItems={selectedItems}
-              handleSelectItemChange={handleSelectItemChange}
-              title={title}
-              cardProperties={cardProperties}
-              description={description}
-              avatar={avatar}
-            />
-          )}
-        </>
-      )}
+            {data?.type === "flat" && (
+              <GroupCards
+                source={source}
+                items={data.records}
+                selectedItems={selectedItems}
+                handleSelectItemChange={handleSelectItemChange}
+                title={title}
+                cardProperties={cardProperties}
+                description={description}
+                avatar={avatar}
+              />
+            )}
+          </>
+        )}
+      </div>
       <PagesPagination paginationInfo={paginationInfo} setPage={setPage} />
-    </>
+    </div>
   )
 }

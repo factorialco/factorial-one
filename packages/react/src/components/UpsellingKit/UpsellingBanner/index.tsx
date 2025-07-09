@@ -1,7 +1,9 @@
 // packages/react/src/experimental/Banner/index.tsx
 import { Button } from "@/components/Actions/Button"
 import CrossIcon from "@/icons/app/Cross"
-import { useState } from "react"
+import { withSkeleton } from "@/lib/skeleton"
+import { Skeleton } from "@/ui/skeleton"
+import { forwardRef, useState } from "react"
 import { UpsellingButton, type UpsellingButtonProps } from "../UpsellingButton"
 
 type DefaultAction = {
@@ -30,16 +32,24 @@ type UpsellingBannerProps = {
   primaryAction?: DefaultAction | PromoteAction
   secondaryAction?: DefaultAction | PromoteAction
   onClose?: () => void
+  isLoading?: boolean
 }
 
-export function UpsellingBanner({
-  title,
-  subtitle,
-  mediaUrl,
-  primaryAction,
-  secondaryAction,
-  onClose,
-}: UpsellingBannerProps) {
+const UpsellingBannerComponent = forwardRef<
+  HTMLDivElement,
+  UpsellingBannerProps
+>(function UpsellingBanner(
+  {
+    title,
+    subtitle,
+    mediaUrl,
+    primaryAction,
+    secondaryAction,
+    onClose,
+    isLoading = false,
+  },
+  ref
+) {
   const isVideo = mediaUrl?.includes(".mp4")
 
   const [isDismissed, setIsDismissed] = useState(false)
@@ -51,8 +61,15 @@ export function UpsellingBanner({
     setIsDismissed(true)
   }
 
+  if (isLoading) {
+    return <UpsellingBannerSkeleton ref={ref} />
+  }
+
   return !isDismissed ? (
-    <div className="bg-white relative flex w-full flex-col gap-4 rounded-xl border border-f1-border-secondary shadow-md sm:flex-row sm:gap-5">
+    <div
+      ref={ref}
+      className="bg-white relative flex w-full flex-col gap-4 rounded-xl border border-f1-border-secondary shadow-md sm:flex-row sm:gap-5"
+    >
       {/* Imagen 16:9 */}
       <div className="aspect-video w-full flex-shrink-0 overflow-hidden rounded-xl px-1 pb-0 pt-1 sm:max-w-80 sm:py-1 sm:pl-1">
         {isVideo ? (
@@ -127,6 +144,45 @@ export function UpsellingBanner({
       </div>
     </div>
   ) : null
-}
+})
+
+const UpsellingBannerSkeleton = forwardRef<HTMLDivElement>(
+  function UpsellingBannerSkeleton(props, ref) {
+    return (
+      <div
+        ref={ref}
+        className="bg-white relative flex w-full flex-col gap-4 rounded-xl border border-f1-border-secondary shadow-md sm:flex-row sm:gap-5"
+        role="status"
+        aria-busy="true"
+        aria-live="polite"
+        {...props}
+      >
+        <div className="aspect-video w-full flex-shrink-0 overflow-hidden rounded-xl px-1 pb-0 pt-1 sm:max-w-80 sm:py-1 sm:pl-1">
+          <Skeleton className="h-full w-full rounded-lg" />
+        </div>
+
+        <div className="flex flex-col justify-center gap-5 px-3 pb-3 sm:py-3 sm:pl-0 sm:pr-3">
+          <div className="flex w-full flex-col gap-1 sm:max-w-lg">
+            <Skeleton className="h-7 w-3/4" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-2/3" />
+          </div>
+          <div className="flex gap-3">
+            <Skeleton className="h-9 w-32" />
+            <Skeleton className="h-9 w-24" />
+          </div>
+        </div>
+        <div className="absolute right-2 top-2 z-10">
+          <Skeleton className="h-8 w-8 rounded-md" />
+        </div>
+      </div>
+    )
+  }
+)
+
+export const UpsellingBanner = withSkeleton(
+  UpsellingBannerComponent,
+  UpsellingBannerSkeleton
+)
 
 UpsellingBanner.displayName = "UpsellingBanner"

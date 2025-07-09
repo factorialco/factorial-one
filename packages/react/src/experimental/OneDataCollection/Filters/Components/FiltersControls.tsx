@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useId, useState } from "react"
 import { Button } from "../../../../components/Actions/Button"
 import { Filter } from "../../../../icons/app"
 import { useI18n } from "../../../../lib/providers/i18n"
@@ -72,6 +72,8 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run this when the popover is opened
   }, [isOpen])
 
+  const id = useId()
+
   return (
     <div className="flex items-center gap-2">
       <Popover open={isOpen} onOpenChange={onOpenChange}>
@@ -84,12 +86,14 @@ export function FiltersControls<Filters extends FiltersDefinition>({
             onClick={() => onOpenChange(!isOpen)}
             hideLabel={hideLabel}
             round={hideLabel}
+            aria-controls={isOpen ? id : undefined}
           />
         </PopoverTrigger>
         <PopoverContent
           className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
           align="start"
           side="bottom"
+          aria-id={id}
         >
           <div className="flex h-[min(448px,80vh)] flex-col">
             <div className="flex min-h-0 flex-1">

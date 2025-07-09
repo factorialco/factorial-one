@@ -41,25 +41,25 @@ const mockItem = {
   role: "Engineer",
   amount: 100000,
   status: "Active",
-  avatar: "https://github.com/nlopin.png",
+  avatar: "/avatars/person01.jpg",
   avatarList: [
     {
       type: "person" as const,
       firstName: "John",
       lastName: "Doe",
-      src: "https://github.com/nlopin.png",
+      src: "/avatars/person01.jpg",
     },
     {
       type: "person" as const,
       firstName: "Josep",
       lastName: "Rey",
-      src: "https://github.com/josepjaume.png",
+      src: "/avatars/person02.jpg",
     },
   ],
   companyName: "Factorial",
-  companyLogo: "https://github.com/factorialco.png",
+  companyLogo: "/avatars/factorial.png",
   teamName: "Engineering",
-  teamLogo: "https://github.com/factorialco.png",
+  teamLogo: "/avatars/team03.jpg",
   skills: [
     {
       label: "React",
@@ -331,6 +331,7 @@ export const PersonTypeWithBadge: Story = {
           badge: {
             type: "warning",
             icon: Placeholder,
+            tooltip: "This is a tooltip",
           },
         },
       }),
@@ -401,6 +402,22 @@ export const TagType: Story = {
         value: {
           label: item.status,
           color: item.status === "active" ? "green" : "red",
+        },
+      }),
+    },
+  },
+}
+
+export const AlertTagType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Alert Tag",
+      render: () => ({
+        type: "alertTag",
+        value: {
+          level: "critical",
+          label: "Critical",
         },
       }),
     },

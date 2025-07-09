@@ -9,6 +9,7 @@ import {
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { renderProperty } from "@/experimental/OneDataCollection/property-render"
 import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary"
 import {
   DataSource,
   GroupingDefinition,
@@ -24,6 +25,7 @@ export type RowProps<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -32,6 +34,7 @@ export type RowProps<
     R,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping
@@ -41,7 +44,7 @@ export type RowProps<
   groupIndex: number
   onCheckedChange: (checked: boolean) => void
   selectedItems: Map<string | number, R>
-  columns: ReadonlyArray<TableColumnDefinition<R, Sortings>>
+  columns: ReadonlyArray<TableColumnDefinition<R, Sortings, Summaries>>
   frozenColumnsLeft: number
   checkColumnWidth: number
 }
@@ -50,6 +53,7 @@ const RowComponentInner = <
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -64,14 +68,25 @@ const RowComponentInner = <
     checkColumnWidth,
     index,
     groupIndex,
-  }: RowProps<R, Filters, Sortings, ItemActions, NavigationFilters, Grouping>,
+  }: RowProps<
+    R,
+    Filters,
+    Sortings,
+    Summaries,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >,
   ref: React.ForwardedRef<HTMLTableRowElement>
 ) => {
   const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
   const itemOnClick = source.itemOnClick ? source.itemOnClick(item) : undefined
   const id = source.selectable ? source.selectable(item) : undefined
 
-  const renderCell = (item: R, column: TableColumnDefinition<R, Sortings>) => {
+  const renderCell = (
+    item: R,
+    column: TableColumnDefinition<R, Sortings, Summaries>
+  ) => {
     return renderProperty(item, column, "table")
   }
 
@@ -84,7 +99,7 @@ const RowComponentInner = <
       {source.selectable && (
         <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
           {id !== undefined && (
-            <div className="flex items-center justify-end">
+            <div className="pointer-events-auto flex items-center justify-end">
               <Checkbox
                 checked={selectedItems.has(id)}
                 onCheckedChange={onCheckedChange}
@@ -135,7 +150,10 @@ const RowComponentInner = <
           href={itemHref}
           onClick={itemOnClick}
         >
-          <ItemActionsDropdown items={actionsToDropdownItems(itemActions)} />
+          <ItemActionsDropdown
+            items={actionsToDropdownItems(itemActions)}
+            className="pointer-events-auto"
+          />
         </TableCell>
       )}
     </TableRow>
@@ -146,6 +164,7 @@ const Row = forwardRef(RowComponentInner) as <
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
@@ -154,6 +173,7 @@ const Row = forwardRef(RowComponentInner) as <
     R,
     Filters,
     Sortings,
+    Summaries,
     ItemActions,
     NavigationFilters,
     Grouping

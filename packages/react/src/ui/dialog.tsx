@@ -3,6 +3,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import * as React from "react"
 
+import { useEffect, useState } from "react"
 import { cn } from "../lib/utils"
 
 const Dialog = DialogPrimitive.Root
@@ -32,24 +33,51 @@ const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
     withTraslateAnimation?: boolean
+    container?: HTMLElement | null
   }
->(({ className, children, withTraslateAnimation = true, ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={cn(
-        "fixed left-[50%] top-[50%] z-50 grid w-[90%] translate-x-[-50%] translate-y-[-50%] rounded-xl border bg-f1-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
-        withTraslateAnimation &&
-          "data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </DialogPrimitive.Content>
-  </DialogPortal>
-))
+>(
+  (
+    {
+      className,
+      children,
+      withTraslateAnimation = true,
+      container: propContainer,
+      ...props
+    },
+    ref
+  ) => {
+    const [container, setContainer] = useState<HTMLElement | null>()
+
+    useEffect(() => {
+      if (propContainer !== undefined) {
+        setContainer(propContainer)
+      } else {
+        setContainer(document.getElementById("content"))
+      }
+    }, [propContainer])
+
+    if (container === undefined) return null
+
+    return (
+      <DialogPortal container={container}>
+        <DialogOverlay />
+        <DialogPrimitive.Content
+          ref={ref}
+          className={cn(
+            "fixed left-[50%] top-[50%] z-50 grid w-[90%] translate-x-[-50%] translate-y-[-50%] rounded-xl border bg-f1-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+            withTraslateAnimation &&
+              "data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </DialogPrimitive.Content>
+      </DialogPortal>
+    )
+  }
+)
+
 DialogContent.displayName = DialogPrimitive.Content.displayName
 
 const DialogHeader = ({

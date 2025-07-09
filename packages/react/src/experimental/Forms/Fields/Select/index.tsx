@@ -98,190 +98,194 @@ const SelectValue = forwardRef<
   )
 })
 
-export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
-  function Select(
-    {
-      placeholder,
-      options = [],
-      onChange,
-      value,
-      children,
-      disabled,
-      open,
-      onOpenChange,
-      showSearchBox,
-      onSearchChange,
-      searchBoxPlaceholder,
-      externalSearch,
-      searchEmptyMessage,
-      className,
-      size,
-      selectContentClassName,
-      actions,
-      label,
-      error,
-      icon,
-      labelIcon,
-      clearable,
-      ...props
+const SelectComponent = forwardRef(function Select<T extends string, R>(
+  {
+    placeholder,
+    options = [],
+    onChange,
+    value,
+    children,
+    disabled,
+    open,
+    onOpenChange,
+    showSearchBox,
+    onSearchChange,
+    searchBoxPlaceholder,
+    externalSearch,
+    searchEmptyMessage,
+    size,
+    selectContentClassName,
+    actions,
+    label,
+    error,
+    icon,
+    labelIcon,
+    clearable,
+    ...props
+  }: SelectProps<T, R>,
+  ref: React.ForwardedRef<HTMLButtonElement>
+) {
+  const selectedOption = options.find(
+    (option): option is Exclude<typeof option, { type: "separator" }> =>
+      option.type !== "separator" && option.value === value
+  )
+
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
+  const [searchValue, setSearchValue] = useState(props.searchValue || "")
+  const [openLocal, setOpenLocal] = useState(open)
+  const [localValue, setLocalValue] = useState(value)
+
+  const filteredOptions = useMemo(() => {
+    if (externalSearch) {
+      return options
+    }
+
+    const res = options.filter(
+      (option) =>
+        option.type === "separator" ||
+        !searchValue ||
+        option.label.toLowerCase().includes(searchValue.toLowerCase())
+    )
+
+    setTimeout(() => {
+      searchInputRef.current?.focus()
+    }, 0)
+
+    return res
+  }, [options, externalSearch, searchValue])
+
+  useEffect(() => {
+    if (open) {
+      searchInputRef.current?.focus()
+    }
+  }, [open])
+
+  const onSearchChangeLocal = useCallback(
+    (value: string) => {
+      setSearchValue(value)
+      onSearchChange?.(value)
     },
-    ref
-  ) {
-    const selectedOption = options.find(
-      (option): option is Exclude<typeof option, { type: "separator" }> =>
-        option.type !== "separator" && option.value === value
-    )
+    [setSearchValue, onSearchChange]
+  )
 
-    const searchInputRef = useRef<HTMLInputElement>(null)
-
-    const [searchValue, setSearchValue] = useState(props.searchValue || "")
-    const [openLocal, setOpenLocal] = useState(open)
-    const [localValue, setLocalValue] = useState(value)
-
-    const filteredOptions = useMemo(() => {
-      if (externalSearch) {
-        return options
-      }
-
-      const res = options.filter(
-        (option) =>
-          option.type === "separator" ||
-          !searchValue ||
-          option.label.toLowerCase().includes(searchValue.toLowerCase())
-      )
-
-      setTimeout(() => {
-        searchInputRef.current?.focus()
-      }, 0)
-
-      return res
-    }, [options, externalSearch, searchValue])
-
-    useEffect(() => {
-      if (open) {
-        searchInputRef.current?.focus()
-      }
-    }, [open])
-
-    const onSearchChangeLocal = useCallback(
-      (value: string) => {
-        setSearchValue(value)
-        onSearchChange?.(value)
-      },
-      [setSearchValue, onSearchChange]
-    )
-
-    const handleLocalValueChange = (value: string) => {
-      setLocalValue(value)
-      // Resets the search value when the option is selected
-      setSearchValue("")
-      onChange?.(
-        value,
-        options.find(
-          (option): option is SelectItemObject<string> =>
-            typeof option === "object" &&
-            option.type !== "separator" &&
-            option.value === value
-        )?.item
-      )
-    }
-
-    const handleChangeOpenLocal = (open: boolean) => {
-      onOpenChange?.(open)
-      setOpenLocal(open)
-      setTimeout(() => {
-        searchInputRef.current?.focus()
-      }, 0)
-    }
-
-    const items: VirtualItem[] = useMemo(
-      () =>
-        filteredOptions.map((option, index) =>
-          option.type === "separator"
-            ? {
-                height: 1,
-                item: <SelectSeparator key={`separator-${index}`} />,
-              }
-            : {
-                height: option.description ? 64 : 32,
-                item: <SelectItem key={option.value} item={option} />,
-                value: option.value,
-              }
-        ),
-      [filteredOptions]
-    )
-
-    return (
-      <SelectPrimitive
-        onValueChange={handleLocalValueChange}
-        value={localValue}
-        disabled={disabled}
-        open={openLocal}
-        onOpenChange={handleChangeOpenLocal}
-        {...props}
-      >
-        {children ? (
-          <SelectTrigger ref={ref} asChild>
-            <div className="flex w-full items-center justify-between">
-              {children}
-            </div>
-          </SelectTrigger>
-        ) : (
-          <SelectTrigger ref={ref} asChild>
-            <InputField
-              label={label}
-              error={error}
-              icon={icon}
-              labelIcon={labelIcon}
-              value={localValue}
-              onChange={handleLocalValueChange}
-              placeholder={placeholder}
-              disabled={disabled}
-              clearable={clearable}
-              size={size}
-              onClickContent={() => {
-                handleChangeOpenLocal(!openLocal)
-              }}
-              append={
-                <Icon
-                  onClick={() => {
-                    handleChangeOpenLocal(!openLocal)
-                  }}
-                  icon={ChevronDown}
-                  size="sm"
-                  className={cn(
-                    "rounded-2xs bg-f1-background-secondary p-0.5 transition-transform duration-200",
-                    openLocal && "rotate-180",
-                    !disabled && "cursor-pointer"
-                  )}
-                />
-              }
-            >
-              <div className="flex w-full items-center justify-between">
-                {selectedOption && <SelectValue item={selectedOption} />}
-              </div>
-            </InputField>
-          </SelectTrigger>
-        )}
-
-        {openLocal && (
-          <SelectContent
-            items={items}
-            className={cn(selectContentClassName)}
-            emptyMessage={searchEmptyMessage}
-            bottom={<SelectBottomActions actions={actions} />}
-            top={
-              <SelectTopActions
-                searchInputRef={searchInputRef}
-                searchValue={searchValue}
-                onSearchChange={onSearchChangeLocal}
-                searchBoxPlaceholder={searchBoxPlaceholder}
-                showSearchBox={showSearchBox}
-              />
-            }
-          ></SelectContent>
-        )}
-      </SelectPrimitive>
+  const handleLocalValueChange = (value: T) => {
+    setLocalValue(value)
+    // Resets the search value when the option is selected
+    setSearchValue("")
+    onChange?.(
+      value,
+      options.find(
+        (option): option is SelectItemObject<T, R> =>
+          typeof option === "object" &&
+          option.type !== "separator" &&
+          option.value === value
+      )?.item
     )
   }
-)
+
+  const handleChangeOpenLocal = (open: boolean) => {
+    onOpenChange?.(open)
+    setOpenLocal(open)
+    setTimeout(() => {
+      searchInputRef.current?.focus()
+    }, 0)
+  }
+
+  const items: VirtualItem[] = useMemo(
+    () =>
+      filteredOptions.map((option, index) =>
+        option.type === "separator"
+          ? {
+              height: 1,
+              item: <SelectSeparator key={`separator-${index}`} />,
+            }
+          : {
+              height: option.description ? 64 : 32,
+              item: <SelectItem key={option.value} item={option} />,
+              value: option.value,
+            }
+      ),
+    [filteredOptions]
+  )
+
+  return (
+    <SelectPrimitive
+      onValueChange={handleLocalValueChange}
+      value={localValue}
+      disabled={disabled}
+      open={openLocal}
+      onOpenChange={handleChangeOpenLocal}
+      {...props}
+    >
+      {children ? (
+        <SelectTrigger ref={ref} asChild>
+          <div className="flex w-full items-center justify-between">
+            {children}
+          </div>
+        </SelectTrigger>
+      ) : (
+        <SelectTrigger ref={ref} asChild>
+          <InputField
+            label={label}
+            error={error}
+            icon={icon}
+            labelIcon={labelIcon}
+            value={localValue}
+            onChange={(value) => handleLocalValueChange(value as T)}
+            placeholder={placeholder}
+            disabled={disabled}
+            clearable={clearable}
+            size={size}
+            onClickContent={() => {
+              handleChangeOpenLocal(!openLocal)
+            }}
+            append={
+              <Icon
+                onClick={() => {
+                  handleChangeOpenLocal(!openLocal)
+                }}
+                icon={ChevronDown}
+                size="sm"
+                className={cn(
+                  "rounded-2xs bg-f1-background-secondary p-0.5 transition-transform duration-200",
+                  openLocal && "rotate-180",
+                  !disabled && "cursor-pointer"
+                )}
+              />
+            }
+          >
+            <div className="flex w-full items-center justify-between">
+              {selectedOption && <SelectValue item={selectedOption} />}
+            </div>
+          </InputField>
+        </SelectTrigger>
+      )}
+
+      {openLocal && (
+        <SelectContent
+          items={items}
+          className={cn(selectContentClassName)}
+          emptyMessage={searchEmptyMessage}
+          bottom={<SelectBottomActions actions={actions} />}
+          top={
+            <SelectTopActions
+              searchInputRef={searchInputRef}
+              searchValue={searchValue}
+              onSearchChange={onSearchChangeLocal}
+              searchBoxPlaceholder={searchBoxPlaceholder}
+              showSearchBox={showSearchBox}
+            />
+          }
+        ></SelectContent>
+      )}
+    </SelectPrimitive>
+  )
+})
+
+export const Select = SelectComponent as <
+  T extends string = string,
+  R = unknown,
+>(
+  props: SelectProps<T, R> & { ref?: React.Ref<HTMLButtonElement> }
+) => React.ReactElement

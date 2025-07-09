@@ -7,8 +7,12 @@ const meta: Meta<typeof UpsellingBanner> = {
   parameters: {
     layout: "padded",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "no-sidebar"],
   argTypes: {
+    isLoading: {
+      control: "boolean",
+      description: "Show skeleton loading state",
+    },
     primaryAction: {
       control: "object",
       description: "Banner primary action",
@@ -40,6 +44,7 @@ export const Default: Story = {
       onClick: () => alert("Read more"),
     },
     onClose: () => alert("Closed"),
+    isLoading: false,
   },
 }
 
@@ -83,6 +88,7 @@ export const Promote: Story = {
       onClick: () => alert("Discover more modules"),
     },
     onClose: () => alert("Closed"),
+    isLoading: false,
   },
 }
 
@@ -121,5 +127,34 @@ export const OnlyPrimary: Story = {
       showConfirmation: true,
     },
     onClose: () => alert("Closed"),
+    isLoading: false,
+  },
+}
+
+export const Skeleton: Story = {
+  args: {
+    title: "Loading banner...",
+    subtitle: "This content is being loaded",
+    mediaUrl: "https://placehold.co/400x225",
+    primaryAction: {
+      variant: "default",
+      label: "Primary Action",
+      onClick: () => {},
+    },
+    secondaryAction: {
+      variant: "default",
+      label: "Secondary",
+      onClick: () => {},
+    },
+    onClose: () => {},
+    isLoading: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Shows the skeleton loading state when data is being fetched or props are loading.",
+      },
+    },
   },
 }

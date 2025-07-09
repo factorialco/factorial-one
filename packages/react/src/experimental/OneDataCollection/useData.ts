@@ -19,6 +19,7 @@ import {
   NavigationFiltersState,
 } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
+import { SummariesDefinition } from "./summary"
 import {
   BaseFetchOptions,
   DataSource,
@@ -27,6 +28,7 @@ import {
   PageBasedPaginatedResponse,
   PaginatedResponse,
   PaginationInfo,
+  PaginationType,
   PromiseOrObservable,
   RecordType,
   SortingsStateMultiple,
@@ -77,8 +79,8 @@ interface UseDataReturn<R> {
 
   // For infinite-scroll pagination:
   loadMore: () => void
-
   totalItems: number | undefined
+  summaries?: R // Add summaries to the return type
 }
 
 type DataType<T> = PromiseState<T>
@@ -200,6 +202,7 @@ export function useData<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 >(
@@ -207,6 +210,7 @@ export function useData<
     R,
     Filters,
     Sortings,
+    Summaries,
     ItemActionsDefinition<R>,
     NavigationFilters,
     Grouping
@@ -256,17 +260,26 @@ export function useData<
       ? currentSearch
       : deferredSearch
 
+  const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
+
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<R> | SimpleResult<R>, appendMode: boolean) => {
+      // Extract summaries data if available
+      const extractedSummaries =
+        "summaries" in result ? result.summaries : undefined
+      setSummariesData(extractedSummaries)
       let records: R[] = []
       if ("records" in result) {
         records = result.records
         // Use a default value of "pages" when paginationType is undefined
-        const paginationType: "pages" | "infinite-scroll" =
-          dataAdapter.paginationType || "pages"
+        const paginationType: PaginationType | undefined =
+          dataAdapter.paginationType
 
         // Update pagination info based on the pagination type
-        if (["pages", "infinite-scroll"].includes(paginationType)) {
+        if (
+          paginationType &&
+          ["pages", "infinite-scroll"].includes(paginationType)
+        ) {
           // For page-based pagination
           setPaginationInfo({
             total: result.total,
@@ -302,7 +315,35 @@ export function useData<
         setTotalItems?.(result.length)
       }
 
-      setRawData(appendMode ? (prevData) => [...prevData, ...records] : records)
+      setRawData(
+        appendMode
+          ? (prevData) => {
+              const merged = [...prevData]
+              const idMap = new Map(
+                prevData
+                  .filter((item) => "id" in item && !!item.id)
+                  .map((item) => [item.id, item])
+              )
+
+              for (const record of records) {
+                if ("id" in record && !!record.id && idMap.has(record.id)) {
+                  const index = merged.findIndex(
+                    (item) => item.id === record.id
+                  )
+                  if (index !== -1) {
+                    merged[index] = record // Overwrite existing item
+                  } else {
+                    merged.push(record) // Fallback
+                  }
+                } else {
+                  merged.push(record) // New item
+                }
+              }
+
+              return merged
+            }
+          : records
+      )
       setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
@@ -319,6 +360,7 @@ export function useData<
       setIsLoading,
       setIsLoadingMore,
       setTotalItems,
+      setSummariesData,
       isLoadingMoreRef,
     ]
   )
@@ -440,7 +482,7 @@ export function useData<
           navigationFilters,
         }
 
-        const fetcher = (): PromiseOrObservable<ResultType> => {
+        function fetcher(): PromiseOrObservable<ResultType> {
           setTotalItems(undefined)
 
           // TODO: Default perPage value from somewhere
@@ -458,12 +500,17 @@ export function useData<
               ...baseFetchOptions,
               pagination: { currentPage, perPage: perPageValue },
             })
-          } else {
+          } else if (dataAdapter.paginationType === "infinite-scroll") {
             // For infinite scroll, use the cursor parameter directly
             return dataAdapter.fetchData({
               ...baseFetchOptions,
               pagination: { cursor, perPage: perPageValue },
             })
+          } else {
+            return dataAdapter.fetchData({
+              ...baseFetchOptions,
+              pagination: {},
+            }) as PromiseOrObservable<ResultType>
           }
         }
 
@@ -586,17 +633,20 @@ export function useData<
         cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
       })
     }
-
-    return () => {
-      cleanup.current?.()
-    }
   }, [
     fetchDataAndUpdate,
     mergedFilters,
     setIsLoading,
     currentNavigationFilters,
+
     dataAdapter.paginationType,
   ])
+
+  useEffect(() => {
+    return () => {
+      cleanup.current?.()
+    }
+  }, [])
 
   return {
     data,
@@ -608,6 +658,7 @@ export function useData<
     setPage,
     loadMore,
     totalItems,
+    summaries: summariesData, // Add summaries to the return object
   }
 }
 

@@ -19,8 +19,8 @@ export default meta
 type Story = StoryObj<typeof CompanySelector>
 
 const exampleCompanies = [
-  { id: "1", name: "Factorial", logo: "https://github.com/factorial.png" },
-  { id: "2", name: "Dazlog", logo: "https://github.com/dazlog.png" },
+  { id: "1", name: "Factorial", logo: "/avatars/factorial.png" },
+  { id: "2", name: "Dazlog", logo: "/avatars/company02.jpg" },
   { id: "3", name: "Acme Corp, Company of Extended Names" },
 ]
 

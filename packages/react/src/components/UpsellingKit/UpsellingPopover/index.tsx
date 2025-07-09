@@ -1,7 +1,14 @@
-import { Button, ButtonProps, IconType, ProductWidget } from "@/factorial-one"
+import {
+  Button,
+  ButtonProps,
+  IconType,
+  ProductWidget,
+  UpsellRequestResponseDialog,
+} from "@/factorial-one"
 import { Popover, PopoverContent, PopoverTrigger } from "../../../ui/popover"
 
 import { PopoverContentProps } from "@radix-ui/react-popover"
+import { useState } from "react"
 import { Upsell } from "../../../icons/app"
 import { Action } from "../ProductWidget"
 
@@ -22,7 +29,10 @@ type UpsellingPopoverProps = {
   trackVisibility?: (visible: boolean) => void
   actions?: Action[]
   onClick?: () => void
+  hideLabel?: boolean
 }
+
+type ResponseStatus = "success" | "error" | null
 
 export function UpsellingPopover({
   isOpen,
@@ -41,7 +51,12 @@ export function UpsellingPopover({
   trackVisibility,
   actions,
   onClick,
+  hideLabel = false,
 }: UpsellingPopoverProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
+  const [currentAction, setCurrentAction] = useState<Action | null>(null)
+
   const handleOpenChange = (open: boolean) => {
     setIsOpen(open)
     if (onClick) {
@@ -49,33 +64,88 @@ export function UpsellingPopover({
     }
   }
 
+  const handleUpsellRequest = async (action: Action) => {
+    if (action.type !== "upsell") return
+
+    setCurrentAction(action)
+
+    try {
+      await action.onClick()
+      if (action.showConfirmation) {
+        setIsModalOpen(true)
+        setResponseStatus("success")
+      }
+    } catch {
+      setIsModalOpen(true)
+      setResponseStatus("error")
+    }
+  }
+
+  const handleModalClose = () => {
+    setResponseStatus(null)
+    setIsModalOpen(false)
+    setCurrentAction(null)
+    setIsOpen(false)
+  }
+
+  const shouldShowPopover = isOpen && !isModalOpen
+
+  const modifiedActions = actions?.map((action) => {
+    if (action.type === "upsell") {
+      return {
+        ...action,
+        onClick: () => handleUpsellRequest(action),
+      }
+    }
+    return action
+  })
+
   return (
-    <Popover open={isOpen} onOpenChange={handleOpenChange}>
-      <PopoverTrigger asChild>
-        <Button
-          variant={variant}
-          label={label}
-          size={size}
-          icon={showIcon ? icon : undefined}
-          onClick={() => setIsOpen(isOpen)}
-        />
-      </PopoverTrigger>
-      <PopoverContent
-        side={side}
-        align={align}
-        className="w-fit border-none bg-transparent p-2 shadow-none"
-      >
-        <ProductWidget
-          mediaUrl={mediaUrl}
-          title={title}
-          description={description}
-          onClose={() => setIsOpen(false)}
-          dismissible={false}
-          width={width}
-          trackVisibility={trackVisibility}
-          actions={actions}
-        />
-      </PopoverContent>
-    </Popover>
+    <>
+      <Popover open={shouldShowPopover} onOpenChange={handleOpenChange}>
+        <PopoverTrigger asChild>
+          <Button
+            variant={variant}
+            label={label}
+            size={size}
+            icon={showIcon ? icon : undefined}
+            onClick={() => setIsOpen(isOpen)}
+            hideLabel={hideLabel}
+          />
+        </PopoverTrigger>
+        <PopoverContent
+          side={side}
+          align={align}
+          className="w-fit border-none bg-transparent p-2 shadow-none"
+        >
+          <ProductWidget
+            mediaUrl={mediaUrl}
+            title={title}
+            description={description}
+            onClose={() => setIsOpen(false)}
+            dismissible={false}
+            width={width}
+            trackVisibility={trackVisibility}
+            actions={modifiedActions}
+            showConfirmation={false}
+          />
+        </PopoverContent>
+      </Popover>
+
+      {currentAction?.type === "upsell" &&
+        currentAction.showConfirmation &&
+        responseStatus && (
+          <UpsellRequestResponseDialog
+            open={true}
+            onClose={handleModalClose}
+            success={responseStatus === "success"}
+            errorMessage={currentAction.errorMessage}
+            successMessage={currentAction.successMessage}
+            nextSteps={currentAction.nextSteps}
+            closeLabel={currentAction.closeLabel}
+            portalContainer={null}
+          />
+        )}
+    </>
   )
 }

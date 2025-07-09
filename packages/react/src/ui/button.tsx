@@ -130,8 +130,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             buttonRef.current?.click()
           }}
           onKeyDown={(e) => {
-            e.preventDefault()
             if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
               buttonRef.current?.click()
             }
           }}

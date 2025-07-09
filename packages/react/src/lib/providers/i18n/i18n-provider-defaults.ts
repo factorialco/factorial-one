@@ -88,14 +88,21 @@ export const defaultTranslations = {
         retry: "Retry",
       },
     },
+    summaries: {
+      types: {
+        sum: "sum",
+      },
+    },
   },
   shortcut: "Shortcut",
   date: {
     from: "From",
     to: "To",
+    none: "None",
     date: "Date",
     custom: "Custom period",
     selectDate: "Select Date",
+    compareTo: "Compare to",
     presets: {
       last7Days: "Last 7 days",
       last30Days: "Last 30 days",

@@ -1,16 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Check } from "../../../../icons/app"
 import { sizes } from "../../../../ui/avatar"
-import { PersonAvatar, PersonAvatarProps } from "./index"
+import { PersonAvatar } from "./index"
 
-const PersonAvatarExample = (
-  props: PersonAvatarProps & { hasBadge: boolean }
-) => {
-  return <PersonAvatar {...props} />
-}
-
-const meta: Meta<typeof PersonAvatarExample> = {
-  component: PersonAvatarExample,
+const meta: Meta<typeof PersonAvatar> = {
+  component: PersonAvatar,
   title: "Avatars/PersonAvatar",
   tags: ["autodocs", "experimental"],
   argTypes: {
@@ -19,49 +13,54 @@ const meta: Meta<typeof PersonAvatarExample> = {
       options: sizes,
       description: "Select the size of the avatar",
     },
-    hasBadge: {
-      control: "boolean",
-      description: "Toggle badge visibility",
+    firstName: {
+      control: "text",
+    },
+    lastName: {
+      control: "text",
     },
     badge: {
       table: { disable: true },
     },
   },
+} satisfies Meta<typeof PersonAvatar>
+
+export default meta
+
+type Story = StoryObj<typeof PersonAvatar>
+
+export const Default: Story = {
   args: {
     firstName: "Dani",
     lastName: "Moreno",
     size: "medium",
-    hasBadge: false,
   },
-  decorators: [
-    (Story, context) => {
-      const { hasBadge, ...args } = context.args
-      const badgeProps = hasBadge
-        ? { type: "positive" as const, icon: Check }
-        : undefined
-      return <Story args={{ ...args, badge: badgeProps }} />
-    },
-  ],
-} satisfies Meta<typeof PersonAvatarExample>
-
-export default meta
-
-type Story = StoryObj<typeof PersonAvatarExample>
-
-export const Default: Story = {}
+}
 
 export const WithImage: Story = {
   args: {
-    src: "https://github.com/dani-moreno.png",
+    ...Default.args,
+    src: "/avatars/person04.jpg",
   },
 }
 
 export const WithBadge: Story = {
   args: {
+    ...Default.args,
     badge: {
       type: "positive",
       icon: Check,
     },
-    size: "medium",
+  },
+}
+
+export const WithBadgeTooltip: Story = {
+  args: {
+    ...Default.args,
+    badge: {
+      type: "positive",
+      icon: Check,
+      tooltip: "This is a tooltip",
+    },
   },
 }

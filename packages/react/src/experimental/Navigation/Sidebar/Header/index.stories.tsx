@@ -17,9 +17,9 @@ export const Default: Story = {
       {
         id: "1",
         name: "Factorial with a long name",
-        logo: "https://github.com/factorialco.png",
+        logo: "/avatars/factorial.png",
       },
-      { id: "2", name: "Dazlog", logo: "https://github.com/dazlog.png" },
+      { id: "2", name: "Dazlog", logo: "/avatars/company02.jpg" },
       { id: "3", name: "Acme Corp" },
     ],
     selected: "1",

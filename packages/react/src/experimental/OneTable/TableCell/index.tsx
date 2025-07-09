@@ -103,17 +103,22 @@ export function TableCell({
         className={cn(
           "[&:has([role=checkbox])]:relative [&:has([role=checkbox])]:z-[1]",
           "[&:has([type=button])]:relative [&:has([type=button])]:z-[1]",
-          "[&:has(a)]:relative [&:has(a)]:z-[1]"
+          "[&:has(a)]:relative [&:has(a)]:z-[1]",
+          "pointer-events-none"
         )}
       >
-        <div className={cn(width !== "auto" && "overflow-hidden")}>
+        <div
+          className={
+            (cn(width !== "auto" && "overflow-hidden"), "relative z-[1]")
+          }
+        >
           {children}
         </div>
       </div>
       {href && (
         <Link
           href={href}
-          className="absolute inset-0 block"
+          className="pointer-events-auto absolute inset-0 !z-0 block bg-[#00]"
           tabIndex={firstCell ? undefined : -1}
         >
           <span className="sr-only">{actions.view}</span>

@@ -1,3 +1,4 @@
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import {
   Add,
   Ai,
@@ -254,6 +255,7 @@ export const WithLinkedItems: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      selectable: (item) => item.id,
       itemActions: (item) => [
         {
           label: "Edit",
@@ -300,7 +302,18 @@ export const WithLinkedItems: Story = {
                 columns: [
                   {
                     label: "Name",
-                    render: (item) => item.name,
+                    render: (item) => ({
+                      type: "person",
+                      value: {
+                        firstName: item.name.split(" ")[0],
+                        lastName: item.name.split(" ")[1],
+                        badge: {
+                          type: "module",
+                          module: "inbox",
+                          tooltip: "Inbox",
+                        },
+                      },
+                    }),
                     sorting: "name",
                   },
                   {
@@ -504,19 +517,19 @@ export const RendererTypes: Story = {
                           type: "person",
                           firstName: item.name,
                           lastName: "Doe",
-                          src: "https://github.com/shadcn.png",
+                          src: "/avatars/person01.jpg",
                         },
                         {
                           type: "person",
                           firstName: "Dani",
                           lastName: "Moreno",
-                          src: "https://github.com/dani-moreno.png",
+                          src: "/avatars/person04.jpg",
                         },
                         {
                           type: "person",
                           firstName: "Sergio",
                           lastName: "Carracedo",
-                          src: "https://github.com/sergiocarracedo.png",
+                          src: "/avatars/person05.jpg",
                         },
                       ],
                     },
@@ -631,6 +644,54 @@ export const WithSelectableAndBulkActions: Story = {
   ),
 }
 
+export const WithSelectableAndDefaultSelectedItems: Story = {
+  render: () => (
+    <ExampleComponent
+      selectable={(item) => item.id}
+      defaultSelectedItems={{
+        allSelected: false,
+        items: [
+          { id: mockUsers[0].id, checked: true },
+          { id: mockUsers[1].id, checked: false },
+          { id: mockUsers[2].id, checked: true },
+        ],
+      }}
+    />
+  ),
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+}
+export const WithSelectableAndDefaultSelectedGroups: Story = {
+  render: () => (
+    <ExampleComponent
+      selectable={(item) => item.id}
+      grouping={{
+        collapsible: true,
+        mandatory: true,
+        defaultOpenGroups: ["group1", "group2"],
+        groupBy: {
+          department: {
+            name: "department",
+            label: (department) => department,
+          },
+        },
+      }}
+      defaultSelectedItems={{
+        allSelected: false,
+        items: [
+          { id: mockUsers[0].id, checked: true },
+          { id: mockUsers[2].id, checked: true },
+        ],
+        groups: [{ groupId: "Product", checked: true }],
+      }}
+    />
+  ),
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+}
+
 const JsonVisualization = ({
   source,
 }: {
@@ -639,6 +700,7 @@ const JsonVisualization = ({
       (typeof mockUsers)[number],
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
       NavigationFiltersDefinition,
       GroupingDefinition<(typeof mockUsers)[number]>
@@ -671,6 +733,7 @@ export const WithCustomJsonView: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       MockActions,
       NavigationFiltersDefinition,
       GroupingDefinition<MockUser>
@@ -1006,6 +1069,7 @@ export const WithSynchronousData: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<MockUser>,
       NavigationFiltersDefinition,
       GroupingDefinition<MockUser>
@@ -1016,7 +1080,14 @@ export const WithSynchronousData: Story = {
       dataAdapter: {
         fetchData: ({ filters, sortings, navigationFilters }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, sortings, navigationFilters)
+          return {
+            records: filterUsers(
+              mockUsers,
+              filters,
+              sortings,
+              navigationFilters
+            ),
+          }
         },
       },
     })
@@ -1208,6 +1279,7 @@ export const WithSyncSearch: Story = {
       (typeof mockUserData)[number],
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       ItemActionsDefinition<(typeof mockUserData)[number]>,
       NavigationFiltersDefinition,
       GroupingDefinition<(typeof mockUserData)[number]>
@@ -1266,7 +1338,7 @@ export const WithSyncSearch: Story = {
             })
           }
 
-          return filteredUsers
+          return { records: filteredUsers }
         },
       },
     })
@@ -1329,6 +1401,7 @@ export const WithAsyncSearch: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
+      SummariesDefinition,
       MockActions,
       NavigationFiltersDefinition,
       GroupingDefinition<MockUser>
@@ -1419,7 +1492,7 @@ export const WithAsyncSearch: Story = {
                 })
               }
 
-              resolve(filteredUsers)
+              resolve({ records: filteredUsers })
             }, 1000) // Simulate 1 second delay for API response
           })
         },
@@ -1732,7 +1805,7 @@ export const TableWithNoFiltersAndSearch: Story = {
         },
       ],
       dataAdapter: {
-        fetchData: () => Promise.resolve(mockUsers),
+        fetchData: () => Promise.resolve({ records: mockUsers }),
       },
     })
 
@@ -1837,7 +1910,7 @@ export const TableWithNoFilters: Story = {
             )
           }
 
-          return Promise.resolve(filteredUsers)
+          return Promise.resolve({ records: filteredUsers })
         },
       },
     })
@@ -1916,7 +1989,7 @@ export const TableWithSecondaryActions: Story = {
             )
           }
 
-          return Promise.resolve(filteredUsers)
+          return Promise.resolve({ records: filteredUsers })
         },
       },
     })
