@@ -8,6 +8,7 @@ import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
 
 import { OneEmptyState } from "@/experimental/OneEmptyState"
+import { experimentalComponent } from "@/lib/experimental"
 import { Skeleton } from "@/ui/skeleton"
 import { OneActionBar } from "../OneActionBar"
 import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
@@ -235,7 +236,7 @@ const MotionIcon = motion.create(Icon)
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export const OneDataCollection = <
+const OneDataCollectionComp = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -470,7 +471,12 @@ export const OneDataCollection = <
   useEffect(() => {
     setEmptyStateType(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- This is intentional we should remove the empty state when the filters, search, navigation filters change
-  }, [currentFilters, currentSearch, currentNavigationFilters])
+  }, [
+    currentFilters,
+    currentSearch,
+    currentNavigationFilters,
+    source.dataAdapter,
+  ])
 
   return (
     <div
@@ -579,6 +585,17 @@ export const OneDataCollection = <
         </Filters.Root>
       </div>
 
+      {/* Visualization renderer must be always mounted to react (load data) even if empty state is shown */}
+      <div className={cn(emptyState && "hidden", fullHeight && "h-full")}>
+        <VisualizationRenderer
+          visualization={visualizations[currentVisualization]}
+          source={source}
+          onSelectItems={onSelectItemsLocal}
+          onLoadData={onLoadData}
+          onLoadError={onLoadError}
+        />
+      </div>
+
       {emptyState ? (
         <div className="flex flex-1 flex-col items-center justify-center">
           <OneEmptyState
@@ -590,13 +607,6 @@ export const OneDataCollection = <
         </div>
       ) : (
         <>
-          <VisualizationRenderer
-            visualization={visualizations[currentVisualization]}
-            source={source}
-            onSelectItems={onSelectItemsLocal}
-            onLoadData={onLoadData}
-            onLoadError={onLoadError}
-          />
           {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
             <OneActionBar
               isOpen={showActionBar}
@@ -611,3 +621,13 @@ export const OneDataCollection = <
     </div>
   )
 }
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+const OneDataCollection = experimentalComponent(
+  "OneDataCollection",
+  OneDataCollectionComp
+)
+
+export { OneDataCollection }

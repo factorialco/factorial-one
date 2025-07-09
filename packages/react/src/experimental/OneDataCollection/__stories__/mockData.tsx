@@ -361,6 +361,11 @@ export const getMockVisualizations = (options?: {
           type: "person",
           firstName: item.name.split(" ")[0],
           lastName: item.name.split(" ")[1],
+          badge: {
+            type: "module",
+            module: "inbox",
+            tooltip: "Inbox",
+          },
         },
       }),
       fields: [
@@ -710,7 +715,12 @@ export const ExampleComponent = ({
   })
 
   return (
-    <div className={cn("space-y-4", fullHeight && "max-h-full bg-[#fff]")}>
+    <div
+      className={cn(
+        "space-y-4",
+        fullHeight && "max-h-full max-w-full bg-[#fff]"
+      )}
+    >
       <OneDataCollection
         fullHeight={fullHeight}
         source={dataSource}

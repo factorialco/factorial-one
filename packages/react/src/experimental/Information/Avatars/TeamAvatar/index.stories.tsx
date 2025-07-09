@@ -27,7 +27,7 @@ export const Default: Story = {}
 
 export const WithImage: Story = {
   args: {
-    src: "https://avatars.githubusercontent.com/u/21041797?s=48&v=4",
+    src: "/avatars/team01.jpg",
   },
 }
 

@@ -1,6 +1,6 @@
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Shortcut } from "@/experimental/exports"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { Icon, IconType } from "@/factorial-one"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { ComponentProps, forwardRef } from "react"

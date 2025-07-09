@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useId, useMemo, useState } from "react"
 import { Button } from "../../../../components/Actions/Button"
 import { Filter } from "../../../../icons/app"
 import { useI18n } from "../../../../lib/providers/i18n"
@@ -84,6 +84,7 @@ export function FiltersControls<Filters extends FiltersDefinition>({
 
     return maxHeight
   }, [schema])
+  const id = useId()
 
   return (
     <div className="flex items-center gap-2">
@@ -97,12 +98,14 @@ export function FiltersControls<Filters extends FiltersDefinition>({
             onClick={() => onOpenChange(!isOpen)}
             hideLabel={hideLabel}
             round={hideLabel}
+            aria-controls={isOpen ? id : undefined}
           />
         </PopoverTrigger>
         <PopoverContent
           className="w-[600px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
           align="start"
           side="bottom"
+          aria-id={id}
         >
           <div
             className={cn("flex flex-col transition-all")}

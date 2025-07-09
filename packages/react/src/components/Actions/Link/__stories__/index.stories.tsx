@@ -55,3 +55,29 @@ export const Variants: Story = {
     </div>
   ),
 }
+
+export const States: Story = {
+  render: (args) => (
+    <div className="flex flex-row items-center justify-center space-x-6">
+      <Link {...args} variant="link">
+        Default link
+      </Link>
+      <Link {...args} variant="link" disabled>
+        Disabled link
+      </Link>
+    </div>
+  ),
+}
+
+export const InteractiveExamples: Story = {
+  render: (args) => (
+    <div className="flex flex-row items-center justify-center space-x-6">
+      <Link {...args} variant="link" href="/internal">
+        Internal link
+      </Link>
+      <Link {...args} variant="link" href="https://example.com" target="_blank">
+        External link
+      </Link>
+    </div>
+  ),
+}

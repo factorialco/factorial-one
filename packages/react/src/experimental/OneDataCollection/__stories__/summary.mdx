@@ -113,3 +113,51 @@ const dataSource = useDataSource({
   }
 />
 ```
+
+### Sticky Summary Row with Frozen Columns
+
+<Canvas
+  of={SummaryStories.WithInfiniteScrollSummaryStickyFrozenColumns}
+  meta={SummaryStories}
+/>
+
+To implement a data collection with infinite scroll and sticky summary:
+
+```tsx
+const dataSource = useDataSource({
+  // Define your summaries as usual
+  summaries: {
+    salary: {
+      type: "sum",
+      label: "Total", // Optional label for the summary row
+    },
+  },
+  // Set pagination to infinite-scroll type
+  pagination: {
+    type: "infinite-scroll",
+    pageSize: 10,
+  },
+  dataAdapter: {
+    fetchData: yourDataFetchFunction(),
+  },
+})
+
+<OneDataCollection
+  source={dataSource}
+  visualization={
+    type: "table",
+    options: {
+      columns: [
+        // Your column definitions
+        {
+          label: "Salary",
+          summary: "salary", // Reference the summary key
+          align: "right",
+          render: (item) => item.salary,
+        },
+      ],
+      frozenColumns: 1
+    },
+  }
+/>
+```

@@ -255,6 +255,7 @@ export const WithLinkedItems: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      selectable: (item) => item.id,
       itemActions: (item) => [
         {
           label: "Edit",
@@ -301,7 +302,18 @@ export const WithLinkedItems: Story = {
                 columns: [
                   {
                     label: "Name",
-                    render: (item) => item.name,
+                    render: (item) => ({
+                      type: "person",
+                      value: {
+                        firstName: item.name.split(" ")[0],
+                        lastName: item.name.split(" ")[1],
+                        badge: {
+                          type: "module",
+                          module: "inbox",
+                          tooltip: "Inbox",
+                        },
+                      },
+                    }),
                     sorting: "name",
                   },
                   {
@@ -505,19 +517,19 @@ export const RendererTypes: Story = {
                           type: "person",
                           firstName: item.name,
                           lastName: "Doe",
-                          src: "https://github.com/shadcn.png",
+                          src: "/avatars/person01.jpg",
                         },
                         {
                           type: "person",
                           firstName: "Dani",
                           lastName: "Moreno",
-                          src: "https://github.com/dani-moreno.png",
+                          src: "/avatars/person04.jpg",
                         },
                         {
                           type: "person",
                           firstName: "Sergio",
                           lastName: "Carracedo",
-                          src: "https://github.com/sergiocarracedo.png",
+                          src: "/avatars/person05.jpg",
                         },
                       ],
                     },

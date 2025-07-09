@@ -1,4 +1,6 @@
 import { ButtonInternal } from "@/components/Actions/Button/internal"
+import { ActivityItemList } from "@/experimental/Information/Activity/ActivityItemList"
+import { Default as ActivityItemListDefault } from "@/experimental/Information/Activity/ActivityItemList/index.stories"
 import { ResourceHeader } from "@/experimental/Information/Headers/ResourceHeader"
 import { Default as ResourceHeaderDefault } from "@/experimental/Information/Headers/ResourceHeader/index.stories"
 import {
@@ -135,6 +137,18 @@ export const WithLeftPosition: Story = {
   args: {
     ...Default.args,
     position: "left",
+    children: (
+      <>
+        <OneModal.Header title="Activity" otherActions={OTHER_ACTIONS} />
+        <OneModal.Content>
+          <ActivityItemList
+            {...(ActivityItemListDefault.args as ComponentProps<
+              typeof ActivityItemList
+            >)}
+          />
+        </OneModal.Content>
+      </>
+    ),
   },
 }
 

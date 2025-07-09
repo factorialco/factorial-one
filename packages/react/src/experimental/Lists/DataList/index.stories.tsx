@@ -24,26 +24,26 @@ const meta: Meta<typeof DataList> = {
         <DataList.PersonItem
           firstName="Saul"
           lastName="Dominguez"
-          avatarUrl="https://avatars.githubusercontent.com/u/22561733?v=4"
+          avatarUrl="/avatars/person05.jpg"
         />
         <DataList.PersonItem
           firstName="Dani"
           lastName="Moreno"
-          avatarUrl="https://avatars.githubusercontent.com/u/96433370?s=60&v=4"
+          avatarUrl="/avatars/person06.jpg"
           action={{ type: "copy", text: "Dani" }}
         />
         <DataList.PersonItem
           firstName="Josep Jaume"
           lastName=" Rey Peroy"
-          avatarUrl="https://avatars.githubusercontent.com/u/111746?s=60&v=4"
+          avatarUrl="/avatars/person07.jpg"
           action={{
             type: "navigate",
-            href: "https://avatars.githubusercontent.com/u/111746?s=60&v=4",
+            href: "/avatars/person07.jpg",
           }}
         />
         <DataList.CompanyItem
           name="Factorial"
-          avatarUrl="https://avatars.githubusercontent.com/u/21041797?s=200&v=4"
+          avatarUrl="/avatars/factorial.png"
         />
         <DataList.TeamItem name="Foundations" />
       </>

@@ -315,7 +315,35 @@ export function useData<
         setTotalItems?.(result.length)
       }
 
-      setRawData(appendMode ? (prevData) => [...prevData, ...records] : records)
+      setRawData(
+        appendMode
+          ? (prevData) => {
+              const merged = [...prevData]
+              const idMap = new Map(
+                prevData
+                  .filter((item) => "id" in item && !!item.id)
+                  .map((item) => [item.id, item])
+              )
+
+              for (const record of records) {
+                if ("id" in record && !!record.id && idMap.has(record.id)) {
+                  const index = merged.findIndex(
+                    (item) => item.id === record.id
+                  )
+                  if (index !== -1) {
+                    merged[index] = record // Overwrite existing item
+                  } else {
+                    merged.push(record) // Fallback
+                  }
+                } else {
+                  merged.push(record) // New item
+                }
+              }
+
+              return merged
+            }
+          : records
+      )
       setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
@@ -605,17 +633,20 @@ export function useData<
         cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
       })
     }
-
-    return () => {
-      cleanup.current?.()
-    }
   }, [
     fetchDataAndUpdate,
     mergedFilters,
     setIsLoading,
     currentNavigationFilters,
+
     dataAdapter.paginationType,
   ])
+
+  useEffect(() => {
+    return () => {
+      cleanup.current?.()
+    }
+  }, [])
 
   return {
     data,

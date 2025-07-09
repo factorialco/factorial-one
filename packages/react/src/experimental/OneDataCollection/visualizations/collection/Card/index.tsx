@@ -314,7 +314,7 @@ export const CardCollection = <
   )
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-4 border-solid border-[#f00]">
+    <div className="flex min-h-0 flex-1 flex-col gap-4">
       <div className="overflow-auto">
         {isInitialLoading ? (
           <CardGrid>
@@ -359,9 +359,10 @@ export const CardCollection = <
                       onSelectChange={(checked) =>
                         handleSelectGroupChange(group, checked)
                       }
+                      className="px-6 pb-2 pt-4"
                     />
                     <AnimatePresence>
-                      {openGroups[group.key] && (
+                      {(!collapsible || openGroups[group.key]) && (
                         <GroupCards
                           key={group.key}
                           source={source}

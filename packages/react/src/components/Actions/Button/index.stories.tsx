@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import React from "react"
 import { expect, within } from "storybook/test"
-import { Add, Archive, Delete, Save, Upsell } from "../../../icons/app"
+import { Add, Archive, Delete, Save } from "../../../icons/app"
 import { Button } from "./index"
 
 const meta = {
@@ -35,33 +36,53 @@ const meta = {
         "promote",
         "outlinePromote",
       ],
-      description: "Visual style variant of the button",
+      description: "Visual style variant of the button.",
     },
     size: {
       control: "select",
       options: ["sm", "md", "lg"],
-      description: "Size of the button",
+      description:
+        "Sets the button size. 'lg' for mobile, 'md' for desktop, 'sm' for compact/secondary actions.",
     },
     label: {
       control: "text",
+      description:
+        "The visible label for the button. Required for accessibility.",
     },
     icon: {
       control: "boolean",
-      description: "Whether to show an icon",
+      description:
+        "Adds an icon to the button, combined with the label for better clarity and recognition.",
+    },
+    emoji: {
+      control: "text",
+      description:
+        "Adds an emoji to the button, can be used as a special case of icon-only button.",
     },
     disabled: {
       control: "boolean",
+      description:
+        "The button is inactive and does not respond to user interaction.",
     },
     loading: {
       control: "boolean",
+      description:
+        "Indicates that an action is in progress. Shows a loading spinner and blocks interaction.",
     },
     hideLabel: {
       control: "boolean",
-      description: "Hide label and show only icon",
+      description:
+        "Hides the label visually (for icon-only or emoji-only buttons), but keeps it accessible for screen readers.",
     },
     pressed: {
       control: "boolean",
-      description: "Force the button to be pressed",
+      description:
+        "If true, the button is visually active or selected (pressed state).",
+    },
+    onClick: {
+      action: "clicked",
+      description:
+        "Callback fired when the button is clicked. Supports async functions for loading state.",
     },
   },
 } satisfies Meta<typeof Button>
@@ -86,90 +107,97 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-2">
-      <h3>Default</h3>
-      <div className="flex gap-2">
-        <Button {...args} variant="default" label="Default" />
-        <Button {...args} variant="critical" label="Critical" />
-        <Button {...args} variant="neutral" label="Neutral" />
-        <Button {...args} variant="ghost" label="Ghost" />
-        <Button {...args} variant="outline" label="Outline" />
-        <Button {...args} variant="promote" label="Promote" />
-        <Button {...args} variant="outlinePromote" label="Outline Promote" />
+    <div className="flex gap-2">
+      <Button {...args} variant="default" label="Default" />
+      <Button {...args} variant="outline" label="Outline" />
+      <Button {...args} variant="neutral" label="Neutral" />
+      <Button {...args} variant="ghost" label="Ghost" />
+      <Button {...args} variant="critical" label="Critical" />
+      <Button {...args} variant="promote" label="Promote" />
+      {/* <Button {...args} variant="outlinePromote" label="Outline Promote" /> */}
+    </div>
+  ),
+}
+
+export const IconVariants: Story = {
+  render: (args) => (
+    <div className="flex flex-col gap-6">
+      <div>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>With icon</div>
+        <div className="flex gap-2">
+          <Button {...args} variant="default" label="Default" icon={Add} />
+          <Button {...args} variant="outline" label="Outline" icon={Add} />
+          <Button {...args} variant="neutral" label="Neutral" icon={Archive} />
+          <Button {...args} variant="ghost" label="Ghost" icon={Save} />
+          <Button {...args} variant="critical" label="Critical" icon={Delete} />
+          <Button {...args} variant="promote" label="Promote" icon={Add} />
+        </div>
       </div>
-      <h3 className="mt-4">With icon</h3>
-      <div className="flex gap-2">
-        <Button {...args} variant="default" label="Default" icon={Add} />
-        <Button {...args} variant="critical" label="Critical" icon={Delete} />
-        <Button {...args} variant="neutral" label="Neutral" icon={Archive} />
-        <Button {...args} variant="ghost" label="Ghost" icon={Save} />
-        <Button {...args} variant="outline" label="Outline" icon={Add} />
-        <Button {...args} variant="promote" label="Promote" icon={Add} />
-        <Button
-          {...args}
-          variant="outlinePromote"
-          label="Outline Promote"
-          icon={Upsell}
-        />
+      <div>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>Only icon</div>
+        <div className="flex gap-2">
+          <Button
+            {...args}
+            variant="default"
+            label="Default"
+            icon={Add}
+            hideLabel
+            round
+          />
+          <Button
+            {...args}
+            variant="outline"
+            label="Outline"
+            icon={Add}
+            hideLabel
+            round
+          />
+          <Button
+            {...args}
+            variant="neutral"
+            label="Neutral"
+            icon={Archive}
+            hideLabel
+            round
+          />
+          <Button
+            {...args}
+            variant="ghost"
+            label="Ghost"
+            icon={Save}
+            hideLabel
+            round
+          />
+          <Button
+            {...args}
+            variant="critical"
+            label="Critical"
+            icon={Delete}
+            hideLabel
+            round
+          />
+          <Button
+            {...args}
+            variant="promote"
+            label="Promote"
+            icon={Add}
+            hideLabel
+            round
+          />
+        </div>
       </div>
-      <h3 className="mt-4">Only icon</h3>
-      <div className="flex gap-2">
-        <Button
-          {...args}
-          variant="default"
-          label="Default"
-          icon={Add}
-          hideLabel
-          round
-        />
-        <Button
-          {...args}
-          variant="critical"
-          label="Critical"
-          icon={Delete}
-          hideLabel
-          round
-        />
-        <Button
-          {...args}
-          variant="neutral"
-          label="Neutral"
-          icon={Archive}
-          hideLabel
-          round
-        />
-        <Button
-          {...args}
-          variant="ghost"
-          label="Ghost"
-          icon={Save}
-          hideLabel
-          round
-        />
-        <Button
-          {...args}
-          variant="outline"
-          label="Outline"
-          icon={Add}
-          hideLabel
-          round
-        />
-        <Button
-          {...args}
-          variant="promote"
-          label="Promote"
-          icon={Add}
-          hideLabel
-          round
-        />
-        <Button
-          {...args}
-          variant="outlinePromote"
-          label="Outline Promote"
-          icon={Upsell}
-          hideLabel
-          round
-        />
+      <div>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>Only emoji</div>
+        <div className="flex gap-2">
+          <Button
+            {...args}
+            emoji="🥰"
+            label="🥰"
+            variant="neutral"
+            hideLabel
+            round
+          />
+        </div>
       </div>
     </div>
   ),
@@ -179,9 +207,9 @@ export const Variants: Story = {
 export const Sizes: Story = {
   render: (args) => (
     <div className="flex items-center gap-4">
-      <Button {...args} size="sm" label="Small" />
-      <Button {...args} size="md" label="Medium" />
       <Button {...args} size="lg" label="Large" />
+      <Button {...args} size="md" label="Medium" />
+      <Button {...args} size="sm" label="Small" />
     </div>
   ),
 }
@@ -233,5 +261,48 @@ export const OnlyEmoji: Story = {
     label: "🥰",
     variant: "neutral",
     hideLabel: true,
+  },
+}
+
+export const States: Story = {
+  render: (args) => {
+    const [asyncLoading, setAsyncLoading] = React.useState(false)
+    return (
+      <div className="flex gap-2">
+        <Button {...args} label="Pressed" pressed />
+        <Button {...args} label="Disabled" disabled />
+        <Button {...args} label="Loading" loading />
+        <Button
+          {...args}
+          label={asyncLoading ? "Saving..." : "Async Loading"}
+          loading={asyncLoading}
+          onClick={async () => {
+            setAsyncLoading(true)
+            await new Promise((resolve) => setTimeout(resolve, 1500))
+            setAsyncLoading(false)
+            alert("Async action completed!")
+          }}
+        />
+      </div>
+    )
+  },
+}
+
+export const AsyncLoading: Story = {
+  render: (args) => {
+    const [asyncLoading, setAsyncLoading] = React.useState(false)
+    return (
+      <Button
+        {...args}
+        label={asyncLoading ? "Saving..." : "Async Loading"}
+        loading={asyncLoading}
+        onClick={async () => {
+          setAsyncLoading(true)
+          await new Promise((resolve) => setTimeout(resolve, 1500))
+          setAsyncLoading(false)
+          alert("Async action completed!")
+        }}
+      />
+    )
   },
 }

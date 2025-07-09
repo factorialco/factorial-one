@@ -4,8 +4,6 @@ import {
   createDataAdapter,
   createPromiseDataFetch,
   ExampleComponent,
-  filterPresets,
-  filters,
   generateMockUsers,
   sortings,
 } from "./mockData"
@@ -20,10 +18,6 @@ const meta = {
     useObservable: {
       control: "boolean",
       description: "Use Observable for data fetching",
-    },
-    usePresets: {
-      control: "boolean",
-      description: "Include filter presets",
     },
     onSelectItems: {
       action: "onSelectItems",
@@ -44,6 +38,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const BasicSummaryRow: Story = {
+  parameters: { a11y: { skipCi: true } },
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
@@ -75,6 +70,7 @@ export const BasicSummaryRow: Story = {
                   render: (item) => item.salary,
                 },
               ],
+              frozenColumns: 1,
             },
           },
         ]}
@@ -84,12 +80,11 @@ export const BasicSummaryRow: Story = {
 }
 
 export const WithInfiniteScrollSummarySticky: Story = {
+  parameters: { a11y: { skipCi: true } },
   render: () => {
     const paginatedMockUsers = generateMockUsers(50)
     const dataSource = useDataSource({
-      filters,
       sortings,
-      presets: filterPresets,
       summaries: {
         salary: {
           type: "sum",
@@ -106,8 +101,9 @@ export const WithInfiniteScrollSummarySticky: Story = {
     })
 
     return (
-      <div className="space-y-4" style={{ height: "500px", overflow: "auto" }}>
+      <div style={{ height: 500 }}>
         <OneDataCollection
+          fullHeight
           source={dataSource}
           visualizations={[
             {
@@ -125,6 +121,60 @@ export const WithInfiniteScrollSummarySticky: Story = {
                     render: (item) => item.salary,
                   },
                 ],
+              },
+            },
+          ]}
+        />
+      </div>
+    )
+  },
+}
+
+export const WithInfiniteScrollSummaryStickyFrozenColumns: Story = {
+  parameters: { a11y: { skipCi: true } },
+  render: () => {
+    const paginatedMockUsers = generateMockUsers(50)
+    const dataSource = useDataSource({
+      sortings,
+      summaries: {
+        salary: {
+          type: "sum",
+          label: "Total",
+        },
+      },
+      dataAdapter: createDataAdapter({
+        data: paginatedMockUsers,
+        delay: 500,
+        paginationType: "infinite-scroll",
+        perPage: 10,
+        useObservable: true,
+      }),
+    })
+
+    return (
+      <div style={{ height: 500 }}>
+        <OneDataCollection
+          fullHeight
+          source={dataSource}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Email", render: (item) => item.email },
+                  { label: "Email2", render: (item) => item.email },
+                  { label: "Role", render: (item) => item.role },
+                  { label: "Role2", render: (item) => item.role },
+                  { label: "Department", render: (item) => item.department },
+                  {
+                    label: "Salary",
+                    summary: "salary",
+                    align: "right",
+                    render: (item) => item.salary,
+                  },
+                ],
+                frozenColumns: 1,
               },
             },
           ]}

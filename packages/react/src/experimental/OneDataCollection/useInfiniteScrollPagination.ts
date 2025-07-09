@@ -9,7 +9,7 @@ export const useInfiniteScrollPagination = (
   loadMore: () => void
 ) => {
   // Ref to the loading indicator (that is also used as a trigger for the infinite scroll)
-  const loadingIndicatorRef = useRef<HTMLDivElement>(null)
+  const loadingIndicatorRef = useRef<HTMLTableCellElement>(null)
 
   useEffect(() => {
     if (

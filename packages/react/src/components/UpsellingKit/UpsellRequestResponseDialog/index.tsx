@@ -21,6 +21,7 @@ interface UpsellRequestResponseDialogProps {
   successMessage: SuccessMessageProps
   nextSteps: NextStepsProps
   closeLabel: string
+  portalContainer?: HTMLElement | null
 }
 
 export interface ErrorMessageProps {
@@ -142,6 +143,7 @@ const UpsellRequestResponseDialog = forwardRef<
       successMessage,
       nextSteps,
       closeLabel,
+      portalContainer,
     },
     ref
   ) => {
@@ -163,6 +165,7 @@ const UpsellRequestResponseDialog = forwardRef<
         <DialogContent
           ref={ref}
           className="bottom-3 top-auto max-w-[400px] translate-y-0 sm:bottom-auto sm:top-[50%] sm:translate-y-[-50%]"
+          container={portalContainer}
         >
           <DialogHeader
             className={`flex flex-col items-start gap-4 px-4 ${success ? "pt-5" : "py-5"}`}

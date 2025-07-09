@@ -51,7 +51,7 @@
 
 .ProseMirror a,
 .rich-text-display-container a {
-  @apply font-medium text-f1-foreground-accent no-underline;
+  @apply cursor-pointer font-medium text-f1-foreground-accent no-underline;
 }
 
 .ProseMirror strong,
@@ -88,7 +88,14 @@
 .ProseMirror ol,
 .rich-text-display-container ul,
 .rich-text-display-container ol {
-  @apply ml-5;
+  @apply pl-5;
+}
+
+.ProseMirror .f1-ordered-list p,
+.rich-text-display-container .f1-ordered-list p,
+.ProseMirror .f1-bullet-list p,
+.rich-text-display-container .f1-bullet-list p {
+  @apply ml-2;
 }
 
 .ProseMirror li,
@@ -98,7 +105,7 @@
 
 .ProseMirror pre,
 .rich-text-display-container pre {
-  @apply relative mx-0 overflow-x-auto whitespace-pre-wrap rounded-md bg-f1-background-secondary p-2;
+  @apply relative mx-0 my-4 overflow-x-auto whitespace-pre-wrap rounded-md bg-f1-background-secondary p-2;
 }
 
 .ProseMirror code,
@@ -134,7 +141,7 @@
 
 .ProseMirror ul[data-type="taskList"],
 .rich-text-display-container ul[data-type="taskList"] {
-  @apply ml-0;
+  @apply pl-0;
 }
 
 .shadow-editor-tools {
@@ -210,4 +217,45 @@ this is a hack to make the checkbox look like the one in the Checkbox component
 
 .editor-mood-tracker p {
   @apply m-0;
+}
+
+.rich-text-details {
+  @apply my-0 flex gap-2 py-1 transition-all;
+}
+
+.rich-text-details summary {
+  @apply text-lg font-semibold;
+}
+
+.rich-text-details summary::marker {
+  content: "";
+}
+
+.rich-text-details > button {
+  @apply flex h-6 w-6 items-center justify-center rounded-xs bg-f1-background;
+}
+
+.rich-text-details > button:hover {
+  @apply bg-f1-background-secondary;
+}
+
+.rich-text-details > button::before {
+  @apply text-xs text-f1-foreground;
+  content: "\25B6";
+}
+
+.rich-text-details.is-open > button::before {
+  @apply rotate-90;
+}
+
+.rich-text-details > div {
+  @apply flex w-full flex-col gap-2;
+}
+
+.rich-text-details > div > [data-type="detailsContent"] > :last-child {
+  @apply mb-2;
+}
+
+.rich-text-details.rich-text-details {
+  @apply mb-2;
 }

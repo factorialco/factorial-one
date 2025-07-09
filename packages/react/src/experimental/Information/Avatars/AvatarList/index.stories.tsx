@@ -6,13 +6,13 @@ const dummyPeople = [
     type: "person" as const,
     firstName: "Nik",
     lastName: "Lopin",
-    src: "https://github.com/nlopin.png",
+    src: "/avatars/person01.jpg",
   },
   {
     type: "person" as const,
     firstName: "Josep Jaume",
     lastName: "Rey",
-    src: "https://github.com/josepjaume.png",
+    src: "/avatars/person02.jpg",
   },
   {
     type: "person" as const,
@@ -25,7 +25,7 @@ const dummyCompanies = [
   {
     type: "company" as const,
     name: "Factorial",
-    src: "https://github.com/factorialco.png",
+    src: "/avatars/company01.jpg",
   },
   {
     type: "company" as const,
@@ -34,6 +34,7 @@ const dummyCompanies = [
   {
     type: "company" as const,
     name: "Another cool company",
+    src: "/avatars/company02.jpg",
   },
 ]
 
