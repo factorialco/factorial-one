@@ -1,7 +1,9 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Spinner } from "@/experimental/exports"
 import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils.ts"
 import { cva } from "cva"
+import { AnimatePresence } from "motion/react"
 import { cloneElement, forwardRef, useEffect, useId, useState } from "react"
 import { InputMessages } from "./components/InputMessages"
 import { Label } from "./components/Label"
@@ -21,13 +23,40 @@ const defaultLengthProvider = (value: string | number | undefined | null) =>
 const inputFieldVariants = cva({
   base: "",
   variants: {
+    canGrow: {
+      true: "flex-1",
+      false: "flex-none",
+    },
     size: {
-      sm: "min-h-[32px] rounded-sm p-1 pl-2",
-      md: "min-h-[40px] rounded-md p-2 pl-3",
+      sm: "rounded-sm p-1 pl-2 pt-[5px]",
+      md: "rounded-md p-2 pl-3",
     },
   },
+  compoundVariants: [
+    {
+      size: "sm",
+      canGrow: true,
+      class: "min-h-[32px]",
+    },
+    {
+      size: "md",
+      canGrow: true,
+      class: "min-h-[40px]",
+    },
+    {
+      size: "sm",
+      canGrow: false,
+      class: "h-[32px]",
+    },
+    {
+      size: "md",
+      canGrow: false,
+      class: "h-[40px]",
+    },
+  ],
   defaultVariants: {
     size: "md",
+    canGrow: false,
   },
 })
 
@@ -70,6 +99,7 @@ export type InputFieldProps<T> = // label or placeholder is required
     onClear?: () => void
     onFocus?: () => void
     onBlur?: () => void
+    canGrow?: boolean
     children: React.ReactNode & {
       onFocus?: () => void
       onBlur?: () => void
@@ -86,6 +116,7 @@ export type InputFieldProps<T> = // label or placeholder is required
     hideMaxLength?: boolean
     append?: React.ReactNode
     lengthProvider?: (value: T | undefined) => number
+    loading?: boolean
   }
 
 const InputField = forwardRef<
@@ -105,7 +136,9 @@ const InputField = forwardRef<
       error,
       size = "md",
       icon,
+      canGrow = false,
       value,
+      loading = false,
       placeholder,
       clearable = false,
       isEmpty = defaultIsEmpty,
@@ -148,6 +181,8 @@ const InputField = forwardRef<
     const handleClear = () => {
       handleChange(emptyValue)
     }
+
+    const showClear = clearable && !noEdit && !isEmpty(localValue)
 
     return (
       <div
@@ -192,11 +227,12 @@ const InputField = forwardRef<
             "border-[1px] border-solid border-f1-border-secondary bg-f1-background hover:border-f1-border-hover",
             "group focus-within:border-f1-border-hover focus-within:ring-1 focus-within:ring-f1-border-hover",
             "active-within:border-f1-border- active-within:ring-1 active-within:ring-f1-border-hover",
-            error &&
-              "border-f1-border-critical-bold bg-f1-background-critical focus:ring-f1-background-critical",
+            "focus-within:outline-none focus-within:ring-1 focus-within:ring-offset-1",
+            error
+              ? "focus-within:ring-f1-critical border-f1-border-critical-bold bg-f1-background-critical"
+              : "focus-within:ring-f1-ring",
             readonly && "border-f1-border-secondary bg-f1-background-secondary",
-
-            inputFieldVariants({ size })
+            inputFieldVariants({ size, canGrow })
           )}
           data-testid="input-field-wrapper"
         >
@@ -217,27 +253,39 @@ const InputField = forwardRef<
                 readonly,
                 value: localValue,
                 "aria-label": label || placeholder,
+                "aria-busy": loading,
+                "aria-live": "spolite",
               })}
             </div>
-
-            {placeholder && !hidePlaceholder && isEmpty(localValue) && (
-              <div
-                className="pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start text-f1-foreground-secondary"
-                onClick={onClickPlaceholder}
-              >
-                {placeholder}
+            {loading && (
+              <div className="i pointer-events-none flex justify-start pt-[2px]">
+                <Spinner size="small" />
               </div>
             )}
+            <div
+              className={cn(
+                "pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start text-f1-foreground-secondary transition-opacity",
+                placeholder && !hidePlaceholder && isEmpty(localValue)
+                  ? "opacity-1"
+                  : "opacity-0"
+              )}
+              onClick={onClickPlaceholder}
+              aria-hidden="true"
+            >
+              {placeholder}
+            </div>
           </div>
           {clearable && !noEdit && (
             <div className="h-5 w-5 shrink-0">
-              {!isEmpty(localValue) && (
-                <Icon
-                  className="hover:text-f1-foreground-primary h-5 w-5 cursor-pointer text-f1-foreground-secondary"
-                  onClick={handleClear}
-                  icon={CrossedCircle}
-                />
-              )}
+              <AnimatePresence initial={!isEmpty(localValue)}>
+                {!isEmpty(localValue) && (
+                  <Icon
+                    className="hover:text-f1-foreground-primary h-5 w-5 cursor-pointer text-f1-foreground-secondary"
+                    onClick={handleClear}
+                    icon={CrossedCircle}
+                  />
+                )}
+              </AnimatePresence>
             </div>
           )}
           {append && <div className="flex gap-2">{append}</div>}

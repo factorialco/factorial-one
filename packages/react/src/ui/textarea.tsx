@@ -52,6 +52,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         maxLength={maxLength}
         clearable={clearable}
         value={value}
+        canGrow={true}
         placeholder={placeholder ?? ""}
         {...props}
       >

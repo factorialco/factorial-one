@@ -132,6 +132,13 @@ export const SizeSm: Story = {
   },
 }
 
+export const Loading: Story = {
+  args: {
+    ...Default.args,
+    loading: true,
+  },
+}
+
 export const IconLabel: Story = {
   args: {
     ...Default.args,
