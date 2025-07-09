@@ -11,12 +11,15 @@ import {
   PromiseOrObservable,
   RecordType,
   SortingsDefinition,
+  Spinner,
   SummariesDefinition,
   useDataSource,
 } from "@/experimental/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
-import { useData } from "@/experimental/OneDataCollection/useData"
+import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
+import { useData, WithGroupId } from "@/experimental/OneDataCollection/useData"
 import { getDataSourcePaginationType } from "@/experimental/OneDataCollection/useDataSource"
+import { useGroups } from "@/experimental/OneDataCollection/useGroups"
 import { ChevronDown } from "@/icons/app"
 import {
   SelectContent,
@@ -35,7 +38,6 @@ import {
   useRef,
   useState,
 } from "react"
-import { ProgressSpinner } from "storybook/internal/components"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
@@ -322,28 +324,64 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
     }, 0)
   }
 
+  const collapsible = localSource.grouping?.collapsible
+  const defaultOpenGroups = localSource.grouping?.defaultOpenGroups
+  const { openGroups, setGroupOpen } = useGroups(
+    data?.type === "grouped" ? data.groups : [],
+    defaultOpenGroups
+  )
+
+  const getItems = useCallback(
+    (
+      records: WithGroupId<R extends RecordType ? R : RecordType>[]
+    ): VirtualItem[] => {
+      return records.map((option, index) => {
+        const mappedOption = optionMapper(
+          option as R extends RecordType ? R : RecordType
+        )
+        return mappedOption.type === "separator"
+          ? {
+              height: 1,
+              item: <SelectSeparator key={`separator-${index}`} />,
+            }
+          : {
+              height: option.description ? 64 : 32,
+              item: (
+                <SelectItem
+                  key={String(mappedOption.value)}
+                  item={mappedOption}
+                />
+              ),
+              value: String(mappedOption.value),
+            }
+      })
+    },
+    [optionMapper]
+  )
+
   const items: VirtualItem[] = useMemo(() => {
-    return data.records.map((option, index) => {
-      const mappedOption = optionMapper(
-        option as R extends RecordType ? R : RecordType
-      )
-      return mappedOption.type === "separator"
-        ? {
-            height: 1,
-            item: <SelectSeparator key={`separator-${index}`} />,
-          }
-        : {
-            height: option.description ? 64 : 32,
-            item: (
-              <SelectItem
-                key={String(mappedOption.value)}
-                item={mappedOption}
-              />
-            ),
-            value: String(mappedOption.value),
-          }
-    })
-  }, [data.records, optionMapper])
+    if (data.type === "grouped") {
+      const items: VirtualItem[] = []
+
+      data.groups.map((group) => {
+        items.push({
+          height: 30,
+          item: (
+            <GroupHeader
+              label={group.label}
+              itemCount={group.itemCount}
+              onOpenChange={(open) => setGroupOpen(group.key, open)}
+              open={openGroups[group.key]}
+              // showOpenChange={collapsible}
+            />
+          ),
+        })
+        items.push(...getItems(group.records))
+      })
+      return items
+    }
+    return getItems(data.records)
+  }, [data.records, data.type, data?.groups, getItems])
 
   const handleScrollBottom = () => {
     loadMore()
@@ -379,10 +417,16 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
                 focusRing("focus-visible:border-f1-border-hover")
               )}
             >
-              <SelectValuePrimitive placeholder={placeholder} asChild>
-                {selectedOption && <SelectValue item={selectedOption} />}
-              </SelectValuePrimitive>
-              {isInitialLoading && <ProgressSpinner />}
+              {isInitialLoading ? (
+                <>
+                  <Spinner size="small" /> {placeholder}
+                </>
+              ) : (
+                <SelectValuePrimitive placeholder={placeholder} asChild>
+                  {selectedOption && <SelectValue item={selectedOption} />}
+                </SelectValuePrimitive>
+              )}
+
               <div className="flex h-6 w-6 items-center justify-center">
                 <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
                   <Icon
@@ -408,6 +452,9 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
                 onSearchChange={onSearchChangeLocal}
                 searchBoxPlaceholder={searchBoxPlaceholder}
                 showSearchBox={showSearchBox}
+                grouping={localSource.grouping}
+                currentGrouping={localSource.currentGrouping}
+                onGroupingChange={localSource.setCurrentGrouping}
               />
             }
             onScrollBottom={handleScrollBottom}

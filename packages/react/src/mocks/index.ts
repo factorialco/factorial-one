@@ -190,6 +190,6 @@ export const LANGUAGES_MOCK = [
 
 export const EDUCATION_MOCK = ["Ph.D.", "Master's", "Bachelor's", "Associate's"]
 
-export const getMockValue = <T>(mock: T[], index: number): T => {
+export const getMockValue = <T>(mock: readonly T[], index: number): T => {
   return mock[index % mock.length]
 }

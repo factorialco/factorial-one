@@ -252,11 +252,6 @@ export function useData<
     paginationInfoRef.current = paginationInfo
   }, [paginationInfo])
 
-  const currentSearchRef = useRef(currentSearch)
-  useEffect(() => {
-    currentSearchRef.current = currentSearch
-  }, [currentSearch])
-
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 
@@ -267,13 +262,24 @@ export function useData<
     [currentFilters, filters]
   )
 
-  const deferredSearch = useDeferredValue(currentSearchRef.current)
+  const deferredSearch = useDeferredValue(currentSearch)
 
-  const searchValue = !search?.enabled
-    ? undefined
-    : search?.sync
-      ? currentSearchRef.current
-      : deferredSearch
+  // We need to use a ref to get the latest search value
+  // because the search value is updated asynchronously
+  // and we need to use the latest value in the callback functions
+  // like loadMore, setPage, etc.
+  const searchValue = useRef<string | undefined>(undefined)
+  useEffect(
+    () => {
+      searchValue.current = !search?.enabled
+        ? undefined
+        : search?.sync
+          ? currentSearch
+          : deferredSearch
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
+    [currentSearch, deferredSearch, search?.enabled, search?.sync]
+  )
 
   const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
 
@@ -588,12 +594,13 @@ export function useData<
       fetchDataAndUpdate({
         filters: mergedFilters,
         currentPage: page,
-        search: searchValue,
+        search: searchValue.current,
         navigationFilters: currentNavigationFilters,
       })
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
     [
-      searchValue,
+      searchValue.current,
       fetchDataAndUpdate,
       mergedFilters,
       setIsLoading,
@@ -629,7 +636,7 @@ export function useData<
           navigationFilters: currentNavigationFilters,
           appendMode: true,
           cursor: currentCursor,
-          search: searchValue,
+          search: searchValue.current,
         })
       }
     },
@@ -640,34 +647,38 @@ export function useData<
       mergedFilters,
       paginationInfoRef.current,
       currentNavigationFilters,
-      searchValue,
+      searchValue.current,
       setIsLoading,
       setIsLoadingMore,
     ]
   )
 
-  useEffect(() => {
-    if (!isLoadingMoreRef.current) {
-      setIsLoading(true)
-      // Explicitly pass 0 as the initial position for infinite scroll
-      const initialPosition =
-        dataAdapter.paginationType === "infinite-scroll" ? 0 : 1
-      fetchDataAndUpdate({
-        filters: mergedFilters,
-        currentPage: initialPosition,
-        navigationFilters: currentNavigationFilters,
-        search: searchValue,
-        cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
-      })
-    }
-  }, [
-    fetchDataAndUpdate,
-    mergedFilters,
-    setIsLoading,
-    currentNavigationFilters,
-    dataAdapter.paginationType,
-    searchValue,
-  ])
+  useEffect(
+    () => {
+      if (!isLoadingMoreRef.current) {
+        setIsLoading(true)
+        // Explicitly pass 0 as the initial position for infinite scroll
+        const initialPosition =
+          dataAdapter.paginationType === "infinite-scroll" ? 0 : 1
+        fetchDataAndUpdate({
+          filters: mergedFilters,
+          currentPage: initialPosition,
+          navigationFilters: currentNavigationFilters,
+          search: searchValue.current,
+          cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
+        })
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
+    [
+      fetchDataAndUpdate,
+      mergedFilters,
+      setIsLoading,
+      currentNavigationFilters,
+      dataAdapter.paginationType,
+      searchValue.current,
+    ]
+  )
 
   useEffect(() => {
     return () => {
