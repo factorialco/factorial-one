@@ -37,7 +37,7 @@ const { source, currentGrouping, setCurrentGrouping } = useDataCollection({
   grouping={{
     mandatory: true, // If true, the grouping is mandatory and the data will be grouped by the grouping field, if false, the grouping is optional and the use can choose not grouping the data
     collapsible: true, // If true, the grouping is collapsible and the user can collapse the grouping, if false, the grouping is non collapsible and the user cannot collapse the grouping
-    initialOpenGroups: true, // If true, the grouping is open by default, if false, the grouping is closed by default, if an array, the grouping will be open only for the groups in the array
+    defaultOpenGroups: true, // If true, the grouping is open by default, if false, the grouping is closed by default, if an array, the grouping will be open only for the groups in the array
     groupBy: {
         // This is the field to group the data by
         department: {

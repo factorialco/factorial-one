@@ -184,8 +184,8 @@ export const BasicActionsExample: Story = {
 // Example showing how actions can be used with card visualization
 export const CardActionsExample: Story = {
   parameters: {
-    i11y: {
-      skipCI: true,
+    a11y: {
+      skipCi: true,
     },
     chromatic: {
       disableSnapshot: true,
@@ -196,7 +196,6 @@ export const CardActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve({ records: mockUsers }),
       },
-      //secondaryActions: buildActions(),
       itemActions: createUserActions(),
     })
 

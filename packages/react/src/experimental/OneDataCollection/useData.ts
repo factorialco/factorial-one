@@ -633,17 +633,20 @@ export function useData<
         cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
       })
     }
-
-    return () => {
-      cleanup.current?.()
-    }
   }, [
     fetchDataAndUpdate,
     mergedFilters,
     setIsLoading,
     currentNavigationFilters,
+
     dataAdapter.paginationType,
   ])
+
+  useEffect(() => {
+    return () => {
+      cleanup.current?.()
+    }
+  }, [])
 
   return {
     data,

@@ -1,4 +1,4 @@
-import { IconType } from "@/factorial-one"
+import { IconType } from "@/components/Utilities/Icon"
 import { JSONContent } from "@tiptap/react"
 import { FileType } from "./constants"
 
