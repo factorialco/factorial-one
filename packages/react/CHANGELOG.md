@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.119.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.1...factorial-one-react-v1.119.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* dialog appearing behind modal in popover context ([ce25903](https://github.com/factorialco/factorial-one/commit/ce25903b97c7822117f08b3b04a6ab92e43139f2))
+
 ## [1.119.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.0...factorial-one-react-v1.119.1) (2025-07-07)
 
 
