@@ -1,6 +1,7 @@
 export { Await } from "../components/Utilities/Await/Await"
 export * from "./a11y"
 export * from "./emojis"
+export { experimentalComponent as experimental } from "./experimental"
 export { PrivacyModeProvider, usePrivacyMode } from "./privacyMode"
 export { buildTranslations } from "./providers/i18n"
 export type { TranslationsType } from "./providers/i18n"

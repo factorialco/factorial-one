@@ -8,6 +8,7 @@ import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
 
 import { OneEmptyState } from "@/experimental/OneEmptyState"
+import { experimentalComponent } from "@/lib/experimental"
 import { Skeleton } from "@/ui/skeleton"
 import { OneActionBar } from "../OneActionBar"
 import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
@@ -235,7 +236,7 @@ const MotionIcon = motion.create(Icon)
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export const OneDataCollection = <
+const OneDataCollectionComp = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -620,3 +621,13 @@ export const OneDataCollection = <
     </div>
   )
 }
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+const OneDataCollection = experimentalComponent(
+  "OneDataCollection",
+  OneDataCollectionComp
+)
+
+export { OneDataCollection }
