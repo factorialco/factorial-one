@@ -1,5 +1,5 @@
+import type { FiltersDefinition } from "../../../../components/OneFilterPicker/types"
 import { IconType } from "../../../../components/Utilities/Icon"
-import type { FiltersDefinition } from "../../Filters/types"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { SortingsDefinition } from "../../sortings"

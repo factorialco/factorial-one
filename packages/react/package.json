@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.119.3",
+  "version": "1.122.0",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -39,7 +39,8 @@
     "prettier:format": "prettier --write \"src/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"src/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "tsc": "tsc --noEmit",
-    "vitest": "vitest run",
+    "vitest": "vitest",
+    "vitest:ui": "vitest --ui",
     "vitest:watch": "vitest dev",
     "vitest:ci": "pnpm run vitest --reporter=dot"
   },
@@ -149,13 +150,13 @@
     "vite": "^6.3.5",
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-lib-inject-css": "^2.2.1",
-    "vitest": "^3.0.7"
+    "vitest": "^3.0.7",
+    "@factorialco/factorial-one-core": "workspace:*"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.34"
   },
   "dependencies": {
-    "@factorialco/factorial-one-core": "workspace:*",
     "@radix-ui/react-hover-card": "^1.1.6",
     "@radix-ui/react-switch": "^1.2.2",
     "@tanstack/react-virtual": "^3.13.2",
