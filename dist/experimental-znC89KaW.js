@@ -78301,7 +78301,14 @@ const V3 = ke(
   }
 );
 V3.displayName = "OneEllipsis";
-const llt = ({ label: e, required: t, htmlFor: n, className: r, icon: a }) => /* @__PURE__ */ oe(
+const llt = ({
+  label: e,
+  required: t,
+  htmlFor: n,
+  className: r,
+  icon: a,
+  disabled: i
+}) => /* @__PURE__ */ oe(
   "label",
   {
     className: we(
@@ -78309,8 +78316,8 @@ const llt = ({ label: e, required: t, htmlFor: n, className: r, icon: a }) => /*
       "text-md flex max-w-full gap-1 font-medium text-f1-foreground-secondary"
     ),
     htmlFor: n,
-    "aria-required": t,
     "aria-label": e,
+    "aria-disabled": i,
     children: [
       a && /* @__PURE__ */ M(un, { icon: a, size: "sm" }),
       /* @__PURE__ */ M(V3, { className: "shrink-1 min-w-0", children: e }),
@@ -78445,7 +78452,8 @@ const llt = ({ label: e, required: t, htmlFor: n, className: r, icon: a }) => /*
                         required: s,
                         htmlFor: B,
                         icon: a,
-                        className: "min-w-0 flex-1"
+                        className: "min-w-0 flex-1",
+                        disabled: t
                       }
                     ),
                     k && !$ && !H && /* @__PURE__ */ oe("div", { className: "text-right text-f1-foreground-secondary", children: [
