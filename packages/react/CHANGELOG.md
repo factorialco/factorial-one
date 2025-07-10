@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.121.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.120.0...factorial-one-react-v1.121.0) (2025-07-10)
+
+
+### Features
+
+* new module icons ([#2236](https://github.com/factorialco/factorial-one/issues/2236)) ([b064e94](https://github.com/factorialco/factorial-one/commit/b064e94ea2af72cb537ac1125523d13452712c2e))
+
 ## [1.120.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.3...factorial-one-react-v1.120.0) (2025-07-10)
 
 
