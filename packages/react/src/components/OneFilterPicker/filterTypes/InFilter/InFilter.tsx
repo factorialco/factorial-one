@@ -3,11 +3,10 @@
 import { Button } from "@/components/Actions/Button"
 import { OneEllipsis } from "@/components/OneEllipsis"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { F1SearchBox } from "@/experimental/Forms/Fields/F1SearchBox"
 import { Spinner } from "@/experimental/Information/Spinner"
-import { Search } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
-import { Input } from "@/ui/input"
 import { useEffect, useMemo, useState } from "react"
 import { FilterTypeComponentProps } from "../types"
 import { InFilterOptions } from "./types"
@@ -160,12 +159,10 @@ export function InFilter<T extends string>({
     >
       {showSearch && (
         <div className="sticky left-0 right-0 top-0 rounded-tr-xl p-2 backdrop-blur-[8px]">
-          <Input
-            type="search"
+          <F1SearchBox
             placeholder="Search..."
             value={searchTerm}
             onChange={setSearchTerm}
-            icon={Search}
             clearable
           />
         </div>

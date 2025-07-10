@@ -37,7 +37,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
-  args: {},
+  args: {
+    label: "Label text here",
+  },
   render: (props) => {
     const [value, setValue] = useState<number | null>(props.value ?? 1)
     console.log("value", value)
@@ -47,6 +49,7 @@ export const Primary: Story = {
 
 export const WithStep: Story = {
   args: {
+    label: "Label text here",
     min: 1,
     max: 5,
     step: 1,
@@ -59,6 +62,7 @@ export const WithStep: Story = {
 
 export const Disabled: Story = {
   args: {
+    label: "Label text here",
     value: 32.5,
     disabled: true,
     locale: "es-ES",
@@ -109,6 +113,7 @@ export const WithError: Story = {
     chromatic: { disableSnapshot: true },
   },
   args: {
+    label: "Label text here",
     error: "Error message here",
   },
 }

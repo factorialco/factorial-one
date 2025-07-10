@@ -1,5 +1,4 @@
-import { Search } from "@/icons/app"
-import { Input } from "@/ui/input"
+import { F1SearchBox } from "@/experimental/Forms/Fields/F1SearchBox"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useEffect, useState } from "react"
 import { InFilter } from "./InFilter"
@@ -198,13 +197,10 @@ const AsyncOptionsWithSearchExample = () => {
 
   return (
     <div className="flex flex-col gap-3">
-      <Input
-        type="search"
+      <F1SearchBox
         placeholder="Search countries..."
         value={searchTerm}
         onChange={setSearchTerm}
-        className="h-8 rounded"
-        icon={Search}
         clearable
       />
 

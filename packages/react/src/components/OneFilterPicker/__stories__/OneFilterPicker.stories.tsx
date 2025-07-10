@@ -203,6 +203,8 @@ export const WithUrlSerialization: Story = {
         <div className="flex flex-col gap-2">
           <Label htmlFor="serialized-filters">Serialized Filters</Label>
           <Input
+            label="Serialized Filters"
+            hideLabel
             id="serialized-filters"
             value={serializedValue}
             onChange={handleSerializedValueChange}
@@ -263,6 +265,8 @@ export const WithPresetsAndUrlSerialization: Story = {
         <div className="flex flex-col gap-2">
           <Label htmlFor="serialized-filters">Serialized Filters</Label>
           <Input
+            label="Serialized Filters"
+            hideLabel
             id="serialized-filters"
             value={serializedValue}
             onChange={handleSerializedValueChange}

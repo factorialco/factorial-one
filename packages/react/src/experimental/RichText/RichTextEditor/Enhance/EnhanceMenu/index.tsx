@@ -132,6 +132,8 @@ const AIEnhanceMenu = ({
         <div className="flex w-full flex-row items-center p-2">
           <Input
             icon={Ai}
+            label={inputPlaceholder}
+            hideLabel
             type="text"
             placeholder={inputPlaceholder}
             autoFocus

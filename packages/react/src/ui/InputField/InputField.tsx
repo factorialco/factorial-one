@@ -70,55 +70,47 @@ const inputFieldWrapperVariants = cva({
   },
 })
 
-export type InputFieldProps<T> = // label or placeholder is required
-  (
-    | {
-        label: string
-        placeholder?: string
-      }
-    | {
-        label?: string
-        placeholder: string
-      }
-  ) & {
-    labelIcon?: IconType
-    hideLabel?: boolean
-    hidePlaceholder?: boolean
-    onClickPlaceholder?: () => void
-    onClickChildren?: () => void
-    onClickContent?: () => void
-    value?: T | undefined
-    onChange?: (value: T) => void
-    size?: InputFieldSize
-    error?: string | string[] | boolean
-    disabled?: boolean
-    className?: string
-    required?: boolean
-    readonly?: boolean
-    clearable?: boolean
-    role?: string
-    onClear?: () => void
+export type InputFieldProps<T> = {
+  label: string
+  placeholder?: string
+  labelIcon?: IconType
+  hideLabel?: boolean
+  hidePlaceholder?: boolean
+  onClickPlaceholder?: () => void
+  onClickChildren?: () => void
+  onClickContent?: () => void
+  value?: T | undefined
+  onChange?: (value: T) => void
+  size?: InputFieldSize
+  error?: string | string[] | boolean
+  disabled?: boolean
+  className?: string
+  required?: boolean
+  readonly?: boolean
+  clearable?: boolean
+  role?: string
+  onClear?: () => void
+  onFocus?: () => void
+  onBlur?: () => void
+  canGrow?: boolean
+  children: React.ReactNode & {
     onFocus?: () => void
     onBlur?: () => void
-    canGrow?: boolean
-    children: React.ReactNode & {
-      onFocus?: () => void
-      onBlur?: () => void
-      onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void
-      onChange?: (
-        value: T | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      ) => void
-      value?: T
-    }
-    icon?: IconType
-    isEmpty?: (value: T | undefined) => boolean
-    emptyValue?: T
-    maxLength?: number
-    hideMaxLength?: boolean
-    append?: React.ReactNode
-    lengthProvider?: (value: T | undefined) => number
-    loading?: boolean
+    onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void
+    onChange?: (
+      value: T | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => void
+    value?: T
   }
+  icon?: IconType
+  isEmpty?: (value: T | undefined) => boolean
+  emptyValue?: T
+  maxLength?: number
+  hideMaxLength?: boolean
+  append?: React.ReactNode
+  lengthProvider?: (value: T | undefined) => number
+  loading?: boolean
+}
 
 const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
   (

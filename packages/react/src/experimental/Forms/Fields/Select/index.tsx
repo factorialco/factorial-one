@@ -48,6 +48,7 @@ export type SelectProps<T, R = any> = {
 } & Pick<
   InputFieldProps<T>,
   | "loading"
+  | "hideLabel"
   | "clearable"
   | "labelIcon"
   | "size"
@@ -110,6 +111,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
     children,
     disabled,
     open,
+    hideLabel,
     onOpenChange,
     showSearchBox,
     onSearchChange,
@@ -238,6 +240,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
             error={error}
             icon={icon}
             labelIcon={labelIcon}
+            hideLabel={hideLabel}
             value={localValue}
             onChange={(value) => handleLocalValueChange(value as T)}
             placeholder={placeholder || ""}

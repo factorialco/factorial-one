@@ -26,6 +26,7 @@ export type InputProps = Omit<
     | "loading"
     | "onChange"
     | "role"
+    | "onClickContent"
   >
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -52,6 +53,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onChange,
       role,
       lengthProvider,
+      onClickContent,
+      hideLabel,
       ...props
     },
     ref
@@ -78,7 +81,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         append={append}
         lengthProvider={lengthProvider}
         hidePlaceholder={type === "file"}
+        hideLabel={hideLabel}
         onChange={onChange}
+        onClickContent={onClickContent}
       >
         <input
           type={type}

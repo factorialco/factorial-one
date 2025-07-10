@@ -34,12 +34,14 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
+    label: "Label text here",
     placeholder: "Placeholder text here",
   },
 }
 
 export const File: Story = {
   args: {
+    label: "Label text here",
     type: "file",
     disabled: false,
     placeholder: "Placeholder text here",
@@ -48,6 +50,7 @@ export const File: Story = {
 
 export const Password: Story = {
   args: {
+    label: "Label text here",
     type: "password",
     disabled: false,
     placeholder: "Placeholder text here",
@@ -56,6 +59,7 @@ export const Password: Story = {
 
 export const Disabled: Story = {
   args: {
+    label: "Label text here",
     type: "text",
     disabled: true,
     placeholder: "Placeholder text here",
@@ -106,6 +110,7 @@ export const WithError: Story = {
     chromatic: { disableSnapshot: true },
   },
   args: {
+    label: "Label text here",
     error: "Error message here",
   },
 }

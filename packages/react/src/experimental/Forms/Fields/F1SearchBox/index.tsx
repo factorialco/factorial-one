@@ -54,6 +54,8 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
         type="search"
         icon={Search}
         value={value}
+        label={props.placeholder ?? "Search"}
+        hideLabel
         placeholder={props.placeholder}
         disabled={props.disabled}
         onChange={onChangeLocal}

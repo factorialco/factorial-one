@@ -17,12 +17,14 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    label: "Label text here",
     placeholder: "Placeholder text here",
   },
 }
 
 export const Disabled: Story = {
   args: {
+    label: "Label text here",
     disabled: true,
     placeholder: "Placeholder text here",
   },
@@ -72,6 +74,7 @@ export const WithError: Story = {
     chromatic: { disableSnapshot: true },
   },
   args: {
+    label: "Label text here",
     error: "Error message here",
   },
 }

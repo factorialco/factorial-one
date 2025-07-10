@@ -90,6 +90,8 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
       loading: <BreadcrumbSkeleton />,
       select: "type" in item && item.type === "select" && (
         <BreadcrumbSelect
+          label={item.label}
+          hideLabel
           options={item.options}
           defaultItem={item.defaultItem}
           onChange={item.onChange}

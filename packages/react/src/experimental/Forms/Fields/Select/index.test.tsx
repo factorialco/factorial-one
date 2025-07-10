@@ -156,6 +156,8 @@ describe("Select", () => {
         onChange={() => {}}
         showSearchBox
         externalSearch
+        label="Select an option2"
+        hideLabel
         onSearchChange={handleSearchChange}
       />
     )
