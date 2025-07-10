@@ -1,4 +1,4 @@
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Icon } from "@/components/Utilities/Icon"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
@@ -28,7 +28,6 @@ export * from "./types"
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Allow to pass anything as item */
 export type SelectProps<T, R = any> = {
-  placeholder?: string
   onChange: (value: T, item?: R) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
@@ -41,18 +40,22 @@ export type SelectProps<T, R = any> = {
   onSearchChange?: (value: string) => void
   externalSearch?: boolean
   searchValue?: string
-  size?: InputFieldProps<T>["size"]
   onOpenChange?: (open: boolean) => void
   searchEmptyMessage?: string
   className?: string
   selectContentClassName?: string
   actions?: Action[]
-  label: string
-  error?: string
-  icon?: IconType
-  labelIcon?: IconType
-  clearable?: boolean
-}
+} & Pick<
+  InputFieldProps<T>,
+  | "loading"
+  | "clearable"
+  | "labelIcon"
+  | "size"
+  | "label"
+  | "error"
+  | "icon"
+  | "placeholder"
+>
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   return (
@@ -121,6 +124,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
     icon,
     labelIcon,
     clearable,
+    loading,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -220,7 +224,10 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
     >
       {children ? (
         <SelectTrigger ref={ref} asChild>
-          <div className="flex w-full items-center justify-between">
+          <div
+            className="flex w-full items-center justify-between"
+            aria-label={label || placeholder}
+          >
             {children}
           </div>
         </SelectTrigger>
@@ -233,16 +240,18 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
             labelIcon={labelIcon}
             value={localValue}
             onChange={(value) => handleLocalValueChange(value as T)}
-            placeholder={placeholder}
+            placeholder={placeholder || ""}
             disabled={disabled}
             clearable={clearable}
             size={size}
+            loading={loading}
             onClickContent={() => {
               handleChangeOpenLocal(!openLocal)
             }}
             append={
               <Icon
                 onClick={() => {
+                  if (disabled) return
                   handleChangeOpenLocal(!openLocal)
                 }}
                 icon={ChevronDown}
@@ -255,9 +264,12 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
               />
             }
           >
-            <div className="flex w-full items-center justify-between">
+            <button
+              className="flex w-full items-center justify-between"
+              aria-label={label || placeholder}
+            >
               {selectedOption && <SelectValue item={selectedOption} />}
-            </div>
+            </button>
           </InputField>
         </SelectTrigger>
       )}

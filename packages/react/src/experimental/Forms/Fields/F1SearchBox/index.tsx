@@ -1,17 +1,18 @@
 import { Input } from "@/ui/input"
-import { ChangeEventHandler, forwardRef, useRef } from "react"
+import { InputFieldProps } from "@/ui/InputField/InputField"
+import { forwardRef, useRef } from "react"
 import { Search } from "../../../../icons/app"
 
 type F1SearchBoxProps = {
-  placeholder?: string
   value?: string
-  disabled?: boolean
   threshold?: number
   debounceTime?: number
-  clearable?: boolean
   autoFocus?: boolean
   onChange?: (value: string) => void
-}
+} & Pick<
+  InputFieldProps<string>,
+  "size" | "loading" | "clearable" | "placeholder" | "disabled"
+>
 
 const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
   (
@@ -19,6 +20,7 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
       value,
       threshold = 0,
       onChange,
+      size = "md",
       debounceTime = 0,
       clearable = false,
       ...props
@@ -27,11 +29,11 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
   ) => {
     const valueToEmitRef = useRef<string | undefined>(undefined)
 
-    const onChangeLocal: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const onChangeLocal = (value: string) => {
       if (
         onChange &&
         // It should emit the change when the user clears the field
-        (e.target.value.length >= threshold || e.target.value.length === 0)
+        (value.length >= threshold || value.length === 0)
       ) {
         // Debounces the onChange callback
         if (valueToEmitRef.current === undefined) {
@@ -42,7 +44,7 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
             valueToEmitRef.current = undefined
           }, debounceTime)
         }
-        valueToEmitRef.current = e.target.value
+        valueToEmitRef.current = value
       }
     }
 
@@ -56,7 +58,7 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
         disabled={props.disabled}
         onChange={onChangeLocal}
         role="searchbox"
-        size="sm"
+        size={size}
         autoFocus={props.autoFocus}
         clearable={clearable}
       />

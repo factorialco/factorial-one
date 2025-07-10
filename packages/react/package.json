@@ -39,7 +39,7 @@
     "prettier:format": "prettier --write \"src/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"src/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "tsc": "tsc --noEmit",
-    "vitest": "vitest run",
+    "vitest": "vitest",
     "vitest:watch": "vitest dev",
     "vitest:ci": "pnpm run vitest --reporter=dot"
   },
@@ -95,6 +95,7 @@
     "@eslint/compat": "^1.2.9",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.27.0",
+    "@factorialco/factorial-one-core": "workspace:*",
     "@microsoft/api-extractor": "7.52.2",
     "@playwright/test": "^1.52.0",
     "@storybook/addon-a11y": "^9.0.8",
@@ -116,6 +117,7 @@
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/ui": "3.0.7",
     "autoprefixer": "^10.4.21",
     "axe-playwright": "^2.1.0",
     "chalk": "^5.4.1",
@@ -149,8 +151,7 @@
     "vite": "^6.3.5",
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-lib-inject-css": "^2.2.1",
-    "vitest": "^3.0.7",
-    "@factorialco/factorial-one-core": "workspace:*"
+    "vitest": "^3.0.7"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.34"

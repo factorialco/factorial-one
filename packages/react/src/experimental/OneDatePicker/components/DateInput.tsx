@@ -51,7 +51,7 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
         error={error}
         className={className}
         onFocus={() => onOpenChange?.(true)}
-        onChange={(e) => setLocalValue(e.target.value)}
+        onChange={setLocalValue}
         onBlur={handleBlur}
       />
     )

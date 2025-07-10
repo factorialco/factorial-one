@@ -28,10 +28,10 @@ describe("NumberInput", () => {
       render(<NumberInput locale="en-US" maxDecimals={0} onChange={onChange} />)
 
       const input = screen.getByRole("textbox")
-      await userEvent.type(input, "-12.")
+      await userEvent.type(input, "-34.")
 
-      expect(input).toHaveValue("-12")
-      expect(onChange).toHaveBeenLastCalledWith(-12)
+      expect(input).toHaveValue("-34")
+      expect(onChange).toHaveBeenLastCalledWith(-34)
     })
   })
 

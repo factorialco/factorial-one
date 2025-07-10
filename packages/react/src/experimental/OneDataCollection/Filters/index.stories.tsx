@@ -359,7 +359,7 @@ export const WithUrlSerialization: Story = {
           <Input
             id="serialized-filters"
             value={serializedValue}
-            onChange={(e) => handleSerializedValueChange(e.target.value)}
+            onChange={handleSerializedValueChange}
             className="font-mono text-sm"
           />
           <p className="text-muted-foreground text-sm">
@@ -418,7 +418,7 @@ export const WithPresetsAndUrlSerialization: Story = {
           <Input
             id="serialized-filters"
             value={serializedValue}
-            onChange={(e) => handleSerializedValueChange(e.target.value)}
+            onChange={handleSerializedValueChange}
             className="font-mono text-sm"
           />
           <p className="text-muted-foreground text-sm">

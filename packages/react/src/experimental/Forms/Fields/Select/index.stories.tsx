@@ -121,6 +121,11 @@ const meta: Meta = {
         "  variant?: 'ghost' | 'critical'\n" +
         "}```",
     },
+    loading: {
+      control: "boolean",
+      description:
+        "Whether the select is loading. If true, the select will be disabled",
+    },
   },
   args: {
     placeholder: "Select a theme",
@@ -150,6 +155,16 @@ export const Default: Story = {
     label: "Select a theme",
     value: undefined,
     placeholder: undefined,
+  },
+}
+
+export const WithPreselectedValue: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    value: "dark",
   },
 }
 

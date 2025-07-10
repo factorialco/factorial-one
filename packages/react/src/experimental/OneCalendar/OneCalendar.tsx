@@ -200,9 +200,7 @@ export function OneCalendar({
                 handleInputNavigate("from", e.key === "ArrowDown" ? -1 : 1)
               }
             }}
-            onChange={(e) =>
-              setInputValue({ ...inputValue, from: e.target.value })
-            }
+            onChange={(value) => setInputValue({ ...inputValue, from: value })}
           />
           {mode === "range" && (
             <Input
@@ -219,9 +217,7 @@ export function OneCalendar({
                   handleInputNavigate("to", e.key === "ArrowDown" ? -1 : 1)
                 }
               }}
-              onChange={(e) =>
-                setInputValue({ ...inputValue, to: e.target.value })
-              }
+              onChange={(value) => setInputValue({ ...inputValue, to: value })}
             />
           )}
         </div>

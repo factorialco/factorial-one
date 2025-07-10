@@ -122,22 +122,4 @@ describe("F1SearchBox", () => {
       expect(onChange).toHaveBeenCalledWith("abc")
     })
   })
-
-  describe("clearable behavior", () => {
-    it("hides clear button when clearable is false", () => {
-      render(<F1SearchBox clearable={false} />)
-      const input = screen.getByRole("searchbox")
-      expect(input.className).toContain(
-        "[&::-webkit-search-cancel-button]:hidden"
-      )
-    })
-
-    it("shows clear button when clearable is true", () => {
-      render(<F1SearchBox clearable={true} />)
-      const input = screen.getByRole("searchbox")
-      expect(input.className).not.toContain(
-        "[&::-webkit-search-cancel-button]:hidden"
-      )
-    })
-  })
 })

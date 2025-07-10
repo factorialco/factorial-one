@@ -136,7 +136,7 @@ const AIEnhanceMenu = ({
             placeholder={inputPlaceholder}
             autoFocus
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={setSearchQuery}
             onKeyDown={handleKeyDown}
             ref={customInputRef}
           />

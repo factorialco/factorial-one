@@ -118,6 +118,7 @@ export const WithATextarea: Story = {
     value: "",
     placeholder: "This is the placeholder",
     onChange: () => {},
+    canGrow: true,
     children: <textarea className="w-full" />,
     icon: icons.Ai,
     clearable: true,

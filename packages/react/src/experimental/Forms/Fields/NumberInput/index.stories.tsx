@@ -38,6 +38,11 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {},
+  render: (props) => {
+    const [value, setValue] = useState<number | null>(props.value ?? 1)
+    console.log("value", value)
+    return <NumberInput {...props} value={value} onChange={setValue} />
+  },
 }
 
 export const WithStep: Story = {

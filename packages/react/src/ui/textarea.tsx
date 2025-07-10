@@ -37,6 +37,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
       value,
       cols,
       rows,
+      onChange,
       placeholder,
       ...props
     },
@@ -52,8 +53,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         maxLength={maxLength}
         clearable={clearable}
         value={value}
-        canGrow={true}
+        canGrow
         placeholder={placeholder ?? ""}
+        onChange={(value) => {
+          onChange?.(value ?? "")
+        }}
         {...props}
       >
         <textarea

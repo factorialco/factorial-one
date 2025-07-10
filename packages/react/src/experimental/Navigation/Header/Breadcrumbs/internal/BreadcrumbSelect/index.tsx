@@ -91,7 +91,6 @@ export function BreadcrumbSelect({
     >
       <button
         className="flex h-6 items-center justify-between rounded-sm border px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary"
-        role="combobox"
         aria-label={selectedLabel}
       >
         <span className="block grow text-f1-foreground">{selectedLabel}</span>

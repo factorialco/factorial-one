@@ -2,9 +2,12 @@ import * as React from "react"
 import { cn } from "../lib/utils"
 import { InputField, InputFieldProps } from "./InputField"
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
+export type InputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size" | "onChange"
+> &
   Pick<
-    InputFieldProps<string | number | readonly string[] | undefined>,
+    InputFieldProps<string>,
     | "label"
     | "labelIcon"
     | "hideLabel"
@@ -20,6 +23,9 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> &
     | "hideMaxLength"
     | "append"
     | "lengthProvider"
+    | "loading"
+    | "onChange"
+    | "role"
   >
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -37,11 +43,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       placeholder,
       clearable,
       size,
+      loading,
       isEmpty,
       emptyValue,
       maxLength,
       hideMaxLength,
       append,
+      onChange,
+      role,
       lengthProvider,
       ...props
     },
@@ -55,18 +64,21 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         error={error}
         disabled={disabled}
         required={required}
-        value={value}
+        value={value as string}
+        loading={loading}
         clearable={clearable}
         className={className}
-        placeholder={placeholder}
+        placeholder={placeholder || ""}
         size={size}
+        role={role}
         isEmpty={isEmpty}
-        emptyValue={emptyValue}
+        emptyValue={emptyValue as string}
         maxLength={maxLength}
         hideMaxLength={hideMaxLength}
         append={append}
         lengthProvider={lengthProvider}
         hidePlaceholder={type === "file"}
+        onChange={onChange}
       >
         <input
           type={type}

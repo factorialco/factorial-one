@@ -8,7 +8,7 @@ import { Search } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
 import { Input } from "@/ui/input"
-import { ChangeEvent, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { FilterTypeComponentProps } from "../types"
 import { InFilterOptions } from "./types"
 import { useLoadOptions } from "./useLoadOptions"
@@ -166,9 +166,7 @@ export function InFilter<T extends string>({
             type="search"
             placeholder="Search..."
             value={searchTerm}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setSearchTerm(e.target.value)
-            }
+            onChange={setSearchTerm}
             icon={Search}
             clearable
           />

@@ -1,5 +1,5 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { Spinner } from "@/experimental/exports"
+import { Spinner } from "@/experimental/Information/Spinner"
 import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils.ts"
 import { cva } from "cva"
@@ -87,7 +87,7 @@ export type InputFieldProps<T> = // label or placeholder is required
     onClickPlaceholder?: () => void
     onClickChildren?: () => void
     onClickContent?: () => void
-    value: T | undefined
+    value?: T | undefined
     onChange?: (value: T) => void
     size?: InputFieldSize
     error?: string | string[] | boolean
@@ -96,6 +96,7 @@ export type InputFieldProps<T> = // label or placeholder is required
     required?: boolean
     readonly?: boolean
     clearable?: boolean
+    role?: string
     onClear?: () => void
     onFocus?: () => void
     onBlur?: () => void
@@ -119,10 +120,7 @@ export type InputFieldProps<T> = // label or placeholder is required
     loading?: boolean
   }
 
-const InputField = forwardRef<
-  HTMLDivElement,
-  InputFieldProps<string | undefined>
->(
+const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
   (
     {
       children,
@@ -151,6 +149,7 @@ const InputField = forwardRef<
       onClickPlaceholder,
       onClickChildren,
       onClickContent,
+      role,
       ...props
     }: InputFieldProps<string>,
     ref
@@ -161,14 +160,22 @@ const InputField = forwardRef<
 
     const [localValue, setLocalValue] = useState(value)
 
-    useEffect(() => {
-      setLocalValue(value)
-    }, [value])
+    useEffect(
+      () => {
+        if (localValue === value || value === emptyValue) {
+          return
+        }
+        setLocalValue(value)
+      },
+      // localValue is a dep because we want to recociliate both values, in some cases the value will not change for example when the parent limits the chars the user can input
+      [value, localValue, emptyValue]
+    )
 
     const handleChange = (
       value: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-      const v = typeof value === "string" ? value : value.target.value
+      const v =
+        (typeof value === "string" ? value : value.target.value) ?? emptyValue
 
       if (maxLength && lengthProvider(v) > maxLength) {
         return
@@ -182,7 +189,23 @@ const InputField = forwardRef<
       handleChange(emptyValue)
     }
 
-    const showClear = clearable && !noEdit && !isEmpty(localValue)
+    const handleClickContent = () => {
+      if (!disabled) {
+        onClickContent?.()
+      }
+    }
+
+    const handleClickChildren = () => {
+      if (!disabled) {
+        onClickChildren?.()
+      }
+    }
+
+    const handleClickPlaceholder = () => {
+      if (!disabled) {
+        onClickPlaceholder?.()
+      }
+    }
 
     return (
       <div
@@ -238,27 +261,31 @@ const InputField = forwardRef<
         >
           {icon && (
             <Icon
-              onClick={onClickContent}
+              onClick={handleClickContent}
               icon={icon}
               className="h-5 w-5 shrink-0 pt-[2px] text-f1-foreground-secondary"
             />
           )}
-          <div className="relative flex w-full gap-2" onClick={onClickContent}>
-            <div onClick={onClickChildren} className="w-full">
+          <div
+            className="relative flex w-full gap-2"
+            onClick={handleClickContent}
+          >
+            <div onClick={handleClickChildren} className="w-full">
               {cloneElement(children as React.ReactElement, {
                 onChange: handleChange,
                 onBlur: props.onBlur,
                 onFocus: props.onFocus,
                 disabled: noEdit,
-                readonly,
+                readOnly: readonly,
+                role,
                 value: localValue,
                 "aria-label": label || placeholder,
                 "aria-busy": loading,
-                "aria-live": "spolite",
+                "aria-disabled": noEdit,
               })}
             </div>
             {loading && (
-              <div className="i pointer-events-none flex justify-start pt-[2px]">
+              <div className="pointer-events-none flex justify-start pt-[2px]">
                 <Spinner size="small" />
               </div>
             )}
@@ -269,7 +296,7 @@ const InputField = forwardRef<
                   ? "opacity-1"
                   : "opacity-0"
               )}
-              onClick={onClickPlaceholder}
+              onClick={handleClickPlaceholder}
               aria-hidden="true"
             >
               {placeholder}

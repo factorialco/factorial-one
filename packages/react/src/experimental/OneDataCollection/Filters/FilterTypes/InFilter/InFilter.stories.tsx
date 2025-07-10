@@ -202,7 +202,7 @@ const AsyncOptionsWithSearchExample = () => {
         type="search"
         placeholder="Search countries..."
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={setSearchTerm}
         className="h-8 rounded"
         icon={Search}
         clearable
