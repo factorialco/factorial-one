@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.122.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.122.1...factorial-one-react-v1.122.2) (2025-07-10)
+
+
+### Bug Fixes
+
+* stop using module icon prop in breadcrumbs ([#2233](https://github.com/factorialco/factorial-one/issues/2233)) ([8c325f5](https://github.com/factorialco/factorial-one/commit/8c325f56ebf9c83d70e1e223906e805af57218bf))
+
 ## [1.122.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.122.0...factorial-one-react-v1.122.1) (2025-07-10)
 
 
