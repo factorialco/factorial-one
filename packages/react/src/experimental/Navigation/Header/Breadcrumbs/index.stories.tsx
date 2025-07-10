@@ -1,4 +1,3 @@
-import { Documents, Recruitment } from "@/icons/modules"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { Button } from "../../../../ui/button"
@@ -21,7 +20,7 @@ export const Default: Story = {
         id: "recruitment",
         label: "Recruitment",
         href: "/recruitment",
-        icon: Recruitment,
+        module: "ats",
       },
       {
         id: "candidates",
@@ -40,7 +39,7 @@ export const LoadingLastItem: Story = {
         id: "recruitment",
         label: "Recruitment",
         href: "/recruitment",
-        icon: Recruitment,
+        module: "ats",
       },
       {
         id: "candidates",
@@ -59,7 +58,7 @@ export const LoadingLastTwoItems: Story = {
         id: "recruitment",
         label: "Recruitment",
         href: "/recruitment",
-        icon: Recruitment,
+        module: "ats",
       },
       { id: "loading-1", label: "Loading", loading: true },
       { id: "loading-2", label: "Loading", loading: true },
@@ -74,7 +73,7 @@ export const WithSelectBreadcrumb: Story = {
         id: "recruitment",
         label: "Recruitment",
         href: "/recruitment",
-        icon: Recruitment,
+        module: "ats",
       },
       {
         id: "offers",
@@ -102,7 +101,7 @@ export const WithSelectBreadcrumb: Story = {
 export const LongBreadcrumbs: Story = {
   args: {
     breadcrumbs: [
-      { id: "documents", label: "Documents", href: "/", icon: Documents },
+      { id: "documents", label: "Documents", href: "/", module: "documents" },
       {
         id: "employee-documents",
         label: "Employee Documents",
@@ -149,7 +148,7 @@ export const Interactive: Story = {
         id: "recruitment",
         label: "Recruitment",
         href: "/recruitment",
-        icon: Recruitment,
+        module: "ats",
       },
       {
         id: "candidates",
@@ -173,7 +172,7 @@ export const Interactive: Story = {
         id: "documents",
         label: "Documents",
         href: "/documents",
-        icon: Documents,
+        module: "documents",
       },
       {
         id: "employee-documents",
