@@ -41,20 +41,27 @@ const { source, currentGrouping, setCurrentGrouping } = useDataCollection({
     groupBy: {
         // This is the field to group the data by
         department: {
-            name: "Department", // This is the name of the group
-            label: (groupId) => groupId, //
-            itemCount: async (groupId) => {
-                await new Promise((resolve) => setTimeout(resolve, 1000))
-                return mockUsers.filter((user) => user.department === groupId)
-                .length
-            },
+          name: "Department", // This is the name of the group
+          label: (groupId) => groupId, //
+          itemCount: async (groupId) => {
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+              return mockUsers.filter((user) => user.department === groupId)
+              .length
+          },
         },
         role: {
-            name: "Role",
-            label: (groupId) => groupId,
-            itemCount: (groupId) => {
-               return mockUsers.filter((user) => user.role === groupId).length
-           },
+          name: "Role",
+          label: (groupId) => groupId,
+          itemCount: (groupId) => {
+              return mockUsers.filter((user) => user.role === groupId).length
+          },
+        },
+        "manager.name": {
+          name: "Manager",
+          label: (groupId) => groupId,
+          itemCount: (groupId) => {
+              return mockUsers.filter((user) => user.manager.name === groupId).length
+          },
         },
     },
   },
@@ -112,6 +119,20 @@ is collapsible.
 The `groupBy` property is used to define the grouping fields. Each key is a
 field of the record and the value is an object with the following properties:
 
+> It accepts a property or a path to a property for nested objects. e.g:
+>
+> ```ts
+> const row = {
+>   name: "Sergio Andersen",
+>   age: 30,
+>   manager: {
+>     name: "John Doe",
+>   },
+> }
+> ```
+>
+> "manager.name" will group by the `name` property of the `manager` object.
+
 - `name`: The name of the grouping (used in the UI to select the how to group
   the data). e.g 'Department'.
 - `label`: The label of of a group, used to show the group title. e.g 'Sales'.
@@ -155,3 +176,4 @@ field of the record and the value is an object with the following properties:
 ### Selectable grouping
 
 <Canvas of={GroupingStories.SelectableGrouping} />
+```
