@@ -2029,9 +2029,9 @@ export declare type InfiniteScrollPaginatedResponse<TRecord> = BasePaginatedResp
     hasMore: boolean;
 };
 
-export declare const Input: React.FC<InputProps>;
+export declare const Input: React.FC<InputProps<string | number>>;
 
-declare const Input_2: React_2.ForwardRefExoticComponent<Omit<React_2.InputHTMLAttributes<HTMLInputElement>, "size"> & Pick<InputFieldProps<string | number | readonly string[] | undefined>, "label" | "disabled" | "size" | "icon" | "loading" | "hideLabel" | "append" | "maxLength" | "required" | "error" | "labelIcon" | "clearable" | "isEmpty" | "emptyValue" | "hideMaxLength" | "lengthProvider"> & React_2.RefAttributes<HTMLInputElement>>;
+declare const Input_2: React_2.ForwardRefExoticComponent<Omit<React_2.InputHTMLAttributes<HTMLInputElement>, "onChange" | "size"> & Pick<InputFieldProps<string>, "label" | "onChange" | "role" | "disabled" | "size" | "icon" | "loading" | "hideLabel" | "append" | "maxLength" | "required" | "error" | "labelIcon" | "clearable" | "isEmpty" | "emptyValue" | "hideMaxLength" | "lengthProvider"> & React_2.RefAttributes<HTMLInputElement>>;
 
 declare type InputFieldProps<T> = // label or placeholder is required
 ({
@@ -2047,7 +2047,7 @@ declare type InputFieldProps<T> = // label or placeholder is required
     onClickPlaceholder?: () => void;
     onClickChildren?: () => void;
     onClickContent?: () => void;
-    value: T | undefined;
+    value?: T | undefined;
     onChange?: (value: T) => void;
     size?: InputFieldSize;
     error?: string | string[] | boolean;
@@ -2056,6 +2056,7 @@ declare type InputFieldProps<T> = // label or placeholder is required
     required?: boolean;
     readonly?: boolean;
     clearable?: boolean;
+    role?: string;
     onClear?: () => void;
     onFocus?: () => void;
     onBlur?: () => void;
@@ -2081,7 +2082,7 @@ declare type InputFieldSize = (typeof inputFieldSizes)[number];
 
 declare const inputFieldSizes: readonly ["sm", "md"];
 
-export declare type InputProps = Pick<ComponentProps<typeof Input_2>, "ref" | "disabled" | "size" | "onChange" | "value" | "placeholder" | "clearable" | "maxLength" | "label" | "labelIcon" | "icon" | "error" | "hideLabel"> & {
+export declare type InputProps<T extends string | number> = Pick<ComponentProps<typeof Input_2>, "ref"> & Pick<InputFieldProps<T>, "disabled" | "size" | "onChange" | "value" | "placeholder" | "clearable" | "maxLength" | "label" | "labelIcon" | "icon" | "error" | "hideLabel"> & {
     type?: Exclude<HTMLInputTypeAttribute, "number">;
 };
 
@@ -2463,7 +2464,7 @@ declare interface NextStepsProps {
 
 export declare const NumberInput: ForwardRefExoticComponent<Omit<NumberInputProps, "ref"> & RefAttributes<HTMLInputElement>>;
 
-declare type NumberInputProps = Omit<InputProps, "value" | "type" | "onChange"> & {
+declare type NumberInputProps = Omit<InputProps<string>, "value" | "type" | "onChange"> & {
     locale: string;
     value?: number | null;
     step?: number;
