@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.121.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.121.0...factorial-one-react-v1.121.1) (2025-07-10)
+
+
+### Bug Fixes
+
+* proper overflow calculation to avoid overflows ([#2238](https://github.com/factorialco/factorial-one/issues/2238)) ([2c86bc5](https://github.com/factorialco/factorial-one/commit/2c86bc5107d400faf6826c7f22d4c6f6a7c68c9a))
+
 ## [1.121.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.120.0...factorial-one-react-v1.121.0) (2025-07-10)
 
 
