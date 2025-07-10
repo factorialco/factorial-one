@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.120.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.3...factorial-one-react-v1.120.0) (2025-07-10)
+
+
+### Features
+
+* Extract datacollection filters to OneFilterPicker component ([#2226](https://github.com/factorialco/factorial-one/issues/2226)) ([#2232](https://github.com/factorialco/factorial-one/issues/2232)) ([0fbf916](https://github.com/factorialco/factorial-one/commit/0fbf9163f4fb71cb0f11bb58ce67180d75bf3004))
+
 ## [1.119.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.2...factorial-one-react-v1.119.3) (2025-07-09)
 
 
