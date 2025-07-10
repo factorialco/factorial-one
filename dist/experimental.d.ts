@@ -1996,16 +1996,13 @@ export declare type InfiniteScrollPaginatedResponse<TRecord> = BasePaginatedResp
 
 export declare const Input: React.FC<InputProps<string | number>>;
 
-declare const Input_2: React_2.ForwardRefExoticComponent<Omit<React_2.InputHTMLAttributes<HTMLInputElement>, "onChange" | "size"> & Pick<InputFieldProps<string>, "label" | "onChange" | "role" | "disabled" | "size" | "icon" | "loading" | "hideLabel" | "append" | "maxLength" | "required" | "error" | "labelIcon" | "clearable" | "isEmpty" | "emptyValue" | "hideMaxLength" | "lengthProvider"> & React_2.RefAttributes<HTMLInputElement>>;
+declare const Input_2: React_2.ForwardRefExoticComponent<Omit<React_2.InputHTMLAttributes<HTMLInputElement>, "onChange" | "size"> & Pick<InputFieldProps<string>, "label" | "onChange" | "role" | "disabled" | "size" | "icon" | "loading" | "hideLabel" | "append" | "maxLength" | "required" | "error" | "labelIcon" | "onClickContent" | "clearable" | "isEmpty" | "emptyValue" | "hideMaxLength" | "lengthProvider"> & React_2.RefAttributes<HTMLInputElement>>;
 
-declare type InputFieldProps<T> = // label or placeholder is required
-({
+declare const INPUTFIELD_SIZES: readonly ["sm", "md"];
+
+declare type InputFieldProps<T> = {
     label: string;
     placeholder?: string;
-} | {
-    label?: string;
-    placeholder: string;
-}) & {
     labelIcon?: IconType;
     hideLabel?: boolean;
     hidePlaceholder?: boolean;
@@ -2043,9 +2040,7 @@ declare type InputFieldProps<T> = // label or placeholder is required
     loading?: boolean;
 };
 
-declare type InputFieldSize = (typeof inputFieldSizes)[number];
-
-declare const inputFieldSizes: readonly ["sm", "md"];
+declare type InputFieldSize = (typeof INPUTFIELD_SIZES)[number];
 
 export declare type InputProps<T extends string | number> = Pick<ComponentProps<typeof Input_2>, "ref"> & Pick<InputFieldProps<T>, "disabled" | "size" | "onChange" | "value" | "placeholder" | "clearable" | "maxLength" | "label" | "labelIcon" | "icon" | "error" | "hideLabel"> & {
     type?: Exclude<HTMLInputTypeAttribute, "number">;
@@ -3536,7 +3531,7 @@ export declare type SelectProps<T, R = any> = {
     className?: string;
     selectContentClassName?: string;
     actions?: Action[];
-} & Pick<InputFieldProps<T>, "loading" | "clearable" | "labelIcon" | "size" | "label" | "error" | "icon" | "placeholder">;
+} & Pick<InputFieldProps<T>, "loading" | "hideLabel" | "clearable" | "labelIcon" | "size" | "label" | "error" | "icon" | "placeholder">;
 
 declare type ShadAvatarProps = ComponentProps<typeof Avatar_2>;
 
