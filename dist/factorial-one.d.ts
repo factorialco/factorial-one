@@ -78,15 +78,50 @@ export declare const Button: ForwardRefExoticComponent<ButtonProps & RefAttribut
 declare const Button_2: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
 declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round" | "className" | "pressed"> & DataAttributes & {
+    /**
+     * Callback fired when the button is clicked. Supports async functions for loading state.
+     */
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
+    /**
+     * The visible label for the button. Required for accessibility.
+     */
     label: string;
+    /**
+     * Indicates that an action is in progress. Shows a loading spinner and blocks interaction.
+     */
     loading?: boolean;
+    /**
+     * Adds an icon to the button, combined with the label for better clarity and recognition.
+     */
     icon?: IconType;
+    /**
+     * Adds an emoji to the button, can be used as a special case of icon-only button.
+     */
     emoji?: string;
+    /**
+     * Hides the label visually (for icon-only or emoji-only buttons), but keeps it accessible for screen readers.
+     */
     hideLabel?: boolean;
+    /**
+     * Sets the button size. 'lg' for mobile, 'md' for desktop, 'sm' for compact/secondary actions.
+     */
     size?: "sm" | "md" | "lg";
+    /**
+     * Appends a React node after the button content (for custom UI extensions).
+     */
     append?: React.ReactNode;
+    /**
+     * Appends a React node as a separate button, visually grouped with the main button.
+     */
     appendButton?: React.ReactNode;
+    /**
+     * If true, the button is inactive and does not respond to user interaction.
+     */
+    disabled?: boolean;
+    /**
+     * If true, the button is visually active or selected (pressed state).
+     */
+    pressed?: boolean;
 };
 
 export declare type ButtonProps = Omit<ButtonInternalProps, (typeof privateProps)[number]>;
@@ -137,7 +172,7 @@ declare type DefaultAction = {
     onClick: () => void;
 };
 
-declare const defaultTranslations: {
+export declare const defaultTranslations: {
     readonly approvals: {
         readonly history: "Approval history";
         readonly statuses: {
@@ -227,14 +262,21 @@ declare const defaultTranslations: {
                 readonly retry: "Retry";
             };
         };
+        readonly summaries: {
+            readonly types: {
+                readonly sum: "sum";
+            };
+        };
     };
     readonly shortcut: "Shortcut";
     readonly date: {
         readonly from: "From";
         readonly to: "To";
+        readonly none: "None";
         readonly date: "Date";
         readonly custom: "Custom period";
         readonly selectDate: "Select Date";
+        readonly compareTo: "Compare to";
         readonly presets: {
             readonly last7Days: "Last 7 days";
             readonly last30Days: "Last 30 days";
@@ -326,6 +368,8 @@ export declare interface ErrorMessageProps {
     description: string;
 }
 
+export declare const experimental: <T extends (...args: any[]) => any>(name: string, component: T) => T;
+
 export declare const FactorialOneProvider: React.FC<{
     children: React.ReactNode;
     link?: LinkContextValue;
@@ -335,6 +379,7 @@ export declare const FactorialOneProvider: React.FC<{
     i18n: Omit<I18nProviderProps, "children">;
     l10n: Omit<L10nProviderProps, "children">;
     isDev?: boolean;
+    showExperimentalWarnings?: boolean;
 }>;
 
 export declare function getEmojiLabel(emoji: string): string;
@@ -410,8 +455,7 @@ declare type LinkProps_2 = AnchorHTMLAttributes<HTMLAnchorElement> & {
 };
 
 declare const linkVariants: (props?: ({
-    variant?: "link" | "text" | undefined;
-    active?: boolean | undefined;
+    variant?: "link" | "unstyled" | undefined;
     disabled?: boolean | undefined;
 } & ({
     class?: ClassValue;
@@ -525,7 +569,7 @@ export declare type ProductCardProps = {
     icon: IconType;
 });
 
-export declare function ProductModal({ isOpen, onClose, title, image, benefits, errorMessage, successMessage, loadingState, nextSteps, closeLabel, primaryAction, modalTitle, modalIcon, secondaryAction, }: ProductModalProps): JSX_2.Element;
+export declare function ProductModal({ isOpen, onClose, title, image, benefits, errorMessage, successMessage, loadingState, nextSteps, closeLabel, primaryAction, modalTitle, modalIcon, secondaryAction, portalContainer, }: ProductModalProps): JSX_2.Element;
 
 declare type ProductModalProps = {
     isOpen: boolean;
@@ -558,9 +602,10 @@ declare type ProductModalProps = {
     closeLabel: string;
     primaryAction?: Action_2;
     secondaryAction?: Action_2;
+    portalContainer?: HTMLElement | null;
 };
 
-export declare function ProductWidget({ mediaUrl, title, description, onClose, dismissible, width, trackVisibility, actions, }: ProductWidgetProps): JSX_2.Element;
+export declare function ProductWidget({ mediaUrl, title, description, onClose, dismissible, width, trackVisibility, actions, showConfirmation, }: ProductWidgetProps): JSX_2.Element;
 
 declare type ProductWidgetProps = {
     mediaUrl?: string;
@@ -571,6 +616,7 @@ declare type ProductWidgetProps = {
     width?: string;
     trackVisibility?: (visible: boolean) => void;
     actions?: Action[];
+    showConfirmation?: boolean;
 };
 
 export declare const ProgressBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
@@ -645,11 +691,9 @@ declare type UpsellAction = BaseAction & {
     showConfirmation: boolean;
 };
 
-export declare function UpsellingBanner({ title, subtitle, mediaUrl, primaryAction, secondaryAction, onClose, }: UpsellingBannerProps): JSX_2.Element | null;
-
-export declare namespace UpsellingBanner {
-    var displayName: string;
-}
+export declare const UpsellingBanner: ForwardRefExoticComponent<UpsellingBannerProps & RefAttributes<HTMLDivElement>> & {
+    Skeleton: ForwardRefExoticComponent<RefAttributes<HTMLDivElement>>;
+};
 
 declare type UpsellingBannerProps = {
     title: string;
@@ -658,9 +702,10 @@ declare type UpsellingBannerProps = {
     primaryAction?: DefaultAction | PromoteAction;
     secondaryAction?: DefaultAction | PromoteAction;
     onClose?: () => void;
+    isLoading?: boolean;
 };
 
-export declare function UpsellingButton({ label, showIcon, onRequest, showConfirmation, loading: externalLoading, errorMessage, successMessage, loadingState, nextSteps, closeLabel, variant, ...props }: UpsellingButtonProps): JSX_2.Element;
+export declare function UpsellingButton({ label, showIcon, onRequest, showConfirmation, loading: externalLoading, errorMessage, successMessage, loadingState, nextSteps, closeLabel, variant, onModalStateChange, portalContainer, ...props }: UpsellingButtonProps): JSX_2.Element;
 
 export declare interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> {
     variant?: "promote" | "outlinePromote";
@@ -700,9 +745,17 @@ export declare interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> 
      * The label to be displayed in the close button of the confirmation dialog
      */
     closeLabel: string;
+    /**
+     * Callback to notify when the modal state changes (open/closed)
+     */
+    onModalStateChange?: (isOpen: boolean) => void;
+    /**
+     * Portal container for the confirmation dialog
+     */
+    portalContainer?: HTMLElement | null;
 }
 
-export declare function UpsellingPopover({ isOpen, setIsOpen, label, variant, size, showIcon, side, align, icon, mediaUrl, title, description, width, trackVisibility, actions, onClick, }: UpsellingPopoverProps): JSX_2.Element;
+export declare function UpsellingPopover({ isOpen, setIsOpen, label, variant, size, showIcon, side, align, icon, mediaUrl, title, description, width, trackVisibility, actions, onClick, hideLabel, }: UpsellingPopoverProps): JSX_2.Element;
 
 declare type UpsellingPopoverProps = {
     isOpen: boolean;
@@ -721,6 +774,7 @@ declare type UpsellingPopoverProps = {
     trackVisibility?: (visible: boolean) => void;
     actions?: Action[];
     onClick?: () => void;
+    hideLabel?: boolean;
 };
 
 export declare const UpsellRequestResponseDialog: ForwardRefExoticComponent<UpsellRequestResponseDialogProps & RefAttributes<HTMLDivElement>>;
@@ -733,6 +787,7 @@ declare interface UpsellRequestResponseDialogProps {
     successMessage: SuccessMessageProps;
     nextSteps: NextStepsProps;
     closeLabel: string;
+    portalContainer?: HTMLElement | null;
 }
 
 export declare const useEmojiConfetti: () => {
@@ -769,6 +824,42 @@ declare global {
         XRay: {
             enable: (filter?: ComponentTypes[]) => void;
             disable: () => void;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        aiBlock: {
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        transcript: {
+            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        moodTracker: {
+            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
 }
