@@ -570,7 +570,7 @@ declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
  */
 export declare function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps): JSX_2.Element;
 
-export declare function BreadcrumbSelect({ options, defaultItem, label, ...props }: BreadcrumbSelectProps): JSX_2.Element;
+export declare function BreadcrumbSelect({ options, defaultItem, ...props }: BreadcrumbSelectProps): JSX_2.Element;
 
 declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     type: "select";
@@ -4466,15 +4466,15 @@ declare module "@tiptap/core" {
 }
 
 
+declare namespace Calendar {
+    var displayName: string;
+}
+
+
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
-}
-
-
-declare namespace Calendar {
-    var displayName: string;
 }
