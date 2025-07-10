@@ -4,7 +4,14 @@ import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils.ts"
 import { cva } from "cva"
 import { AnimatePresence } from "motion/react"
-import { cloneElement, forwardRef, useEffect, useId, useState } from "react"
+import {
+  AriaAttributes,
+  cloneElement,
+  forwardRef,
+  useEffect,
+  useId,
+  useState,
+} from "react"
 import { InputMessages } from "./components/InputMessages"
 import { Label } from "./components/Label"
 export const INPUTFIELD_SIZES = ["sm", "md"] as const
@@ -20,6 +27,19 @@ const defaultIsEmpty = (value: string | number | undefined | null) => {
 const defaultLengthProvider = (value: string | number | undefined | null) =>
   value ? value.toString().length : 0
 
+const inputElementVariants = cva({
+  base: "",
+  variants: {
+    size: {
+      sm: "py-1",
+      md: "py-2",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+})
+
 const inputFieldVariants = cva({
   base: "",
   variants: {
@@ -28,8 +48,8 @@ const inputFieldVariants = cva({
       false: "flex-none",
     },
     size: {
-      sm: "rounded-sm p-1 pl-2 pt-[5px]",
-      md: "rounded-md p-2 pl-3",
+      sm: "rounded-sm pl-2 pr-1",
+      md: "rounded-md pl-3 pr-2",
     },
   },
   compoundVariants: [
@@ -89,6 +109,8 @@ export type InputFieldProps<T> = {
   readonly?: boolean
   clearable?: boolean
   role?: string
+  "aria-controls"?: AriaAttributes["aria-controls"]
+  "aria-expanded"?: AriaAttributes["aria-expanded"]
   onClear?: () => void
   onFocus?: () => void
   onBlur?: () => void
@@ -124,7 +146,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       className,
       required,
       error,
-      size = "md",
+      size = "sm",
       icon,
       canGrow = false,
       value,
@@ -142,6 +164,8 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       onClickChildren,
       onClickContent,
       role,
+      "aria-controls": ariaControls,
+      "aria-expanded": ariaExpanded,
       ...props
     }: InputFieldProps<string>,
     ref
@@ -154,7 +178,11 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
 
     useEffect(
       () => {
-        if (localValue === value || value === emptyValue) {
+        if (
+          localValue === value ||
+          value === emptyValue ||
+          value === undefined
+        ) {
           return
         }
         setLocalValue(value)
@@ -208,13 +236,13 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
         )}
         ref={ref}
       >
-        <div
-          className={cn(
-            "flex max-w-full items-center",
-            inputFieldWrapperVariants({ size })
-          )}
-        >
-          {((!hideLabel && label) || maxLength) && (
+        {((!hideLabel && label) || maxLength) && (
+          <div
+            className={cn(
+              "flex max-w-full items-center",
+              inputFieldWrapperVariants({ size })
+            )}
+          >
             <div
               className={cn("flex min-w-0 flex-1 flex-row gap-4")}
               data-testid="input-field-top"
@@ -226,6 +254,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                   htmlFor={id}
                   icon={labelIcon}
                   className="min-w-0 flex-1"
+                  disabled={disabled}
                 />
               )}
               {maxLength && !hideMaxLength && !noEdit && (
@@ -234,8 +263,8 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 </div>
               )}
             </div>
-          )}
-        </div>
+          </div>
+        )}
         <div
           className={cn(
             "flex w-full gap-2 transition-all",
@@ -248,20 +277,22 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               ? "focus-within:ring-f1-critical border-f1-border-critical-bold bg-f1-background-critical"
               : "focus-within:ring-f1-ring",
             readonly && "border-f1-border-secondary bg-f1-background-secondary",
-            disabled && "cursor-not-allowed bg-f1-background-secondary",
+            disabled && "cursor-not-allowed",
             inputFieldVariants({ size, canGrow })
           )}
           data-testid="input-field-wrapper"
         >
           {icon && (
-            <Icon
-              onClick={handleClickContent}
-              icon={icon}
-              className="h-5 w-5 shrink-0 pt-[2px] text-f1-foreground-secondary"
-            />
+            <div className={cn(inputElementVariants({ size }))}>
+              <Icon
+                onClick={handleClickContent}
+                icon={icon}
+                className="h-5 w-5 shrink-0 pt-[2px] text-f1-foreground-secondary"
+              />
+            </div>
           )}
           <div
-            className="relative flex w-full gap-2"
+            className="relative flex w-full min-w-0 flex-1 gap-2"
             onClick={handleClickContent}
           >
             <div onClick={handleClickChildren} className="w-full">
@@ -272,21 +303,26 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 disabled: noEdit,
                 readOnly: readonly,
                 role,
+                "aria-controls": ariaControls,
+                "aria-expanded": ariaExpanded,
+                id,
                 value: localValue,
                 "aria-label": label || placeholder,
                 "aria-busy": loading,
                 "aria-disabled": noEdit,
+                className: cn(
+                  "h-full w-full shrink flex-1 min-w-0",
+                  "[&::-webkit-search-cancel-button]:hidden",
+                  (children as React.ReactElement).props.className,
+                  inputElementVariants({ size })
+                ),
               })}
             </div>
-            {loading && (
-              <div className="pointer-events-none flex justify-start pt-[2px]">
-                <Spinner size="small" />
-              </div>
-            )}
             {!noEdit && (
               <div
                 className={cn(
-                  "pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start text-f1-foreground-secondary transition-opacity",
+                  "pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start pt-[1px] text-f1-foreground-secondary transition-opacity",
+                  inputElementVariants({ size }),
                   placeholder && !hidePlaceholder && isEmpty(localValue)
                     ? "opacity-1"
                     : "opacity-0"
@@ -298,12 +334,24 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               </div>
             )}
           </div>
+          {loading && (
+            <div
+              className={cn(
+                "pointer-events-none flex justify-start",
+                inputElementVariants({ size })
+              )}
+            >
+              <Spinner size="small" className="mt-[3px]" />
+            </div>
+          )}
           {clearable && !noEdit && (
-            <div className="h-5 w-5 shrink-0">
+            <div
+              className={cn("h-5 w-5 shrink-0", inputElementVariants({ size }))}
+            >
               <AnimatePresence initial={!isEmpty(localValue)}>
                 {!isEmpty(localValue) && (
                   <Icon
-                    className="hover:text-f1-foreground-primary h-5 w-5 cursor-pointer text-f1-foreground-secondary"
+                    className="hover:text-f1-foreground-primary mt-[1px] h-5 w-5 cursor-pointer text-f1-foreground-secondary"
                     onClick={handleClear}
                     icon={CrossedCircle}
                   />
@@ -311,7 +359,11 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               </AnimatePresence>
             </div>
           )}
-          {append && <div className="flex gap-2">{append}</div>}
+          {append && (
+            <div className={cn("flex gap-2", inputElementVariants({ size }))}>
+              {append}
+            </div>
+          )}
         </div>
         <InputMessages error={error} />
       </div>

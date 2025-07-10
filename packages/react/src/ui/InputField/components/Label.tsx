@@ -8,8 +8,16 @@ type LabelProps = {
   htmlFor: string
   className?: string
   icon?: IconType
+  disabled?: boolean
 }
-const Label = ({ label, required, htmlFor, className, icon }: LabelProps) => {
+const Label = ({
+  label,
+  required,
+  htmlFor,
+  className,
+  icon,
+  disabled,
+}: LabelProps) => {
   return (
     <label
       className={cn(
@@ -17,8 +25,8 @@ const Label = ({ label, required, htmlFor, className, icon }: LabelProps) => {
         "text-md flex max-w-full gap-1 font-medium text-f1-foreground-secondary"
       )}
       htmlFor={htmlFor}
-      aria-required={required}
       aria-label={label}
+      aria-disabled={disabled}
     >
       {icon && <Icon icon={icon} size="sm"></Icon>}
       <OneEllipsis className="shrink-1 min-w-0">{label}</OneEllipsis>

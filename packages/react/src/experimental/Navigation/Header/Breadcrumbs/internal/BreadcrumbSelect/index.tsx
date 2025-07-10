@@ -88,11 +88,10 @@ export function BreadcrumbSelect({
       value={localValue}
       searchValue={localSearch}
       onOpenChange={onOpenChangeLocal}
+      label={selectedLabel}
+      hideLabel
     >
-      <button
-        className="flex h-6 items-center justify-between rounded-sm border px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary"
-        aria-label={selectedLabel}
-      >
+      <button className="flex h-6 items-center justify-between rounded-sm border px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
         <span className="block grow text-f1-foreground">{selectedLabel}</span>
         <div className="ml-2">
           <motion.div
