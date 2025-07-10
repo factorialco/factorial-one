@@ -1,3 +1,4 @@
+import { f1Colors } from "@factorialco/factorial-one-core"
 import { cva, type VariantProps } from "cva"
 import {
   forwardRef,
@@ -27,6 +28,7 @@ export interface IconProps
     VariantProps<typeof iconVariants> {
   icon: IconType
   state?: "normal" | "animate"
+  color?: Lowercase<keyof typeof f1Colors.icon> | `#${string}` | "currentColor"
 }
 
 export type IconType = ForwardRefExoticComponent<
@@ -37,12 +39,21 @@ export type IconType = ForwardRefExoticComponent<
 >
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
-  { size, icon, state = "normal", className, ...props },
+  { size, icon, state = "normal", color = "currentColor", ...props },
   ref
 ) {
   if (!icon) return null
   const Component = icon
   const isAnimated = icon.displayName?.includes("Animated")
+
+  const isHexColor = color.startsWith("#")
+  const colorClass =
+    color === "currentColor"
+      ? "text-current"
+      : isHexColor
+        ? ""
+        : `text-f1-icon-${color}`
+  const colorStyle = isHexColor ? { color } : undefined
 
   if (isAnimated) {
     return (
@@ -50,7 +61,8 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
         ref={ref}
         {...props}
         animate={state}
-        className={cn(iconVariants({ size }), "select-none", className)}
+        className={cn(iconVariants({ size }), "select-none", colorClass)}
+        style={colorStyle}
       />
     )
   }
@@ -59,7 +71,8 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
     <Component
       ref={ref}
       {...props}
-      className={cn("aspect-square", iconVariants({ size }), className)}
+      className={cn("aspect-square", iconVariants({ size }), colorClass)}
+      style={colorStyle}
     />
   )
 })
