@@ -47,12 +47,15 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
   const isAnimated = icon.displayName?.includes("Animated")
 
   const isHexColor = color.startsWith("#")
-  const colorClass =
-    color === "currentColor"
-      ? "text-current"
-      : isHexColor
-        ? ""
-        : `text-f1-icon-${color}`
+
+  const getColorClass = (colorValue: string) => {
+    if (colorValue === "currentColor") return "text-current"
+    if (colorValue === "default") return "text-f1-icon"
+    if (colorValue.startsWith("#")) return ""
+    return `text-f1-icon-${colorValue}`
+  }
+
+  const colorClass = getColorClass(color)
   const colorStyle = isHexColor ? { color } : undefined
 
   if (isAnimated) {
