@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.122.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.121.1...factorial-one-react-v1.122.0) (2025-07-10)
+
+
+### Features
+
+* **Icon:** add color prop ([#2239](https://github.com/factorialco/factorial-one/issues/2239)) ([2120ad8](https://github.com/factorialco/factorial-one/commit/2120ad841992fde01276d8309c3406b87129e9a0))
+
 ## [1.121.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.121.0...factorial-one-react-v1.121.1) (2025-07-10)
 
 
