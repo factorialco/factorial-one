@@ -1,4 +1,4 @@
-import { FilterDefinition, FilterValue } from "./FilterTypes"
+import { FilterDefinition, FilterValue } from "./filterTypes"
 export type { FilterDefinition, FilterValue }
 
 /**
@@ -46,3 +46,21 @@ export type CurrentFilters<F extends FilterOptions<string>> = F extends {
       [Key in K]?: FilterValue<F["fields"][Key]>
     }
   : Record<string, never>
+
+/**
+ * Defines preset filter configurations that can be applied to a collection.
+ * @template Filters - The available filter configurations
+ */
+export type PresetDefinition<Filters extends FiltersDefinition> = {
+  /** Display name for the preset */
+  label: string
+  /** Filter configuration to apply when this preset is selected */
+  filter: FiltersState<Filters>
+  /** Function to count the number of items that match the filter */
+  itemsCount?: (
+    filters: FiltersState<Filters>
+  ) => Promise<number | undefined> | number | undefined
+}
+
+export type PresetsDefinition<Filters extends FiltersDefinition> =
+  PresetDefinition<Filters>[]

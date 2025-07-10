@@ -1,10 +1,10 @@
 import { AnimatePresence, motion } from "motion/react"
-import { cn, focusRing } from "../../../../lib/utils"
-import { FilterDefinitionsByType, getFilterType } from "../FilterTypes"
+import { cn, focusRing } from "../../../lib/utils"
+import { FilterDefinitionsByType, getFilterType } from "../filterTypes"
 import type {
   FilterTypeDefinition,
   FilterTypeSchema,
-} from "../FilterTypes/types"
+} from "../filterTypes/types"
 import type { FiltersDefinition, FiltersState, FilterValue } from "../types"
 
 /**

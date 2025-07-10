@@ -5,7 +5,7 @@ import { DropdownItemSeparator } from "@/experimental/Navigation/Dropdown/intern
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
-import { FiltersDefinition } from "../../../../Filters/types"
+import { FiltersDefinition } from "../../../../../../components/OneFilterPicker/types"
 import {
   ActionDefinition,
   filterItemActions,

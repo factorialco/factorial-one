@@ -3,196 +3,37 @@ import { Label } from "@/ui/label"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useEffect, useState } from "react"
 import { fn } from "storybook/test"
-import { PresetsDefinition } from "../types"
-import { InFilterOptions } from "./FilterTypes/InFilter/types"
-import * as Filters from "./index"
-import { FiltersRootProps } from "./index"
-import type { FiltersDefinition, FiltersState } from "./types"
+import { InFilterOptions } from "../filterTypes/InFilter/types"
+import * as OneFilterPicker from "../index"
+import {
+  OneFilterPicker as OneFilterPickerComponent,
+  OneFilterPickerRootProps,
+} from "../index"
+import type { FiltersDefinition, FiltersState } from "../types"
 import {
   deserializeFilters,
   getFiltersFromUrl,
   serializeFilters,
   updateUrlWithFilters,
-} from "./utils"
+} from "../utils"
+import {
+  filterDefinition,
+  generateCountries,
+  getPresetMock,
+  samplePresets,
+} from "./mockData"
 
 const meta = {
-  title: "Data Collection/Filters",
-  component: (props: FiltersRootProps<FiltersDefinition>) => {
-    return (
-      <>
-        <Filters.Root {...props}>
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
-      </>
-    )
+  title: "FilterPicker",
+  component: (props: OneFilterPickerRootProps<FiltersDefinition>) => {
+    return <OneFilterPickerComponent {...props} />
   },
 } satisfies Meta
 
 export default meta
 
-const sampleDefinition: FiltersDefinition = {
-  date: {
-    type: "date",
-    label: "Date",
-    options: {},
-  },
-  dateRange: {
-    type: "date",
-    label: "Date Range",
-    options: {
-      mode: "range",
-    },
-  },
-  dateWeek: {
-    type: "date",
-    label: "Date Week",
-    options: {
-      view: "week",
-    },
-  },
-  dateRangeWeek: {
-    type: "date",
-    label: "Date Range Week",
-    options: {
-      mode: "range",
-      view: "week",
-    },
-  },
-  dateMonth: {
-    type: "date",
-    label: "Date Month",
-    options: {
-      view: "month",
-    },
-  },
-  dateMonthRange: {
-    type: "date",
-    label: "Date Month Range",
-    options: {
-      view: "month",
-      mode: "range",
-    },
-  },
-  dateQuarter: {
-    type: "date",
-    label: "Date Quarter",
-    options: {
-      view: "quarter",
-    },
-  },
-  dateHalfYear: {
-    type: "date",
-    label: "Date Half Year",
-    options: {
-      view: "halfyear",
-    },
-  },
-  dateYear: {
-    type: "date",
-    label: "Date Year",
-    options: {
-      view: "year",
-    },
-  },
-  department: {
-    type: "in",
-    label: "Department",
-    options: {
-      options: async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-        return [
-          {
-            value: "engineering",
-            label: "Engineering",
-          },
-          { value: "marketing", label: "Marketing" },
-          { value: "sales", label: "Sales" },
-          { value: "hr", label: "Human Resources" },
-          { value: "finance", label: "Finance" },
-        ]
-      },
-    },
-  },
-  name: {
-    type: "search",
-    label: "Employee name",
-  },
-  manager: {
-    type: "in",
-    label: "Manager",
-    options: {
-      options: [
-        { value: "alice", label: "Alice Johnson" },
-        { value: "bob", label: "Bob Smith" },
-        { value: "carol", label: "Carol Williams" },
-        { value: "dave", label: "Dave Brown" },
-      ],
-    },
-  },
-  location: {
-    type: "in",
-    label: "Office location",
-    options: {
-      options: [
-        { value: "london", label: "London" },
-        { value: "new_york", label: "New York" },
-        { value: "tokyo", label: "Tokyo" },
-        { value: "remote", label: "Remote" },
-      ],
-    },
-  },
-  role: {
-    type: "in",
-    label: "Role",
-    options: {
-      options: [
-        { value: "engineer", label: "Software Engineer" },
-        { value: "designer", label: "Product Designer" },
-        { value: "manager", label: "Product Manager" },
-        { value: "analyst", label: "Data Analyst" },
-        { value: "marketer", label: "Marketing Specialist" },
-        { value: "sales", label: "Sales Representative" },
-        { value: "hr", label: "Human Resources Specialist" },
-        { value: "finance", label: "Financial Analyst" },
-        { value: "customer_support", label: "Customer Support Specialist" },
-        { value: "legal", label: "Legal Counsel" },
-        { value: "operations", label: "Operations Manager" },
-        { value: "research", label: "Research Scientist" },
-        { value: "product", label: "Product Manager" },
-        { value: "security", label: "Security Specialist" },
-        { value: "other", label: "Other" },
-      ],
-    },
-  },
-}
-
-// Define sample presets for use in stories
-const samplePresets: PresetsDefinition<typeof sampleDefinition> = [
-  {
-    label: "Engineering Team",
-    filter: {
-      department: ["engineering"],
-      role: ["engineer", "manager"],
-    },
-  },
-  {
-    label: "Remote Workers",
-    filter: {
-      location: ["remote"],
-    },
-  },
-  {
-    label: "Alice's Team",
-    filter: {
-      manager: ["alice"],
-    },
-  },
-]
-
 const FiltersWithState = () => {
-  const [filters, setFilters] = useState<FiltersState<typeof sampleDefinition>>(
+  const [filters, setFilters] = useState<FiltersState<typeof filterDefinition>>(
     {
       name: "John",
       department: ["engineering"],
@@ -200,15 +41,11 @@ const FiltersWithState = () => {
   )
 
   return (
-    <Filters.Root
-      schema={sampleDefinition}
-      filters={filters}
+    <OneFilterPickerComponent
+      filters={filterDefinition}
+      value={filters}
       onChange={setFilters}
-    >
-      <Filters.Controls />
-      <Filters.Presets />
-      <Filters.ChipsList />
-    </Filters.Root>
+    ></OneFilterPickerComponent>
   )
 }
 
@@ -218,7 +55,7 @@ export const Interactive: StoryObj = {
 
 // Example of pre-populated filters
 const FiltersWithInitialState = () => {
-  const [filters, setFilters] = useState<FiltersState<typeof sampleDefinition>>(
+  const [filters, setFilters] = useState<FiltersState<typeof filterDefinition>>(
     {
       department: ["engineering", "marketing"],
       name: "John",
@@ -227,15 +64,11 @@ const FiltersWithInitialState = () => {
   )
 
   return (
-    <Filters.Root
-      schema={sampleDefinition}
-      filters={filters}
+    <OneFilterPickerComponent
+      filters={filterDefinition}
+      value={filters}
       onChange={setFilters}
-    >
-      <Filters.Controls />
-      <Filters.Presets />
-      <Filters.ChipsList />
-    </Filters.Root>
+    ></OneFilterPickerComponent>
   )
 }
 
@@ -244,22 +77,22 @@ export const WithInitialFilters: StoryObj = {
 }
 
 // Example with presets
-const FiltersWithPresets = () => {
-  const [filters, setFilters] = useState<FiltersState<typeof sampleDefinition>>(
+const FiltersWithPresets = ({
+  presets = getPresetMock(false),
+}: {
+  presets?: OneFilterPicker.PresetsDefinition<typeof filterDefinition>
+}) => {
+  const [filters, setFilters] = useState<FiltersState<typeof filterDefinition>>(
     {}
   )
 
   return (
-    <Filters.Root
-      schema={sampleDefinition}
-      filters={filters}
-      presets={samplePresets}
+    <OneFilterPickerComponent
+      filters={filterDefinition}
+      value={filters}
+      presets={presets}
       onChange={setFilters}
-    >
-      <Filters.Controls />
-      <Filters.Presets />
-      <Filters.ChipsList />
-    </Filters.Root>
+    ></OneFilterPickerComponent>
   )
 }
 
@@ -267,9 +100,16 @@ export const WithPresets: StoryObj = {
   render: () => <FiltersWithPresets />,
 }
 
+export const WithPreselectedFiltersAndItemCount: StoryObj = {
+  render: () => {
+    const presets = getPresetMock(true)
+    return <FiltersWithPresets presets={presets} />
+  },
+}
+
 // Example with presets and initial filters
 const FiltersWithPresetsAndInitialState = () => {
-  const [filters, setFilters] = useState<FiltersState<typeof sampleDefinition>>(
+  const [filters, setFilters] = useState<FiltersState<typeof filterDefinition>>(
     {
       department: ["engineering"],
       role: ["engineer"],
@@ -277,16 +117,12 @@ const FiltersWithPresetsAndInitialState = () => {
   )
 
   return (
-    <Filters.Root
-      schema={sampleDefinition}
-      filters={filters}
+    <OneFilterPickerComponent
+      filters={filterDefinition}
+      value={filters}
       presets={samplePresets}
       onChange={setFilters}
-    >
-      <Filters.Controls />
-      <Filters.Presets />
-      <Filters.ChipsList />
-    </Filters.Root>
+    ></OneFilterPickerComponent>
   )
 }
 
@@ -294,12 +130,12 @@ export const WithPresetsAndInitialFilters: StoryObj = {
   render: () => <FiltersWithPresetsAndInitialState />,
 }
 
-type Story = StoryObj<typeof Filters.Root>
+type Story = StoryObj<typeof OneFilterPicker.Root>
 
 export const Default: Story = {
   args: {
-    schema: sampleDefinition,
-    filters: {},
+    filters: filterDefinition,
+    value: {},
     onChange: fn(),
   },
 }
@@ -310,10 +146,20 @@ export const Default: Story = {
  */
 export const WithPresetsArgs: Story = {
   args: {
-    schema: sampleDefinition,
-    filters: {},
+    filters: filterDefinition,
+    value: {},
     presets: samplePresets,
     onChange: fn(),
+  },
+}
+
+export const WithChildren: Story = {
+  args: {
+    filters: filterDefinition,
+    value: {},
+    presets: samplePresets,
+    onChange: fn(),
+    children: <div>Hello this is my children content</div>,
   },
 }
 
@@ -324,7 +170,7 @@ export const WithPresetsArgs: Story = {
  */
 export const WithUrlSerialization: Story = {
   args: {
-    schema: sampleDefinition,
+    filters: filterDefinition,
   },
   render: (args) => {
     const [filters, setFilters] = useState(() => {
@@ -367,11 +213,12 @@ export const WithUrlSerialization: Story = {
             in the URL. You can modify it to see how the filters update.
           </p>
         </div>
-        <Filters.Root {...args} filters={filters} onChange={setFilters}>
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        <OneFilterPickerComponent
+          {...args}
+          filters={filterDefinition}
+          value={filters}
+          onChange={setFilters}
+        ></OneFilterPickerComponent>
       </div>
     )
   },
@@ -383,7 +230,7 @@ export const WithUrlSerialization: Story = {
  */
 export const WithPresetsAndUrlSerialization: Story = {
   args: {
-    schema: sampleDefinition,
+    filters: filterDefinition,
   },
   render: (args) => {
     const [filters, setFilters] = useState(() => {
@@ -426,16 +273,13 @@ export const WithPresetsAndUrlSerialization: Story = {
             in the URL. You can modify it to see how the filters update.
           </p>
         </div>
-        <Filters.Root
+        <OneFilterPickerComponent
           {...args}
-          filters={filters}
+          filters={filterDefinition}
+          value={filters}
           presets={samplePresets}
           onChange={setFilters}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        ></OneFilterPickerComponent>
       </div>
     )
   },
@@ -533,15 +377,11 @@ export const WithAsyncOptions: Story = {
 
     return (
       <div className="w-[600px]">
-        <Filters.Root
-          schema={asyncDefinition}
-          filters={filters}
+        <OneFilterPickerComponent
+          filters={asyncDefinition}
+          value={filters}
           onChange={setFilters}
-        >
-          <Filters.Controls />
-          <Filters.Presets />
-          <Filters.ChipsList />
-        </Filters.Root>
+        ></OneFilterPickerComponent>
       </div>
     )
   },
@@ -568,62 +408,6 @@ const LargeAsyncOptionsComponent = (props: { cache: boolean }) => {
   const [filters, setFilters] = useState<
     FiltersState<LargeAsyncDefinitionType>
   >({})
-
-  // Generate a large list of countries
-  const generateCountries = () => {
-    const countries = [
-      { value: "us", label: "United States" },
-      { value: "ca", label: "Canada" },
-      { value: "mx", label: "Mexico" },
-      { value: "br", label: "Brazil" },
-      { value: "ar", label: "Argentina" },
-      { value: "uk", label: "United Kingdom" },
-      { value: "fr", label: "France" },
-      { value: "de", label: "Germany" },
-      { value: "it", label: "Italy" },
-      { value: "es", label: "Spain" },
-      { value: "pt", label: "Portugal" },
-      { value: "ru", label: "Russia" },
-      { value: "cn", label: "China" },
-      { value: "jp", label: "Japan" },
-      { value: "kr", label: "South Korea" },
-      { value: "in", label: "India" },
-      { value: "au", label: "Australia" },
-      { value: "nz", label: "New Zealand" },
-      { value: "za", label: "South Africa" },
-      { value: "eg", label: "Egypt" },
-      { value: "ng", label: "Nigeria" },
-      { value: "ke", label: "Kenya" },
-      { value: "sa", label: "Saudi Arabia" },
-      { value: "ae", label: "United Arab Emirates" },
-      { value: "il", label: "Israel" },
-      { value: "tr", label: "Turkey" },
-      { value: "th", label: "Thailand" },
-      { value: "vn", label: "Vietnam" },
-      { value: "my", label: "Malaysia" },
-      { value: "sg", label: "Singapore" },
-      { value: "id", label: "Indonesia" },
-      { value: "ph", label: "Philippines" },
-      { value: "se", label: "Sweden" },
-      { value: "no", label: "Norway" },
-      { value: "dk", label: "Denmark" },
-      { value: "fi", label: "Finland" },
-      { value: "nl", label: "Netherlands" },
-      { value: "be", label: "Belgium" },
-      { value: "ch", label: "Switzerland" },
-      { value: "at", label: "Austria" },
-      { value: "gr", label: "Greece" },
-      { value: "pl", label: "Poland" },
-      { value: "cz", label: "Czech Republic" },
-      { value: "hu", label: "Hungary" },
-      { value: "ro", label: "Romania" },
-      { value: "bg", label: "Bulgaria" },
-      { value: "hr", label: "Croatia" },
-      { value: "rs", label: "Serbia" },
-      { value: "ua", label: "Ukraine" },
-    ]
-    return countries
-  }
 
   const largeAsyncDefinition: LargeAsyncDefinitionType = {
     countries: {
@@ -659,15 +443,11 @@ const LargeAsyncOptionsComponent = (props: { cache: boolean }) => {
           when the filter is opened.
         </p>
       )}
-      <Filters.Root
-        schema={largeAsyncDefinition}
-        filters={filters}
+      <OneFilterPickerComponent
+        filters={largeAsyncDefinition}
+        value={filters}
         onChange={setFilters}
-      >
-        <Filters.Controls />
-        <Filters.Presets />
-        <Filters.ChipsList />
-      </Filters.Root>
+      ></OneFilterPickerComponent>
     </div>
   )
 }
