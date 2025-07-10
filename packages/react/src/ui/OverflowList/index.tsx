@@ -71,6 +71,7 @@ const OverflowList = function OverflowList<T>({
   const {
     containerRef,
     overflowButtonRef,
+    customOverflowIndicatorRef,
     measurementContainerRef,
     visibleItems,
     overflowItems,
@@ -143,17 +144,16 @@ const OverflowList = function OverflowList<T>({
           {overflowIndicatorWithPopover ? (
             <Popover open={isOpen} onOpenChange={handleOpenChange}>
               <PopoverTrigger asChild>
-                <div ref={overflowButtonRef}>
-                  <button
-                    className={cn(
-                      "inline-flex flex-shrink-0 items-center",
-                      focusRing()
-                    )}
-                  >
-                    {renderOverflowIndicator?.(overflowItems.length, isOpen) ??
-                      DefaultOverflowIndicator}
-                  </button>
-                </div>
+                <button
+                  ref={overflowButtonRef}
+                  className={cn(
+                    "inline-flex flex-shrink-0 items-center",
+                    focusRing()
+                  )}
+                >
+                  {renderOverflowIndicator?.(overflowItems.length, isOpen) ??
+                    DefaultOverflowIndicator}
+                </button>
               </PopoverTrigger>
               <PopoverContent
                 className="rounded-md border border-solid border-f1-border-secondary p-1 shadow-md"
@@ -169,7 +169,7 @@ const OverflowList = function OverflowList<T>({
               </PopoverContent>
             </Popover>
           ) : (
-            <div ref={overflowButtonRef}>
+            <div ref={customOverflowIndicatorRef}>
               {renderOverflowIndicator?.(overflowItems.length, false) ??
                 DefaultOverflowIndicator}
             </div>

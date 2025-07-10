@@ -17,7 +17,8 @@ type CalculateVisibleItemCountParams = {
  */
 export function useOverflowCalculation<T>(items: T[], gap: number) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const overflowButtonRef = useRef<HTMLDivElement>(null)
+  const overflowButtonRef = useRef<HTMLButtonElement>(null)
+  const customOverflowIndicatorRef = useRef<HTMLDivElement>(null)
   const measurementContainerRef = useRef<HTMLDivElement>(null)
 
   // Combined state for visible and overflow items
@@ -81,7 +82,10 @@ export function useOverflowCalculation<T>(items: T[], gap: number) {
     if (!containerRef.current || items.length === 0) return
 
     const currentContainerWidth = containerRef.current.clientWidth
-    const overflowButtonWidth = overflowButtonRef.current?.offsetWidth || 32
+    const overflowButtonWidth =
+      overflowButtonRef.current?.offsetWidth ||
+      customOverflowIndicatorRef.current?.offsetWidth ||
+      32
     const itemWidths = measureItemWidths()
     const itemWidthsWithGap = itemWidths.map((width) => width + gap)
 
@@ -123,6 +127,7 @@ export function useOverflowCalculation<T>(items: T[], gap: number) {
   return {
     containerRef,
     overflowButtonRef,
+    customOverflowIndicatorRef,
     measurementContainerRef,
     visibleItems: itemsState.visibleItems,
     overflowItems: itemsState.overflowItems,
