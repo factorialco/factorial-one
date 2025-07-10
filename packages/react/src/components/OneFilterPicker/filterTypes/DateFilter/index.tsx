@@ -43,6 +43,7 @@ export const dateFilter: FilterTypeDefinition<
 
     return granularity.toString(value)
   },
+  formHeight: 520,
 }
 
 export default dateFilter
