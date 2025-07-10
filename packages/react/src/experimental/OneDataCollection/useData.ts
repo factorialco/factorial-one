@@ -8,11 +8,14 @@ import {
   useState,
 } from "react"
 import { Observable } from "zen-observable-ts"
+import type {
+  FiltersDefinition,
+  FiltersState,
+} from "../../components/OneFilterPicker/types"
 import {
   PromiseState,
   promiseToObservable,
 } from "../../lib/promise-to-observable"
-import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import {
   NavigationFiltersDefinition,

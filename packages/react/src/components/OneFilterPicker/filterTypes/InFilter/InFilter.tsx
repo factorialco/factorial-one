@@ -105,9 +105,7 @@ export function InFilter<T extends string>({
   if (error) {
     return (
       <div className="text-f1-foreground-destructive flex w-full flex-col items-center justify-center gap-2 py-4">
-        <p className="text-sm">
-          {i18n.collections.filters.failedToLoadOptions}
-        </p>
+        <p className="text-sm">{i18n.filters.failedToLoadOptions}</p>
         <button
           className={cn(
             "text-f1-foreground-primary text-xs underline",
@@ -118,7 +116,7 @@ export function InFilter<T extends string>({
             loadOptions(true)
           }}
         >
-          {i18n.collections.filters.retry}
+          {i18n.filters.retry}
         </button>
       </div>
     )

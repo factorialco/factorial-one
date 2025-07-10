@@ -1,4 +1,7 @@
-import { FiltersDefinition, FiltersState } from "./Filters/types"
+import {
+  FiltersDefinition,
+  FiltersState,
+} from "../../components/OneFilterPicker/types"
 import { SortOrder } from "./sortings"
 import { RecordType } from "./types"
 

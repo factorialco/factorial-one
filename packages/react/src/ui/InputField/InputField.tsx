@@ -7,8 +7,8 @@ import { AnimatePresence } from "motion/react"
 import { cloneElement, forwardRef, useEffect, useId, useState } from "react"
 import { InputMessages } from "./components/InputMessages"
 import { Label } from "./components/Label"
-export const inputFieldSizes = ["sm", "md"] as const
-export type InputFieldSize = (typeof inputFieldSizes)[number]
+export const INPUTFIELD_SIZES = ["sm", "md"] as const
+export type InputFieldSize = (typeof INPUTFIELD_SIZES)[number]
 
 const defaultEmptyValue = ""
 
@@ -211,7 +211,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       <div
         className={cn(
           "flex flex-col gap-2",
-          disabled && "opacity-30",
+          disabled && "cursor-not-allowed opacity-50",
           className
         )}
         ref={ref}
@@ -247,7 +247,8 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
         <div
           className={cn(
             "flex w-full gap-2 transition-all",
-            "border-[1px] border-solid border-f1-border-secondary bg-f1-background hover:border-f1-border-hover",
+            "border-[1px] border-solid border-f1-border-secondary bg-f1-background",
+            !noEdit && "hover:border-f1-border-hover",
             "group focus-within:border-f1-border-hover focus-within:ring-1 focus-within:ring-f1-border-hover",
             "active-within:border-f1-border- active-within:ring-1 active-within:ring-f1-border-hover",
             "focus-within:outline-none focus-within:ring-1 focus-within:ring-offset-1",
@@ -255,6 +256,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               ? "focus-within:ring-f1-critical border-f1-border-critical-bold bg-f1-background-critical"
               : "focus-within:ring-f1-ring",
             readonly && "border-f1-border-secondary bg-f1-background-secondary",
+            disabled && "cursor-not-allowed bg-f1-background-secondary",
             inputFieldVariants({ size, canGrow })
           )}
           data-testid="input-field-wrapper"
@@ -289,18 +291,20 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 <Spinner size="small" />
               </div>
             )}
-            <div
-              className={cn(
-                "pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start text-f1-foreground-secondary transition-opacity",
-                placeholder && !hidePlaceholder && isEmpty(localValue)
-                  ? "opacity-1"
-                  : "opacity-0"
-              )}
-              onClick={handleClickPlaceholder}
-              aria-hidden="true"
-            >
-              {placeholder}
-            </div>
+            {!noEdit && (
+              <div
+                className={cn(
+                  "pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start text-f1-foreground-secondary transition-opacity",
+                  placeholder && !hidePlaceholder && isEmpty(localValue)
+                    ? "opacity-1"
+                    : "opacity-0"
+                )}
+                onClick={handleClickPlaceholder}
+                aria-hidden="true"
+              >
+                {placeholder}
+              </div>
+            )}
           </div>
           {clearable && !noEdit && (
             <div className="h-5 w-5 shrink-0">

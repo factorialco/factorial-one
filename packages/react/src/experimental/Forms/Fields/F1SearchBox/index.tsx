@@ -20,7 +20,7 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
       value,
       threshold = 0,
       onChange,
-      size = "md",
+      size = "sm",
       debounceTime = 0,
       clearable = false,
       ...props
