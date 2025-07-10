@@ -5,12 +5,14 @@ import { ChartConfig as ChartConfig_2 } from './utils/types';
 import { ChartPropsBase } from './utils/types';
 import { ClassValue } from 'cva';
 import { ComponentProps } from 'react';
+import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
 import { HTMLAttributes } from 'react';
 import { IconProps } from './Icon';
 import { ImgHTMLAttributes } from 'react';
+import { InFilterOptions } from './InFilter/types';
 import { JSX as JSX_2 } from 'react';
 import { LineChartConfig } from '../../ui/chart';
 import { LineChartPropsBase } from './utils/types';
@@ -69,6 +71,17 @@ values: {
 declare type BaseAction = {
     label: string;
     onClick: () => Promise<void> | void;
+};
+
+/**
+ * Base definition for all filter types.
+ * Provides common properties that all filters must implement.
+ */
+declare type BaseFilterDefinition<T extends FilterTypeKey> = {
+    /** Human-readable label for the filter */
+    label: string;
+    /** The type of filter */
+    type: T;
 };
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
@@ -152,6 +165,10 @@ declare const buttonVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
+declare type CalendarMode = "single" | "range";
+
+declare type CalendarView = "day" | "month" | "year" | "week" | "quarter" | "halfyear";
+
 export declare const CategoryBarChart: ForwardRefExoticComponent<Omit<CategoryBarProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 declare type ComponentTypes = (typeof componentTypes)[number];
@@ -164,6 +181,35 @@ declare type CopyButtonProps = Omit<ComponentProps<typeof Button_2>, "onClick" |
     valueToCopy: string;
     copiedTooltipLabel?: string;
     copyTooltipLabel?: string;
+};
+
+/**
+ * Extracts the current filters type from filter options.
+ * Creates a type mapping filter keys to their respective value types.
+ * Used for type-safe access to filter values.
+ * @template F - The filter options type
+ */
+export declare type CurrentFilters<F extends FilterOptions<string>> = F extends {
+    fields: Record<infer K extends string, FilterDefinition>;
+} ? {
+    [Key in K]?: FilterValue<F["fields"][Key]>;
+} : Record<string, never>;
+
+declare type DateFilterDefinition = BaseFilterDefinition<"date"> & {
+    options?: DateFilterOptions_2;
+};
+
+declare type DateFilterOptions_2 = {
+    minDate?: Date;
+    maxDate?: Date;
+    mode?: CalendarMode;
+    defaultSelected?: Date | DateRange | null;
+    view?: CalendarView;
+};
+
+declare type DateRange = {
+    from: Date;
+    to?: Date;
 };
 
 declare type DefaultAction = {
@@ -218,6 +264,8 @@ export declare const defaultTranslations: {
         readonly label: "Filters";
         readonly applyFilters: "Apply filters";
         readonly cancel: "Cancel";
+        readonly failedToLoadOptions: "Failed to load options";
+        readonly retry: "Retry";
     };
     readonly collections: {
         readonly sorting: {
@@ -240,10 +288,6 @@ export declare const defaultTranslations: {
             readonly pagination: {
                 readonly of: "of";
             };
-        };
-        readonly filters: {
-            readonly failedToLoadOptions: "Failed to load options";
-            readonly retry: "Retry";
         };
         readonly itemsCount: "items";
         readonly emptyStates: {
@@ -382,6 +426,94 @@ export declare const FactorialOneProvider: React.FC<{
     showExperimentalWarnings?: boolean;
 }>;
 
+/**
+ * Union of all available filter types.
+ * Used to define possible filter configurations in a collection.
+ * @template T - Type of values for the InFilterDefinition
+ */
+export declare type FilterDefinition = FilterDefinitionsByType[keyof FilterDefinitionsByType];
+
+/**
+ * All the available filter types
+ */
+declare type FilterDefinitionsByType<T = unknown> = {
+    in: InFilterDefinition<T>;
+    search: SearchFilterDefinition;
+    date: DateFilterDefinition;
+};
+
+/**
+ * Configuration options for filters in a collection.
+ * Defines the structure and behavior of available filters.
+ * @template FilterKeys - String literal type for filter keys
+ */
+export declare type FilterOptions<FilterKeys extends string> = Record<FilterKeys, FilterDefinition>;
+
+/**
+ * Record of filter definitions for a collection.
+ * Maps filter keys to their respective definitions.
+ * Used to configure the available filters for a collection.
+ * @template Keys - String literal type for filter keys
+ */
+export declare type FiltersDefinition<Keys extends string = string> = Record<Keys, FilterDefinition>;
+
+/**
+ * Current state of all filters in a collection.
+ * Maps filter keys to their current values.
+ * This represents the active filter selections at any given time.
+ * @template Definition - Record of filter definitions
+ */
+export declare type FiltersState<Definition extends Record<string, FilterDefinition>> = {
+    [K in keyof Definition]?: FilterValue<Definition[K]>;
+};
+
+declare type FilterTypeContext<Options extends object = never> = {
+    schema: FilterTypeSchema<Options>;
+};
+
+declare type FilterTypeDefinition<Value = unknown, Options extends object = never, EmptyValue = Value> = {
+    /** Check if the value is empty */
+    emptyValue: EmptyValue;
+    isEmpty: (value: Value, context: FilterTypeContext<Options>) => boolean;
+    /** Render the filter form */
+    render: <Schema extends FilterTypeSchema<Options>>(props: {
+        schema: Schema;
+        value: Value;
+        onChange: (value: Value) => void;
+    }) => React.ReactNode;
+    /**
+     * The value label to display in the filter chips
+     */
+    chipLabel: (value: Value, context: FilterTypeContext<Options>) => string | Promise<string>;
+    /**
+     * The default options to render a filter of this type, for example max and min date for a date filter, the list of options for an in filter, etc
+     */
+    defaultOptions?: Options;
+};
+
+declare type FilterTypeKey = keyof typeof filterTypes;
+
+declare const filterTypes: {
+    readonly in: FilterTypeDefinition<string[], InFilterOptions<string>>;
+    readonly search: FilterTypeDefinition<string>;
+    readonly date: FilterTypeDefinition<Date | DateRange | undefined, DateFilterOptions>;
+};
+
+declare type FilterTypeSchema<Options extends object = never> = {
+    options: Options extends never ? never : Options;
+    label: string;
+};
+
+/**
+ * Extracts the appropriate value type for a given filter:
+ * - InFilter -> Array of selected values of type T
+ * - SearchFilter -> Search string
+ *
+ * This type is used to ensure type safety when working with filter values.
+ * @template T - The filter definition type
+ */
+export declare type FilterValue<T extends FilterDefinition> = T extends InFilterDefinition<infer U> ? U[] : T extends SearchFilterDefinition ? string : T extends DateFilterDefinition ? DateRange | Date | undefined : never;
+
 export declare function getEmojiLabel(emoji: string): string;
 
 export declare const HomeLayout: ForwardRefExoticComponent<Omit<{
@@ -405,6 +537,31 @@ declare type ImageContextValue = {
 };
 
 declare type ImageProps = ImgHTMLAttributes<HTMLImageElement>;
+
+declare type InFilterDefinition<T = unknown> = BaseFilterDefinition<"in"> & {
+    options: InFilterOptions_2<T>;
+};
+
+/**
+ * Represents a selectable option in filter components.
+ * Used primarily with InFilterDefinition.
+ * @template T - Type of the underlying value
+ */
+declare type InFilterOptionItem<T = unknown> = {
+    /** The value used for filtering */
+    value: T;
+    /** Human-readable label for the option */
+    label: string;
+};
+
+/**
+ * Represents the options for the InFilter component.
+ * @template T - Type of the underlying value
+ */
+declare type InFilterOptions_2<T> = {
+    cache?: boolean;
+    options: Array<InFilterOptionItem<T>> | (() => Array<InFilterOptionItem<T>> | Promise<Array<InFilterOptionItem<T>>>);
+};
 
 declare type L10nContextValue = {
     locale: string;
@@ -531,7 +688,47 @@ export declare interface NextStepsProps {
     items: StepItemProps[];
 }
 
+/**
+ * OneFiltersPicker component to use as a single component
+ */
+export declare const OneFilterPicker: {
+    <Definition extends FiltersDefinition>(props: OneFilterPickerRootProps<Definition>): JSX_2.Element;
+    displayName: string;
+};
+
+/**
+ * Props for the Filters component.
+ * @template Definition - The type defining the structure of available filters
+ */
+declare interface OneFilterPickerRootProps<Definition extends FiltersDefinition> {
+    /** The definition of available filters and their configurations */
+    filters?: Definition;
+    /** Current state of applied filters */
+    value: FiltersState<Definition>;
+    /** Optional preset configurations that users can select */
+    presets?: PresetsDefinition<Definition>;
+    /** Callback fired when filters are changed */
+    onChange: (value: FiltersState<Definition>) => void;
+    /** The children of the component */
+    children?: React.ReactNode;
+}
+
 export declare const PieChart: ForwardRefExoticComponent<Omit<PieChartProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+/**
+ * Defines preset filter configurations that can be applied to a collection.
+ * @template Filters - The available filter configurations
+ */
+export declare type PresetDefinition<Filters extends FiltersDefinition> = {
+    /** Display name for the preset */
+    label: string;
+    /** Filter configuration to apply when this preset is selected */
+    filter: FiltersState<Filters>;
+    /** Function to count the number of items that match the filter */
+    itemsCount?: (filters: FiltersState<Filters>) => Promise<number | undefined> | number | undefined;
+};
+
+export declare type PresetsDefinition<Filters extends FiltersDefinition> = PresetDefinition<Filters>[];
 
 export declare const PrivacyModeProvider: React_2.FC<{
     initiallyEnabled?: boolean;
@@ -643,6 +840,8 @@ declare type RegularAction = BaseAction & {
     type: "regular";
     variant: ButtonVariant;
 };
+
+declare type SearchFilterDefinition = BaseFilterDefinition<"search">;
 
 declare const sizes: readonly ["sm", "md", "lg"];
 
@@ -856,15 +1055,15 @@ declare module "@tiptap/core" {
 }
 
 
+declare namespace Calendar {
+    var displayName: string;
+}
+
+
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
-}
-
-
-declare namespace Calendar {
-    var displayName: string;
 }
