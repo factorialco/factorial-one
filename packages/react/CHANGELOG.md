@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.122.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.122.0...factorial-one-react-v1.122.1) (2025-07-10)
+
+
+### Bug Fixes
+
+* **datacollection:** filters form width and custo height by type ([#2160](https://github.com/factorialco/factorial-one/issues/2160)) ([6c067f2](https://github.com/factorialco/factorial-one/commit/6c067f21b04f0d24f8b2cf8f73c01bb219b19788))
+
 ## [1.122.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.121.1...factorial-one-react-v1.122.0) (2025-07-10)
 
 
