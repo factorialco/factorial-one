@@ -40,6 +40,7 @@
     "prettier:check:ci": "prettier --check \"src/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "tsc": "tsc --noEmit",
     "vitest": "vitest",
+    "vitest:ui": "vitest --ui",
     "vitest:watch": "vitest dev",
     "vitest:ci": "pnpm run vitest --reporter=dot"
   },
