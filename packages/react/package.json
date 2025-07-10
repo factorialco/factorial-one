@@ -151,7 +151,7 @@
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-lib-inject-css": "^2.2.1",
     "vitest": "^3.0.7",
-    "@factorialco/factorial-one-core": "workspace:*"
+    "@factorialco/factorial-one-core": "latest"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.34"
