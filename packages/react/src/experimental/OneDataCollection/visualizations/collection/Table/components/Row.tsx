@@ -1,7 +1,7 @@
 import { ItemActionsDropdown } from "@/experimental/OneDataCollection/ItemActions/ItemActionsDropdown"
 import { forwardRef } from "react"
 
-import { FiltersDefinition } from "@/experimental/OneDataCollection/Filters/types"
+import { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import {
   filterItemActions,
   ItemActionsDefinition,

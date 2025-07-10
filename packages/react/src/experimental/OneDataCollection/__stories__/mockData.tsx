@@ -3,8 +3,6 @@ import {
   BaseResponse,
   BulkActionDefinition,
   DataAdapter,
-  FilterDefinition,
-  FiltersState,
   GroupingDefinition,
   GroupingState,
   InfiniteScrollPaginatedResponse,
@@ -14,7 +12,6 @@ import {
   OnSelectItemsCallback,
   PaginatedResponse,
   PaginationType,
-  PresetsDefinition,
   RecordType,
   SelectedItemsState,
   SortingsStateMultiple,
@@ -27,6 +24,11 @@ import { NewColor } from "@/experimental/Information/Tags/DotTag"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { cn } from "@/lib/utils"
 
+import {
+  FilterDefinition,
+  FiltersState,
+  PresetsDefinition,
+} from "@/components/OneFilterPicker"
 import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,

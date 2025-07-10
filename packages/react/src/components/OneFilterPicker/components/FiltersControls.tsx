@@ -1,18 +1,17 @@
-import { cn } from "@/lib/utils"
 import { useEffect, useId, useMemo, useState } from "react"
-import { Button } from "../../../../components/Actions/Button"
-import { Filter } from "../../../../icons/app"
-import { useI18n } from "../../../../lib/providers/i18n"
-import { Popover, PopoverContent, PopoverTrigger } from "../../../../ui/popover"
-import { getFilterType } from "../FilterTypes"
-import { FilterTypeContext, FilterTypeSchema } from "../FilterTypes/types"
+import { Filter } from "../../../icons/app"
+import { useI18n } from "../../../lib/providers/i18n"
+import { Popover, PopoverContent, PopoverTrigger } from "../../../ui/popover"
+import { Button } from "../../Actions/Button"
+import { getFilterType } from "../filterTypes"
+import { FilterTypeContext, FilterTypeSchema } from "../filterTypes/types"
 import type { FiltersDefinition, FiltersState } from "../types"
 import { FilterContent } from "./FilterContent"
 import { FilterList } from "./FilterList"
 
 interface FiltersControlsProps<Filters extends FiltersDefinition> {
-  schema: Filters
-  filters: FiltersState<Filters>
+  filters: Filters
+  value: FiltersState<Filters>
   onChange: (value: FiltersState<Filters>) => void
   isOpen?: boolean
   onOpenChange?: (open: boolean) => void
@@ -22,8 +21,8 @@ interface FiltersControlsProps<Filters extends FiltersDefinition> {
 const DEFAULT_FORM_HEIGHT = 388
 
 export function FiltersControls<Filters extends FiltersDefinition>({
-  schema,
   filters,
+  value,
   onChange,
   isOpen: controlledIsOpen,
   onOpenChange: controlledOnOpenChange,
@@ -38,10 +37,10 @@ export function FiltersControls<Filters extends FiltersDefinition>({
   const isOpen = controlledIsOpen ?? internalIsOpen
   const onOpenChange = controlledOnOpenChange ?? setInternalIsOpen
 
-  const [localFiltersValue, setLocalFiltersValue] = useState(filters)
+  const [localFiltersValue, setLocalFiltersValue] = useState(value)
   useEffect(() => {
-    setLocalFiltersValue(filters)
-  }, [filters])
+    setLocalFiltersValue(value)
+  }, [value])
 
   const updateFilterValue = (key: keyof Filters, newValue: unknown): void => {
     setLocalFiltersValue((prev) => ({
@@ -59,12 +58,12 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     const getFirstFilterNotEmpty = () => {
       return Object.entries(localFiltersValue).find(([key, value]) => {
         // TODO: Make this type better
-        const filterType = getFilterType(schema[key].type) as unknown as {
+        const filterType = getFilterType(filters[key].type) as unknown as {
           isEmpty: (value: unknown, context: FilterTypeContext) => boolean
         }
 
         return !filterType.isEmpty(value, {
-          schema: schema[key] as unknown as FilterTypeSchema,
+          schema: filters[key] as unknown as FilterTypeSchema,
         })
       })
     }
@@ -77,13 +76,13 @@ export function FiltersControls<Filters extends FiltersDefinition>({
 
   // gets the form height
   const formHeight = useMemo(() => {
-    const maxHeight = Object.entries(schema).reduce((max, [_, value]) => {
+    const maxHeight = Object.entries(filters).reduce((max, [_, value]) => {
       const filterType = getFilterType(value.type)
       return Math.max(max, filterType?.formHeight || DEFAULT_FORM_HEIGHT)
     }, 0)
 
     return maxHeight
-  }, [schema])
+  }, [filters])
   const id = useId()
 
   return (
@@ -108,14 +107,14 @@ export function FiltersControls<Filters extends FiltersDefinition>({
           aria-id={id}
         >
           <div
-            className={cn("flex flex-col transition-all")}
+            className="flex flex-col transition-all"
             style={{
               height: formHeight || DEFAULT_FORM_HEIGHT,
             }}
           >
             <div className="flex min-h-0 flex-1">
               <FilterList
-                definition={schema}
+                definition={filters}
                 tempFilters={localFiltersValue}
                 selectedFilterKey={selectedFilterKey}
                 onFilterSelect={(key: keyof Filters) =>
@@ -125,7 +124,7 @@ export function FiltersControls<Filters extends FiltersDefinition>({
               {selectedFilterKey && (
                 <FilterContent
                   selectedFilterKey={selectedFilterKey}
-                  definition={schema}
+                  definition={filters}
                   tempFilters={localFiltersValue}
                   onFilterChange={updateFilterValue}
                 />
