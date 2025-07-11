@@ -97,15 +97,9 @@ export type GroupRecord<RecordType> = {
 
 export type Data<RecordType> = {
   records: WithGroupId<RecordType>[]
-} & (
-  | {
-      type: "grouped"
-      groups: GroupRecord<WithGroupId<RecordType>>[]
-    }
-  | {
-      type: "flat"
-    }
-)
+  type: "grouped" | "flat"
+  groups: GroupRecord<WithGroupId<RecordType>>[]
+}
 
 /**
  * Custom hook for handling data fetching state
@@ -433,7 +427,18 @@ export function useData<
     /**
      * Flat data
      */
-    return { type: "flat" as const, records: data }
+    return {
+      type: "flat" as const,
+      records: data,
+      groups: [
+        {
+          key: "all",
+          label: "All",
+          itemCount: data.length,
+          records: data,
+        },
+      ],
+    }
   }, [rawData, currentGrouping, grouping, mergedFilters])
 
   const handleFetchError = useCallback(

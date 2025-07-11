@@ -383,7 +383,6 @@ const SelectComponent = forwardRef(function Select<
   const items: VirtualItem[] = useMemo(() => {
     if (data.type === "grouped") {
       const items: VirtualItem[] = []
-
       data.groups.map((group) => {
         items.push({
           height: 30,
@@ -402,14 +401,7 @@ const SelectComponent = forwardRef(function Select<
       return items
     }
     return getItems(data.records)
-  }, [
-    data.records,
-    data.type,
-    data?.groups,
-    getItems,
-    openGroups,
-    setGroupOpen,
-  ])
+  }, [data.records, data.type, data.groups, getItems, openGroups, setGroupOpen])
 
   const handleScrollBottom = () => {
     loadMore()
@@ -431,7 +423,7 @@ const SelectComponent = forwardRef(function Select<
             : undefined
         }
         disabled={disabled}
-        open={open}
+        open={openLocal}
         onOpenChange={handleChangeOpenLocal}
         {...props}
       >

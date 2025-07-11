@@ -384,6 +384,7 @@ export const WithCustomTrigger: Story = {
   },
   render: ({ value, options, placeholder, onChange, ...args }) => (
     <Select
+      label="Choose a color"
       value={value}
       options={options}
       placeholder={placeholder}
