@@ -1,7 +1,7 @@
 import { FiltersDefinition } from "../../../../../../components/OneFilterPicker/types"
+import { SortingsDefinition } from "../../../../../../hooks/datasource/types/sortings.typings"
 import { ItemActionsDefinition } from "../../../../item-actions"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
-import { SortingsDefinition } from "../../../../sortings"
 import { SummariesDefinition } from "../../../../summary"
 import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
 import { ItemDefinition, ListPropertyDefinition } from "../types"

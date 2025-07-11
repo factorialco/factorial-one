@@ -2,11 +2,11 @@ import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts
 import { Ai, Download, Pencil, Upload } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { FiltersDefinition } from "../../../components/OneFilterPicker/types"
+import { SortingsDefinition } from "../../../hooks/datasource/types/sortings.typings"
 import { SecondaryActionsItemDefinition } from "../actions"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
-import { SortingsDefinition } from "../sortings"
 import { DataSource, GroupingDefinition } from "../types"
 import { Visualization } from "../visualizations/collection/types"
 

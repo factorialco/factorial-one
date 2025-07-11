@@ -1,9 +1,9 @@
 import {
   FiltersDefinition,
   FiltersState,
-} from "../../components/OneFilterPicker/types"
-import { SortOrder } from "./sortings"
-import { RecordType } from "./types"
+} from "@/components/OneFilterPicker/types"
+import { RecordType } from "./records.typings"
+import { SortOrder } from "./sortings.typings"
 
 /**
  * Defines the structure and configuration of a grouping options for a data source.

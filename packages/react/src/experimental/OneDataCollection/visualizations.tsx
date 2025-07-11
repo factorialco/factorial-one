@@ -1,23 +1,22 @@
+import {
+  DataSource,
+  GroupingDefinition,
+  OnSelectItemsCallback,
+  RecordType,
+} from "@/hooks/datasource"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import type { FiltersDefinition } from "../../components/OneFilterPicker/types"
 import { Icon, IconType } from "../../components/Utilities/Icon"
+import { SortingsDefinition } from "../../hooks/datasource/types/sortings.typings"
 import { Kanban, Sliders, Table } from "../../icons/app"
 import { useI18n } from "../../lib/providers/i18n"
 import { cn, focusRing } from "../../lib/utils"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
-import { SortingsDefinition } from "./sortings"
 import { SummariesDefinition } from "./summary"
-import type {
-  DataSource,
-  GroupingDefinition,
-  OnLoadDataCallback,
-  OnLoadErrorCallback,
-  OnSelectItemsCallback,
-  RecordType,
-} from "./types"
+import type { OnLoadDataCallback, OnLoadErrorCallback } from "./types"
 import type { CardVisualizationOptions } from "./visualizations/collection/Card"
 import { CardCollection } from "./visualizations/collection/Card"
 import type { TableVisualizationOptions } from "./visualizations/collection/Table"

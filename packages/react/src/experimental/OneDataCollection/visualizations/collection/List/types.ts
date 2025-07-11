@@ -3,7 +3,7 @@ import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import {
   SortingKey,
   SortingsDefinition,
-} from "@/experimental/OneDataCollection/sortings"
+} from "@/hooks/datasource/types/sortings.typings"
 import { PropertyDefinition } from "../../../property-render"
 import { RecordType } from "../../../types"
 

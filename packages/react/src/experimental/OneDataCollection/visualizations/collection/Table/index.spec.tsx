@@ -10,12 +10,13 @@ import {
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
 import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
+import { SortingsDefinition } from "../../../../../hooks/datasource/types/sortings.typings"
+import { useData } from "../../../../../hooks/datasource/useData"
 import {
   defaultTranslations,
   I18nProvider,
 } from "../../../../../lib/providers/i18n"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { SortingsDefinition } from "../../../sortings"
 import { SummariesDefinition } from "../../../summary"
 import type {
   BaseFetchOptions,
@@ -25,7 +26,6 @@ import type {
   PaginatedResponse,
   PaginationType,
 } from "../../../types"
-import { useData } from "../../../useData"
 import { TableCollection } from "./index"
 
 type TestFilters = FiltersDefinition

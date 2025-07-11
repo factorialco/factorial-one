@@ -11,12 +11,17 @@ import { LayoutGrid } from "lucide-react"
 import { describe, expect, test, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
 import type { FiltersDefinition } from "../../../components/OneFilterPicker/types"
+import { SortingsDefinition } from "../../../hooks/datasource/types/sortings.typings"
+import {
+  GROUP_ID_SYMBOL,
+  useData,
+  WithGroupId,
+} from "../../../hooks/datasource/useData"
 import { PromiseState } from "../../../lib/promise-to-observable"
 import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
-import { SortingsDefinition } from "../sortings"
 import { SummariesDefinition } from "../summary"
 import type {
   BaseResponse,
@@ -26,7 +31,6 @@ import type {
   PaginatedResponse,
   SortingsState,
 } from "../types"
-import { GROUP_ID_SYMBOL, useData, WithGroupId } from "../useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>

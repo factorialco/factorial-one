@@ -1,3 +1,9 @@
+import type {
+  FiltersDefinition,
+  FiltersState,
+} from "@/components/OneFilterPicker/types"
+import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
+import { PromiseState, promiseToObservable } from "@/lib/promise-to-observable"
 import { groupBy } from "lodash"
 import {
   useCallback,
@@ -8,24 +14,13 @@ import {
   useState,
 } from "react"
 import { Observable } from "zen-observable-ts"
-import type {
-  FiltersDefinition,
-  FiltersState,
-} from "../../components/OneFilterPicker/types"
-import {
-  PromiseState,
-  promiseToObservable,
-} from "../../lib/promise-to-observable"
-import { ItemActionsDefinition } from "./item-actions"
 import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
-} from "./navigationFilters/types"
-import { SortingsDefinition } from "./sortings"
-import { SummariesDefinition } from "./summary"
+} from "../../experimental/OneDataCollection/navigationFilters/types"
+import { SummariesDefinition } from "../../experimental/OneDataCollection/summary"
 import {
   BaseFetchOptions,
-  DataSource,
   GroupingDefinition,
   InfiniteScrollPaginatedResponse,
   PageBasedPaginatedResponse,
@@ -34,8 +29,10 @@ import {
   PaginationType,
   PromiseOrObservable,
   RecordType,
+  SortingsDefinition,
   SortingsStateMultiple,
 } from "./types"
+import { DataSource } from "./types/datasource.typings"
 
 /**
  * Represents an error that occurred during data fetching

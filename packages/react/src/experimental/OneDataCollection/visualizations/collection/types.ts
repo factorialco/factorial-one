@@ -1,8 +1,8 @@
 import type { FiltersDefinition } from "../../../../components/OneFilterPicker/types"
 import { IconType } from "../../../../components/Utilities/Icon"
+import { SortingsDefinition } from "../../../../hooks/datasource/types/sortings.typings"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
-import { SortingsDefinition } from "../../sortings"
 import { SummariesDefinition } from "../../summary"
 import type {
   DataSource,

@@ -8,7 +8,6 @@ import {
 } from "@/experimental/OneDataCollection/item-actions"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { renderProperty } from "@/experimental/OneDataCollection/property-render"
-import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary"
 import {
   DataSource,
@@ -16,6 +15,7 @@ import {
   RecordType,
 } from "@/experimental/OneDataCollection/types"
 import { TableCell, TableRow } from "@/experimental/OneTable"
+import { SortingsDefinition } from "@/hooks/datasource/types/sortings.typings"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { TableColumnDefinition } from ".."

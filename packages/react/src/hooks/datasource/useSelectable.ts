@@ -1,17 +1,17 @@
+import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import type { FiltersDefinition } from "../../components/OneFilterPicker/types"
-import { ItemActionsDefinition } from "./item-actions"
-import { NavigationFiltersDefinition } from "./navigationFilters/types"
-import type { SortingsDefinition } from "./sortings"
-import type { SummariesDefinition } from "./summary"
+import { ItemActionsDefinition } from "../../experimental/OneDataCollection/item-actions"
+import { NavigationFiltersDefinition } from "../../experimental/OneDataCollection/navigationFilters/types"
+import type { SummariesDefinition } from "../../experimental/OneDataCollection/summary"
 import {
-  DataSource,
   GroupingDefinition,
   OnSelectItemsCallback,
   PaginationInfo,
   RecordType,
   SelectedItemsState,
 } from "./types"
+import { DataSource } from "./types/datasource.typings"
+import type { SortingsDefinition } from "./types/sortings.typings"
 import { Data, GROUP_ID_SYMBOL, GroupRecord, WithGroupId } from "./useData"
 
 export type AllSelectionStatus = {

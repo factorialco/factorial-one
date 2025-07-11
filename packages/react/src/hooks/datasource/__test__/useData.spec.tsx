@@ -3,11 +3,9 @@ import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts
 import { act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
-import type { FiltersState } from "../../components/OneFilterPicker/types"
-import type { PromiseState } from "../../lib/promise-to-observable"
-import { GroupingDefinition } from "./grouping"
-import { ItemActionsDefinition } from "./item-actions"
-import { SortingsDefinition } from "./sortings"
+import type { FiltersState } from "../../../components/OneFilterPicker/types"
+import { GroupingDefinition } from "../../../experimental/OneDataCollection/grouping"
+import { ItemActionsDefinition } from "../../../experimental/OneDataCollection/item-actions"
 import type {
   BaseDataAdapter,
   BaseFetchOptions,
@@ -16,8 +14,10 @@ import type {
   PaginatedDataAdapter,
   PaginatedResponse,
   RecordType,
-} from "./types"
-import { GROUP_ID_SYMBOL, useData, WithGroupId } from "./useData"
+} from "../../../experimental/OneDataCollection/types"
+import type { PromiseState } from "../../../lib/promise-to-observable"
+import { SortingsDefinition } from "../types/sortings.typings"
+import { GROUP_ID_SYMBOL, useData, WithGroupId } from "../useData"
 interface TestRecord extends RecordType {
   id: number
   name: string

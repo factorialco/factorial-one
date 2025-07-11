@@ -6,6 +6,7 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import { FiltersDefinition } from "../../../../../../components/OneFilterPicker/types"
+import { SortingsDefinition } from "../../../../../../hooks/datasource/types/sortings.typings"
 import {
   ActionDefinition,
   filterItemActions,
@@ -14,7 +15,6 @@ import {
 import { ItemActionsDropdown } from "../../../../ItemActions/ItemActionsDropdown"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { renderProperty } from "../../../../property-render"
-import { SortingsDefinition } from "../../../../sortings"
 import { SummariesDefinition } from "../../../../summary"
 import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
 import { actionsToDropdownItems } from "../../utils"
