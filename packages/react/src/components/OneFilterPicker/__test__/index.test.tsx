@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event"
 import React from "react"
 import { describe, expect, it, vi } from "vitest"
 import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
-import { render, screen, waitFor, within } from "../../../test-utils"
+import { render, screen, waitFor } from "../../../test-utils"
 import { OneFilterPicker } from "../index"
 import type { FiltersDefinition } from "../types"
 
@@ -450,9 +450,7 @@ describe("Presets", () => {
     )
 
     // Apply a preset
-    const visibleContainer = screen.getByTestId("overflow-visible-container")
-    const engineeringOnlyPreset =
-      within(visibleContainer).getByText("Engineering Only")
+    const engineeringOnlyPreset = screen.getByText("Engineering Only")
     await user.click(engineeringOnlyPreset)
     expect(onChange).toHaveBeenCalledWith({ department: ["engineering"] })
 
@@ -514,9 +512,7 @@ describe("Presets", () => {
     )
 
     // Click on the preset
-    const visibleContainer = screen.getByTestId("overflow-visible-container")
-    const engineeringSearchPreset =
-      within(visibleContainer).getByText("Engineering Search")
+    const engineeringSearchPreset = screen.getByText("Engineering Search")
     await user.click(engineeringSearchPreset)
 
     // Verify both filters were applied
