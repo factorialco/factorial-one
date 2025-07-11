@@ -147,3 +147,13 @@ export const WithChildren: Story = {
     ),
   },
 }
+
+export const WithEmoji: Story = {
+  args: {
+    ...Default.args,
+    avatar: {
+      type: "emoji",
+      emoji: "🐱",
+    },
+  },
+}
