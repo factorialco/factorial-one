@@ -206,6 +206,8 @@ export function ClockInControls({
                     <>
                       {breakTypeOptions.length > 1 && onChangeBreakTypeId ? (
                         <Select
+                          label={labels.break}
+                          hideLabel
                           value=""
                           options={breakTypeOptions}
                           onChange={handleChangeBreakType}
@@ -271,6 +273,8 @@ export function ClockInControls({
           {canSelectLocation ? (
             <>
               <Select
+                label={labels.selectLocation}
+                hideLabel
                 value={locationId}
                 options={locationOptions}
                 onChange={onChangeLocationId}

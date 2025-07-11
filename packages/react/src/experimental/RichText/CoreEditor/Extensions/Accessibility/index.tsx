@@ -1,17 +1,28 @@
-import { Extension } from "@tiptap/react"
+import { Editor, Extension } from "@tiptap/react"
+
+const applyA11yAttrs = (editor: Editor, label: string) => {
+  const dom = editor.view.dom
+  dom.setAttribute("aria-label", label)
+  if (dom.getAttribute("role") === "textbox") {
+    dom.removeAttribute("aria-expanded")
+  }
+}
 
 const Accessibility = Extension.create({
   name: "accessibility",
+
   addOptions() {
     return {
       label: "Rich text editor",
     }
   },
-  onTransaction() {
-    this.editor.view.dom.setAttribute("aria-label", this.options.label)
-  },
+
   onCreate() {
-    this.editor.view.dom.setAttribute("aria-label", this.options.label)
+    applyA11yAttrs(this.editor, this.options.label)
+  },
+
+  onTransaction() {
+    applyA11yAttrs(this.editor, this.options.label)
   },
 })
 

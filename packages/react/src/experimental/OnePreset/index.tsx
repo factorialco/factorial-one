@@ -30,7 +30,7 @@ export const Preset = ({ label, number, onClick, selected }: PresetProps) => {
         onChange={() => onClick?.()}
       />
       <span className="whitespace-nowrap">{label}</span>
-      {number && (
+      {!!number && (
         <Await resolve={number} fallback={<Skeleton className="h-4 w-4" />}>
           {(number) =>
             number && (

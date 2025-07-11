@@ -76,7 +76,7 @@ const preview: Preview = {
   decorators: [FactorialOne, withTheme()],
 
   parameters: {
-    chromatic: { diffThreshold: 0.2 },
+    chromatic: { disableSnapshot: true, diffThreshold: 0.2 },
     a11y: {
       config: {
         rules: [

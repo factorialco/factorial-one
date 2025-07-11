@@ -1,3 +1,5 @@
+import { Button } from "@/components/Actions/Button"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import {
   ColorExtension,
@@ -12,7 +14,6 @@ import {
   TypographyExtension,
   UnderlineExtension,
 } from "@/experimental/RichText/CoreEditor"
-import { Button, Icon, IconType } from "@/factorial-one"
 import { Ai, ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { JSONContent, Node } from "@tiptap/core"
@@ -194,9 +195,12 @@ const useContentEditor = (
   return editor
 }
 
-const useAIBlockState = (data: AIBlockData | undefined) => {
+const useAIBlockState = (
+  data: AIBlockData | undefined,
+  initialCollapsed = false
+) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [isCollapsed, setIsCollapsed] = useState(initialCollapsed)
 
   useEffect(() => {
     if (data?.selectedAction && !data?.content && !isLoading) {
@@ -434,7 +438,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
   const blockId = useRef(Math.random().toString(36).substr(2, 9)).current
   const { isLoading, setIsLoading, isCollapsed, setIsCollapsed } =
-    useAIBlockState(data)
+    useAIBlockState(data, node.attrs.isCollapsed ?? false)
   const { title: displayTitle, emoji: displayEmoji } = useDisplayInfo(
     data,
     config,
@@ -520,14 +524,17 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
         selectedTitle: undefined,
         selectedEmoji: undefined,
       },
+      isCollapsed: false,
     })
     setIsLoading(false)
     setIsCollapsed(false)
   }, [updateAttributes, setIsLoading, setIsCollapsed])
 
   const handleToggleCollapse = useCallback(() => {
-    setIsCollapsed(!isCollapsed)
-  }, [isCollapsed, setIsCollapsed])
+    const newState = !isCollapsed
+    setIsCollapsed(newState)
+    updateAttributes({ isCollapsed: newState })
+  }, [isCollapsed, setIsCollapsed, updateAttributes])
 
   const getDropdownItems = useCallback((): DropdownItem[] => {
     const items: DropdownItem[] = []
@@ -618,8 +625,8 @@ export const AIBlock = Node.create({
   name: "aiBlock",
   group: "block",
   atom: true,
-  selectable: false,
-  draggable: false,
+  selectable: true,
+  draggable: true,
 
   addOptions() {
     return {
@@ -644,6 +651,9 @@ export const AIBlock = Node.create({
       },
       config: {
         default: null,
+      },
+      isCollapsed: {
+        default: false,
       },
     }
   },

@@ -1,5 +1,5 @@
+import { Button } from "@/components/Actions/Button"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
-import { Button } from "@/factorial-one"
 import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { Node } from "@tiptap/core"
 import {
@@ -51,8 +51,9 @@ export const LiveCompanionView: React.FC<NodeViewProps> = ({
   node,
   deleteNode,
   extension,
+  updateAttributes,
 }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState<boolean>(node.attrs.isOpen ?? false)
   const data = node.attrs.data as LiveCompanionData
 
   // Use dynamic config from extension options instead of persisted config
@@ -64,7 +65,9 @@ export const LiveCompanionView: React.FC<NodeViewProps> = ({
   if (!data) return null
 
   const handleToggleCollapse = () => {
-    setIsOpen(!isOpen)
+    const newState = !isOpen
+    setIsOpen(newState)
+    updateAttributes({ isOpen: newState })
   }
 
   // Generate dropdown items
@@ -236,9 +239,9 @@ export const LiveCompanion = Node.create({
 
   atom: true,
 
-  selectable: false,
+  selectable: true,
 
-  draggable: false,
+  draggable: true,
 
   addOptions() {
     return {
@@ -263,6 +266,9 @@ export const LiveCompanion = Node.create({
       },
       config: {
         default: null,
+      },
+      isOpen: {
+        default: false,
       },
     }
   },

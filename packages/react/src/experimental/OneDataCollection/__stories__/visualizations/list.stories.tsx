@@ -62,6 +62,36 @@ export const ListVisualizationWithGrouping: Story = {
   },
 }
 
+export const ListVisualizationWithGroupingAndAllGroupsOpenByDefault: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  render: () => {
+    const mockVisualizations = getMockVisualizations()
+    return (
+      <ExampleComponent
+        visualizations={[mockVisualizations.list]}
+        grouping={{
+          collapsible: true,
+          mandatory: true,
+          defaultOpenGroups: true,
+          groupBy: {
+            department: {
+              name: "Department",
+              label: (groupId) => groupId,
+              itemCount: async (groupId) => {
+                await new Promise((resolve) => setTimeout(resolve, 1000))
+                return mockUsers.filter((user) => user.department === groupId)
+                  .length
+              },
+            },
+          },
+        }}
+      />
+    )
+  },
+}
+
 export const ListVisualizationWithInfiniteScrollPagination: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },

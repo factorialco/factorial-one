@@ -76,6 +76,8 @@ describe("Select", () => {
   it("renders with placeholder", () => {
     render(
       <Select
+        label="Select an option"
+        hideLabel
         options={mockOptions}
         onChange={() => {}}
         placeholder="Select an option"
@@ -86,7 +88,14 @@ describe("Select", () => {
 
   it("shows options when clicked", async () => {
     const user = userEvent.setup()
-    render(<Select options={mockOptions} onChange={() => {}} />)
+    render(
+      <Select
+        label="Select an option"
+        hideLabel
+        options={mockOptions}
+        onChange={() => {}}
+      />
+    )
 
     await openSelect(user)
 
@@ -97,7 +106,15 @@ describe("Select", () => {
   })
 
   it("displays selected value", async () => {
-    render(<Select options={mockOptions} onChange={() => {}} value="option1" />)
+    render(
+      <Select
+        label="Select an option"
+        hideLabel
+        options={mockOptions}
+        onChange={() => {}}
+        value="option1"
+      />
+    )
 
     await waitFor(() => {
       expect(screen.getByText("Option 1")).toBeInTheDocument()
@@ -108,6 +125,8 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
+        label="Select an option"
+        hideLabel
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -117,12 +136,20 @@ describe("Select", () => {
 
     await openSelect(user)
 
-    expect(screen.getByPlaceholderText("Search options")).toBeInTheDocument()
+    expect(screen.getByText("Search options")).toBeInTheDocument()
   })
 
   it("filters options based on search input", async () => {
     const user = userEvent.setup()
-    render(<Select options={mockOptions} onChange={() => {}} showSearchBox />)
+    render(
+      <Select
+        label="Select an option"
+        hideLabel
+        options={mockOptions}
+        onChange={() => {}}
+        showSearchBox
+      />
+    )
 
     await openSelect(user)
     await user.type(screen.getByRole("searchbox"), "1")
@@ -137,6 +164,8 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
+        label="Select an option"
+        hideLabel
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -159,6 +188,8 @@ describe("Select", () => {
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
+        label="Select an option2"
+        hideLabel
         onSearchChange={handleSearchChange}
       />
     )
@@ -177,17 +208,38 @@ describe("Select", () => {
     expect(searchInput).toHaveFocus()
     expect(handleSearchChange).toHaveBeenCalled()
     expect(handleSearchChange).toHaveBeenCalledWith("t")
+    await waitFor(() => {
+      expect(handleSearchChange).toHaveBeenCalledWith("test")
+    })
+    // Should still show all options when externalSearch is true
+    expect(screen.getByText("Option 1")).toBeInTheDocument()
+    expect(screen.getByText("Option 2")).toBeInTheDocument()
   })
 
-  it("disables select when disabled prop is true", () => {
-    render(<Select options={mockOptions} onChange={() => {}} disabled />)
+  it("disables select when disabled prop is true", async () => {
+    render(
+      <Select
+        label="Select an option"
+        hideLabel
+        options={mockOptions}
+        onChange={() => {}}
+        disabled
+      />
+    )
 
-    expect(screen.getByRole("combobox")).toBeDisabled()
+    await waitFor(() => {
+      expect(screen.getByRole("combobox")).toBeDisabled()
+    })
   })
 
   it("renders with custom trigger", () => {
     render(
-      <Select options={mockOptions} onChange={() => {}}>
+      <Select
+        label="Select an option"
+        hideLabel
+        options={mockOptions}
+        onChange={() => {}}
+      >
         <button>Custom Trigger</button>
       </Select>
     )
@@ -199,7 +251,14 @@ describe("Select", () => {
     const handleChange = vi.fn()
     const user = userEvent.setup()
 
-    render(<Select options={mockOptions} onChange={handleChange} />)
+    render(
+      <Select
+        label="Select an option"
+        hideLabel
+        options={mockOptions}
+        onChange={handleChange}
+      />
+    )
 
     await openSelect(user)
     await user.click(screen.getByText("Option 1"))
@@ -239,7 +298,14 @@ describe("Select", () => {
       },
     ]
 
-    render(<Select options={mockOptions} onChange={handleChange} />)
+    render(
+      <Select
+        label="Select an option"
+        hideLabel
+        options={mockOptions}
+        onChange={handleChange}
+      />
+    )
 
     await openSelect(user)
     await user.click(screen.getByText("Option 1"))

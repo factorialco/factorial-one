@@ -3,8 +3,6 @@ import {
   BaseResponse,
   BulkActionDefinition,
   DataAdapter,
-  FilterDefinition,
-  FiltersState,
   GroupingDefinition,
   GroupingState,
   InfiniteScrollPaginatedResponse,
@@ -14,7 +12,6 @@ import {
   OnSelectItemsCallback,
   PaginatedResponse,
   PaginationType,
-  PresetsDefinition,
   RecordType,
   SelectedItemsState,
   SortingsStateMultiple,
@@ -26,6 +23,11 @@ import { Observable } from "zen-observable-ts"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { cn } from "@/lib/utils"
 
+import {
+  FilterDefinition,
+  FiltersState,
+  PresetsDefinition,
+} from "@/components/OneFilterPicker"
 import {
   DEPARTMENTS_MOCK,
   FIRST_NAMES_MOCK,

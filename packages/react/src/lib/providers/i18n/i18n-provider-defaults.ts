@@ -44,6 +44,8 @@ export const defaultTranslations = {
     label: "Filters",
     applyFilters: "Apply filters",
     cancel: "Cancel",
+    failedToLoadOptions: "Failed to load options",
+    retry: "Retry",
   },
   collections: {
     sorting: {
@@ -66,10 +68,6 @@ export const defaultTranslations = {
       pagination: {
         of: "of",
       },
-    },
-    filters: {
-      failedToLoadOptions: "Failed to load options",
-      retry: "Retry",
     },
     itemsCount: "items",
     emptyStates: {

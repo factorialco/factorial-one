@@ -1,5 +1,4 @@
 import {
-  AddBlockButtonExtension,
   ColorExtension,
   createAccessibilityExtension,
   createPlaceholderExtension,
@@ -95,7 +94,6 @@ export const createBasicTextEditorExtensions = (
     AIBlockExtension.configure({
       currentConfig: enhancedAIBlockConfig,
     }),
-    AddBlockButtonExtension,
     PersistSelection,
     createPlaceholderExtension(placeholder),
     createAccessibilityExtension(placeholder),

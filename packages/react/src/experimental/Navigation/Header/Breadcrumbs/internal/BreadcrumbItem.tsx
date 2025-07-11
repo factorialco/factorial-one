@@ -93,6 +93,8 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
         (item.options || item.source) && (
           <>
             <BreadcrumbSelect
+              label={item.label}
+              hideLabel
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               source={item.source as any}
               options={item.options}

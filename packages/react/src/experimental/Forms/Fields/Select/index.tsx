@@ -11,7 +11,6 @@ import {
   PromiseOrObservable,
   RecordType,
   SortingsDefinition,
-  Spinner,
   SummariesDefinition,
   useDataSource,
 } from "@/experimental/exports"
@@ -21,13 +20,14 @@ import { useData, WithGroupId } from "@/experimental/OneDataCollection/useData"
 import { getDataSourcePaginationType } from "@/experimental/OneDataCollection/useDataSource"
 import { useGroups } from "@/experimental/OneDataCollection/useGroups"
 import { ChevronDown } from "@/icons/app"
+import { cn } from "@/lib/utils"
+import { InputField, InputFieldProps } from "@/ui/InputField"
 import {
   SelectContent,
   SelectItem as SelectItemPrimitive,
   Select as SelectPrimitive,
   SelectSeparator,
   SelectTrigger,
-  SelectValue as SelectValuePrimitive,
   VirtualItem,
 } from "@/ui/Select"
 import {
@@ -38,7 +38,6 @@ import {
   useRef,
   useState,
 } from "react"
-import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
 import { SelectTopActions } from "./SelectTopActions"
@@ -53,14 +52,12 @@ export * from "./types"
  * @template R - The type of the record/item data (used with data source)
  *
  */
-export type SelectProps<T, R = unknown> = {
-  placeholder?: string
+export type SelectProps<T extends string, R = unknown> = {
   onChange: (value: T, origialItem?: R, option?: SelectItemObject<T, R>) => void
   onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
   children?: React.ReactNode
-  disabled?: boolean
   open?: boolean
   showSearchBox?: boolean
   searchBoxPlaceholder?: string
@@ -92,11 +89,28 @@ export type SelectProps<T, R = unknown> = {
       mapOptions?: never
       options: SelectItemProps<T, R>[]
     }
-)
+) &
+  Pick<
+    InputFieldProps<T>,
+    | "loading"
+    | "hideLabel"
+    | "clearable"
+    | "labelIcon"
+    | "size"
+    | "label"
+    | "error"
+    | "icon"
+    | "placeholder"
+    | "disabled"
+  >
 
-const SelectItem = <T,>({ item }: { item: SelectItemObject<T> }) => {
+const SelectItem = <T extends string, R>({
+  item,
+}: {
+  item: SelectItemObject<T, R>
+}) => {
   return (
-    <SelectItemPrimitive value={String(item.value)}>
+    <SelectItemPrimitive value={item.value}>
       <div className="flex w-full items-start gap-1.5">
         {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
         {item.icon && (
@@ -124,7 +138,7 @@ const SelectItem = <T,>({ item }: { item: SelectItemObject<T> }) => {
 
 const SelectValue = forwardRef<
   HTMLDivElement,
-  { item: SelectItemObject<unknown> }
+  { item: SelectItemObject<string> }
 >(function SelectValue({ item }, ref) {
   return (
     <div className="flex items-center gap-1.5" ref={ref}>
@@ -138,10 +152,10 @@ const SelectValue = forwardRef<
   )
 })
 
-const defaultTrigger =
-  "flex h-10 w-full items-center justify-between rounded-md border border-solid border-f1-border bg-f1-background pl-3 pr-2 py-2.5 transition-colors placeholder:text-f1-foreground-secondary hover:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1"
-
-const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
+const SelectComponent = forwardRef(function Select<
+  T extends string,
+  R extends RecordType,
+>(
   {
     placeholder,
     onChange,
@@ -152,15 +166,22 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
     children,
     disabled,
     open,
+    hideLabel,
     onOpenChange,
     showSearchBox,
     onSearchChange,
     searchBoxPlaceholder,
     searchEmptyMessage,
-    className,
+    size,
     selectContentClassName,
     actions,
     source,
+    label,
+    error,
+    icon,
+    labelIcon,
+    clearable,
+    loading,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -305,7 +326,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
     [setCurrentSearch, onSearchChange]
   )
 
-  const onValueChange = (changedValue: string | undefined) => {
+  const handleLocalValueChange = (changedValue: string | undefined) => {
     // Resets the search value when the option is selected
     setCurrentSearch(undefined)
     setLocalValue(changedValue as T)
@@ -316,7 +337,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
     }
   }
 
-  const onOpenChangeLocal = (open: boolean) => {
+  const handleChangeOpenLocal = (open: boolean) => {
     onOpenChange?.(open)
     setOpenLocal(open)
     setTimeout(() => {
@@ -324,7 +345,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
     }, 0)
   }
 
-  const collapsible = localSource.grouping?.collapsible
+  // const collapsible = localSource.grouping?.collapsible
   const defaultOpenGroups = localSource.grouping?.defaultOpenGroups
   const { openGroups, setGroupOpen } = useGroups(
     data?.type === "grouped" ? data.groups : [],
@@ -352,7 +373,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
                   item={mappedOption}
                 />
               ),
-              value: String(mappedOption.value),
+              value: mappedOption.value,
             }
       })
     },
@@ -381,7 +402,14 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
       return items
     }
     return getItems(data.records)
-  }, [data.records, data.type, data?.groups, getItems])
+  }, [
+    data.records,
+    data.type,
+    data?.groups,
+    getItems,
+    openGroups,
+    setGroupOpen,
+  ])
 
   const handleScrollBottom = () => {
     loadMore()
@@ -396,7 +424,7 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   return (
     <>
       <SelectPrimitive
-        onValueChange={onValueChange}
+        onValueChange={handleLocalValueChange}
         value={
           localValue !== undefined && localValue !== null
             ? String(localValue)
@@ -404,39 +432,57 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
         }
         disabled={disabled}
         open={open}
-        onOpenChange={onOpenChangeLocal}
+        onOpenChange={handleChangeOpenLocal}
         {...props}
       >
         <SelectTrigger ref={ref} asChild>
-          {children || (
-            <button
-              aria-label="Select unfoldable"
-              className={cn(
-                defaultTrigger,
-                className,
-                focusRing("focus-visible:border-f1-border-hover")
-              )}
+          {children ? (
+            <div
+              className="flex w-full items-center justify-between"
+              aria-label={label || placeholder}
             >
-              {isInitialLoading ? (
-                <>
-                  <Spinner size="small" /> {placeholder}
-                </>
-              ) : (
-                <SelectValuePrimitive placeholder={placeholder} asChild>
-                  {selectedOption && <SelectValue item={selectedOption} />}
-                </SelectValuePrimitive>
-              )}
-
-              <div className="flex h-6 w-6 items-center justify-center">
-                <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
-                  <Icon
-                    icon={ChevronDown}
-                    size="sm"
-                    className="rounded-2xs bg-f1-background-secondary p-0.5"
-                  />
-                </div>
-              </div>
-            </button>
+              {children}
+            </div>
+          ) : (
+            <InputField
+              label={label}
+              error={error}
+              icon={icon}
+              labelIcon={labelIcon}
+              hideLabel={hideLabel}
+              value={localValue as string}
+              onChange={(value) => handleLocalValueChange(value)}
+              placeholder={placeholder || ""}
+              disabled={disabled}
+              clearable={clearable}
+              size={size}
+              loading={isInitialLoading || loading}
+              onClickContent={() => {
+                handleChangeOpenLocal(!openLocal)
+              }}
+              append={
+                <Icon
+                  onClick={() => {
+                    if (disabled) return
+                    handleChangeOpenLocal(!openLocal)
+                  }}
+                  icon={ChevronDown}
+                  size="sm"
+                  className={cn(
+                    "rounded-2xs bg-f1-background-secondary p-0.5 transition-transform duration-200",
+                    openLocal && "rotate-180",
+                    !disabled && "cursor-pointer"
+                  )}
+                />
+              }
+            >
+              <button
+                className="flex w-full items-center justify-between"
+                aria-label={label || placeholder}
+              >
+                {selectedOption && <SelectValue item={selectedOption} />}
+              </button>
+            </InputField>
           )}
         </SelectTrigger>
         {openLocal && (
@@ -466,6 +512,9 @@ const SelectComponent = forwardRef(function Select<T, R extends RecordType>(
   )
 })
 
-export const Select = SelectComponent as <T = string, R = unknown>(
+export const Select = SelectComponent as <
+  T extends string = string,
+  R = unknown,
+>(
   props: SelectProps<T, R> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.ReactElement

@@ -1,5 +1,75 @@
 # Changelog
 
+## [1.121.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.120.0...factorial-one-react-v1.121.0) (2025-07-10)
+
+
+### Features
+
+* new module icons ([#2236](https://github.com/factorialco/factorial-one/issues/2236)) ([b064e94](https://github.com/factorialco/factorial-one/commit/b064e94ea2af72cb537ac1125523d13452712c2e))
+
+## [1.120.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.3...factorial-one-react-v1.120.0) (2025-07-10)
+
+
+### Features
+
+* Extract datacollection filters to OneFilterPicker component ([#2226](https://github.com/factorialco/factorial-one/issues/2226)) ([#2232](https://github.com/factorialco/factorial-one/issues/2232)) ([0fbf916](https://github.com/factorialco/factorial-one/commit/0fbf9163f4fb71cb0f11bb58ce67180d75bf3004))
+
+## [1.119.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.2...factorial-one-react-v1.119.3) (2025-07-09)
+
+
+### Bug Fixes
+
+* **avatar:** add no translate attribute for avatars ([#2228](https://github.com/factorialco/factorial-one/issues/2228)) ([f7bc69a](https://github.com/factorialco/factorial-one/commit/f7bc69ac2d574da096cebcbab94ccdf7ea2c3eb7))
+
+## [1.119.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.1...factorial-one-react-v1.119.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* dialog appearing behind modal in popover context ([ce25903](https://github.com/factorialco/factorial-one/commit/ce25903b97c7822117f08b3b04a6ab92e43139f2))
+
+## [1.119.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.119.0...factorial-one-react-v1.119.1) (2025-07-07)
+
+
+### Bug Fixes
+
+* update BasicTextEditor and added drag extension ([#2212](https://github.com/factorialco/factorial-one/issues/2212)) ([5dc53ed](https://github.com/factorialco/factorial-one/commit/5dc53ed8e00731b493d143435f46cebd46a04601))
+
+## [1.119.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.118.2...factorial-one-react-v1.119.0) (2025-07-04)
+
+
+### Features
+
+* **Icons:** new icons missing from Gamma ([#2221](https://github.com/factorialco/factorial-one/issues/2221)) ([528674b](https://github.com/factorialco/factorial-one/commit/528674bc0115abbab8d8520614c5f4d22ed3f1c8))
+
+## [1.118.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.118.1...factorial-one-react-v1.118.2) (2025-07-04)
+
+
+### Bug Fixes
+
+* set correct selectable count when there is grouping ([#2223](https://github.com/factorialco/factorial-one/issues/2223)) ([eb43a39](https://github.com/factorialco/factorial-one/commit/eb43a39783d4a314928922fef55fd5dd63c2e668))
+
+## [1.118.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.118.0...factorial-one-react-v1.118.1) (2025-07-04)
+
+
+### Bug Fixes
+
+* data collection defaultOpenGroups as true ([#2220](https://github.com/factorialco/factorial-one/issues/2220)) ([8ae61d7](https://github.com/factorialco/factorial-one/commit/8ae61d77aba2f343f02acc1a010805083911641b))
+
+## [1.118.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.117.2...factorial-one-react-v1.118.0) (2025-07-03)
+
+
+### Features
+
+* add skeleton while product banner data is loading ([38fd151](https://github.com/factorialco/factorial-one/commit/38fd15153f179a0566338d58d8ca6cef017053da))
+
+## [1.117.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.117.1...factorial-one-react-v1.117.2) (2025-07-02)
+
+
+### Bug Fixes
+
+* decouple upsell dialog from button ([#2209](https://github.com/factorialco/factorial-one/issues/2209)) ([4e7858b](https://github.com/factorialco/factorial-one/commit/4e7858b45f4ff346d1be538734418a2025547149))
+
 ## [1.117.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.117.0...factorial-one-react-v1.117.1) (2025-07-01)
 
 

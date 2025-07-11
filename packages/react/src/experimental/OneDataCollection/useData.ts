@@ -8,11 +8,14 @@ import {
   useState,
 } from "react"
 import { Observable } from "zen-observable-ts"
+import type {
+  FiltersDefinition,
+  FiltersState,
+} from "../../components/OneFilterPicker/types"
 import {
   PromiseState,
   promiseToObservable,
 } from "../../lib/promise-to-observable"
-import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import {
   NavigationFiltersDefinition,
@@ -228,6 +231,8 @@ export function useData<
     currentNavigationFilters,
     currentGrouping,
     grouping,
+    idProvider = (item, index): string | number =>
+      "id" in item ? `${item.id}` : index || JSON.stringify(item),
   } = source
 
   const cleanup = useRef<(() => void) | undefined>()
@@ -282,6 +287,30 @@ export function useData<
   )
 
   const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
+
+  /**
+   * Merges 2 arrays of items using the idProvider to update the existing items
+   * and add the new items
+   */
+  const mergeItems = (
+    prevData: R[],
+    newData: R[],
+    idProvider: (item: R, index?: number) => string | number | symbol
+  ): R[] => {
+    {
+      // The Map order is guaranteed to be the same as the order of the items in the array. Check https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#objects_vs._maps
+      const idMap = new Map(
+        prevData.map((item, index) => [idProvider(item, index), item])
+      )
+
+      for (const [index, record] of newData.entries()) {
+        const id = idProvider(record, index)
+        idMap.set(id, record)
+      }
+
+      return Array.from(idMap.values())
+    }
+  }
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<R> | SimpleResult<R>, appendMode: boolean) => {
@@ -340,31 +369,7 @@ export function useData<
 
       setRawData(
         appendMode
-          ? (prevData) => {
-              const merged = [...prevData]
-              const idMap = new Map(
-                prevData
-                  .filter((item) => "id" in item && !!item.id)
-                  .map((item) => [item.id, item])
-              )
-
-              for (const record of records) {
-                if ("id" in record && !!record.id && idMap.has(record.id)) {
-                  const index = merged.findIndex(
-                    (item) => item.id === record.id
-                  )
-                  if (index !== -1) {
-                    merged[index] = record // Overwrite existing item
-                  } else {
-                    merged.push(record) // Fallback
-                  }
-                } else {
-                  merged.push(record) // New item
-                }
-              }
-
-              return merged
-            }
+          ? (prevData) => mergeItems(prevData, records, idProvider)
           : records
       )
       setError(null)

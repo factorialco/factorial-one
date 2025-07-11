@@ -4,7 +4,7 @@ import { focusRing } from "@/lib/utils"
 
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { FiltersDefinition } from "../../Filters/types"
+import { FiltersDefinition } from "../../../../components/OneFilterPicker/types"
 import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"

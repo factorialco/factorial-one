@@ -44,6 +44,7 @@ describe.skip("BreadcrumbSelect", () => {
   it("renders with default value", () => {
     render(
       <BreadcrumbSelect
+        label="Select an option"
         options={mockOptions}
         value="option1"
         onChange={mockOnChange}
@@ -55,6 +56,7 @@ describe.skip("BreadcrumbSelect", () => {
   it("renders with default item when no value is provided", () => {
     render(
       <BreadcrumbSelect
+        label="Select an option"
         options={mockOptions}
         onChange={mockOnChange}
         defaultItem={{ value: "option1", label: "Option 1" }}
@@ -66,6 +68,7 @@ describe.skip("BreadcrumbSelect", () => {
   it("renders placeholder when no value or default item is provided", () => {
     render(
       <BreadcrumbSelect
+        label="Select an option"
         options={mockOptions}
         onChange={mockOnChange}
         placeholder="Select an option"
@@ -78,7 +81,13 @@ describe.skip("BreadcrumbSelect", () => {
     const onChange = vi.fn()
     const user = userEvent.setup()
 
-    render(<BreadcrumbSelect options={mockOptions} onChange={onChange} />)
+    render(
+      <BreadcrumbSelect
+        label="Select an option"
+        options={mockOptions}
+        onChange={onChange}
+      />
+    )
 
     await openSelect(user)
 
@@ -98,6 +107,8 @@ describe.skip("BreadcrumbSelect", () => {
 
     render(
       <BreadcrumbSelect
+        label="Select an option"
+        hideLabel
         options={mockOptions}
         onSearchChange={onSearchChange}
         showSearchBox

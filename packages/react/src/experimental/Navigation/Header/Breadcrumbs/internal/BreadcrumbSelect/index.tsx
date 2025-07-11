@@ -8,9 +8,12 @@ import {
   SelectProps,
 } from "../../../../../Forms/Fields/Select"
 
-export type BreadcrumbSelectProps<T = string, R = unknown> = SelectProps<T, R>
+export type BreadcrumbSelectProps<T extends string, R = unknown> = SelectProps<
+  T,
+  R
+>
 
-export function BreadcrumbSelect<T = string, R = unknown>({
+export function BreadcrumbSelect<T extends string, R = unknown>({
   ...props
 }: BreadcrumbSelectProps<T, R>) {
   const [localOpen, setLocalOpen] = useState(props.open)
@@ -40,12 +43,10 @@ export function BreadcrumbSelect<T = string, R = unknown>({
       onOpenChange={onOpenChangeLocal}
       onChange={handleChange}
       onChangeSelectedOption={handleChangeSelectedOption}
+      label={props.label}
+      hideLabel
     >
-      <button
-        className="flex h-6 items-center justify-between rounded-sm border px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary"
-        role="combobox"
-        aria-label={selectedLabel}
-      >
+      <button className="flex h-6 items-center justify-between rounded-sm border px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
         <span className="block grow text-f1-foreground">{selectedLabel}</span>
         <div className="ml-2">
           <motion.div
