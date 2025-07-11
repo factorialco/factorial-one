@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.124.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.123.0...factorial-one-react-v1.124.0) (2025-07-11)
+
+
+### Features
+
+* **Card:** make Emoji avatar available ([#2248](https://github.com/factorialco/factorial-one/issues/2248)) ([7dba9fd](https://github.com/factorialco/factorial-one/commit/7dba9fdf65ae3403b6c9c7c5b6e2232bef72d0c6))
+
 ## [1.123.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.122.2...factorial-one-react-v1.123.0) (2025-07-11)
 
 
