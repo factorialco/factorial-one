@@ -113,7 +113,7 @@ const OneEllipsis = forwardRef<HTMLDivElement, OneEllipsisProps>(
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <span className="overflow-hidden">{Text}</span>
+            <span className="min-w-0 flex-1 overflow-hidden">{Text}</span>
           </TooltipTrigger>
           <TooltipContent className="max-w-xl">{children}</TooltipContent>
         </Tooltip>

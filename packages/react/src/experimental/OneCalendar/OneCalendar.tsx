@@ -187,6 +187,8 @@ export function OneCalendar({
       {showInput && (
         <div className="mb-2 flex gap-2">
           <Input
+            label={i18n.date.from}
+            hideLabel
             error={!!inputError.from}
             value={inputValue.from}
             placeholder={mode === "range" ? i18n.date.from : i18n.date.date}
@@ -200,12 +202,12 @@ export function OneCalendar({
                 handleInputNavigate("from", e.key === "ArrowDown" ? -1 : 1)
               }
             }}
-            onChange={(e) =>
-              setInputValue({ ...inputValue, from: e.target.value })
-            }
+            onChange={(value) => setInputValue({ ...inputValue, from: value })}
           />
           {mode === "range" && (
             <Input
+              label={i18n.date.to}
+              hideLabel
               error={!!inputError.to}
               value={inputValue.to}
               placeholder={i18n.date.to}
@@ -219,9 +221,7 @@ export function OneCalendar({
                   handleInputNavigate("to", e.key === "ArrowDown" ? -1 : 1)
                 }
               }}
-              onChange={(e) =>
-                setInputValue({ ...inputValue, to: e.target.value })
-              }
+              onChange={(value) => setInputValue({ ...inputValue, to: value })}
             />
           )}
         </div>

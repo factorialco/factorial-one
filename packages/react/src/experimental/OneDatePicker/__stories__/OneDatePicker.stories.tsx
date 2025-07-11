@@ -60,6 +60,8 @@ const presets = [
 
 export const Simple: Story = {
   args: {
+    label: "Date",
+    placeholder: "Select a date",
     defaultValue: {
       granularity: "day",
     } as DatePickerValue,
@@ -71,6 +73,8 @@ export const Simple: Story = {
 
 export const WithCustomRange: Story = {
   args: {
+    label: "Date",
+    placeholder: "Select a date",
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
@@ -82,6 +86,8 @@ export const WithCustomRange: Story = {
 
 export const HideGoToCurrent: Story = {
   args: {
+    label: "Date",
+    placeholder: "Select a date",
     hideGoToCurrent: true,
   },
   parameters: {
@@ -91,6 +97,8 @@ export const HideGoToCurrent: Story = {
 
 export const WithDefaultDate: Story = {
   args: {
+    label: "Date",
+    placeholder: "Select a date",
     hideGoToCurrent: true,
     defaultValue: {
       value: { from: new Date(2025, 6, 30), to: new Date(2025, 6, 30) },
@@ -104,6 +112,8 @@ export const WithDefaultDate: Story = {
 
 export const WithPresets: Story = {
   args: {
+    label: "Date",
+    placeholder: "Select a date",
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
@@ -117,6 +127,8 @@ export const WithPresets: Story = {
 
 export const WithMinMaxDates: Story = {
   args: {
+    label: "Date",
+    placeholder: "Select a date",
     defaultValue: {
       granularity: "day",
     } as DatePickerValue,

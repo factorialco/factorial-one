@@ -1,13 +1,14 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { ChevronDown } from "@/icons/app"
+import { cn } from "@/lib/utils"
+import { InputField, InputFieldProps } from "@/ui/InputField"
 import {
   SelectContent,
   SelectItem as SelectItemPrimitive,
   Select as SelectPrimitive,
   SelectSeparator,
   SelectTrigger,
-  SelectValue as SelectValuePrimitive,
   VirtualItem,
 } from "@/ui/Select"
 import {
@@ -18,7 +19,6 @@ import {
   useRef,
   useState,
 } from "react"
-import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
 import { SelectTopActions } from "./SelectTopActions"
@@ -28,7 +28,6 @@ export * from "./types"
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Allow to pass anything as item */
 export type SelectProps<T, R = any> = {
-  placeholder?: string
   onChange: (value: T, item?: R) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
@@ -46,11 +45,22 @@ export type SelectProps<T, R = any> = {
   className?: string
   selectContentClassName?: string
   actions?: Action[]
-}
+} & Pick<
+  InputFieldProps<T>,
+  | "loading"
+  | "hideLabel"
+  | "clearable"
+  | "labelIcon"
+  | "size"
+  | "label"
+  | "error"
+  | "icon"
+  | "placeholder"
+>
 
-const SelectItem = <T,>({ item }: { item: SelectItemObject<T> }) => {
+const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   return (
-    <SelectItemPrimitive value={String(item.value)}>
+    <SelectItemPrimitive value={item.value}>
       <div className="flex w-full items-start gap-1.5">
         {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
         {item.icon && (
@@ -78,7 +88,7 @@ const SelectItem = <T,>({ item }: { item: SelectItemObject<T> }) => {
 
 const SelectValue = forwardRef<
   HTMLDivElement,
-  { item: SelectItemObject<unknown> }
+  { item: SelectItemObject<string> }
 >(function SelectValue({ item }, ref) {
   return (
     <div className="flex items-center gap-1.5" ref={ref}>
@@ -92,10 +102,7 @@ const SelectValue = forwardRef<
   )
 })
 
-const defaultTrigger =
-  "flex h-10 w-full items-center justify-between rounded-md border border-solid border-f1-border bg-f1-background pl-3 pr-2 py-2.5 transition-colors placeholder:text-f1-foreground-secondary hover:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1"
-
-const SelectComponent = forwardRef(function Select<T, R>(
+const SelectComponent = forwardRef(function Select<T extends string, R>(
   {
     placeholder,
     options = [],
@@ -104,15 +111,22 @@ const SelectComponent = forwardRef(function Select<T, R>(
     children,
     disabled,
     open,
+    hideLabel,
     onOpenChange,
     showSearchBox,
     onSearchChange,
     searchBoxPlaceholder,
     externalSearch,
     searchEmptyMessage,
-    className,
+    size,
     selectContentClassName,
     actions,
+    label,
+    error,
+    icon,
+    labelIcon,
+    clearable,
+    loading,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -124,10 +138,9 @@ const SelectComponent = forwardRef(function Select<T, R>(
 
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const [searchValue, setSearchValue] = useState(
-    (props as { searchValue?: string }).searchValue || ""
-  )
+  const [searchValue, setSearchValue] = useState(props.searchValue || "")
   const [openLocal, setOpenLocal] = useState(open)
+  const [localValue, setLocalValue] = useState(value)
 
   const filteredOptions = useMemo(() => {
     if (externalSearch) {
@@ -162,19 +175,22 @@ const SelectComponent = forwardRef(function Select<T, R>(
     [setSearchValue, onSearchChange]
   )
 
-  const onValueChange = (changedValue: string) => {
+  const handleLocalValueChange = (value: T) => {
+    setLocalValue(value)
     // Resets the search value when the option is selected
     setSearchValue("")
-    const foundOption = options.find(
-      (option): option is SelectItemObject<T, R> =>
-        option.type !== "separator" && String(option.value) === changedValue
+    onChange?.(
+      value,
+      options.find(
+        (option): option is SelectItemObject<T, R> =>
+          typeof option === "object" &&
+          option.type !== "separator" &&
+          option.value === value
+      )?.item
     )
-    if (foundOption) {
-      onChange?.(foundOption.value, foundOption.item)
-    }
   }
 
-  const onOpenChangeLocal = (open: boolean) => {
+  const handleChangeOpenLocal = (open: boolean) => {
     onOpenChange?.(open)
     setOpenLocal(open)
     setTimeout(() => {
@@ -192,8 +208,8 @@ const SelectComponent = forwardRef(function Select<T, R>(
             }
           : {
               height: option.description ? 64 : 32,
-              item: <SelectItem key={String(option.value)} item={option} />,
-              value: String(option.value),
+              item: <SelectItem key={option.value} item={option} />,
+              value: option.value,
             }
       ),
     [filteredOptions]
@@ -201,42 +217,70 @@ const SelectComponent = forwardRef(function Select<T, R>(
 
   return (
     <SelectPrimitive
-      onValueChange={onValueChange}
-      value={value !== undefined && value !== null ? String(value) : undefined}
+      onValueChange={handleLocalValueChange}
+      value={localValue}
       disabled={disabled}
-      open={open}
-      onOpenChange={onOpenChangeLocal}
+      open={openLocal}
+      onOpenChange={handleChangeOpenLocal}
       {...props}
     >
-      <SelectTrigger ref={ref} asChild>
-        {children || (
-          <button
-            aria-label="Select unfoldable"
-            className={cn(
-              defaultTrigger,
-              className,
-              focusRing("focus-visible:border-f1-border-hover")
-            )}
+      {children ? (
+        <SelectTrigger ref={ref} asChild>
+          <div
+            className="flex w-full items-center justify-between"
+            aria-label={label || placeholder}
           >
-            <SelectValuePrimitive placeholder={placeholder} asChild>
+            {children}
+          </div>
+        </SelectTrigger>
+      ) : (
+        <SelectTrigger ref={ref} asChild>
+          <InputField
+            label={label}
+            error={error}
+            icon={icon}
+            labelIcon={labelIcon}
+            hideLabel={hideLabel}
+            value={localValue}
+            onChange={(value) => handleLocalValueChange(value as T)}
+            placeholder={placeholder || ""}
+            disabled={disabled}
+            clearable={clearable}
+            size={size}
+            loading={loading}
+            onClickContent={() => {
+              handleChangeOpenLocal(!openLocal)
+            }}
+            append={
+              <Icon
+                onClick={() => {
+                  if (disabled) return
+                  handleChangeOpenLocal(!openLocal)
+                }}
+                icon={ChevronDown}
+                size="sm"
+                className={cn(
+                  "rounded-2xs bg-f1-background-secondary p-0.5 transition-transform duration-200",
+                  openLocal && "rotate-180",
+                  !disabled && "cursor-pointer"
+                )}
+              />
+            }
+          >
+            <button
+              className="flex w-full items-center justify-between"
+              aria-label={label || placeholder}
+            >
               {selectedOption && <SelectValue item={selectedOption} />}
-            </SelectValuePrimitive>
-            <div className="flex h-6 w-6 items-center justify-center">
-              <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
-                <Icon
-                  icon={ChevronDown}
-                  size="sm"
-                  className="rounded-2xs bg-f1-background-secondary p-0.5"
-                />
-              </div>
-            </div>
-          </button>
-        )}
-      </SelectTrigger>
+            </button>
+          </InputField>
+        </SelectTrigger>
+      )}
+
       {openLocal && (
         <SelectContent
           items={items}
-          className={selectContentClassName}
+          className={cn(selectContentClassName)}
           emptyMessage={searchEmptyMessage}
           bottom={<SelectBottomActions actions={actions} />}
           top={
@@ -254,6 +298,9 @@ const SelectComponent = forwardRef(function Select<T, R>(
   )
 })
 
-export const Select = SelectComponent as <T = string, R = unknown>(
+export const Select = SelectComponent as <
+  T extends string = string,
+  R = unknown,
+>(
   props: SelectProps<T, R> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.ReactElement

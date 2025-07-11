@@ -2,21 +2,28 @@ import {
   OneDatePickerPopup,
   OneDatePickerPopupProps,
 } from "@/ui/DatePickerPopup/OneDatePickerPopup"
+import { InputFieldProps } from "@/ui/InputField/InputField"
 import { useMemo, useState } from "react"
 import { granularityDefinitions } from "../OneCalendar"
 import { DateInput } from "./components/DateInput"
 import { DatePickerValue } from "./types"
-export interface OneDatePickerProps
-  extends Omit<OneDatePickerPopupProps, "children"> {
+export type OneDatePickerProps = Omit<OneDatePickerPopupProps, "children"> & {
   hideNavigation?: boolean
   hideGoToCurrent?: boolean
-}
+} & Pick<
+    InputFieldProps<string>,
+    "label" | "hideLabel" | "placeholder" | "error"
+  >
 
 export function OneDatePicker({
   onSelect,
   defaultValue,
   presets = [],
   granularities = ["day"],
+  label,
+  hideLabel,
+  error,
+  placeholder,
   ...props
 }: OneDatePickerProps) {
   const [value, setValue] = useState<DatePickerValue | undefined>(defaultValue)
@@ -45,6 +52,9 @@ export function OneDatePicker({
         onOpenChange={setIsOpen}
       >
         <DateInput
+          label={label}
+          hideLabel={hideLabel}
+          placeholder={placeholder}
           value={value}
           granularity={granularityDefinition}
           onDateChange={(newValue) =>
@@ -54,6 +64,7 @@ export function OneDatePicker({
             })
           }
           disabled={props.disabled}
+          error={error}
           open={isOpen}
           onOpenChange={setIsOpen}
         />

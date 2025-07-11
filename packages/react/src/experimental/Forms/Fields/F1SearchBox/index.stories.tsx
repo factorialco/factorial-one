@@ -33,6 +33,13 @@ const meta = {
       defaultValue: 0,
     },
   },
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: 300, margin: "0 auto" }}>
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof F1SearchBox>
 
 export default meta

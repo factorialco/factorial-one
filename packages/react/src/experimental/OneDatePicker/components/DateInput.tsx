@@ -4,23 +4,41 @@ import type {
 } from "@/experimental/OneCalendar"
 import { isValidDate } from "@/experimental/OneCalendar/utils"
 import { Input } from "@/ui/input"
+import { InputFieldProps } from "@/ui/InputField/InputField"
 import { forwardRef, useEffect, useState } from "react"
 import { DatePickerValue } from "../types"
 
 type DateInputProps = {
   value: DatePickerValue | undefined
-  disabled?: boolean
   className?: string
   onDateChange?: (date: DateRangeComplete) => void
   onClick?: () => void
   granularity?: GranularityDefinition
   open?: boolean
   onOpenChange?: (open: boolean) => void
-}
+} & Pick<
+  InputFieldProps<string>,
+  | "label"
+  | "hideLabel"
+  | "error"
+  | "disabled"
+  | "placeholder"
+  | "onClickContent"
+>
 
 const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
   (
-    { value, onDateChange, disabled, className, granularity, onOpenChange },
+    {
+      value,
+      onDateChange,
+      disabled,
+      className,
+      granularity,
+      onOpenChange,
+      label,
+      hideLabel,
+      placeholder,
+    },
     ref
   ) => {
     const [localValue, setLocalValue] = useState("")
@@ -44,15 +62,18 @@ const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
 
     return (
       <Input
+        label={label}
+        hideLabel={hideLabel}
         ref={ref}
-        placeholder="TODO component not ready, just a boilerplate"
+        placeholder={`${placeholder} TODO component not ready, just a boilerplate`}
         value={localValue}
         disabled={disabled}
         error={error}
         className={className}
         onFocus={() => onOpenChange?.(true)}
-        onChange={(e) => setLocalValue(e.target.value)}
+        onChange={setLocalValue}
         onBlur={handleBlur}
+        onClickContent={() => onOpenChange?.(true)}
       />
     )
   }

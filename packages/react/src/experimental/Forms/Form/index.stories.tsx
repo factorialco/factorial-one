@@ -77,6 +77,7 @@ export const Default: Story = {
         >
           {(field) => (
             <Input
+              label="Username"
               placeholder="A username must be all letters"
               {...field}
               value={field.value ? String(field.value) : undefined}
@@ -92,6 +93,7 @@ export const Default: Story = {
         >
           {(field) => (
             <Input
+              label="Full name"
               {...field}
               value={field.value ? String(field.value) : undefined}
             />
@@ -106,6 +108,7 @@ export const Default: Story = {
         >
           {(field) => (
             <Input
+              label="Email"
               type="email"
               {...field}
               value={field.value ? String(field.value) : undefined}
@@ -121,6 +124,7 @@ export const Default: Story = {
         >
           {(field) => (
             <Input
+              label="Password"
               type="password"
               {...field}
               value={field.value ? String(field.value) : undefined}
@@ -136,6 +140,7 @@ export const Default: Story = {
         >
           {(field) => (
             <Input
+              label="Password Confirmation"
               type="password"
               {...field}
               value={field.value ? String(field.value) : undefined}
@@ -151,6 +156,7 @@ export const Default: Story = {
         >
           {(field) => (
             <Textarea
+              label="Biography"
               {...field}
               value={field.value ? String(field.value) : undefined}
             />
@@ -165,6 +171,7 @@ export const Default: Story = {
         >
           {(field) => (
             <Select
+              label="Tag"
               {...field}
               value={field.value ? String(field.value) : undefined}
               placeholder="Select something"
@@ -225,7 +232,11 @@ export const AsyncFieldValidation: Story = {
           name="username"
         >
           {(field) => (
-            <Input placeholder="Try 'taken' as a username" {...field} />
+            <Input
+              label="Username"
+              placeholder="Try 'taken' as a username"
+              {...field}
+            />
           )}
         </FormField>
 
@@ -257,7 +268,13 @@ export const AsyncSubmit: Story = {
           control={form.control}
           name="comment"
         >
-          {(field) => <Textarea placeholder="Add your comment" {...field} />}
+          {(field) => (
+            <Textarea
+              label="Comment"
+              placeholder="Add your comment"
+              {...field}
+            />
+          )}
         </FormField>
 
         <FormActions form={form} submitLabel="Create" />
@@ -326,6 +343,7 @@ export const MultipleTypeSchema: Story = {
             >
               {(field) => (
                 <Input
+                  label="Name"
                   placeholder="Try 'taken' as a username"
                   {...field}
                   value={String(field.value)}
@@ -381,6 +399,7 @@ export const MultipleTypeSchema: Story = {
             >
               {(field) => (
                 <Input
+                  label="Name"
                   placeholder="Try 'taken' as a username"
                   {...field}
                   value={String(field.value)}
@@ -525,6 +544,7 @@ export const NestedSchemas: Story = {
             >
               {(field) => (
                 <NumberInput
+                  label="Quantity"
                   {...field}
                   step={1}
                   value={Number(field.value) || 0}
@@ -545,6 +565,7 @@ export const NestedSchemas: Story = {
               {(field) => (
                 <NumberInput
                   {...field}
+                  label="Price"
                   value={Number(field.value) || 0}
                   locale="en-US"
                   onChange={(value) => {
@@ -560,7 +581,13 @@ export const NestedSchemas: Story = {
               control={subForm.control}
               name="comment"
             >
-              {(field) => <Input placeholder="Add your comment" {...field} />}
+              {(field) => (
+                <Input
+                  label="Comment"
+                  placeholder="Add your comment"
+                  {...field}
+                />
+              )}
             </FormField>
 
             <div className="mt-3">
