@@ -78343,8 +78343,8 @@ const dlt = ({
       false: "flex-none"
     },
     size: {
-      sm: "rounded-sm pl-2 pr-1",
-      md: "rounded-md pl-3 pr-2"
+      sm: "rounded-[10px] pl-2 pr-1",
+      md: "rounded-[12px] pl-3 pr-2"
     }
   },
   compoundVariants: [
@@ -78484,12 +78484,13 @@ const dlt = ({
             {
               className: be(
                 "flex w-full gap-2 transition-all",
+                "border-[f1-border-secondary bg-f1-background] border-[1px] border-solid",
                 "border-[1px] border-solid border-f1-border-secondary bg-f1-background",
                 !Q && "hover:border-f1-border-hover",
                 "group focus-within:border-f1-border-hover focus-within:ring-1 focus-within:ring-f1-border-hover",
-                "active-within:border-f1-border- active-within:ring-1 active-within:ring-f1-border-hover",
+                "active-within:border-f1-border active-within:ring-1 active-within:ring-f1-border-hover",
                 "focus-within:outline-none focus-within:ring-1 focus-within:ring-offset-1",
-                u ? "focus-within:ring-f1-critical border-f1-border-critical-bold bg-f1-background-critical" : "focus-within:ring-f1-ring",
+                u ? "focus-within:ring-f1-critical border-f1-border-critical-bold" : "focus-within:ring-f1-ring",
                 n && "border-f1-border-secondary bg-f1-background-secondary",
                 t && "cursor-not-allowed",
                 hlt({ size: c, canGrow: f })
@@ -78501,7 +78502,7 @@ const dlt = ({
                   {
                     onClick: j,
                     icon: d,
-                    className: "h-5 w-5 shrink-0 pt-[2px] text-f1-foreground-secondary"
+                    className: "text-f1-icon-default h-5 w-5 shrink-0 pt-[2px]"
                   }
                 ) }),
                 /* @__PURE__ */ oe(
@@ -78535,7 +78536,7 @@ const dlt = ({
                         "div",
                         {
                           className: be(
-                            "pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start pt-[1px] text-f1-foreground-secondary transition-opacity",
+                            "pointer-events-none absolute bottom-0 left-0 top-[1px] z-10 flex flex-1 justify-start text-f1-foreground-secondary transition-opacity",
                             Gs({ size: c }),
                             y && !C && v(Y) ? "opacity-1" : "opacity-0"
                           ),
@@ -78564,7 +78565,7 @@ const dlt = ({
                     children: /* @__PURE__ */ M(Qr, { initial: !v(Y), children: !v(Y) && /* @__PURE__ */ M(
                       un,
                       {
-                        className: "hover:text-f1-foreground-primary mt-[1px] h-5 w-5 cursor-pointer text-f1-foreground-secondary",
+                        className: "mt-[1px] h-5 w-5 cursor-pointer text-f1-icon-secondary hover:text-f1-icon",
                         onClick: R,
                         icon: cE
                       }
