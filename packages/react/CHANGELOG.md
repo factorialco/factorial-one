@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.123.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.122.2...factorial-one-react-v1.123.0) (2025-07-11)
+
+
+### Features
+
+* Use ellipsis in icon names in Icons documentation ([#2246](https://github.com/factorialco/factorial-one/issues/2246)) ([d3aaa89](https://github.com/factorialco/factorial-one/commit/d3aaa89b612ecbbf21d10f81500fcb02d08827af))
+
 ## [1.122.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.122.1...factorial-one-react-v1.122.2) (2025-07-10)
 
 
