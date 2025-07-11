@@ -132,5 +132,6 @@ export const Clearable: Story = {
   args: {
     label: "Label text here",
     maxLength: 10,
+    clearable: true,
   },
 }

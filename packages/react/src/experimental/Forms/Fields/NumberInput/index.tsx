@@ -100,7 +100,6 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           ref={ref}
           value={fieldValue}
           inputMode="decimal"
-          className="group-focus-within:pr-5 group-hover:pr-5"
           onChange={handleChange}
           {...props}
           append={<Arrows />}
