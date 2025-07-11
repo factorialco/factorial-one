@@ -39,11 +39,8 @@ function IconCard({ name, icon: Icon }: IconEntry) {
       transition={{ duration: 0.1 }}
     >
       <IconComponent icon={Icon} size="lg" color="bold" />
-      <div className="w-full">
-        <OneEllipsis
-          tag="span"
-          className="text-center !text-sm text-f1-foreground-secondary"
-        >
+      <div className="w-full text-center text-f1-foreground-secondary">
+        <OneEllipsis tag="span" className="!text-sm">
           {name}
         </OneEllipsis>
       </div>
