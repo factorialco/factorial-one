@@ -3,6 +3,7 @@ import { AlertTagCellValue } from './types/alertTag.tsx';
 import { AmountCellValue } from './types/amount.tsx';
 import { AnchorHTMLAttributes } from 'react';
 import { AreaChartWidgetProps } from './AreaChartWidget';
+import { AriaAttributes } from 'react';
 import { AvatarListCellValue } from './types/avatarList.tsx';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { AvatarProps } from '@radix-ui/react-avatar';
@@ -2019,6 +2020,8 @@ declare type InputFieldProps<T> = {
     readonly?: boolean;
     clearable?: boolean;
     role?: string;
+    "aria-controls"?: AriaAttributes["aria-controls"];
+    "aria-expanded"?: AriaAttributes["aria-expanded"];
     onClear?: () => void;
     onFocus?: () => void;
     onBlur?: () => void;
@@ -4450,8 +4453,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        transcript: {
-            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
     }
 }
@@ -4459,8 +4462,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        liveCompanion: {
-            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        transcript: {
+            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
         };
     }
 }
