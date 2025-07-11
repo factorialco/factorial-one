@@ -78243,8 +78243,21 @@ const llt = ({ error: e }) => {
   if (!e || e === !0) return null;
   const t = Array.isArray(e) ? e : [e];
   return t.length > 0 && /* @__PURE__ */ oe("div", { className: "flex gap-1", children: [
-    /* @__PURE__ */ M(un, { icon: Z2, className: "h-4 w-4 text-f1-icon-critical" }),
-    /* @__PURE__ */ M("ul", { className: "list-none", children: t.map((n) => /* @__PURE__ */ M("li", { className: "text-sm text-f1-foreground-critical", children: n }, n)) })
+    /* @__PURE__ */ M(
+      un,
+      {
+        icon: Z2,
+        className: "h-6 w-6 -translate-y-[2px] text-f1-icon-critical"
+      }
+    ),
+    /* @__PURE__ */ M("ul", { className: "list-none", children: t.map((n) => /* @__PURE__ */ M(
+      "li",
+      {
+        className: "text-md font-medium text-f1-foreground-critical",
+        children: n
+      },
+      n
+    )) })
   ] });
 }, xA = (e, t) => {
   if (!e) return !1;
