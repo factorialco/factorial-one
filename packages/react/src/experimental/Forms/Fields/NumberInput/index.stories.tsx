@@ -42,7 +42,6 @@ export const Primary: Story = {
   },
   render: (props) => {
     const [value, setValue] = useState<number | null>(props.value ?? 1)
-    console.log("value", value)
     return <NumberInput {...props} value={value} onChange={setValue} />
   },
 }

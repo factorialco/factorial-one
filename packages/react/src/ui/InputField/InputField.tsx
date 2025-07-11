@@ -48,8 +48,8 @@ const inputFieldVariants = cva({
       false: "flex-none",
     },
     size: {
-      sm: "rounded-sm pl-2 pr-1",
-      md: "rounded-md pl-3 pr-2",
+      sm: "rounded-[10px] pl-2 pr-1",
+      md: "rounded-[12px] pl-3 pr-2",
     },
   },
   compoundVariants: [
@@ -268,13 +268,14 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
         <div
           className={cn(
             "flex w-full gap-2 transition-all",
+            "border-[f1-border-secondary bg-f1-background] border-[1px] border-solid",
             "border-[1px] border-solid border-f1-border-secondary bg-f1-background",
             !noEdit && "hover:border-f1-border-hover",
             "group focus-within:border-f1-border-hover focus-within:ring-1 focus-within:ring-f1-border-hover",
-            "active-within:border-f1-border- active-within:ring-1 active-within:ring-f1-border-hover",
+            "active-within:border-f1-border active-within:ring-1 active-within:ring-f1-border-hover",
             "focus-within:outline-none focus-within:ring-1 focus-within:ring-offset-1",
             error
-              ? "focus-within:ring-f1-critical border-f1-border-critical-bold bg-f1-background-critical"
+              ? "focus-within:ring-f1-critical border-f1-border-critical-bold"
               : "focus-within:ring-f1-ring",
             readonly && "border-f1-border-secondary bg-f1-background-secondary",
             disabled && "cursor-not-allowed",
@@ -287,7 +288,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               <Icon
                 onClick={handleClickContent}
                 icon={icon}
-                className="h-5 w-5 shrink-0 pt-[2px] text-f1-foreground-secondary"
+                className="text-f1-icon-default h-5 w-5 shrink-0 pt-[2px]"
               />
             </div>
           )}
@@ -321,7 +322,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
             {!noEdit && (
               <div
                 className={cn(
-                  "pointer-events-none absolute bottom-0 left-0 top-0 z-10 flex flex-1 justify-start pt-[1px] text-f1-foreground-secondary transition-opacity",
+                  "pointer-events-none absolute bottom-0 left-0 top-[1px] z-10 flex flex-1 justify-start text-f1-foreground-secondary transition-opacity",
                   inputElementVariants({ size }),
                   placeholder && !hidePlaceholder && isEmpty(localValue)
                     ? "opacity-1"
@@ -351,7 +352,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               <AnimatePresence initial={!isEmpty(localValue)}>
                 {!isEmpty(localValue) && (
                   <Icon
-                    className="hover:text-f1-foreground-primary mt-[1px] h-5 w-5 cursor-pointer text-f1-foreground-secondary"
+                    className="mt-[1px] h-5 w-5 cursor-pointer text-f1-icon-secondary hover:text-f1-icon"
                     onClick={handleClear}
                     icon={CrossedCircle}
                   />

@@ -12,10 +12,16 @@ const InputMessages = ({ error }: InputMessagesProps) => {
   return (
     messages.length > 0 && (
       <div className="flex gap-1">
-        <Icon icon={AlertCircle} className="h-4 w-4 text-f1-icon-critical" />
+        <Icon
+          icon={AlertCircle}
+          className="h-6 w-6 -translate-y-[2px] text-f1-icon-critical"
+        />
         <ul className="list-none">
           {messages.map((message) => (
-            <li key={message} className="text-sm text-f1-foreground-critical">
+            <li
+              key={message}
+              className="text-md font-medium text-f1-foreground-critical"
+            >
               {message}
             </li>
           ))}
