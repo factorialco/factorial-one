@@ -12,7 +12,7 @@ import type {
   FiltersDefinition,
   FiltersState,
 } from "../../components/OneFilterPicker/types"
-import { getValueByPath } from "../../lib/objectPaths"
+import { getValueByPath } from "@/lib/objectPaths"
 import {
   PromiseState,
   promiseToObservable,
