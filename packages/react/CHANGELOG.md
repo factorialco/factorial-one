@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.125.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.124.0...factorial-one-react-v1.125.0) (2025-07-14)
+
+
+### Features
+
+* datacollection grouping on nested values ([#2240](https://github.com/factorialco/factorial-one/issues/2240)) ([6855042](https://github.com/factorialco/factorial-one/commit/6855042efd4fff42ae3ae1201400a13f5aba83b6))
+
 ## [1.124.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.123.0...factorial-one-react-v1.124.0) (2025-07-11)
 
 
