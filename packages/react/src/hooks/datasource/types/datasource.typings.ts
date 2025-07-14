@@ -46,6 +46,11 @@ export type DataSourceDefinition<
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters>
 
+  /** Additional options for the data adapter fetch function */
+  dataAdapterFetchOptions?: () => Promise<
+    DataAdapterFetchOptions<Record, Filters>
+  >
+
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
   /** Default selected items */

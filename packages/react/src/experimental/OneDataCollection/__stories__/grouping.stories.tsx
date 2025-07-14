@@ -3,7 +3,7 @@ import { Meta, StoryObj } from "@storybook/react-vite"
 import {
   GroupingDefinition,
   OneDataCollection,
-  useDataSource,
+  useDataCollectionSource,
 } from "../exports"
 import {
   createDataAdapter,
@@ -190,7 +190,7 @@ export const WithPaginationAndGrouping: Story = {
       },
     }
 
-    const source = useDataSource({
+    const source = useDataCollectionSource({
       selectable: (item) => item.id,
       filters,
       presets: filterPresets,
@@ -310,7 +310,7 @@ export const WithInfiniteScrollPaginationAndGrouping: Story = {
       },
     }
 
-    const source = useDataSource({
+    const source = useDataCollectionSource({
       selectable: (item) => item.id,
       filters,
       presets: filterPresets,

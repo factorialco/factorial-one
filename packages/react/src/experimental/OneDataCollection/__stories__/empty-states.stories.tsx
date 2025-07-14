@@ -1,16 +1,14 @@
-import {
-  FiltersState,
-  NavigationFiltersDefinition,
-} from "@/experimental/exports"
-import {
-  BaseResponse,
-  DataAdapter,
-} from "@/experimental/OneDataCollection/types"
+import { BaseResponse, DataAdapter } from "@/hooks/datasource/types"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { Observable } from "zen-observable-ts"
+import {
+  FiltersState,
+  NavigationFiltersDefinition,
+  OneDataCollection,
+  useDataCollectionSource,
+} from "../exports"
 import { CustomEmptyStates } from "../hooks/useEmptyState"
-import { OneDataCollection, useDataSource } from "../index"
 import {
   createPromiseDataFetch,
   filters,
@@ -44,7 +42,7 @@ const BaseExampleComponent = ({
   currentFilters?: FiltersState<typeof filters>
   emptyStates?: CustomEmptyStates
 }) => {
-  const dataSource = useDataSource({
+  const dataSource = useDataCollectionSource({
     filters,
     dataAdapter,
     currentFilters,

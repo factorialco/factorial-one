@@ -39,17 +39,17 @@ import { VisualizationRenderer } from "./visualizations/collection"
 const MotionIcon = motion.create(Icon)
 
 import {
-  DataSource,
   GroupingDefinition,
   OnSelectItemsCallback,
   RecordType,
 } from "@/hooks/datasource"
+import { DataCollectionSource } from "./hooks/useDataCollectionSource"
 
 /**
  * A component that renders a collection of data with filtering and visualization capabilities.
- * It consumes a data source (created by useDataSource) and displays it through one or more visualizations.
+ * It consumes a data source (created by useDataCollectionSource) and displays it through one or more visualizations.
  *
- * DataCollection is separated from useDataSource to:
+ * DataCollection is separated from useDataCollectionSource to:
  * 1. Support the composition pattern - data sources can be created and managed independently
  * 2. Allow a single data source to be visualized in multiple ways simultaneously
  * 3. Enable reuse of the same data source in different parts of the application
@@ -83,7 +83,7 @@ const OneDataCollectionComp = <
   emptyStates,
   fullHeight,
 }: {
-  source: DataSource<
+  source: DataCollectionSource<
     Record,
     Filters,
     Sortings,

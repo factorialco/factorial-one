@@ -17,6 +17,13 @@ import {
 import { SummariesDefinition } from "../../summary"
 import { BulkActionDefinition, OnBulkActionCallback } from "../../types"
 
+export type DataCollectionSourceDataAdapter<
+  Record extends RecordType = RecordType,
+  Filters extends FiltersDefinition = FiltersDefinition,
+  NavigationFilters extends
+    NavigationFiltersDefinition = NavigationFiltersDefinition,
+> = DataAdapter<Record, Filters> & {}
+
 export type DataCollectionSourceDefinition<
   Record extends RecordType = RecordType,
   Filters extends FiltersDefinition = FiltersDefinition,
@@ -46,6 +53,11 @@ export type DataCollectionSourceDefinition<
   summaries?: Summaries & {
     label?: string // Optional label for the summaries row
   }
+  dataAdapter?: DataCollectionSourceDataAdapter<
+    Record,
+    Filters,
+    NavigationFilters
+  >
 
   /** Bulk actions that can be performed on the collection */
   bulkActions?: (

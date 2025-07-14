@@ -15,7 +15,7 @@ import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SummariesDefinition } from "./summary"
 export * from "@/hooks/datasource/types/grouping.typings"
-export * from "../../hooks/datasource/types/sortings.typings"
+export * from "@/hooks/datasource/types/sortings.typings"
 export * from "./summary"
 
 /**

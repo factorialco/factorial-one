@@ -15,7 +15,7 @@ import {
   RecordType,
   SelectedItemsState,
   SortingsStateMultiple,
-  useDataSource,
+  useDataCollectionSource,
 } from "@/experimental/OneDataCollection/exports"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
@@ -505,7 +505,7 @@ export const createPromiseDataFetch = (delay = 500) => {
 // Utility functions for data fetching
 export type FiltersType = typeof filters
 
-// Example component using useDataSource
+// Example component using useDataCollectionSource
 export const ExampleComponent = ({
   useObservable = false,
   usePresets = false,
@@ -557,7 +557,7 @@ export const ExampleComponent = ({
     frozenColumns,
   })
 
-  const dataSource = useDataSource({
+  const dataSource = useDataCollectionSource({
     filters,
     navigationFilters,
     presets: usePresets ? filterPresets : undefined,

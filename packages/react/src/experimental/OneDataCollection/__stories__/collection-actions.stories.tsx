@@ -4,10 +4,14 @@ import { Meta, StoryObj } from "@storybook/react-vite"
 import { FiltersDefinition } from "../../../components/OneFilterPicker/types"
 import { SortingsDefinition } from "../../../hooks/datasource/types/sortings.typings"
 import { SecondaryActionsItemDefinition } from "../actions"
-import { OneDataCollection, useDataSource } from "../index"
+import {
+  DataCollectionSource,
+  OneDataCollection,
+  useDataCollectionSource,
+} from "../exports"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
-import { DataSource, GroupingDefinition } from "../types"
+import { GroupingDefinition } from "../types"
 import { Visualization } from "../visualizations/collection/types"
 
 const meta = {
@@ -119,7 +123,7 @@ function BaseStory<
   dataSource,
   visualizations,
 }: {
-  dataSource: DataSource<
+  dataSource: DataCollectionSource<
     (typeof mockUsers)[number],
     Filters,
     Sortings,
@@ -178,7 +182,7 @@ function BaseStory<
 // Basic story showing all action types
 export const BasicActionsExample: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       dataAdapter: {
         fetchData: () => Promise.resolve({ records: mockUsers }),
       },
@@ -200,7 +204,7 @@ export const BasicActionsExample: Story = {
 // Basic story showing all action types
 export const WithExpandedActionsExample: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       dataAdapter: {
         fetchData: () => Promise.resolve({ records: mockUsers }),
       },
@@ -222,7 +226,7 @@ export const WithExpandedActionsExample: Story = {
 // Basic story showing all action types
 export const HiddenLabelExpandedActionsExample: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       dataAdapter: {
         fetchData: () => Promise.resolve({ records: mockUsers }),
       },
@@ -256,7 +260,7 @@ export const CardActionsExample: Story = {
     chromatic: { disableSnapshot: true },
   },
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       dataAdapter: {
         fetchData: () => Promise.resolve({ records: mockUsers }),
       },

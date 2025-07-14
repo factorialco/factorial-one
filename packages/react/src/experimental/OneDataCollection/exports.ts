@@ -7,5 +7,6 @@ export type * from "./navigationFilters/types"
 export type * from "./summary"
 export type * from "./types"
 // For backwards compatibility
-export { useDataSource } from "@/hooks/datasource"
 export * from "@/hooks/datasource/types"
+
+export * from "./hooks/useDataCollectionSource"
