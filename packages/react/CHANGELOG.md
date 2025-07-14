@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.126.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.125.0...factorial-one-react-v1.126.0) (2025-07-14)
+
+
+### Features
+
+* inputfield internal component ([#2101](https://github.com/factorialco/factorial-one/issues/2101)) ([958866b](https://github.com/factorialco/factorial-one/commit/958866be28838ed16c8a8375bd226ee6328ff6f1))
+
 ## [1.125.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.124.0...factorial-one-react-v1.125.0) (2025-07-14)
 
 
