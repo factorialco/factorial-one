@@ -18,15 +18,6 @@ export * from "@/hooks/datasource/types/grouping.typings"
 export * from "../../hooks/datasource/types/sortings.typings"
 export * from "./summary"
 
-export type CollectionSearchOptions = {
-  /** Whether search is enabled */
-  enabled: boolean
-  /** Whether search is synchronous */
-  sync?: boolean
-  /** Debounce time for search */
-  debounceTime?: number
-}
-
 /**
  * Represents a bulk action that can be performed on a collection.
  */

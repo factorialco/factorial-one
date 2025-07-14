@@ -2,10 +2,6 @@ import {
   FiltersDefinition,
   FiltersState,
 } from "@/components/OneFilterPicker/types"
-import {
-  NavigationFiltersDefinition,
-  NavigationFiltersState,
-} from "@/experimental/OneDataCollection/navigationFilters/types"
 import { SortingsStateMultiple } from "@/hooks/datasource/types/sortings.typings"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
@@ -15,29 +11,23 @@ import { RecordType } from "./records.typings"
  * Base options for data fetching
  * @template Filters - The available filter configurations
  */
-export type BaseFetchOptions<
-  Filters extends FiltersDefinition,
-  NavigationFilters extends NavigationFiltersDefinition,
-> = {
+export type BaseFetchOptions<Filters extends FiltersDefinition> = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
   sortings: SortingsStateMultiple
   search?: string
-  navigationFilters?: NavigationFiltersState<NavigationFilters>
 }
 
 // Update PaginatedFetchOptions to handle both pagination types
-export type PaginatedFetchOptions<
-  Filters extends FiltersDefinition,
-  NavigationFilters extends NavigationFiltersDefinition,
-> = BaseFetchOptions<Filters, NavigationFilters> & {
-  pagination: {
-    perPage?: number // Common to both
-  } & (
-    | { currentPage: number; cursor?: never }
-    | { cursor?: string | null; currentPage?: never }
-  )
-}
+export type PaginatedFetchOptions<Filters extends FiltersDefinition> =
+  BaseFetchOptions<Filters> & {
+    pagination: {
+      perPage?: number // Common to both
+    } & (
+      | { currentPage: number; cursor?: never }
+      | { cursor?: string | null; currentPage?: never }
+    )
+  }
 
 /**
  * Base response type for collection data
@@ -155,7 +145,6 @@ export type PaginationInfo = Omit<
 export type BaseDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  NavigationFilters extends NavigationFiltersDefinition,
 > = {
   /** Indicates this adapter doesn't use pagination */
   paginationType?: never | undefined
@@ -165,7 +154,7 @@ export type BaseDataAdapter<
    * @returns Array of records, promise of records, or observable of records
    */
   fetchData: (
-    options: BaseFetchOptions<Filters, NavigationFilters>
+    options: BaseFetchOptions<Filters>
   ) =>
     | BaseResponse<Record>
     | Promise<BaseResponse<Record>>
@@ -180,7 +169,6 @@ export type BaseDataAdapter<
 export type PaginatedDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  NavigationFilters extends NavigationFiltersDefinition,
 > = {
   /** Indicates this adapter uses page-based pagination */
   paginationType: PaginationType
@@ -192,7 +180,7 @@ export type PaginatedDataAdapter<
    * @returns Paginated response with records and pagination info
    */
   fetchData: (
-    options: PaginatedFetchOptions<Filters, NavigationFilters>
+    options: PaginatedFetchOptions<Filters>
   ) =>
     | PaginatedResponse<Record>
     | Promise<PaginatedResponse<Record>>
@@ -207,10 +195,7 @@ export type PaginatedDataAdapter<
 export type DataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  NavigationFilters extends NavigationFiltersDefinition,
-> =
-  | BaseDataAdapter<Record, Filters, NavigationFilters>
-  | PaginatedDataAdapter<Record, Filters, NavigationFilters>
+> = BaseDataAdapter<Record, Filters> | PaginatedDataAdapter<Record, Filters>
 
 /**
  * Represents a collection of selected items.

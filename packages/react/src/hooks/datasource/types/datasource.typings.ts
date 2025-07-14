@@ -3,11 +3,12 @@ import {
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker/types"
-import { CollectionSearchOptions } from "@/experimental/OneDataCollection/types"
 import { DataAdapter } from "./fetch.typings"
 import { GroupingDefinition, GroupingState } from "./grouping.typings"
 import { RecordType } from "./records.typings"
+import { SearchOptions } from "./search.typings"
 import { SelectedItemsState } from "./selection.typings"
+import { SortingsDefinition, SortingsState } from "./sortings.typings"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
@@ -36,7 +37,7 @@ export type DataSourceDefinition<
   presets?: PresetsDefinition<Filters>
 
   /** Search configuration */
-  search?: CollectionSearchOptions
+  search?: SearchOptions
 
   /** Available sorting fields. If not provided, sorting is not allowed. */
   sortings?: Sortings
