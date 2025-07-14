@@ -10,6 +10,15 @@ export type BannerAction = {
   variant?: "default" | "outline" | "ghost"
 }
 
+export type TitleSize = "sm" | "md" | "lg" | "xl"
+
+const titleSizeMap: Record<TitleSize, string> = {
+  sm: "text-lg",
+  md: "text-xl",
+  lg: "text-2xl",
+  xl: "text-3xl",
+}
+
 export type BaseBannerProps = {
   title: string
   subtitle?: string
@@ -19,6 +28,7 @@ export type BaseBannerProps = {
   onClose?: () => void
   isLoading?: boolean
   children?: React.ReactNode
+  titleSize?: TitleSize
 }
 
 const BaseBannerComponent = forwardRef<HTMLDivElement, BaseBannerProps>(
@@ -32,6 +42,7 @@ const BaseBannerComponent = forwardRef<HTMLDivElement, BaseBannerProps>(
       onClose,
       isLoading = false,
       children,
+      titleSize = "md",
     },
     ref
   ) {
@@ -76,7 +87,11 @@ const BaseBannerComponent = forwardRef<HTMLDivElement, BaseBannerProps>(
         {/* Content */}
         <div className="flex flex-col justify-center gap-5 px-3 pb-3 sm:py-3 sm:pl-0 sm:pr-3">
           <div className="flex w-full flex-col gap-1 sm:max-w-lg">
-            <h3 className="font-bold text-xl text-f1-foreground">{title}</h3>
+            <h3
+              className={`font-bold ${titleSizeMap[titleSize]} text-f1-foreground`}
+            >
+              {title}
+            </h3>
             {subtitle && (
               <p className="text-base text-f1-foreground-secondary">
                 {subtitle}
