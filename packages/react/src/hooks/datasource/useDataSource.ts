@@ -1,13 +1,4 @@
-import {
-  ItemActionsDefinition,
-  NavigationFiltersDefinition,
-  NavigationFiltersState,
-} from "@/experimental/OneDataCollection/exports"
-import { navigationFilterTypes } from "@/experimental/OneDataCollection/navigationFilters"
-import {
-  CollectionSearchOptions,
-  SummariesDefinition,
-} from "@/experimental/OneDataCollection/types"
+import { CollectionSearchOptions } from "@/experimental/OneDataCollection/types"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import {
@@ -49,30 +40,10 @@ export const createDataSourceDefinition = <
   R extends RecordType = RecordType,
   FiltersSchema extends FiltersDefinition = FiltersDefinition,
   Sortings extends SortingsDefinition = SortingsDefinition,
-  Summaries extends SummariesDefinition = SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<R> = ItemActionsDefinition<R>,
-  NavigationFilters extends
-    NavigationFiltersDefinition = NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 >(
-  definition: DataSourceDefinition<
-    R,
-    FiltersSchema,
-    Sortings,
-    Summaries,
-    ItemActions,
-    NavigationFilters,
-    Grouping
-  >
-): DataSourceDefinition<
-  R,
-  FiltersSchema,
-  Sortings,
-  Summaries,
-  ItemActions,
-  NavigationFilters,
-  Grouping
-> => {
+  definition: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>
+): DataSourceDefinition<R, FiltersSchema, Sortings, Grouping> => {
   return definition
 }
 
@@ -114,65 +85,23 @@ export const useDataSource = <
   R extends RecordType = RecordType,
   FiltersSchema extends FiltersDefinition = FiltersDefinition,
   Sortings extends SortingsDefinition = SortingsDefinition,
-  Summaries extends SummariesDefinition = SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<R> = ItemActionsDefinition<R>,
-  NavigationFilters extends
-    NavigationFiltersDefinition = NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
     currentGrouping: initialCurrentGrouping,
     filters,
-    navigationFilters,
     search,
     defaultSorting,
-    summaries,
     dataAdapter,
     grouping,
     ...rest
-  }: DataSourceDefinition<
-    R,
-    FiltersSchema,
-    Sortings,
-    Summaries,
-    ItemActions,
-    NavigationFilters,
-    Grouping
-  >,
+  }: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>,
   deps: ReadonlyArray<unknown> = []
-): DataSource<
-  R,
-  FiltersSchema,
-  Sortings,
-  Summaries,
-  ItemActions,
-  NavigationFilters,
-  Grouping
-> => {
+): DataSource<R, FiltersSchema, Sortings, Grouping> => {
   const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
-
-  const [currentNavigationFilters, setCurrentNavigationFilters] = useState<
-    NavigationFiltersState<NavigationFilters>
-  >(() => {
-    if (!navigationFilters) {
-      return {} as NavigationFiltersState<NavigationFilters>
-    }
-
-    return Object.fromEntries(
-      Object.entries(navigationFilters).map(([key, filter]) => {
-        const filterType = navigationFilterTypes[filter.type]
-        return [
-          key,
-          filterType.valueConverter
-            ? filterType.valueConverter(filter.defaultValue, filter)
-            : filter.defaultValue,
-        ]
-      })
-    ) as NavigationFiltersState<NavigationFilters>
-  })
 
   const [currentSortings, setCurrentSortings] =
     useState<SortingsState<Sortings> | null>(defaultSorting || null)
@@ -196,9 +125,6 @@ export const useDataSource = <
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedSummaries = useMemo(() => summaries, deps)
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -230,7 +156,7 @@ export const useDataSource = <
     setCurrentFilters,
     currentSortings,
     setCurrentSortings,
-    summaries: memoizedSummaries,
+
     search,
     currentSearch,
     setCurrentSearch,
@@ -238,9 +164,7 @@ export const useDataSource = <
     isLoading,
     setIsLoading,
     dataAdapter: memoizedDataAdapter,
-    navigationFilters,
-    currentNavigationFilters,
-    setCurrentNavigationFilters,
+
     setCurrentGrouping,
     currentGrouping,
     grouping,

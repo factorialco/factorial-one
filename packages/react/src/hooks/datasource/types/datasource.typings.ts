@@ -3,21 +3,7 @@ import {
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker/types"
-import {
-  ItemActionsDefinition,
-  NavigationFiltersDefinition,
-  NavigationFiltersState,
-  PrimaryActionsDefinition,
-  SecondaryActionsDefinition,
-} from "@/experimental/exports"
-import {
-  BulkActionDefinition,
-  CollectionSearchOptions,
-  OnBulkActionCallback,
-  SortingsDefinition,
-  SortingsState,
-  SummariesDefinition,
-} from "@/experimental/OneDataCollection/types"
+import { CollectionSearchOptions } from "@/experimental/OneDataCollection/types"
 import { DataAdapter } from "./fetch.typings"
 import { GroupingDefinition, GroupingState } from "./grouping.typings"
 import { RecordType } from "./records.typings"
@@ -40,11 +26,6 @@ export type DataSourceDefinition<
   Record extends RecordType = RecordType,
   Filters extends FiltersDefinition = FiltersDefinition,
   Sortings extends SortingsDefinition = SortingsDefinition,
-  Summaries extends SummariesDefinition = SummariesDefinition,
-  ItemActions extends
-    ItemActionsDefinition<Record> = ItemActionsDefinition<Record>,
-  NavigationFilters extends
-    NavigationFiltersDefinition = NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record> = GroupingDefinition<Record>,
 > = {
   /** Available filter configurations */
@@ -54,44 +35,21 @@ export type DataSourceDefinition<
   /** Predefined filter configurations that can be applied */
   presets?: PresetsDefinition<Filters>
 
-  /** Navigation filters */
-  navigationFilters?: NavigationFilters
-
-  /** URL for a single item in the collection */
-  itemUrl?: (item: Record) => string | undefined
-  /** Click handler for a single item in the collection */
-  itemOnClick?: (item: Record) => () => void
-  /** Available actions that can be performed on records */
-  itemActions?: ItemActions
-  /** Available primary actions that can be performed on the collection */
-  primaryActions?: PrimaryActionsDefinition
-  /** Available secondary actions that can be performed on the collection */
-  secondaryActions?: SecondaryActionsDefinition
   /** Search configuration */
   search?: CollectionSearchOptions
 
   /** Available sorting fields. If not provided, sorting is not allowed. */
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
-  /** Available summaries fields. If not provided, summaries is not allowed. */
-  summaries?: Summaries & {
-    label?: string // Optional label for the summaries row
-  }
+
   /** Data adapter responsible for fetching and managing data */
-  dataAdapter: DataAdapter<Record, Filters, NavigationFilters>
+  dataAdapter: DataAdapter<Record, Filters>
 
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
   /** Default selected items */
   defaultSelectedItems?: SelectedItemsState
-  /** Bulk actions that can be performed on the collection */
-  bulkActions?: (
-    selectedItems: Parameters<OnBulkActionCallback<Record, Filters>>[1]
-  ) => {
-    primary: BulkActionDefinition[]
-    secondary?: BulkActionDefinition[]
-  }
-  totalItemSummary?: (totalItems: number) => string
+
   /** Grouping configuration */
   grouping?: Grouping
   currentGrouping?: GroupingState<Record, Grouping>
@@ -108,19 +66,8 @@ export type DataSource<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<R>,
-  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
-> = DataSourceDefinition<
-  R,
-  Filters,
-  Sortings,
-  Summaries,
-  ItemActions,
-  NavigationFilters,
-  Grouping
-> & {
+> = DataSourceDefinition<R, Filters, Sortings, Grouping> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
@@ -136,10 +83,7 @@ export type DataSource<
   setCurrentSearch: (search: string | undefined) => void
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
-  currentNavigationFilters: NavigationFiltersState<NavigationFilters>
-  setCurrentNavigationFilters: React.Dispatch<
-    React.SetStateAction<NavigationFiltersState<NavigationFilters>>
-  >
+
   /** Current state of applied grouping */
   currentGrouping?: Grouping["mandatory"] extends true
     ? Exclude<GroupingState<R, Grouping>, undefined>
@@ -148,10 +92,7 @@ export type DataSource<
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<R, Grouping>>
   >
-  /** Current summaries data */
-  currentSummaries?: R
-  /** Function to update the current summaries data */
-  setCurrentSummaries?: React.Dispatch<React.SetStateAction<R | undefined>>
+
   /** Function to provide an id for a record, necessary for append mode */
   idProvider?: (item: R, index?: number) => string | number | symbol
 }
