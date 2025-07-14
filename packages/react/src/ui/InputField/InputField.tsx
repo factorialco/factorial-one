@@ -176,6 +176,12 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
 
     const [localValue, setLocalValue] = useState(value)
 
+    if (!label) {
+      console.error(
+        "InputField: label is required for accessibility reasons. If you don't want to show a label, set hideLabel to true."
+      )
+    }
+
     useEffect(
       () => {
         if (
