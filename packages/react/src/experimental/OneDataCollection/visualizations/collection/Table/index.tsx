@@ -1,8 +1,8 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination"
+import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/hooks/useInfiniteScrollPagination"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
 import {
   OneTable,
   TableBody,

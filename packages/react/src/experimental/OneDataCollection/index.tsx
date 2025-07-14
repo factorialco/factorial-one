@@ -19,6 +19,7 @@ import { DataError } from "../../hooks/datasource/useData"
 import { OneActionBar } from "../OneActionBar"
 import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
+import { CustomEmptyStates, useEmptyState } from "./hooks/useEmptyState"
 import { ItemActionsDefinition } from "./item-actions"
 import { navigationFilterTypes } from "./navigationFilters"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
@@ -30,7 +31,6 @@ import type {
   OnBulkActionCallback,
   OnLoadDataCallback,
 } from "./types"
-import { CustomEmptyStates, useEmptyState } from "./useEmptyState"
 export * from "./navigationFilters/types"
 
 import type { Visualization } from "./visualizations/collection"

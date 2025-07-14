@@ -3,7 +3,7 @@ import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/na
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { useGroups } from "@/hooks/datasource/useGroups"
 
-import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/useInfiniteScrollPagination"
+import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/hooks/useInfiniteScrollPagination"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
