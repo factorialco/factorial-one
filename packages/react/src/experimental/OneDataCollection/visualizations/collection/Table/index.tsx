@@ -283,7 +283,7 @@ export const TableCollection = <
   const checkColumnWidth = source.selectable ? 52 : 0
 
   return (
-    <>
+    <div className="flex h-full flex-col gap-4">
       <OneTable loading={isLoading}>
         <TableHeader sticky={true}>
           <TableRow>
@@ -553,6 +553,6 @@ export const TableCollection = <
         setPage={setPage}
         className="pb-4"
       />
-    </>
+    </div>
   )
 }
