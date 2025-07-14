@@ -8,24 +8,6 @@ const meta = {
     layout: "padded",
   },
   tags: ["autodocs"],
-  argTypes: {
-    titleSize: {
-      control: { type: "select" },
-      options: ["sm", "md", "lg", "xl"],
-      description: "Controls the size of the banner title",
-      table: {
-        defaultValue: { summary: "md" },
-      },
-    },
-    isLoading: {
-      control: "boolean",
-      description: "Show skeleton loading state",
-    },
-    onClose: {
-      action: "closed",
-      description: "Callback when banner is closed",
-    },
-  },
 } satisfies Meta<typeof BaseBanner>
 
 export default meta
@@ -102,24 +84,5 @@ export const Loading: Story = {
     mediaUrl:
       "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     isLoading: true,
-  },
-}
-
-export const ExtraLargeTitle: Story = {
-  args: {
-    title: "Black Friday Sale",
-    subtitle: "Don't miss out on our biggest deals of the year",
-    mediaUrl:
-      "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    titleSize: "xl",
-    primaryAction: {
-      label: "Shop Now",
-      onClick: () => alert("Shopping now"),
-    },
-    secondaryAction: {
-      label: "View All Deals",
-      onClick: () => alert("Viewing deals"),
-    },
-    onClose: () => alert("Banner closed"),
   },
 }
