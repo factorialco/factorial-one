@@ -53,6 +53,7 @@ type SimpleResult<T> = T[]
 interface UseDataOptions<Filters extends FiltersDefinition> {
   filters?: Partial<FiltersState<Filters>>
   onError?: (error: DataError) => void
+  handleFetchSuccess?: (data: R) => Data
 }
 
 /**
@@ -308,7 +309,9 @@ export function useData<
       // Extract summaries data if available
       const extractedSummaries =
         "summaries" in result ? result.summaries : undefined
+
       setSummariesData(extractedSummaries)
+
       let records: R[] = []
       if ("records" in result) {
         records = result.records

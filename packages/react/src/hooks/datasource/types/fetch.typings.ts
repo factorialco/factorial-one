@@ -31,11 +31,14 @@ export type PaginatedFetchOptions<Filters extends FiltersDefinition> =
 
 /**
  * Base response type for collection data
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
+ *
+ * @property {R[]} records The list of records for the current page.
+ * @property {TRecord} [summaries] Optional summaries data for the collection.
  */
-export type BaseResponse<Record> = {
-  records: Record[]
-  summaries?: Record // Optional summaries data
+export type BaseResponse<R> = {
+  records: R[]
+  summaries?: R // Optional summaries data
 }
 
 /**
@@ -50,22 +53,16 @@ export type PaginationType = "pages" | "infinite-scroll" | "no-pagination"
  * Represents a base structure for paginated API responses, providing
  * details about the records on the current page and pagination metadata.
  *
- * @template TRecord The type of each record in the paginated response.
+ * @template R The type of each record in the paginated response.
  *
- * @property {TRecord[]} records The list of records for the current page.
  * @property {number} total The total number of records available.
  * @property {number} perPage The number of records displayed per page.
- * @property {TRecord} [summaries] Optional summaries data for the collection.
  */
-export type BasePaginatedResponse<TRecord> = {
-  /** The records for the current page */
-  records: TRecord[]
+export type BasePaginatedResponse<R> = BaseResponse<R> & {
   /** Total number of records available */
   total: number
   /** Number of records per page */
   perPage: number
-  /** Optional summaries data */
-  summaries?: TRecord
 }
 
 /**
@@ -139,12 +136,14 @@ export type PaginationInfo = Omit<
 
 /**
  * Base data adapter configuration for non-paginated collections
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The available filter configurations
  */
 export type BaseDataAdapter<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
+  Options extends BaseFetchOptions<Filters>,
+  FetchReturn = BaseResponse<R>,
 > = {
   /** Indicates this adapter doesn't use pagination */
   paginationType?: never | undefined
@@ -154,21 +153,23 @@ export type BaseDataAdapter<
    * @returns Array of records, promise of records, or observable of records
    */
   fetchData: (
-    options: BaseFetchOptions<Filters>
+    options: Options
   ) =>
-    | BaseResponse<Record>
-    | Promise<BaseResponse<Record>>
-    | Observable<PromiseState<BaseResponse<Record>>>
+    | FetchReturn
+    | Promise<FetchReturn>
+    | Observable<PromiseState<FetchReturn>>
 }
 
 /**
  * Paginated data adapter configuration
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The available filter configurations
  */
 export type PaginatedDataAdapter<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
+  Options extends PaginatedFetchOptions<Filters>,
+  FetchReturn = PaginatedResponse<R>,
 > = {
   /** Indicates this adapter uses page-based pagination */
   paginationType: PaginationType
@@ -180,22 +181,29 @@ export type PaginatedDataAdapter<
    * @returns Paginated response with records and pagination info
    */
   fetchData: (
-    options: PaginatedFetchOptions<Filters>
+    options: Options
   ) =>
-    | PaginatedResponse<Record>
-    | Promise<PaginatedResponse<Record>>
-    | Observable<PromiseState<PaginatedResponse<Record>>>
+    | FetchReturn
+    | Promise<FetchReturn>
+    | Observable<PromiseState<FetchReturn>>
 }
 
 /**
  * Combined type for all possible data adapter configurations
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The available filter configurations
  */
 export type DataAdapter<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
-> = BaseDataAdapter<Record, Filters> | PaginatedDataAdapter<Record, Filters>
+> =
+  | BaseDataAdapter<R, Filters, BaseFetchOptions<Filters>, BaseResponse<R>>
+  | PaginatedDataAdapter<
+      R,
+      Filters,
+      PaginatedFetchOptions<Filters>,
+      PageBasedPaginatedResponse<R>
+    >
 
 /**
  * Represents a collection of selected items.

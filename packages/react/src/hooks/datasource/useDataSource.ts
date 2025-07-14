@@ -1,4 +1,3 @@
-import { CollectionSearchOptions } from "@/experimental/OneDataCollection/types"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import {
@@ -13,6 +12,7 @@ import {
   SortingsDefinition,
   SortingsState,
 } from "./types"
+import { SearchOptions } from "./types/search.typings"
 
 /**
  * Get the pagination type of a data adapter
@@ -110,7 +110,7 @@ export const useDataSource = <
     enabled: false,
     sync: false,
     ...search,
-  } satisfies CollectionSearchOptions
+  } satisfies SearchOptions
 
   const [currentSearch, setCurrentSearch] = useState<string | undefined>()
 
@@ -151,20 +151,29 @@ export const useDataSource = <
 
   return {
     ...rest,
+    // Filters
     filters: memoizedFilters,
     currentFilters,
     setCurrentFilters,
+
+    // Sortings
     currentSortings,
     setCurrentSortings,
 
+    // Search
     search,
     currentSearch,
     setCurrentSearch,
     debouncedCurrentSearch,
+
+    // Loading
     isLoading,
     setIsLoading,
+
+    // Data adapter
     dataAdapter: memoizedDataAdapter,
 
+    // Grouping
     setCurrentGrouping,
     currentGrouping,
     grouping,

@@ -198,6 +198,7 @@ export const TableCollection = <
   )
   const summaryData = useMemo(() => {
     // Early return if no summaries configuration or summaries data is available
+
     if (!summariesData || !source.summaries) return null
 
     return {

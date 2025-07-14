@@ -1,9 +1,4 @@
 import { Icon } from "@/components/Utilities/Icon"
-import {
-  ItemActionsDefinition,
-  NavigationFiltersDefinition,
-  SummariesDefinition,
-} from "@/experimental/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import {
@@ -77,9 +72,6 @@ export type SelectProps<T extends string, R = unknown> = {
         R extends RecordType ? R : RecordType,
         FiltersDefinition,
         SortingsDefinition,
-        SummariesDefinition,
-        ItemActionsDefinition<R extends RecordType ? R : RecordType>,
-        NavigationFiltersDefinition,
         GroupingDefinition<R extends RecordType ? R : RecordType>
       >
       mapOptions: (
@@ -214,16 +206,12 @@ const SelectComponent = forwardRef(function Select<
       dataAdapter: source
         ? (source.dataAdapter as PaginatedDataAdapter<
             R extends RecordType ? R : RecordType,
-            FiltersDefinition,
-            NavigationFiltersDefinition
+            FiltersDefinition
           >)
         : {
             fetchData: ({
               search,
-            }: BaseFetchOptions<
-              FiltersDefinition,
-              NavigationFiltersDefinition
-            >): PromiseOrObservable<
+            }: BaseFetchOptions<FiltersDefinition>): PromiseOrObservable<
               BaseResponse<R extends RecordType ? R : RecordType>
             > => {
               return {
