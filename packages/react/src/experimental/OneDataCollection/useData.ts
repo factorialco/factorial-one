@@ -1,3 +1,4 @@
+import { getValueByPath } from "@/lib/objectPaths"
 import { groupBy } from "lodash"
 import {
   useCallback,
@@ -12,7 +13,6 @@ import type {
   FiltersDefinition,
   FiltersState,
 } from "../../components/OneFilterPicker/types"
-import { getValueByPath } from "@/lib/objectPaths"
 import {
   PromiseState,
   promiseToObservable,
