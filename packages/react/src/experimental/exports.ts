@@ -1,6 +1,7 @@
 import { Component } from "../lib/component"
 import { ScrollArea as ScrollAreaComponent } from "./Utilities/ScrollArea"
 
+export * from "./Banners/exports"
 export * from "./Charts/exports"
 export * from "./Forms/exports"
 export * from "./Information/exports"
