@@ -29,9 +29,11 @@ export function SearchFilter({
   return (
     <div className="space-y-4 p-3">
       <Input
+        label={`Search ${schema.label.toLowerCase()}...`}
+        hideLabel
         placeholder={`Search ${schema.label.toLowerCase()}...`}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
       />
     </div>
   )

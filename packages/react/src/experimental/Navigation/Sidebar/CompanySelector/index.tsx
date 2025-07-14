@@ -120,6 +120,8 @@ const Selector = ({
 
   return (
     <Select
+      label="Select a company"
+      hideLabel
       options={options}
       value={selected.id}
       onChange={handleChange}

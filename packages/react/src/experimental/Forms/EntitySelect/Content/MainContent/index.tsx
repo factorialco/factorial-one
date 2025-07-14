@@ -460,6 +460,8 @@ export const MainContent: React.FC<MainContentProps> = ({
         {groups && groups.length > 1 && (
           <div className="flex-1">
             <Select
+              label="Group"
+              hideLabel
               disabled={loading}
               onChange={onGroupChange}
               options={groups}

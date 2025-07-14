@@ -2,6 +2,7 @@ import type { StorybookConfig } from "@storybook/react-vite"
 import { createRequire } from "node:module"
 import { dirname, join } from "node:path"
 import * as process from "node:process"
+import remarkGfm from "remark-gfm"
 
 const require = createRequire(import.meta.url)
 
@@ -39,7 +40,16 @@ const config: StorybookConfig = {
     getAbsolutePath("@vueless/storybook-dark-mode"),
     getAbsolutePath("@chromatic-com/storybook"),
     getAbsolutePath("storybook-addon-tag-badges"),
-    getAbsolutePath("@storybook/addon-docs"),
+    {
+      name: getAbsolutePath("@storybook/addon-docs"),
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
   ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
