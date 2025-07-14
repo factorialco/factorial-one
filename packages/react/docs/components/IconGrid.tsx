@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react"
 import { useMemo, useState } from "react"
+import { OneEllipsis } from "../../src/components/OneEllipsis"
 import {
   Icon as IconComponent,
   IconType,
@@ -37,10 +38,12 @@ function IconCard({ name, icon: Icon }: IconEntry) {
       exit={{ opacity: 0, scale: 0.95 }}
       transition={{ duration: 0.1 }}
     >
-      <IconComponent icon={Icon} size="lg" className="text-f1-icon-bold" />
-      <span className="text-center !text-sm text-f1-foreground-secondary">
-        {name}
-      </span>
+      <IconComponent icon={Icon} size="lg" color="bold" />
+      <div className="w-full text-center text-f1-foreground-secondary">
+        <OneEllipsis tag="span" className="!text-sm">
+          {name}
+        </OneEllipsis>
+      </div>
       <motion.button
         onClick={copyToClipboard}
         className={cn(
@@ -102,14 +105,13 @@ export function IconGrid() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <IconComponent
-          icon={Icons.Search}
-          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 select-none text-f1-foreground-secondary"
-        />
+        <div className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 select-none">
+          <IconComponent icon={Icons.Search} color="secondary" />
+        </div>
       </div>
       <AnimatePresence>
         {filteredIcons.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {filteredIcons.map((iconEntry) => (
               <IconCard key={iconEntry.name} {...iconEntry} />
             ))}

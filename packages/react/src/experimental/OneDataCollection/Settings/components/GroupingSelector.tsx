@@ -62,7 +62,7 @@ export const GroupingSelector = <
               onGroupingChange(
                 value !== EmptyGroupingValue
                   ? {
-                      field: value,
+                      field: value as keyof Grouping["groupBy"],
                       order: currentGrouping?.order ?? "asc",
                     }
                   : undefined

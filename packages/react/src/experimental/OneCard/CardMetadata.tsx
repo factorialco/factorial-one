@@ -16,7 +16,7 @@ interface CardMetadataProps {
 export function CardMetadata({ metadata }: CardMetadataProps) {
   return (
     <div className="flex h-8 items-center gap-1.5 font-medium">
-      <Icon icon={metadata.icon} className="text-f1-icon" size="md" />
+      <Icon icon={metadata.icon} color="default" size="md" />
 
       {metadata.type === "text" && (
         <div className="text-f1-foreground">{metadata.title}</div>

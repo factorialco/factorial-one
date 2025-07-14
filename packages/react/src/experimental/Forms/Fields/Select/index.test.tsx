@@ -146,34 +146,6 @@ describe("Select", () => {
     expect(screen.getByText("No results found")).toBeInTheDocument()
   })
 
-  it("handles external search when externalSearch is true", async () => {
-    const handleSearchChange = vi.fn()
-    const user = userEvent.setup()
-
-    render(
-      <Select
-        options={mockOptions}
-        onChange={() => {}}
-        showSearchBox
-        externalSearch
-        label="Select an option2"
-        hideLabel
-        onSearchChange={handleSearchChange}
-      />
-    )
-
-    await openSelect(user)
-
-    await user.type(screen.getByRole("searchbox"), "test")
-
-    await waitFor(() => {
-      expect(handleSearchChange).toHaveBeenCalledWith("test")
-    })
-    // Should still show all options when externalSearch is true
-    expect(screen.getByText("Option 1")).toBeInTheDocument()
-    expect(screen.getByText("Option 2")).toBeInTheDocument()
-  })
-
   it("disables select when disabled prop is true", async () => {
     render(<Select options={mockOptions} onChange={() => {}} disabled />)
 

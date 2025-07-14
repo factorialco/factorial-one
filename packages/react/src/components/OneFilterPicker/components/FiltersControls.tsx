@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react"
+import { useEffect, useId, useMemo, useState } from "react"
 import { Filter } from "../../../icons/app"
 import { useI18n } from "../../../lib/providers/i18n"
 import { Popover, PopoverContent, PopoverTrigger } from "../../../ui/popover"
@@ -17,6 +17,8 @@ interface FiltersControlsProps<Filters extends FiltersDefinition> {
   onOpenChange?: (open: boolean) => void
   hideLabel?: boolean
 }
+
+const DEFAULT_FORM_HEIGHT = 388
 
 export function FiltersControls<Filters extends FiltersDefinition>({
   filters,
@@ -72,6 +74,15 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run this when the popover is opened
   }, [isOpen])
 
+  // gets the form height
+  const formHeight = useMemo(() => {
+    const maxHeight = Object.entries(filters).reduce((max, [_, value]) => {
+      const filterType = getFilterType(value.type)
+      return Math.max(max, filterType?.formHeight || DEFAULT_FORM_HEIGHT)
+    }, 0)
+
+    return maxHeight
+  }, [filters])
   const id = useId()
 
   return (
@@ -90,12 +101,17 @@ export function FiltersControls<Filters extends FiltersDefinition>({
           />
         </PopoverTrigger>
         <PopoverContent
-          className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
+          className="w-[600px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
           align="start"
           side="bottom"
           aria-id={id}
         >
-          <div className="flex h-[min(448px,80vh)] flex-col">
+          <div
+            className="flex flex-col transition-all"
+            style={{
+              height: formHeight || DEFAULT_FORM_HEIGHT,
+            }}
+          >
             <div className="flex min-h-0 flex-1">
               <FilterList
                 definition={filters}
@@ -114,7 +130,6 @@ export function FiltersControls<Filters extends FiltersDefinition>({
                 />
               )}
             </div>
-
             <div className="flex items-center justify-end gap-2 border border-solid border-transparent border-t-f1-border-secondary p-2">
               <Button
                 onClick={handleApplyFilters}

@@ -1,4 +1,3 @@
-import { IconType } from "@/components/Utilities/Icon"
 import { SelectItemObject } from "@/experimental/Forms/Fields/Select"
 import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { DropdownItemObject } from "@/experimental/Navigation/Dropdown"
@@ -17,8 +16,6 @@ type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
 
 type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
   module?: ModuleId
-  // @deprecated This property will be removed soon. Use the `module` property instead.
-  icon?: IconType
 }
 
 type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {

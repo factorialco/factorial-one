@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useResizeObserver } from "usehooks-ts"
 
+type CalculateVisibleItemCountParams = {
+  itemWidths: number[]
+  availableWidth: number
+}
+
 /**
  * Custom hook for overflow calculations
  *
@@ -13,6 +18,7 @@ import { useResizeObserver } from "usehooks-ts"
 export function useOverflowCalculation<T>(items: T[], gap: number) {
   const containerRef = useRef<HTMLDivElement>(null)
   const overflowButtonRef = useRef<HTMLButtonElement>(null)
+  const customOverflowIndicatorRef = useRef<HTMLDivElement>(null)
   const measurementContainerRef = useRef<HTMLDivElement>(null)
 
   // Combined state for visible and overflow items
@@ -35,14 +41,6 @@ export function useOverflowCalculation<T>(items: T[], gap: number) {
     },
   })
 
-  // Helper function to add gap between items
-  const addGapBetweenItems = useCallback(
-    (totalWidth: number, itemIndex: number, itemsCount: number) => {
-      return itemIndex < itemsCount - 1 ? totalWidth + gap : totalWidth
-    },
-    [gap]
-  )
-
   // Measure all items in a hidden container
   const measureItemWidths = useCallback(() => {
     if (!measurementContainerRef.current) return []
@@ -58,24 +56,9 @@ export function useOverflowCalculation<T>(items: T[], gap: number) {
     return widths
   }, [])
 
-  // Calculate the total width of all items including gaps
-  const calculateTotalItemsWidth = useCallback(
-    (itemWidths: number[]) => {
-      let totalWidth = 0
-
-      for (let i = 0; i < itemWidths.length; i++) {
-        totalWidth += itemWidths[i]
-        totalWidth = addGapBetweenItems(totalWidth, i, itemWidths.length)
-      }
-
-      return totalWidth
-    },
-    [addGapBetweenItems]
-  )
-
   // Calculate how many items can fit in the available width
   const calculateVisibleItemCount = useCallback(
-    (itemWidths: number[], availableWidth: number) => {
+    ({ itemWidths, availableWidth }: CalculateVisibleItemCountParams) => {
       let visibleCount = 0
       let accumulatedWidth = 0
 
@@ -85,18 +68,13 @@ export function useOverflowCalculation<T>(items: T[], gap: number) {
         if (newWidth > availableWidth) break
 
         accumulatedWidth = newWidth
-        accumulatedWidth = addGapBetweenItems(
-          accumulatedWidth,
-          i,
-          itemWidths.length
-        )
         visibleCount++
       }
 
       // Return the actual count without enforcing a minimum of 1
       return visibleCount
     },
-    [addGapBetweenItems]
+    []
   )
 
   // Calculate which items should be visible and which should overflow
@@ -104,44 +82,38 @@ export function useOverflowCalculation<T>(items: T[], gap: number) {
     if (!containerRef.current || items.length === 0) return
 
     const currentContainerWidth = containerRef.current.clientWidth
-    const overflowButtonWidth = overflowButtonRef.current?.offsetWidth || 60
+    const overflowButtonWidth =
+      overflowButtonRef.current?.offsetWidth ||
+      customOverflowIndicatorRef.current?.offsetWidth ||
+      32
     const itemWidths = measureItemWidths()
-
-    // Check if all items can fit without an overflow button
-    const totalItemsWidth = calculateTotalItemsWidth(itemWidths)
-    const allItemsFit = totalItemsWidth <= currentContainerWidth
-
-    if (allItemsFit) {
-      setItemsState({
-        visibleItems: items,
-        overflowItems: [],
-      })
-      return
-    }
+    const itemWidthsWithGap = itemWidths.map((width) => width + gap)
 
     // Calculate how many items fit with an overflow button
     const availableWidth = currentContainerWidth - overflowButtonWidth - gap
-    const visibleCount = calculateVisibleItemCount(itemWidths, availableWidth)
 
-    // If no items can fit, put all items in the overflow
-    if (visibleCount === 0) {
-      setItemsState({
-        visibleItems: [],
-        overflowItems: items,
-      })
-    } else {
-      setItemsState({
-        visibleItems: items.slice(0, visibleCount),
-        overflowItems: items.slice(visibleCount),
-      })
+    const visibleCount = calculateVisibleItemCount({
+      itemWidths: itemWidthsWithGap,
+      availableWidth,
+    })
+
+    let visibleItems = visibleCount === 0 ? [] : items.slice(0, visibleCount)
+    let overflowItems = visibleCount === 0 ? items : items.slice(visibleCount)
+
+    if (
+      overflowItems.length === 1 &&
+      !!visibleItems.length &&
+      overflowButtonWidth === itemWidths?.[-1] - gap
+    ) {
+      visibleItems = items
+      overflowItems = []
     }
-  }, [
-    items,
-    gap,
-    measureItemWidths,
-    calculateTotalItemsWidth,
-    calculateVisibleItemCount,
-  ])
+
+    setItemsState({
+      visibleItems,
+      overflowItems,
+    })
+  }, [items, gap, measureItemWidths, calculateVisibleItemCount])
 
   // Initial calculation and initialization
   useEffect(() => {
@@ -155,6 +127,7 @@ export function useOverflowCalculation<T>(items: T[], gap: number) {
   return {
     containerRef,
     overflowButtonRef,
+    customOverflowIndicatorRef,
     measurementContainerRef,
     visibleItems: itemsState.visibleItems,
     overflowItems: itemsState.overflowItems,

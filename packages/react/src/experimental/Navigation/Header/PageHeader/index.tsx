@@ -1,5 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
+import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
@@ -45,9 +46,9 @@ type NavigationProps = {
 
 type HeaderProps = {
   module: {
+    id: ModuleId
     name: string
     href: string
-    icon: IconType
   }
   statusTag?: {
     text: string
@@ -123,7 +124,7 @@ export function PageHeader({
       id: module.href,
       label: module.name,
       href: module.href,
-      icon: module.icon,
+      module: module.id,
     },
     ...breadcrumbs,
   ]

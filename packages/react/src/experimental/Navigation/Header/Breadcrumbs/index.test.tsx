@@ -48,7 +48,7 @@ describe("Breadcrumbs", async () => {
     const breadcrumbs = [home, products, electronics, laptops]
 
     const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
-    const nav: HTMLElement = container.querySelector("nav>ol:last-child")
+    const nav: HTMLElement | null = container.querySelector("nav>ol:last-child")
     expect(nav).toBeInTheDocument()
 
     expect(await within(nav!).findByText(laptops.label)).toBeInTheDocument()
@@ -104,7 +104,13 @@ describe("Breadcrumbs", async () => {
   })
 
   it("renders breadcrumbs with icons when provided", () => {
-    const home = { id: "home", label: "Home", href: "/", icon: Home }
+    const home = {
+      id: "home",
+      label: "Home",
+      href: "/",
+      icon: Home,
+      module: "home",
+    }
     const settings = {
       id: "settings",
       label: "Settings",
