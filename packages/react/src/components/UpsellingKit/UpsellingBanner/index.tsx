@@ -65,7 +65,6 @@ export const UpsellingBanner = forwardRef<HTMLDivElement, UpsellingBannerProps>(
       )
     }
 
-    // Convert promote actions to use children prop instead
     const basePrimaryAction =
       primaryAction?.variant !== "promote" ? primaryAction : undefined
     const baseSecondaryAction =
