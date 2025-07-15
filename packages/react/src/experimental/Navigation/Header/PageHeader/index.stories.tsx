@@ -25,7 +25,7 @@ type Story = StoryObj<typeof PageHeader>
 const defaultModule = {
   name: "Time Tracking",
   href: "/time-tracking",
-  icon: Briefcase,
+  id: "time-tracking" as const,
 }
 
 const defaultActions = [

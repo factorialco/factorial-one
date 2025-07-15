@@ -1,4 +1,3 @@
-import { IconType } from "@/components/Utilities/Icon"
 import {
   FiltersDefinition,
   ItemActionsDefinition,
@@ -32,15 +31,13 @@ type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
 
 type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
   module?: ModuleId
-  // @deprecated This property will be removed soon. Use the `module` property instead.
-  icon?: IconType
 }
 
 type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   type: "select"
   searchbox?: boolean
   externalSearch?: boolean
-  onChange: BreadcrumbSelectProps["onChange"]
+  onChange: BreadcrumbSelectProps<string>["onChange"]
   value?: string
   defaultItem?: SelectItemObject<string>
 } & (
