@@ -71,6 +71,7 @@ const OverflowList = function OverflowList<T>({
   const {
     containerRef,
     overflowButtonRef,
+    customOverflowIndicatorRef,
     measurementContainerRef,
     visibleItems,
     overflowItems,
@@ -168,8 +169,10 @@ const OverflowList = function OverflowList<T>({
               </PopoverContent>
             </Popover>
           ) : (
-            (renderOverflowIndicator?.(overflowItems.length, false) ??
-            DefaultOverflowIndicator)
+            <div ref={customOverflowIndicatorRef}>
+              {renderOverflowIndicator?.(overflowItems.length, false) ??
+                DefaultOverflowIndicator}
+            </div>
           )}
         </>
       )}

@@ -6,6 +6,7 @@ import {
   Avatar,
   AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
+import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { EllipsisHorizontal } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
@@ -21,11 +22,15 @@ import { useState, type ReactNode } from "react"
 import { CardMetadata } from "./CardMetadata"
 import { type Metadata } from "./types"
 
+type CardAvatar =
+  | AvatarVariant
+  | { type: "emoji"; emoji: string; size?: "sm" | "md" | "lg" }
+
 interface OneCardProps {
   /**
    * The avatar to display in the card
    */
-  avatar?: AvatarVariant
+  avatar?: CardAvatar
 
   /**
    * The title of the card
@@ -148,7 +153,14 @@ export function OneCard({
           <CardHeader className="flex-col gap-0.5 p-0">
             {avatar && (
               <div className="mb-1.5 flex h-fit w-fit">
-                <Avatar avatar={avatar} size="medium" />
+                {avatar.type === "emoji" ? (
+                  <EmojiAvatar
+                    emoji={avatar.emoji}
+                    size={avatar.size || "md"}
+                  />
+                ) : (
+                  <Avatar avatar={avatar} size="medium" />
+                )}
               </div>
             )}
             <CardTitle className="flex flex-row justify-between gap-1 text-lg font-semibold text-f1-foreground">

@@ -11,6 +11,7 @@ import {
   filterPresets,
   filters,
   generateMockUsers,
+  MockUser,
   mockUsers,
   sortings,
 } from "./mockData"
@@ -83,6 +84,24 @@ export const WithGrouping: Story = {
               return mockUsers.filter((user) => user.role === groupId).length
             },
           },
+          "permissions.read": {
+            name: "Read",
+            label: (groupId) => (groupId ? "Read Access" : "No Access"),
+            itemCount: (groupId) => {
+              return mockUsers.filter(
+                (user) => user.permissions?.read === groupId
+              ).length
+            },
+          },
+          "permissions.write": {
+            name: "Write",
+            label: (groupId) => (groupId ? "Write Access" : "No Write Access"),
+            itemCount: (groupId) => {
+              return mockUsers.filter(
+                (user) => user.permissions?.read === groupId
+              ).length
+            },
+          },
         },
       }}
     />
@@ -134,27 +153,130 @@ export const CollapsibleGrouping: Story = {
 }
 
 export const CollapsibleGroupingWithDefaultOpenGroups: Story = {
-  render: () => (
-    <ExampleComponent
-      frozenColumns={2}
-      grouping={{
-        mandatory: true,
-        collapsible: true,
-        defaultOpenGroups: ["Engineering"],
-        groupBy: {
-          department: {
-            name: "Department",
-            label: (groupId) => groupId,
-            itemCount: async (groupId) => {
-              await new Promise((resolve) => setTimeout(resolve, 1000))
-              return mockUsers.filter((user) => user.department === groupId)
-                .length
-            },
+  render: () => {
+    // Create a fixed set of paginated users so we're not regenerating them on every render
+    const paginatedMockUsers = generateMockUsers(50)
+
+    const grouping: GroupingDefinition<MockUser> = {
+      mandatory: true,
+      collapsible: true,
+      groupBy: {
+        department: {
+          name: "Department",
+          label: async (groupId) => {
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+            return groupId
+          },
+          itemCount: async (groupId) => {
+            await new Promise((resolve) => setTimeout(resolve, 1500))
+            return paginatedMockUsers.filter(
+              (user) => user.department === groupId
+            ).length
           },
         },
-      }}
-    />
-  ),
+        role: {
+          name: "Role",
+          label: (groupId) => groupId,
+          itemCount: (groupId) => {
+            return paginatedMockUsers.filter((user) => user.role === groupId)
+              .length
+          },
+        },
+      },
+    }
+
+    const source = useDataSource({
+      selectable: (item) => item.id,
+      filters,
+      presets: filterPresets,
+      sortings,
+      grouping,
+      currentGrouping: {
+        field: "department",
+        order: "asc",
+      },
+      bulkActions: (allSelected) => {
+        return {
+          primary: [
+            {
+              label: allSelected ? "Delete All" : "Delete",
+              icon: Delete,
+              id: "delete-all",
+            },
+          ],
+        }
+      },
+      dataAdapter: createDataAdapter({
+        data: paginatedMockUsers,
+        delay: 500,
+        paginationType: "pages",
+      }),
+    })
+
+    return (
+      <OneDataCollection
+        source={source}
+        onSelectItems={(selectedItems) => {
+          console.log("Selected items", "->", selectedItems)
+        }}
+        onBulkAction={(action, selectedItems) => {
+          console.log(`Bulk action: ${action}`, "->", selectedItems)
+        }}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+                {
+                  label: "Permissions",
+                  render: (item) =>
+                    [
+                      item.permissions?.read ? "Read" : "",
+                      item.permissions?.write ? "Write" : "",
+                      item.permissions?.delete ? "Delete" : "",
+                    ]
+                      .filter(Boolean)
+                      .join(", "),
+                  sorting: "permissions.read",
+                },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+              title: (item) => item.name,
+            },
+          },
+        ]}
+      />
+    )
+  },
 }
 
 export const WithPaginationAndGrouping: Story = {

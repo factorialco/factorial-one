@@ -12,6 +12,20 @@ const meta = {
     layout: "padded",
   },
   tags: ["autodocs", "experimental"],
+  decorators: [
+    (Story) => (
+      <div
+        style={{
+          height: "470px",
+          width: "100%",
+          display: "flex",
+          overflow: "hidden",
+        }}
+      >
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof ExampleComponent>
 
 export default meta
@@ -21,14 +35,20 @@ export const Basic: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },
   },
+  render: () => <ExampleComponent frozenColumns={2} fullHeight />,
   decorators: [
     (Story) => (
-      <div style={{ height: "400px", width: "100%", display: "flex" }}>
+      <div
+        style={{
+          height: "420px",
+          width: "100%",
+          display: "flex",
+        }}
+      >
         <Story />
       </div>
     ),
   ],
-  render: () => <ExampleComponent frozenColumns={2} fullHeight />,
 }
 
 export const WithPagination: Story = {

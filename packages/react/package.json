@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.121.0",
+  "version": "1.126.3",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -189,6 +189,7 @@
     "@tiptap/suggestion": "^2.12.0",
     "@vueless/storybook-dark-mode": "^9.0.5",
     "cva": "1.0.0-beta.3",
+    "dompurify": "^3.2.6",
     "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.6.0",
     "embla-carousel-wheel-gestures": "^8.0.1",

@@ -9,7 +9,6 @@ import * as TabsStories from "../Tabs/index.stories"
 
 import { StandardLayout } from "@/components/layouts/StandardLayout"
 import { ComponentProps } from "react"
-import { Briefcase } from "../../../icons/app"
 import { ApplicationFrame } from "../ApplicationFrame"
 
 type TabsProps = ComponentProps<typeof Tabs>
@@ -36,7 +35,7 @@ type Story = StoryObj<ComponentProps<typeof Page>>
 const defaultModule = {
   name: "Time Tracking",
   href: "/time-tracking",
-  icon: Briefcase,
+  id: "time-tracking" as const,
 }
 
 // Common real-world combinations

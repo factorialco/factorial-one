@@ -2,6 +2,7 @@ import type {
   FiltersDefinition,
   FiltersState,
 } from "@/components/OneFilterPicker/types"
+import { getValueByPath } from "@/lib/objectPaths"
 import { PromiseState, promiseToObservable } from "@/lib/promise-to-observable"
 import { groupBy } from "lodash"
 import {
@@ -326,6 +327,9 @@ export function useData<
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<R> | SimpleResult<R>, appendMode: boolean) => {
+      /**
+       * Call to the onResponse callback
+       */
       onResponse?.(result)
 
       let records: R[] = []
@@ -342,20 +346,24 @@ export function useData<
           paginationType !== "no-pagination"
         ) {
           // For page-based pagination
-          setPaginationInfo({
+          const common = {
             total: result.total,
             perPage: result.perPage,
-            type: paginationType,
-            // Pages pagination
-            ...(paginationType === "pages" && {
+          }
+          if (paginationType === "pages") {
+            setPaginationInfo({
+              ...common,
+              type: "pages" as const,
               currentPage: "currentPage" in result ? result.currentPage : 1,
               pagesCount:
                 "pagesCount" in result
                   ? result.pagesCount
                   : Math.ceil(result.total / result.perPage),
-            }),
-            // Infinite scroll pagination
-            ...(paginationType === "infinite-scroll" && {
+            })
+          } else if (paginationType === "infinite-scroll") {
+            setPaginationInfo({
+              ...common,
+              type: "infinite-scroll" as const,
               cursor:
                 "cursor" in result && result.cursor !== undefined
                   ? result.cursor
@@ -366,8 +374,8 @@ export function useData<
                 "hasMore" in result
                   ? result.hasMore
                   : rawData.length + result.records.length < result.total,
-            }),
-          })
+            })
+          }
 
           setTotalItems(result.total)
         }
@@ -407,7 +415,8 @@ export function useData<
     const data: WithGroupId<R>[] = rawData.map((record) => ({
       ...record,
       [GROUP_ID_SYMBOL]:
-        (currentGrouping?.field && record[currentGrouping.field as keyof R]) ||
+        (currentGrouping?.field &&
+          getValueByPath(record, currentGrouping.field as string)) ||
         undefined,
     }))
 
@@ -418,22 +427,32 @@ export function useData<
       currentGrouping &&
       currentGrouping.field &&
       grouping &&
-      grouping.groupBy[currentGrouping.field as keyof R]
+      (grouping.groupBy as Record<string, unknown>)[
+        currentGrouping.field as string
+      ]
     ) {
       const groupedData = groupBy(data, GROUP_ID_SYMBOL)
+      const fieldName = currentGrouping.field as string
+      const groupConfig = (grouping.groupBy as Record<string, unknown>)[
+        fieldName
+      ] as {
+        label: (
+          groupId: unknown,
+          filters: FiltersState<FiltersDefinition>
+        ) => string | Promise<string>
+        itemCount?: (
+          groupId: unknown,
+          filters: FiltersState<FiltersDefinition>
+        ) => number | undefined | Promise<number | undefined>
+      }
 
       return {
         type: "grouped" as const,
         records: data,
         groups: Object.entries(groupedData).map(([key, value]) => ({
           key,
-          label: grouping.groupBy[currentGrouping.field as keyof R]!.label(
-            key as R[keyof R],
-            mergedFilters
-          ),
-          itemCount: grouping.groupBy[
-            currentGrouping.field as keyof R
-          ]?.itemCount?.(key as R[keyof R], mergedFilters),
+          label: groupConfig.label(key as unknown, mergedFilters),
+          itemCount: groupConfig.itemCount?.(key as unknown, mergedFilters),
           records: value,
         })),
       }

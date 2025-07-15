@@ -1,4 +1,5 @@
 import { Skeleton } from "@/ui/skeleton"
+import DOMPurify from "dompurify"
 import { withSkeleton } from "../../../../../lib/skeleton"
 import { cn } from "../../../../../lib/utils"
 import "./TextEditorTheme.css"
@@ -27,7 +28,7 @@ export const BasePostDescription = ({
 
   return (
     <div
-      dangerouslySetInnerHTML={{ __html: content }}
+      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
       className={cn(className, collapsed && "line-clamp-5")}
     />
   )

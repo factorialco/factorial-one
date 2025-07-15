@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import DOMPurify from "dompurify"
 import { forwardRef, HTMLAttributes } from "react"
 import "../index.css"
 
@@ -15,7 +16,7 @@ const RichTextDisplay = forwardRef<RichTextDisplayHandle, RichTextDisplayProps>(
       <div
         ref={ref}
         className={cn("rich-text-display-container", className)}
-        dangerouslySetInnerHTML={{ __html: content }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
         {...props}
       />
     )
