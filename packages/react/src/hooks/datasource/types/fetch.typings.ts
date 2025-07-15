@@ -128,11 +128,9 @@ export type PaginatedResponse<TRecord> =
 /**
  * Pagination state and controls
  */
-export type PaginationInfo = Omit<
-  | PageBasedPaginatedResponse<unknown>
-  | InfiniteScrollPaginatedResponse<unknown>,
-  "records"
->
+export type PaginationInfo =
+  | Omit<PageBasedPaginatedResponse<unknown>, "records">
+  | Omit<InfiniteScrollPaginatedResponse<unknown>, "records">
 
 /**
  * Base data adapter configuration for non-paginated collections
