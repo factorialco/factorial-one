@@ -3,12 +3,19 @@ import { useState } from "react"
 import { EqFilter } from "./eqFilter"
 
 const meta: Meta<typeof EqFilter> = {
-  title: "Experimental/OneDataCollection/Filters/EqFilter",
+  title: "Data Collection/Filters/EqFilter",
   component: EqFilter,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div className="border-f1-border-primary w-[300px] rounded-md border p-4">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
