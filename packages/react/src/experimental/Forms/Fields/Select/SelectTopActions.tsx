@@ -6,7 +6,10 @@ import {
 } from "@/hooks/datasource"
 import { F1SearchBox } from "../F1SearchBox"
 
-interface SelectTopActionsProps<R extends RecordType = RecordType> {
+interface SelectTopActionsProps<
+  R extends RecordType = RecordType,
+  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
+> {
   showSearchBox?: boolean
   searchBoxPlaceholder?: string
   onSearchChange: (value: string) => void
@@ -14,12 +17,12 @@ interface SelectTopActionsProps<R extends RecordType = RecordType> {
   searchInputRef: React.RefObject<HTMLInputElement>
   onFocus?: () => void
   onBlur?: () => void
-  grouping?: GroupingDefinition<R>
-  currentGrouping?: GroupingState<R, GroupingDefinition<R>>
-  onGroupingChange?: (grouping: GroupingState<R, GroupingDefinition<R>>) => void
+  grouping?: Grouping
+  currentGrouping?: GroupingState<R, Grouping>
+  onGroupingChange?: (grouping: GroupingState<R, Grouping>) => void
 }
 
-export const SelectTopActions = ({
+export const SelectTopActions = <R extends RecordType = RecordType>({
   showSearchBox,
   searchBoxPlaceholder,
   onSearchChange,
@@ -30,7 +33,7 @@ export const SelectTopActions = ({
   grouping,
   currentGrouping,
   onGroupingChange,
-}: SelectTopActionsProps) => {
+}: SelectTopActionsProps<R>) => {
   if (!showSearchBox) return null
   return (
     <div className="flex gap-2 px-2 pt-2">
