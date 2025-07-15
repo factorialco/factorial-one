@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.126.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.2...factorial-one-react-v1.126.3) (2025-07-15)
+
+
+### Bug Fixes
+
+* adding titleSize as a prop ([9f01baa](https://github.com/factorialco/factorial-one/commit/9f01baa373078b5b660ebe75d5c34e46b083b220))
+* adding titleSize as a prop ([df915b7](https://github.com/factorialco/factorial-one/commit/df915b735d345984e6444b058b9e54c05a8f9993))
+* decoupling base banner form upselling kit banner ([bb292f5](https://github.com/factorialco/factorial-one/commit/bb292f5d4089ab8970b766b70249a96c863c1724))
+* decoupling base banner form upselling kit banner ([abeebed](https://github.com/factorialco/factorial-one/commit/abeebed64f50fb68471d4235984524f4dc9d8cd2))
+
+## [1.126.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.1...factorial-one-react-v1.126.2) (2025-07-15)
+
+
+### Bug Fixes
+
+* sanitize postdescription and Richtext html with domPurify ([#2253](https://github.com/factorialco/factorial-one/issues/2253)) ([de32984](https://github.com/factorialco/factorial-one/commit/de329845fac1debf1fcea0187082a0e3dfc1e2ae))
+
+## [1.126.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.0...factorial-one-react-v1.126.1) (2025-07-15)
+
+
+### Bug Fixes
+
+* table pagination padding ([#2252](https://github.com/factorialco/factorial-one/issues/2252)) ([1b17da3](https://github.com/factorialco/factorial-one/commit/1b17da350b7e8f51389b6fdb6014c03568ee9290))
+
 ## [1.126.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.125.0...factorial-one-react-v1.126.0) (2025-07-14)
 
 
