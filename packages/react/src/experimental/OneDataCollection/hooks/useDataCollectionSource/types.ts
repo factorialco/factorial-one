@@ -6,9 +6,9 @@ import {
   DataSourceDefinition,
   FiltersDefinition,
   GroupingDefinition,
-  PageBasedPaginatedResponse,
   PaginatedDataAdapter,
   PaginatedFetchOptions,
+  PaginatedResponse,
   RecordType,
   SortingsDefinition,
 } from "@/hooks/datasource/types"
@@ -67,7 +67,7 @@ export type DataCollectionDataAdapter<
       R,
       Filters,
       DataCollectionPaginatedFetchOptions<Filters, NavigationFilters>,
-      PageBasedPaginatedResponse<R>
+      PaginatedResponse<R>
     >
 
 /**
