@@ -82,5 +82,13 @@ export const useDataCollectionSource = <
     navigationFilters,
     currentNavigationFilters,
     setCurrentNavigationFilters,
-  }
+  } as DataCollectionSource<
+    R,
+    FiltersSchema,
+    Sortings,
+    Summaries,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
 }

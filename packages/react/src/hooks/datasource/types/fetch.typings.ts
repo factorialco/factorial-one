@@ -142,7 +142,7 @@ export type PaginationInfo = Omit<
 export type BaseDataAdapter<
   R extends RecordType,
   Filters extends FiltersDefinition,
-  Options extends BaseFetchOptions<Filters> = BaseFetchOptions<Filters>,
+  Options extends BaseFetchOptions<Filters>,
   FetchReturn = BaseResponse<R>,
 > = {
   /** Indicates this adapter doesn't use pagination */
@@ -203,7 +203,7 @@ export type DataAdapter<
       R,
       Filters,
       PaginatedFetchOptions<Filters>,
-      PageBasedPaginatedResponse<R>
+      PaginatedResponse<R>
     >
 
 /**

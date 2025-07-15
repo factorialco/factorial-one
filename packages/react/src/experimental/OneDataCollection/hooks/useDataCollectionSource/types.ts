@@ -56,10 +56,7 @@ export type DataCollectionSourceDefinition<
   NavigationFilters extends
     NavigationFiltersDefinition = NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
-> = Omit<
-  DataSourceDefinition<R, Filters, Sortings, Grouping>,
-  "dataAdapter"
-> & {
+> = DataSourceDefinition<R, Filters, Sortings, Grouping> & {
   /**
    * Data Collection specific datasource elements / features
    */
