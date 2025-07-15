@@ -124,14 +124,16 @@ describe("Select", () => {
   it("renders search box when showSearchBox is true", async () => {
     const user = userEvent.setup()
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-        showSearchBox
-        searchBoxPlaceholder="Search options"
-      />
+      <>
+        <Select
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={() => {}}
+          showSearchBox
+          searchBoxPlaceholder="Search options"
+        />
+      </>
     )
 
     await openSelect(user)

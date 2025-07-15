@@ -185,7 +185,7 @@ export const CollapsibleGroupingWithDefaultOpenGroups: Story = {
       },
     }
 
-    const source = useDataSource({
+    const source = useDataCollectionSource({
       selectable: (item) => item.id,
       filters,
       presets: filterPresets,

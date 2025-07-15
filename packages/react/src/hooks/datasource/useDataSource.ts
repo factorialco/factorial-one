@@ -86,6 +86,12 @@ export const useDataSource = <
   FiltersSchema extends FiltersDefinition = FiltersDefinition,
   Sortings extends SortingsDefinition = SortingsDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
+  TDataSource extends DataSourceDefinition<
+    R,
+    FiltersSchema,
+    Sortings,
+    Grouping
+  > = DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
@@ -96,7 +102,7 @@ export const useDataSource = <
     dataAdapter,
     grouping,
     ...rest
-  }: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>,
+  }: TDataSource,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<R, FiltersSchema, Sortings, Grouping> => {
   const [currentFilters, setCurrentFilters] = useState<

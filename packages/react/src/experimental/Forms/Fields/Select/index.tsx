@@ -14,9 +14,9 @@ import {
   SortingsDefinition,
   useData,
   useDataSource,
+  useGroups,
   WithGroupId,
 } from "@/hooks/datasource"
-import { useGroups } from "@/hooks/datasource/useGroups"
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { InputField, InputFieldProps } from "@/ui/InputField"
@@ -40,7 +40,6 @@ import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
 import { SelectTopActions } from "./SelectTopActions"
 import type { SelectItemObject, SelectItemProps } from "./types"
-
 export * from "./types"
 
 /**

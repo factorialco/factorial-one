@@ -8,5 +8,4 @@ export type * from "./summary"
 export type * from "./types"
 // For backwards compatibility
 export * from "@/hooks/datasource/types"
-
 export * from "./hooks/useDataCollectionSource"

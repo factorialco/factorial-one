@@ -4,7 +4,6 @@ import {
   SelectItemProps,
 } from "@/experimental/exports"
 import { IconType } from "@/factorial-one"
-import { Recruitment } from "@/icons/modules"
 import {
   FIRST_NAMES_MOCK,
   getMockValue,
@@ -165,7 +164,7 @@ export const WithSelectBreadcrumbWithDatasource: Story = {
             id: "recruitment",
             label: "Recruitment",
             href: "/recruitment",
-            icon: Recruitment,
+            module: "ats",
           },
           {
             id: "offers",
