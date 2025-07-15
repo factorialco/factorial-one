@@ -1,12 +1,12 @@
+import { GroupingSelector } from "@/experimental/OneDataCollection/Settings/components/GroupingSelector"
 import {
   GroupingDefinition,
   GroupingState,
-} from "@/experimental/OneDataCollection/grouping"
-import { GroupingSelector } from "@/experimental/OneDataCollection/Settings/components/GroupingSelector"
-import { RecordType } from "@/experimental/OneDataCollection/types"
+  RecordType,
+} from "@/hooks/datasource"
 import { F1SearchBox } from "../F1SearchBox"
 
-interface SelectTopActionsProps {
+interface SelectTopActionsProps<R extends RecordType = RecordType> {
   showSearchBox?: boolean
   searchBoxPlaceholder?: string
   onSearchChange: (value: string) => void
@@ -14,11 +14,9 @@ interface SelectTopActionsProps {
   searchInputRef: React.RefObject<HTMLInputElement>
   onFocus?: () => void
   onBlur?: () => void
-  grouping?: GroupingDefinition<RecordType>
-  currentGrouping?: GroupingState<RecordType, GroupingDefinition<RecordType>>
-  onGroupingChange?: (
-    grouping: GroupingState<RecordType, GroupingDefinition<RecordType>>
-  ) => void
+  grouping?: GroupingDefinition<R>
+  currentGrouping?: GroupingState<R, GroupingDefinition<R>>
+  onGroupingChange?: (grouping: GroupingState<R, GroupingDefinition<R>>) => void
 }
 
 export const SelectTopActions = ({

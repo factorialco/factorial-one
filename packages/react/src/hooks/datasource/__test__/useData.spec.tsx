@@ -1,21 +1,19 @@
-import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
-import type { FiltersState } from "../../../components/OneFilterPicker/types"
-import { GroupingDefinition } from "../../../experimental/OneDataCollection/grouping"
-import { ItemActionsDefinition } from "../../../experimental/OneDataCollection/item-actions"
-import type {
+import { FiltersState } from "../../../components/OneFilterPicker/types"
+import { PromiseState } from "../../../lib/promise-to-observable"
+import {
   BaseDataAdapter,
   BaseFetchOptions,
   BaseResponse,
-  DataSource,
+  GroupingDefinition,
+  PageBasedPaginatedResponse,
   PaginatedDataAdapter,
-  PaginatedResponse,
+  PaginatedFetchOptions,
   RecordType,
-} from "../../../experimental/OneDataCollection/types"
-import type { PromiseState } from "../../../lib/promise-to-observable"
+} from "../types"
+import { DataSource } from "../types/datasource.typings"
 import { SortingsDefinition } from "../types/sortings.typings"
 import { GROUP_ID_SYMBOL, useData, WithGroupId } from "../useData"
 interface TestRecord extends RecordType {
@@ -40,15 +38,12 @@ type TestSource = DataSource<
   TestRecord,
   TestFilters,
   SortingsDefinition,
-  SummariesDefinition,
-  ItemActionsDefinition<TestRecord>,
-  NavigationFiltersDefinition,
   GroupingDefinition<TestRecord>
 >
 
 const createMockDataSource = (
   fetchData: (
-    options: BaseFetchOptions<TestFilters, NavigationFiltersDefinition>
+    options: BaseFetchOptions<TestFilters>
   ) =>
     | BaseResponse<TestRecord>
     | Promise<BaseResponse<TestRecord>>
@@ -58,7 +53,8 @@ const createMockDataSource = (
   const baseAdapter: BaseDataAdapter<
     TestRecord,
     TestFilters,
-    NavigationFiltersDefinition
+    BaseFetchOptions<TestFilters>,
+    BaseResponse<TestRecord>
   > = {
     fetchData,
   }
@@ -66,7 +62,8 @@ const createMockDataSource = (
   const paginatedAdapter: PaginatedDataAdapter<
     TestRecord,
     TestFilters,
-    NavigationFiltersDefinition
+    PaginatedFetchOptions<TestFilters>,
+    PageBasedPaginatedResponse<TestRecord>
   > = {
     fetchData: async (options) => {
       const result = await Promise.resolve(fetchData(options))
@@ -99,9 +96,6 @@ const createMockDataSource = (
     setCurrentSearch: vi.fn(),
     isLoading: false,
     setIsLoading: vi.fn(),
-    currentNavigationFilters: {},
-    setCurrentNavigationFilters: vi.fn(),
-    navigationFilters: undefined,
     currentGrouping: undefined,
     setCurrentGrouping: vi.fn(),
   }
@@ -372,38 +366,38 @@ describe("useData", () => {
       const source = {
         dataAdapter: {
           fetchData: () => {
-            return new Observable<PromiseState<PaginatedResponse<TestRecord>>>(
-              (subscriber) => {
-                subscriptionCount++
+            return new Observable<
+              PromiseState<PageBasedPaginatedResponse<TestRecord>>
+            >((subscriber) => {
+              subscriptionCount++
+              subscriber.next({
+                loading: true,
+                data: null,
+                error: null,
+              })
+
+              // Simulate async data loading
+              setTimeout(() => {
                 subscriber.next({
-                  loading: true,
-                  data: null,
+                  loading: false,
+                  data: {
+                    records: mockData,
+                    total: mockData.length,
+                    currentPage: 1,
+                    perPage: 10,
+                    pagesCount: 1,
+                    type: "pages",
+                  },
                   error: null,
                 })
+                subscriber.complete()
+              }, 10)
 
-                // Simulate async data loading
-                setTimeout(() => {
-                  subscriber.next({
-                    loading: false,
-                    data: {
-                      records: mockData,
-                      total: mockData.length,
-                      currentPage: 1,
-                      perPage: 10,
-                      pagesCount: 1,
-                      type: "pages",
-                    },
-                    error: null,
-                  })
-                  subscriber.complete()
-                }, 10)
-
-                // Return unsubscribe function that tracks when it's called
-                return () => {
-                  unsubscribeCalls++
-                }
+              // Return unsubscribe function that tracks when it's called
+              return () => {
+                unsubscribeCalls++
               }
-            )
+            })
           },
           paginationType: "pages" as const,
           perPage: 10,
@@ -417,9 +411,6 @@ describe("useData", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
-        currentNavigationFilters: {},
-        setCurrentNavigationFilters: vi.fn(),
-        navigationFilters: undefined,
         currentGrouping: undefined,
         setCurrentGrouping: vi.fn(),
       }
