@@ -1,9 +1,13 @@
-import { FiltersDefinition } from "../../../../../../components/OneFilterPicker/types"
-import { SortingsDefinition } from "../../../../../../hooks/datasource/types/sortings.typings"
+import {
+  FiltersDefinition,
+  GroupingDefinition,
+  RecordType,
+  SortingsDefinition,
+} from "@/hooks/datasource"
+import { DataCollectionSource } from "../../../../exports"
 import { ItemActionsDefinition } from "../../../../item-actions"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { SummariesDefinition } from "../../../../summary"
-import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
 import { ItemDefinition, ListPropertyDefinition } from "../types"
 import { Row } from "./Row"
 
@@ -16,7 +20,7 @@ type ListGroupProps<
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 > = {
-  source: DataSource<
+  source: DataCollectionSource<
     R,
     Filters,
     Sortings,

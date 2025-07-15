@@ -1,5 +1,4 @@
 import {
-  DataSource,
   GroupingDefinition,
   OnSelectItemsCallback,
   RecordType,
@@ -13,6 +12,7 @@ import { SortingsDefinition } from "../../hooks/datasource/types/sortings.typing
 import { Kanban, Sliders, Table } from "../../icons/app"
 import { useI18n } from "../../lib/providers/i18n"
 import { cn, focusRing } from "../../lib/utils"
+import { DataCollectionSource } from "./exports"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SummariesDefinition } from "./summary"
@@ -62,7 +62,7 @@ export type Visualization<
       component: (props: {
         onLoadData: OnLoadDataCallback<Record, Filters>
         onLoadError: OnLoadErrorCallback
-        source: DataSource<
+        source: DataCollectionSource<
           Record,
           Filters,
           Sortings,
@@ -256,7 +256,7 @@ export const VisualizationRenderer = <
     NavigationFilters,
     Grouping
   >
-  source: DataSource<
+  source: DataCollectionSource<
     Record,
     Filters,
     Sortings,

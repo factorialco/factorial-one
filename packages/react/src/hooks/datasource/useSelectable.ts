@@ -1,16 +1,13 @@
 import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { ItemActionsDefinition } from "../../experimental/OneDataCollection/item-actions"
-import { NavigationFiltersDefinition } from "../../experimental/OneDataCollection/navigationFilters/types"
-import type { SummariesDefinition } from "../../experimental/OneDataCollection/summary"
 import {
+  DataSourceDefinition,
   GroupingDefinition,
   OnSelectItemsCallback,
   PaginationInfo,
   RecordType,
   SelectedItemsState,
 } from "./types"
-import { DataSource } from "./types/datasource.typings"
 import type { SortingsDefinition } from "./types/sortings.typings"
 import { Data, GROUP_ID_SYMBOL, GroupRecord, WithGroupId } from "./useData"
 
@@ -37,22 +34,11 @@ export function useSelectable<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<R>,
-  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 >(
   data: Data<R>,
   paginationInfo: PaginationInfo | null,
-  source: DataSource<
-    R,
-    Filters,
-    Sortings,
-    Summaries,
-    ItemActions,
-    NavigationFilters,
-    Grouping
-  >,
+  source: DataSourceDefinition<R, Filters, Sortings, Grouping>,
   onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
   defaultSelectedItems: SelectedItemsState | undefined
 ): UseSelectable<R> {
@@ -399,7 +385,7 @@ export function useSelectable<
             !!checked,
           ])
         ),
-        filters: source.currentFilters,
+        filters: source.currentFilters || {},
         selectedCount: selectedItemsCount,
       },
       clearSelectedItems

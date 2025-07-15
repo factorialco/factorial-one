@@ -29,7 +29,7 @@ export function useDataCollectionData<
     NavigationFilters,
     Grouping
   >,
-  { filters, onError }: UseDataOptions<Filters> = {}
+  { filters, onError }: UseDataOptions<R, Filters> = {}
 ) {
   const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
 

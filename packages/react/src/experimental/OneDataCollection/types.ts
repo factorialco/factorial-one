@@ -5,12 +5,12 @@ import type {
 import { IconType } from "@/components/Utilities/Icon"
 import {
   DataError,
-  DataSource,
   GroupingDefinition,
   OnSelectItemsCallback,
   RecordType,
   SortingsDefinition,
 } from "@/hooks/datasource"
+import { DataCollectionSource } from "./exports"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SummariesDefinition } from "./summary"
@@ -79,7 +79,7 @@ export type CollectionProps<
   VisualizationOptions extends object,
 > = {
   /** The data source configuration and state */
-  source: DataSource<
+  source: DataCollectionSource<
     Record,
     Filters,
     Sortings,

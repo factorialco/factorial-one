@@ -1,5 +1,12 @@
+import { DataCollectionSource } from "@/experimental/OneDataCollection/exports"
 import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData/useDataCollectionData"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import {
+  BaseFetchOptions,
+  FiltersDefinition,
+  PaginatedFetchOptions,
+  PaginationType,
+} from "@/hooks/datasource"
 import {
   act,
   render,
@@ -10,22 +17,13 @@ import {
 } from "@testing-library/react"
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
-import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
-import { SortingsDefinition } from "../../../../../hooks/datasource/types/sortings.typings"
 import {
   defaultTranslations,
   I18nProvider,
 } from "../../../../../lib/providers/i18n"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SummariesDefinition } from "../../../summary"
-import type {
-  BaseFetchOptions,
-  DataSource,
-  GroupingDefinition,
-  PaginatedFetchOptions,
-  PaginatedResponse,
-  PaginationType,
-} from "../../../types"
+import type { GroupingDefinition, SortingsDefinition } from "../../../types"
 import { TableCollection } from "./index"
 
 type TestFilters = FiltersDefinition
@@ -60,7 +58,7 @@ const testColumns = [
 const createTestSource = (
   data: Person[] = testData,
   error?: Error
-): DataSource<
+): DataCollectionSource<
   Person,
   TestFilters,
   SortingsDefinition,
@@ -310,7 +308,7 @@ describe("TableCollection", () => {
       totalItems?: number
       itemsPerPage?: number
       paginationType?: PaginationType
-    }): DataSource<
+    }): DataCollectionSource<
       Person,
       TestFilters,
       SortingsDefinition,
@@ -336,11 +334,14 @@ describe("TableCollection", () => {
       dataAdapter: {
         paginationType,
         perPage: itemsPerPage,
-        fetchData: (async (
-          options: PaginatedFetchOptions<TestFilters, TestNavigationFilters>
+        fetchData: async (
+          options:
+            | BaseFetchOptions<TestFilters>
+            | PaginatedFetchOptions<TestFilters>
         ) => {
           // Handle both BaseFetchOptions and PaginatedFetchOptions
-          const currentPage = options.pagination?.currentPage ?? 1
+          const currentPage =
+            "pagination" in options ? (options.pagination?.currentPage ?? 1) : 1
           const pagesCount = Math.ceil(totalItems / itemsPerPage)
           const startIndex = (currentPage - 1) * itemsPerPage
           const endIndex = startIndex + itemsPerPage
@@ -357,10 +358,9 @@ describe("TableCollection", () => {
             currentPage,
             perPage: itemsPerPage,
             pagesCount,
+            type: "pages" as const,
           }
-        }) as (
-          options: BaseFetchOptions<TestFilters, TestNavigationFilters>
-        ) => Promise<PaginatedResponse<Person>>,
+        },
       },
     })
 
