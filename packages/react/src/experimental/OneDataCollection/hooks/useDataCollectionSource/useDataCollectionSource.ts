@@ -18,7 +18,7 @@ import {
   NavigationFiltersState,
 } from "../../navigationFilters/types"
 import { SummariesDefinition } from "../../summary"
-import { DataCollectionSource } from "./types"
+import { DataCollectionSource, DataCollectionSourceDefinition } from "./types"
 
 export const useDataCollectionSource = <
   R extends RecordType = RecordType,
@@ -30,7 +30,7 @@ export const useDataCollectionSource = <
     NavigationFiltersDefinition = NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 >(
-  source: DataCollectionSource<
+  source: DataCollectionSourceDefinition<
     R,
     FiltersSchema,
     Sortings,
@@ -40,7 +40,15 @@ export const useDataCollectionSource = <
     Grouping
   >,
   deps: ReadonlyArray<unknown> = []
-) => {
+): DataCollectionSource<
+  R,
+  FiltersSchema,
+  Sortings,
+  Summaries,
+  ItemActions,
+  NavigationFilters,
+  Grouping
+> => {
   const { navigationFilters, summaries } = source
 
   const datasource = useDataSource(source, deps)

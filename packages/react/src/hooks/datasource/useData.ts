@@ -2,7 +2,6 @@ import type {
   FiltersDefinition,
   FiltersState,
 } from "@/components/OneFilterPicker/types"
-import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
 import { PromiseState, promiseToObservable } from "@/lib/promise-to-observable"
 import { groupBy } from "lodash"
 import {
@@ -14,11 +13,6 @@ import {
   useState,
 } from "react"
 import { Observable } from "zen-observable-ts"
-import {
-  NavigationFiltersDefinition,
-  NavigationFiltersState,
-} from "../../experimental/OneDataCollection/navigationFilters/types"
-import { SummariesDefinition } from "../../experimental/OneDataCollection/summary"
 import {
   BaseFetchOptions,
   GroupingDefinition,
@@ -50,10 +44,30 @@ type SimpleResult<T> = T[]
 /**
  * Hook options for useData
  */
-interface UseDataOptions<Filters extends FiltersDefinition> {
+export interface UseDataOptions<
+  R extends RecordType,
+  Filters extends FiltersDefinition,
+> {
   filters?: Partial<FiltersState<Filters>>
+  /**
+   * A function that is called when an error occurs during data fetching.
+   * It is called with the error object.
+   * @param error - The error object.
+   */
   onError?: (error: DataError) => void
-  handleFetchSuccess?: (data: R) => Data
+  /**
+   * A function that provides the fetch parameters for the data source.
+   * It is called before each fetch request and can be used to modify the fetch parameters.
+   * @param options - The fetch parameters for the data source.
+   * @returns The fetch parameters for the data source.
+   */
+  fetchParamsProvider?: <O extends BaseFetchOptions<Filters>>(options: O) => O
+  /**
+   * A function that is called when the data is fetched successfully.
+   * It is called with the response data.
+   * @param response - The response data.
+   */
+  onResponse?: (response: PaginatedResponse<R> | SimpleResult<R>) => void
 }
 
 /**
@@ -127,6 +141,19 @@ function usePaginationState() {
   return { paginationInfo, setPaginationInfo }
 }
 
+const defaultFetchDataAndUpdateOptions = <
+  Filters extends FiltersDefinition,
+  O extends BaseFetchOptions<Filters>,
+>(
+  options: O
+): O => options
+
+const defaultIdProvider = (
+  item: RecordType,
+  index?: number
+): string | number =>
+  "id" in item ? `${item.id}` : index || JSON.stringify(item)
+
 /**
  * A core React hook that manages data fetching, state management, and pagination within the Collections ecosystem.
  *
@@ -197,20 +224,17 @@ export function useData<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
-  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 >(
-  source: DataSource<
-    R,
-    Filters,
-    Sortings,
-    Summaries,
-    ItemActionsDefinition<R>,
-    NavigationFilters,
-    Grouping
-  >,
-  { filters, onError }: UseDataOptions<Filters> = {}
+  source: DataSource<R, Filters, Sortings, Grouping>,
+  {
+    filters,
+    onError,
+    fetchParamsProvider = defaultFetchDataAndUpdateOptions,
+    onResponse,
+  }: UseDataOptions<R, Filters> = {},
+  // Deps to trigger fetchDataAndUpdate
+  deps: unknown[] = []
 ): UseDataReturn<R> {
   const {
     dataAdapter,
@@ -220,11 +244,9 @@ export function useData<
     currentSearch,
     isLoading,
     setIsLoading,
-    currentNavigationFilters,
     currentGrouping,
     grouping,
-    idProvider = (item: R, index: number): string | number =>
-      "id" in item ? `${item.id}` : index || JSON.stringify(item),
+    idProvider = defaultIdProvider,
   } = source
 
   const cleanup = useRef<(() => void) | undefined>()
@@ -278,8 +300,6 @@ export function useData<
     [currentSearch, deferredSearch, search?.enabled, search?.sync]
   )
 
-  const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
-
   /**
    * Merges 2 arrays of items using the idProvider to update the existing items
    * and add the new items
@@ -306,11 +326,7 @@ export function useData<
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<R> | SimpleResult<R>, appendMode: boolean) => {
-      // Extract summaries data if available
-      const extractedSummaries =
-        "summaries" in result ? result.summaries : undefined
-
-      setSummariesData(extractedSummaries)
+      onResponse?.(result)
 
       let records: R[] = []
       if ("records" in result) {
@@ -382,7 +398,6 @@ export function useData<
       setIsLoading,
       setIsLoadingMore,
       setTotalItems,
-      setSummariesData,
       isLoadingMoreRef,
     ]
   )
@@ -463,13 +478,9 @@ export function useData<
   type ResultType = PaginatedResponse<R> | SimpleResult<R>
 
   // Define a type for the fetch parameters to make the function more maintainable
-  type FetchDataParams<
-    Filters extends FiltersDefinition,
-    NavigationFilters extends NavigationFiltersDefinition,
-  > = {
+  type FetchDataParams<Filters extends FiltersDefinition> = {
     filters: FiltersState<Filters>
     currentPage?: number
-    navigationFilters: NavigationFiltersState<NavigationFilters>
     appendMode?: boolean
     cursor?: string | null
     search?: string | undefined
@@ -479,11 +490,10 @@ export function useData<
     async ({
       filters,
       currentPage = 1,
-      navigationFilters,
       search,
       appendMode = false,
       cursor = null,
-    }: FetchDataParams<Filters, NavigationFilters>) => {
+    }: FetchDataParams<Filters>) => {
       try {
         // Clean up any existing subscription before creating a new one
         if (cleanup.current) {
@@ -510,12 +520,15 @@ export function useData<
             : []),
         ]
 
-        const baseFetchOptions: BaseFetchOptions<Filters, NavigationFilters> = {
-          filters,
-          search,
-          sortings,
-          navigationFilters,
-        }
+        const baseFetchOptions: BaseFetchOptions<Filters> = fetchParamsProvider(
+          {
+            filters,
+            search,
+            sortings,
+          }
+        )
+
+        console.log("baseFetchOptions", baseFetchOptions)
 
         function fetcher(): PromiseOrObservable<ResultType> {
           setTotalItems(undefined)
@@ -581,6 +594,8 @@ export function useData<
         handleFetchError(error)
       }
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fetchDataAndUpdateParamsProvider must be stable
     [
       handleFetchError,
       dataAdapter,
@@ -588,6 +603,8 @@ export function useData<
       currentGrouping,
       handleFetchSuccess,
       setIsLoading,
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
+      ...deps,
     ]
   )
 
@@ -605,7 +622,6 @@ export function useData<
         filters: mergedFilters,
         currentPage: page,
         search: searchValue.current,
-        navigationFilters: currentNavigationFilters,
       })
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
@@ -615,7 +631,8 @@ export function useData<
       mergedFilters,
       setIsLoading,
       paginationInfo,
-      currentNavigationFilters,
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
+      ...deps,
     ]
   )
 
@@ -643,7 +660,6 @@ export function useData<
         // Use named parameters
         fetchDataAndUpdate({
           filters: mergedFilters,
-          navigationFilters: currentNavigationFilters,
           appendMode: true,
           cursor: currentCursor,
           search: searchValue.current,
@@ -656,10 +672,11 @@ export function useData<
       isLoading,
       mergedFilters,
       paginationInfoRef.current,
-      currentNavigationFilters,
       searchValue.current,
       setIsLoading,
       setIsLoadingMore,
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
+      ...deps,
     ]
   )
 
@@ -673,7 +690,6 @@ export function useData<
         fetchDataAndUpdate({
           filters: mergedFilters,
           currentPage: initialPosition,
-          navigationFilters: currentNavigationFilters,
           search: searchValue.current,
           cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
         })
@@ -684,9 +700,10 @@ export function useData<
       fetchDataAndUpdate,
       mergedFilters,
       setIsLoading,
-      currentNavigationFilters,
       dataAdapter.paginationType,
       searchValue.current,
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
+      ...deps,
     ]
   )
 
@@ -706,11 +723,9 @@ export function useData<
     setPage,
     loadMore,
     totalItems,
-    summaries: summariesData, // Add summaries to the return object
   }
 }
 
-// TODO: move them to utils file???
 // Type guard functions to check pagination types
 export function isPageBasedPagination<R extends RecordType>(
   pagination: PaginationInfo | null

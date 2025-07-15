@@ -1,7 +1,10 @@
 import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { OneCard } from "@/experimental/OneCard"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
+import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData"
+import { DataCollectionSource } from "@/experimental/OneDataCollection/hooks/useDataCollectionSource"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import { GroupingDefinition, RecordType } from "@/hooks/datasource"
 import { getAnimationVariants, useGroups } from "@/hooks/datasource/useGroups"
 import { useSelectable } from "@/hooks/datasource/useSelectable"
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
@@ -10,17 +13,11 @@ import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useMemo } from "react"
 import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
 import { SortingsDefinition } from "../../../../../hooks/datasource/types/sortings.typings"
-import { useData } from "../../../../../hooks/datasource/useData"
 import { PagesPagination } from "../../../components/PagesPagination"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SummariesDefinition } from "../../../summary"
-import {
-  CollectionProps,
-  DataSource,
-  GroupingDefinition,
-  RecordType,
-} from "../../../types"
+import { CollectionProps } from "../../../types"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
 
@@ -86,7 +83,7 @@ type GroupCardsProps<
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 > = {
-  source: DataSource<
+  source: DataCollectionSource<
     Record,
     Filters,
     Sortings,
@@ -254,24 +251,25 @@ export const CardCollection = <
     return source.dataAdapter
   }, [source.dataAdapter])
 
-  const { data, paginationInfo, setPage, isInitialLoading } = useData<
-    Record,
-    Filters,
-    Sortings,
-    Summaries,
-    NavigationFilters,
-    Grouping
-  >(
-    {
-      ...source,
-      dataAdapter: overridenDataAdapter,
-    },
-    {
-      onError: (error) => {
-        onLoadError(error)
+  const { data, paginationInfo, setPage, isInitialLoading } =
+    useDataCollectionData<
+      Record,
+      Filters,
+      Sortings,
+      Summaries,
+      NavigationFilters,
+      Grouping
+    >(
+      {
+        ...source,
+        dataAdapter: overridenDataAdapter,
       },
-    }
-  )
+      {
+        onError: (error) => {
+          onLoadError(error)
+        },
+      }
+    )
 
   useEffect(() => {
     onLoadData({

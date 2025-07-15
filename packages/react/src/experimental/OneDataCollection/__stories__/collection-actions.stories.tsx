@@ -219,6 +219,10 @@ export const WithExpandedActionsExample: Story = {
       },
     })
 
+    dataSource.setCurrentFilters({
+      status: "active",
+    })
+
     return <BaseStory dataSource={dataSource} />
   },
 }

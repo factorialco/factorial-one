@@ -1,6 +1,7 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination"
+import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData"
 import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/hooks/useInfiniteScrollPagination"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
@@ -12,6 +13,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/experimental/OneTable"
+import {
+  isInfiniteScrollPagination,
+  RecordType,
+  SortingKey,
+  SortingsDefinition,
+  SortingsState,
+} from "@/hooks/datasource"
 import { getAnimationVariants, useGroups } from "@/hooks/datasource/useGroups"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
@@ -19,20 +27,11 @@ import { Skeleton } from "@/ui/skeleton.tsx"
 import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
-import {
-  SortingKey,
-  SortingsDefinition,
-  SortingsState,
-} from "../../../../../hooks/datasource/types/sortings.typings"
-import {
-  isInfiniteScrollPagination,
-  useData,
-} from "../../../../../hooks/datasource/useData"
 import { useSelectable } from "../../../../../hooks/datasource/useSelectable"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition } from "../../../property-render"
 import { SummariesDefinition, SummaryKey } from "../../../summary"
-import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
+import { CollectionProps, GroupingDefinition } from "../../../types"
 import { statusToChecked } from "../utils"
 import { Row } from "./components/Row"
 
@@ -147,14 +146,18 @@ export const TableCollection = <
     isLoadingMore,
     loadMore,
     summaries: summariesData,
-  } = useData<R, Filters, Sortings, Summaries, NavigationFilters, Grouping>(
-    source,
-    {
-      onError: (error) => {
-        onLoadError(error)
-      },
-    }
-  )
+  } = useDataCollectionData<
+    R,
+    Filters,
+    Sortings,
+    Summaries,
+    NavigationFilters,
+    Grouping
+  >(source, {
+    onError: (error) => {
+      onLoadError(error)
+    },
+  })
 
   const { currentSortings, setCurrentSortings, isLoading } = source
 

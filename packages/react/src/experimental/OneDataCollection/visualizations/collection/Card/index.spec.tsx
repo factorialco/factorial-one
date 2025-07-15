@@ -1,3 +1,4 @@
+import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData/useDataCollectionData"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { render, renderHook, screen, waitFor } from "@testing-library/react"
@@ -5,7 +6,6 @@ import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
 import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
 import { SortingsDefinition } from "../../../../../hooks/datasource/types/sortings.typings"
-import { useData } from "../../../../../hooks/datasource/useData"
 import { I18nProvider } from "../../../../../lib/providers/i18n"
 import { defaultTranslations } from "../../../../../lib/providers/i18n/i18n-provider-defaults"
 import { ItemActionsDefinition } from "../../../item-actions"
@@ -324,7 +324,7 @@ describe("CardCollection", () => {
 
       // Wait for loading state to finish and verify error state
       const { result } = renderHook(
-        () => useData(createTestSource([], error)),
+        () => useDataCollectionData(createTestSource([], error)),
         {
           wrapper: TestWrapper,
         }

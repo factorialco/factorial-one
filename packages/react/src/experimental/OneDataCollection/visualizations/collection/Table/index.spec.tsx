@@ -1,3 +1,4 @@
+import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData/useDataCollectionData"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   act,
@@ -11,7 +12,6 @@ import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
 import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
 import { SortingsDefinition } from "../../../../../hooks/datasource/types/sortings.typings"
-import { useData } from "../../../../../hooks/datasource/useData"
 import {
   defaultTranslations,
   I18nProvider,
@@ -287,7 +287,7 @@ describe("TableCollection", () => {
 
       // Verify error state
       const { result } = renderHook(
-        () => useData(createTestSource([], error)),
+        () => useDataCollectionData(createTestSource([], error)),
         {
           wrapper: TestWrapper,
         }

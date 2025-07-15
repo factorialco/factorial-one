@@ -1,5 +1,4 @@
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
-import { useData } from "@/hooks/datasource/useData"
 import {
   Add,
   Ai,
@@ -33,6 +32,7 @@ import {
   OneDataCollection,
   useDataCollectionSource,
 } from "../exports"
+import { useDataCollectionData } from "../hooks/useDataCollectionData/useDataCollectionData"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import {
@@ -711,7 +711,7 @@ const JsonVisualization = ({
     >
   >
 }) => {
-  const { data, isLoading } = useData(source)
+  const { data, isLoading } = useDataCollectionData(source)
 
   if (isLoading) {
     return (
