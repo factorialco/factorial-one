@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.126.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.2...factorial-one-react-v1.126.3) (2025-07-15)
+
+
+### Bug Fixes
+
+* adding titleSize as a prop ([9f01baa](https://github.com/factorialco/factorial-one/commit/9f01baa373078b5b660ebe75d5c34e46b083b220))
+* adding titleSize as a prop ([df915b7](https://github.com/factorialco/factorial-one/commit/df915b735d345984e6444b058b9e54c05a8f9993))
+* decoupling base banner form upselling kit banner ([bb292f5](https://github.com/factorialco/factorial-one/commit/bb292f5d4089ab8970b766b70249a96c863c1724))
+* decoupling base banner form upselling kit banner ([abeebed](https://github.com/factorialco/factorial-one/commit/abeebed64f50fb68471d4235984524f4dc9d8cd2))
+
 ## [1.126.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.1...factorial-one-react-v1.126.2) (2025-07-15)
 
 
