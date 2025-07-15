@@ -1,8 +1,8 @@
 import {
-  BaseFetchOptions,
   BaseResponse,
   BulkActionDefinition,
-  DataAdapter,
+  DataCollectionBaseFetchOptions,
+  DataCollectionDataAdapter,
   GroupingDefinition,
   GroupingState,
   InfiniteScrollPaginatedResponse,
@@ -408,7 +408,10 @@ export const createObservableDataFetch = (delay = 0) => {
     filters,
     sortings: sortingsState,
     navigationFilters,
-  }: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>) =>
+  }: DataCollectionBaseFetchOptions<
+    FiltersType,
+    NavigationFiltersDefinition
+  >) =>
     new Observable<PromiseState<BaseResponse<MockUser>>>((observer) => {
       observer.next({
         loading: true,
@@ -457,7 +460,10 @@ export const createObservableDataFetch = (delay = 0) => {
 
 export const createPromiseDataFetch = (delay = 500) => {
   return (
-    options: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>
+    options: DataCollectionBaseFetchOptions<
+      FiltersType,
+      NavigationFiltersDefinition
+    >
   ) => {
     const {
       filters,
@@ -536,7 +542,11 @@ export const ExampleComponent = ({
       GroupingDefinition<MockUser>
     >
   >
-  dataAdapter?: DataAdapter<MockUser, FiltersType, NavigationFiltersDefinition>
+  dataAdapter?: DataCollectionDataAdapter<
+    MockUser,
+    FiltersType,
+    NavigationFiltersDefinition
+  >
   defaultSelectedItems?: SelectedItemsState
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
@@ -657,7 +667,7 @@ export function createDataAdapter<
   useObservable = false,
   paginationType,
   perPage = 20,
-}: DataAdapterOptions<TRecord>): DataAdapter<
+}: DataAdapterOptions<TRecord>): DataCollectionDataAdapter<
   TRecord,
   TFilters,
   TNavigationFilters
@@ -807,7 +817,11 @@ export function createDataAdapter<
   }
 
   if (paginationType === "pages") {
-    const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
+    const adapter: DataCollectionDataAdapter<
+      TRecord,
+      TFilters,
+      TNavigationFilters
+    > = {
       paginationType: "pages",
       perPage,
       fetchData: ({ filters, sortings, pagination }) => {
@@ -871,7 +885,11 @@ export function createDataAdapter<
 
     return adapter
   } else if (paginationType === "infinite-scroll") {
-    const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
+    const adapter: DataCollectionDataAdapter<
+      TRecord,
+      TFilters,
+      TNavigationFilters
+    > = {
       paginationType: "infinite-scroll",
       perPage,
       fetchData: ({ filters, sortings, pagination }) => {
@@ -942,7 +960,11 @@ export function createDataAdapter<
   }
 
   // Not paginated
-  const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
+  const adapter: DataCollectionDataAdapter<
+    TRecord,
+    TFilters,
+    TNavigationFilters
+  > = {
     fetchData: ({ filters, sortings }) => {
       if (useObservable) {
         return new Observable<PromiseState<BaseResponse<TRecord>>>(

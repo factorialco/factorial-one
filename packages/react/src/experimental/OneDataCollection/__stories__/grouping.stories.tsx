@@ -190,6 +190,12 @@ export const WithPaginationAndGrouping: Story = {
       },
     }
 
+    const dataAdapter = createDataAdapter({
+      data: paginatedMockUsers,
+      delay: 500,
+      paginationType: "pages",
+    })
+
     const source = useDataCollectionSource({
       selectable: (item) => item.id,
       filters,
@@ -211,11 +217,7 @@ export const WithPaginationAndGrouping: Story = {
           ],
         }
       },
-      dataAdapter: createDataAdapter({
-        data: paginatedMockUsers,
-        delay: 500,
-        paginationType: "pages",
-      }),
+      dataAdapter,
     })
 
     return (

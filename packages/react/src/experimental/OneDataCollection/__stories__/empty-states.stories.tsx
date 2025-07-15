@@ -1,8 +1,9 @@
-import { BaseResponse, DataAdapter } from "@/hooks/datasource/types"
+import { BaseResponse } from "@/hooks/datasource/types"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { Observable } from "zen-observable-ts"
 import {
+  DataCollectionDataAdapter,
   FiltersState,
   NavigationFiltersDefinition,
   OneDataCollection,
@@ -34,7 +35,7 @@ const BaseExampleComponent = ({
   currentFilters,
   emptyStates,
 }: {
-  dataAdapter: DataAdapter<
+  dataAdapter: DataCollectionDataAdapter<
     MockUser,
     typeof filters,
     NavigationFiltersDefinition

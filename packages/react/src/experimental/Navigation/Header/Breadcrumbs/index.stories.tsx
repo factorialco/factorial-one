@@ -1,6 +1,5 @@
 import {
   FiltersDefinition,
-  NavigationFiltersDefinition,
   PaginatedFetchOptions,
   SelectItemProps,
 } from "@/experimental/exports"
@@ -125,12 +124,7 @@ export const WithSelectBreadcrumbWithDatasource: Story = {
     const source = {
       dataAdapter: {
         paginationType: "infinite-scroll",
-        fetchData: (
-          options: PaginatedFetchOptions<
-            FiltersDefinition,
-            NavigationFiltersDefinition
-          >
-        ) => {
+        fetchData: (options: PaginatedFetchOptions<FiltersDefinition>) => {
           const { search, pagination } = options
           return new Promise((resolve) => {
             setTimeout(() => {

@@ -12,7 +12,7 @@ import { SortingsDefinition, SortingsState } from "./sortings.typings"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  * @template ItemActions - The available actions that can be performed on records
  * @template NavigationFilters - The available navigation filters for the collection
@@ -24,10 +24,10 @@ import { SortingsDefinition, SortingsState } from "./sortings.typings"
  * @template Summaries - The available summaries for the collection
  */
 export type DataSourceDefinition<
-  Record extends RecordType = RecordType,
+  R extends RecordType = RecordType,
   Filters extends FiltersDefinition = FiltersDefinition,
   Sortings extends SortingsDefinition = SortingsDefinition,
-  Grouping extends GroupingDefinition<Record> = GroupingDefinition<Record>,
+  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 > = {
   /** Available filter configurations */
   filters?: Filters
@@ -44,16 +44,16 @@ export type DataSourceDefinition<
   defaultSorting?: SortingsState<Sortings>
 
   /** Data adapter responsible for fetching and managing data */
-  dataAdapter: DataAdapter<Record, Filters>
+  dataAdapter: DataAdapter<R, Filters>
 
   /** Selectable items value under the checkbox column (undefined if not selectable) */
-  selectable?: (item: Record) => string | number | undefined
+  selectable?: (item: R) => string | number | undefined
   /** Default selected items */
   defaultSelectedItems?: SelectedItemsState
 
   /** Grouping configuration */
   grouping?: Grouping
-  currentGrouping?: GroupingState<Record, Grouping>
+  currentGrouping?: GroupingState<R, Grouping>
 }
 
 /**

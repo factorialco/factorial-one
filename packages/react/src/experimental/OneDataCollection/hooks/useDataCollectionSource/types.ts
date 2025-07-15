@@ -24,7 +24,34 @@ import {
 import { SummariesDefinition } from "../../summary"
 import { BulkActionDefinition, OnBulkActionCallback } from "../../types"
 
-export type DataCollectionSourceDataAdapter<
+/**
+ * Extended base fetch options for data collection
+ */
+type DataCollectionExtendFetchOptions<
+  NavigationFilters extends NavigationFiltersDefinition,
+> = {
+  navigationFilters: NavigationFiltersState<NavigationFilters>
+}
+
+export type DataCollectionBaseFetchOptions<
+  Filters extends FiltersDefinition,
+  NavigationFilters extends NavigationFiltersDefinition,
+> = BaseFetchOptions<Filters> &
+  DataCollectionExtendFetchOptions<NavigationFilters>
+
+/**
+ * Extended base fetch options for data collection
+ */
+export type DataCollectionPaginatedFetchOptions<
+  Filters extends FiltersDefinition,
+  NavigationFilters extends NavigationFiltersDefinition,
+> = PaginatedFetchOptions<Filters> &
+  DataCollectionExtendFetchOptions<NavigationFilters>
+
+/**
+ * Data collection data adapter
+ */
+export type DataCollectionDataAdapter<
   R extends RecordType = RecordType,
   Filters extends FiltersDefinition = FiltersDefinition,
   NavigationFilters extends
@@ -33,20 +60,20 @@ export type DataCollectionSourceDataAdapter<
   | BaseDataAdapter<
       R,
       Filters,
-      BaseFetchOptions<Filters> & {
-        navigationFilters: NavigationFilters
-      },
+      DataCollectionBaseFetchOptions<Filters, NavigationFilters>,
       BaseResponse<R>
     >
   | PaginatedDataAdapter<
       R,
       Filters,
-      PaginatedFetchOptions<Filters> & {
-        navigationFilters: NavigationFilters
-      },
+      DataCollectionPaginatedFetchOptions<Filters, NavigationFilters>,
       PageBasedPaginatedResponse<R>
     >
 
+/**
+ * Data collection source definition
+ * Extends the base data source definition with data collection specific elements / features
+ */
 export type DataCollectionSourceDefinition<
   R extends RecordType = RecordType,
   Filters extends FiltersDefinition = FiltersDefinition,
@@ -56,7 +83,10 @@ export type DataCollectionSourceDefinition<
   NavigationFilters extends
     NavigationFiltersDefinition = NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
-> = DataSourceDefinition<R, Filters, Sortings, Grouping> & {
+> = Omit<
+  DataSourceDefinition<R, Filters, Sortings, Grouping>,
+  "dataAdapter"
+> & {
   /**
    * Data Collection specific datasource elements / features
    */
@@ -78,7 +108,7 @@ export type DataCollectionSourceDefinition<
     label?: string // Optional label for the summaries row
   }
   // /** Datacolllction data adapter */
-  dataAdapter: DataCollectionSourceDataAdapter<R, Filters, NavigationFilters>
+  dataAdapter: DataCollectionDataAdapter<R, Filters, NavigationFilters>
   /** Bulk actions that can be performed on the collection */
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<R, Filters>>[1]
@@ -89,6 +119,10 @@ export type DataCollectionSourceDefinition<
   totalItemSummary?: (totalItems: number) => string
 }
 
+/**
+ * Data collection source
+ * Extends the base data source with data collection specific elements / features
+ */
 export type DataCollectionSource<
   R extends RecordType = RecordType,
   Filters extends FiltersDefinition = FiltersDefinition,
