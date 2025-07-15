@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.126.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.1...factorial-one-react-v1.126.2) (2025-07-15)
+
+
+### Bug Fixes
+
+* sanitize postdescription and Richtext html with domPurify ([#2253](https://github.com/factorialco/factorial-one/issues/2253)) ([de32984](https://github.com/factorialco/factorial-one/commit/de329845fac1debf1fcea0187082a0e3dfc1e2ae))
+
 ## [1.126.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.0...factorial-one-react-v1.126.1) (2025-07-15)
 
 
