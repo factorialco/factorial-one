@@ -3,13 +3,13 @@
  * NOTE: If a feature needs to be used outside of the data collection, extract it and move it to the useDataSource hook. DON'T USE THIS HOOK FOR ELEMENTS NOT RELATED TO DATA COLLECTION.
  */
 
-import { useDataSource } from "@/hooks/datasource"
 import {
   FiltersDefinition,
   GroupingDefinition,
   RecordType,
   SortingsDefinition,
-} from "@/hooks/datasource/types"
+  useDataSource,
+} from "@/hooks/datasource"
 import { useMemo, useState } from "react"
 import { ItemActionsDefinition } from "../../item-actions"
 import { navigationFilterTypes } from "../../navigationFilters"

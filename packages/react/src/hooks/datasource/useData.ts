@@ -528,8 +528,6 @@ export function useData<
           }
         )
 
-        console.log("baseFetchOptions", baseFetchOptions)
-
         function fetcher(): PromiseOrObservable<ResultType> {
           setTotalItems(undefined)
 
