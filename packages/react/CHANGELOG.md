@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.126.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.0...factorial-one-react-v1.126.1) (2025-07-15)
+
+
+### Bug Fixes
+
+* table pagination padding ([#2252](https://github.com/factorialco/factorial-one/issues/2252)) ([1b17da3](https://github.com/factorialco/factorial-one/commit/1b17da350b7e8f51389b6fdb6014c03568ee9290))
+
 ## [1.126.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.125.0...factorial-one-react-v1.126.0) (2025-07-14)
 
 
