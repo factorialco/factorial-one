@@ -119,7 +119,12 @@ export const BasicTableView: Story = {
           filters.department?.map((department) => {
             console.log("department", department)
           })
-          return createPromiseDataFetch()({ filters, sortings, search })
+          return createPromiseDataFetch()({
+            filters,
+            sortings,
+            search,
+            navigationFilters: {},
+          })
         },
       },
       itemActions: (item) => [

@@ -4,6 +4,7 @@
  */
 
 import {
+  DataAdapter,
   FiltersDefinition,
   GroupingDefinition,
   RecordType,
@@ -51,7 +52,13 @@ export const useDataCollectionSource = <
 > => {
   const { navigationFilters, summaries } = source
 
-  const datasource = useDataSource(source, deps)
+  const datasource = useDataSource<R, FiltersSchema, Sortings, Grouping>(
+    {
+      ...source,
+      dataAdapter: source.dataAdapter as DataAdapter<R, FiltersSchema>,
+    },
+    deps
+  )
 
   const [currentNavigationFilters, setCurrentNavigationFilters] = useState<
     NavigationFiltersState<NavigationFilters>
