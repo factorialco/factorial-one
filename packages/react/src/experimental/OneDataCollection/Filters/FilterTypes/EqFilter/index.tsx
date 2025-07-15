@@ -1,8 +1,8 @@
 import type { BaseFilterDefinition } from "../"
+import { getCacheKey, loadOptions } from "../shared/useLoadOptions"
 import { FilterTypeDefinition } from "../types"
 import { EqFilter } from "./eqFilter"
 import { EqFilterOptions } from "./types"
-import { getCacheKey, loadOptions } from "./useLoadOptions"
 
 export const eqFilter: FilterTypeDefinition<
   string | null,

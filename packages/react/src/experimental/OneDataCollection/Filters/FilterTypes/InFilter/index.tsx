@@ -1,8 +1,8 @@
 import type { BaseFilterDefinition } from "../"
+import { getCacheKey, loadOptions } from "../shared/useLoadOptions"
 import { FilterTypeDefinition } from "../types"
 import { InFilter } from "./InFilter"
 import { InFilterOptions } from "./types"
-import { getCacheKey, loadOptions } from "./useLoadOptions"
 
 export const inFilter: FilterTypeDefinition<
   string[],

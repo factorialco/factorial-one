@@ -1,12 +1,24 @@
 import { useCallback, useEffect, useState } from "react"
-import { EqFilterDefinition } from "."
 import { FilterTypeSchema } from "../types"
-import { EqFilterOptionItem, EqFilterOptions } from "./types"
 
-const optionsCache = new Map<string, EqFilterOptionItem<unknown>[]>()
+export type FilterOptionItem<T = unknown> = {
+  /** The value used for filtering */
+  value: T
+  /** Human-readable label for the option */
+  label: string
+}
+
+export type FilterOptions<T> = {
+  cache?: boolean
+  options:
+    | Array<FilterOptionItem<T>>
+    | (() => Array<FilterOptionItem<T>> | Promise<Array<FilterOptionItem<T>>>)
+}
+
+const optionsCache = new Map<string, FilterOptionItem<unknown>[]>()
 
 export function getCacheKey<T>(
-  schema: FilterTypeSchema<EqFilterOptions<T>>
+  schema: FilterTypeSchema<FilterOptions<T>>
 ): string {
   return JSON.stringify(schema)
 }
@@ -14,13 +26,13 @@ export function getCacheKey<T>(
 export async function loadOptions<T>(
   cacheKey: string,
   optionsDef:
-    | EqFilterOptionItem<T>[]
-    | Promise<EqFilterOptionItem<T>[]>
-    | (() => Promise<EqFilterOptionItem<T>[]> | EqFilterOptionItem<T>[]),
+    | FilterOptionItem<T>[]
+    | Promise<FilterOptionItem<T>[]>
+    | (() => Promise<FilterOptionItem<T>[]> | FilterOptionItem<T>[]),
   cache: boolean = false
-): Promise<EqFilterOptionItem<T>[]> {
+): Promise<FilterOptionItem<T>[]> {
   if (cache && optionsCache.has(cacheKey)) {
-    return optionsCache.get(cacheKey) as EqFilterOptionItem<T>[]
+    return optionsCache.get(cacheKey) as FilterOptionItem<T>[]
   }
 
   const optionsProvider =
@@ -33,11 +45,11 @@ export async function loadOptions<T>(
   return options
 }
 
-export function useLoadOptions<T>(schema: EqFilterDefinition<T>) {
+export function useLoadOptions<T>(schema: FilterTypeSchema<FilterOptions<T>>) {
   const cacheKey = getCacheKey(schema)
 
   // Only use state for async options
-  const [options, setOptions] = useState<EqFilterOptionItem<T>[]>([])
+  const [options, setOptions] = useState<FilterOptionItem<T>[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 

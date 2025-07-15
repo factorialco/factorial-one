@@ -9,9 +9,9 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
 import { Input } from "@/ui/input"
 import { ChangeEvent, useEffect, useMemo, useState } from "react"
+import { useLoadOptions } from "../shared/useLoadOptions"
 import { FilterTypeComponentProps } from "../types"
 import { InFilterOptions } from "./types"
-import { useLoadOptions } from "./useLoadOptions"
 
 /**
  * Props for the InFilter component.
@@ -79,10 +79,7 @@ export function InFilter<T extends string>({
 
   const [searchTerm, setSearchTerm] = useState("")
 
-  const { options, isLoading, error, loadOptions } = useLoadOptions({
-    ...schema,
-    type: "in",
-  })
+  const { options, isLoading, error, loadOptions } = useLoadOptions(schema)
 
   useEffect(() => {
     setSearchTerm("")

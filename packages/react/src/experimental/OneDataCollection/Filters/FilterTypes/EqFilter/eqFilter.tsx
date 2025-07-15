@@ -7,9 +7,9 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
 import { Input } from "@/ui/input"
 import { ChangeEvent, useEffect, useMemo, useState } from "react"
+import { FilterOptionItem, useLoadOptions } from "../shared/useLoadOptions"
 import { FilterTypeComponentProps } from "../types"
-import { EqFilterOptionItem, EqFilterOptions } from "./types"
-import { useLoadOptions } from "./useLoadOptions"
+import { EqFilterOptions } from "./types"
 
 /**
  * Props for the EqFilter component.
@@ -84,7 +84,7 @@ export function EqFilter<T extends string>({
   }, [schema])
 
   const filteredOptions = useMemo(() => {
-    return options.filter((option: EqFilterOptionItem<T>) =>
+    return options.filter((option: FilterOptionItem<T>) =>
       option.label.toLowerCase().includes(searchTerm.toLowerCase())
     )
   }, [options, searchTerm])
@@ -156,7 +156,7 @@ export function EqFilter<T extends string>({
         </div>
       )}
       <div className="flex-1 overflow-y-auto px-2">
-        {filteredOptions.map((option: EqFilterOptionItem<T>) => {
+        {filteredOptions.map((option: FilterOptionItem<T>) => {
           const isSelected = value === option.value
           const _optionId = `option-${String(option.value)}`
 
