@@ -1,15 +1,18 @@
-import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData/useDataCollectionData"
-import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
+import {
+  FiltersDefinition,
+  GroupingDefinition,
+  SortingsDefinition,
+} from "@/hooks/datasource"
+import { I18nProvider } from "@/lib/providers/i18n"
+import { defaultTranslations } from "@/lib/providers/i18n/i18n-provider-defaults"
 import { render, renderHook, screen, waitFor } from "@testing-library/react"
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
-import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
-import { SortingsDefinition } from "../../../../../hooks/datasource/types/sortings.typings"
-import { I18nProvider } from "../../../../../lib/providers/i18n"
-import { defaultTranslations } from "../../../../../lib/providers/i18n/i18n-provider-defaults"
-import { ItemActionsDefinition } from "../../../item-actions"
-import type { DataSource, GroupingDefinition } from "../../../types"
+import { useDataCollectionData } from "../../../hooks/useDataCollectionData/useDataCollectionData.ts"
+import { DataCollectionSource } from "../../../hooks/useDataCollectionSource/index.ts"
+import { ItemActionsDefinition } from "../../../item-actions.tsx"
+import { NavigationFiltersDefinition } from "../../../navigationFilters/types"
+import { SummariesDefinition } from "../../../summary.ts"
 import { CardCollection } from "./index"
 
 type Person = {
@@ -47,7 +50,7 @@ const testCardProperties = [
 const createTestSource = (
   data: Person[] = testData,
   error?: Error
-): DataSource<
+): DataCollectionSource<
   Person,
   FiltersDefinition,
   SortingsDefinition,

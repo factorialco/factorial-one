@@ -1,9 +1,6 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination"
-import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData"
-import { useInfiniteScrollPagination } from "@/experimental/OneDataCollection/hooks/useInfiniteScrollPagination"
-import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   OneTable,
   TableBody,
@@ -14,24 +11,29 @@ import {
   TableRow,
 } from "@/experimental/OneTable"
 import {
+  FiltersDefinition,
+  getAnimationVariants,
+  GroupingDefinition,
   isInfiniteScrollPagination,
   RecordType,
   SortingKey,
   SortingsDefinition,
   SortingsState,
+  useGroups,
+  useSelectable,
 } from "@/hooks/datasource"
-import { getAnimationVariants, useGroups } from "@/hooks/datasource/useGroups"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton.tsx"
 import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
-import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
-import { useSelectable } from "../../../../../hooks/datasource/useSelectable"
+import { useDataCollectionData } from "../../../hooks/useDataCollectionData"
+import { useInfiniteScrollPagination } from "../../../hooks/useInfiniteScrollPagination"
 import { ItemActionsDefinition } from "../../../item-actions"
+import { NavigationFiltersDefinition } from "../../../navigationFilters/types"
 import { PropertyDefinition } from "../../../property-render"
 import { SummariesDefinition, SummaryKey } from "../../../summary"
-import { CollectionProps, GroupingDefinition } from "../../../types"
+import { CollectionProps } from "../../../types"
 import { statusToChecked } from "../utils"
 import { Row } from "./components/Row"
 

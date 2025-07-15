@@ -68,13 +68,13 @@ import { DataCollectionSource } from "./hooks/useDataCollectionSource"
  * - The selected visualization of the data
  */
 const OneDataCollectionComp = <
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
+  Grouping extends GroupingDefinition<R>,
 >({
   source,
   visualizations,
@@ -84,7 +84,7 @@ const OneDataCollectionComp = <
   fullHeight,
 }: {
   source: DataCollectionSource<
-    Record,
+    R,
     Filters,
     Sortings,
     Summaries,
@@ -94,7 +94,7 @@ const OneDataCollectionComp = <
   >
   visualizations: ReadonlyArray<
     Visualization<
-      Record,
+      R,
       Filters,
       Sortings,
       Summaries,
@@ -103,8 +103,8 @@ const OneDataCollectionComp = <
       Grouping
     >
   >
-  onSelectItems?: OnSelectItemsCallback<Record, Filters>
-  onBulkAction?: OnBulkActionCallback<Record, Filters>
+  onSelectItems?: OnSelectItemsCallback<R, Filters>
+  onBulkAction?: OnBulkActionCallback<R, Filters>
   emptyStates?: CustomEmptyStates
   onTotalItemsChange?: (totalItems: number) => void
   fullHeight?: boolean
@@ -200,7 +200,7 @@ const OneDataCollectionComp = <
 
   const i18n = useI18n()
 
-  const onSelectItemsLocal: OnSelectItemsCallback<Record, Filters> = (
+  const onSelectItemsLocal: OnSelectItemsCallback<R, Filters> = (
     selectedItems,
     clearSelectedItems
   ): void => {
@@ -285,7 +285,7 @@ const OneDataCollectionComp = <
     filters,
     isInitialLoading,
     search,
-  }: Parameters<OnLoadDataCallback<Record, Filters>>[0]) => {
+  }: Parameters<OnLoadDataCallback<R, Filters>>[0]) => {
     if (isInitialLoading) return
 
     setTotalItems(totalItems)

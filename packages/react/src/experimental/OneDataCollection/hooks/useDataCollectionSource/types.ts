@@ -56,7 +56,10 @@ export type DataCollectionSourceDefinition<
   NavigationFilters extends
     NavigationFiltersDefinition = NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
-> = DataSourceDefinition<R, Filters, Sortings, Grouping> & {
+> = Omit<
+  DataSourceDefinition<R, Filters, Sortings, Grouping>,
+  "dataAdapter"
+> & {
   /**
    * Data Collection specific datasource elements / features
    */
@@ -78,7 +81,7 @@ export type DataCollectionSourceDefinition<
     label?: string // Optional label for the summaries row
   }
   // /** Datacolllction data adapter */
-  // dataAdapter?: DataCollectionSourceDataAdapter<R, Filters, NavigationFilters>
+  dataAdapter: DataCollectionSourceDataAdapter<R, Filters, NavigationFilters>
   /** Bulk actions that can be performed on the collection */
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<R, Filters>>[1]
