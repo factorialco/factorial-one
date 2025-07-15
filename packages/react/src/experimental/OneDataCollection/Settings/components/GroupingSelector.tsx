@@ -9,9 +9,9 @@ type GroupingSelectorProps<
   R extends RecordType,
   Grouping extends GroupingDefinition<R>,
 > = {
-  grouping: Grouping
-  currentGrouping: GroupingState<R, Grouping> | undefined
-  onGroupingChange: (groupingState: GroupingState<R, Grouping>) => void
+  grouping?: Grouping
+  currentGrouping?: GroupingState<R, Grouping>
+  onGroupingChange?: (groupingState: GroupingState<R, Grouping>) => void
 }
 
 const EmptyGroupingValue = "__no-grouping__"
@@ -25,6 +25,13 @@ export const GroupingSelector = <
   onGroupingChange,
 }: GroupingSelectorProps<R, Grouping>) => {
   const i18n = useI18n()
+  if (
+    !grouping ||
+    (!!grouping.mandatory && Object.entries(grouping.groupBy).length < 2)
+  ) {
+    return null
+  }
+
   const groupingOptions = [
     ...(!grouping.mandatory
       ? [
@@ -59,7 +66,7 @@ export const GroupingSelector = <
             options={groupingOptions}
             value={currentGrouping?.field.toString() ?? EmptyGroupingValue}
             onChange={(value: string) =>
-              onGroupingChange(
+              onGroupingChange?.(
                 value !== EmptyGroupingValue
                   ? {
                       field: value as keyof Grouping["groupBy"],
@@ -78,7 +85,7 @@ export const GroupingSelector = <
               variant="outline"
               icon={currentGrouping?.order === "asc" ? ArrowUp : ArrowDown}
               onClick={() =>
-                onGroupingChange({
+                onGroupingChange?.({
                   field: currentGrouping.field,
                   order: currentGrouping.order === "asc" ? "desc" : "asc",
                 })

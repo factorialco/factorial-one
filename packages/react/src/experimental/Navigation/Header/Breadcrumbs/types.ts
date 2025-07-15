@@ -1,7 +1,22 @@
-import { SelectItemObject } from "@/experimental/Forms/Fields/Select"
+import {
+  FiltersDefinition,
+  ItemActionsDefinition,
+} from "@/experimental/exports"
+import {
+  SelectItemObject,
+  SelectItemProps,
+} from "@/experimental/Forms/Fields/Select"
 import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { DropdownItemObject } from "@/experimental/Navigation/Dropdown"
 import { NavigationItem } from "@/experimental/Navigation/utils"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import {
+  DataSourceDefinition,
+  GroupingDefinition,
+  RecordType,
+  SortingsDefinition,
+  SummariesDefinition,
+} from "@/experimental/OneDataCollection/types"
 import { BreadcrumbSelectProps } from "./internal/BreadcrumbSelect"
 
 type BreadcrumbBaseItemType = NavigationItem & {
@@ -22,11 +37,29 @@ type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   type: "select"
   searchbox?: boolean
   externalSearch?: boolean
-  options: BreadcrumbSelectProps["options"]
-  onChange: BreadcrumbSelectProps["onChange"]
+  onChange: BreadcrumbSelectProps<string>["onChange"]
   value?: string
   defaultItem?: SelectItemObject<string>
-}
+} & (
+    | {
+        source: DataSourceDefinition<
+          RecordType,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<RecordType>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<RecordType>
+        >
+        mapOptions: (item: RecordType) => SelectItemProps<string>
+        options?: never
+      }
+    | {
+        source?: never
+        mapOptions?: never
+        options: SelectItemProps<string>[]
+      }
+  )
 
 export type BreadcrumbItemType =
   | BreadcrumbLoadingItemType
