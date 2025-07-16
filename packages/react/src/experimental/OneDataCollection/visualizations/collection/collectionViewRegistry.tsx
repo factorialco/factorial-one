@@ -1,13 +1,16 @@
 import { IconType } from "@/components/Utilities/Icon"
-import { Kanban, List, Table } from "@/icons/app"
 import {
   FiltersDefinition,
+  GroupingDefinition,
+  RecordType,
+  SortingsDefinition,
+} from "@/hooks/datasource"
+import { Kanban, List, Table } from "@/icons/app"
+import {
   ItemActionsDefinition,
   NavigationFiltersDefinition,
-  SortingsDefinition,
   SummariesDefinition,
 } from "../../exports"
-import { GroupingDefinition, RecordType } from "../../types"
 import { CardCollection, CardCollectionProps } from "./Card"
 import { ListCollection, ListCollectionProps } from "./List"
 import { TableCollection, TableCollectionProps } from "./Table"

@@ -1,11 +1,9 @@
 import {
   FiltersDefinition,
-  NavigationFiltersDefinition,
   PaginatedFetchOptions,
   SelectItemProps,
 } from "@/experimental/exports"
 import { IconType } from "@/factorial-one"
-import { Recruitment } from "@/icons/modules"
 import {
   FIRST_NAMES_MOCK,
   getMockValue,
@@ -125,12 +123,7 @@ export const WithSelectBreadcrumbWithDatasource: Story = {
     const source = {
       dataAdapter: {
         paginationType: "infinite-scroll",
-        fetchData: (
-          options: PaginatedFetchOptions<
-            FiltersDefinition,
-            NavigationFiltersDefinition
-          >
-        ) => {
+        fetchData: (options: PaginatedFetchOptions<FiltersDefinition>) => {
           const { search, pagination } = options
           return new Promise((resolve) => {
             setTimeout(() => {
@@ -171,7 +164,7 @@ export const WithSelectBreadcrumbWithDatasource: Story = {
             id: "recruitment",
             label: "Recruitment",
             href: "/recruitment",
-            icon: Recruitment,
+            module: "ats",
           },
           {
             id: "offers",

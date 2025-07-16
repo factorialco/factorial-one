@@ -1,9 +1,12 @@
 import { Button } from "@/components/Actions/Button"
 import { Select } from "@/experimental/Forms/Fields/Select"
+import {
+  GroupingDefinition,
+  GroupingState,
+  RecordType,
+} from "@/hooks/datasource"
 import { ArrowDown, ArrowUp, Placeholder } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
-import { GroupingDefinition, GroupingState } from "../../grouping"
-import { RecordType } from "../../types"
 
 type GroupingSelectorProps<
   R extends RecordType,

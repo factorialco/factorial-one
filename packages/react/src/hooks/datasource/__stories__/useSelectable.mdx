@@ -1,0 +1,923 @@
+import { Meta } from "@storybook/addon-docs/blocks"
+
+<Meta title="Datasource/useSelectable" />
+
+# useSelectable
+
+The `useSelectable` hook manages selection state for individual items and groups
+in a data collection. It provides comprehensive selection functionality
+including individual item selection, group selection with cascading, bulk
+operations support, and partial selection states.
+
+## Overview
+
+`useSelectable` handles the complex logic of managing selection state in data
+collections, including:
+
+- Individual item selection and deselection
+- Group selection with automatic cascading to items
+- Bulk selection operations (select all/none)
+- Partial selection states (indeterminate checkboxes)
+- Default selected items configuration
+- Integration with pagination and filtering
+
+### Key Features
+
+- **Individual Selection**: Select/deselect individual items
+- **Group Selection**: Select/deselect entire groups with cascading
+- **Bulk Operations**: Select all/none functionality
+- **Partial States**: Indeterminate checkbox states for partial selections
+- **Default Selection**: Support for pre-selected items and groups
+- **Pagination Aware**: Works correctly with paginated data
+- **Type Safe**: Full TypeScript support with generics
+
+## API Reference
+
+### Parameters
+
+```tsx
+useSelectable<R, Filters, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>(
+  data: Data<R>,
+  paginationInfo: PaginationInfo | null,
+  source: DataSource<R, Filters, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>,
+  onSelectItems?: OnSelectItemsCallback<R, Filters>,
+  defaultSelectedItems?: SelectedItemsState
+)
+```
+
+### Parameters
+
+#### `data: Data<R>`
+
+The data object returned by `useData`, containing records and groups.
+
+#### `paginationInfo: PaginationInfo | null`
+
+Pagination information from `useData` to handle selection across pages.
+
+#### `source: DataSource`
+
+The data source object from `useDataSource` containing configuration.
+
+#### `onSelectItems?: OnSelectItemsCallback<R, Filters>`
+
+Optional callback triggered when selection changes:
+
+```tsx
+type OnSelectItemsCallback<R, Filters> = (
+  allItemsCheck: boolean | "indeterminate",
+  selectedItems: {
+    items: Array<{ id: string | number; checked: boolean }>
+    groups: Array<{ groupId: string; checked: boolean }>
+  },
+  filters: FiltersState<Filters>
+) => void
+```
+
+#### `defaultSelectedItems?: SelectedItemsState`
+
+Default selected items and groups:
+
+```tsx
+type SelectedItemsState = {
+  items?: Array<{ id: string | number; checked: boolean }>
+  groups?: Array<{ groupId: string; checked: boolean }>
+}
+```
+
+### Return Value
+
+```tsx
+interface UseSelectable<R> {
+  // Selection State
+  selectedItems: Map<number | string, R> // Currently selected items
+  selectedGroups: Map<string, GroupRecord<R>> // Currently selected groups
+
+  // Selection Status
+  isAllSelected: boolean // Are all items selected?
+  isPartiallySelected: boolean // Are some items selected?
+  allSelectedStatus: AllSelectionStatus // Overall selection status
+  groupAllSelectedStatus: Record<string, AllSelectionStatus> // Per-group status
+
+  // Selection Actions
+  handleSelectItemChange: (item: R, checked: boolean) => void // Select/deselect item
+  handleSelectAll: (checked: boolean) => void // Select/deselect all
+  handleSelectGroupChange: (group: GroupRecord<R>, checked: boolean) => void // Select/deselect group
+}
+```
+
+### Selection Status Types
+
+```tsx
+interface AllSelectionStatus {
+  checked: boolean // All items selected
+  indeterminate: boolean // Some items selected
+  selectedCount: number // Number of selected items
+  unselectedCount: number // Number of unselected items
+}
+```
+
+## Usage Examples
+
+### Basic Selection
+
+```tsx
+import { useDataSource, useData, useSelectable } from "@/hooks/datasource"
+
+function SelectableUserList() {
+  const dataSource = useDataSource({
+    filters: userFilters,
+    selectable: (user) => user.id, // Enable selection by ID
+    dataAdapter: { fetchData: fetchUsers },
+  })
+
+  const { data, paginationInfo } = useData(dataSource)
+
+  const {
+    selectedItems,
+    handleSelectItemChange,
+    handleSelectAll,
+    isAllSelected,
+    isPartiallySelected,
+  } = useSelectable(data, paginationInfo, dataSource)
+
+  return (
+    <div>
+      {/* Select All checkbox */}
+      <label>
+        <input
+          type="checkbox"
+          checked={isAllSelected}
+          ref={(el) => {
+            if (el) el.indeterminate = isPartiallySelected && !isAllSelected
+          }}
+          onChange={(e) => handleSelectAll(e.target.checked)}
+        />
+        Select All ({selectedItems.size} selected)
+      </label>
+
+      {/* Individual items */}
+      {data.records.map((user) => (
+        <div key={user.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedItems.has(user.id)}
+              onChange={(e) => handleSelectItemChange(user, e.target.checked)}
+            />
+            {user.name}
+          </label>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Group Selection
+
+```tsx
+function GroupedSelectableUserList() {
+  const dataSource = useDataSource({
+    filters: userFilters,
+    selectable: (user) => user.id,
+    grouping: {
+      groupBy: {
+        department: {
+          label: "Department",
+          getGroupKey: (user) => user.department,
+          getGroupLabel: (key) => key.charAt(0).toUpperCase() + key.slice(1),
+        },
+      },
+    },
+    currentGrouping: { field: "department", order: "asc" },
+    dataAdapter: { fetchData: fetchUsers },
+  })
+
+  const { data, paginationInfo } = useData(dataSource)
+
+  const {
+    selectedItems,
+    selectedGroups,
+    handleSelectItemChange,
+    handleSelectGroupChange,
+    groupAllSelectedStatus,
+  } = useSelectable(data, paginationInfo, dataSource)
+
+  if (data.type !== "grouped") return null
+
+  return (
+    <div>
+      {data.groups.map((group) => {
+        const groupStatus = groupAllSelectedStatus[group.key]
+
+        return (
+          <div key={group.key}>
+            {/* Group header with selection */}
+            <div className="group-header">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={groupStatus?.checked || false}
+                  ref={(el) => {
+                    if (el)
+                      el.indeterminate = groupStatus?.indeterminate || false
+                  }}
+                  onChange={(e) =>
+                    handleSelectGroupChange(group, e.target.checked)
+                  }
+                />
+                <h3>
+                  {group.label} ({groupStatus?.selectedCount || 0}/
+                  {group.itemCount})
+                </h3>
+              </label>
+            </div>
+
+            {/* Group items */}
+            {group.records.map((user) => (
+              <div key={user.id} className="group-item">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={selectedItems.has(user.id)}
+                    onChange={(e) =>
+                      handleSelectItemChange(user, e.target.checked)
+                    }
+                  />
+                  {user.name}
+                </label>
+              </div>
+            ))}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+```
+
+### Selection with Bulk Actions
+
+```tsx
+function UserListWithBulkActions() {
+  const dataSource = useDataSource({
+    filters: userFilters,
+    selectable: (user) => user.id,
+    bulkActions: (selectedItems) => ({
+      primary: [
+        {
+          label: "Delete Selected",
+          icon: Delete,
+          onClick: () => deleteUsers(Array.from(selectedItems.values())),
+          critical: true,
+        },
+      ],
+      secondary: [
+        {
+          label: "Export Selected",
+          icon: Download,
+          onClick: () => exportUsers(Array.from(selectedItems.values())),
+        },
+        {
+          label: "Send Email",
+          icon: Email,
+          onClick: () => sendEmailToUsers(Array.from(selectedItems.values())),
+        },
+      ],
+    }),
+    dataAdapter: { fetchData: fetchUsers },
+  })
+
+  const { data, paginationInfo } = useData(dataSource)
+
+  const {
+    selectedItems,
+    handleSelectItemChange,
+    handleSelectAll,
+    allSelectedStatus,
+  } = useSelectable(data, paginationInfo, dataSource)
+
+  const bulkActions = dataSource.bulkActions?.(selectedItems)
+
+  return (
+    <div>
+      {/* Selection header */}
+      <div className="selection-header">
+        <label>
+          <input
+            type="checkbox"
+            checked={allSelectedStatus.checked}
+            ref={(el) => {
+              if (el) el.indeterminate = allSelectedStatus.indeterminate
+            }}
+            onChange={(e) => handleSelectAll(e.target.checked)}
+          />
+          {allSelectedStatus.selectedCount > 0 ? (
+            <span>{allSelectedStatus.selectedCount} items selected</span>
+          ) : (
+            <span>Select all</span>
+          )}
+        </label>
+
+        {/* Bulk actions */}
+        {selectedItems.size > 0 && bulkActions && (
+          <div className="bulk-actions">
+            {bulkActions.primary.map((action) => (
+              <button
+                key={action.label}
+                onClick={action.onClick}
+                className={action.critical ? "critical" : ""}
+              >
+                {action.icon && <action.icon />}
+                {action.label}
+              </button>
+            ))}
+
+            {bulkActions.secondary && (
+              <div className="secondary-actions">
+                {bulkActions.secondary.map((action) => (
+                  <button key={action.label} onClick={action.onClick}>
+                    {action.icon && <action.icon />}
+                    {action.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Item list */}
+      {data.records.map((user) => (
+        <div key={user.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedItems.has(user.id)}
+              onChange={(e) => handleSelectItemChange(user, e.target.checked)}
+            />
+            {user.name}
+          </label>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Default Selected Items
+
+```tsx
+function UserListWithDefaults() {
+  const dataSource = useDataSource({
+    filters: userFilters,
+    selectable: (user) => user.id,
+    defaultSelectedItems: {
+      items: [
+        { id: "user1", checked: true },
+        { id: "user2", checked: true },
+      ],
+      groups: [{ groupId: "engineering", checked: true }],
+    },
+    dataAdapter: { fetchData: fetchUsers },
+  })
+
+  const { data, paginationInfo } = useData(dataSource)
+
+  const { selectedItems, handleSelectItemChange, handleSelectAll } =
+    useSelectable(
+      data,
+      paginationInfo,
+      dataSource,
+      undefined,
+      dataSource.defaultSelectedItems
+    )
+
+  return (
+    <div>
+      {/* Default items are already selected */}
+      {data.records.map((user) => (
+        <div key={user.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedItems.has(user.id)}
+              onChange={(e) => handleSelectItemChange(user, e.target.checked)}
+            />
+            {user.name}
+          </label>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Selection with Callback
+
+```tsx
+function UserListWithCallback() {
+  const dataSource = useDataSource({
+    filters: userFilters,
+    selectable: (user) => user.id,
+    dataAdapter: { fetchData: fetchUsers },
+  })
+
+  const { data, paginationInfo } = useData(dataSource)
+
+  const handleSelectionChange = useCallback(
+    (
+      allItemsCheck: boolean | "indeterminate",
+      selectedItems: {
+        items: Array<{ id: string | number; checked: boolean }>
+        groups: Array<{ groupId: string; checked: boolean }>
+      },
+      filters: FiltersState<typeof userFilters>
+    ) => {
+      console.log("Selection changed:", {
+        allItemsCheck,
+        selectedItems,
+        filters,
+      })
+
+      // For async data collections, you might need to handle selection differently
+      if (allItemsCheck === true || allItemsCheck === "indeterminate") {
+        // Apply selection to all items matching current filters
+        // This would typically be done on the backend
+      }
+    },
+    []
+  )
+
+  const { selectedItems, handleSelectItemChange, handleSelectAll } =
+    useSelectable(data, paginationInfo, dataSource, handleSelectionChange)
+
+  return (
+    <div>
+      {data.records.map((user) => (
+        <div key={user.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedItems.has(user.id)}
+              onChange={(e) => handleSelectItemChange(user, e.target.checked)}
+            />
+            {user.name}
+          </label>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Paginated Selection
+
+```tsx
+function PaginatedSelectableUserList() {
+  const dataSource = useDataSource({
+    filters: userFilters,
+    selectable: (user) => user.id,
+    dataAdapter: {
+      paginationType: "pages",
+      perPage: 10,
+      fetchData: fetchUsers,
+    },
+  })
+
+  const { data, paginationInfo, setPage } = useData(dataSource)
+
+  const {
+    selectedItems,
+    handleSelectItemChange,
+    handleSelectAll,
+    allSelectedStatus,
+  } = useSelectable(data, paginationInfo, dataSource)
+
+  return (
+    <div>
+      {/* Selection persists across pages */}
+      <div className="selection-info">
+        <span>
+          {allSelectedStatus.selectedCount} of {paginationInfo?.total} items
+          selected
+        </span>
+        <button onClick={() => handleSelectAll(false)}>Clear Selection</button>
+      </div>
+
+      {/* Current page items */}
+      {data.records.map((user) => (
+        <div key={user.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedItems.has(user.id)}
+              onChange={(e) => handleSelectItemChange(user, e.target.checked)}
+            />
+            {user.name}
+          </label>
+        </div>
+      ))}
+
+      {/* Pagination controls */}
+      {paginationInfo && (
+        <div className="pagination">
+          <button
+            onClick={() => setPage(paginationInfo.currentPage - 1)}
+            disabled={paginationInfo.currentPage === 1}
+          >
+            Previous
+          </button>
+          <span>
+            Page {paginationInfo.currentPage} of {paginationInfo.pagesCount}
+          </span>
+          <button
+            onClick={() => setPage(paginationInfo.currentPage + 1)}
+            disabled={paginationInfo.currentPage === paginationInfo.pagesCount}
+          >
+            Next
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+```
+
+## Advanced Patterns
+
+### Custom Selection Logic
+
+```tsx
+function CustomSelectableUserList() {
+  const dataSource = useDataSource({
+    filters: userFilters,
+    selectable: (user) => (user.canBeSelected ? user.id : undefined), // Conditional selection
+    dataAdapter: { fetchData: fetchUsers },
+  })
+
+  const { data, paginationInfo } = useData(dataSource)
+
+  const {
+    selectedItems,
+    handleSelectItemChange,
+    handleSelectAll,
+    allSelectedStatus,
+  } = useSelectable(data, paginationInfo, dataSource)
+
+  return (
+    <div>
+      {data.records.map((user) => (
+        <div key={user.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedItems.has(user.id)}
+              onChange={(e) => handleSelectItemChange(user, e.target.checked)}
+              disabled={!user.canBeSelected}
+            />
+            {user.name}
+            {!user.canBeSelected && <span> (Cannot be selected)</span>}
+          </label>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Selection with Filtering
+
+```tsx
+function FilteredSelectableUserList() {
+  const dataSource = useDataSource({
+    filters: userFilters,
+    selectable: (user) => user.id,
+    dataAdapter: { fetchData: fetchUsers },
+  })
+
+  const { data, paginationInfo } = useData(dataSource)
+
+  const {
+    selectedItems,
+    handleSelectItemChange,
+    handleSelectAll,
+    allSelectedStatus,
+  } = useSelectable(data, paginationInfo, dataSource)
+
+  // Filter selected items based on current data
+  const visibleSelectedItems = useMemo(() => {
+    return Array.from(selectedItems.values()).filter((selectedItem) =>
+      data.records.some((record) => record.id === selectedItem.id)
+    )
+  }, [selectedItems, data.records])
+
+  return (
+    <div>
+      <div className="selection-summary">
+        <span>
+          {selectedItems.size} total selected, {visibleSelectedItems.length}{" "}
+          visible
+        </span>
+        {selectedItems.size > visibleSelectedItems.length && (
+          <span>
+            ({selectedItems.size - visibleSelectedItems.length} selected items
+            are filtered out)
+          </span>
+        )}
+      </div>
+
+      {data.records.map((user) => (
+        <div key={user.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={selectedItems.has(user.id)}
+              onChange={(e) => handleSelectItemChange(user, e.target.checked)}
+            />
+            {user.name}
+          </label>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+### Server-Side Selection
+
+```tsx
+function ServerSideSelectableUserList() {
+  const [serverSelectedItems, setServerSelectedItems] = useState<Set<string>>(
+    new Set()
+  )
+
+  const dataSource = useDataSource({
+    filters: userFilters,
+    selectable: (user) => user.id,
+    dataAdapter: { fetchData: fetchUsers },
+  })
+
+  const { data, paginationInfo } = useData(dataSource)
+
+  const handleSelectionChange = useCallback(
+    async (
+      allItemsCheck: boolean | "indeterminate",
+      selectedItems: {
+        items: Array<{ id: string | number; checked: boolean }>
+        groups: Array<{ groupId: string; checked: boolean }>
+      },
+      filters: FiltersState<typeof userFilters>
+    ) => {
+      if (allItemsCheck === true) {
+        // Select all items matching current filters on server
+        const response = await fetch("/api/users/select-all", {
+          method: "POST",
+          body: JSON.stringify({ filters }),
+        })
+        const { selectedIds } = await response.json()
+        setServerSelectedItems(new Set(selectedIds))
+      } else if (allItemsCheck === false) {
+        // Deselect all items on server
+        await fetch("/api/users/deselect-all", {
+          method: "POST",
+          body: JSON.stringify({ filters }),
+        })
+        setServerSelectedItems(new Set())
+      } else {
+        // Update specific items on server
+        await fetch("/api/users/update-selection", {
+          method: "POST",
+          body: JSON.stringify({
+            filters,
+            selectedItems: selectedItems.items,
+          }),
+        })
+
+        // Update local state
+        const newSelected = new Set(serverSelectedItems)
+        selectedItems.items.forEach((item) => {
+          if (item.checked) {
+            newSelected.add(item.id.toString())
+          } else {
+            newSelected.delete(item.id.toString())
+          }
+        })
+        setServerSelectedItems(newSelected)
+      }
+    },
+    [serverSelectedItems]
+  )
+
+  const { selectedItems, handleSelectItemChange, handleSelectAll } =
+    useSelectable(data, paginationInfo, dataSource, handleSelectionChange)
+
+  return (
+    <div>
+      <div className="selection-info">
+        <span>
+          {selectedItems.size} client-side selected, {serverSelectedItems.size}{" "}
+          server-side selected
+        </span>
+      </div>
+
+      {data.records.map((user) => (
+        <div key={user.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={
+                selectedItems.has(user.id) || serverSelectedItems.has(user.id)
+              }
+              onChange={(e) => handleSelectItemChange(user, e.target.checked)}
+            />
+            {user.name}
+          </label>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+## Best Practices
+
+### 1. Handle Selection States Properly
+
+```tsx
+function SelectableList() {
+  const { allSelectedStatus } = useSelectable(data, paginationInfo, dataSource)
+
+  return (
+    <input
+      type="checkbox"
+      checked={allSelectedStatus.checked}
+      ref={(el) => {
+        // Always set indeterminate state
+        if (el) el.indeterminate = allSelectedStatus.indeterminate
+      }}
+      onChange={(e) => handleSelectAll(e.target.checked)}
+    />
+  )
+}
+```
+
+### 2. Optimize Selection Performance
+
+```tsx
+const SelectableItem = memo(({ item, isSelected, onSelect }) => (
+  <label>
+    <input
+      type="checkbox"
+      checked={isSelected}
+      onChange={(e) => onSelect(item, e.target.checked)}
+    />
+    {item.name}
+  </label>
+))
+
+function OptimizedSelectableList() {
+  const { selectedItems, handleSelectItemChange } = useSelectable(
+    data,
+    paginationInfo,
+    dataSource
+  )
+
+  return (
+    <div>
+      {data.records.map((item) => (
+        <SelectableItem
+          key={item.id}
+          item={item}
+          isSelected={selectedItems.has(item.id)}
+          onSelect={handleSelectItemChange}
+        />
+      ))}
+    </div>
+  )
+}
+```
+
+### 3. Handle Group Selection Correctly
+
+```tsx
+function GroupedList() {
+  const { groupAllSelectedStatus, handleSelectGroupChange } = useSelectable(
+    data,
+    paginationInfo,
+    dataSource
+  )
+
+  return (
+    <div>
+      {data.groups.map((group) => {
+        const groupStatus = groupAllSelectedStatus[group.key]
+
+        return (
+          <div key={group.key}>
+            <label>
+              <input
+                type="checkbox"
+                checked={groupStatus?.checked || false}
+                ref={(el) => {
+                  if (el) el.indeterminate = groupStatus?.indeterminate || false
+                }}
+                onChange={(e) =>
+                  handleSelectGroupChange(group, e.target.checked)
+                }
+              />
+              {group.label}
+            </label>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+```
+
+### 4. Type Safety
+
+```tsx
+type User = {
+  id: string
+  name: string
+  canBeSelected: boolean
+}
+
+const dataSource = useDataSource<User, typeof userFilters>({
+  filters: userFilters,
+  selectable: (user) => (user.canBeSelected ? user.id : undefined),
+  dataAdapter: { fetchData: fetchUsers },
+})
+
+const { selectedItems, handleSelectItemChange } = useSelectable(
+  data,
+  paginationInfo,
+  dataSource
+)
+
+// selectedItems is correctly typed as Map<string, User>
+```
+
+## Related Hooks
+
+- [`useDataSource`](/?path=/docs/hooks-datasource-usedatasource--docs) - For
+  creating data sources with selection configuration
+- [`useData`](/?path=/docs/hooks-datasource-usedata--docs) - For data fetching
+  and pagination
+- [`useGroups`](/?path=/docs/hooks-datasource-usegroups--docs) - For group state
+  management
+
+## Common Patterns
+
+### Selection Status
+
+```tsx
+const { allSelectedStatus, groupAllSelectedStatus } = useSelectable(
+  data,
+  paginationInfo,
+  dataSource
+)
+
+// Overall selection status
+console.log(allSelectedStatus.checked) // All selected
+console.log(allSelectedStatus.indeterminate) // Some selected
+console.log(allSelectedStatus.selectedCount) // Number selected
+
+// Per-group selection status
+Object.entries(groupAllSelectedStatus).forEach(([groupKey, status]) => {
+  console.log(
+    `Group ${groupKey}: ${status.selectedCount}/${status.selectedCount + status.unselectedCount}`
+  )
+})
+```
+
+### Bulk Operations
+
+```tsx
+const { selectedItems } = useSelectable(data, paginationInfo, dataSource)
+
+// Get selected items as array
+const selectedItemsArray = Array.from(selectedItems.values())
+
+// Perform bulk operations
+const bulkDelete = () => {
+  deleteUsers(selectedItemsArray)
+}
+
+const bulkExport = () => {
+  exportUsers(selectedItemsArray)
+}
+```
+
+### Conditional Selection
+
+```tsx
+// Only enable selection for active users
+const dataSource = useDataSource({
+  selectable: (user) => (user.status === "active" ? user.id : undefined),
+  dataAdapter: { fetchData: fetchUsers },
+})
+```
