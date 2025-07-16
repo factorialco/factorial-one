@@ -265,16 +265,23 @@ export function PageHeader({
         {navigation && hasActions && (
           <div className="h-4 w-px bg-f1-border-secondary" />
         )}
-        {hasProductUpdates && (
-          <div className="items-right flex gap-2">
-            <ProductUpdates {...productUpdates} currentModule={module.name} />
-          </div>
-        )}
-        {hasActions && (
-          <div className="items-right flex gap-2">
-            {actions.map((action, index) => (
-              <PageAction key={index} action={action} />
-            ))}
+        {(hasProductUpdates || hasActions) && (
+          <div className="flex items-center gap-2">
+            {hasProductUpdates && (
+              <div className="items-right flex gap-2">
+                <ProductUpdates
+                  {...productUpdates}
+                  currentModule={module.name}
+                />
+              </div>
+            )}
+            {hasActions && (
+              <div className="items-right flex gap-2">
+                {actions.map((action, index) => (
+                  <PageAction key={index} action={action} />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
