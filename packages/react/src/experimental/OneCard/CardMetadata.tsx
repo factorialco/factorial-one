@@ -1,21 +1,36 @@
 import { Icon } from "@/components/Utilities/Icon"
-import React from "react"
-import { metadataRenderers } from "./metadata"
-import { Metadata } from "./types"
+import { propertyRenderers } from "@/experimental/OneDataCollection/visualizations/property"
+import { CardMetadata as CardMetadataType } from "./types"
 
 interface CardMetadataProps {
-  metadata: Metadata
+  metadata: CardMetadataType
 }
 
 export function CardMetadata({ metadata }: CardMetadataProps) {
-  const MetadataRenderer = metadataRenderers[metadata.type] as (props: {
-    metadata: Metadata
-  }) => React.ReactNode
+  const { type, value } = metadata.property
+  const renderer = propertyRenderers[type]
+
+  if (!renderer) {
+    return (
+      <div className="flex h-8 items-center gap-1.5 font-medium">
+        <Icon icon={metadata.icon} color="default" size="md" />
+        <span>Unknown property type: {type}</span>
+      </div>
+    )
+  }
+
+  const propertyMeta = {
+    visualization: "card" as const,
+    property: {
+      label: "", // Cards don't need property labels
+      render: () => value,
+    },
+  }
 
   return (
     <div className="flex h-8 items-center gap-1.5 font-medium">
       <Icon icon={metadata.icon} color="default" size="md" />
-      <MetadataRenderer metadata={metadata} />
+      {(renderer as any)(value, propertyMeta)}
     </div>
   )
 }

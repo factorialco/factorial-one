@@ -20,7 +20,7 @@ import {
 } from "@/ui/Card"
 import { useState, type ReactNode } from "react"
 import { CardMetadata } from "./CardMetadata"
-import { type Metadata } from "./types"
+import { type CardMetadata as CardMetadataType } from "./types"
 
 type CardAvatar =
   | AvatarVariant
@@ -45,7 +45,7 @@ interface OneCardProps {
   /**
    * Metadata items to display in the card
    */
-  metadata?: Metadata[]
+  metadata?: CardMetadataType[]
 
   /**
    * The children to display in the card

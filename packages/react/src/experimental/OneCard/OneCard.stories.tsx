@@ -48,20 +48,28 @@ export const Default: Story = {
     title: "Daniel Moreno",
     metadata: [
       {
-        type: "text",
         icon: Briefcase,
-        title: "Design Engineer",
+        property: {
+          type: "text",
+          value: "Design Engineer",
+        },
       },
       {
-        type: "text",
         icon: CalendarArrowRight,
-        title: "3 years ago",
+        property: {
+          type: "text",
+          value: "3 years ago",
+        },
       },
       {
-        type: "status",
         icon: Star,
-        status: "positive",
-        label: "Active",
+        property: {
+          type: "status",
+          value: {
+            status: "positive",
+            label: "Active",
+          },
+        },
       },
     ],
     otherActions: [
@@ -105,14 +113,20 @@ export const WithActions: Story = {
     ],
     metadata: [
       {
-        type: "tag",
         icon: Office,
-        label: "Barcelona, Spain",
+        property: {
+          type: "tag",
+          value: {
+            label: "Barcelona, Spain",
+          },
+        },
       },
       {
-        type: "text",
         icon: Calendar,
-        title: "10 months ago",
+        property: {
+          type: "text",
+          value: "10 months ago",
+        },
       },
     ],
   },
@@ -155,5 +169,77 @@ export const WithEmoji: Story = {
       type: "emoji",
       emoji: "🐱",
     },
+  },
+}
+
+export const WithRichMetadata: Story = {
+  args: {
+    avatar: {
+      type: "person",
+      firstName: "Sarah",
+      lastName: "Chen",
+    },
+    title: "Sarah Chen",
+    description:
+      "Senior Product Manager working on user experience and product strategy",
+    metadata: [
+      {
+        icon: Briefcase,
+        property: {
+          type: "text",
+          value: "Product Manager",
+        },
+      },
+      {
+        icon: CalendarArrowRight,
+        property: {
+          type: "date",
+          value: new Date("2022-03-15"),
+        },
+      },
+      {
+        icon: Star,
+        property: {
+          type: "status",
+          value: {
+            status: "positive",
+            label: "Active",
+          },
+        },
+      },
+      {
+        icon: Office,
+        property: {
+          type: "person",
+          value: {
+            firstName: "John",
+            lastName: "Manager",
+          },
+        },
+      },
+      {
+        icon: Add,
+        property: {
+          type: "tag",
+          value: {
+            label: "Remote",
+          },
+        },
+      },
+      {
+        icon: Calendar,
+        property: {
+          type: "number",
+          value: 42,
+        },
+      },
+    ],
+    otherActions: [
+      {
+        label: "View Profile",
+        icon: ExternalLink,
+        onClick: fn(),
+      },
+    ],
   },
 }
