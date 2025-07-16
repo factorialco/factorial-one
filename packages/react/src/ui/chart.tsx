@@ -3,6 +3,7 @@ import { useLayoutEffect, useMemo, useState } from "react"
 import * as RechartsPrimitive from "recharts"
 
 import { cva, type VariantProps } from "cva"
+import DOMPurify from "dompurify"
 import { cn } from "../lib/utils"
 
 const variants = cva({
@@ -139,11 +140,8 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     return null
   }
 
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES).map(
-          ([theme, prefix]) => `
+  const content = Object.entries(THEMES).map(
+    ([theme, prefix]) => `
 ${prefix} [data-chart=${id}] {
 ${colorConfig
   .map(([key, itemConfig]) => {
@@ -155,7 +153,12 @@ ${colorConfig
   .join("\n")}
 }
 `
-        ),
+  )
+
+  return (
+    <style
+      dangerouslySetInnerHTML={{
+        __html: DOMPurify.sanitize(content.join("\n")),
       }}
     />
   )

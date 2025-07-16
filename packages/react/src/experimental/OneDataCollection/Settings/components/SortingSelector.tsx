@@ -1,5 +1,4 @@
 import { Button } from "@/components/Actions/Button"
-import { Icon } from "@/components/Utilities/Icon"
 import { Select } from "@/experimental/Forms/Fields/Select"
 import { ArrowDown, ArrowUp, Placeholder } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
@@ -45,16 +44,12 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
   }, [JSON.stringify(currentSortings)])
 
   return (
-    <div className="flex flex-col gap-0 pb-3">
-      <div className="flex items-center gap-1 p-3 pb-2 text-sm font-medium text-f1-foreground-secondary">
-        <div className="flex h-4 w-4 items-center justify-center text-f1-icon">
-          <Icon icon={Placeholder} size="sm" />
-        </div>
-        {i18n.collections.sorting.sortBy}
-      </div>
+    <div className="flex flex-col gap-0 py-3">
       <div className="flex items-center gap-2 px-3">
         <div className="shrink grow [&_button]:h-8 [&_button]:rounded">
           <Select
+            label={i18n.collections.sorting.sortBy}
+            labelIcon={Placeholder}
             options={sortingOptions}
             value={localSortings?.field as string}
             onChange={(value) => {

@@ -88,7 +88,7 @@
 .ProseMirror ol,
 .rich-text-display-container ul,
 .rich-text-display-container ol {
-  @apply ml-5;
+  @apply pl-5;
 }
 
 .ProseMirror .f1-ordered-list p,
@@ -105,7 +105,7 @@
 
 .ProseMirror pre,
 .rich-text-display-container pre {
-  @apply relative mx-0 overflow-x-auto whitespace-pre-wrap rounded-md bg-f1-background-secondary p-2;
+  @apply relative mx-0 my-4 overflow-x-auto whitespace-pre-wrap rounded-md bg-f1-background-secondary p-2;
 }
 
 .ProseMirror code,
@@ -141,7 +141,7 @@
 
 .ProseMirror ul[data-type="taskList"],
 .rich-text-display-container ul[data-type="taskList"] {
-  @apply ml-0;
+  @apply pl-0;
 }
 
 .shadow-editor-tools {

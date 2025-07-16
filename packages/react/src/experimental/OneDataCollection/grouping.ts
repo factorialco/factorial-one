@@ -1,4 +1,8 @@
-import { FiltersDefinition, FiltersState } from "./Filters/types"
+import { RecordPaths, RecordPathValue } from "@/lib/objectPaths"
+import {
+  FiltersDefinition,
+  FiltersState,
+} from "../../components/OneFilterPicker/types"
 import { SortOrder } from "./sortings"
 import { RecordType } from "./types"
 
@@ -10,16 +14,16 @@ export type GroupingDefinition<R extends RecordType> = {
   /** Whether grouping is mandatory or the user can chose not to group */
   mandatory?: boolean
   groupBy: {
-    [K in keyof R]?: {
+    [K in RecordPaths<R>]?: {
       /** The label for the grouping */
       name: string
       /** The item count for the grouping */
       label: (
-        groupId: R[K],
+        groupId: RecordPathValue<R, K>,
         filters: FiltersState<FiltersDefinition>
       ) => string | Promise<string>
       itemCount?: (
-        groupId: R[K],
+        groupId: RecordPathValue<R, K>,
         filters: FiltersState<FiltersDefinition>
       ) => number | undefined | Promise<number | undefined>
     }

@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton.tsx"
 import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
-import type { FiltersDefinition } from "../../../Filters/types"
+import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition } from "../../../property-render"
 import {
@@ -197,8 +197,6 @@ export const TableCollection = <
     source.defaultSelectedItems
   )
   const summaryData = useMemo(() => {
-    console.warn("summariesData", summariesData)
-    console.warn("source.summaries", source.summaries)
     // Early return if no summaries configuration or summaries data is available
     if (!summariesData || !source.summaries) return null
 
@@ -285,7 +283,7 @@ export const TableCollection = <
   const checkColumnWidth = source.selectable ? 52 : 0
 
   return (
-    <>
+    <div className="flex h-full flex-col gap-4">
       <OneTable loading={isLoading}>
         <TableHeader sticky={true}>
           <TableRow>
@@ -362,9 +360,12 @@ export const TableCollection = <
               const itemCount = group.itemCount
               return (
                 <Fragment key={`group-${group.key}`}>
-                  <TableRow key={`group-header-${group.key}`}>
+                  <TableRow key={`group-header-${group.key}`} sticky>
                     <TableCell
-                      colSpan={columns.length + (source.selectable ? 1 : 0)}
+                      sticky={{ left: 0 }}
+                      colSpan={
+                        (frozenColumnsLeft || 1) + (source.selectable ? 1 : 0)
+                      }
                     >
                       <GroupHeader
                         className="px-4"
@@ -381,6 +382,15 @@ export const TableCollection = <
                         open={openGroups[group.key]}
                         onOpenChange={(open) => setGroupOpen(group.key, open)}
                       />
+                    </TableCell>
+                    <TableCell
+                      colSpan={
+                        columns.length -
+                        (frozenColumnsLeft || 1) +
+                        (source.selectable ? 1 : 0)
+                      }
+                    >
+                      &nbsp;
                     </TableCell>
                   </TableRow>
 
@@ -463,7 +473,7 @@ export const TableCollection = <
             <TableRow
               className={cn(
                 summaryData.sticky &&
-                  "sticky bottom-0 z-10 bg-f1-background shadow-[0_-1px_0_0_var(--f1-border-secondary)]",
+                  "sticky bottom-0 z-10 bg-f1-background shadow-[0_-1px_0_0_var(--f1-border-secondary)] hover:bg-f1-background",
                 "font-medium"
               )}
             >
@@ -543,6 +553,6 @@ export const TableCollection = <
         setPage={setPage}
         className="pb-4"
       />
-    </>
+    </div>
   )
 }

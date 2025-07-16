@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import type { FiltersDefinition } from "./Filters/types"
+import type { FiltersDefinition } from "../../components/OneFilterPicker/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import type { SortingsDefinition } from "./sortings"
@@ -382,16 +382,7 @@ export function useSelectable<
     // Notify the parent component about the selected items
     const totalItems = paginationInfo?.total ?? (data.records?.length || 0)
 
-    const selectedItemsCount = allSelectedCheck
-      ? totalItems - unselectedCount
-      : isGrouped
-        ? Array.from(groupsState.values()).reduce((acc, { group, checked }) => {
-            return (
-              acc +
-              (checked ? groupAllSelectedStatus[group.key]?.selectedCount : 0)
-            )
-          }, 0)
-        : selectedCount
+    const selectedItemsCount = totalItems - unselectedCount
 
     onSelectItems?.(
       {

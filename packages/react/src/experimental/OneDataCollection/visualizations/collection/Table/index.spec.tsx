@@ -9,11 +9,11 @@ import {
 } from "@testing-library/react"
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
+import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
 import {
   defaultTranslations,
   I18nProvider,
 } from "../../../../../lib/providers/i18n"
-import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
 import { SummariesDefinition } from "../../../summary"

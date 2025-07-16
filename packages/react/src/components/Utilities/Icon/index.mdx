@@ -41,12 +41,25 @@ import { Archive } from "@/icons/app"
 
 ### Color
 
-The Icon will be displayed with the color of the text. You can change the color
-using the `className` prop, or setting a text color for the container. Please
-use
-[one of the specific color tokens](/docs/foundations-colors--documentation#icon)
-for icons.
+The Icon component supports different color options through the `color` prop:
+
+- **Token colors**: Use predefined icon color tokens like `secondary`, `accent`
+  or `critical`.
+  [Here is the full list of icon tokens](/docs/foundations-colors--documentation&globals=#icon).
+- **Hex colors**: Pass any hex color value like `#ff0000`
+- **Current color**: Default behavior that inherits the parent's text color
 
 ```jsx
-<Icon icon={Archive} className="text-f1-icon-secondary" />
+// Using token colors
+<Icon icon={Archive} color="secondary" />
+<Icon icon={Alert} color="critical" />
+
+// Using hex colors
+<Icon icon={Star} color="#ff0000" />
+
+// Using current color (default)
+<Icon icon={Home} />
 ```
+
+Please, use the token colors unless you have a specific reason to use a hex
+color.

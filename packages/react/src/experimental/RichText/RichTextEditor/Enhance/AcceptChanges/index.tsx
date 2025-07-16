@@ -42,7 +42,7 @@ const AcceptChanges = ({
       />
 
       <Button
-        label={labels?.repeatButtonLabel || i18n.collections.filters.retry}
+        label={labels?.repeatButtonLabel || i18n.filters.retry}
         onClick={(e) => {
           e.preventDefault()
           editor.chain().focus().undo().run()

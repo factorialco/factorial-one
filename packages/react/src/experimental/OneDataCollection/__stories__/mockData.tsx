@@ -3,8 +3,6 @@ import {
   BaseResponse,
   BulkActionDefinition,
   DataAdapter,
-  FilterDefinition,
-  FiltersState,
   GroupingDefinition,
   GroupingState,
   InfiniteScrollPaginatedResponse,
@@ -14,7 +12,6 @@ import {
   OnSelectItemsCallback,
   PaginatedResponse,
   PaginationType,
-  PresetsDefinition,
   RecordType,
   SelectedItemsState,
   SortingsStateMultiple,
@@ -27,6 +24,11 @@ import { NewColor } from "@/experimental/Information/Tags/DotTag"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { cn } from "@/lib/utils"
 
+import {
+  FilterDefinition,
+  FiltersState,
+  PresetsDefinition,
+} from "@/components/OneFilterPicker"
 import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
@@ -125,6 +127,11 @@ export type MockUser = {
   isStarred: boolean
   salary: number | undefined
   joinedAt: Date
+  permissions: {
+    read?: boolean
+    write?: boolean
+    delete: boolean
+  }
 }
 
 export const FIRST_NAMES_MOCK = [
@@ -230,6 +237,11 @@ export const generateMockUsers = (count: number): MockUser[] => {
       href: `/users/user-${index + 1}`,
       salary: SALARY_MOCK[index % SALARY_MOCK.length],
       joinedAt: START_DATE_MOCK[index % START_DATE_MOCK.length],
+      permissions: {
+        read: index % 2 === 0,
+        write: index % 3 === 0,
+        delete: index % 4 === 0,
+      },
     }
   })
 }
@@ -328,6 +340,18 @@ export const getMockVisualizations = (options?: {
           render: (item) => item.department,
           sorting: "department",
         },
+        {
+          label: "Permissions",
+          render: (item) =>
+            [
+              item.permissions?.read ? "Read" : "",
+              item.permissions?.write ? "Write" : "",
+              item.permissions?.delete ? "Delete" : "",
+            ]
+              .filter(Boolean)
+              .join(", "),
+          sorting: "permissions.read",
+        },
       ],
     },
   },
@@ -419,6 +443,15 @@ export const sortings = {
   },
   salary: {
     label: "Salary",
+  },
+  "permissions.read": {
+    label: "Read",
+  },
+  "permissions.write": {
+    label: "Write",
+  },
+  "permissions.delete": {
+    label: "Delete",
   },
 } as const
 

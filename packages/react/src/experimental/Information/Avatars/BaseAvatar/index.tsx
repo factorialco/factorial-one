@@ -120,6 +120,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
               aria-hidden={!hasAria}
               aria-label={ariaLabel}
               aria-labelledby={ariaLabelledby}
+              translate="no"
               data-a11y-color-contrast-ignore
               className={
                 src

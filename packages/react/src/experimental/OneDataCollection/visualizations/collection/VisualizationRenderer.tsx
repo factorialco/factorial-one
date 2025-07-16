@@ -5,7 +5,7 @@ import {
   OnSelectItemsCallback,
 } from "../../types"
 
-import { FiltersDefinition } from "../../Filters/types"
+import { FiltersDefinition } from "../../../../components/OneFilterPicker/types"
 import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"

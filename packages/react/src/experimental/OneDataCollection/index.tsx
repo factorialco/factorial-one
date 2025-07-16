@@ -8,12 +8,16 @@ import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
 
 import { OneEmptyState } from "@/experimental/OneEmptyState"
+import { experimentalComponent } from "@/lib/experimental"
 import { Skeleton } from "@/ui/skeleton"
+import { OneFilterPicker } from "../../components/OneFilterPicker"
+import type {
+  FiltersDefinition,
+  FiltersState,
+} from "../../components/OneFilterPicker/types"
 import { OneActionBar } from "../OneActionBar"
 import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
-import * as Filters from "./Filters"
-import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { navigationFilterTypes } from "./navigationFilters"
 import {
@@ -235,7 +239,7 @@ const MotionIcon = motion.create(Icon)
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export const OneDataCollection = <
+const OneDataCollectionComp = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -470,7 +474,12 @@ export const OneDataCollection = <
   useEffect(() => {
     setEmptyStateType(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- This is intentional we should remove the empty state when the filters, search, navigation filters change
-  }, [currentFilters, currentSearch, currentNavigationFilters])
+  }, [
+    currentFilters,
+    currentSearch,
+    currentNavigationFilters,
+    source.dataAdapter,
+  ])
 
   return (
     <div
@@ -514,69 +523,62 @@ export const OneDataCollection = <
       <div
         className={cn("flex flex-col gap-4 px-6", fullHeight && "max-h-full")}
       >
-        <Filters.Root
-          schema={filters}
-          filters={currentFilters}
+        <OneFilterPicker
+          filters={filters}
+          value={currentFilters}
           presets={presets}
-          onChange={(value) =>
-            setCurrentFilters(value as FiltersState<Filters>)
-          }
+          onChange={(value) => setCurrentFilters(value)}
         >
-          <div
-            className={cn(
-              "flex items-center justify-between gap-4",
-              !filters && "justify-end"
-            )}
-          >
-            {filters && (
-              <div className="flex min-w-0 flex-1 gap-1">
-                <Filters.Controls />
-                <Filters.Presets />
-              </div>
-            )}
-            <div className="flex shrink-0 items-center gap-2">
-              {isLoading && (
-                <MotionIcon
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{
-                    opacity: 0,
-                  }}
-                  size="lg"
-                  icon={Spinner}
-                  className="animate-spin"
-                />
+          {isLoading && (
+            <MotionIcon
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{
+                opacity: 0,
+              }}
+              size="lg"
+              icon={Spinner}
+              className="animate-spin"
+            />
+          )}
+          {search && (
+            <Search onChange={setCurrentSearch} value={currentSearch} />
+          )}
+          <Settings
+            visualizations={visualizations}
+            currentVisualization={currentVisualization}
+            onVisualizationChange={setCurrentVisualization}
+            grouping={grouping}
+            currentGrouping={currentGrouping}
+            onGroupingChange={setCurrentGrouping}
+            sortings={sortings}
+            currentSortings={currentSortings}
+            onSortingsChange={setCurrentSortings}
+          ></Settings>
+          {hasCollectionsActions && (
+            <>
+              {elementsRightActions && (
+                <div className="mx-1 h-4 w-px bg-f1-background-secondary-hover" />
               )}
-              {search && (
-                <Search onChange={setCurrentSearch} value={currentSearch} />
-              )}
-              <Settings
-                visualizations={visualizations}
-                currentVisualization={currentVisualization}
-                onVisualizationChange={setCurrentVisualization}
-                grouping={grouping}
-                currentGrouping={currentGrouping}
-                onGroupingChange={setCurrentGrouping}
-                sortings={sortings}
-                currentSortings={currentSortings}
-                onSortingsChange={setCurrentSortings}
-              ></Settings>
-              {hasCollectionsActions && (
-                <>
-                  {elementsRightActions && (
-                    <div className="mx-1 h-4 w-px bg-f1-background-secondary-hover" />
-                  )}
-                  <CollectionActions
-                    primaryActions={primaryActionItem}
-                    secondaryActions={secondaryActionsItems}
-                    otherActions={otherActionsItems}
-                  />
-                </>
-              )}
-            </div>
-          </div>
-          <Filters.ChipsList />
-        </Filters.Root>
+              <CollectionActions
+                primaryActions={primaryActionItem}
+                secondaryActions={secondaryActionsItems}
+                otherActions={otherActionsItems}
+              />
+            </>
+          )}
+        </OneFilterPicker>
+      </div>
+
+      {/* Visualization renderer must be always mounted to react (load data) even if empty state is shown */}
+      <div className={cn(emptyState && "hidden", fullHeight && "h-full")}>
+        <VisualizationRenderer
+          visualization={visualizations[currentVisualization]}
+          source={source}
+          onSelectItems={onSelectItemsLocal}
+          onLoadData={onLoadData}
+          onLoadError={onLoadError}
+        />
       </div>
 
       {emptyState ? (
@@ -590,13 +592,6 @@ export const OneDataCollection = <
         </div>
       ) : (
         <>
-          <VisualizationRenderer
-            visualization={visualizations[currentVisualization]}
-            source={source}
-            onSelectItems={onSelectItemsLocal}
-            onLoadData={onLoadData}
-            onLoadError={onLoadError}
-          />
           {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
             <OneActionBar
               isOpen={showActionBar}
@@ -611,3 +606,13 @@ export const OneDataCollection = <
     </div>
   )
 }
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+const OneDataCollection = experimentalComponent(
+  "OneDataCollection",
+  OneDataCollectionComp
+)
+
+export { OneDataCollection }

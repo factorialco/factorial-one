@@ -241,6 +241,8 @@ export function OneDatePickerPopup({
                     {i18n.date.compareTo}
                   </div>
                   <Select
+                    label={i18n.date.compareTo}
+                    hideLabel
                     placeholder={i18n.date.compareTo}
                     options={compareToOptions.map((option) => ({
                       label: option.label,

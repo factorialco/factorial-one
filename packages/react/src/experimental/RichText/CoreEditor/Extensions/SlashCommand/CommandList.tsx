@@ -1,4 +1,4 @@
-import { Icon } from "@/factorial-one"
+import { Icon } from "@/components/Utilities/Icon"
 import { cn } from "@/lib/utils"
 import {
   forwardRef,

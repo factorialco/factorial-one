@@ -1,43 +1,100 @@
 import * as React from "react"
-import { Icon, IconType } from "../components/Utilities/Icon"
-import { cn, focusRing } from "../lib/utils"
+import { cn } from "../lib/utils"
+import { InputField, InputFieldProps } from "./InputField"
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
-  icon?: IconType
-  clearable?: boolean
-  error?: boolean
-}
+export type InputProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "size" | "onChange"
+> &
+  Pick<
+    InputFieldProps<string>,
+    | "label"
+    | "labelIcon"
+    | "hideLabel"
+    | "error"
+    | "disabled"
+    | "required"
+    | "size"
+    | "icon"
+    | "clearable"
+    | "isEmpty"
+    | "emptyValue"
+    | "maxLength"
+    | "hideMaxLength"
+    | "append"
+    | "lengthProvider"
+    | "loading"
+    | "onChange"
+    | "role"
+    | "onClickContent"
+  >
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, icon, clearable, error, ...props }, ref) => {
+  (
+    {
+      className,
+      type,
+      label,
+      labelIcon,
+      icon,
+      error,
+      disabled,
+      required,
+      value,
+      placeholder,
+      clearable,
+      size,
+      loading,
+      isEmpty,
+      emptyValue,
+      maxLength,
+      hideMaxLength,
+      append,
+      onChange,
+      role,
+      lengthProvider,
+      onClickContent,
+      hideLabel,
+      ...props
+    },
+    ref
+  ) => {
     return (
-      <div
-        className={cn(
-          "flex w-full appearance-none rounded-md border-0 bg-f1-background p-2 ring-1 ring-inset ring-f1-border transition-all placeholder:text-f1-foreground-tertiary hover:ring-f1-border-hover",
-          focusRing("focus:ring-f1-border-hover"),
-          icon ? "flex gap-1 py-1.5 ps-2" : "ps-3",
-          props.disabled &&
-            "cursor-not-allowed bg-f1-background-secondary opacity-50",
-          error && "ring-f1-border-critical-bold",
-          className
-        )}
+      <InputField
+        label={label}
+        icon={icon}
+        labelIcon={labelIcon}
+        error={error}
+        disabled={disabled}
+        required={required}
+        value={value as string}
+        loading={loading}
+        clearable={clearable}
+        className={className}
+        placeholder={placeholder || ""}
+        size={size}
+        role={role}
+        isEmpty={isEmpty}
+        emptyValue={emptyValue as string}
+        maxLength={maxLength}
+        hideMaxLength={hideMaxLength}
+        append={append}
+        lengthProvider={lengthProvider}
+        hidePlaceholder={type === "file"}
+        hideLabel={hideLabel}
+        onChange={onChange}
+        onClickContent={onClickContent}
       >
-        {icon && (
-          <Icon
-            icon={icon}
-            className="h-5 w-5 shrink-0 text-f1-foreground-secondary"
-          />
-        )}
         <input
           type={type}
           ref={ref}
           {...props}
           className={cn(
-            !clearable ? "[&::-webkit-search-cancel-button]:hidden" : "",
+            "[&::-webkit-search-cancel-button]:hidden",
             "w-full shrink disabled:cursor-not-allowed"
           )}
         />
-      </div>
+      </InputField>
     )
   }
 )

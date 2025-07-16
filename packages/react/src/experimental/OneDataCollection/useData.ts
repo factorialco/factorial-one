@@ -1,3 +1,4 @@
+import { getValueByPath } from "@/lib/objectPaths"
 import { groupBy } from "lodash"
 import {
   useCallback,
@@ -8,11 +9,14 @@ import {
   useState,
 } from "react"
 import { Observable } from "zen-observable-ts"
+import type {
+  FiltersDefinition,
+  FiltersState,
+} from "../../components/OneFilterPicker/types"
 import {
   PromiseState,
   promiseToObservable,
 } from "../../lib/promise-to-observable"
-import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import {
   NavigationFiltersDefinition,
@@ -228,6 +232,8 @@ export function useData<
     currentNavigationFilters,
     currentGrouping,
     grouping,
+    idProvider = (item, index): string | number =>
+      "id" in item ? `${item.id}` : index || JSON.stringify(item),
   } = source
   const cleanup = useRef<(() => void) | undefined>()
 
@@ -261,6 +267,30 @@ export function useData<
       : deferredSearch
 
   const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
+
+  /**
+   * Merges 2 arrays of items using the idProvider to update the existing items
+   * and add the new items
+   */
+  const mergeItems = (
+    prevData: R[],
+    newData: R[],
+    idProvider: (item: R, index?: number) => string | number | symbol
+  ): R[] => {
+    {
+      // The Map order is guaranteed to be the same as the order of the items in the array. Check https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map#objects_vs._maps
+      const idMap = new Map(
+        prevData.map((item, index) => [idProvider(item, index), item])
+      )
+
+      for (const [index, record] of newData.entries()) {
+        const id = idProvider(record, index)
+        idMap.set(id, record)
+      }
+
+      return Array.from(idMap.values())
+    }
+  }
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<R> | SimpleResult<R>, appendMode: boolean) => {
@@ -317,31 +347,7 @@ export function useData<
 
       setRawData(
         appendMode
-          ? (prevData) => {
-              const merged = [...prevData]
-              const idMap = new Map(
-                prevData
-                  .filter((item) => "id" in item && !!item.id)
-                  .map((item) => [item.id, item])
-              )
-
-              for (const record of records) {
-                if ("id" in record && !!record.id && idMap.has(record.id)) {
-                  const index = merged.findIndex(
-                    (item) => item.id === record.id
-                  )
-                  if (index !== -1) {
-                    merged[index] = record // Overwrite existing item
-                  } else {
-                    merged.push(record) // Fallback
-                  }
-                } else {
-                  merged.push(record) // New item
-                }
-              }
-
-              return merged
-            }
+          ? (prevData) => mergeItems(prevData, records, idProvider)
           : records
       )
       setError(null)
@@ -370,7 +376,8 @@ export function useData<
     const data: WithGroupId<R>[] = rawData.map((record) => ({
       ...record,
       [GROUP_ID_SYMBOL]:
-        (currentGrouping?.field && record[currentGrouping.field as keyof R]) ||
+        (currentGrouping?.field &&
+          getValueByPath(record, currentGrouping.field as string)) ||
         undefined,
     }))
 
@@ -381,22 +388,32 @@ export function useData<
       currentGrouping &&
       currentGrouping.field &&
       grouping &&
-      grouping.groupBy[currentGrouping.field as keyof R]
+      (grouping.groupBy as Record<string, unknown>)[
+        currentGrouping.field as string
+      ]
     ) {
       const groupedData = groupBy(data, GROUP_ID_SYMBOL)
+      const fieldName = currentGrouping.field as string
+      const groupConfig = (grouping.groupBy as Record<string, unknown>)[
+        fieldName
+      ] as {
+        label: (
+          groupId: unknown,
+          filters: FiltersState<FiltersDefinition>
+        ) => string | Promise<string>
+        itemCount?: (
+          groupId: unknown,
+          filters: FiltersState<FiltersDefinition>
+        ) => number | undefined | Promise<number | undefined>
+      }
 
       return {
         type: "grouped" as const,
         records: data,
         groups: Object.entries(groupedData).map(([key, value]) => ({
           key,
-          label: grouping.groupBy[currentGrouping.field as keyof R]!.label(
-            key as R[keyof R],
-            mergedFilters
-          ),
-          itemCount: grouping.groupBy[
-            currentGrouping.field as keyof R
-          ]?.itemCount?.(key as R[keyof R], mergedFilters),
+          label: groupConfig.label(key as unknown, mergedFilters),
+          itemCount: groupConfig.itemCount?.(key as unknown, mergedFilters),
           records: value,
         })),
       }
@@ -633,17 +650,20 @@ export function useData<
         cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
       })
     }
-
-    return () => {
-      cleanup.current?.()
-    }
   }, [
     fetchDataAndUpdate,
     mergedFilters,
     setIsLoading,
     currentNavigationFilters,
+
     dataAdapter.paginationType,
   ])
+
+  useEffect(() => {
+    return () => {
+      cleanup.current?.()
+    }
+  }, [])
 
   return {
     data,
