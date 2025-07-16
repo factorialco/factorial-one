@@ -84,9 +84,9 @@ export const createDataSourceDefinition = <
 
 export function useDataSource<
   R extends RecordType = RecordType,
-  FiltersSchema extends FiltersDefinition = FiltersDefinition,
-  Sortings extends SortingsDefinition = SortingsDefinition,
-  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
+  FiltersSchema extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  Grouping extends GroupingDefinition<R>,
 >(
   {
     currentFilters: initialCurrentFilters = {},

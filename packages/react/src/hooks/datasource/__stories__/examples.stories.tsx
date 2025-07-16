@@ -442,7 +442,7 @@ const SelectableExample = () => {
 
 // Complete example with all hooks
 const CompleteExample = () => {
-  const dataSource = useDataSource<MockUser, typeof userFilters>({
+  const dataSource = useDataSource({
     filters: userFilters,
     selectable: (user) => (user.canBeSelected ? user.id : undefined),
     grouping: {
@@ -739,7 +739,7 @@ const CompleteExample = () => {
 
 // Filter example
 const FilterExample = () => {
-  const dataSource = useDataSource<MockUser, typeof userFilters>({
+  const dataSource = useDataSource({
     filters: userFilters,
     currentFilters: { department: ["Engineering"] },
     dataAdapter: createMockDataAdapter(),

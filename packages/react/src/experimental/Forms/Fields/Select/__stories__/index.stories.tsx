@@ -141,6 +141,8 @@ const meta: Meta = {
         item,
       }
     }),
+    label: "Select a theme",
+    hideLabel: true,
     disabled: false,
     showSearchBox: false,
   },
