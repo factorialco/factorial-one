@@ -23,6 +23,7 @@ export const defaultTranslations = {
     save: "Save",
     cancel: "Cancel",
     copy: "Copy",
+    close: "Close",
     showAll: "Show all",
     showLess: "Show less",
     skipToContent: "Skip to content",
