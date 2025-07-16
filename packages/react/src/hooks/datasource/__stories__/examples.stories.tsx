@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from "@storybook/react-vite"
-import { useCallback } from "react"
 import {
   createDataSourceDefinition,
   PaginatedDataAdapter,
@@ -229,7 +228,13 @@ const GroupedExample = () => {
               >
                 <span>{openGroups[group.key] ? "▼" : "▶"}</span>
                 <strong>
-                  {group.label} ({group.itemCount})
+                  <Await resolve={group.itemCount} fallback={<span>...</span>}>
+                    {(itemCount) => (
+                      <>
+                        {group.label} ({itemCount})
+                      </>
+                    )}
+                  </Await>
                 </strong>
               </span>
             </button>
@@ -288,7 +293,7 @@ const GroupedExample = () => {
 
 // Selectable example
 const SelectableExample = () => {
-  const dataSource = useDataSource<MockUser, typeof userFilters>({
+  const dataSource = useDataSource({
     filters: userFilters,
     selectable: (user) => (user.canBeSelected ? user.id : undefined),
     dataAdapter: createMockDataAdapter(),
@@ -437,7 +442,7 @@ const SelectableExample = () => {
 
 // Complete example with all hooks
 const CompleteExample = () => {
-  const dataSource = useDataSource({
+  const dataSource = useDataSource<MockUser, typeof userFilters>({
     filters: userFilters,
     selectable: (user) => (user.canBeSelected ? user.id : undefined),
     grouping: {
@@ -455,23 +460,6 @@ const CompleteExample = () => {
   const { data, isLoading, error, paginationInfo } = useData(dataSource)
   const { openGroups, setGroupOpen } = useGroups(data.groups, ["Engineering"])
 
-  const handleSelectionChange = useCallback(
-    (
-      allItemsCheck: boolean | "indeterminate",
-      selectedItems: {
-        items: Array<{ id: string | number; checked: boolean }>
-      },
-      filters: any
-    ) => {
-      console.log("Selection changed:", {
-        allItemsCheck,
-        selectedItems,
-        filters,
-      })
-    },
-    []
-  )
-
   const {
     selectedItems,
     handleSelectItemChange,
@@ -479,7 +467,11 @@ const CompleteExample = () => {
     handleSelectGroupChange,
     allSelectedStatus,
     groupAllSelectedStatus,
-  } = useSelectable(data, paginationInfo, dataSource, handleSelectionChange)
+  } = useSelectable(data, paginationInfo, dataSource, (selectedItems) => {
+    console.log("Selection changed:", {
+      selectedItems,
+    })
+  })
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error.message}</div>
@@ -755,7 +747,7 @@ const FilterExample = () => {
 
   const { data, isLoading, error } = useData(dataSource)
 
-  const handleFilterChange = (filterKey: string, value: any) => {
+  const handleFilterChange = (filterKey: string, value: string[]) => {
     dataSource.setCurrentFilters({
       ...dataSource.currentFilters,
       [filterKey]: value,

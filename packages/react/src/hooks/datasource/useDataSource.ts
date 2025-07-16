@@ -81,17 +81,12 @@ export const createDataSourceDefinition = <
  * - actions: Available actions for the collection
  * - presets: Available filter presets
  */
-export const useDataSource = <
+
+export function useDataSource<
   R extends RecordType = RecordType,
   FiltersSchema extends FiltersDefinition = FiltersDefinition,
   Sortings extends SortingsDefinition = SortingsDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
-  TDataSource extends DataSourceDefinition<
-    R,
-    FiltersSchema,
-    Sortings,
-    Grouping
-  > = DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
@@ -102,9 +97,9 @@ export const useDataSource = <
     dataAdapter,
     grouping,
     ...rest
-  }: TDataSource,
+  }: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>,
   deps: ReadonlyArray<unknown> = []
-): DataSource<R, FiltersSchema, Sortings, Grouping> => {
+): DataSource<R, FiltersSchema, Sortings, Grouping> {
   const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
