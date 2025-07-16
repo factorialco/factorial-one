@@ -12,9 +12,11 @@ const meta = {
   decorators: [
     (Story) => {
       return (
-        <CopilotKit runtimeUrl="https://mastra.local.factorial.dev/copilotkit">
-          <Story />
-        </CopilotKit>
+        <div className="h-full w-full bg-[hsl(0,0,98)]">
+          <CopilotKit runtimeUrl="https://mastra.local.factorial.dev/copilotkit">
+            <Story />
+          </CopilotKit>
+        </div>
       )
     },
   ],
