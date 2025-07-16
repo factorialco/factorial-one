@@ -16,7 +16,7 @@ import { CompanyCellValue } from './types/company.tsx';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
-import { CopilotKit } from '@copilotkit/react-core';
+import { CopilotPopup } from '@copilotkit/react-ui';
 import { DateCellValue } from './types/date.tsx';
 import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
@@ -202,7 +202,7 @@ declare type AIButton = {
 
 export declare const AiChat: (props: AiChatProps) => JSX_2.Element;
 
-export declare type AiChatProps = ComponentProps<typeof CopilotKit>;
+export declare type AiChatProps = Pick<ComponentProps<typeof CopilotPopup>, "className" | "children">;
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "warning" | "positive" | "destructive" | undefined;
