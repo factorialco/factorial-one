@@ -1,8 +1,8 @@
-import { C as p, L as ne, c as ie, P as V, a as b, f as de, b as ce, A as ue, B as fe, d as he, e as pe, g as me, V as ve, h as q, i as ge, j as xe, M as H, I as be, F as ye, D as Ce, k as we, l as Ne, m as Le, n as U, S as Pe, o as Se, p as C, U as W, q as Me, r as ke, s as O, t as Re, u as Y, v as Be, w as De, x as Te, y as $e, z as Ie, E as Fe, G as Ee, H as Oe, J as _e, X as je, K as ze, N as Ve, O as qe, Q as He } from "./experimental-2ZsxyYO4.js";
-import { Z as Ea, R as Oa, a3 as _a, Y as ja, T as za, W as Va, a0 as qa, _ as Ha, a4 as Ua, a5 as Wa, $ as Ya, a2 as Ga, a1 as Xa } from "./experimental-2ZsxyYO4.js";
+import { C as p, L as ne, c as ie, P as z, a as b, f as de, b as ce, A as ue, B as fe, d as he, e as pe, g as me, V as ge, h as q, i as ve, j as xe, M as U, I as be, F as ye, D as Ce, k as we, l as Ne, m as Pe, n as G, S as Le, o as Se, p as C, U as H, q as Me, r as ke, s as E, t as De, u as Y, v as Re, w as Be, x as Te, y as $e, z as Ie, E as Fe, G as Oe, H as Ee, J as _e, X as je, K as Ve, N as ze, O as qe, Q as Ue } from "./experimental-CHU0HweN.js";
+import { a7 as Oa, R as Ea, ad as _a, Z as ja, Y as Va, T as za, W as qa, aa as Ua, a2 as Ga, a8 as Ha, a5 as Ya, a1 as Wa, ae as Xa, a0 as Ja, $ as Qa, _ as Ka, a3 as Za, af as Aa, a4 as er, a9 as ar, ac as rr, a6 as sr, ab as lr } from "./experimental-CHU0HweN.js";
 import { jsx as e, jsxs as d, Fragment as $ } from "react/jsx-runtime";
 import * as I from "react";
-import Ue, { forwardRef as D, useRef as G, useImperativeHandle as We, Children as Ye, useState as g, useEffect as X, createContext as Ge } from "react";
+import Ge, { forwardRef as B, useRef as W, useImperativeHandle as He, Children as Ye, useState as v, useEffect as X, createContext as We } from "react";
 const xa = {
   approvals: {
     history: "Approval history",
@@ -181,7 +181,7 @@ const xa = {
   },
   ne
 );
-var F = "Progress", E = 100, [Xe, ya] = ie(F), [Je, Qe] = Xe(F), J = I.forwardRef(
+var F = "Progress", O = 100, [Xe, ya] = ie(F), [Je, Qe] = Xe(F), J = I.forwardRef(
   (a, r) => {
     const {
       __scopeProgress: s,
@@ -191,16 +191,16 @@ var F = "Progress", E = 100, [Xe, ya] = ie(F), [Je, Qe] = Xe(F), J = I.forwardRe
       ...n
     } = a;
     (t || t === 0) && !_(t) && console.error(Ze(`${t}`, "Progress"));
-    const u = _(t) ? t : E;
+    const u = _(t) ? t : O;
     l !== null && !j(l, u) && console.error(Ae(`${l}`, "Progress"));
-    const o = j(l, u) ? l : null, v = B(o) ? c(o, u) : void 0;
+    const o = j(l, u) ? l : null, g = R(o) ? c(o, u) : void 0;
     return /* @__PURE__ */ e(Je, { scope: s, value: o, max: u, children: /* @__PURE__ */ e(
-      V.div,
+      z.div,
       {
         "aria-valuemax": u,
         "aria-valuemin": 0,
-        "aria-valuenow": B(o) ? o : void 0,
-        "aria-valuetext": v,
+        "aria-valuenow": R(o) ? o : void 0,
+        "aria-valuetext": g,
         role: "progressbar",
         "data-state": Z(o, u),
         "data-value": o ?? void 0,
@@ -216,7 +216,7 @@ var Q = "ProgressIndicator", K = I.forwardRef(
   (a, r) => {
     const { __scopeProgress: s, ...l } = a, t = Qe(Q, s);
     return /* @__PURE__ */ e(
-      V.div,
+      z.div,
       {
         "data-state": Z(t.value, t.max),
         "data-value": t.value ?? void 0,
@@ -234,22 +234,22 @@ function Ke(a, r) {
 function Z(a, r) {
   return a == null ? "indeterminate" : a === r ? "complete" : "loading";
 }
-function B(a) {
+function R(a) {
   return typeof a == "number";
 }
 function _(a) {
-  return B(a) && !isNaN(a) && a > 0;
+  return R(a) && !isNaN(a) && a > 0;
 }
 function j(a, r) {
-  return B(a) && !isNaN(a) && a <= r && a >= 0;
+  return R(a) && !isNaN(a) && a <= r && a >= 0;
 }
 function Ze(a, r) {
-  return `Invalid prop \`max\` of value \`${a}\` supplied to \`${r}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${E}\`.`;
+  return `Invalid prop \`max\` of value \`${a}\` supplied to \`${r}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${O}\`.`;
 }
 function Ae(a, r) {
   return `Invalid prop \`value\` of value \`${a}\` supplied to \`${r}\`. The \`value\` prop must be:
   - a positive number
-  - less than the value passed to \`max\` (or ${E} if no \`max\` prop is set)
+  - less than the value passed to \`max\` (or ${O} if no \`max\` prop is set)
   - \`null\` or \`undefined\` if the progress is indeterminate.
 
 Defaulting to \`null\`.`;
@@ -312,13 +312,13 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
     type: "info"
   },
   he
-), La = p(
+), Pa = p(
   {
     name: "LineChart",
     type: "info"
   },
   pe
-), Pa = p(
+), La = p(
   {
     name: "PieChart",
     type: "info"
@@ -329,7 +329,7 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
     name: "VerticalBarChart",
     type: "info"
   },
-  ve
+  ge
 ), Ma = p(
   {
     name: "ProgressBarChart",
@@ -341,13 +341,13 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
   sm: 2,
   md: 2,
   lg: 2
-}, la = D(function({ widgets: r, children: s }, l) {
-  const t = G(null);
-  We(l, () => t.current);
+}, la = B(function({ widgets: r, children: s }, l) {
+  const t = W(null);
+  He(l, () => t.current);
   const c = Ye.toArray(r).filter((n) => !!n).map((n, u) => /* @__PURE__ */ e("div", { className: "h-full @5xl:h-auto [&>div]:h-full", children: n }, u));
   return /* @__PURE__ */ e(q, { layout: "home", children: /* @__PURE__ */ d("div", { ref: t, className: "@container", children: [
     /* @__PURE__ */ d("div", { className: "flex flex-col gap-6 px-5 pt-4 @md:pt-2 @5xl:hidden", children: [
-      /* @__PURE__ */ e(ge, { columns: sa, showArrows: !1, children: c }),
+      /* @__PURE__ */ e(ve, { columns: sa, showArrows: !1, children: c }),
       /* @__PURE__ */ e("main", { children: s })
     ] }),
     /* @__PURE__ */ d("div", { className: "hidden grid-cols-3 gap-5 px-6 pb-6 pt-2 @5xl:grid", children: [
@@ -356,7 +356,7 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
       /* @__PURE__ */ e("div", { className: "flex flex-1 flex-col gap-5", children: c.slice(3) })
     ] })
   ] }) });
-}), ta = D(
+}), ta = B(
   function({ children: r, sideContent: s, mainColumnPosition: l = "left" }, t) {
     return /* @__PURE__ */ e("div", { ref: t, className: "h-full overflow-auto", children: /* @__PURE__ */ d(
       "div",
@@ -366,7 +366,7 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
           l === "right" ? "flex-col" : "flex-col-reverse"
         ),
         children: [
-          l === "right" && /* @__PURE__ */ e(z, { children: s }),
+          l === "right" && /* @__PURE__ */ e(V, { children: s }),
           /* @__PURE__ */ e(
             "main",
             {
@@ -377,19 +377,19 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
               children: r
             }
           ),
-          l === "left" && /* @__PURE__ */ e(z, { children: s })
+          l === "left" && /* @__PURE__ */ e(V, { children: s })
         ]
       }
     ) });
   }
-), z = ({ children: a }) => /* @__PURE__ */ e("aside", { className: "py-5 pl-2 pr-4 sm:basis-1/4 sm:pb-6", children: a }), oa = xe({
+), V = ({ children: a }) => /* @__PURE__ */ e("aside", { className: "py-5 pl-2 pr-4 sm:basis-1/4 sm:pb-6", children: a }), oa = xe({
   base: "relative flex min-h-full w-full flex-col gap-4 place-self-center overflow-y-auto px-6 py-5",
   variants: {
     variant: {
       narrow: "max-w-screen-lg"
     }
   }
-}), ae = Ue.forwardRef(({ children: a, variant: r, className: s, ...l }, t) => /* @__PURE__ */ e(q, { layout: "standard", children: /* @__PURE__ */ e(
+}), ae = Ge.forwardRef(({ children: a, variant: r, className: s, ...l }, t) => /* @__PURE__ */ e(q, { layout: "standard", children: /* @__PURE__ */ e(
   "section",
   {
     ref: t,
@@ -405,13 +405,13 @@ const ka = p(
     type: "layout"
   },
   ae
-), Ra = p(
+), Da = p(
   {
     name: "TwoColumnLayout",
     type: "layout"
   },
   ta
-), Ba = p(
+), Ra = p(
   {
     name: "HomeLayout",
     type: "layout"
@@ -420,7 +420,7 @@ const ka = p(
 ), na = ({ benefits: a }) => /* @__PURE__ */ e("div", { className: "flex flex-col gap-2", children: a.map((r, s) => /* @__PURE__ */ e(ia, { text: r }, s)) }), ia = ({ text: a }) => /* @__PURE__ */ d("div", { className: "flex flex-row items-start gap-2", children: [
   /* @__PURE__ */ e(be, { icon: ye, size: "md", className: "text-f1-icon-positive" }),
   /* @__PURE__ */ e("span", { children: a })
-] }), re = D(
+] }), re = B(
   ({ title: a, image: r, benefits: s, actions: l, withShadow: t = !0, icon: c, moduleName: n }, u) => /* @__PURE__ */ d(
     "div",
     {
@@ -442,7 +442,7 @@ const ka = p(
           /* @__PURE__ */ d("div", { className: "flex flex-col gap-5", children: [
             /* @__PURE__ */ d("div", { className: "flex flex-col gap-2", children: [
               /* @__PURE__ */ d("div", { className: "flex flex-row items-center gap-2", children: [
-                c && /* @__PURE__ */ e(H, { icon: c }),
+                c && /* @__PURE__ */ e(U, { icon: c }),
                 n && /* @__PURE__ */ e("p", { className: "text-base font-medium text-f1-foreground", children: n })
               ] }),
               /* @__PURE__ */ e("h2", { className: "font-bold text-xl text-f1-foreground", children: a })
@@ -463,7 +463,7 @@ function da({
   children: l,
   icon: t
 }) {
-  const [c, n] = g(a);
+  const [c, n] = v(a);
   return X(() => {
     n(a);
   }, [a]), /* @__PURE__ */ e(Ce, { open: c, onOpenChange: (o) => {
@@ -471,21 +471,21 @@ function da({
   }, modal: !0, children: /* @__PURE__ */ d(we, { className: "max-h-[620px] w-[760px] overflow-y-auto overflow-x-hidden bg-f1-background", children: [
     /* @__PURE__ */ d("div", { className: "flex flex-row items-center justify-between px-4 py-4", children: [
       /* @__PURE__ */ d(Ne, { className: "flex flex-row items-center gap-2 text-lg font-semibold text-f1-foreground", children: [
-        t && /* @__PURE__ */ e(H, { icon: t, size: "lg" }),
+        t && /* @__PURE__ */ e(U, { icon: t, size: "lg" }),
         s
       ] }),
       /* @__PURE__ */ e(
-        Le,
+        Pe,
         {
           variant: "outline",
-          icon: U,
+          icon: G,
           onClick: r,
           label: "Close modal",
           hideLabel: !0
         }
       )
     ] }),
-    /* @__PURE__ */ d(Pe, { className: "[*[data-state=visible]_div]:bg-f1-background flex max-h-[512px] flex-col", children: [
+    /* @__PURE__ */ d(Le, { className: "[*[data-state=visible]_div]:bg-f1-background flex max-h-[512px] flex-col", children: [
       l,
       /* @__PURE__ */ e(
         Se,
@@ -497,7 +497,7 @@ function da({
     ] })
   ] }) });
 }
-function Da({
+function Ba({
   isOpen: a,
   onClose: r,
   title: s,
@@ -507,14 +507,14 @@ function Da({
   successMessage: n,
   loadingState: u,
   nextSteps: o,
-  closeLabel: v,
+  closeLabel: g,
   primaryAction: f,
   modalTitle: w,
   modalIcon: N,
   secondaryAction: i,
-  portalContainer: L
+  portalContainer: P
 }) {
-  const [S, M] = g(a), [k, x] = g(null), [R, y] = g(!1), m = async () => {
+  const [S, M] = v(a), [k, x] = v(null), [D, y] = v(!1), m = async () => {
     if (f != null && f.onClick) {
       y(!0);
       try {
@@ -525,15 +525,15 @@ function Da({
         y(!1);
       }
     }
-  }, P = () => {
+  }, L = () => {
     M(!1), r == null || r();
-  }, T = R;
+  }, T = D;
   return /* @__PURE__ */ d($, { children: [
     /* @__PURE__ */ e(
       da,
       {
         isOpen: S,
-        onClose: P,
+        onClose: L,
         title: w,
         icon: N,
         children: /* @__PURE__ */ e("div", { className: "pb-4 pl-4", children: /* @__PURE__ */ e(
@@ -571,18 +571,18 @@ function Da({
       }
     ),
     k && /* @__PURE__ */ e(
-      W,
+      H,
       {
         open: !0,
         onClose: () => {
-          P(), x(null);
+          L(), x(null);
         },
         success: k === "success",
         errorMessage: c,
         successMessage: n,
         nextSteps: o,
-        closeLabel: v,
-        portalContainer: L
+        closeLabel: g,
+        portalContainer: P
       }
     )
   ] });
@@ -598,20 +598,20 @@ function ca({
   actions: u,
   showConfirmation: o = !0
 }) {
-  const [v, f] = g(!1), w = () => {
+  const [g, f] = v(!1), w = () => {
     f(!0), l && l();
   };
   X(() => {
-    n && n(!v);
-  }, [n, v]);
+    n && n(!g);
+  }, [n, g]);
   const N = a == null ? void 0 : a.includes(".mp4");
-  return /* @__PURE__ */ e($, { children: v ? null : /* @__PURE__ */ d(Me, { style: { width: c }, className: "relative bg-f1-background p-1", children: [
+  return /* @__PURE__ */ e($, { children: g ? null : /* @__PURE__ */ d(Me, { style: { width: c }, className: "relative bg-f1-background p-1", children: [
     /* @__PURE__ */ d(ke, { children: [
       t && /* @__PURE__ */ e("div", { className: "absolute right-2 top-2 z-10", children: /* @__PURE__ */ e(
         C,
         {
           variant: "ghost",
-          icon: U,
+          icon: G,
           size: "sm",
           hideLabel: !0,
           onClick: w,
@@ -638,12 +638,12 @@ function ca({
           }
         )) }),
         /* @__PURE__ */ d("div", { className: "flex flex-col gap-[2px] p-3", children: [
-          /* @__PURE__ */ e(O, { className: "text-lg font-medium", children: r }),
-          /* @__PURE__ */ e(O, { className: "line-clamp-3 text-base font-normal text-f1-foreground-secondary", children: s })
+          /* @__PURE__ */ e(E, { className: "text-lg font-medium", children: r }),
+          /* @__PURE__ */ e(E, { className: "line-clamp-3 text-base font-normal text-f1-foreground-secondary", children: s })
         ] })
       ] })
     ] }),
-    u && /* @__PURE__ */ e(Re, { className: "p-3", children: u.map(
+    u && /* @__PURE__ */ e(De, { className: "p-3", children: u.map(
       (i) => i.type === "upsell" ? /* @__PURE__ */ e(
         Y,
         {
@@ -670,7 +670,7 @@ function ca({
     ) })
   ] }) });
 }
-const ua = D(
+const ua = B(
   function({ primaryAction: r, secondaryAction: s, ...l }, t) {
     const c = (o) => o.variant === "promote" ? /* @__PURE__ */ e(
       Y,
@@ -698,7 +698,7 @@ const ua = D(
       }
     ), n = (r == null ? void 0 : r.variant) !== "promote" ? r : void 0, u = (s == null ? void 0 : s.variant) !== "promote" ? s : void 0;
     return /* @__PURE__ */ d(
-      Be,
+      Re,
       {
         ref: t,
         ...l,
@@ -723,20 +723,20 @@ function Ta({
   side: n = "right",
   align: u = "center",
   icon: o = $e,
-  mediaUrl: v,
+  mediaUrl: g,
   title: f,
   description: w,
   width: N = "300px",
   trackVisibility: i,
-  actions: L,
+  actions: P,
   onClick: S,
   hideLabel: M = !1
 }) {
-  const [k, x] = g(!1), [R, y] = g(null), [m, P] = g(null), T = (h) => {
+  const [k, x] = v(!1), [D, y] = v(null), [m, L] = v(null), T = (h) => {
     r(h), S && S();
   }, se = async (h) => {
     if (h.type === "upsell") {
-      P(h);
+      L(h);
       try {
         await h.onClick(), h.showConfirmation && (x(!0), y("success"));
       } catch {
@@ -744,13 +744,13 @@ function Ta({
       }
     }
   }, le = () => {
-    y(null), x(!1), P(null), r(!1);
-  }, te = a && !k, oe = L == null ? void 0 : L.map((h) => h.type === "upsell" ? {
+    y(null), x(!1), L(null), r(!1);
+  }, te = a && !k, oe = P == null ? void 0 : P.map((h) => h.type === "upsell" ? {
     ...h,
     onClick: () => se(h)
   } : h);
   return /* @__PURE__ */ d($, { children: [
-    /* @__PURE__ */ d(De, { open: te, onOpenChange: T, children: [
+    /* @__PURE__ */ d(Be, { open: te, onOpenChange: T, children: [
       /* @__PURE__ */ e(Te, { asChild: !0, children: /* @__PURE__ */ e(
         C,
         {
@@ -771,7 +771,7 @@ function Ta({
           children: /* @__PURE__ */ e(
             ca,
             {
-              mediaUrl: v,
+              mediaUrl: g,
               title: f,
               description: w,
               onClose: () => r(!1),
@@ -785,12 +785,12 @@ function Ta({
         }
       )
     ] }),
-    (m == null ? void 0 : m.type) === "upsell" && m.showConfirmation && R && /* @__PURE__ */ e(
-      W,
+    (m == null ? void 0 : m.type) === "upsell" && m.showConfirmation && D && /* @__PURE__ */ e(
+      H,
       {
         open: !0,
         onClose: le,
-        success: R === "success",
+        success: D === "success",
         errorMessage: m.errorMessage,
         successMessage: m.successMessage,
         nextSteps: m.nextSteps,
@@ -800,11 +800,11 @@ function Ta({
     )
   ] });
 }
-const fa = Ge(
+const fa = We(
   null
 ), ha = ({ children: a, fullScreen: r = !0 }) => {
-  const s = G(null), [l, t] = g(s.current);
-  return He(() => {
+  const s = W(null), [l, t] = v(s.current);
+  return Ue(() => {
     t(s.current);
   }, []), /* @__PURE__ */ e(fa.Provider, { value: { element: l }, children: /* @__PURE__ */ e(
     "div",
@@ -834,49 +834,59 @@ const fa = Ge(
   {
     isDev: u,
     showExperimentalWarnings: o,
-    children: /* @__PURE__ */ e(Ee, { ...n, children: /* @__PURE__ */ e(Oe, { ...c, children: /* @__PURE__ */ e(_e, { ...s, children: /* @__PURE__ */ e(ha, { ...r, children: /* @__PURE__ */ e(je, { children: /* @__PURE__ */ e(
-      ze,
+    children: /* @__PURE__ */ e(Oe, { ...n, children: /* @__PURE__ */ e(Ee, { ...c, children: /* @__PURE__ */ e(_e, { ...s, children: /* @__PURE__ */ e(ha, { ...r, children: /* @__PURE__ */ e(je, { children: /* @__PURE__ */ e(
+      Ve,
       {
         initiallyEnabled: l,
-        children: /* @__PURE__ */ e(Ve, { ...t, children: a })
+        children: /* @__PURE__ */ e(ze, { ...t, children: a })
       }
     ) }) }) }) }) })
   }
 ) });
 export {
   Ca as AreaChart,
-  Ea as Await,
+  Oa as Await,
   wa as BarChart,
   C as Button,
   Na as CategoryBarChart,
-  Oa as CopyButton,
+  Ea as CopyButton,
   _a as EmojiImage,
   $a as FactorialOneProvider,
-  Ba as HomeLayout,
-  ja as Icon,
-  La as LineChart,
+  ja as GROUP_ID_SYMBOL,
+  Ra as HomeLayout,
+  Va as Icon,
+  Pa as LineChart,
   ba as Link,
   za as OneFilterPicker,
-  Pa as PieChart,
-  ze as PrivacyModeProvider,
+  La as PieChart,
+  Ve as PrivacyModeProvider,
   re as ProductBlankslate,
-  Va as ProductCard,
-  Da as ProductModal,
+  qa as ProductCard,
+  Ba as ProductModal,
   ca as ProductWidget,
   Ma as ProgressBarChart,
   ka as StandardLayout,
-  Ra as TwoColumnLayout,
-  W as UpsellRequestResponseDialog,
+  Da as TwoColumnLayout,
+  H as UpsellRequestResponseDialog,
   ua as UpsellingBanner,
   Y as UpsellingButton,
   Ta as UpsellingPopover,
   Sa as VerticalBarChart,
-  qa as buildTranslations,
+  Ua as buildTranslations,
+  Ga as createDataSourceDefinition,
   xa as defaultTranslations,
   Ha as experimental,
-  Ua as getEmojiLabel,
-  Wa as useEmojiConfetti,
-  Ya as usePrivacyMode,
-  Ga as useReducedMotion,
-  Xa as useXRay
+  Ya as getAnimationVariants,
+  Wa as getDataSourcePaginationType,
+  Xa as getEmojiLabel,
+  Ja as isInfiniteScrollPagination,
+  Qa as isPageBasedPagination,
+  Ka as useData,
+  Za as useDataSource,
+  Aa as useEmojiConfetti,
+  er as useGroups,
+  ar as usePrivacyMode,
+  rr as useReducedMotion,
+  sr as useSelectable,
+  lr as useXRay
 };
