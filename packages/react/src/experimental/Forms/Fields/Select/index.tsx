@@ -49,7 +49,7 @@ export * from "./types"
  * @template R - The type of the record/item data (used with data source)
  *
  */
-export type SelectProps<T extends string, R = unknown> = {
+export type SelectProps<T extends string, R extends RecordType = RecordType> = {
   onChange: (
     value: T,
     originalItem?: R,
@@ -72,10 +72,10 @@ export type SelectProps<T extends string, R = unknown> = {
 } & (
   | {
       source: DataSourceDefinition<
-        R extends RecordType ? R : RecordType,
+        R,
         FiltersDefinition,
         SortingsDefinition,
-        GroupingDefinition<R extends RecordType ? R : RecordType>
+        GroupingDefinition<R>
       >
       mapOptions: (item: R) => SelectItemProps<T, R>
       options?: never
@@ -150,7 +150,7 @@ const SelectValue = forwardRef<
 
 const SelectComponent = forwardRef(function Select<
   T extends string,
-  R = unknown,
+  R extends RecordType = RecordType,
 >(
   {
     placeholder,
@@ -205,15 +205,12 @@ const SelectComponent = forwardRef(function Select<
     return {
       ...source,
       dataAdapter: source
-        ? (source.dataAdapter as PaginatedDataAdapter<
-            R extends RecordType ? R : RecordType,
-            FiltersDefinition
-          >)
+        ? (source.dataAdapter as PaginatedDataAdapter<R, FiltersDefinition>)
         : {
             fetchData: ({
               search,
             }: BaseFetchOptions<FiltersDefinition>): PromiseOrObservable<
-              BaseResponse<R extends RecordType ? R : RecordType>
+              BaseResponse<R>
             > => {
               return {
                 records: options.filter(
@@ -221,7 +218,7 @@ const SelectComponent = forwardRef(function Select<
                     option.type === "separator" ||
                     !search ||
                     option.label.toLowerCase().includes(search.toLowerCase())
-                ) as unknown as (R extends RecordType ? R : RecordType)[],
+                ) as unknown as R[],
               }
             },
           },
@@ -245,7 +242,7 @@ const SelectComponent = forwardRef(function Select<
    * Maps an item to a SelectItemProps<T, R>
    */
   const optionMapper = useCallback(
-    <R extends RecordType>(item: R): SelectItemProps<T, R> => {
+    (item: R): SelectItemProps<T, R> => {
       if (source) {
         if (!mapOptions) {
           throw new Error("mapOptions is required when using a source")
@@ -346,7 +343,7 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const getItems = useCallback(
-    (records: WithGroupId<R>[]): VirtualItem[] => {
+    (records: WithGroupId<R>[] | R[]): VirtualItem[] => {
       return records.map((option, index) => {
         const mappedOption = optionMapper(option)
         return mappedOption.type === "separator"
@@ -495,7 +492,7 @@ const SelectComponent = forwardRef(function Select<
 
 export const Select = SelectComponent as <
   T extends string = string,
-  R = unknown,
+  R extends RecordType = RecordType,
 >(
   props: SelectProps<T, R> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.ReactElement

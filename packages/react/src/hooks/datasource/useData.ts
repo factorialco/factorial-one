@@ -109,7 +109,7 @@ export type GroupRecord<RecordType> = {
 }
 
 export type Data<R extends RecordType> = {
-  records: R[]
+  records: WithGroupId<R>[]
   type: "grouped" | "flat"
   groups: GroupRecord<R>[]
 }
