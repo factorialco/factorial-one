@@ -40,7 +40,7 @@ export function useSelectable<
   paginationInfo: PaginationInfo | null,
   source: DataSourceDefinition<R, Filters, Sortings, Grouping>,
   onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
-  defaultSelectedItems: SelectedItemsState | undefined
+  defaultSelectedItems?: SelectedItemsState | undefined
 ): UseSelectable<R> {
   const isGrouped = data.type === "grouped"
   const isPaginated = paginationInfo !== null

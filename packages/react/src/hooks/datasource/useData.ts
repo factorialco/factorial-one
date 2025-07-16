@@ -82,7 +82,7 @@ export type WithGroupId<RecordType> = RecordType & {
 /**
  * Hook return type for useData
  */
-interface UseDataReturn<R> {
+interface UseDataReturn<R extends RecordType> {
   data: Data<R>
   isInitialLoading: boolean
   isLoading: boolean
@@ -108,10 +108,10 @@ export type GroupRecord<RecordType> = {
   records: RecordType[]
 }
 
-export type Data<RecordType> = {
-  records: WithGroupId<RecordType>[]
+export type Data<R extends RecordType> = {
+  records: WithGroupId<R>[]
   type: "grouped" | "flat"
-  groups: GroupRecord<WithGroupId<RecordType>>[]
+  groups: GroupRecord<WithGroupId<R>>[]
 }
 
 /**
@@ -223,9 +223,9 @@ const defaultIdProvider = (
  */
 export function useData<
   R extends RecordType,
-  Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Grouping extends GroupingDefinition<R>,
+  Filters extends FiltersDefinition = FiltersDefinition,
+  Sortings extends SortingsDefinition = SortingsDefinition,
+  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 >(
   source: DataSource<R, Filters, Sortings, Grouping>,
   {

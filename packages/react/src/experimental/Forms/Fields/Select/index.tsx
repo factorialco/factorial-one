@@ -50,7 +50,11 @@ export * from "./types"
  *
  */
 export type SelectProps<T extends string, R = unknown> = {
-  onChange: (value: T, origialItem?: R, option?: SelectItemObject<T, R>) => void
+  onChange: (
+    value: T,
+    originalItem?: R,
+    option?: SelectItemObject<T, R>
+  ) => void
   onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
@@ -73,9 +77,7 @@ export type SelectProps<T extends string, R = unknown> = {
         SortingsDefinition,
         GroupingDefinition<R extends RecordType ? R : RecordType>
       >
-      mapOptions: (
-        item: R extends RecordType ? R : RecordType
-      ) => SelectItemProps<T, R>
+      mapOptions: (item: R) => SelectItemProps<T, R>
       options?: never
     }
   | {
@@ -148,7 +150,7 @@ const SelectValue = forwardRef<
 
 const SelectComponent = forwardRef(function Select<
   T extends string,
-  R extends RecordType,
+  R = unknown,
 >(
   {
     placeholder,
@@ -203,10 +205,7 @@ const SelectComponent = forwardRef(function Select<
     return {
       ...source,
       dataAdapter: source
-        ? (source.dataAdapter as PaginatedDataAdapter<
-            R extends RecordType ? R : RecordType,
-            FiltersDefinition
-          >)
+        ? (source.dataAdapter as PaginatedDataAdapter<R, FiltersDefinition>)
         : {
             fetchData: ({
               search,
@@ -239,8 +238,11 @@ const SelectComponent = forwardRef(function Select<
     [options]
   )
 
+  /**
+   * Maps an item to a SelectItemProps<T, R>
+   */
   const optionMapper = useCallback(
-    (item: R extends RecordType ? R : RecordType): SelectItemProps<T, R> => {
+    <R extends RecordType>(item: R): SelectItemProps<T, R> => {
       if (source) {
         if (!mapOptions) {
           throw new Error("mapOptions is required when using a source")
@@ -254,7 +256,7 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const { data, isInitialLoading, loadMore, isLoadingMore } =
-    useData(localSource)
+    useData<R>(localSource)
 
   const { currentSearch, setCurrentSearch } = localSource
 
@@ -273,9 +275,7 @@ const SelectComponent = forwardRef(function Select<
         return undefined
       }
       for (const option of data.records) {
-        const mappedOption = optionMapper(
-          option as R extends RecordType ? R : RecordType
-        )
+        const mappedOption = optionMapper(option)
         if (
           mappedOption.type !== "separator" &&
           String(mappedOption.value) === value
@@ -343,20 +343,16 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const getItems = useCallback(
-    (
-      records: WithGroupId<R extends RecordType ? R : RecordType>[]
-    ): VirtualItem[] => {
+    (records: WithGroupId<R>[]): VirtualItem[] => {
       return records.map((option, index) => {
-        const mappedOption = optionMapper(
-          option as R extends RecordType ? R : RecordType
-        )
+        const mappedOption = optionMapper(option)
         return mappedOption.type === "separator"
           ? {
               height: 1,
               item: <SelectSeparator key={`separator-${index}`} />,
             }
           : {
-              height: option.description ? 64 : 32,
+              height: mappedOption.description ? 64 : 32,
               item: (
                 <SelectItem
                   key={String(mappedOption.value)}

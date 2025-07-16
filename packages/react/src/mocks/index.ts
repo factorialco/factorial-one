@@ -193,3 +193,47 @@ export const EDUCATION_MOCK = ["Ph.D.", "Master's", "Bachelor's", "Associate's"]
 export const getMockValue = <T>(mock: readonly T[], index: number): T => {
   return mock[index % mock.length]
 }
+
+export type MockUser = {
+  index: number
+  id: string
+  name: string
+  email: string
+  role: string
+  department: (typeof DEPARTMENTS_MOCK)[number]
+  status: string
+  isStarred: boolean
+  salary: number | undefined
+  joinedAt: Date
+  permissions: {
+    read?: boolean
+    write?: boolean
+    delete: boolean
+  }
+}
+
+export const generateMockUsers = (count: number): MockUser[] => {
+  return Array.from({ length: count }).map((_, index) => {
+    const department = getMockValue(DEPARTMENTS_MOCK, index)
+    const name = `${getMockValue(FIRST_NAMES_MOCK, index)} ${getMockValue(SURNAMES_MOCK, index)}`
+    const email = `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`
+    return {
+      index,
+      id: `user-${index + 1}`,
+      name,
+      email,
+      role: getMockValue(ROLES_MOCK, index),
+      department,
+      status: getMockValue(STATUS_MOCK, index),
+      isStarred: index % 3 === 0,
+      href: `/users/user-${index + 1}`,
+      salary: getMockValue(SALARY_MOCK, index),
+      joinedAt: getMockValue(START_DATE_MOCK, index),
+      permissions: {
+        read: index % 2 === 0,
+        write: index % 3 === 0,
+        delete: index % 4 === 0,
+      },
+    }
+  })
+}
