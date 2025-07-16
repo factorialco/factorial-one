@@ -1,8 +1,11 @@
-import { CopilotKit } from "@copilotkit/react-core"
+import { CopilotPopup } from "@copilotkit/react-ui"
 import type { ComponentProps } from "react"
 
-export type AiChatProps = ComponentProps<typeof CopilotKit>
+export type AiChatProps = Pick<
+  ComponentProps<typeof CopilotPopup>,
+  "className" | "children"
+>
 
 export const AiChat = (props: AiChatProps) => {
-  return <CopilotKit {...props} />
+  return <CopilotPopup {...props} />
 }
