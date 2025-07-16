@@ -205,6 +205,7 @@ export type MockUser = {
   isStarred: boolean
   salary: number | undefined
   joinedAt: Date
+  canBeSelected: boolean
   permissions: {
     read?: boolean
     write?: boolean
@@ -229,6 +230,7 @@ export const generateMockUsers = (count: number): MockUser[] => {
       href: `/users/user-${index + 1}`,
       salary: getMockValue(SALARY_MOCK, index),
       joinedAt: getMockValue(START_DATE_MOCK, index),
+      canBeSelected: index < 1,
       permissions: {
         read: index % 2 === 0,
         write: index % 3 === 0,

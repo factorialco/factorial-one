@@ -109,17 +109,17 @@ export type GroupRecord<RecordType> = {
 }
 
 export type Data<R extends RecordType> = {
-  records: WithGroupId<R>[]
+  records: R[]
   type: "grouped" | "flat"
-  groups: GroupRecord<WithGroupId<R>>[]
+  groups: GroupRecord<R>[]
 }
 
 /**
  * Custom hook for handling data fetching state
  */
-function useDataFetchState<Record>() {
+function useDataFetchState<R extends RecordType>() {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [data, setData] = useState<Record[]>([])
+  const [data, setData] = useState<R[]>([])
   const [error, setError] = useState<DataError | null>(null)
 
   return {
@@ -222,7 +222,7 @@ const defaultIdProvider = (
  * - setPage: Function to navigate to a specific page
  */
 export function useData<
-  R extends RecordType,
+  R extends RecordType = RecordType,
   Filters extends FiltersDefinition = FiltersDefinition,
   Sortings extends SortingsDefinition = SortingsDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,

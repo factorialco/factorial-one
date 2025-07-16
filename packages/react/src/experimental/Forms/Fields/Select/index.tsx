@@ -205,7 +205,10 @@ const SelectComponent = forwardRef(function Select<
     return {
       ...source,
       dataAdapter: source
-        ? (source.dataAdapter as PaginatedDataAdapter<R, FiltersDefinition>)
+        ? (source.dataAdapter as PaginatedDataAdapter<
+            R extends RecordType ? R : RecordType,
+            FiltersDefinition
+          >)
         : {
             fetchData: ({
               search,

@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { useCallback } from "react"
 import {
+  createDataSourceDefinition,
   PaginatedDataAdapter,
   useData,
   useDataSource,
@@ -95,10 +96,12 @@ const createMockDataAdapter = () =>
 
 // Basic example
 const BasicExample = () => {
-  const dataSource = useDataSource({
+  const datasourceDefinition = createDataSourceDefinition({
     filters: userFilters,
     dataAdapter: createMockDataAdapter(),
   })
+
+  const dataSource = useDataSource(datasourceDefinition)
 
   const { data, isLoading, error } = useData(dataSource)
 
@@ -162,7 +165,7 @@ const GroupedExample = () => {
       groupBy: {
         department: {
           name: "Department",
-          label: (user) => user.department,
+          label: (groupId) => groupId,
         },
       },
     },
@@ -287,7 +290,7 @@ const GroupedExample = () => {
 const SelectableExample = () => {
   const dataSource = useDataSource<MockUser, typeof userFilters>({
     filters: userFilters,
-    selectable: (user) => (user.index > 1 ? user.id : undefined),
+    selectable: (user) => (user.canBeSelected ? user.id : undefined),
     dataAdapter: createMockDataAdapter(),
   })
 
@@ -434,14 +437,14 @@ const SelectableExample = () => {
 
 // Complete example with all hooks
 const CompleteExample = () => {
-  const dataSource = useDataSource<MockUser, typeof userFilters>({
+  const dataSource = useDataSource({
     filters: userFilters,
-    selectable: (user) => (user.index > 1 ? user.id : undefined),
+    selectable: (user) => (user.canBeSelected ? user.id : undefined),
     grouping: {
       groupBy: {
         department: {
           name: "Department",
-          label: (user) => user.department,
+          label: (groupId) => groupId,
         },
       },
     },
