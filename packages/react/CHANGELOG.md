@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.127.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.3...factorial-one-react-v1.127.0) (2025-07-16)
+
+
+### Features
+
+* **PageHeader:** add pressed state to product updates and actions dropdown ([#2260](https://github.com/factorialco/factorial-one/issues/2260)) ([b22a0a7](https://github.com/factorialco/factorial-one/commit/b22a0a7a61f1ec73d214949173a6f5630cc31c75))
+
 ## [1.126.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.2...factorial-one-react-v1.126.3) (2025-07-15)
 
 
