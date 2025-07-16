@@ -11,7 +11,7 @@ import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
-import { ReactElement, useRef } from "react"
+import { ReactElement, useRef, useState } from "react"
 
 import { Breadcrumbs, BreadcrumbsProps } from "../Breadcrumbs"
 import { FavoriteButton } from "../Favorites"
@@ -265,16 +265,23 @@ export function PageHeader({
         {navigation && hasActions && (
           <div className="h-4 w-px bg-f1-border-secondary" />
         )}
-        {hasProductUpdates && (
-          <div className="items-right flex gap-2">
-            <ProductUpdates {...productUpdates} currentModule={module.name} />
-          </div>
-        )}
-        {hasActions && (
-          <div className="items-right flex gap-2">
-            {actions.map((action, index) => (
-              <PageAction key={index} action={action} />
-            ))}
+        {(hasProductUpdates || hasActions) && (
+          <div className="flex items-center gap-2">
+            {hasProductUpdates && (
+              <div className="items-right flex gap-2">
+                <ProductUpdates
+                  {...productUpdates}
+                  currentModule={module.name}
+                />
+              </div>
+            )}
+            {hasActions && (
+              <div className="items-right flex gap-2">
+                {actions.map((action, index) => (
+                  <PageAction key={index} action={action} />
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -284,16 +291,18 @@ export function PageHeader({
 
 function PageAction({ action }: { action: PageAction }): ReactElement {
   const ref = useRef<HTMLAnchorElement>(null)
+  const [isOpen, setIsOpen] = useState(false)
 
   if ("actions" in action) {
     return (
-      <Dropdown items={action.actions}>
+      <Dropdown items={action.actions} open={isOpen} onOpenChange={setIsOpen}>
         <Button
           size="md"
           variant="outline"
           label={action.label}
           icon={action.icon}
           hideLabel
+          pressed={isOpen}
         />
       </Dropdown>
     )
