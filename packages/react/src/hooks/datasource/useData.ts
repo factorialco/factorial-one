@@ -277,10 +277,9 @@ export function useData<
 
   const isLoadingMoreRef = useRef(false)
 
-  const mergedFilters = useMemo(
-    () => ({ ...currentFilters, ...filters }),
-    [currentFilters, filters]
-  )
+  const mergedFilters = useMemo(() => {
+    return { ...currentFilters, ...filters }
+  }, [currentFilters, filters])
 
   const deferredSearch = useDeferredValue(currentSearch)
 

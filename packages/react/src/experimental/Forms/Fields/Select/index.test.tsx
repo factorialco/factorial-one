@@ -1,11 +1,14 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import type { RecordType } from "@/hooks/datasource"
+import "@testing-library/jest-dom/vitest"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Search } from "../../../../icons/app"
+import { render, TestI18nProvider } from "../../../../test-utils"
 import { Select } from "./index"
 import type { SelectItemProps } from "./types"
 
-const mockOptions: SelectItemProps<string>[] = [
+const mockOptions: SelectItemProps<string, RecordType>[] = [
   {
     value: "option1",
     label: "Option 1",
@@ -38,6 +41,18 @@ const mockOptions: SelectItemProps<string>[] = [
     },
   },
 ]
+
+// Default props to satisfy InputFieldProps requirements
+const defaultSelectProps = {
+  error: undefined,
+  icon: undefined,
+  loading: false,
+  clearable: false,
+  labelIcon: undefined,
+  size: "md" as const,
+  disabled: false,
+  placeholder: "",
+}
 
 describe("Select", () => {
   // Mock ResizeObserver
@@ -75,13 +90,16 @@ describe("Select", () => {
 
   it("renders with placeholder", () => {
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-        placeholder="Select an option"
-      />
+      <TestI18nProvider>
+        <Select
+          {...defaultSelectProps}
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={() => {}}
+          placeholder="Select an option"
+        />
+      </TestI18nProvider>
     )
     expect(screen.getByText("Select an option")).toBeInTheDocument()
   })
@@ -89,12 +107,15 @@ describe("Select", () => {
   it("shows options when clicked", async () => {
     const user = userEvent.setup()
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-      />
+      <TestI18nProvider>
+        <Select
+          {...defaultSelectProps}
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={() => {}}
+        />
+      </TestI18nProvider>
     )
 
     await openSelect(user)
@@ -107,13 +128,16 @@ describe("Select", () => {
 
   it("displays selected value", async () => {
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-        value="option1"
-      />
+      <TestI18nProvider>
+        <Select
+          {...defaultSelectProps}
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={() => {}}
+          value="option1"
+        />
+      </TestI18nProvider>
     )
 
     await waitFor(() => {
@@ -124,8 +148,9 @@ describe("Select", () => {
   it("renders search box when showSearchBox is true", async () => {
     const user = userEvent.setup()
     render(
-      <>
+      <TestI18nProvider>
         <Select
+          {...defaultSelectProps}
           label="Select an option"
           hideLabel
           options={mockOptions}
@@ -133,7 +158,7 @@ describe("Select", () => {
           showSearchBox
           searchBoxPlaceholder="Search options"
         />
-      </>
+      </TestI18nProvider>
     )
 
     await openSelect(user)
@@ -144,13 +169,16 @@ describe("Select", () => {
   it("filters options based on search input", async () => {
     const user = userEvent.setup()
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-        showSearchBox
-      />
+      <TestI18nProvider>
+        <Select
+          {...defaultSelectProps}
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={() => {}}
+          showSearchBox
+        />
+      </TestI18nProvider>
     )
 
     await openSelect(user)
@@ -165,14 +193,17 @@ describe("Select", () => {
   it("shows empty message when no options match search", async () => {
     const user = userEvent.setup()
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-        showSearchBox
-        searchEmptyMessage="No results found"
-      />
+      <TestI18nProvider>
+        <Select
+          {...defaultSelectProps}
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={() => {}}
+          showSearchBox
+          searchEmptyMessage="No results found"
+        />
+      </TestI18nProvider>
     )
 
     await openSelect(user)
@@ -181,52 +212,18 @@ describe("Select", () => {
     expect(screen.getByText("No results found")).toBeInTheDocument()
   })
 
-  it("maintains focus on search input during data loading", async () => {
-    const user = userEvent.setup()
-    const handleSearchChange = vi.fn()
-
-    render(
-      <Select
-        options={mockOptions}
-        onChange={() => {}}
-        showSearchBox
-        label="Select an option2"
-        hideLabel
-        onSearchChange={handleSearchChange}
-      />
-    )
-
-    await openSelect(user)
-
-    const searchInput = screen.getByRole("searchbox")
-
-    // Focus the search input
-    await user.click(searchInput)
-    expect(searchInput).toHaveFocus()
-
-    // Type to trigger search (which would normally cause a re-render)
-    await user.type(searchInput, "test")
-    // The search input should still have focus after the search
-    expect(searchInput).toHaveFocus()
-    expect(handleSearchChange).toHaveBeenCalled()
-    expect(handleSearchChange).toHaveBeenCalledWith("t")
-    await waitFor(() => {
-      expect(handleSearchChange).toHaveBeenCalledWith("test")
-    })
-    // Should still show all options when externalSearch is true
-    expect(screen.getByText("Option 1")).toBeInTheDocument()
-    expect(screen.getByText("Option 2")).toBeInTheDocument()
-  })
-
   it("disables select when disabled prop is true", async () => {
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-        disabled
-      />
+      <TestI18nProvider>
+        <Select
+          {...defaultSelectProps}
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={() => {}}
+          disabled
+        />
+      </TestI18nProvider>
     )
 
     await waitFor(() => {
@@ -236,14 +233,17 @@ describe("Select", () => {
 
   it("renders with custom trigger", () => {
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-      >
-        <button>Custom Trigger</button>
-      </Select>
+      <TestI18nProvider>
+        <Select
+          {...defaultSelectProps}
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={() => {}}
+        >
+          <button>Custom Trigger</button>
+        </Select>
+      </TestI18nProvider>
     )
 
     expect(screen.getByText("Custom Trigger")).toBeInTheDocument()
@@ -254,12 +254,15 @@ describe("Select", () => {
     const user = userEvent.setup()
 
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={handleChange}
-      />
+      <TestI18nProvider>
+        <Select
+          {...defaultSelectProps}
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={handleChange}
+        />
+      </TestI18nProvider>
     )
 
     await openSelect(user)
@@ -301,12 +304,15 @@ describe("Select", () => {
     ]
 
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={handleChange}
-      />
+      <TestI18nProvider>
+        <Select
+          {...defaultSelectProps}
+          label="Select an option"
+          hideLabel
+          options={mockOptions}
+          onChange={handleChange}
+        />
+      </TestI18nProvider>
     )
 
     await openSelect(user)

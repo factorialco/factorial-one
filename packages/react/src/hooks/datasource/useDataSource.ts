@@ -100,9 +100,16 @@ export function useDataSource<
   }: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<R, FiltersSchema, Sortings, Grouping> {
-  const [currentFilters, setCurrentFilters] = useState<
+  const [currentFilters, _setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
+
+  const setCurrentFilters = (x: FiltersState<FiltersSchema>) => {
+    if (JSON.stringify(x) === JSON.stringify(currentFilters)) {
+      return
+    }
+    _setCurrentFilters(x)
+  }
 
   const [currentSortings, setCurrentSortings] =
     useState<SortingsState<Sortings> | null>(defaultSorting || null)

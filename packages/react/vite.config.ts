@@ -113,5 +113,8 @@ export default defineConfig({
     alias: {
       ...alias,
     },
+    typecheck: {
+      tsconfig: "./tsconfig.test.json",
+    },
   },
 })
