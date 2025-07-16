@@ -34,7 +34,7 @@ type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   externalSearch?: boolean
   onChange: BreadcrumbSelectProps<string>["onChange"]
   value?: string
-  defaultItem?: SelectItemObject<string>
+  defaultItem?: SelectItemObject<string, RecordType>
 } & (
     | {
         source: DataSourceDefinition<
@@ -49,7 +49,7 @@ type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     | {
         source?: never
         mapOptions?: never
-        options: SelectItemProps<string>[]
+        options: SelectItemProps<string, RecordType>[]
       }
   )
 

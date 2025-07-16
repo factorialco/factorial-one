@@ -19,7 +19,7 @@ const meta: Meta<typeof BreadcrumbSelect> = {
 
 export default meta
 
-type Story = StoryObj<typeof BreadcrumbSelect<string, unknown>>
+type Story = StoryObj<typeof BreadcrumbSelect<string>>
 
 export const Default: Story = {
   args: {

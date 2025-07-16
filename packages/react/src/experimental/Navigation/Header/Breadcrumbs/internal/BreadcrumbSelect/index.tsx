@@ -1,3 +1,4 @@
+import { RecordType } from "@/hooks/datasource"
 import { motion } from "motion/react"
 import { useState } from "react"
 import { Icon } from "../../../../../../components/Utilities/Icon"
@@ -8,14 +9,15 @@ import {
   SelectProps,
 } from "../../../../../Forms/Fields/Select"
 
-export type BreadcrumbSelectProps<T extends string, R = unknown> = SelectProps<
-  T,
-  R
->
+export type BreadcrumbSelectProps<
+  T extends string,
+  R extends RecordType = RecordType,
+> = SelectProps<T, R>
 
-export function BreadcrumbSelect<T extends string, R = unknown>({
-  ...props
-}: BreadcrumbSelectProps<T, R>) {
+export function BreadcrumbSelect<
+  T extends string,
+  R extends RecordType = RecordType,
+>({ ...props }: BreadcrumbSelectProps<T, R>) {
   const [localOpen, setLocalOpen] = useState(props.open)
 
   const onOpenChangeLocal = (open: boolean) => {
