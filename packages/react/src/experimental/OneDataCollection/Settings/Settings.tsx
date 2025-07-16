@@ -7,6 +7,7 @@ import {
   SortingsState,
 } from "@/hooks/datasource"
 import { Sliders } from "@/icons/app"
+import { GroupingSelector } from "@/ui/GroupingSelector"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
 import { FiltersDefinition } from "../../../components/OneFilterPicker/types"
@@ -14,7 +15,6 @@ import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import { SummariesDefinition } from "../summary"
 import { Visualization } from "../visualizations/collection"
-import { GroupingSelector } from "./components/GroupingSelector"
 import { SortingSelector } from "./components/SortingSelector"
 import { VisualizationSelector } from "./components/VisualizationSelector"
 
@@ -136,6 +136,7 @@ export const Settings = <
                   grouping={grouping}
                   currentGrouping={currentGrouping}
                   onGroupingChange={handleGroupingChange}
+                  className="px-3 py-3"
                 />
               ),
               hasSortings && (
@@ -144,6 +145,7 @@ export const Settings = <
                   currentSortings={currentSortings}
                   onChange={onSortingsChange}
                   sortings={sortings}
+                  className="px-3 py-3"
                 />
               ),
             ]
