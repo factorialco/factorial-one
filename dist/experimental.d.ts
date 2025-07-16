@@ -16,6 +16,7 @@ import { CompanyCellValue } from './types/company.tsx';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
+import { CopilotKit } from '@copilotkit/react-core';
 import { CopilotPopup } from '@copilotkit/react-ui';
 import { DateCellValue } from './types/date.tsx';
 import { DateFilterOptions } from './DateFilter/DateFilter';
@@ -202,7 +203,11 @@ declare type AIButton = {
 
 export declare const AiChat: (props: AiChatProps) => JSX_2.Element;
 
-export declare type AiChatProps = Pick<ComponentProps<typeof CopilotPopup>, "className" | "children">;
+export declare type AiChatProps = ComponentProps<typeof CopilotPopup>;
+
+export declare const AiChatProvider: (props: AiChatProviderProps) => JSX_2.Element;
+
+export declare type AiChatProviderProps = ComponentProps<typeof CopilotKit>;
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "warning" | "positive" | "destructive" | undefined;
@@ -4509,15 +4514,6 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        liveCompanion: {
-            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
-        };
-    }
-}
-
-
-declare module "@tiptap/core" {
-    interface Commands<ReturnType> {
         transcript: {
             insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
         };
@@ -4527,8 +4523,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        moodTracker: {
-            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
     }
 }
@@ -4536,4 +4532,13 @@ declare module "@tiptap/core" {
 
 declare namespace Calendar {
     var displayName: string;
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
+        moodTracker: {
+            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
+        };
+    }
 }
