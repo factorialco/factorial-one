@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.127.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.127.1...factorial-one-react-v1.127.2) (2025-07-17)
+
+
+### Bug Fixes
+
+* newColor type export ([455cabb](https://github.com/factorialco/factorial-one/commit/455cabb63d54b43fd4c5a3bb4b8dd6b7bd82247e))
+
 ## [1.127.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.127.0...factorial-one-react-v1.127.1) (2025-07-17)
 
 
