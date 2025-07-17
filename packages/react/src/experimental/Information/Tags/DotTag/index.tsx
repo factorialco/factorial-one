@@ -1,10 +1,10 @@
-import { baseColors } from "@factorialco/factorial-one-core"
+import { type BaseColor, baseColors } from "@factorialco/factorial-one-core"
 import { forwardRef } from "react"
 import { useTextFormatEnforcer } from "../../../../lib/text"
 import { BaseTag } from "../BaseTag"
 
 export type NewColor = Extract<
-  keyof typeof baseColors,
+  BaseColor,
   | "viridian"
   | "malibu"
   | "yellow"
