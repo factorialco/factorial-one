@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.128.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.127.2...factorial-one-react-v1.128.0) (2025-07-17)
+
+
+### Features
+
+* Add internal Action component ([#2200](https://github.com/factorialco/factorial-one/issues/2200)) ([5de1af3](https://github.com/factorialco/factorial-one/commit/5de1af3b1824a1a863c6f3cba484cf61a30ad0d7))
+
 ## [1.127.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.127.1...factorial-one-react-v1.127.2) (2025-07-17)
 
 
