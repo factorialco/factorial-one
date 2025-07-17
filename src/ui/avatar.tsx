@@ -101,7 +101,7 @@ const AvatarFallback = ({
   className,
   size = "medium",
   ...props
-}: React.ComponentPropsWithoutRef<typeof View> & {
+}: React.ComponentPropsWithoutRef<typeof Text> & {
   size?: (typeof sizes)[number];
 }) => (
   <Text
