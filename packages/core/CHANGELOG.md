@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.1](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.20.0...factorial-one-core-v1.20.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* input type extends string ([#2265](https://github.com/factorialco/factorial-one/issues/2265)) ([ff995c6](https://github.com/factorialco/factorial-one/commit/ff995c6f847c5fa172874fdcffb72e697353a5e8))
+
 ## [1.20.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.19.0...factorial-one-core-v1.20.0) (2025-07-10)
 
 

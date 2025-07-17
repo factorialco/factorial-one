@@ -113,7 +113,9 @@ export const baseColors = {
   },
 } as const
 
+
 export type BaseColor = keyof typeof baseColors
+
 
 export const f1Colors = {
   foreground: {
@@ -236,4 +238,6 @@ export const f1Colors = {
   "special-highlight": "hsl(var(--special-highlight))",
 } as const
 
+
 export type F1Color = keyof typeof f1Colors
+
