@@ -375,6 +375,26 @@ export const getMockVisualizations = (options?: {
       ],
     },
   },
+  kanban: {
+    type: "kanban",
+    options: {
+      title: (item) => item.name,
+      kanbanProperties: [
+        {
+          label: "Email",
+          render: (item) => item.email,
+        },
+        {
+          label: "Role",
+          render: (item) => item.role,
+        },
+        {
+          label: "Department",
+          render: (item) => item.department,
+        },
+      ],
+    },
+  },
   list: {
     type: "list",
     options: {
