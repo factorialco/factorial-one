@@ -12,6 +12,10 @@ const cardPropertyRenderers = {
   team: propertyRenderers.team,
   status: propertyRenderers.status,
   tag: propertyRenderers.tag,
+  avatarList: propertyRenderers.avatarList,
+  tagList: propertyRenderers.tagList,
+  alertTag: propertyRenderers.alertTag,
+  dotTag: propertyRenderers.dotTag,
 } as const
 
 export type CardPropertyType = keyof typeof cardPropertyRenderers
