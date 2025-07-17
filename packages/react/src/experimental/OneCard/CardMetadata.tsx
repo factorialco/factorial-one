@@ -2,13 +2,27 @@ import { Icon } from "@/components/Utilities/Icon"
 import { propertyRenderers } from "@/experimental/OneDataCollection/visualizations/property"
 import { CardMetadata as CardMetadataType } from "./types"
 
+const cardPropertyRenderers = {
+  text: propertyRenderers.text,
+  number: propertyRenderers.number,
+  date: propertyRenderers.date,
+  amount: propertyRenderers.amount,
+  person: propertyRenderers.person,
+  company: propertyRenderers.company,
+  team: propertyRenderers.team,
+  status: propertyRenderers.status,
+  tag: propertyRenderers.tag,
+} as const
+
+export type CardPropertyType = keyof typeof cardPropertyRenderers
+
 interface CardMetadataProps {
   metadata: CardMetadataType
 }
 
 export function CardMetadata({ metadata }: CardMetadataProps) {
   const { type, value } = metadata.property
-  const renderer = propertyRenderers[type]
+  const renderer = cardPropertyRenderers[type as CardPropertyType]
 
   if (!renderer) {
     return (
