@@ -59,6 +59,7 @@ if (buildSync) {
   )
 }
 /* ------------ Build sync end ------*/
+
 if (process.env.BUILD_TYPES) {
   extraPlugins.push(
     dts({
