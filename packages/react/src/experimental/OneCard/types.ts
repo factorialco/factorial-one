@@ -1,58 +1,19 @@
 import { IconType } from "@/components/Utilities/Icon"
-import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
-import { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
+import { propertyRenderers } from "@/experimental/OneDataCollection/visualizations/property"
+import { CardPropertyType } from "./CardMetadata"
 
-export type BaseMetadata = {
+/**
+ * Card metadata property renderers.
+ * Each metadata item consists of an icon and a property with its data.
+ */
+export type CardMetadataProperty = {
+  [K in CardPropertyType]: {
+    type: K
+    value: Parameters<(typeof propertyRenderers)[K]>[0]
+  }
+}[CardPropertyType]
+
+export type CardMetadata = {
   icon: IconType
+  property: CardMetadataProperty
 }
-
-export type SimpleMetadata = BaseMetadata & {
-  type: "text"
-  title: string
-}
-
-export type AvatarListMetadata = BaseMetadata & {
-  type: "avatarList"
-  avatars: AvatarVariant[]
-  max?: number
-}
-
-export type StatusMetadata = BaseMetadata & {
-  type: "status"
-  status: StatusVariant
-  label: string
-}
-
-export type UserMetadata = BaseMetadata & {
-  type: "user"
-  firstName: string
-  lastName: string
-  src?: string
-}
-
-export type CompanyMetadata = BaseMetadata & {
-  type: "company"
-  name: string
-  src?: string
-}
-
-export type TeamMetadata = BaseMetadata & {
-  type: "team"
-  name: string
-  src?: string
-}
-
-export type TagMetadata = BaseMetadata & {
-  type: "tag"
-  label: string
-  tagIcon?: IconType
-}
-
-export type Metadata =
-  | SimpleMetadata
-  | AvatarListMetadata
-  | StatusMetadata
-  | UserMetadata
-  | CompanyMetadata
-  | TeamMetadata
-  | TagMetadata

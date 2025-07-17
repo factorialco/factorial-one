@@ -48,20 +48,28 @@ export const Default: Story = {
     title: "Daniel Moreno",
     metadata: [
       {
-        type: "text",
         icon: Briefcase,
-        title: "Design Engineer",
+        property: {
+          type: "text",
+          value: "Design Engineer",
+        },
       },
       {
-        type: "text",
         icon: CalendarArrowRight,
-        title: "3 years ago",
+        property: {
+          type: "text",
+          value: "3 years ago",
+        },
       },
       {
-        type: "status",
         icon: Star,
-        status: "positive",
-        label: "Active",
+        property: {
+          type: "status",
+          value: {
+            status: "positive",
+            label: "Active",
+          },
+        },
       },
     ],
     otherActions: [
@@ -105,14 +113,20 @@ export const WithActions: Story = {
     ],
     metadata: [
       {
-        type: "tag",
         icon: Office,
-        label: "Barcelona, Spain",
+        property: {
+          type: "tag",
+          value: {
+            label: "Barcelona, Spain",
+          },
+        },
       },
       {
-        type: "text",
         icon: Calendar,
-        title: "10 months ago",
+        property: {
+          type: "text",
+          value: "10 months ago",
+        },
       },
     ],
   },
