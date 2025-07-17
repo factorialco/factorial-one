@@ -38,6 +38,7 @@ export function Picker({
           size={size}
           icon={lastEmojiReaction ? undefined : Reaction}
           emoji={lastEmojiReaction}
+          pressed={isOpen}
           onClick={(event) => {
             event.preventDefault()
             event.stopPropagation()
@@ -49,7 +50,7 @@ export function Picker({
       <PopoverContent
         side="bottom"
         align="start"
-        className="w-fit border-none bg-transparent p-2 shadow-none"
+        className="w-fit -translate-x-2 border-none bg-transparent p-2 shadow-none"
         onClick={(event) => {
           event.preventDefault()
           event.stopPropagation()
