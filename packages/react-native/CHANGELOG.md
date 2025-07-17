@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.17.0...factorial-one-react-native-v0.17.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* change type ([#2264](https://github.com/factorialco/factorial-one/issues/2264)) ([2b5b3eb](https://github.com/factorialco/factorial-one/commit/2b5b3eb5c7800058602cceb7a2cfb2b36a1cc1af))
+
 ## [0.17.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.16.0...factorial-one-react-native-v0.17.0) (2025-06-25)
 
 
