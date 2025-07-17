@@ -111,7 +111,7 @@ export const baseColors = {
   special: {
     highlight: "348 80% 50%",
   },
-}
+} as const
 
 export const f1Colors = {
   foreground: {
@@ -232,4 +232,4 @@ export const f1Colors = {
   link: "hsl(var(--link))",
   page: "hsl(var(--page))",
   "special-highlight": "hsl(var(--special-highlight))",
-}
+} as const

@@ -3,24 +3,27 @@ import * as React from "react"
 import { cn } from "../lib/utils"
 import { InputField, InputFieldProps } from "./InputField"
 
-export type TextareaProps =
-  React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
-    value?: string
-  } & Pick<
-      InputFieldProps<string>,
-      | "label"
-      | "labelIcon"
-      | "icon"
-      | "error"
-      | "hideLabel"
-      | "maxLength"
-      | "clearable"
-      | "placeholder"
-      | "onChange"
-      | "onClear"
-      | "onFocus"
-      | "onBlur"
-    >
+export type TextareaProps = Omit<
+  React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  "onChange" | "value" | "onFocus" | "onBlur"
+> & {
+  value?: string
+} & Pick<
+    InputFieldProps<string>,
+    | "label"
+    | "labelIcon"
+    | "icon"
+    | "error"
+    | "hideLabel"
+    | "maxLength"
+    | "clearable"
+    | "placeholder"
+    | "onChange"
+    | "value"
+    | "onClear"
+    | "onFocus"
+    | "onBlur"
+  >
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   (
