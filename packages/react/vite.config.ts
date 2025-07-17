@@ -66,7 +66,6 @@ if (process.env.BUILD_TYPES) {
       include: ["src"],
       exclude: ["**/*.stories.tsx"],
       rollupTypes: true,
-      tsconfigPath: resolve(__dirname, "./tsconfig-build.json"),
     })
   )
 }

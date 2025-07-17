@@ -1,7 +1,9 @@
-import { type BaseColor, baseColors } from "@factorialco/factorial-one-core"
+import { baseColors } from "@factorialco/factorial-one-core"
 import { forwardRef } from "react"
 import { useTextFormatEnforcer } from "../../../../lib/text"
 import { BaseTag } from "../BaseTag"
+
+type BaseColor = keyof typeof baseColors
 
 export type NewColor = Extract<
   BaseColor,
