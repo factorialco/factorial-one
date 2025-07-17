@@ -1,6 +1,6 @@
 import { render, type RenderOptions } from "@testing-library/react"
 import type { ReactElement } from "react"
-import { I18nProvider, defaultTranslations } from "./lib/providers/i18n"
+import { I18nProvider, defaultTranslations } from "../lib/providers/i18n"
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (

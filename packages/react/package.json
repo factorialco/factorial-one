@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.127.1",
+  "version": "1.127.0",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -96,8 +96,7 @@
     "@eslint/compat": "^1.2.9",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.27.0",
-    "@factorialco/factorial-one-core": "workspace:*",
-    "@microsoft/api-extractor": "7.52.2",
+    "@microsoft/api-extractor": "7.52.8",
     "@playwright/test": "^1.52.0",
     "@storybook/addon-a11y": "^9.0.8",
     "@storybook/addon-docs": "^9.0.8",
@@ -159,6 +158,7 @@
     "@rollup/rollup-linux-x64-gnu": "^4.34"
   },
   "dependencies": {
+    "@factorialco/factorial-one-core": "workspace:*",
     "@radix-ui/react-hover-card": "^1.1.6",
     "@radix-ui/react-switch": "^1.2.2",
     "@tanstack/react-virtual": "^3.13.2",
