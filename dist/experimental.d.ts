@@ -769,19 +769,19 @@ declare type CardMetadataProperty = {
 declare type CardPropertyDefinition<T> = PropertyDefinition_2<T>;
 
 declare const cardPropertyRenderers: {
-    readonly text: (args: TextCellValue) => JSX_2.Element;
-    readonly number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
-    readonly date: (args: DateCellValue) => JSX_2.Element;
-    readonly amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
-    readonly person: (args: PersonCellValue) => JSX_2.Element;
-    readonly company: (args: CompanyCellValue) => JSX_2.Element;
-    readonly team: (args: TeamCellValue) => JSX_2.Element;
-    readonly status: (args: StatusCellValue) => JSX_2.Element;
-    readonly tag: (args: TagCellValue) => JSX_2.Element;
-    readonly avatarList: (args: AvatarListCellValue) => JSX_2.Element;
-    readonly tagList: (args: TagListCellValue) => JSX_2.Element;
-    readonly alertTag: (args: AlertTagCellValue) => JSX_2.Element;
-    readonly dotTag: (args: DotTagCellValue) => JSX_2.Element;
+    readonly text: (args: TextCellValue) => default_2.JSX.Element;
+    readonly number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => default_2.JSX.Element;
+    readonly date: (args: DateCellValue) => default_2.JSX.Element;
+    readonly amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => default_2.JSX.Element;
+    readonly person: (args: PersonCellValue) => default_2.JSX.Element;
+    readonly company: (args: CompanyCellValue) => default_2.JSX.Element;
+    readonly team: (args: TeamCellValue) => default_2.JSX.Element;
+    readonly status: (args: StatusCellValue) => default_2.JSX.Element;
+    readonly tag: (args: TagCellValue) => default_2.JSX.Element;
+    readonly avatarList: (args: AvatarListCellValue) => default_2.JSX.Element;
+    readonly tagList: (args: TagListCellValue) => default_2.JSX.Element;
+    readonly alertTag: (args: AlertTagCellValue) => default_2.JSX.Element;
+    readonly dotTag: (args: DotTagCellValue) => default_2.JSX.Element;
 };
 
 declare type CardPropertyType = keyof typeof cardPropertyRenderers;
@@ -4483,8 +4483,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        liveCompanion: {
-            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        transcript: {
+            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
         };
     }
 }
@@ -4492,8 +4492,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        transcript: {
-            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
     }
 }
