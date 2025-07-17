@@ -1,9 +1,6 @@
 import { Icon } from "@/components/Utilities/Icon"
-import {
-  RendererDefinition,
-  renderProperty,
-} from "@/experimental/OneDataCollection/property-render"
 import { propertyRenderers } from "@/experimental/OneDataCollection/visualizations/property"
+import React from "react"
 import { CardMetadata as CardMetadataType } from "./types"
 
 const cardPropertyRenderers = {
@@ -31,22 +28,26 @@ interface CardMetadataProps {
 export function CardMetadata({ metadata }: CardMetadataProps) {
   const { type, value } = metadata.property
 
-  const mockItem = {}
-  const propertyDefinition = {
-    label: "",
-    render: (): RendererDefinition =>
-      ({
-        type,
-        value,
-      }) as RendererDefinition,
+  const renderer = cardPropertyRenderers[type as CardPropertyType]
+
+  if (!renderer) {
+    return (
+      <div className="flex h-8 items-center gap-1.5 font-medium">
+        <Icon icon={metadata.icon} color="default" size="md" />
+        <span>Unsupported property type: {type}</span>
+      </div>
+    )
   }
 
-  const renderedValue = renderProperty(mockItem, propertyDefinition, "card")
+  const typedRenderer = renderer as (
+    arg: Parameters<(typeof cardPropertyRenderers)[CardPropertyType]>[0],
+    meta?: { visualization: "card" }
+  ) => React.ReactNode
 
   return (
     <div className="flex h-8 items-center gap-1.5 font-medium">
       <Icon icon={metadata.icon} color="default" size="md" />
-      {renderedValue}
+      {typedRenderer(value, { visualization: "card" })}
     </div>
   )
 }
