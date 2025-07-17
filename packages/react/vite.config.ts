@@ -65,7 +65,7 @@ if (process.env.BUILD_TYPES) {
     dts({
       include: ["src"],
       exclude: ["**/*.stories.tsx"],
-      // rollupTypes: true,
+      rollupTypes: true,
       tsconfigPath: resolve(__dirname, "./tsconfig-build.json"),
     })
   )

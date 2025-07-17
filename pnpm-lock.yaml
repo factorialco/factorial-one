@@ -342,8 +342,8 @@ importers:
         specifier: ^9.27.0
         version: 9.27.0
       '@factorialco/factorial-one-core':
-        specifier: workspace:*
-        version: link:../core
+        specifier: latest
+        version: 1.20.1(@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.17))(tailwindcss-animate@1.0.7(tailwindcss@3.4.17))(tailwindcss@3.4.17)(typescript@5.7.3)
       '@microsoft/api-extractor':
         specifier: 7.52.2
         version: 7.52.2(@types/node@22.13.9)
@@ -2234,7 +2234,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {node: '>=0.10.0'}
+    engines: {'0': node >=0.10.0}
 
   '@expo/cli@0.22.24':
     resolution: {integrity: sha512-lhdenxBC8/x/vL39j79eXE09mOaqNNLmiSDdY/PblnI+UNzGgsQ48hBTYa/MQhd0ioXXVKurZL2941dLKwcxJw==}
@@ -2309,6 +2309,14 @@ packages:
   '@expo/xcpretty@4.3.2':
     resolution: {integrity: sha512-ReZxZ8pdnoI3tP/dNnJdnmAk7uLT4FjsKDGW7YeDdvdOMz2XCQSmSCM9IWlrXuWtMF9zeSB6WJtEhCQ41gQOfw==}
     hasBin: true
+
+  '@factorialco/factorial-one-core@1.20.1':
+    resolution: {integrity: sha512-rhzX8v3nL9F2kS7ueDLRIr007eY9hEsHWJvWlAzHjeVpnE0u51XWDpVfu3wJRUrO6SjRCUiU88exdBaLHXZzog==}
+    peerDependencies:
+      '@tailwindcss/container-queries': ^0.1.1
+      tailwindcss: ^3.4.3
+      tailwindcss-animate: ^1.0.7
+      typescript: ^5.7.2
 
   '@factorialco/factorial-one-core@1.9.0':
     resolution: {integrity: sha512-P0jxWcAlkT0yjZ28ZgDxiVZtWXePXDTTUsmCDjUPnzjGusKz3HLQobmQg5pPmfdwMhN8DYHN/ovw55T85LXGGg==}
@@ -12837,6 +12845,13 @@ snapshots:
       chalk: 4.1.2
       find-up: 5.0.0
       js-yaml: 4.1.0
+
+  '@factorialco/factorial-one-core@1.20.1(@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.17))(tailwindcss-animate@1.0.7(tailwindcss@3.4.17))(tailwindcss@3.4.17)(typescript@5.7.3)':
+    dependencies:
+      '@tailwindcss/container-queries': 0.1.1(tailwindcss@3.4.17)
+      tailwindcss: 3.4.17
+      tailwindcss-animate: 1.0.7(tailwindcss@3.4.17)
+      typescript: 5.7.3
 
   '@factorialco/factorial-one-core@1.9.0(@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.17))(tailwindcss-animate@1.0.7(tailwindcss@3.4.17))(tailwindcss@3.4.17)(typescript@5.7.3)':
     dependencies:
