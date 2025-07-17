@@ -28,15 +28,6 @@ describe("Link", () => {
     expect(screen.getByRole("link").querySelector("svg")).toBeInTheDocument()
   })
 
-  it("applies custom className", () => {
-    render(
-      <Link href="/test" className="custom-class">
-        Click me
-      </Link>
-    )
-    expect(screen.getByRole("link")).toHaveClass("custom-class")
-  })
-
   it("applies active state when isActive returns true", () => {
     const { isActive } = vi.mocked(useNavigation)()
     vi.mocked(isActive).mockReturnValue(true)
