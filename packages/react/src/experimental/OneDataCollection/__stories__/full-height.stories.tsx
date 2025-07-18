@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react-vite"
 import {
+  buildSecondaryActions,
   createDataAdapter,
   ExampleComponent,
   generateMockUsers,
@@ -19,7 +20,7 @@ const meta = {
           height: "470px",
           width: "100%",
           display: "flex",
-          overflow: "hidden",
+          overflow: "auto",
         }}
       >
         <Story />
@@ -35,20 +36,17 @@ export const Basic: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },
   },
-  render: () => <ExampleComponent frozenColumns={2} fullHeight />,
-  decorators: [
-    (Story) => (
-      <div
-        style={{
-          height: "420px",
-          width: "100%",
-          display: "flex",
-        }}
-      >
-        <Story />
-      </div>
-    ),
-  ],
+  render: () => (
+    <ExampleComponent
+      frozenColumns={2}
+      fullHeight
+      totalItemSummary={(totalItems) => `Total items: ${totalItems}`}
+      secondaryActions={{
+        expanded: 0,
+        actions: buildSecondaryActions,
+      }}
+    />
+  ),
 }
 
 export const WithPagination: Story = {

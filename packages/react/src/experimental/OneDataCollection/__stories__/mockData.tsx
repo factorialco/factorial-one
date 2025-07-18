@@ -12,7 +12,10 @@ import {
   OnSelectItemsCallback,
   PaginatedResponse,
   PaginationType,
+  PrimaryActionsDefinition,
   RecordType,
+  SecondaryActionsDefinition,
+  SecondaryActionsItemDefinition,
   SelectedItemsState,
   SortingsStateMultiple,
   useDataSource,
@@ -29,7 +32,7 @@ import {
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker"
-import { Ai, Delete, Pencil, Star } from "../../../icons/app"
+import { Ai, Delete, Download, Pencil, Star, Upload } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
@@ -661,6 +664,8 @@ export const ExampleComponent = ({
   visualizations,
   fullHeight,
   dataAdapter,
+  primaryActions,
+  secondaryActions,
 }: {
   useObservable?: boolean
   usePresets?: boolean
@@ -693,6 +698,8 @@ export const ExampleComponent = ({
   grouping?: GroupingDefinition<MockUser> | undefined
   currentGrouping?: GroupingState<MockUser, GroupingDefinition<MockUser>>
   paginationType?: PaginationType
+  primaryActions?: PrimaryActionsDefinition
+  secondaryActions?: SecondaryActionsDefinition
 }) => {
   const mockVisualizations = getMockVisualizations({
     frozenColumns,
@@ -705,6 +712,8 @@ export const ExampleComponent = ({
     sortings,
     grouping,
     currentGrouping: currentGrouping,
+    primaryActions,
+    secondaryActions,
     itemActions: (item) => [
       {
         label: "Edit",
@@ -1144,4 +1153,32 @@ export function createDataAdapter<
   }
 
   return adapter
+}
+
+// Example of a comprehensive actions definition with various types of actions
+export const buildSecondaryActions = (): SecondaryActionsItemDefinition[] => {
+  return [
+    // Action with description
+    {
+      label: "Edit",
+      icon: Pencil,
+      onClick: () => console.log(`Another user action`),
+      description: "User actions",
+    },
+
+    // Separator between action groups
+    { type: "separator" },
+    {
+      label: "Export",
+      icon: Upload,
+      onClick: () => console.log(`Downloading users`),
+      description: "Download users",
+    },
+    {
+      label: "Import",
+      icon: Download,
+      onClick: () => console.log(`Importing users`),
+      description: "Import users",
+    },
+  ]
 }
