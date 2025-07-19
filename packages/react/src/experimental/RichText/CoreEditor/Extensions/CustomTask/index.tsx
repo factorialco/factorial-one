@@ -1,89 +1,77 @@
 import { cn } from "@/lib/utils"
-import { Checkbox } from "@/ui/checkbox"
 import TaskItem from "@tiptap/extension-task-item"
-import {
-  NodeViewContent,
-  NodeViewProps,
-  NodeViewWrapper,
-  ReactNodeViewRenderer,
-} from "@tiptap/react"
-import React from "react"
-
-export const CustomTaskItemView: React.FC<NodeViewProps> = ({
-  node,
-  getPos,
-  editor,
-}) => {
-  const isChecked = node.attrs.checked
-
-  const handleCheckedChange = (checked: boolean) => {
-    editor
-      .chain()
-      .focus()
-      .command(({ tr }) => {
-        tr.setNodeMarkup(getPos(), undefined, {
-          ...node.attrs,
-          checked,
-        })
-        return true
-      })
-      .run()
-  }
-
-  return (
-    <NodeViewWrapper className="mb-2 flex items-start gap-2">
-      <Checkbox
-        checked={isChecked}
-        onCheckedChange={handleCheckedChange}
-        hideLabel
-      />
-      <div
-        className={cn(isChecked && "text-f1-foreground-secondary line-through")}
-      >
-        <NodeViewContent className="content" />
-      </div>
-    </NodeViewWrapper>
-  )
-}
 
 const CustomTask = TaskItem.extend({
-  addNodeView() {
-    return ReactNodeViewRenderer(CustomTaskItemView)
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      checked: {
+        default: false,
+        keepOnSplit: false,
+        parseHTML: (element) => element.getAttribute("data-checked") === "true",
+        renderHTML: (attributes) => {
+          return {
+            "data-checked": attributes.checked,
+          }
+        },
+      },
+    }
   },
+
+  parseHTML() {
+    return [
+      {
+        tag: `li[data-type="${this.name}"]`,
+        priority: 51,
+      },
+    ]
+  },
+
   renderHTML({ node, HTMLAttributes }) {
     return [
       "li",
-      { class: cn("f1-task-item", HTMLAttributes.class) },
+      {
+        ...HTMLAttributes,
+        "data-type": this.name,
+        "data-checked": node.attrs.checked,
+        class: cn("f1-task-item", HTMLAttributes.class),
+      },
+      [
+        "input",
+        {
+          type: "checkbox",
+          checked: node.attrs.checked ? "checked" : null,
+          contenteditable: "false",
+        },
+      ],
       [
         "div",
-        { class: "flex items-start gap-2" },
-        [
-          "button",
-          {
-            type: "button",
-            role: "checkbox",
-            "aria-checked": node.attrs.checked ? "true" : "false",
-            disabled: "disabled",
-            class: node.attrs.checked
-              ? "custom-checkbox custom-checkbox-checked"
-              : "custom-checkbox",
-            style: "appearance: none; -webkit-appearance: none;",
-          },
-        ],
-        [
-          "div",
-          {
-            class: cn(
-              node.attrs.checked
-                ? "text-f1-foreground-secondary line-through"
-                : "",
-              "content"
-            ),
-          },
-          0,
-        ],
+        {
+          class: "f1-task-item-content",
+        },
+        0,
       ],
     ]
+  },
+
+  addKeyboardShortcuts() {
+    const shortcuts = this.parent?.() || {}
+
+    return {
+      ...shortcuts,
+      Enter: () => {
+        if (this.editor.isActive(this.name)) {
+          return this.editor.commands.splitListItem(this.name)
+        }
+        return false
+      },
+      "Shift-Tab": () => {
+        if (this.editor.isActive(this.name)) {
+          return this.editor.commands.liftListItem(this.name)
+        }
+        return false
+      },
+    }
   },
 })
 
