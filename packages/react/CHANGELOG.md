@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.129.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.0...factorial-one-react-v1.129.1) (2025-07-21)
+
+
+### Bug Fixes
+
+* custom task item  ([#2275](https://github.com/factorialco/factorial-one/issues/2275)) ([3214307](https://github.com/factorialco/factorial-one/commit/321430783151acd4c9533bb1ba7ec6a716ac3eb1))
+
 ## [1.129.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.128.1...factorial-one-react-v1.129.0) (2025-07-21)
 
 
