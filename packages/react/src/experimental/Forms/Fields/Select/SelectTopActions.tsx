@@ -20,6 +20,7 @@ interface SelectTopActionsProps<
   grouping?: Grouping
   currentGrouping?: GroupingState<R, Grouping>
   onGroupingChange?: (grouping: GroupingState<R, Grouping>) => void
+  multiple?: boolean
 }
 
 export const SelectTopActions = <R extends RecordType = RecordType>({

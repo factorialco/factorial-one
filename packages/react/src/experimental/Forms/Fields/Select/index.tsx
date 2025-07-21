@@ -50,15 +50,30 @@ export * from "./types"
  * @template R - The type of the record/item data (used with data source)
  *
  */
-export type SelectProps<T extends string, R extends RecordType = RecordType> = {
-  onChange: (
-    value: T,
-    originalItem?: R,
-    option?: SelectItemObject<T, R>
-  ) => void
-  onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
-  value?: T
-  defaultItem?: SelectItemObject<T, R>
+export type SelectProps<T extends string, R extends RecordType = RecordType> = (
+  | {
+      multiple: true
+      onChange: (
+        value: T[],
+        originalItems?: R[],
+        options?: SelectItemObject<T, R>[]
+      ) => void
+      onChangeSelectedOption?: (options: SelectItemObject<T, R>[]) => void
+      value?: T[]
+      defaultItem?: SelectItemObject<T, R>[]
+    }
+  | {
+      multiple?: false
+      onChange: (
+        value: T,
+        originalItem?: R,
+        option?: SelectItemObject<T, R>
+      ) => void
+      onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
+      value?: T
+      defaultItem?: SelectItemObject<T, R>
+    }
+) & {
   children?: React.ReactNode
   open?: boolean
   showSearchBox?: boolean
@@ -71,22 +86,22 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = {
   selectContentClassName?: string
   actions?: Action[]
 } & (
-  | {
-      source: DataSourceDefinition<
-        R,
-        FiltersDefinition,
-        SortingsDefinition,
-        GroupingDefinition<R>
-      >
-      mapOptions: (item: R) => SelectItemProps<T, R>
-      options?: never
-    }
-  | {
-      source?: never
-      mapOptions?: never
-      options: SelectItemProps<T, R>[]
-    }
-) &
+    | {
+        source: DataSourceDefinition<
+          R,
+          FiltersDefinition,
+          SortingsDefinition,
+          GroupingDefinition<R>
+        >
+        mapOptions: (item: R) => SelectItemProps<T, R>
+        options?: never
+      }
+    | {
+        source?: never
+        mapOptions?: never
+        options: SelectItemProps<T, R>[]
+      }
+  ) &
   Pick<
     InputFieldProps<T>,
     | "loading"
@@ -181,6 +196,8 @@ const SelectComponent = forwardRef(function Select<
     labelIcon,
     clearable,
     loading,
+    multiple,
+    defaultItem,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -189,9 +206,17 @@ const SelectComponent = forwardRef(function Select<
 
   const [openLocal, setOpenLocal] = useState(open)
 
-  const [localValue, setLocalValue] = useState(
-    value || props.defaultItem?.value
-  )
+  // Internally manage all the selected values as an array
+  const [localValue, setLocalValue] = useState<T[]>(() => {
+    if (multiple) {
+      return (
+        value ?? (defaultItem || []).filter(Boolean).map((item) => item.value)
+      )
+    } else {
+      const singleValue = value ?? defaultItem?.value
+      return singleValue !== undefined ? [singleValue] : []
+    }
+  })
 
   const dataSource = useMemo(() => {
     if (
@@ -264,7 +289,7 @@ const SelectComponent = forwardRef(function Select<
   const { currentSearch, setCurrentSearch } = localSource
 
   const [selectedOption, setSelectedOption] = useState<
-    SelectItemObject<T, R> | undefined
+    SelectItemObject<T, R>[] | undefined
   >(undefined)
 
   /**
@@ -291,12 +316,18 @@ const SelectComponent = forwardRef(function Select<
     [data.records, optionMapper]
   )
 
+  // Select options if select values changes
   useEffect(() => {
-    const foundOption = findOption(localValue)
-    if (foundOption) {
-      onChangeSelectedOption?.(foundOption)
-      setSelectedOption(foundOption)
+    const selectedOptions: SelectItemObject<T, R>[] = []
+    for (const value of localValue) {
+      const foundOption = findOption(value)
+      if (foundOption) {
+        selectedOptions.push(foundOption)
+      }
     }
+
+    onChangeSelectedOption?.(multiple ? selectedOptions : selectedOptions[0])
+    setSelectedOption(selectedOptions)
   }, [
     data.records,
     localValue,

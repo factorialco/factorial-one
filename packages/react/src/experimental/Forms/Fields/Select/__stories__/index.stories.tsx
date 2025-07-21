@@ -399,3 +399,58 @@ export const WithCustomTrigger: Story = {
     </Select>
   ),
 }
+
+export const WithDataSourcePaginatedAndMultiple: Story = {
+  args: {
+    placeholder: "Select a value",
+    showSearchBox: true,
+    multiple: true,
+    onChange: fn(),
+    value: ["option-2", "option-3"],
+    source: createDataSourceDefinition<MockItem>({
+      dataAdapter: {
+        paginationType: "infinite-scroll",
+        fetchData: (options) => {
+          const { search, pagination } = options
+          return new Promise((resolve) => {
+            setTimeout(
+              () => {
+                const pageSize = pagination.perPage ?? 10
+                const cursor = "cursor" in pagination ? pagination.cursor : null
+                const nextCursor = cursor ? Number(cursor) + pageSize : pageSize
+
+                const results = mockItems.filter(
+                  (item) =>
+                    !search ||
+                    item.label.toLowerCase().includes(search.toLowerCase())
+                )
+
+                const paginatedResults = results.slice(
+                  cursor ? Number(cursor) : 0,
+                  nextCursor
+                )
+
+                const res = {
+                  type: "infinite-scroll" as const,
+                  cursor: String(nextCursor),
+                  perPage: pageSize,
+                  hasMore: nextCursor < results.length,
+                  records: paginatedResults,
+                  total: results.length,
+                }
+                resolve(res)
+              },
+              100 + Math.random() * 100
+            )
+          })
+        },
+      },
+    }),
+    mapOptions: (item: MockItem) => ({
+      value: item.value,
+      label: item.label,
+      icon: item.icon,
+      description: item.description,
+    }),
+  },
+}
