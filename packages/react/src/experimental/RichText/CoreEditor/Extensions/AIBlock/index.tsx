@@ -279,10 +279,7 @@ const AIBlockHeader: React.FC<AIBlockHeaderProps> = ({
     className="flex flex-row items-center justify-between gap-2"
     layout
   >
-    <div
-      className={`flex flex-row items-center gap-2 ${canCollapse ? "cursor-pointer" : ""}`}
-      onClick={canCollapse ? onToggleCollapse : undefined}
-    >
+    <div className="flex flex-row items-center gap-2">
       <motion.span
         className="flex items-center text-lg"
         animate={{

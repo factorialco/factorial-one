@@ -95,10 +95,7 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
           className="flex flex-row items-center justify-between gap-2"
           layout
         >
-          <div
-            className="flex cursor-pointer flex-row items-center gap-2"
-            onClick={handleToggleCollapse}
-          >
+          <div className="flex flex-row items-center gap-2">
             <div className="flex flex-col gap-1">
               <div className="flex flex-row items-center gap-3">
                 <p className="text-f1-text-primary text-lg font-semibold">

@@ -8,15 +8,17 @@
 }
 
 .preserved-selection {
-  background-color: #07a2ad33 !important;
+  @apply bg-f1-background-selected-bold/20;
 }
 
 /* Make all selections transparent */
-.rich-text-editor-container *::selection {
+.rich-text-editor-container *::selection,
+.basic-text-editor-container *::selection {
   background-color: transparent !important;
 }
 
-.rich-text-editor-container::selection {
+.rich-text-editor-container::selection,
+.basic-text-editor-container::selection {
   background-color: transparent !important;
 }
 
