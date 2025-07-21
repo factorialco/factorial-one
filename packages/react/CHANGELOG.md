@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.128.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.128.0...factorial-one-react-v1.128.1) (2025-07-21)
+
+
+### Bug Fixes
+
+* add missing modules names ([#2276](https://github.com/factorialco/factorial-one/issues/2276)) ([8d3e275](https://github.com/factorialco/factorial-one/commit/8d3e275555edd418f54e5b9dcbde646d0186870b))
+
 ## [1.128.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.127.2...factorial-one-react-v1.128.0) (2025-07-17)
 
 
