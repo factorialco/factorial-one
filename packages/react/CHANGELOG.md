@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.129.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.128.1...factorial-one-react-v1.129.0) (2025-07-21)
+
+
+### Features
+
+* **EmojiPicker:** use pressed prop in trigger ([#2271](https://github.com/factorialco/factorial-one/issues/2271)) ([65ee496](https://github.com/factorialco/factorial-one/commit/65ee496a83077d0362e2e193fe55deb109231fa4))
+
 ## [1.128.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.128.0...factorial-one-react-v1.128.1) (2025-07-21)
 
 
