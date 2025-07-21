@@ -10,18 +10,19 @@ import {
   SelectValue,
 } from "../index"
 
-const SelectWithHooks = ({
+const SelectWithHooks = <T extends string | string[]>({
   options,
   placeholder,
   asList,
   multiple,
+  value: defaultValue,
   ...props
 }: SelectProps) => {
-  const [value, setValue] = useState(props.value ?? (multiple ? [] : ""))
+  const [value, setValue] = useState(defaultValue as T)
 
   const handleChange = (value: string | string[]) => {
     console.log("value", value)
-    setValue(value)
+    setValue(value as T)
   }
 
   const items = useMemo(

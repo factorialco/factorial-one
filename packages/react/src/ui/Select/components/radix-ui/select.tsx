@@ -83,32 +83,6 @@ type SelectNativeOptionsContextValue = {
 const [SelectNativeOptionsProvider, useSelectNativeOptionsContext] =
   createSelectContext<SelectNativeOptionsContextValue>(SELECT_NAME)
 
-interface ControlledClearableSelectProps {
-  value: string[] | string | undefined
-  defaultValue?: never
-  onValueChange: (value: string[] | string | undefined) => void
-}
-
-interface ControlledUnclearableSelectProps {
-  value: string[] | string
-  defaultValue?: never
-  onValueChange: (value: string[] | string) => void
-}
-
-interface UncontrolledSelectProps {
-  value?: never
-  defaultValue?: string[] | string
-  onValueChange?: {
-    (value: string[] | string): void
-    (value: string[] | string | undefined): void
-  }
-}
-
-type SelectControlProps =
-  | ControlledClearableSelectProps
-  | ControlledUnclearableSelectProps
-  | UncontrolledSelectProps
-
 interface SelectSharedProps {
   children?: React.ReactNode
   open?: boolean
@@ -122,18 +96,13 @@ interface SelectSharedProps {
   form?: string
 }
 
-// TODO: Should improve typing somewhat, but this would be a breaking change.
-// Consider using in the next major version (along with some testing to be sure
-// it works as expected and doesn't cause problems)
-type _FutureSelectProps = SelectSharedProps & SelectControlProps
-
 type SelectProps = SelectSharedProps &
   (
     | {
         value?: string
         defaultValue?: string
         onValueChange?(value: string): void
-        multiple?: never | false
+        multiple?: false | never
       }
     | {
         value?: string[]

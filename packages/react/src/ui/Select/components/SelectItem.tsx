@@ -15,9 +15,6 @@ const SelectItem = React.forwardRef<
   }
 >(({ className, children, ...props }, ref) => {
   const context = useSelectContext()
-
-  console.log("context", context.value)
-
   const { multiple } = context
 
   const selected = useMemo(() => {
