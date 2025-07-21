@@ -1,7 +1,7 @@
 import { ButtonInternal } from "@/components/Actions/Button/internal"
 import Cross from "@/icons/app/Cross"
 import { useI18n } from "@/lib/providers/i18n"
-import { cn } from "@/lib/utils"
+import { cn, focusRing } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/ui/dialog"
 import { useLangGraphInterruptRender } from "@copilotkit/react-core"
 import {
@@ -25,7 +25,8 @@ export const ChatWindow = ({ children, ...rest }: WindowProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen} modal={false} {...rest}>
       <DialogContent
-        className="flex h-1/3 min-h-[426px] max-w-[460px] flex-col overflow-hidden rounded-xl border-f1-border shadow"
+        onPointerDownOutside={(e) => e.preventDefault()}
+        className="flex h-1/3 min-h-[426px] max-w-[460px] flex-col overflow-hidden rounded-xl border-solid border-f1-border shadow"
         position="bottom right"
       >
         {children}
@@ -287,7 +288,8 @@ export const ChatButton = (props: ButtonProps) => {
     <button
       className={cn(
         "h-10 w-10 cursor-pointer rounded-xl bg-[hsl(220,27,26%)] p-1 pl-2",
-        open ? "hidden" : "block"
+        open ? "hidden" : "block",
+        focusRing()
       )}
       onClick={() => setOpen(!open)}
       {...props}
