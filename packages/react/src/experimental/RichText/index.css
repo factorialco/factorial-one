@@ -173,19 +173,6 @@
   background-color: var(--scrollbar-thumb-hover);
 }
 
-/* Custom checkbox styling for HTML export */
-.custom-checkbox {
-  @apply h-5 w-5 shrink-0 rounded-xs border border-solid border-f1-border text-f1-foreground-selected;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.custom-checkbox-checked {
-  @apply bg-f1-background-selected-bold text-f1-foreground-inverse;
-}
-
 .f1-task-item {
   @apply mb-2 flex list-none gap-2;
 }
