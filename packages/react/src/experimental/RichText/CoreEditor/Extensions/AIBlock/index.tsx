@@ -41,6 +41,9 @@ export interface AIBlockConfig {
   buttons?: AIButton[]
   onClick: (type: string) => Promise<JSONContent | null>
   title: string
+}
+
+export interface AIBlockConfigWithLabels extends AIBlockConfig {
   labels?: AIBlockLabels
   toolbarLabels: ToolbarLabels
   slashCommandGroupLabels?: SlashCommandGroupLabels
@@ -60,7 +63,10 @@ interface AIBlockData {
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     aiBlock: {
-      insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType
+      insertAIBlock: (
+        data: AIBlockData,
+        config: AIBlockConfigWithLabels
+      ) => ReturnType
     }
   }
 }
@@ -86,7 +92,7 @@ const useContentEditor = (
   isLoading: boolean,
   blockId: string,
   updateAttributes: (attrs: { data: AIBlockData }) => void,
-  config: AIBlockConfig
+  config: AIBlockConfigWithLabels
 ): Editor | null => {
   const extensions = useMemo(() => {
     return createAIBlockEditorExtensions(
@@ -424,8 +430,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 }) => {
   const data = node.attrs.data as AIBlockData
   const config =
-    (extension.options.currentConfig as AIBlockConfig) ||
-    (node.attrs.config as AIBlockConfig)
+    (extension.options.currentConfig as AIBlockConfigWithLabels) ||
+    (node.attrs.config as AIBlockConfigWithLabels)
 
   const blockId = useRef(Math.random().toString(36).substr(2, 9)).current
   const { isLoading, setIsLoading, isCollapsed, setIsCollapsed } =
