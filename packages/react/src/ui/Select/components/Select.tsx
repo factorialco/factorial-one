@@ -6,28 +6,17 @@ import * as SelectPrimitive from "./radix-ui"
 export type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root> & {
   asList?: boolean
   placeholder?: string
-  options: { value: string; label: string }[]
+  options?: { value: string; label: string }[]
 }
+
 /**
  * Select Root component
  */
 
 const Select = (props: SelectProps) => {
-  // Extract the specific props we need
-  const {
-    asList,
-    placeholder: _placeholder,
-    options: _options,
-    onValueChange,
-    multiple,
-    ...selectPrimitiveProps
-  } = props
+  const [internalOpen, setInternalOpen] = useState(props.asList ? true : false)
 
-  // If open prop is not provided, we'll manage it internally
-  const [internalOpen, setInternalOpen] = useState(asList ? true : false)
-
-  // Use either the controlled open state from props or the internal state
-  const isOpen = asList
+  const isOpen = props.asList
     ? true
     : props.open !== undefined
       ? props.open
@@ -57,7 +46,7 @@ const Select = (props: SelectProps) => {
   } as SelectContextType
 
   const commonProps = {
-    ...selectPrimitiveProps,
+    ...props,
     open: isOpen,
     onOpenChange: handleOpenChange,
     children: (
@@ -69,19 +58,28 @@ const Select = (props: SelectProps) => {
 
   const handleValueChange = (value: string | string[]) => {
     setLocalValue(value)
-    if (multiple) {
-      onValueChange?.(value as string[])
+    if (props.multiple) {
+      props.onValueChange?.(value as string[])
     } else {
-      onValueChange?.(value as string)
+      props.onValueChange?.(value as string)
     }
   }
 
-  const promitiveProps = {
-    ...commonProps,
-    multiple: multiple || false,
-    value: localValue,
-    onValueChange: handleValueChange,
-  } as SelectProps
+  const promitiveProps = props.multiple
+    ? {
+        ...commonProps,
+        multiple: true as const,
+        value: localValue as string[],
+        defaultValue: props.defaultValue as string[],
+        onValueChange: handleValueChange,
+      }
+    : {
+        ...commonProps,
+        multiple: false as const,
+        value: localValue as string,
+        defaultValue: props.defaultValue as string,
+        onValueChange: handleValueChange,
+      }
 
   return (
     <div className="[&>div]:!relative">

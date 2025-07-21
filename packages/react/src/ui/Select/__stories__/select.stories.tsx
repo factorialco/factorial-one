@@ -10,17 +10,18 @@ import {
   SelectValue,
 } from "../index"
 
-const SelectWithHooks = <T extends string | string[]>({
+const SelectWithHooks = <M extends boolean>({
   options,
   placeholder,
   asList,
   multiple,
   value: defaultValue,
   ...props
-}: SelectProps) => {
+}: Omit<SelectProps, "multiple"> & { multiple: M }) => {
+  type T = M extends true ? string[] : string
   const [value, setValue] = useState(defaultValue as T)
 
-  const handleChange = (value: string | string[]) => {
+  const handleChange = (value: any) => {
     console.log("value", value)
     setValue(value as T)
   }
@@ -112,7 +113,6 @@ export const AsList: Story = {
 
 export const Multiple: Story = {
   args: {
-    ...Default.args,
     value: ["light", "system"],
     multiple: true,
   },
@@ -130,7 +130,7 @@ export const WithTopContent: Story = {
         <SelectContent
           top={<div className="border-b border-f1-border p-3">Top Content</div>}
         >
-          {options.map((option) => (
+          {options?.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
@@ -155,7 +155,7 @@ export const WithBottomContent: Story = {
             <div className="border-t border-f1-border p-3">Bottom Content</div>
           }
         >
-          {options.map((option) => (
+          {options?.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
@@ -189,7 +189,7 @@ export const WithBothTopAndBottom: Story = {
             </div>
           }
         >
-          {options.map((option) => (
+          {options?.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
@@ -227,7 +227,7 @@ export const WithCustomTrigger: Story = {
           </button>
         </SelectTrigger>
         <SelectContent>
-          {options.map((option) => (
+          {options?.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               <div className="flex items-center gap-2">
                 <Desktop className="h-4 w-4" />
