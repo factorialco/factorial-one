@@ -78,6 +78,9 @@ importers:
       '@copilotkit/runtime':
         specifier: ^1.9.2
         version: 1.9.2(@ag-ui/client@0.0.34)(@ag-ui/core@0.0.34)(@ag-ui/encoder@0.0.34)(@ag-ui/proto@0.0.34)(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-bedrock-agent-runtime@3.844.0)(@aws-sdk/client-bedrock-runtime@3.844.0)(@aws-sdk/client-kendra@3.844.0)(@aws-sdk/credential-provider-node@3.844.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.4.7)(openai@4.104.0(ws@8.18.1)(zod@3.24.1))(zod@3.24.1))(@ibm-cloud/watsonx-ai@1.6.8)(@smithy/util-utf8@2.3.0)(axios@1.8.4)(fast-xml-parser@5.2.5)(google-auth-library@8.9.0)(ibm-cloud-sdk-core@5.4.0)(ignore@5.3.2)(jsdom@26.0.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(playwright@1.52.0)(react@18.3.1)(weaviate-client@3.6.2)(ws@8.18.1)
+      '@copilotkit/runtime-client-gql':
+        specifier: ^1.9.2
+        version: 1.9.2(graphql@16.11.0)(react@18.3.1)
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.10.0(react-hook-form@7.54.2(react@18.3.1))
@@ -317,7 +320,7 @@ importers:
         version: 1.1.0
       zod:
         specifier: ^3.23.8
-        version: 3.24.1
+        version: 3.25.76
     optionalDependencies:
       '@rollup/rollup-linux-x64-gnu':
         specifier: ^4.34
@@ -2450,7 +2453,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {'0': node >=0.10.0}
+    engines: {node: '>=0.10.0'}
 
   '@expo/cli@0.22.24':
     resolution: {integrity: sha512-lhdenxBC8/x/vL39j79eXE09mOaqNNLmiSDdY/PblnI+UNzGgsQ48hBTYa/MQhd0ioXXVKurZL2941dLKwcxJw==}
@@ -15065,8 +15068,8 @@ snapshots:
       chalk: 4.1.2
       graphql: 16.11.0
       uuid: 10.0.0
-      zod: 3.24.1
-      zod-to-json-schema: 3.24.6(zod@3.24.1)
+      zod: 3.25.76
+      zod-to-json-schema: 3.24.6(zod@3.25.76)
     transitivePeerDependencies:
       - encoding
 
@@ -19824,6 +19827,14 @@ snapshots:
       picocolors: 1.1.1
       playwright: 1.52.0
 
+  axios@1.8.4:
+    dependencies:
+      follow-redirects: 1.15.9
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+
   axios@1.8.4(debug@4.4.1):
     dependencies:
       follow-redirects: 1.15.9(debug@4.4.1)
@@ -21797,6 +21808,8 @@ snapshots:
 
   flow-parser@0.263.0: {}
 
+  follow-redirects@1.15.9: {}
+
   follow-redirects@1.15.9(debug@4.4.1):
     optionalDependencies:
       debug: 4.4.1
@@ -22338,7 +22351,7 @@ snapshots:
   http-proxy@1.18.1:
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.9(debug@4.4.1)
+      follow-redirects: 1.15.9
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -27709,7 +27722,7 @@ snapshots:
 
   wait-on@7.2.0:
     dependencies:
-      axios: 1.8.4(debug@4.4.1)
+      axios: 1.8.4
       joi: 17.13.3
       lodash: 4.17.21
       minimist: 1.2.8

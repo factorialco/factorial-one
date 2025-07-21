@@ -3,7 +3,12 @@ import { CopilotPopup } from "@copilotkit/react-ui"
 import "@copilotkit/react-ui/styles.css"
 
 import type { ComponentProps } from "react"
-import { ChatHeader, ChatWindow } from "./ChatWindow"
+import {
+  ChatButton,
+  ChatHeader,
+  ChatWindow,
+  MessagesContainer,
+} from "./ChatWindow"
 
 export type AiChatProps = ComponentProps<typeof CopilotPopup>
 
@@ -17,5 +22,13 @@ export const AiChatProvider = (props: AiChatProviderProps) => {
 }
 
 export const AiChat = (props: AiChatProps) => {
-  return <CopilotPopup Window={ChatWindow} Header={ChatHeader} {...props} />
+  return (
+    <CopilotPopup
+      Window={ChatWindow}
+      Header={ChatHeader}
+      Messages={MessagesContainer}
+      Button={ChatButton}
+      {...props}
+    />
+  )
 }
