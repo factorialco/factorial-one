@@ -193,25 +193,7 @@ export const TranscriptView: React.FC<NodeViewProps> = ({
                   {data.messages.map((message, index) => {
                     const user = getUserById(message.userId)
                     return (
-                      <motion.div
-                        key={index}
-                        initial={{
-                          opacity: 0,
-                          y: -10,
-                          scale: 0.95,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                          scale: 1,
-                        }}
-                        transition={{
-                          delay: index * 0.05,
-                          duration: 0.2,
-                          ease: "easeOut",
-                        }}
-                        className="flex flex-row gap-3"
-                      >
+                      <div key={index} className="flex flex-row gap-3">
                         {user?.imageUrl && (
                           <PersonAvatar
                             size="xsmall"
@@ -233,7 +215,7 @@ export const TranscriptView: React.FC<NodeViewProps> = ({
                             {message.text}
                           </p>
                         </div>
-                      </motion.div>
+                      </div>
                     )
                   })}
                 </div>
