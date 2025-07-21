@@ -27,11 +27,14 @@ import {
   YEARS_OF_EXPERIENCIE_MOCK,
 } from "@/mocks"
 import { Meta, StoryObj } from "@storybook/react-vite"
-import { GroupingDefinition } from "../grouping"
-import { OneDataCollection, useDataSource } from "../index"
+import {
+  GroupingDefinition,
+  OneDataCollection,
+  useDataCollectionSource,
+} from "../exports"
+import { useDataCollectionData } from "../hooks/useDataCollectionData/useDataCollectionData"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
-import { useData } from "../useData"
 import {
   createDataAdapter,
   createPromiseDataFetch,
@@ -88,7 +91,7 @@ type Story = StoryObj<typeof meta>
 // Basic examples with single visualization
 export const BasicTableView: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       filters,
       presets: filterPresets,
       sortings: {
@@ -116,7 +119,12 @@ export const BasicTableView: Story = {
           filters.department?.map((department) => {
             console.log("department", department)
           })
-          return createPromiseDataFetch()({ filters, sortings, search })
+          return createPromiseDataFetch()({
+            filters,
+            sortings,
+            search,
+            navigationFilters: {},
+          })
         },
       },
       itemActions: (item) => [
@@ -232,7 +240,7 @@ export const TableFrozenCols: Story = {
 // Basic examples with single visualization
 export const WithLinkedItems: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       filters,
       presets: filterPresets,
       itemUrl: (item) => {
@@ -367,7 +375,7 @@ export const WithLinkedItems: Story = {
 
 export const BasicCardView: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       filters,
       sortings,
       presets: filterPresets,
@@ -430,7 +438,7 @@ export const BasicCardView: Story = {
 // Examples with different property renderers
 export const RendererTypes: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       filters,
       sortings,
       presets: filterPresets,
@@ -553,7 +561,7 @@ export const CustomCardProperties: Story = {
     },
   },
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       filters,
       sortings,
       presets: filterPresets,
@@ -697,7 +705,7 @@ const JsonVisualization = ({
   source,
 }: {
   source: ReturnType<
-    typeof useDataSource<
+    typeof useDataCollectionSource<
       (typeof mockUsers)[number],
       typeof filters,
       typeof sortings,
@@ -708,7 +716,7 @@ const JsonVisualization = ({
     >
   >
 }) => {
-  const { data, isLoading } = useData(source)
+  const { data, isLoading } = useDataCollectionData(source)
 
   if (isLoading) {
     return (
@@ -730,7 +738,7 @@ export const WithCustomJsonView: Story = {
     type MockUser = (typeof mockUsers)[number]
     type MockActions = ItemActionsDefinition<MockUser>
 
-    const dataSource = useDataSource<
+    const dataSource = useDataCollectionSource<
       MockUser,
       typeof filters,
       typeof sortings,
@@ -817,7 +825,7 @@ export const WithCustomJsonView: Story = {
 // Example usage with table visualization
 export const WithTableVisualization: Story = {
   render: () => {
-    const source = useDataSource({
+    const source = useDataCollectionSource({
       filters,
       sortings,
       defaultSorting: {
@@ -870,7 +878,7 @@ export const WithTableVisualization: Story = {
 // Example usage with card visualization
 export const WithCardVisualization: Story = {
   render: () => {
-    const source = useDataSource({
+    const source = useDataCollectionSource({
       filters,
       presets: filterPresets,
       sortings,
@@ -905,7 +913,7 @@ export const WithCardVisualization: Story = {
 // Example usage with multiple visualizations
 export const WithMultipleVisualizations: Story = {
   render: () => {
-    const source = useDataSource({
+    const source = useDataCollectionSource({
       filters,
       sortings,
       dataAdapter: createDataAdapter({
@@ -933,7 +941,7 @@ export const WithPagesPagination: Story = {
       frozenColumns: 0,
     })
 
-    const source = useDataSource({
+    const source = useDataCollectionSource({
       filters,
       presets: filterPresets,
       sortings,
@@ -980,7 +988,7 @@ export const WithInfiniteScrollPagination: Story = {
     // Create a fixed set of paginated users so we're not regenerating them on every render
     const paginatedMockUsers = generateMockUsers(50)
 
-    const source = useDataSource({
+    const source = useDataCollectionSource({
       filters,
       presets: filterPresets,
       sortings,
@@ -1066,7 +1074,7 @@ export const WithSynchronousData: Story = {
       frozenColumns: 0,
     })
 
-    const source = useDataSource<
+    const source = useDataCollectionSource<
       MockUser,
       typeof filters,
       typeof sortings,
@@ -1108,7 +1116,7 @@ export const WithSynchronousData: Story = {
 
 export const WithAdvancedActions: Story = {
   render: () => {
-    const source = useDataSource({
+    const source = useDataCollectionSource({
       filters,
       sortings,
       presets: filterPresets,
@@ -1276,7 +1284,7 @@ export const WithSyncSearch: Story = {
     ]
 
     // TODO allow to infer the type of the data source
-    const source = useDataSource<
+    const source = useDataCollectionSource<
       (typeof mockUserData)[number],
       typeof filters,
       typeof sortings,
@@ -1398,7 +1406,7 @@ export const WithAsyncSearch: Story = {
     type MockUser = (typeof mockUsers)[number]
     type MockActions = ItemActionsDefinition<MockUser>
 
-    const source = useDataSource<
+    const source = useDataCollectionSource<
       MockUser,
       typeof filters,
       typeof sortings,
@@ -1612,7 +1620,7 @@ export const TableColumnProperties: Story = {
       delay: 300,
     })
 
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       filters,
       presets: filterPresets,
       sortings: extendedSortings,
@@ -1734,7 +1742,7 @@ export const TableColumnProperties: Story = {
 
 export const TableWithNoFiltersAndSearch: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       sortings: {
         name: { label: "Name" },
         email: { label: "Email" },
@@ -1820,7 +1828,7 @@ export const TableWithNoFiltersAndSearch: Story = {
 
 export const TableWithNoFilters: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       sortings: {
         name: { label: "Name" },
         email: { label: "Email" },
@@ -1926,7 +1934,7 @@ export const TableWithNoFilters: Story = {
 
 export const TableWithSecondaryActions: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataCollectionSource({
       sortings: {
         name: { label: "Name" },
         email: { label: "Email" },
@@ -2008,7 +2016,7 @@ export const TotalItemsSummary: Story = {
     docs: {
       description: {
         story:
-          'The `totalItemSummary` useDataSource prop allows you to customize how the total number of items is displayed in the collection header. It receives a function that takes the total count as a parameter and returns a string to be displayed. By default, if no `totalItemSummary` is provided, it will display "{count} items".',
+          'The `totalItemSummary` useDataCollectionSource prop allows you to customize how the total number of items is displayed in the collection header. It receives a function that takes the total count as a parameter and returns a string to be displayed. By default, if no `totalItemSummary` is provided, it will display "{count} items".',
       },
     },
   },

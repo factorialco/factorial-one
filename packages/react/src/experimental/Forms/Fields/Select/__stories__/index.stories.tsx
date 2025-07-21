@@ -3,7 +3,7 @@ import { fn } from "storybook/test"
 import { Select, SelectProps } from "../index"
 
 import { IconType } from "@/components/Utilities/Icon"
-import { createDataSourceDefinition } from "@/experimental/OneDataCollection/useDataSource"
+import { createDataSourceDefinition } from "@/hooks/datasource"
 import { Appearance, Circle, Desktop, Plus } from "@/icons/app"
 import {
   DEPARTMENTS_MOCK,
@@ -141,6 +141,8 @@ const meta: Meta = {
         item,
       }
     }),
+    label: "Select a theme",
+    hideLabel: true,
     disabled: false,
     showSearchBox: false,
   },

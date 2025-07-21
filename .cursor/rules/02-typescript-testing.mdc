@@ -1,29 +1,35 @@
 ---
 description: TypeScript Usage and Testing Standards
-globs: 
-alwaysApply: false
----
----
-description: "Factorial One DS - TypeScript Usage and Testing Standards"
-globs: "packages/react/**/*.ts,packages/react/**/*.tsx"
+globs:
 alwaysApply: false
 ---
 
+---
+
+description: "Factorial One DS - TypeScript Usage and Testing Standards"
+globs: "packages/react/**/\*.ts,packages/react/**/\*.tsx"
+alwaysApply: false
+
+---
+
 # TypeScript Usage
+
 - Use **strict** TypeScript configuration.
 - Prefer **interfaces** over types for public APIs.
 - Use discriminated unions for complex state.
 - Export component prop interfaces.
 - Implement proper generic constraints.
+- `any` is a non aceptable type, avoid its use
 
 # Testing Standards
+
 - Write **Vitest** unit tests for utilities and hooks and components.
 - Create **Storybook stories** for visual testing.
 - Include **accessibility tests** using axe-playwright.
 - Test component variants and edge cases.
 - Avoid excessive mocking; test behavior, not internals.
 - Always run tests to confirm changes.
-- Do not import `@testing-library/jest-dom` 
+- Do not import `@testing-library/jest-dom`
 - Import vitest methods like: describe, it, expect, etc. explicitily
 - name test files with `.test.tsx` or `.test.ts`, never with `.specs.ts`
 
@@ -31,36 +37,36 @@ alwaysApply: false
 
 ```tsx
 // packages/react/src/components/Utilities/Icon/index.tsx
-import { cn } from "../../../lib/utils"
-import { cva, type VariantProps } from "cva"
+import { cn } from "../../../lib/utils";
+import { cva, type VariantProps } from "cva";
 import {
   forwardRef,
   ForwardRefExoticComponent,
   RefAttributes,
   SVGProps,
-} from "react"
+} from "react";
 
 export interface IconProps
   extends SVGProps<SVGSVGElement>,
     VariantProps<typeof iconVariants> {
-  icon: IconType
-  state?: "normal" | "animate"
+  icon: IconType;
+  state?: "normal" | "animate";
 }
 
 export type IconType = ForwardRefExoticComponent<
   SVGProps<SVGSVGElement> &
     RefAttributes<SVGSVGElement> & {
-      animate?: "normal" | "animate"
+      animate?: "normal" | "animate";
     }
->
+>;
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
   { size, icon, state = "normal", className, ...props },
   ref
 ) {
-  if (!icon) return null
-  const Component = icon
-  const isAnimated = icon.displayName?.includes("Animated")
+  if (!icon) return null;
+  const Component = icon;
+  const isAnimated = icon.displayName?.includes("Animated");
 
   if (isAnimated) {
     return (
@@ -70,7 +76,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
         animate={state}
         className={cn("select-none", className)}
       />
-    )
+    );
   }
 
   return (
@@ -79,15 +85,15 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
       {...props}
       className={cn("aspect-square", iconVariants({ size }), className)}
     />
-  )
-})
+  );
+});
 ```
 
-~~~mdx
+````mdx
 // packages/react/src/components/Utilities/Icon/index.mdx
 import { Meta, Canvas, Controls } from "@storybook/blocks"
 import LinkTo from "@storybook/addon-links/react"
-import * as IconStories from "./index.stories"
+import \* as IconStories from "./index.stories"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 <Meta title="Icon" />
@@ -137,18 +143,18 @@ for icons.
 ```jsx
 <Icon icon={Archive} className="text-f1-icon-secondary" />
 ```
-~~~
+````
 
 ```tsx
 // packages/react/src/components/Utilities/Icon/index.stories.tsx
-import type { Meta, StoryObj } from "@storybook/react"
-import { useState } from "react"
+import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 
-import * as AnimatedIcons from "../../../icons/animated"
-import * as Icons from "../../../icons/app"
-import * as ModuleIcons from "../../../icons/modules"
-import { ComponentProps } from "react"
-import { Icon } from "./index"
+import * as AnimatedIcons from "../../../icons/animated";
+import * as Icons from "../../../icons/app";
+import * as ModuleIcons from "../../../icons/modules";
+import { ComponentProps } from "react";
+import { Icon } from "./index";
 
 const meta = {
   title: "Icon",
@@ -170,17 +176,17 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs", "stable"],
-} satisfies Meta<ComponentProps<typeof Icon>>
+} satisfies Meta<ComponentProps<typeof Icon>>;
 
-export default meta
-type Story = StoryObj<typeof meta>
+export default meta;
+type Story = StoryObj<typeof meta>;
 
 export const App: Story = {
   args: {
     size: "lg",
     icon: Icons.ChartLine,
   },
-}
+};
 
 export const Module: Story = {
   args: {
@@ -194,7 +200,7 @@ export const Module: Story = {
       mapping: ModuleIcons,
     },
   },
-}
+};
 
 export const Animated: Story = {
   args: {
@@ -215,7 +221,7 @@ export const Animated: Story = {
     },
   },
   render: ({ size, icon }) => {
-    const [isHovered, setIsHovered] = useState(false)
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
       <div
@@ -229,8 +235,7 @@ export const Animated: Story = {
           size={size}
         />
       </div>
-    )
+    );
   },
-}
+};
 ```
-

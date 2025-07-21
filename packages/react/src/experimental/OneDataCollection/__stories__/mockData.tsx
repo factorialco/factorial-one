@@ -1,8 +1,8 @@
 import {
-  BaseFetchOptions,
   BaseResponse,
   BulkActionDefinition,
-  DataAdapter,
+  DataCollectionBaseFetchOptions,
+  DataCollectionDataAdapter,
   GroupingDefinition,
   GroupingState,
   InfiniteScrollPaginatedResponse,
@@ -15,28 +15,22 @@ import {
   RecordType,
   SelectedItemsState,
   SortingsStateMultiple,
-  useDataSource,
+  useDataCollectionSource,
 } from "@/experimental/OneDataCollection/exports"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
 
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { cn } from "@/lib/utils"
+import { generateMockUsers, MockUser } from "@/mocks"
+export { generateMockUsers, type MockUser }
 
 import {
   FilterDefinition,
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker"
-import {
-  DEPARTMENTS_MOCK,
-  FIRST_NAMES_MOCK,
-  ROLES_MOCK,
-  SALARY_MOCK,
-  START_DATE_MOCK,
-  STATUS_MOCK,
-  SURNAMES_MOCK,
-} from "@/mocks"
+import { DEPARTMENTS_MOCK } from "@/mocks"
 import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
@@ -86,50 +80,6 @@ export const filterPresets: PresetsDefinition<typeof filters> = [
     },
   },
 ]
-
-export type MockUser = {
-  index: number
-  id: string
-  name: string
-  email: string
-  role: string
-  department: (typeof DEPARTMENTS_MOCK)[number]
-  status: string
-  isStarred: boolean
-  salary: number | undefined
-  joinedAt: Date
-  permissions: {
-    read?: boolean
-    write?: boolean
-    delete: boolean
-  }
-}
-
-export const generateMockUsers = (count: number): MockUser[] => {
-  return Array.from({ length: count }).map((_, index) => {
-    const department = DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length]
-    const name = `${FIRST_NAMES_MOCK[index % FIRST_NAMES_MOCK.length]} ${SURNAMES_MOCK[index % SURNAMES_MOCK.length]}`
-    const email = `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`
-    return {
-      index,
-      id: `user-${index + 1}`,
-      name,
-      email,
-      role: ROLES_MOCK[index % ROLES_MOCK.length],
-      department,
-      status: STATUS_MOCK[index % STATUS_MOCK.length],
-      isStarred: index % 3 === 0,
-      href: `/users/user-${index + 1}`,
-      salary: SALARY_MOCK[index % SALARY_MOCK.length],
-      joinedAt: START_DATE_MOCK[index % START_DATE_MOCK.length],
-      permissions: {
-        read: index % 2 === 0,
-        write: index % 3 === 0,
-        delete: index % 4 === 0,
-      },
-    }
-  })
-}
 
 // Mock data
 export const mockUsers = generateMockUsers(10)
@@ -439,7 +389,10 @@ export const createObservableDataFetch = (delay = 0) => {
     filters,
     sortings: sortingsState,
     navigationFilters,
-  }: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>) =>
+  }: DataCollectionBaseFetchOptions<
+    FiltersType,
+    NavigationFiltersDefinition
+  >) =>
     new Observable<PromiseState<BaseResponse<MockUser>>>((observer) => {
       observer.next({
         loading: true,
@@ -488,7 +441,10 @@ export const createObservableDataFetch = (delay = 0) => {
 
 export const createPromiseDataFetch = (delay = 500) => {
   return (
-    options: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>
+    options: DataCollectionBaseFetchOptions<
+      FiltersType,
+      NavigationFiltersDefinition
+    >
   ) => {
     const {
       filters,
@@ -536,7 +492,7 @@ export const createPromiseDataFetch = (delay = 500) => {
 // Utility functions for data fetching
 export type FiltersType = typeof filters
 
-// Example component using useDataSource
+// Example component using useDataCollectionSource
 export const ExampleComponent = ({
   useObservable = false,
   usePresets = false,
@@ -567,7 +523,11 @@ export const ExampleComponent = ({
       GroupingDefinition<MockUser>
     >
   >
-  dataAdapter?: DataAdapter<MockUser, FiltersType, NavigationFiltersDefinition>
+  dataAdapter?: DataCollectionDataAdapter<
+    MockUser,
+    FiltersType,
+    NavigationFiltersDefinition
+  >
   defaultSelectedItems?: SelectedItemsState
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
@@ -588,7 +548,7 @@ export const ExampleComponent = ({
     frozenColumns,
   })
 
-  const dataSource = useDataSource({
+  const dataSource = useDataCollectionSource({
     filters,
     navigationFilters,
     presets: usePresets ? filterPresets : undefined,
@@ -688,7 +648,7 @@ export function createDataAdapter<
   useObservable = false,
   paginationType,
   perPage = 20,
-}: DataAdapterOptions<TRecord>): DataAdapter<
+}: DataAdapterOptions<TRecord>): DataCollectionDataAdapter<
   TRecord,
   TFilters,
   TNavigationFilters
@@ -838,7 +798,11 @@ export function createDataAdapter<
   }
 
   if (paginationType === "pages") {
-    const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
+    const adapter: DataCollectionDataAdapter<
+      TRecord,
+      TFilters,
+      TNavigationFilters
+    > = {
       paginationType: "pages",
       perPage,
       fetchData: ({ filters, sortings, pagination }) => {
@@ -902,7 +866,11 @@ export function createDataAdapter<
 
     return adapter
   } else if (paginationType === "infinite-scroll") {
-    const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
+    const adapter: DataCollectionDataAdapter<
+      TRecord,
+      TFilters,
+      TNavigationFilters
+    > = {
       paginationType: "infinite-scroll",
       perPage,
       fetchData: ({ filters, sortings, pagination }) => {
@@ -973,7 +941,11 @@ export function createDataAdapter<
   }
 
   // Not paginated
-  const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
+  const adapter: DataCollectionDataAdapter<
+    TRecord,
+    TFilters,
+    TNavigationFilters
+  > = {
     fetchData: ({ filters, sortings }) => {
       if (useObservable) {
         return new Observable<PromiseState<BaseResponse<TRecord>>>(

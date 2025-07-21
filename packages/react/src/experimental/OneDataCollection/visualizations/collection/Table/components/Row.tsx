@@ -1,24 +1,24 @@
 import { ItemActionsDropdown } from "@/experimental/OneDataCollection/ItemActions/ItemActionsDropdown"
 import { forwardRef } from "react"
 
-import { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import {
   filterItemActions,
   ItemActionsDefinition,
 } from "@/experimental/OneDataCollection/item-actions"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { renderProperty } from "@/experimental/OneDataCollection/property-render"
-import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary"
+import { TableCell, TableRow } from "@/experimental/OneTable"
 import {
-  DataSource,
+  FiltersDefinition,
   GroupingDefinition,
   RecordType,
-} from "@/experimental/OneDataCollection/types"
-import { TableCell, TableRow } from "@/experimental/OneTable"
+  SortingsDefinition,
+} from "@/hooks/datasource"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { TableColumnDefinition } from ".."
+import { DataCollectionSource } from "../../../../exports"
 import { actionsToDropdownItems } from "../../utils"
 
 export type RowProps<
@@ -30,7 +30,7 @@ export type RowProps<
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 > = {
-  source: DataSource<
+  source: DataCollectionSource<
     R,
     Filters,
     Sortings,
