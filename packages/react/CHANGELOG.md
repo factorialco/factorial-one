@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.129.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.0...factorial-one-react-v1.129.1) (2025-07-21)
+
+
+### Bug Fixes
+
+* custom task item  ([#2275](https://github.com/factorialco/factorial-one/issues/2275)) ([3214307](https://github.com/factorialco/factorial-one/commit/321430783151acd4c9533bb1ba7ec6a716ac3eb1))
+
+## [1.129.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.128.1...factorial-one-react-v1.129.0) (2025-07-21)
+
+
+### Features
+
+* **EmojiPicker:** use pressed prop in trigger ([#2271](https://github.com/factorialco/factorial-one/issues/2271)) ([65ee496](https://github.com/factorialco/factorial-one/commit/65ee496a83077d0362e2e193fe55deb109231fa4))
+
+## [1.128.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.128.0...factorial-one-react-v1.128.1) (2025-07-21)
+
+
+### Bug Fixes
+
+* add missing modules names ([#2276](https://github.com/factorialco/factorial-one/issues/2276)) ([8d3e275](https://github.com/factorialco/factorial-one/commit/8d3e275555edd418f54e5b9dcbde646d0186870b))
+
+## [1.128.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.127.2...factorial-one-react-v1.128.0) (2025-07-17)
+
+
+### Features
+
+* Add internal Action component ([#2200](https://github.com/factorialco/factorial-one/issues/2200)) ([5de1af3](https://github.com/factorialco/factorial-one/commit/5de1af3b1824a1a863c6f3cba484cf61a30ad0d7))
+
+## [1.127.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.127.1...factorial-one-react-v1.127.2) (2025-07-17)
+
+
+### Bug Fixes
+
+* newColor type export ([455cabb](https://github.com/factorialco/factorial-one/commit/455cabb63d54b43fd4c5a3bb4b8dd6b7bd82247e))
+
+## [1.127.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.127.0...factorial-one-react-v1.127.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* input type extends string ([#2265](https://github.com/factorialco/factorial-one/issues/2265)) ([ff995c6](https://github.com/factorialco/factorial-one/commit/ff995c6f847c5fa172874fdcffb72e697353a5e8))
+
+## [1.127.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.3...factorial-one-react-v1.127.0) (2025-07-16)
+
+
+### Features
+
+* **PageHeader:** add pressed state to product updates and actions dropdown ([#2260](https://github.com/factorialco/factorial-one/issues/2260)) ([b22a0a7](https://github.com/factorialco/factorial-one/commit/b22a0a7a61f1ec73d214949173a6f5630cc31c75))
+
 ## [1.126.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.126.2...factorial-one-react-v1.126.3) (2025-07-15)
 
 

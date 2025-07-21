@@ -84,7 +84,7 @@ export default defineConfig({
     lib: {
       entry: {
         ["factorial-one"]: resolve(__dirname, "src/factorial-one.ts"),
-        ["experimental"]: resolve(__dirname, "src/experimental/exports.ts"),
+        ["experimental"]: resolve(__dirname, "src/experimental.ts"),
       },
       fileName: (_, entryName) => {
         return `${entryName}.js`

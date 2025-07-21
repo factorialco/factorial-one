@@ -1,9 +1,9 @@
+import { render, screen, waitFor } from "@/testing/test-utils"
 import "@testing-library/jest-dom/vitest"
 import userEvent from "@testing-library/user-event"
 import React from "react"
 import { describe, expect, it, vi } from "vitest"
 import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
-import { render, screen, waitFor } from "../../../test-utils"
 import { OneFilterPicker } from "../index"
 import type { FiltersDefinition } from "../types"
 
