@@ -87,6 +87,7 @@ const createTestSource = (
   },
   currentGrouping: undefined,
   setCurrentGrouping: vi.fn(),
+  lanes: [],
 })
 
 // Test wrapper component that provides I18nProvider
@@ -362,6 +363,7 @@ describe("TableCollection", () => {
           }
         },
       },
+      lanes: [],
     })
 
     it("renders pagination controls when pages pagination is enabled", async () => {

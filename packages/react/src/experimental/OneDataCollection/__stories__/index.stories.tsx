@@ -175,6 +175,7 @@ export const BasicTableView: Story = {
           onClick: () => console.log(`Import`),
         },
       ],
+      lanes: [],
     })
 
     return (
@@ -301,6 +302,7 @@ export const WithLinkedItems: Story = {
             item.department === "Engineering" && item.status === "active",
         },
       ],
+      lanes: [],
     })
 
     return (
@@ -407,6 +409,7 @@ export const BasicCardView: Story = {
           onClick: () => console.log(`Export`),
         },
       ],
+      lanes: [],
     })
 
     return (
@@ -445,6 +448,7 @@ export const RendererTypes: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      lanes: [],
     })
 
     return (
@@ -568,6 +572,7 @@ export const CustomCardProperties: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      lanes: [],
     })
 
     return (
@@ -753,6 +758,7 @@ export const WithCustomJsonView: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      lanes: [],
     })
 
     return (
@@ -836,6 +842,7 @@ export const WithTableVisualization: Story = {
         data: mockUsers,
         delay: 500,
       }),
+      lanes: [],
     })
 
     return (
@@ -887,6 +894,7 @@ export const WithCardVisualization: Story = {
         delay: 1000,
         useObservable: true,
       }),
+      lanes: [],
     })
 
     return (
@@ -920,6 +928,7 @@ export const WithMultipleVisualizations: Story = {
         data: mockUsers,
         delay: 500,
       }),
+      lanes: [],
     })
 
     const visualizations = Object.values(
@@ -962,6 +971,7 @@ export const WithPagesPagination: Story = {
         delay: 500,
         paginationType: "pages",
       }),
+      lanes: [],
     })
 
     return (
@@ -1010,6 +1020,7 @@ export const WithInfiniteScrollPagination: Story = {
         paginationType: "infinite-scroll",
         perPage: 10,
       }),
+      lanes: [],
     })
 
     return (
@@ -1099,6 +1110,7 @@ export const WithSynchronousData: Story = {
           }
         },
       },
+      lanes: [],
     })
 
     return (
@@ -1192,6 +1204,7 @@ export const WithAdvancedActions: Story = {
           description: "Create a copy of this user",
         },
       ],
+      lanes: [],
     })
 
     return (
@@ -1350,6 +1363,7 @@ export const WithSyncSearch: Story = {
           return { records: filteredUsers }
         },
       },
+      lanes: [],
     })
 
     return (
@@ -1506,6 +1520,7 @@ export const WithAsyncSearch: Story = {
           })
         },
       },
+      lanes: [],
     })
 
     return (
@@ -1625,6 +1640,7 @@ export const TableColumnProperties: Story = {
       presets: filterPresets,
       sortings: extendedSortings,
       dataAdapter,
+      lanes: [],
     })
 
     return (
@@ -1781,6 +1797,7 @@ export const TableWithNoFiltersAndSearch: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve({ records: mockUsers }),
       },
+      lanes: [],
     })
 
     return (
@@ -1887,6 +1904,7 @@ export const TableWithNoFilters: Story = {
           return Promise.resolve({ records: filteredUsers })
         },
       },
+      lanes: [],
     })
 
     return (
@@ -1966,6 +1984,7 @@ export const TableWithSecondaryActions: Story = {
           return Promise.resolve({ records: filteredUsers })
         },
       },
+      lanes: [],
     })
 
     return (

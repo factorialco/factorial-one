@@ -595,6 +595,7 @@ export const ExampleComponent = ({
         ? createObservableDataFetch()
         : createPromiseDataFetch(),
     },
+    lanes: [],
   })
 
   return (

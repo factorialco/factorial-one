@@ -49,6 +49,7 @@ export const BasicSummaryRow: Story = {
           type: "sum",
         },
       },
+      lanes: [],
     })
 
     return (
@@ -98,6 +99,7 @@ export const WithInfiniteScrollSummarySticky: Story = {
         perPage: 10,
         useObservable: true,
       }),
+      lanes: [],
     })
 
     return (
@@ -149,6 +151,7 @@ export const WithInfiniteScrollSummaryStickyFrozenColumns: Story = {
         perPage: 10,
         useObservable: true,
       }),
+      lanes: [],
     })
 
     return (

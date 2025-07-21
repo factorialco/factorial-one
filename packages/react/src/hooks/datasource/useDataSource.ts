@@ -104,11 +104,16 @@ export function useDataSource<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
 
-  const setCurrentFilters = (x: FiltersState<FiltersSchema>) => {
-    if (JSON.stringify(x) === JSON.stringify(currentFilters)) {
+  const setCurrentFilters = (
+    x:
+      | FiltersState<FiltersSchema>
+      | ((prev: FiltersState<FiltersSchema>) => FiltersState<FiltersSchema>)
+  ) => {
+    const newValue = typeof x === "function" ? x(currentFilters) : x
+    if (JSON.stringify(newValue) === JSON.stringify(currentFilters)) {
       return
     }
-    _setCurrentFilters(x)
+    _setCurrentFilters(newValue)
   }
 
   const [currentSortings, setCurrentSortings] =

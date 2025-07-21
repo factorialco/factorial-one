@@ -135,6 +135,7 @@ export const BasicActionsExample: Story = {
         fetchData: () => Promise.resolve({ records: mockUsers }),
       },
       itemActions: createUserActions(),
+      lanes: [],
     })
 
     return (
@@ -197,6 +198,7 @@ export const CardActionsExample: Story = {
         fetchData: () => Promise.resolve({ records: mockUsers }),
       },
       itemActions: createUserActions(),
+      lanes: [],
     })
 
     return (

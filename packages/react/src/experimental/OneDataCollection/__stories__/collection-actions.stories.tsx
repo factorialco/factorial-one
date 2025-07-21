@@ -195,6 +195,7 @@ export const BasicActionsExample: Story = {
         expanded: 0,
         actions: buildSecondaryActions,
       },
+      lanes: [],
     })
 
     return <BaseStory dataSource={dataSource} />
@@ -217,6 +218,7 @@ export const WithExpandedActionsExample: Story = {
         expanded: 1,
         actions: buildSecondaryActions,
       },
+      lanes: [],
     })
 
     dataSource.setCurrentFilters({
@@ -249,6 +251,7 @@ export const HiddenLabelExpandedActionsExample: Story = {
           return actions
         },
       },
+      lanes: [],
     })
 
     return <BaseStory dataSource={dataSource} />
@@ -283,6 +286,7 @@ export const CardActionsExample: Story = {
           return actions
         },
       },
+      lanes: [],
     })
 
     return (

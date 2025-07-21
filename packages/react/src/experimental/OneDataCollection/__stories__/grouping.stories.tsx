@@ -211,6 +211,7 @@ export const CollapsibleGroupingWithDefaultOpenGroups: Story = {
         delay: 500,
         paginationType: "pages",
       }),
+      lanes: [],
     })
 
     return (
@@ -340,6 +341,7 @@ export const WithPaginationAndGrouping: Story = {
         }
       },
       dataAdapter,
+      lanes: [],
     })
 
     return (
@@ -463,6 +465,7 @@ export const WithInfiniteScrollPaginationAndGrouping: Story = {
         delay: 500,
         paginationType: "infinite-scroll",
       }),
+      lanes: [],
     })
 
     return (

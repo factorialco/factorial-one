@@ -48,6 +48,7 @@ const BaseExampleComponent = ({
     dataAdapter,
     currentFilters,
     sortings,
+    lanes: [],
   })
 
   const mockVisualizations = getMockVisualizations()
