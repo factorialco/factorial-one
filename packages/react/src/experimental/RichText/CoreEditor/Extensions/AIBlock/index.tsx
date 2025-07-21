@@ -45,7 +45,7 @@ export interface AIBlockLabels {
 }
 
 export interface AIBlockConfig {
-  buttons: AIButton[]
+  buttons?: AIButton[]
   onClick: (type: string) => Promise<JSONContent | null>
   title: string
   labels?: AIBlockLabels
@@ -238,7 +238,7 @@ const useDisplayInfo = (
 
     // Only fall back to searching in config if no saved data exists
     if (selectedAction) {
-      const selectedButton = config.buttons.find(
+      const selectedButton = config.buttons?.find(
         (button: AIButton) => button.type === selectedAction
       )
 
@@ -340,7 +340,7 @@ const AIButtonsSection: React.FC<AIButtonsSectionProps> = ({
         exit={{ opacity: 0, height: 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        {config.buttons.map((button: AIButton, index: number) => (
+        {config.buttons?.map((button: AIButton, index: number) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, x: -20 }}
@@ -476,7 +476,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
   const handleClick = useCallback(
     async (type: string) => {
-      const selectedButton = config.buttons.find(
+      const selectedButton = config.buttons?.find(
         (button: AIButton) => button.type === type
       )
 
@@ -576,6 +576,9 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
   const shouldShowButtons = !isLoading && !hasSelectedAction && !hasContent
 
   if (!data || !config) return null
+
+  // Don't render the block if there are no buttons available
+  if (!config.buttons || config.buttons.length === 0) return null
 
   return (
     <NodeViewWrapper contentEditable={false}>

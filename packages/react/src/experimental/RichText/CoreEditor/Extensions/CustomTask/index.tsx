@@ -41,6 +41,7 @@ const CustomTask = TaskItem.extend({
         {
           type: "checkbox",
           checked: node.attrs.checked ? "checked" : null,
+          disabled: "disabled",
           contenteditable: "false",
         },
       ],
