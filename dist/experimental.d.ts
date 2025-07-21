@@ -180,7 +180,7 @@ declare type ActivityItemProps = {
 };
 
 declare interface AIBlockConfig {
-    buttons: AIButton[];
+    buttons?: AIButton[];
     onClick: (type: string) => Promise<JSONContent_2 | null>;
     title: string;
     labels?: AIBlockLabels;
@@ -207,7 +207,7 @@ export declare type AiChatProps = ComponentProps<typeof CopilotPopup>;
 
 export declare const AiChatProvider: (props: AiChatProviderProps) => JSX_2.Element;
 
-export declare type AiChatProviderProps = ComponentProps<typeof CopilotKit>;
+export declare type AiChatProviderProps = Omit<ComponentProps<typeof CopilotKit>, "window">;
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "warning" | "positive" | "destructive" | undefined;
@@ -422,6 +422,8 @@ export declare type BaseBannerProps = {
 };
 
 export declare const BaseCelebration: ({ link, firstName, lastName, src, onClick, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element;
+
+declare type BaseColor = keyof typeof baseColors;
 
 export declare const BaseCommunityPost: ({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noReactionsButton, noVideoPreload, }: CommunityPostProps) => JSX_2.Element;
 
@@ -2035,7 +2037,7 @@ export declare type InfiniteScrollPaginatedResponse<TRecord> = BasePaginatedResp
     hasMore: boolean;
 };
 
-export declare const Input: React.FC<InputProps<string | number>>;
+export declare const Input: <T extends string = string>(props: InputProps<T>) => JSX_2.Element;
 
 declare const Input_2: React_2.ForwardRefExoticComponent<Omit<React_2.InputHTMLAttributes<HTMLInputElement>, "onChange" | "size"> & Pick<InputFieldProps<string>, "label" | "onChange" | "role" | "disabled" | "size" | "icon" | "loading" | "hideLabel" | "append" | "maxLength" | "required" | "error" | "labelIcon" | "onClickContent" | "clearable" | "isEmpty" | "emptyValue" | "hideMaxLength" | "lengthProvider"> & React_2.RefAttributes<HTMLInputElement>>;
 
@@ -2085,7 +2087,7 @@ declare type InputFieldProps<T> = {
 
 declare type InputFieldSize = (typeof INPUTFIELD_SIZES)[number];
 
-export declare type InputProps<T extends string | number> = Pick<ComponentProps<typeof Input_2>, "ref"> & Pick<InputFieldProps<T>, "disabled" | "size" | "onChange" | "value" | "placeholder" | "clearable" | "maxLength" | "label" | "labelIcon" | "icon" | "error" | "hideLabel"> & {
+export declare type InputProps<T extends string> = Pick<ComponentProps<typeof Input_2>, "ref"> & Pick<InputFieldProps<T>, "disabled" | "size" | "onChange" | "value" | "placeholder" | "clearable" | "maxLength" | "label" | "labelIcon" | "icon" | "error" | "hideLabel"> & {
     type?: Exclude<HTMLInputTypeAttribute, "number">;
 };
 
@@ -2362,12 +2364,14 @@ export declare const modules: {
     readonly pages: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly payroll_bundle: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly performance_v2: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly performance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly playground: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly processes: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly profile: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly project_management: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly reports: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly settings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly personal_settings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly shift_management: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly shifts: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly social: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
@@ -2464,7 +2468,7 @@ declare type NavigationProps = {
     };
 };
 
-export declare type NewColor = Extract<keyof typeof baseColors, "viridian" | "malibu" | "yellow" | "purple" | "lilac" | "barbie" | "smoke" | "army" | "flubber" | "indigo" | "camel">;
+export declare type NewColor = Extract<BaseColor, "viridian" | "malibu" | "yellow" | "purple" | "lilac" | "barbie" | "smoke" | "army" | "flubber" | "indigo" | "camel">;
 
 declare interface NextStepsProps {
     title: string;
@@ -4071,11 +4075,11 @@ declare type TeamTagProps = ComponentProps<typeof TeamTag>;
 
 export declare const Textarea: React.FC<TextareaProps>;
 
-declare const Textarea_2: React_2.ForwardRefExoticComponent<React_2.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+declare const Textarea_2: React_2.ForwardRefExoticComponent<Omit<React_2.TextareaHTMLAttributes<HTMLTextAreaElement>, "value" | "onChange" | "onFocus" | "onBlur"> & {
     value?: string;
-} & Pick<InputFieldProps<string>, "label" | "onChange" | "onFocus" | "onBlur" | "icon" | "hideLabel" | "maxLength" | "placeholder" | "error" | "labelIcon" | "clearable" | "onClear"> & React_2.RefAttributes<HTMLTextAreaElement>>;
+} & Pick<InputFieldProps<string>, "label" | "value" | "onChange" | "onFocus" | "onBlur" | "icon" | "hideLabel" | "maxLength" | "placeholder" | "error" | "labelIcon" | "clearable" | "onClear"> & React_2.RefAttributes<HTMLTextAreaElement>>;
 
-export declare type TextareaProps = Pick<ComponentProps<typeof Textarea_2>, "disabled" | "onChange" | "value" | "placeholder" | "rows" | "cols" | "label" | "labelIcon" | "icon" | "error" | "hideLabel" | "maxLength" | "clearable">;
+export declare type TextareaProps = Pick<ComponentProps<typeof Textarea_2>, "disabled" | "onChange" | "value" | "placeholder" | "rows" | "cols" | "label" | "labelIcon" | "icon" | "error" | "hideLabel" | "maxLength" | "clearable" | "onBlur" | "onFocus">;
 
 declare const THEMES: {
     readonly light: "";
@@ -4505,8 +4509,8 @@ declare global {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        liveCompanion: {
-            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        aiBlock: {
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType;
         };
     }
 }
@@ -4514,8 +4518,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        aiBlock: {
-            insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
     }
 }
