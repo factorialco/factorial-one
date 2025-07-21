@@ -65,6 +65,22 @@ describe("Collections", () => {
               }
             },
           },
+          lanes: [
+            {
+              filters: { name: "John" },
+              name: "John",
+              description: "John's Filters",
+              icon: "filter",
+              color: "red",
+            },
+            {
+              filters: { name: "Jane" },
+              name: "Jane",
+              description: "Jane's Filters",
+              icon: "filter",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -103,6 +119,15 @@ describe("Collections", () => {
               ],
             }),
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -174,6 +199,15 @@ describe("Collections", () => {
                 return () => {}
               }),
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -258,6 +292,15 @@ describe("Collections", () => {
               return { records: filtered }
             },
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -294,6 +337,15 @@ describe("Collections", () => {
           dataAdapter: {
             fetchData: async () => ({ records: [{ name: "John" }] }),
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -384,6 +436,15 @@ describe("Collections", () => {
                 return () => {}
               }),
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -468,6 +529,15 @@ describe("Collections", () => {
               label: "Name",
             },
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         })
 
         // Override the setCurrentSortings with our mock for testing
@@ -589,6 +659,15 @@ describe("Collections", () => {
             field: "name",
             order: "desc",
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -681,6 +760,15 @@ describe("Collections", () => {
             },
           },
           defaultSorting,
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -745,6 +833,15 @@ describe("Collections", () => {
             field: "name",
             order: "desc",
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -870,6 +967,15 @@ describe("Collections", () => {
               return { records: filtered }
             },
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         })
 
         // Override the setCurrentFilters with our mock for testing
@@ -982,6 +1088,15 @@ describe("Collections", () => {
               label: "Delete",
               variant: "destructive",
               onClick: () => handleDelete(item),
+            },
+          ],
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
             },
           ],
         }),
@@ -1105,6 +1220,15 @@ describe("Collections", () => {
             enabled: true,
             sync: true,
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         })
 
         // Override setCurrentSearch with our mock
@@ -1217,6 +1341,15 @@ describe("Collections", () => {
               }
             },
           },
+          lanes: [
+            {
+              filters: {},
+              name: "All",
+              description: "All items",
+              icon: "list",
+              color: "blue",
+            },
+          ],
         }),
       { wrapper: TestWrapper }
     )

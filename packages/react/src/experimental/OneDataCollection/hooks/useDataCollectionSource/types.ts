@@ -5,6 +5,7 @@ import {
   DataSource,
   DataSourceDefinition,
   FiltersDefinition,
+  FiltersState,
   GroupingDefinition,
   PaginatedDataAdapter,
   PaginatedFetchOptions,
@@ -117,6 +118,15 @@ export type DataCollectionSourceDefinition<
     secondary?: BulkActionDefinition[]
   }
   totalItemSummary?: (totalItems: number) => string
+
+  /** Lanes for the data collection TODO: make it optional */
+  lanes: {
+    filters: FiltersState<Filters>
+    name: string
+    description: string
+    icon: string
+    color: string
+  }[]
 }
 
 /**
