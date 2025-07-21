@@ -179,6 +179,10 @@
   @apply mb-2 flex list-none gap-2;
 }
 
+.f1-task-item div {
+  @apply flex-1;
+}
+
 .f1-task-item input {
   /* Hide native checkbox and style it custom */
   appearance: none;

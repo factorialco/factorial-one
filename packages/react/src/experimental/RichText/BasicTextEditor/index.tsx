@@ -87,7 +87,18 @@ const BasicTextEditorComponent = forwardRef<
       placeholder,
       toolbarLabels,
       slashCommandGroupLabels,
-      aiBlockConfig,
+      aiBlockConfig
+        ? {
+            ...aiBlockConfig,
+            toolbarLabels,
+            slashCommandGroupLabels,
+            moodTrackerLabels,
+            liveCompanionLabels,
+            transcriptLabels,
+            labels: aiBlockLabels,
+            placeholder,
+          }
+        : undefined,
       aiBlockLabels,
       moodTrackerLabels,
       liveCompanionLabels,
