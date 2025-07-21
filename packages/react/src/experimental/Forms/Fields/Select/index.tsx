@@ -206,18 +206,6 @@ const SelectComponent = forwardRef(function Select<
 
   const [openLocal, setOpenLocal] = useState(open)
 
-  // Internally manage all the selected values as an array
-  const [localValue, setLocalValue] = useState<T[]>(() => {
-    if (multiple) {
-      return (
-        value ?? (defaultItem || []).filter(Boolean).map((item) => item.value)
-      )
-    } else {
-      const singleValue = value ?? defaultItem?.value
-      return singleValue !== undefined ? [singleValue] : []
-    }
-  })
-
   const dataSource = useMemo(() => {
     if (
       source &&
@@ -289,52 +277,53 @@ const SelectComponent = forwardRef(function Select<
   const { currentSearch, setCurrentSearch } = localSource
 
   const [selectedOption, setSelectedOption] = useState<
-    SelectItemObject<T, R>[] | undefined
+    SelectItemObject<T, R> | SelectItemObject<T, R>[] | undefined
   >(undefined)
 
   /**
    * Finds an option in the data records by value and returns the mapped option
    * @param value - The value to find
-   * @returns The option if found, undefined otherwise
+   * @returns The options array if found, empty array otherwise
    */
-  const findOption = useCallback(
-    (value: string | T | undefined): SelectItemObject<T, R> | undefined => {
+  const findOptions = useCallback(
+    (
+      value: (string | T) | (string | T)[] | undefined
+    ): SelectItemObject<T, R>[] => {
+      const res: SelectItemObject<T, R>[] = []
       if (value === undefined) {
-        return undefined
+        return res
       }
+
+      if (!Array.isArray(value)) {
+        value = [value]
+      }
+
       for (const option of data.records) {
         const mappedOption = optionMapper(option)
         if (
           mappedOption.type !== "separator" &&
-          String(mappedOption.value) === value
+          value.includes(mappedOption.value)
         ) {
-          return mappedOption
+          res.push(mappedOption)
         }
       }
-      return undefined
+      return res
     },
     [data.records, optionMapper]
   )
 
   // Select options if select values changes
   useEffect(() => {
-    const selectedOptions: SelectItemObject<T, R>[] = []
-    for (const value of localValue) {
-      const foundOption = findOption(value)
-      if (foundOption) {
-        selectedOptions.push(foundOption)
-      }
-    }
+    const foundOptions = findOptions(value)
 
-    onChangeSelectedOption?.(multiple ? selectedOptions : selectedOptions[0])
-    setSelectedOption(selectedOptions)
-  }, [
-    data.records,
-    localValue,
-    optionMapper,
-    findOption,
-    onChangeSelectedOption,
-  ])
+    if (multiple) {
+      onChangeSelectedOption?.(foundOptions)
+      setSelectedOption(foundOptions)
+    } else {
+      onChangeSelectedOption?.(foundOptions[0])
+      setSelectedOption(foundOptions[0])
+    }
+  }, [optionMapper, findOptions, onChangeSelectedOption, value, multiple])
 
   useEffect(() => {
     if (open) {
@@ -350,11 +339,15 @@ const SelectComponent = forwardRef(function Select<
     [setCurrentSearch, onSearchChange]
   )
 
-  const handleLocalValueChange = (changedValue: string | undefined) => {
+  const handleLocalValueChange = (
+    changedValue: string | string[] | undefined
+  ) => {
+    console.log("changedValue", changedValue)
     // Resets the search value when the option is selected
     setCurrentSearch(undefined)
-    setLocalValue(changedValue as T)
-    const foundOption = findOption(changedValue)
+
+    setValue(changedValue as T[])
+    const foundOption = findOptions(changedValue)
 
     if (foundOption) {
       onChange?.(foundOption.value, foundOption.item, foundOption)
@@ -391,6 +384,7 @@ const SelectComponent = forwardRef(function Select<
                 <SelectItem
                   key={String(mappedOption.value)}
                   item={mappedOption}
+                  multiple={multiple}
                 />
               ),
               value: mappedOption.value,
@@ -439,15 +433,15 @@ const SelectComponent = forwardRef(function Select<
       <SelectPrimitive
         onValueChange={handleLocalValueChange}
         value={
-          localValue !== undefined && localValue !== null
-            ? String(localValue)
-            : undefined
+          value !== undefined && value !== null ? String(value) : undefined
         }
         disabled={disabled}
         open={openLocal}
+        multiple={multiple}
         onOpenChange={handleChangeOpenLocal}
         {...props}
       >
+        {JSON.stringify(value, null, 2)}
         <SelectTrigger ref={ref} asChild>
           {children ? (
             <div
@@ -463,7 +457,8 @@ const SelectComponent = forwardRef(function Select<
               icon={icon}
               labelIcon={labelIcon}
               hideLabel={hideLabel}
-              value={localValue as string}
+              value={value}
+              multiple={multiple}
               onChange={(value) => handleLocalValueChange(value)}
               placeholder={placeholder || ""}
               disabled={disabled}

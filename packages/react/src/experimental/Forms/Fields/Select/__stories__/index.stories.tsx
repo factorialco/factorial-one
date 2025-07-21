@@ -38,6 +38,8 @@ const SelectWithHooks = (props: SelectProps<string>) => {
         onChange={handleOnChange}
         onSearchChange={handleOnSearchChange}
       />
+
+      <div className="mt-20">Selected: {JSON.stringify(localValue)}</div>
     </div>
   )
 }

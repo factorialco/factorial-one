@@ -1,10 +1,12 @@
-import * as SelectPrimitive from "@radix-ui/react-select"
 import * as React from "react"
 import { useState } from "react"
-import { SelectContext } from "../SelectContext.tsx"
+import { SelectContext, SelectContextType } from "../SelectContext.tsx"
+import * as SelectPrimitive from "./radix-ui"
 
-type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root> & {
+export type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root> & {
   asList?: boolean
+  placeholder?: string
+  options: { value: string; label: string }[]
 }
 /**
  * Select Root component
@@ -30,19 +32,35 @@ const Select = (props: SelectProps) => {
     props.onOpenChange?.(open)
   }
 
+  React.useEffect(() => {
+    console.log("props.value", props.value)
+  }, [props.value])
+
+  const handleValueChange = (value: (typeof props)["value"]) => {
+    setLocalValue(value)
+    props.onValueChange?.(value)
+  }
+
+  const [localValue, setLocalValue] = useState(props.value)
+
   return (
     <div className="[&>div]:!relative">
       <SelectPrimitive.Root
         {...props}
         open={isOpen}
+        value={localValue}
         onOpenChange={handleOpenChange}
+        onValueChange={handleValueChange}
       >
         <SelectContext.Provider
-          value={{
-            value: props.value,
-            open: isOpen,
-            asList: props.asList,
-          }}
+          value={
+            {
+              value: localValue,
+              open: isOpen,
+              asList: props.asList,
+              multiple: props.multiple,
+            } as SelectContextType
+          }
         >
           {props.children}
         </SelectContext.Provider>

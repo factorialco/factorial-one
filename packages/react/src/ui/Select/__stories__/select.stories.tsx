@@ -1,29 +1,32 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useMemo, useState } from "react"
-import { Circle, Desktop } from "../../icons/app"
+import { Circle, Desktop } from "../../../icons/app"
 import {
   Select,
   SelectContent,
   SelectItem,
+  SelectProps,
   SelectTrigger,
   SelectValue,
-} from "./index"
+} from "../index"
 
 const SelectWithHooks = ({
   options,
   placeholder,
   asList,
+  multiple,
   ...props
-}: {
-  options: { value: string; label: string }[]
-  placeholder?: string
-  asList?: boolean
-}) => {
-  const [value, setValue] = useState("")
+}: SelectProps) => {
+  const [value, setValue] = useState(props.value ?? (multiple ? [] : ""))
+
+  const handleChange = (value: string | string[]) => {
+    console.log("value", value)
+    setValue(value)
+  }
 
   const items = useMemo(
     () =>
-      options.map((option) => ({
+      options?.map((option) => ({
         value: option.value,
         height: 40,
         item: <SelectItem value={option.value}>{option.label}</SelectItem>,
@@ -32,13 +35,22 @@ const SelectWithHooks = ({
   )
 
   return (
-    <Select value={value} onValueChange={setValue} {...props} asList={asList}>
-      <SelectTrigger>
-        {value}
-        <SelectValue placeholder={placeholder} />
-      </SelectTrigger>
-      <SelectContent items={items}></SelectContent>
-    </Select>
+    <>
+      <Select
+        value={value}
+        onValueChange={handleChange}
+        multiple={multiple}
+        {...props}
+        asList={asList}
+      >
+        <SelectTrigger>
+          {value}
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent items={items}></SelectContent>
+      </Select>
+      <div className="mt-20">Selected: {JSON.stringify(value)}</div>
+    </>
   )
 }
 
@@ -64,6 +76,7 @@ const meta = {
   },
   args: {
     placeholder: "Select an option",
+    multiple: false,
     options: [
       { value: "light", label: "Light" },
       { value: "dark", label: "Dark" },
@@ -93,6 +106,14 @@ export const AsList: Story = {
           "Renders the select as a list. Removes the triger and keeps it always open.",
       },
     },
+  },
+}
+
+export const Multiple: Story = {
+  args: {
+    ...Default.args,
+    value: ["light", "system"],
+    multiple: true,
   },
 }
 

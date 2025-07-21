@@ -1,7 +1,6 @@
 import { useReducedMotion } from "@/lib/a11y"
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/ui/scrollarea"
-import * as SelectPrimitive from "@radix-ui/react-select"
 import { useVirtualizer } from "@tanstack/react-virtual"
 import {
   ComponentPropsWithoutRef,
@@ -16,6 +15,7 @@ import {
 } from "react"
 import { VirtualItem } from "../index"
 import { SelectContext } from "../SelectContext"
+import * as SelectPrimitive from "./radix-ui"
 
 const VIEWBOX_VERTICAL_PADDING = 8
 
@@ -94,7 +94,13 @@ const SelectContent = forwardRef<
     const { value, open, asList } = useContext(SelectContext)
 
     const positionIndex = useMemo(() => {
-      return (items && items.findIndex((item) => item.value === value)) || 0
+      return (
+        (items &&
+          items.findIndex(
+            (item) => item.value !== undefined && value.includes(item.value)
+          )) ||
+        0
+      )
     }, [items, value])
 
     const virtualizer = useVirtualizer({
