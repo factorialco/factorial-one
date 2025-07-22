@@ -3,7 +3,7 @@ import { Icon } from "@/components/Utilities/Icon"
 import {
   Pulse,
   pulseIcon,
-  pulseIconStyle,
+  pulseIconColor,
 } from "@/experimental/Information/Avatars/PulseAvatar"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
@@ -113,7 +113,7 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
                       <Icon
                         icon={pulseIcon[day.mood]}
                         size="lg"
-                        className={pulseIconStyle({ pulse: day.mood })}
+                        color={pulseIconColor[day.mood]}
                       />
                     </div>
                   ))}
@@ -205,7 +205,7 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
                         <Icon
                           icon={pulseIcon[day.mood]}
                           size="lg"
-                          className={pulseIconStyle({ pulse: day.mood })}
+                          color={pulseIconColor[day.mood]}
                         />
                       </div>
                       <p className="text-f1-text-primary text-md font-normal">

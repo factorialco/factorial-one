@@ -1,5 +1,5 @@
 import { Button as ActionButton } from "@/components/Actions/Button"
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Icon, IconProps, IconType } from "@/components/Utilities/Icon"
 import {
   FaceNegative,
   FaceNeutral,
@@ -10,7 +10,6 @@ import {
 } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { Button } from "@/ui/button"
-import { cva } from "cva"
 import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, useState } from "react"
 import { EmojiImage } from "../../../../lib/emojis"
@@ -31,17 +30,13 @@ export const pulseIcon: Record<Pulse, IconType> = {
   superPositive: FaceSuperPositive,
 }
 
-export const pulseIconStyle = cva({
-  variants: {
-    pulse: {
-      superNegative: "text-[hsl(theme(colors.radical.50))]",
-      negative: "text-[hsl(theme(colors.orange.50))]",
-      neutral: "text-[hsl(theme(colors.yellow.50))]",
-      positive: "text-[hsl(theme(colors.flubber.50))]",
-      superPositive: "text-[hsl(theme(colors.grass.50))]",
-    },
-  },
-})
+export const pulseIconColor: Record<Pulse, IconProps["color"]> = {
+  superNegative: "mood-super-negative",
+  negative: "mood-negative",
+  neutral: "mood-neutral",
+  positive: "mood-positive",
+  superPositive: "mood-super-positive",
+}
 
 type BaseAvatarProps = ComponentProps<typeof BaseAvatar>
 
@@ -152,10 +147,7 @@ export const PulseAvatar = ({
                   round
                   aria-label={translations.actions.edit}
                 >
-                  <Icon
-                    icon={pulseIcon[pulse]}
-                    className={pulseIconStyle({ pulse })}
-                  />
+                  <Icon icon={pulseIcon[pulse]} color={pulseIconColor[pulse]} />
                 </Button>
               </div>
             ) : (
