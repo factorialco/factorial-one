@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.130.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.130.0...factorial-one-react-v1.130.1) (2025-07-22)
+
+
+### Bug Fixes
+
+* pulse avatar icon color ([#2282](https://github.com/factorialco/factorial-one/issues/2282)) ([5fdd117](https://github.com/factorialco/factorial-one/commit/5fdd117b2b2c22eb9b2e148a1101c46e3d8208f8))
+
 ## [1.130.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.3...factorial-one-react-v1.130.0) (2025-07-22)
 
 
