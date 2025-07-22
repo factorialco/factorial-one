@@ -33,6 +33,7 @@ export const defaultTranslations = {
     more: "More",
     moveUp: "Move up",
     moveDown: "Move down",
+    other: "Other actions",
   },
   status: {
     selected: {

@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { IconType } from "@/components/Utilities/Icon"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import {
   Avatar,
@@ -9,6 +9,7 @@ import {
 import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { EllipsisHorizontal } from "@/icons/app"
+import { useI18n } from "@/lib/providers/i18n/i18n-provider"
 import { cn, focusRing } from "@/lib/utils"
 import {
   Card,
@@ -118,6 +119,8 @@ export function OneCard({
   onSelect,
   onClick,
 }: OneCardProps) {
+  const translations = useI18n()
+
   const hasActions =
     primaryAction || (secondaryActions && secondaryActions?.length > 0)
   const hasOtherActions = otherActions && otherActions.length > 0
@@ -173,7 +176,7 @@ export function OneCard({
             )}
           </CardHeader>
           {(hasOtherActions || selectable) && (
-            <div className={cn("flex flex-row gap-2 [&>div]:z-[1]")}>
+            <div className="flex flex-row items-center gap-2 [&>div]:z-[1]">
               {hasOtherActions && (
                 <div
                   className={cn(
@@ -187,16 +190,15 @@ export function OneCard({
                     open={isOpen}
                     onOpenChange={setIsOpen}
                   >
-                    <button
-                      className={cn(
-                        "flex h-6 w-6 items-center justify-center rounded-sm transition-colors hover:bg-f1-background-secondary",
-                        isOpen && "bg-f1-background-secondary",
-                        focusRing()
-                      )}
-                      aria-label="Other actions"
-                    >
-                      <Icon icon={EllipsisHorizontal} size="sm" />
-                    </button>
+                    <Button
+                      label={translations.actions.other}
+                      icon={EllipsisHorizontal}
+                      variant="ghost"
+                      size="sm"
+                      round
+                      hideLabel
+                      pressed={isOpen}
+                    />
                   </Dropdown>
                 </div>
               )}
