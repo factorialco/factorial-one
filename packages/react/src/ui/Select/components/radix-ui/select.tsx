@@ -63,7 +63,7 @@ type SelectContextValue = {
   required?: boolean
   multiple?: boolean
   onOpenChange(open: boolean): void
-  dir: SelectProps<string>["dir"]
+  dir: SelectProps["dir"]
   triggerPointerDownPosRef: React.MutableRefObject<{
     x: number
     y: number

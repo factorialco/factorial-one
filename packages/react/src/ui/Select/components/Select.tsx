@@ -1,4 +1,3 @@
-import * as React from "react"
 import { useState } from "react"
 import { SelectContext, SelectContextType } from "../SelectContext.tsx"
 import * as SelectPrimitive from "./radix-ui"
@@ -34,10 +33,6 @@ const Select = <T extends string = string>(props: SelectProps) => {
     props.onOpenChange?.(open)
   }
 
-  React.useEffect(() => {
-    console.log("props.value", props.value)
-  }, [props.value])
-
   const [localValue, setLocalValue] = useState(props.value)
 
   const contextValue: SelectContextType = {
@@ -67,7 +62,7 @@ const Select = <T extends string = string>(props: SelectProps) => {
     }
   }
 
-  const promitiveProps = props.multiple
+  const primitiveProps = props.multiple
     ? {
         ...commonProps,
         multiple: true as const,
@@ -85,7 +80,7 @@ const Select = <T extends string = string>(props: SelectProps) => {
 
   return (
     <div className="[&>div]:!relative">
-      <SelectPrimitive.Root {...promitiveProps} />
+      <SelectPrimitive.Root {...primitiveProps} />
     </div>
   )
 }

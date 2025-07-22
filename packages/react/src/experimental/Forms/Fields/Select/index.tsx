@@ -12,6 +12,7 @@ import {
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
+  SelectedItemsState,
   SortingsDefinition,
   useData,
   useDataSource,
@@ -56,12 +57,12 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = (
   | {
       multiple: true
       onChange: (
-        value: T[],
+        value: SelectedItemsState<T>,
         originalItems?: R[],
         options?: SelectItemObject<T, R>[]
       ) => void
       onChangeSelectedOption?: (options: SelectItemObject<T, R>[]) => void
-      value?: T[]
+      value?: T[] | SelectedItemsState<T>
       defaultItem?: SelectItemObject<T, R>[]
     }
   | {
@@ -227,7 +228,7 @@ const SelectComponent = forwardRef(function Select<
   const defaultValue = useMemo(() => {
     return multiple
       ? defaultItem?.map((item) => item.value) || []
-      : defaultItem?.value || ""
+      : defaultItem?.value
   }, [defaultItem, multiple])
 
   const dataSource = useMemo(() => {
@@ -268,6 +269,7 @@ const SelectComponent = forwardRef(function Select<
   const localSource = useDataSource(
     {
       ...dataSource,
+      selectable: (item) => item.value as string,
       search: showSearchBox
         ? {
             enabled: showSearchBox,
@@ -295,24 +297,48 @@ const SelectComponent = forwardRef(function Select<
     [mapOptions, source]
   )
 
+  /**
+   * Handles the data fetch form source and pagination if needed
+   */
   const { data, isInitialLoading, loadMore, isLoadingMore, paginationInfo } =
     useData<R>(localSource)
 
+  /**
+   * Gets the search status and handler from the local source
+   */
   const { currentSearch, setCurrentSearch } = localSource
 
-  const { selectedItems, handleSelectItemChange } = useSelectable(
+  /**
+   * Handles the selection of items and groups
+   * We use the more complex case (chunked data) internally, but for the single selection we will return just the selected item outside the component
+   */
+  const { selectedItemsInData } = useSelectable(
     data,
     paginationInfo,
     localSource,
     (item) => {
       console.log("item", item)
+    },
+    {
+      allSelected: true,
+      // items: [
+      //   ...(multiple ? (defaultItem ?? []) : [defaultItem])
+      //     .filter((item) => item !== undefined)
+      //     .map((item) => ({
+      //       id: item.value,
+      //       checked: true,
+      //     })),
+      //   ...(multiple ? (value ?? []) : [value])
+      //     .filter((item) => item !== undefined)
+      //     .map((item) => ({
+      //       id: item.value,
+      //       checked: true,
+      //     })),
+      // ],
     }
-    // {
-    //   selectedItems: new Map(
-    //     defaultItem?.map((item) => [item.value, item]) || []
-    //   ),
-    // }
   )
+
+  console.log("--------------->", data, selectedItemsInData)
 
   const [selectedOption, setSelectedOption] = useState<
     SelectItemObject<T, R> | SelectItemObject<T, R>[] | undefined
@@ -378,9 +404,9 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const handleLocalValueChange = (changedValue: ValueType) => {
-    console.log("changedValue", changedValue)
-    // Resets the search value when the option is selected
     setCurrentSearch(undefined)
+
+    console.log("changedValue", changedValue)
 
     const foundOptions = findOptions(changedValue)
 
@@ -475,11 +501,20 @@ const SelectComponent = forwardRef(function Select<
     }, 0)
   }, [data])
 
+  const primitiveValue = useMemo(() => {
+    console.log("selectedItemsInData", selectedItemsInData)
+    const selectedItemsArray = Array.from(selectedItemsInData.values()).map(
+      (item) => item.value as T
+    )
+
+    return multiple ? selectedItemsArray : selectedItemsArray[0] || undefined
+  }, [selectedItemsInData, multiple])
+
   return (
     <>
       <SelectPrimitive
         onValueChange={handleLocalValueChange}
-        value={value}
+        value={primitiveValue}
         disabled={disabled}
         open={openLocal}
         multiple={multiple}

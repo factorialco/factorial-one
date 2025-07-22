@@ -19,6 +19,12 @@ export type AllSelectionStatus = {
 }
 
 type UseSelectable<R extends RecordType> = {
+  /*
+   * A map of selected items in the current data
+   * It is used to display the selected items in the UI
+   * It is updated when the data changes
+   */
+  selectedItemsInData: Map<number | string, R>
   isAllSelected: boolean
   selectedItems: Map<number | string, R>
   selectedGroups: Map<string, GroupRecord<R>>
@@ -56,34 +62,6 @@ export function useSelectable<
   const [itemsState, setItemsState] = useState<Map<number | string, ItemState>>(
     new Map()
   )
-
-  /**
-   * Set the default selected items and groups
-   */
-  useEffect(() => {
-    if (!defaultSelectedItems) {
-      return
-    }
-
-    if (isGrouped) {
-      for (const defaultGroup of defaultSelectedItems.groups || []) {
-        const group = data.groups.find(
-          (group) => group.key === defaultGroup.groupId
-        )
-        if (group) {
-          handleSelectGroupChange(group, defaultGroup.checked)
-        }
-      }
-    }
-
-    for (const item of defaultSelectedItems.items || []) {
-      const record = data.records.find((record) => record.id === item.id)
-      if (record) {
-        handleSelectItemChange(record, item.checked)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the defaultSelectedItems
-  }, [JSON.stringify(defaultSelectedItems), data.records])
 
   /**
    * Get the list of selected and unselected items from the itemsState for performance reasons
@@ -307,6 +285,7 @@ export function useSelectable<
 
   const isAllSelected = useMemo(
     () => (allSelectedCheck || areAllKnownItemsSelected) && selectedCount > 0,
+
     [allSelectedCheck, areAllKnownItemsSelected, selectedCount]
   )
 
@@ -400,7 +379,76 @@ export function useSelectable<
     data.records?.length,
   ])
 
+  /**
+   * Set the default selected items and groups
+   */
+  useEffect(() => {
+    if (!defaultSelectedItems) {
+      return
+    }
+
+    if (defaultSelectedItems.allSelected) {
+      handleSelectAll(true)
+    }
+
+    if (isGrouped) {
+      for (const defaultGroup of defaultSelectedItems.groups || []) {
+        const group = data.groups.find(
+          (group) => group.key === defaultGroup.groupId
+        )
+        if (group) {
+          handleSelectGroupChange(group, defaultGroup.checked)
+        }
+      }
+    }
+
+    for (const item of defaultSelectedItems.items || []) {
+      const record = data.records.find((record) => record.id === item.id)
+      if (record) {
+        handleSelectItemChange(record, item.checked)
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the defaultSelectedItems
+  }, [JSON.stringify(defaultSelectedItems), data.records])
+
+  /** Creates a map of selected items in the current data */
+  const selectedItemsInData = useMemo(() => {
+    const res = new Map()
+
+    for (const group of data.groups) {
+      for (const record of group.records) {
+        const id = source.selectable && source.selectable(record)
+        if (id === undefined) {
+          continue
+        }
+        // If it is specitely unselected, we don't add
+        if (unselectedItems.has(id)) {
+          continue
+        }
+        if (
+          allSelectedCheck ||
+          groupAllSelectedStatus[group.key]?.checked ||
+          selectedItems.has(id)
+        ) {
+          res.set(id, record)
+        }
+      }
+    }
+
+    console.log("selectedItemsInData2", res)
+
+    return res
+  }, [
+    selectedItems,
+    unselectedItems,
+    allSelectedCheck,
+    groupAllSelectedStatus,
+    data.groups,
+  ])
+
   return {
+    selectedItemsInData,
     selectedItems,
     selectedGroups,
     allSelectedStatus: {

@@ -7,9 +7,9 @@ import { RecordType } from "./records.typings"
 /**
  * Represents the selected items by id
  */
-export type SelectedItemsState = {
+export type SelectedItemsState<T extends string = string> = {
   allSelected?: boolean | "indeterminate"
-  items?: ReadonlyArray<{ id: string; checked: boolean }>
+  items?: ReadonlyArray<{ id: T; checked: boolean }>
   groups?: ReadonlyArray<{ groupId: string; checked: boolean }>
 }
 
