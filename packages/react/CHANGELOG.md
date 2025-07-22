@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.130.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.3...factorial-one-react-v1.130.0) (2025-07-22)
+
+
+### Features
+
+* **Card:** use DataCollection's metadata ([#2272](https://github.com/factorialco/factorial-one/issues/2272)) ([71f75f2](https://github.com/factorialco/factorial-one/commit/71f75f24df1deb0b8d41c46010a322924dad6e33))
+
 ## [1.129.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.2...factorial-one-react-v1.129.3) (2025-07-22)
 
 
