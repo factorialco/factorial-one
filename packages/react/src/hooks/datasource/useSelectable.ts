@@ -111,7 +111,8 @@ export function useSelectable<
    */
   const handleSelectGroupChange = (
     group: GroupRecord<R> | GroupRecord<R>[],
-    checked: boolean
+    checked: boolean,
+    onlyIfNotStateDefined: boolean = false
   ) => {
     if (!isGrouped) {
       return
@@ -130,7 +131,7 @@ export function useSelectable<
         )
         .map((item) => item.item),
     ]
-    handleSelectItemChange(groupItems, checked)
+    handleSelectItemChange(groupItems, checked, onlyIfNotStateDefined)
 
     setGroupsState((current) => {
       const newState = new Map(current)
@@ -239,7 +240,7 @@ export function useSelectable<
     item: R | readonly R[],
     checked: boolean,
     // Only applies the checked state if the item has no state set yet
-    onlyIfNotSelected: boolean = false
+    onlyIfNotStateDefined: boolean = false
   ) => {
     const items = Array.isArray(item) ? item : [item]
 
@@ -249,9 +250,8 @@ export function useSelectable<
       if (id === undefined) {
         return
       }
-
       // If the item is already selected, we don't need to update the state if onlyIfNotSelected is true
-      if (onlyIfNotSelected && itemsState.has(id)) {
+      if (onlyIfNotStateDefined && itemsState.has(id)) {
         return
       }
 
@@ -264,17 +264,23 @@ export function useSelectable<
     }
   }
 
-  const handleSelectAll = (checked: boolean) => {
+  const handleSelectAll = (
+    checked: boolean,
+    onlyIfNotStateDefined: boolean = false
+  ) => {
     setAllSelectedCheck(checked)
+
     if (isGrouped) {
       handleSelectGroupChange(
         Array.from(groupsState.values()).map(({ group }) => group),
-        checked
+        checked,
+        onlyIfNotStateDefined
       )
     } else {
       handleSelectItemChange(
         Array.from(itemsState.values()).map(({ item }) => item),
-        checked
+        checked,
+        onlyIfNotStateDefined
       )
     }
   }
@@ -357,8 +363,6 @@ export function useSelectable<
       // Notify the parent component about the selected items
       const totalItems = paginationInfo?.total ?? (data.records?.length || 0)
 
-      console.log("totalItems", totalItems)
-      console.log("unselectedCount", unselectedCount)
       const selectedItemsCount = totalItems - unselectedCount
 
       return {

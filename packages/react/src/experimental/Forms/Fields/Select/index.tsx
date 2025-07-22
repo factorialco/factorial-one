@@ -455,7 +455,6 @@ const SelectComponent = forwardRef(function Select<
       })
     }
   }
-
   const handleChangeOpenLocal = (open: boolean) => {
     onOpenChange?.(open)
     setOpenLocal(open)
