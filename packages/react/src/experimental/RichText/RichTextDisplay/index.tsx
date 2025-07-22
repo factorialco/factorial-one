@@ -12,17 +12,18 @@ type RichTextDisplayHandle = HTMLDivElement
 
 const RichTextDisplay = forwardRef<RichTextDisplayHandle, RichTextDisplayProps>(
   function RichTextDisplay({ content, className, ...props }, ref) {
-    // convert line breaks to <br> if no HTML tags are detected to be retro compatible with the old text
-    const processedContent = /<[^>]*>/.test(content)
-      ? content
-      : content.replace(/\n/g, "<br>")
+    const isHtml = /<[^>]*>/.test(content)
 
     return (
       <div
         ref={ref}
-        className={cn("rich-text-display-container", className)}
+        className={cn(
+          "rich-text-display-container",
+          !isHtml && "whitespace-pre-wrap",
+          className
+        )}
         dangerouslySetInnerHTML={{
-          __html: DOMPurify.sanitize(processedContent),
+          __html: DOMPurify.sanitize(content),
         }}
         {...props}
       />
