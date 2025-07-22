@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.129.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.2...factorial-one-react-v1.129.3) (2025-07-22)
+
+
+### Bug Fixes
+
+* **RichTextDisplay:** improve HTML content handling and line break support ([#2284](https://github.com/factorialco/factorial-one/issues/2284)) ([2fc7a2a](https://github.com/factorialco/factorial-one/commit/2fc7a2a9a5d74c7111507fd42d2a960730ac2aa1))
+
 ## [1.129.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.1...factorial-one-react-v1.129.2) (2025-07-22)
 
 
