@@ -522,7 +522,7 @@ const SelectComponent = forwardRef(function Select<
         defaultValue={defaultValue}
         {...props}
       >
-        {JSON.stringify(value, null, 2)}
+        {JSON.stringify(primitiveValue, null, 2)}
         <SelectTrigger ref={ref} asChild>
           {children ? (
             <div

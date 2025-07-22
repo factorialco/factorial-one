@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SelectContext, SelectContextType } from "../SelectContext.tsx"
 import * as SelectPrimitive from "./radix-ui"
 import { SelectPrimitiveProps } from "./radix-ui/select.tsx"
@@ -34,6 +34,14 @@ const Select = <T extends string = string>(props: SelectProps) => {
   }
 
   const [localValue, setLocalValue] = useState(props.value)
+
+  useEffect(
+    () => {
+      setLocalValue(props.value)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the value
+    [JSON.stringify(props.value)]
+  )
 
   const contextValue: SelectContextType = {
     value: localValue,
