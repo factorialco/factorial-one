@@ -408,7 +408,7 @@ export const WithDataSourcePaginatedAndMultiple: Story = {
     showSearchBox: true,
     multiple: true,
     onChange: fn(),
-    value: ["option-2", "option-3"],
+    value: ["option-2", "option-66"],
     source: createDataSourceDefinition<MockItem>({
       dataAdapter: {
         paginationType: "infinite-scroll",

@@ -10,18 +10,18 @@ import {
   SelectValue,
 } from "../index"
 
-const SelectWithHooks = <M extends boolean>({
+const SelectWithHooks = ({
   options,
   placeholder,
   asList,
-  multiple,
+  multiple = false,
   value: defaultValue,
   ...props
-}: Omit<SelectProps, "multiple"> & { multiple: M }) => {
-  type T = M extends true ? string[] : string
+}: SelectProps) => {
+  type T = typeof multiple extends true ? string[] : string | undefined
   const [value, setValue] = useState(defaultValue as T)
 
-  const handleChange = (value: any) => {
+  const handleChange = (value: T) => {
     console.log("value", value)
     setValue(value as T)
   }
@@ -49,7 +49,7 @@ const SelectWithHooks = <M extends boolean>({
           {value}
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent items={items}></SelectContent>
+        <SelectContent items={items} />
       </Select>
       <div className="mt-20">Selected: {JSON.stringify(value)}</div>
     </>
@@ -115,6 +115,24 @@ export const Multiple: Story = {
   args: {
     value: ["light", "system"],
     multiple: true,
+  },
+  render: ({ options, placeholder }) => {
+    const [value, setValue] = useState<string[]>([])
+
+    return (
+      <Select value={value} onValueChange={setValue} multiple>
+        <SelectTrigger>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {options?.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    )
   },
 }
 

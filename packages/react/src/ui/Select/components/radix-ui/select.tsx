@@ -63,7 +63,7 @@ type SelectContextValue = {
   required?: boolean
   multiple?: boolean
   onOpenChange(open: boolean): void
-  dir: SelectProps["dir"]
+  dir: SelectProps<string>["dir"]
   triggerPointerDownPosRef: React.MutableRefObject<{
     x: number
     y: number
@@ -111,6 +111,8 @@ type SelectProps = SelectSharedProps &
         multiple: true
       }
   )
+
+export type { SelectProps as SelectPrimitiveProps }
 
 const Select: React.FC<SelectProps> = (props: ScopedProps<SelectProps>) => {
   const {

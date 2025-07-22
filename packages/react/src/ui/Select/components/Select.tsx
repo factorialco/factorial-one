@@ -2,8 +2,9 @@ import * as React from "react"
 import { useState } from "react"
 import { SelectContext, SelectContextType } from "../SelectContext.tsx"
 import * as SelectPrimitive from "./radix-ui"
+import { SelectPrimitiveProps } from "./radix-ui/select.tsx"
 
-export type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root> & {
+export type SelectProps = SelectPrimitiveProps & {
   asList?: boolean
   placeholder?: string
   options?: { value: string; label: string }[]
@@ -13,7 +14,8 @@ export type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root> & {
  * Select Root component
  */
 
-const Select = (props: SelectProps) => {
+const Select = <T extends string = string>(props: SelectProps) => {
+  type Value = Exclude<typeof props.value, undefined>
   const [internalOpen, setInternalOpen] = useState(props.asList ? true : false)
 
   const isOpen = props.asList
@@ -56,12 +58,12 @@ const Select = (props: SelectProps) => {
     ),
   }
 
-  const handleValueChange = (value: string | string[]) => {
+  const handleValueChange = (value: Value) => {
     setLocalValue(value)
     if (props.multiple) {
-      props.onValueChange?.(value as string[])
+      props.onValueChange?.(value as T[])
     } else {
-      props.onValueChange?.(value as string)
+      props.onValueChange?.(value as T)
     }
   }
 
@@ -69,15 +71,15 @@ const Select = (props: SelectProps) => {
     ? {
         ...commonProps,
         multiple: true as const,
-        value: localValue as string[],
-        defaultValue: props.defaultValue as string[],
+        value: localValue as T[],
+        defaultValue: props.defaultValue as T[],
         onValueChange: handleValueChange,
       }
     : {
         ...commonProps,
         multiple: false as const,
-        value: localValue as string,
-        defaultValue: props.defaultValue as string,
+        value: localValue as T,
+        defaultValue: props.defaultValue as T,
         onValueChange: handleValueChange,
       }
 
