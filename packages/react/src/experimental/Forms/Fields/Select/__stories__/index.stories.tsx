@@ -408,6 +408,8 @@ export const WithDataSourcePaginatedAndMultiple: Story = {
     showSearchBox: true,
     multiple: true,
     onChange: fn(),
+    label: "Select a value",
+    hideLabel: false,
     value: ["option-2", "option-66"],
     source: createDataSourceDefinition<MockItem>({
       dataAdapter: {

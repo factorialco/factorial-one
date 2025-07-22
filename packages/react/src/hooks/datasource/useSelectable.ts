@@ -4,6 +4,7 @@ import {
   DataSourceDefinition,
   GroupingDefinition,
   OnSelectItemsCallback,
+  OnSelectItemsCallbackStatus,
   PaginationInfo,
   RecordType,
   SelectedItemsState,
@@ -18,7 +19,7 @@ export type AllSelectionStatus = {
   unselectedCount: number
 }
 
-type UseSelectable<R extends RecordType> = {
+type UseSelectable<R extends RecordType, Filters extends FiltersDefinition> = {
   /*
    * A map of selected items in the current data
    * It is used to display the selected items in the UI
@@ -34,6 +35,11 @@ type UseSelectable<R extends RecordType> = {
   handleSelectGroupChange: (group: GroupRecord<R>, checked: boolean) => void
   groupAllSelectedStatus: Record<string, AllSelectionStatus>
   allSelectedStatus: AllSelectionStatus
+  /**
+   * The selected status
+   * It is used to notify the parent component about the selected items
+   */
+  selectedStatus: OnSelectItemsCallbackStatus<R, Filters>
 }
 
 export function useSelectable<
@@ -47,7 +53,7 @@ export function useSelectable<
   source: DataSourceDefinition<R, Filters, Sortings, Grouping>,
   onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
   defaultSelectedItems?: SelectedItemsState | undefined
-): UseSelectable<R> {
+): UseSelectable<R, Filters> {
   const isGrouped = data.type === "grouped"
   const isPaginated = paginationInfo !== null
   /**
@@ -343,14 +349,19 @@ export function useSelectable<
     }
   }, [areAllKnownItemsSelected, selectedCount])
 
-  useEffect(() => {
-    // Notify the parent component about the selected items
-    const totalItems = paginationInfo?.total ?? (data.records?.length || 0)
+  /**
+   * Gets the selected statis
+   */
+  const selectedStatus: OnSelectItemsCallbackStatus<R, Filters> =
+    useMemo(() => {
+      // Notify the parent component about the selected items
+      const totalItems = paginationInfo?.total ?? (data.records?.length || 0)
 
-    const selectedItemsCount = totalItems - unselectedCount
+      console.log("totalItems", totalItems)
+      console.log("unselectedCount", unselectedCount)
+      const selectedItemsCount = totalItems - unselectedCount
 
-    onSelectItems?.(
-      {
+      return {
         allSelected:
           unselectedCount === 0
             ? allSelectedCheck
@@ -366,18 +377,21 @@ export function useSelectable<
         ),
         filters: source.currentFilters || {},
         selectedCount: selectedItemsCount,
-      },
-      clearSelectedItems
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps  --  We intentionally omit clearSelectedItems, onSelectItems, selectedCount, source.currentFilters, and unselectedCount
-  }, [
-    allSelectedCheck,
-    itemsState,
-    groupsState,
-    groupAllSelectedStatus,
-    paginationInfo?.total,
-    data.records?.length,
-  ])
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps  --  We intentionally omit clearSelectedItems, onSelectItems, selectedCount, source.currentFilters, and unselectedCount
+    }, [
+      allSelectedCheck,
+      itemsState,
+      groupsState,
+      groupAllSelectedStatus,
+      paginationInfo?.total,
+      data.records?.length,
+    ])
+
+  useEffect(() => {
+    // Notify the parent component about the selected items
+    onSelectItems?.(selectedStatus, clearSelectedItems)
+  }, [selectedStatus, onSelectItems, clearSelectedItems])
 
   /**
    * Set the default selected items and groups
@@ -413,41 +427,44 @@ export function useSelectable<
   }, [JSON.stringify(defaultSelectedItems), data.records])
 
   /** Creates a map of selected items in the current data */
-  const selectedItemsInData = useMemo(() => {
-    const res = new Map()
+  const selectedItemsInData = useMemo(
+    () => {
+      const res = new Map()
 
-    for (const group of data.groups) {
-      for (const record of group.records) {
-        const id = source.selectable && source.selectable(record)
-        if (id === undefined) {
-          continue
-        }
-        // If it is specitely unselected, we don't add
-        if (unselectedItems.has(id)) {
-          continue
-        }
-        if (
-          allSelectedCheck ||
-          groupAllSelectedStatus[group.key]?.checked ||
-          selectedItems.has(id)
-        ) {
-          res.set(id, record)
+      for (const group of data.groups) {
+        for (const record of group.records) {
+          const id = source.selectable && source.selectable(record)
+          if (id === undefined) {
+            continue
+          }
+          // If it is specitely unselected, we don't add
+          if (unselectedItems.has(id)) {
+            continue
+          }
+          if (
+            allSelectedCheck ||
+            groupAllSelectedStatus[group.key]?.checked ||
+            selectedItems.has(id)
+          ) {
+            res.set(id, record)
+          }
         }
       }
-    }
-
-    console.log("selectedItemsInData2", res)
-
-    return res
-  }, [
-    selectedItems,
-    unselectedItems,
-    allSelectedCheck,
-    groupAllSelectedStatus,
-    data.groups,
-  ])
+      return res
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only need source.selectable
+    [
+      selectedItems,
+      unselectedItems,
+      allSelectedCheck,
+      groupAllSelectedStatus,
+      data.groups,
+      source.selectable,
+    ]
+  )
 
   return {
+    selectedStatus,
     selectedItemsInData,
     selectedItems,
     selectedGroups,

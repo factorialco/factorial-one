@@ -3,10 +3,15 @@ import { SelectContext, SelectContextType } from "../SelectContext.tsx"
 import * as SelectPrimitive from "./radix-ui"
 import { SelectPrimitiveProps } from "./radix-ui/select.tsx"
 
+type SelectOption = {
+  value: string
+  label: string
+}
+
 export type SelectProps = SelectPrimitiveProps & {
   asList?: boolean
   placeholder?: string
-  options?: { value: string; label: string }[]
+  options?: SelectOption[]
 }
 
 /**

@@ -59,6 +59,7 @@ type SelectContextValue = {
   contentId: string
   value: string[] | string | undefined
   onValueChange(value: string[] | string): void
+  onItemCheckChange?: (value: string, checked: boolean) => void
   open: boolean
   required?: boolean
   multiple?: boolean
@@ -87,13 +88,14 @@ interface SelectSharedProps {
   children?: React.ReactNode
   open?: boolean
   defaultOpen?: boolean
-  onOpenChange?(open: boolean): void
+  onOpenChange?: (open: boolean) => void
   dir?: Direction
   name?: string
   autoComplete?: string
   disabled?: boolean
   required?: boolean
   form?: string
+  onItemCheckChange?: (value: string, checked: boolean) => void
 }
 
 type SelectProps = SelectSharedProps &
@@ -124,6 +126,7 @@ const Select: React.FC<SelectProps> = (props: ScopedProps<SelectProps>) => {
     value: valueProp,
     defaultValue,
     onValueChange,
+    onItemCheckChange,
     dir,
     name,
     autoComplete,
@@ -188,6 +191,7 @@ const Select: React.FC<SelectProps> = (props: ScopedProps<SelectProps>) => {
         contentId={useId()}
         value={value}
         onValueChange={setValue}
+        onItemCheckChange={onItemCheckChange}
         open={open}
         onOpenChange={setOpen}
         dir={direction}
@@ -1403,6 +1407,8 @@ const SelectItem = React.forwardRef<SelectItemElement, SelectItemProps>(
       if (disabled) {
         return
       }
+
+      context.onItemCheckChange?.(value, !isSelected)
 
       if (context.multiple) {
         const initValue = (context.value as string[]) ?? []

@@ -245,6 +245,7 @@ const SelectComponent = forwardRef(function Select<
 
     return {
       ...source,
+      idProvider: (item: R) => item.value as string,
       dataAdapter: source
         ? (source.dataAdapter as PaginatedDataAdapter<R, FiltersDefinition>)
         : {
@@ -312,34 +313,42 @@ const SelectComponent = forwardRef(function Select<
    * Handles the selection of items and groups
    * We use the more complex case (chunked data) internally, but for the single selection we will return just the selected item outside the component
    */
-  const { selectedItemsInData } = useSelectable(
-    data,
-    paginationInfo,
-    localSource,
-    (item) => {
-      console.log("item", item)
-    },
-    {
-      allSelected: true,
-      // items: [
-      //   ...(multiple ? (defaultItem ?? []) : [defaultItem])
-      //     .filter((item) => item !== undefined)
-      //     .map((item) => ({
-      //       id: item.value,
-      //       checked: true,
-      //     })),
-      //   ...(multiple ? (value ?? []) : [value])
-      //     .filter((item) => item !== undefined)
-      //     .map((item) => ({
-      //       id: item.value,
-      //       checked: true,
-      //     })),
-      // ],
-    }
-  )
+  const { selectedItemsInData, selectedStatus, handleSelectItemChange } =
+    useSelectable(
+      data,
+      paginationInfo,
+      localSource,
+      (status) => {
+        console.log("onSelectItemcallback", status)
+      },
+      {
+        allSelected: true,
+        // items: [
+        //   ...(multiple ? (defaultItem ?? []) : [defaultItem])
+        //     .filter((item) => item !== undefined)
+        //     .map((item) => ({
+        //       id: item.value,
+        //       checked: true,
+        //     })),
+        //   ...(multiple ? (value ?? []) : [value])
+        //     .filter((item) => item !== undefined)
+        //     .map((item) => ({
+        //       id: item.value,
+        //       checked: true,
+        //     })),
+        // ],
+      }
+    )
 
-  console.log("--------------->", data, selectedItemsInData)
+  useEffect(() => {
+    console.log("--------------------->selectedStatus", selectedStatus)
+  }, [JSON.stringify(selectedStatus)])
 
+  /**
+   * The selected option(s)
+   * It is used to display the selected option(s) in the input field
+   * As the data is chunked, no all the items are loaded, so we need to find the options in the data records
+   */
   const [selectedOption, setSelectedOption] = useState<
     SelectItemObject<T, R> | SelectItemObject<T, R>[] | undefined
   >(undefined)
@@ -376,18 +385,23 @@ const SelectComponent = forwardRef(function Select<
     [data.records, optionMapper]
   )
 
-  // Select options if select values changes
-  useEffect(() => {
-    const foundOptions = findOptions(value)
+  // // Select options if select values changes
+  // const valueString = JSON.stringify(value)
+  // useEffect(
+  //   () => {
+  //     const foundOptions = findOptions(value)
 
-    if (multiple) {
-      onChangeSelectedOption?.(foundOptions)
-      setSelectedOption(foundOptions)
-    } else {
-      onChangeSelectedOption?.(foundOptions[0])
-      setSelectedOption(foundOptions[0])
-    }
-  }, [optionMapper, findOptions, onChangeSelectedOption, value, multiple])
+  //     if (multiple) {
+  //       onChangeSelectedOption?.(foundOptions)
+  //       setSelectedOption(foundOptions)
+  //     } else {
+  //       onChangeSelectedOption?.(foundOptions[0])
+  //       setSelectedOption(foundOptions[0])
+  //     }
+  //   },
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the value
+  //   [optionMapper, findOptions, onChangeSelectedOption, valueString, multiple]
+  // )
 
   useEffect(() => {
     if (open) {
@@ -404,27 +418,41 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const handleLocalValueChange = (changedValue: ValueType) => {
-    setCurrentSearch(undefined)
+    // setCurrentSearch(undefined)
 
     console.log("changedValue", changedValue)
 
-    const foundOptions = findOptions(changedValue)
+    // const foundOptions = findOptions(changedValue)
 
+    // if (foundOptions) {
+    //   if (multiple) {
+    //     const options = (foundOptions || []).filter(
+    //       (option): option is SelectItemObject<T, R> => option !== undefined
+    //     )
+    //     onChange?.(
+    //       options.map((option) => option.value),
+    //       options
+    //         .map((option) => option.item)
+    //         .filter((item) => item !== undefined),
+    //       options
+    //     )
+    //   } else {
+    //     onChange?.(foundOptions[0].value, foundOptions[0].item, foundOptions[0])
+    //   }
+    // }
+  }
+
+  /**
+   * When an option is checked or unchecked, we need to update the selected items status
+   * @param value
+   * @param checked
+   */
+  const handleItemCheckChange = (value: string, checked: boolean) => {
+    const foundOptions = findOptions(value)
     if (foundOptions) {
-      if (multiple) {
-        const options = (foundOptions || []).filter(
-          (option): option is SelectItemObject<T, R> => option !== undefined
-        )
-        onChange?.(
-          options.map((option) => option.value),
-          options
-            .map((option) => option.item)
-            .filter((item) => item !== undefined),
-          options
-        )
-      } else {
-        onChange?.(foundOptions[0].value, foundOptions[0].item, foundOptions[0])
-      }
+      foundOptions.forEach((option) => {
+        handleSelectItemChange(option as unknown as R, checked)
+      })
     }
   }
 
@@ -514,6 +542,7 @@ const SelectComponent = forwardRef(function Select<
     <>
       <SelectPrimitive
         onValueChange={handleLocalValueChange}
+        onItemCheckChange={handleItemCheckChange}
         value={primitiveValue}
         disabled={disabled}
         open={openLocal}
@@ -522,7 +551,6 @@ const SelectComponent = forwardRef(function Select<
         defaultValue={defaultValue}
         {...props}
       >
-        {JSON.stringify(primitiveValue, null, 2)}
         <SelectTrigger ref={ref} asChild>
           {children ? (
             <div
