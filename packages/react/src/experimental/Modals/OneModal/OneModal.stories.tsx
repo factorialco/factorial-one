@@ -231,36 +231,6 @@ export const WithResourceHeaderAndFullscreenPosition: Story = {
   },
 }
 
-export const WithResourceHeaderWithOnlyMetadata: Story = {
-  args: {
-    ...Default.args,
-    position: "fullscreen",
-    children: (
-      <>
-        <OneModal.Header
-          module={{
-            id: "timeoff",
-            label: "Time Off",
-            href: "/timeoff",
-          }}
-        />
-        <OneModal.Content withPadding>
-          <ResourceHeader
-            {...(ResourceHeaderDefault.args as ComponentProps<
-              typeof ResourceHeader
-            >)}
-            title=""
-            description={undefined}
-            primaryAction={undefined}
-            secondaryActions={undefined}
-            otherActions={undefined}
-          />
-        </OneModal.Content>
-      </>
-    ),
-  },
-}
-
 export const WithFewItems: Story = {
   args: {
     ...Default.args,
