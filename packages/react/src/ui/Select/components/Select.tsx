@@ -38,11 +38,18 @@ const Select = <T extends string = string>(props: SelectProps) => {
     props.onOpenChange?.(open)
   }
 
-  const [localValue, setLocalValue] = useState(props.value)
+  const toArray = (value: string | string[] | undefined) => {
+    if (value === undefined) {
+      return []
+    }
+    return Array.isArray(value) ? value : [value]
+  }
+
+  const [localValue, setLocalValue] = useState(toArray(props.value))
 
   useEffect(
     () => {
-      setLocalValue(props.value)
+      setLocalValue(toArray(props.value))
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the value
     [JSON.stringify(props.value)]
@@ -67,9 +74,10 @@ const Select = <T extends string = string>(props: SelectProps) => {
   }
 
   const handleValueChange = (value: Value) => {
-    setLocalValue(value)
+    setLocalValue(toArray(value))
+
     if (props.multiple) {
-      props.onValueChange?.(value as T[])
+      props.onValueChange?.(toArray(value) as T[])
     } else {
       props.onValueChange?.(value as T)
     }
@@ -79,15 +87,15 @@ const Select = <T extends string = string>(props: SelectProps) => {
     ? {
         ...commonProps,
         multiple: true as const,
-        value: localValue as T[],
-        defaultValue: props.defaultValue as T[],
+        value: localValue,
+        defaultValue: props.defaultValue,
         onValueChange: handleValueChange,
       }
     : {
         ...commonProps,
         multiple: false as const,
-        value: localValue as T,
-        defaultValue: props.defaultValue as T,
+        value: localValue[0],
+        defaultValue: props.defaultValue,
         onValueChange: handleValueChange,
       }
 

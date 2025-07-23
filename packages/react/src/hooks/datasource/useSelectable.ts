@@ -54,22 +54,59 @@ export function useSelectable<
   onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
   defaultSelectedItems?: SelectedItemsState | undefined
 ): UseSelectable<R, Filters> {
-  const isGrouped = data.type === "grouped"
-  const isPaginated = paginationInfo !== null
-  /**
-   * Items state and list of selected and unselected items
-   */
   // itemsState is the state of the selected items
   type ItemState = {
     item: WithGroupId<R>
     groupId?: unknown
     checked: boolean
   }
+
+  const isGrouped = data.type === "grouped"
+  const isPaginated = paginationInfo !== null
+
+  /**
+   * Set the default selected items and groups
+   */
+  const [isDefaultSelectedItemsSet, setIsDefaultSelectedItemsSet] =
+    useState(false)
+  useEffect(() => {
+    if (!defaultSelectedItems || isDefaultSelectedItemsSet) {
+      return
+    }
+
+    if (defaultSelectedItems.allSelected) {
+      handleSelectAll(true, true)
+    }
+
+    if (isGrouped) {
+      for (const defaultGroup of defaultSelectedItems.groups || []) {
+        const group = data.groups.find(
+          (group) => group.key === defaultGroup.groupId
+        )
+        if (group) {
+          handleSelectGroupChange(group, defaultGroup.checked)
+        }
+      }
+    }
+
+    for (const item of defaultSelectedItems.items || []) {
+      const record = data.records.find((record) => record.id === item.id)
+      if (record) {
+        handleSelectItemChange(record, item.checked)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the defaultSelectedItems
+  }, [JSON.stringify(defaultSelectedItems), data.records])
+
+  /**
+   * Items state is a list of selected and unselected items (the list the user interacted with)
+   */
+
   const [itemsState, setItemsState] = useState<Map<number | string, ItemState>>(
     new Map()
   )
 
-  /**
+  /*
    * Get the list of selected and unselected items from the itemsState for performance reasons
    */
   const [selectedItems, unselectedItems] = useMemo(() => {
@@ -86,7 +123,7 @@ export function useSelectable<
   }, [itemsState])
 
   /**
-   * Groups state and list of selected and unselected groups
+   * Groups state is a list of selected and unselected groups (the list the user interacted with)
    */
   const [groupsState, setGroupsState] = useState<
     Map<string, { group: GroupRecord<R>; checked: boolean }>
@@ -156,6 +193,8 @@ export function useSelectable<
   >({})
 
   useEffect(() => {
+    console.log("here groupAllSelectedStatus", itemsState)
+
     const getGroupAllSelectedStatus = async () => {
       if (!isGrouped) {
         return {}
@@ -214,7 +253,6 @@ export function useSelectable<
     }
 
     getGroupAllSelectedStatus()
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGrouped, isGrouped && data.groups, groupsState, itemsState])
 
@@ -297,7 +335,6 @@ export function useSelectable<
 
   const isAllSelected = useMemo(
     () => (allSelectedCheck || areAllKnownItemsSelected) && selectedCount > 0,
-
     [allSelectedCheck, areAllKnownItemsSelected, selectedCount]
   )
 
@@ -341,10 +378,12 @@ export function useSelectable<
     // eslint-disable-next-line react-hooks/exhaustive-deps -- handleItemStateChange is a stable function
   }, [data, isAllSelected, isGrouped])
 
-  // Control the allSelectedCheck state
-  // If all items are selected, we need to set the allSelectedCheck state to true
-  // If there are no selected items, we need to set the allSelectedCheck state to false
-  // If some items are selected, we need to keep the state as is to know if we will need to check the next page items
+  /**
+   * Controls the allSelectedCheck state
+   * If all items are selected, we need to set the allSelectedCheck state to true
+   * If there are no selected items, we need to set the allSelectedCheck state to false
+   * If some items are selected, we need to keep the state as is to know if we will need to check the next page items
+   */
   useEffect(() => {
     if (areAllKnownItemsSelected) {
       setAllSelectedCheck(true)
@@ -356,7 +395,8 @@ export function useSelectable<
   }, [areAllKnownItemsSelected, selectedCount])
 
   /**
-   * Gets the selected statis
+   * Gets the selected status
+   * @description It is used to notify the parent component about the selected items
    */
   const selectedStatus: OnSelectItemsCallbackStatus<R, Filters> =
     useMemo(() => {
@@ -392,45 +432,19 @@ export function useSelectable<
       data.records?.length,
     ])
 
+  /**
+   * Notify the parent component about the selected items
+   * @description It is used to notify the parent component about the selected items
+   */
   useEffect(() => {
     // Notify the parent component about the selected items
     onSelectItems?.(selectedStatus, clearSelectedItems)
   }, [selectedStatus, onSelectItems, clearSelectedItems])
 
   /**
-   * Set the default selected items and groups
+   * Creates a map of selected items in the current data chunk
+   * @description It is used to know which items should set as checked in the UI
    */
-  useEffect(() => {
-    if (!defaultSelectedItems) {
-      return
-    }
-
-    if (defaultSelectedItems.allSelected) {
-      handleSelectAll(true)
-    }
-
-    if (isGrouped) {
-      for (const defaultGroup of defaultSelectedItems.groups || []) {
-        const group = data.groups.find(
-          (group) => group.key === defaultGroup.groupId
-        )
-        if (group) {
-          handleSelectGroupChange(group, defaultGroup.checked)
-        }
-      }
-    }
-
-    for (const item of defaultSelectedItems.items || []) {
-      const record = data.records.find((record) => record.id === item.id)
-      if (record) {
-        handleSelectItemChange(record, item.checked)
-      }
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the defaultSelectedItems
-  }, [JSON.stringify(defaultSelectedItems), data.records])
-
-  /** Creates a map of selected items in the current data */
   const selectedItemsInData = useMemo(
     () => {
       const res = new Map()

@@ -3,17 +3,9 @@ import { createContext, useContext } from "react"
 export type SelectContextType = {
   open?: boolean
   asList?: boolean
-} & (
-  | {
-      value: string[]
-      multiple: true
-    }
-  | {
-      value: string
-      multiple: false | never
-    }
-)
-
+  multiple?: boolean
+  value: string[] | string
+}
 export const SelectContext = createContext<SelectContextType>({
   value: "",
   open: false,

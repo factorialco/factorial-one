@@ -97,7 +97,8 @@ const SelectContent = forwardRef<
       return (
         (items &&
           items.findIndex(
-            (item) => item.value !== undefined && value.includes(item.value)
+            (item) =>
+              item.value !== undefined && (value ?? []).includes(item.value)
           )) ||
         0
       )

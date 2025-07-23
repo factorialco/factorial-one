@@ -319,6 +319,10 @@ const SelectComponent = forwardRef(function Select<
       paginationInfo,
       localSource,
       (status) => {
+        // if it single value return the select value as is
+        // If muiltiple and no pagination, we return all the selected values
+        // IFmultiple and p[agination we return the selections status]
+
         console.log("onSelectItemcallback", status)
       },
       {
