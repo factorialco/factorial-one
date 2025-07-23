@@ -239,6 +239,43 @@ export const WithDataSourceNotPaginated: Story = {
   },
 }
 
+export const WithDataSourceNotPaginatedMultiple: Story = {
+  args: {
+    placeholder: "Select a value",
+    multiple: true,
+    showSearchBox: true,
+    onChange: fn(),
+    value: "option-2",
+    source: createDataSourceDefinition<MockItem>({
+      dataAdapter: {
+        fetchData: (options) => {
+          const { search } = options
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const results = mockItems.filter(
+                (item) =>
+                  !search ||
+                  item.label.toLowerCase().includes(search.toLowerCase())
+              )
+
+              const res = {
+                records: results,
+              }
+              resolve(res)
+            }, 100)
+          })
+        },
+      },
+    }),
+    mapOptions: (item: (typeof mockItems)[number]) => ({
+      value: item.value,
+      label: item.label,
+      icon: item.icon,
+      description: item.description,
+    }),
+  },
+}
+
 export const WithDataSourcePaginated: Story = {
   args: {
     placeholder: "Select a value",

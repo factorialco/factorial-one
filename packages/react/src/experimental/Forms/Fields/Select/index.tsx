@@ -9,6 +9,7 @@ import {
   FiltersDefinition,
   getDataSourcePaginationType,
   GroupingDefinition,
+  OnSelectItemsCallbackStatus,
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
@@ -56,11 +57,15 @@ export * from "./types"
 export type SelectProps<T extends string, R extends RecordType = RecordType> = (
   | {
       multiple: true
-      onChange: (
-        value: SelectedItemsState<T>,
-        originalItems?: R[],
-        options?: SelectItemObject<T, R>[]
-      ) => void
+      onChange:
+        | // This is the case when the data is not paginated
+        ((
+            value: T[],
+            originalItem?: R[],
+            option?: SelectItemObject<T, R>[]
+          ) => void)
+        // This is the case when the data is paginated
+        | ((state: OnSelectItemsCallbackStatus<R, FiltersDefinition>) => void)
       onChangeSelectedOption?: (options: SelectItemObject<T, R>[]) => void
       value?: T[] | SelectedItemsState<T>
       defaultItem?: SelectItemObject<T, R>[]
@@ -313,40 +318,54 @@ const SelectComponent = forwardRef(function Select<
    * Handles the selection of items and groups
    * We use the more complex case (chunked data) internally, but for the single selection we will return just the selected item outside the component
    */
-  const { selectedItemsInData, selectedStatus, handleSelectItemChange } =
-    useSelectable(
-      data,
-      paginationInfo,
-      localSource,
-      (status) => {
-        // if it single value return the select value as is
-        // If muiltiple and no pagination, we return all the selected values
-        // IFmultiple and p[agination we return the selections status]
-
-        console.log("onSelectItemcallback", status)
-      },
-      {
-        allSelected: true,
-        // items: [
-        //   ...(multiple ? (defaultItem ?? []) : [defaultItem])
-        //     .filter((item) => item !== undefined)
-        //     .map((item) => ({
-        //       id: item.value,
-        //       checked: true,
-        //     })),
-        //   ...(multiple ? (value ?? []) : [value])
-        //     .filter((item) => item !== undefined)
-        //     .map((item) => ({
-        //       id: item.value,
-        //       checked: true,
-        //     })),
-        // ],
+  const { selectedItemsInData, handleSelectItemChange } = useSelectable(
+    data,
+    paginationInfo,
+    localSource,
+    (status) => {
+      if (!multiple) {
+        return
       }
-    )
+      const notPaginated =
+        getDataSourcePaginationType(localSource.dataAdapter) === "no-pagination"
+      console.log("notPaginated", notPaginated)
+      if (notPaginated) {
+        // Aa no pagination we return the real selected data not the definition of the selection
+        const items = status.itemsStatus
+          .filter((item) => item.checked)
+          .map((item) => ({
+            value: item.item.value,
+            item: item.item,
+            option: item.item,
+          }))
+        console.log("items", items)
 
-  useEffect(() => {
-    console.log("--------------------->selectedStatus", selectedStatus)
-  }, [JSON.stringify(selectedStatus)])
+        onChange?.(
+          items.map((item) => item.value as T),
+          items.map((item) => item.item),
+          items.map((item) => item.option)
+        )
+      } else {
+        onChange?.(status)
+      }
+    }
+    // {
+    //   items: [
+    //     ...(multiple ? (defaultItem ?? []) : [defaultItem])
+    //       .filter((item) => item !== undefined)
+    //       .map((item) => ({
+    //         id: item.value,
+    //         checked: true,
+    //       })),
+    //     // ...(multiple ? (value ?? []) : [value])
+    //     //   .filter((item) => item !== undefined)
+    //     //   .map((item) => ({
+    //     //     id: item.value,
+    //     //     checked: true,
+    //     //   })),
+    //   ],
+    // }
+  )
 
   /**
    * The selected option(s)
@@ -421,29 +440,13 @@ const SelectComponent = forwardRef(function Select<
     [setCurrentSearch, onSearchChange]
   )
 
+  // Whe the selectiopn mode is single, we need to find the option and call the onChange with the option
   const handleLocalValueChange = (changedValue: ValueType) => {
-    // setCurrentSearch(undefined)
-
-    console.log("changedValue", changedValue)
-
-    // const foundOptions = findOptions(changedValue)
-
-    // if (foundOptions) {
-    //   if (multiple) {
-    //     const options = (foundOptions || []).filter(
-    //       (option): option is SelectItemObject<T, R> => option !== undefined
-    //     )
-    //     onChange?.(
-    //       options.map((option) => option.value),
-    //       options
-    //         .map((option) => option.item)
-    //         .filter((item) => item !== undefined),
-    //       options
-    //     )
-    //   } else {
-    //     onChange?.(foundOptions[0].value, foundOptions[0].item, foundOptions[0])
-    //   }
-    // }
+    setCurrentSearch(undefined)
+    const foundOptions = findOptions(changedValue)
+    if (foundOptions) {
+      onChange?.(foundOptions[0].value, foundOptions[0]?.item, foundOptions[0])
+    }
   }
 
   /**
@@ -533,20 +536,23 @@ const SelectComponent = forwardRef(function Select<
   }, [data])
 
   const primitiveValue = useMemo(() => {
-    console.log("selectedItemsInData", selectedItemsInData)
     const selectedItemsArray = Array.from(selectedItemsInData.values()).map(
       (item) => item.value as T
     )
-
     return multiple ? selectedItemsArray : selectedItemsArray[0] || undefined
   }, [selectedItemsInData, multiple])
+
+  const handlers = {
+    ...(multiple
+      ? { onItemCheckChange: handleItemCheckChange }
+      : { onValueChange: handleLocalValueChange }),
+  }
 
   return (
     <>
       <SelectPrimitive
-        onValueChange={handleLocalValueChange}
-        onItemCheckChange={handleItemCheckChange}
-        value={primitiveValue}
+        {...handlers}
+        // value={primitiveValue}
         disabled={disabled}
         open={openLocal}
         multiple={multiple}
