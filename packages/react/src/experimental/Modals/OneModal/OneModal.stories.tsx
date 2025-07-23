@@ -159,6 +159,13 @@ export const WithRightPosition: Story = {
   },
 }
 
+export const WithFullscreenPosition: Story = {
+  args: {
+    ...Default.args,
+    position: "fullscreen",
+  },
+}
+
 export const WithModule: Story = {
   args: {
     ...Default.args,
@@ -182,6 +189,13 @@ export const WithModule: Story = {
   },
 }
 
+export const WithModuleAndFullscreenPosition: Story = {
+  args: {
+    ...WithModule.args,
+    position: "fullscreen",
+  },
+}
+
 export const WithResourceHeader: Story = {
   args: {
     ...Default.args,
@@ -200,6 +214,43 @@ export const WithResourceHeader: Story = {
             {...(ResourceHeaderDefault.args as ComponentProps<
               typeof ResourceHeader
             >)}
+            primaryAction={undefined}
+            secondaryActions={undefined}
+            otherActions={undefined}
+          />
+        </OneModal.Content>
+      </>
+    ),
+  },
+}
+
+export const WithResourceHeaderAndFullscreenPosition: Story = {
+  args: {
+    ...WithResourceHeader.args,
+    position: "fullscreen",
+  },
+}
+
+export const WithResourceHeaderWithOnlyMetadata: Story = {
+  args: {
+    ...Default.args,
+    position: "fullscreen",
+    children: (
+      <>
+        <OneModal.Header
+          module={{
+            id: "timeoff",
+            label: "Time Off",
+            href: "/timeoff",
+          }}
+        />
+        <OneModal.Content withPadding>
+          <ResourceHeader
+            {...(ResourceHeaderDefault.args as ComponentProps<
+              typeof ResourceHeader
+            >)}
+            title=""
+            description={undefined}
             primaryAction={undefined}
             secondaryActions={undefined}
             otherActions={undefined}
