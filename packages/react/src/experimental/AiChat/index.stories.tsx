@@ -13,7 +13,10 @@ const meta = {
     (Story) => {
       return (
         <div className="h-full w-full bg-[hsl(0,0,98)]">
-          <CopilotKit runtimeUrl="https://mastra.local.factorial.dev/copilotkit">
+          <CopilotKit
+            runtimeUrl="https://mastra.local.factorial.dev/copilotkit"
+            agent="OneLight"
+          >
             <Story />
           </CopilotKit>
         </div>

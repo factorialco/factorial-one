@@ -6,8 +6,10 @@ import type { ComponentProps } from "react"
 import {
   ChatButton,
   ChatHeader,
+  ChatTextarea,
   ChatWindow,
   MessagesContainer,
+  UserMessage,
 } from "./ChatWindow"
 
 export type AiChatProps = ComponentProps<typeof CopilotPopup>
@@ -28,6 +30,8 @@ export const AiChat = (props: AiChatProps) => {
       Header={ChatHeader}
       Messages={MessagesContainer}
       Button={ChatButton}
+      Input={ChatTextarea}
+      UserMessage={UserMessage}
       {...props}
     />
   )
