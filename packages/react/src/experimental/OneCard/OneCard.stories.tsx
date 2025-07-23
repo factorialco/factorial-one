@@ -133,6 +133,17 @@ export const WithActions: Story = {
   },
 }
 
+export const WithActionsAndLink: Story = {
+  args: {
+    ...WithActions.args,
+    secondaryActions: {
+      label: "View more",
+      href: "/",
+      target: "_blank",
+    },
+  },
+}
+
 export const WithLink: Story = {
   args: {
     ...Default.args,
