@@ -1,9 +1,10 @@
 import { CopilotKit } from "@copilotkit/react-core"
 import { CopilotPopup } from "@copilotkit/react-ui"
-import "@copilotkit/react-ui/styles.css"
+// import "@copilotkit/react-ui/styles.css"
 
 import type { ComponentProps } from "react"
 import {
+  AssistantMessage,
   ChatButton,
   ChatHeader,
   ChatTextarea,
@@ -32,6 +33,7 @@ export const AiChat = (props: AiChatProps) => {
       Button={ChatButton}
       Input={ChatTextarea}
       UserMessage={UserMessage}
+      AssistantMessage={AssistantMessage}
       {...props}
     />
   )

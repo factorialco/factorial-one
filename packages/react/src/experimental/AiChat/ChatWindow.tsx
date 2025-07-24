@@ -1,4 +1,5 @@
 import { ButtonInternal } from "@/components/Actions/Button/internal"
+import { Spinner } from "@/experimental"
 import { ArrowUp, SolidStop } from "@/icons/app"
 import Cross from "@/icons/app/Cross"
 import { useI18n } from "@/lib/providers/i18n"
@@ -6,7 +7,9 @@ import { cn, focusRing } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/ui/dialog"
 import { useLangGraphInterruptRender } from "@copilotkit/react-core"
 import {
+  Markdown,
   useChatContext,
+  type AssistantMessageProps,
   type ButtonProps,
   type HeaderProps,
   type InputProps,
@@ -22,6 +25,7 @@ import {
 } from "@copilotkit/runtime-client-gql"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useMemo, useRef, useState } from "react"
+import { markdownRenderers } from "./markdownRenderers"
 import OneIcon from "./OneIcon"
 
 export const ChatWindow = ({ children, ...rest }: WindowProps) => {
@@ -65,6 +69,33 @@ export const UserMessage = ({ message }: UserMessageProps) => {
   return (
     <div className="w-fit max-w-[330px] self-end whitespace-pre-wrap rounded-2xl border border-solid border-f1-border-secondary bg-f1-background-tertiary px-4 py-3">
       {message}
+    </div>
+  )
+}
+
+export const AssistantMessage = ({
+  message,
+  isGenerating: _isGenerating,
+  isCurrentMessage: _isCurrentMessage,
+  isLoading,
+  rawData: _rawData,
+  markdownTagRenderers,
+  onCopy: _onCopy,
+  onRegenerate: _onRegenerate,
+  onThumbsDown: _onThumbsDown,
+  onThumbsUp: _onThumbsUp,
+}: AssistantMessageProps) => {
+  return (
+    <div className="flex min-h-[20px] w-fit max-w-[330px] flex-col items-start justify-center">
+      {isLoading && <Spinner size="small" className="text-f1-foreground" />}
+      {message && (
+        <div className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1">
+          <Markdown
+            content={message}
+            components={markdownTagRenderers || markdownRenderers}
+          />
+        </div>
+      )}
     </div>
   )
 }
@@ -299,6 +330,7 @@ export const ChatButton = (props: ButtonProps) => {
   return (
     <button
       className={cn(
+        "absolute bottom-4 right-4",
         "h-10 w-10 cursor-pointer rounded-xl bg-[hsl(220,27,26%)] p-1 pl-2",
         open ? "hidden" : "block",
         focusRing()
