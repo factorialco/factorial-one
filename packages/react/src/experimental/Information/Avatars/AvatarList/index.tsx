@@ -1,3 +1,4 @@
+import { sizes } from "@/ui/avatar"
 import { OverflowList } from "@/ui/OverflowList"
 import { cva } from "cva"
 import { Tooltip } from "../../../Overlays/Tooltip"
@@ -5,8 +6,11 @@ import { Avatar, AvatarVariant } from "../Avatar"
 import { MaxCounter } from "./MaxCounter"
 
 type AvatarType = AvatarVariant["type"]
-export const avatarListSizes = ["xsmall", "small", "medium"] as const
-export type AvatarListSize = (typeof avatarListSizes)[number]
+
+export type AvatarListSize = Extract<
+  (typeof sizes)[number],
+  "xsmall" | "small" | "medium"
+>
 
 const avatarListVariants = cva({
   base: "flex items-center",
