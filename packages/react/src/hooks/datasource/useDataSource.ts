@@ -84,9 +84,9 @@ export const createDataSourceDefinition = <
 
 export function useDataSource<
   R extends RecordType = RecordType,
-  FiltersSchema extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Grouping extends GroupingDefinition<R>,
+  FiltersSchema extends FiltersDefinition = FiltersDefinition,
+  Sortings extends SortingsDefinition = SortingsDefinition,
+  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
@@ -100,16 +100,16 @@ export function useDataSource<
   }: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<R, FiltersSchema, Sortings, Grouping> {
-  const [currentFilters, _setCurrentFilters] = useState<
+  const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
 
-  const setCurrentFilters = (x: FiltersState<FiltersSchema>) => {
-    if (JSON.stringify(x) === JSON.stringify(currentFilters)) {
-      return
-    }
-    _setCurrentFilters(x)
-  }
+  // const setCurrentFilters = (x: FiltersState<FiltersSchema>) => {
+  //   if (JSON.stringify(x) === JSON.stringify(currentFilters)) {
+  //     return
+  //   }
+  //   _setCurrentFilters(x)
+  // }
 
   const [currentSortings, setCurrentSortings] =
     useState<SortingsState<Sortings> | null>(defaultSorting || null)

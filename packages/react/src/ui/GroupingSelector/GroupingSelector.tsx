@@ -73,15 +73,22 @@ export const GroupingSelector = <
               selected: currentGrouping.field.toString(),
               direction: currentGrouping.order,
             }
-          : undefined
+          : {
+              selected: EmptyGroupingValue,
+              direction: "asc",
+            }
       }
       onChange={
         onGroupingChange
           ? (value) =>
-              onGroupingChange({
-                field: value?.selected as keyof Grouping["groupBy"],
-                order: value?.direction as SortOrder,
-              })
+              onGroupingChange(
+                value?.selected === EmptyGroupingValue
+                  ? undefined
+                  : {
+                      field: value?.selected as keyof Grouping["groupBy"],
+                      order: value?.direction as SortOrder,
+                    }
+              )
           : undefined
       }
       label={i18n.collections.grouping.groupBy}
