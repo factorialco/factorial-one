@@ -54,7 +54,7 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
         value={
           localSortings
             ? {
-                selected: localSortings.field.toString(),
+                selected: localSortings.field?.toString(),
                 direction: localSortings.order,
               }
             : undefined

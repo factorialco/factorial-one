@@ -450,10 +450,6 @@ export function useSelectable<
       data.records?.length,
     ])
 
-  useEffect(() => {
-    console.log("selectedStatus Change", selectedStatus)
-  }, [selectedStatus])
-
   /**
    * Notify the parent component about the selected items
    * @description It is used to notify the parent component about the selected items

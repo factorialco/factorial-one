@@ -337,8 +337,6 @@ const SelectComponent = forwardRef(function Select<
             option: item.item,
           }))
 
-        console.log("items", items)
-
         const values = items.map((item) => item.value as T)
 
         if (multiple) {
@@ -541,13 +539,17 @@ const SelectComponent = forwardRef(function Select<
     }, 0)
   }, [data])
 
-  const primitiveValue = useMemo(() => {
-    const selectedItemsArray = Array.from(selectedItemsInData.values()).map(
-      (item) => item.value as string
-    )
+  const primitiveValue = useMemo(
+    () => {
+      const selectedItemsArray = Array.from(selectedItemsInData.values()).map(
+        (item) => item.value as string
+      )
 
-    return multiple ? selectedItemsArray : selectedItemsArray[0] || undefined
-  }, [JSON.stringify(selectedItemsInData), multiple])
+      return multiple ? selectedItemsArray : selectedItemsArray[0] || undefined
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the selectedItemsInData
+    [JSON.stringify(selectedItemsInData), multiple]
+  )
 
   const handlers = {
     onItemCheckChange: handleItemCheckChange,

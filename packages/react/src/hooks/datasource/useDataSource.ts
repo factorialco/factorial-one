@@ -157,6 +157,10 @@ export function useDataSource<
     GroupingState<R, Grouping>
   >(initialCurrentGrouping ?? defaultGrouping)
 
+  useEffect(() => {
+    console.log("currentGrouping", currentGrouping)
+  }, [currentGrouping])
+
   // For mandatory grouping, ensure we have a valid grouping state
   if (grouping?.mandatory && !currentGrouping?.field) {
     throw new Error("Grouping is mandatory but no grouping state is set")
