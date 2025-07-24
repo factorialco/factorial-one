@@ -8,6 +8,11 @@ type AvatarType = AvatarVariant["type"]
 export const avatarListSizes = ["xsmall", "small", "medium"] as const
 export type AvatarListSize = (typeof avatarListSizes)[number]
 
+export type AvatarListSize = Extract<
+  (typeof sizes)[number],
+  "xsmall" | "small" | "medium"
+>
+
 const avatarListVariants = cva({
   base: "flex items-center",
   variants: {

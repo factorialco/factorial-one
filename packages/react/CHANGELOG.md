@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.132.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.2...factorial-one-react-v1.132.0) (2025-07-24)
+
+
+### Features
+
+* **Avatar:** new `large` size ([#2288](https://github.com/factorialco/factorial-one/issues/2288)) ([fdb72d7](https://github.com/factorialco/factorial-one/commit/fdb72d764945cd9c92ae84ff0670a5ac089ee955))
+
+## [1.131.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.1...factorial-one-react-v1.131.2) (2025-07-24)
+
+
+### Bug Fixes
+
+* select icon classes ([f55d9ec](https://github.com/factorialco/factorial-one/commit/f55d9ecd9fc026381e84b4911997ec3266cba90a))
+
+## [1.131.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.0...factorial-one-react-v1.131.1) (2025-07-24)
+
+
+### Bug Fixes
+
+* fullHeight ([#2274](https://github.com/factorialco/factorial-one/issues/2274)) ([e237773](https://github.com/factorialco/factorial-one/commit/e2377736d4f19a75d7fca2d5fc4ac8e558085dc0))
+
+## [1.131.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.130.1...factorial-one-react-v1.131.0) (2025-07-24)
+
+
+### Features
+
+* **RichText:** enhance mention insertion ([#2292](https://github.com/factorialco/factorial-one/issues/2292)) ([fa16ec8](https://github.com/factorialco/factorial-one/commit/fa16ec85070f96ed20832b8f2cd6831ca7fedf48))
+
+## [1.130.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.130.0...factorial-one-react-v1.130.1) (2025-07-22)
+
+
+### Bug Fixes
+
+* pulse avatar icon color ([#2282](https://github.com/factorialco/factorial-one/issues/2282)) ([5fdd117](https://github.com/factorialco/factorial-one/commit/5fdd117b2b2c22eb9b2e148a1101c46e3d8208f8))
+
 ## [1.130.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.3...factorial-one-react-v1.130.0) (2025-07-22)
 
 

@@ -20,11 +20,6 @@ import {
   UnderlineExtension,
 } from "@/experimental/RichText/CoreEditor"
 import {
-  AIBlockConfigWithLabels,
-  AIBlockExtension,
-  AIBlockLabels,
-} from "@/experimental/RichText/CoreEditor/Extensions/AIBlock"
-import {
   LiveCompanionConfig,
   LiveCompanionExtension,
   LiveCompanionLabels,
@@ -40,22 +35,14 @@ import {
   TranscriptLabels,
 } from "@/experimental/RichText/CoreEditor/Extensions/Transcript"
 
-export const createBasicTextEditorExtensions = (
+export const createAIBlockEditorExtensions = (
   placeholder: string,
   toolbarLabels: ToolbarLabels,
   groupLabels?: SlashCommandGroupLabels,
-  aiBlockConfig?: AIBlockConfigWithLabels,
-  aiBlockLabels?: AIBlockLabels,
   moodTrackerLabels?: MoodTrackerLabels,
   liveCompanionLabels?: LiveCompanionLabels,
   transcriptLabels?: TranscriptLabels
 ) => {
-  // Create enhanced config with labels if both are provided
-  const enhancedAIBlockConfig =
-    aiBlockConfig && aiBlockLabels
-      ? { ...aiBlockConfig, labels: aiBlockLabels }
-      : aiBlockConfig
-
   // Create enhanced MoodTracker config with labels
   const enhancedMoodTrackerConfig: MoodTrackerConfig | undefined =
     moodTrackerLabels ? { labels: moodTrackerLabels } : undefined
@@ -91,16 +78,10 @@ export const createBasicTextEditorExtensions = (
     TranscriptExtension.configure({
       currentConfig: enhancedTranscriptConfig,
     }),
-    AIBlockExtension.configure({
-      currentConfig: enhancedAIBlockConfig,
-    }),
+    // Note: AIBlockExtension is intentionally excluded to prevent infinite recursion
     PersistSelection,
     createPlaceholderExtension(placeholder),
     createAccessibilityExtension(placeholder),
-    createSlashCommandExtension(
-      toolbarLabels,
-      groupLabels,
-      enhancedAIBlockConfig
-    ),
+    createSlashCommandExtension(toolbarLabels, groupLabels),
   ]
 }

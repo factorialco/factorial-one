@@ -23,12 +23,33 @@ const iconVariants = cva({
   },
 })
 
+/**
+ * Utility type to extract all possible paths from nested object.
+ * Generates hyphenated paths from nested object structure
+ * Only includes parent key if it has a DEFAULT property
+ */
+type NestedKeyOf<T> = {
+  [K in keyof T & string]: T[K] extends object
+    ? K extends "DEFAULT"
+      ? never
+      : T[K] extends { DEFAULT: string }
+        ? `${K}` | `${K}-${NestedKeyOf<T[K]>}`
+        : `${K}-${NestedKeyOf<T[K]>}`
+    : K extends "DEFAULT"
+      ? never
+      : `${K}`
+}[keyof T & string]
+
 export interface IconProps
   extends SVGProps<SVGSVGElement>,
     VariantProps<typeof iconVariants> {
   icon: IconType
   state?: "normal" | "animate"
-  color?: Lowercase<keyof typeof f1Colors.icon> | `#${string}` | "currentColor"
+  color?:
+    | "default"
+    | "currentColor"
+    | `#${string}`
+    | Lowercase<NestedKeyOf<typeof f1Colors.icon>>
 }
 
 export type IconType = ForwardRefExoticComponent<
