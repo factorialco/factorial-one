@@ -209,14 +209,14 @@ export const WithLabelIcon: Story = {
   },
 }
 
-export const SizeSm: Story = {
+export const SizeMd: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },
   },
   args: {
     label: "Select a theme",
     icon: Desktop,
-    size: "sm",
+    size: "md",
   },
 }
 
