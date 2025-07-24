@@ -9,6 +9,7 @@ import {
   FiltersDefinition,
   getDataSourcePaginationType,
   GroupingDefinition,
+  OnSelectItemsCallbackStatus,
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
@@ -56,14 +57,14 @@ export * from "./types"
 export type SelectProps<T extends string, R extends RecordType = RecordType> = (
   | {
       multiple: true
-      onChange: // This is the case when the data is not paginated
-      (
-        value: T[],
-        originalItem?: R[],
-        option?: SelectItemObject<T, R>[]
-      ) => void
-      // This is the case when the data is paginated
-      //| ((state: OnSelectItemsCallbackStatus<R, FiltersDefinition>) => void)
+      onChange: {
+        (
+          value: T[],
+          originalItem?: R[],
+          option?: SelectItemObject<T, R>[]
+        ): void
+        (state: OnSelectItemsCallbackStatus<R, FiltersDefinition>): void
+      }
       onChangeSelectedOption?: (options: SelectItemObject<T, R>[]) => void
       value?: T[] | SelectedItemsState<T>
       defaultItem?: SelectItemObject<T, R>[]
