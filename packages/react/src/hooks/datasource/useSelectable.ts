@@ -52,7 +52,10 @@ export function useSelectable<
   paginationInfo: PaginationInfo | null,
   source: DataSourceDefinition<R, Filters, Sortings, Grouping>,
   onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
-  defaultSelectedItems?: SelectedItemsState | undefined
+  defaultSelectedItems?: SelectedItemsState | undefined,
+  options?: {
+    singleSelect?: boolean
+  }
 ): UseSelectable<R, Filters> {
   // itemsState is the state of the selected items
   type ItemState = {
@@ -151,7 +154,7 @@ export function useSelectable<
     checked: boolean,
     onlyIfNotStateDefined: boolean = false
   ) => {
-    if (!isGrouped) {
+    if (!isGrouped || options?.singleSelect) {
       return
     }
 
@@ -193,8 +196,6 @@ export function useSelectable<
   >({})
 
   useEffect(() => {
-    console.log("here groupAllSelectedStatus", itemsState)
-
     const getGroupAllSelectedStatus = async () => {
       if (!isGrouped) {
         return {}
@@ -280,7 +281,14 @@ export function useSelectable<
     // Only applies the checked state if the item has no state set yet
     onlyIfNotStateDefined: boolean = false
   ) => {
+    if (options?.singleSelect) {
+      clearSelected()
+    }
+
     const items = Array.isArray(item) ? item : [item]
+    const itemsStateNew = options?.singleSelect
+      ? new Map()
+      : new Map(itemsState)
 
     let updated = 0
     for (const item of items) {
@@ -289,16 +297,16 @@ export function useSelectable<
         return
       }
       // If the item is already selected, we don't need to update the state if onlyIfNotSelected is true
-      if (onlyIfNotStateDefined && itemsState.has(id)) {
+      if (onlyIfNotStateDefined && itemsStateNew.has(id)) {
         return
       }
 
       updated++
-      itemsState.set(id, { item, checked })
+      itemsStateNew.set(id, { item, checked })
     }
 
     if (updated > 0) {
-      setItemsState((current) => new Map(current))
+      setItemsState(itemsStateNew)
     }
   }
 
@@ -306,6 +314,10 @@ export function useSelectable<
     checked: boolean,
     onlyIfNotStateDefined: boolean = false
   ) => {
+    if (options?.singleSelect) {
+      return
+    }
+
     setAllSelectedCheck(checked)
 
     if (isGrouped) {
@@ -403,7 +415,9 @@ export function useSelectable<
       // Notify the parent component about the selected items
       const totalItems = paginationInfo?.total ?? (data.records?.length || 0)
 
-      const selectedItemsCount = totalItems - unselectedCount
+      const selectedItemsCount = allSelectedCheck
+        ? totalItems - unselectedCount
+        : selectedCount
 
       return {
         allSelected:
@@ -432,6 +446,10 @@ export function useSelectable<
       data.records?.length,
     ])
 
+  useEffect(() => {
+    console.log("selectedStatus Change", selectedStatus)
+  }, [selectedStatus])
+
   /**
    * Notify the parent component about the selected items
    * @description It is used to notify the parent component about the selected items
@@ -439,7 +457,8 @@ export function useSelectable<
   useEffect(() => {
     // Notify the parent component about the selected items
     onSelectItems?.(selectedStatus, clearSelectedItems)
-  }, [selectedStatus, onSelectItems, clearSelectedItems])
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- onSelectItems is not stable and causes a loop
+  }, [selectedStatus, clearSelectedItems])
 
   /**
    * Creates a map of selected items in the current data chunk

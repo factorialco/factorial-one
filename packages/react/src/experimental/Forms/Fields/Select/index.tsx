@@ -9,7 +9,6 @@ import {
   FiltersDefinition,
   getDataSourcePaginationType,
   GroupingDefinition,
-  OnSelectItemsCallbackStatus,
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
@@ -57,15 +56,14 @@ export * from "./types"
 export type SelectProps<T extends string, R extends RecordType = RecordType> = (
   | {
       multiple: true
-      onChange:
-        | // This is the case when the data is not paginated
-        ((
-            value: T[],
-            originalItem?: R[],
-            option?: SelectItemObject<T, R>[]
-          ) => void)
-        // This is the case when the data is paginated
-        | ((state: OnSelectItemsCallbackStatus<R, FiltersDefinition>) => void)
+      onChange: // This is the case when the data is not paginated
+      (
+        value: T[],
+        originalItem?: R[],
+        option?: SelectItemObject<T, R>[]
+      ) => void
+      // This is the case when the data is paginated
+      //| ((state: OnSelectItemsCallbackStatus<R, FiltersDefinition>) => void)
       onChangeSelectedOption?: (options: SelectItemObject<T, R>[]) => void
       value?: T[] | SelectedItemsState<T>
       defaultItem?: SelectItemObject<T, R>[]
@@ -160,7 +158,9 @@ const SelectItem = <T extends string, R>({
 
 const SelectValue = forwardRef<
   HTMLDivElement,
-  { item: SelectItemObject<string> | SelectItemObject<string>[] }
+  {
+    item: SelectItemObject<string> | SelectItemObject<string>[]
+  }
 >(function SelectValue({ item }, ref) {
   if (Array.isArray(item)) {
     return (
@@ -170,7 +170,8 @@ const SelectValue = forwardRef<
           type="dot"
           tags={item.map((i) => ({
             text: i.label,
-            type: "dot",
+            type: "icon",
+            icon: i.icon,
           }))}
         />
       </div>
@@ -196,7 +197,7 @@ const SelectComponent = forwardRef(function Select<
   {
     placeholder,
     onChange,
-    onChangeSelectedOption,
+    onChangeSelectedOptions,
     value,
     options = [],
     mapOptions,
@@ -323,13 +324,9 @@ const SelectComponent = forwardRef(function Select<
     paginationInfo,
     localSource,
     (status) => {
-      if (!multiple) {
-        return
-      }
       const notPaginated =
         getDataSourcePaginationType(localSource.dataAdapter) === "no-pagination"
-      console.log("notPaginated", notPaginated)
-      if (notPaginated) {
+      if (notPaginated || !multiple) {
         // Aa no pagination we return the real selected data not the definition of the selection
         const items = status.itemsStatus
           .filter((item) => item.checked)
@@ -338,16 +335,32 @@ const SelectComponent = forwardRef(function Select<
             item: item.item,
             option: item.item,
           }))
+
         console.log("items", items)
 
-        onChange?.(
-          items.map((item) => item.value as T),
-          items.map((item) => item.item),
-          items.map((item) => item.option)
-        )
+        const values = items.map((item) => item.value as T)
+
+        if (multiple) {
+          onChange?.(
+            values,
+            items.map((item) => item.item),
+            findOptions(values)
+          )
+          setSelectedOptions(findOptions(values))
+        } else {
+          const value = values[0]
+          const item = items[0]?.item
+          const option = findOptions(value)?.[0]
+          onChange?.(value, item, option)
+          setSelectedOptions(option)
+        }
       } else {
         onChange?.(status)
       }
+    },
+    {},
+    {
+      singleSelect: !multiple,
     }
     // {
     //   items: [
@@ -372,7 +385,7 @@ const SelectComponent = forwardRef(function Select<
    * It is used to display the selected option(s) in the input field
    * As the data is chunked, no all the items are loaded, so we need to find the options in the data records
    */
-  const [selectedOption, setSelectedOption] = useState<
+  const [selectedOption, setSelectedOptions] = useState<
     SelectItemObject<T, R> | SelectItemObject<T, R>[] | undefined
   >(undefined)
 
@@ -408,6 +421,7 @@ const SelectComponent = forwardRef(function Select<
     [data.records, optionMapper]
   )
 
+  // TODO????
   // // Select options if select values changes
   // const valueString = JSON.stringify(value)
   // useEffect(
@@ -415,15 +429,15 @@ const SelectComponent = forwardRef(function Select<
   //     const foundOptions = findOptions(value)
 
   //     if (multiple) {
-  //       onChangeSelectedOption?.(foundOptions)
-  //       setSelectedOption(foundOptions)
+  //       onChangeSelectedOptions?.(foundOptions)
+  //       setSelectedOptions(foundOptions)
   //     } else {
-  //       onChangeSelectedOption?.(foundOptions[0])
-  //       setSelectedOption(foundOptions[0])
+  //       onChangeSelectedOptions?.(foundOptions[0])
+  //       setSelectedOptions(foundOptions[0])
   //     }
   //   },
   //   // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the value
-  //   [optionMapper, findOptions, onChangeSelectedOption, valueString, multiple]
+  //   [optionMapper, findOptions, onChangeSelectedOptions, valueString, multiple]
   // )
 
   useEffect(() => {
@@ -445,7 +459,9 @@ const SelectComponent = forwardRef(function Select<
     setCurrentSearch(undefined)
     const foundOptions = findOptions(changedValue)
     if (foundOptions) {
-      onChange?.(foundOptions[0].value, foundOptions[0]?.item, foundOptions[0])
+      const option = foundOptions[0]
+      setSelectedOptions(option)
+      onChange?.(option.value, option.item, option)
     }
   }
 
@@ -537,28 +553,29 @@ const SelectComponent = forwardRef(function Select<
 
   const primitiveValue = useMemo(() => {
     const selectedItemsArray = Array.from(selectedItemsInData.values()).map(
-      (item) => item.value as T
+      (item) => item.value as string
     )
+
     return multiple ? selectedItemsArray : selectedItemsArray[0] || undefined
-  }, [selectedItemsInData, multiple])
+  }, [JSON.stringify(selectedItemsInData), multiple])
 
   const handlers = {
-    ...(multiple
-      ? { onItemCheckChange: handleItemCheckChange }
-      : { onValueChange: handleLocalValueChange }),
+    onItemCheckChange: handleItemCheckChange,
+    onValueChange: () => {},
   }
 
   return (
     <>
       <SelectPrimitive
-        {...handlers}
-        // value={primitiveValue}
+        value={primitiveValue}
         disabled={disabled}
         open={openLocal}
         multiple={multiple}
         onOpenChange={handleChangeOpenLocal}
         defaultValue={defaultValue}
         {...props}
+        // Handlers should be after the props to override the default handlers
+        {...handlers}
       >
         <SelectTrigger ref={ref} asChild>
           {children ? (
@@ -586,26 +603,29 @@ const SelectComponent = forwardRef(function Select<
                 handleChangeOpenLocal(!openLocal)
               }}
               append={
-                <Icon
-                  onClick={() => {
-                    if (disabled) return
-                    handleChangeOpenLocal(!openLocal)
-                  }}
-                  icon={ChevronDown}
-                  size="sm"
+                <div
                   className={cn(
                     "rounded-2xs bg-f1-background-secondary p-0.5 transition-transform duration-200",
                     openLocal && "rotate-180",
                     !disabled && "cursor-pointer"
                   )}
-                />
+                >
+                  <Icon
+                    onClick={() => {
+                      if (disabled) return
+                      handleChangeOpenLocal(!openLocal)
+                    }}
+                    icon={ChevronDown}
+                    size="sm"
+                  />
+                </div>
               }
             >
               <button
                 className="flex w-full max-w-full items-center justify-between"
                 aria-label={label || placeholder}
               >
-                {selectedOption && <SelectValue item={selectedOption} />}
+                <>{selectedOption && <SelectValue item={selectedOption} />}</>
               </button>
             </InputField>
           )}

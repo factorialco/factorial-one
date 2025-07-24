@@ -39,7 +39,9 @@ const SelectWithHooks = (props: SelectProps<string>) => {
         onSearchChange={handleOnSearchChange}
       />
 
-      <div className="mt-20">Selected: {JSON.stringify(localValue)}</div>
+      <div className="mt-20">
+        Selected: {JSON.stringify(localValue, null, 2)}
+      </div>
     </div>
   )
 }
@@ -180,7 +182,7 @@ export const WithActions: Story = {
   },
 }
 
-const mockItems = Array.from({ length: 10000 }, (_, i) => ({
+const mockItems = Array.from({ length: 100 }, (_, i) => ({
   value: `option-${i}`,
   label: `${getMockValue(FIRST_NAMES_MOCK, i)} ${getMockValue(SURNAMES_MOCK, i)}`,
   icon: getMockValue(MOCK_ICONS, i),
