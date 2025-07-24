@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.20.1...factorial-one-core-v1.20.2) (2025-07-22)
+
+
+### Bug Fixes
+
+* pulse avatar icon color ([#2282](https://github.com/factorialco/factorial-one/issues/2282)) ([5fdd117](https://github.com/factorialco/factorial-one/commit/5fdd117b2b2c22eb9b2e148a1101c46e3d8208f8))
+
 ## [1.20.1](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.20.0...factorial-one-core-v1.20.1) (2025-07-17)
 
 

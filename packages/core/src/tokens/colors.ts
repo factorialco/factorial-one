@@ -113,9 +113,7 @@ export const baseColors = {
   },
 } as const
 
-
 export type BaseColor = keyof typeof baseColors
-
 
 export const f1Colors = {
   foreground: {
@@ -231,6 +229,13 @@ export const f1Colors = {
       DEFAULT: "hsl(var(--selected-50))",
       hover: "hsl(var(--selected-60))",
     },
+    mood: {
+      "super-negative": "hsl(var(--mood-super-negative))",
+      negative: "hsl(var(--mood-negative))",
+      neutral: "hsl(var(--mood-neutral))",
+      positive: "hsl(var(--mood-positive))",
+      "super-positive": "hsl(var(--mood-super-positive))",
+    },
   },
   ring: "hsl(var(--ring))",
   link: "hsl(var(--link))",
@@ -238,6 +243,4 @@ export const f1Colors = {
   "special-highlight": "hsl(var(--special-highlight))",
 } as const
 
-
 export type F1Color = keyof typeof f1Colors
-

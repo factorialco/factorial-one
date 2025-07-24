@@ -25,6 +25,9 @@ const createSlashCommandExtension = (
       return {
         suggestion: {
           char: "/",
+          allowSpaces: true,
+          allowedPrefixes: [" ", "\n"],
+          startOfLine: false,
           command: ({
             editor,
             range,
@@ -87,12 +90,14 @@ const createSlashCommandExtension = (
           editor: this.editor,
           ...this.options.suggestion,
           items: ({ query }: { query: string }) => {
-            const normalizedQuery = query.toLowerCase().replace(/\s+/g, "")
+            // Exact search: the query with spaces must match exactly
+            const normalizedQuery = query.toLowerCase().trim()
             const results = availableCommands(labels, aiBlockConfig).filter(
               (item: CommandItem) => {
-                const normalizedTitle = item.title
-                  .toLowerCase()
-                  .replace(/\s+/g, "")
+                const normalizedTitle = item.title.toLowerCase()
+                // If query is empty, show all commands
+                if (!normalizedQuery) return true
+                // Exact string matching (including spaces)
                 return normalizedTitle.includes(normalizedQuery)
               }
             )
@@ -191,18 +196,16 @@ const createSlashCommandExtension = (
                 // Filter groups based on query if available
                 let filteredGroups = groupedCommands
                 if (props.query && props.query.trim()) {
-                  const normalizedQuery = props.query
-                    .toLowerCase()
-                    .replace(/\s+/g, "")
+                  const normalizedQuery = props.query.toLowerCase().trim()
+
                   filteredGroups = groupedCommands
                     .map((group) => ({
                       ...group,
-                      commands: group.commands.filter((item) =>
-                        item.title
-                          .toLowerCase()
-                          .replace(/\s+/g, "")
-                          .includes(normalizedQuery)
-                      ),
+                      commands: group.commands.filter((item) => {
+                        const normalizedTitle = item.title.toLowerCase()
+                        // Exact string matching (including spaces)
+                        return normalizedTitle.includes(normalizedQuery)
+                      }),
                     }))
                     .filter((group) => group.commands.length > 0)
                 }
@@ -243,17 +246,9 @@ const createSlashCommandExtension = (
                 editor: Editor
                 query?: string
               }) => {
-                if (props.items.length === 0) {
-                  if (popoverRoot && container) {
-                    popoverRoot.unmount()
-                    container.remove()
-                  }
-                  return
-                }
-
                 if (!component || !container || !popoverRoot) return
 
-                // Get filtered groups for update as well
+                // Get filtered groups for update
                 const groupedCommands = getGroupedCommands(
                   labels,
                   finalGroupLabels,
@@ -261,42 +256,54 @@ const createSlashCommandExtension = (
                 )
                 let filteredGroups = groupedCommands
                 if (props.query && props.query.trim()) {
-                  const normalizedQuery = props.query
-                    .toLowerCase()
-                    .replace(/\s+/g, "")
+                  const normalizedQuery = props.query.toLowerCase().trim()
+
                   filteredGroups = groupedCommands
                     .map((group) => ({
                       ...group,
-                      commands: group.commands.filter((item) =>
-                        item.title
-                          .toLowerCase()
-                          .replace(/\s+/g, "")
-                          .includes(normalizedQuery)
-                      ),
+                      commands: group.commands.filter((item) => {
+                        const normalizedTitle = item.title.toLowerCase()
+                        // Exact string matching (including spaces)
+                        return normalizedTitle.includes(normalizedQuery)
+                      }),
                     }))
                     .filter((group) => group.commands.length > 0)
                 }
 
+                // Always update the component with current items (even if empty)
                 component.updateProps({
                   items: props.items,
                   groups: filteredGroups,
                 })
 
-                const safeGetRect = () => {
-                  if (props.clientRect) {
-                    const rect = props.clientRect()
-                    if (rect && rect.width && rect.height) return rect
+                // Control visibility based on whether we have items
+                if (props.items.length === 0) {
+                  // Hide the popover content
+                  if (container) {
+                    ;(container as HTMLElement).style.display = "none"
                   }
-                  return getSlashRect()
+                } else {
+                  // Show the popover content and update position
+                  if (container) {
+                    ;(container as HTMLElement).style.display = ""
+                  }
+
+                  const safeGetRect = () => {
+                    if (props.clientRect) {
+                      const rect = props.clientRect()
+                      if (rect && rect.width && rect.height) return rect
+                    }
+                    return getSlashRect()
+                  }
+                  const anchorRect = safeGetRect()
+                  popoverRoot.render(
+                    <PopoverComponent
+                      content={component.element as HTMLElement}
+                      anchorRect={anchorRect}
+                      editor={props.editor}
+                    />
+                  )
                 }
-                const anchorRect = safeGetRect()
-                popoverRoot.render(
-                  <PopoverComponent
-                    content={component.element as HTMLElement}
-                    anchorRect={anchorRect}
-                    editor={props.editor}
-                  />
-                )
               },
               onKeyDown: (props: { event: KeyboardEvent }) => {
                 if (props.event.key === "Escape") {

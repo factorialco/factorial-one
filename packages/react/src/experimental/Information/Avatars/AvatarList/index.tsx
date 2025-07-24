@@ -12,6 +12,11 @@ export type AvatarListSize = Extract<
   "xsmall" | "small" | "medium"
 >
 
+export type AvatarListSize = Extract<
+  (typeof sizes)[number],
+  "xsmall" | "small" | "medium"
+>
+
 const avatarListVariants = cva({
   base: "flex items-center",
   variants: {
