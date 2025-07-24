@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.132.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.132.0...factorial-one-react-v1.132.1) (2025-07-24)
+
+
+### Bug Fixes
+
+* **FileAvatar:** defined sizes & structured stories ([#2289](https://github.com/factorialco/factorial-one/issues/2289)) ([7172713](https://github.com/factorialco/factorial-one/commit/7172713e620f571b8089d7cae8d7c5b235d875c1))
+
 ## [1.132.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.2...factorial-one-react-v1.132.0) (2025-07-24)
 
 
