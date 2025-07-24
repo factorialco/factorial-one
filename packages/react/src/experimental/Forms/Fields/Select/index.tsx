@@ -454,17 +454,6 @@ const SelectComponent = forwardRef(function Select<
     [setCurrentSearch, onSearchChange]
   )
 
-  // Whe the selectiopn mode is single, we need to find the option and call the onChange with the option
-  const handleLocalValueChange = (changedValue: ValueType) => {
-    setCurrentSearch(undefined)
-    const foundOptions = findOptions(changedValue)
-    if (foundOptions) {
-      const option = foundOptions[0]
-      setSelectedOptions(option)
-      onChange?.(option.value, option.item, option)
-    }
-  }
-
   /**
    * When an option is checked or unchecked, we need to update the selected items status
    * @param value
@@ -592,8 +581,8 @@ const SelectComponent = forwardRef(function Select<
               icon={icon}
               labelIcon={labelIcon}
               hideLabel={hideLabel}
+              emptyValue={undefined}
               value={value as ValueType}
-              onChange={(value) => handleLocalValueChange(value)}
               placeholder={placeholder || ""}
               disabled={disabled}
               clearable={clearable}

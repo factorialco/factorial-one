@@ -280,6 +280,7 @@ export const WithDataSourceNotPaginatedMultiple: Story = {
 
 export const WithDataSourcePaginated: Story = {
   args: {
+    clearable: true,
     placeholder: "Select a value",
     showSearchBox: true,
     onChange: fn(),

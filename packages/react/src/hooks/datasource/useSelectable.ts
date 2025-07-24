@@ -302,7 +302,11 @@ export function useSelectable<
       }
 
       updated++
-      itemsStateNew.set(id, { item, checked })
+      // If the select is single, we dont allow to toggle the value, so is always checked
+      itemsStateNew.set(id, {
+        item,
+        checked: options?.singleSelect ? true : checked,
+      })
     }
 
     if (updated > 0) {
