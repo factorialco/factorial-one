@@ -39,7 +39,7 @@ export const SelectWithDirection = ({
             labelIcon={Placeholder}
             options={options}
             value={value?.selected ?? EmptyValue}
-            onChange={(value: string) =>
+            onChange={(value: string) => {
               onChange?.(
                 value !== EmptyValue
                   ? {
@@ -48,7 +48,7 @@ export const SelectWithDirection = ({
                     }
                   : undefined
               )
-            }
+            }}
           />
         </div>
         {value?.selected && !hideDirection && value.selected !== EmptyValue && (

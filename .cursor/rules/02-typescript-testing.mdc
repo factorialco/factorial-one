@@ -20,6 +20,7 @@ alwaysApply: false
 - Export component prop interfaces.
 - Implement proper generic constraints.
 - `any` is a non aceptable type, avoid its use
+- Don't use `any` or `as any` to solve types issues
 
 # Testing Standards
 

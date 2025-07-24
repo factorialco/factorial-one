@@ -139,6 +139,7 @@ export const Settings = <
                   className="px-3 py-3"
                 />
               ),
+
               hasSortings && (
                 <SortingSelector
                   key="sorting"

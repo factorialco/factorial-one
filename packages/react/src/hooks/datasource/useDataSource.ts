@@ -104,13 +104,6 @@ export function useDataSource<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
 
-  // const setCurrentFilters = (x: FiltersState<FiltersSchema>) => {
-  //   if (JSON.stringify(x) === JSON.stringify(currentFilters)) {
-  //     return
-  //   }
-  //   _setCurrentFilters(x)
-  // }
-
   const [currentSortings, setCurrentSortings] =
     useState<SortingsState<Sortings> | null>(defaultSorting || null)
 
@@ -151,6 +144,10 @@ export function useDataSource<
   const [currentGrouping, setCurrentGrouping] = useState<
     GroupingState<R, Grouping>
   >(initialCurrentGrouping ?? defaultGrouping)
+
+  useEffect(() => {
+    console.log("currentGrouping", currentGrouping)
+  }, [currentGrouping])
 
   // For mandatory grouping, ensure we have a valid grouping state
   if (grouping?.mandatory && !currentGrouping?.field) {

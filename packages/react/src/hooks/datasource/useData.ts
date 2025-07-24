@@ -314,7 +314,6 @@ export function useData<
       const idMap = new Map(
         prevData.map((item, index) => [idProvider(item, index), item])
       )
-
       for (const [index, record] of newData.entries()) {
         const id = idProvider(record, index)
         idMap.set(id, record)

@@ -70,7 +70,7 @@ export const GroupingSelector = <
       value={
         currentGrouping
           ? {
-              selected: currentGrouping.field.toString(),
+              selected: currentGrouping.field?.toString(),
               direction: currentGrouping.order,
             }
           : {

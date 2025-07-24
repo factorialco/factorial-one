@@ -54,6 +54,9 @@ export type DataSourceDefinition<
   /** Grouping configuration */
   grouping?: Grouping
   currentGrouping?: GroupingState<R, Grouping>
+
+  /** Function to provide an id for a record, necessary for append mode */
+  idProvider?: (item: R, index?: number) => string | number | symbol
 }
 
 /**
@@ -93,7 +96,4 @@ export type DataSource<
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<R, Grouping>>
   >
-
-  /** Function to provide an id for a record, necessary for append mode */
-  idProvider?: (item: R, index?: number) => string | number | symbol
 }
