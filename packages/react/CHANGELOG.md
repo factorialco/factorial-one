@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.131.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.0...factorial-one-react-v1.131.1) (2025-07-24)
+
+
+### Bug Fixes
+
+* fullHeight ([#2274](https://github.com/factorialco/factorial-one/issues/2274)) ([e237773](https://github.com/factorialco/factorial-one/commit/e2377736d4f19a75d7fca2d5fc4ac8e558085dc0))
+
 ## [1.131.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.130.1...factorial-one-react-v1.131.0) (2025-07-24)
 
 
