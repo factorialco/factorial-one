@@ -132,6 +132,8 @@ export type InputFieldProps<T> = {
   append?: React.ReactNode
   lengthProvider?: (value: T | undefined) => number
   loading?: boolean
+  minWidth?: string
+  maxWidth?: string
 }
 
 const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
@@ -166,6 +168,8 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       role,
       "aria-controls": ariaControls,
       "aria-expanded": ariaExpanded,
+      minWidth,
+      maxWidth,
       ...props
     }: InputFieldProps<string>,
     ref
@@ -241,6 +245,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
           className
         )}
         ref={ref}
+        style={{ minWidth, maxWidth }}
       >
         {((!hideLabel && label) || maxLength) && (
           <div

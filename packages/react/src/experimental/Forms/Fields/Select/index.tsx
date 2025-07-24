@@ -1,6 +1,6 @@
+import { OneEllipsis } from "@/components/OneEllipsis"
 import { Icon } from "@/components/Utilities/Icon"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
-import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import {
   BaseFetchOptions,
   BaseResponse,
@@ -19,6 +19,7 @@ import {
 } from "@/hooks/datasource"
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
+import { GroupHeader } from "@/ui/GroupHeader"
 import { InputField, InputFieldProps } from "@/ui/InputField"
 import {
   SelectContent,
@@ -98,6 +99,8 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = {
     | "icon"
     | "placeholder"
     | "disabled"
+    | "minWidth"
+    | "maxWidth"
   >
 
 const SelectItem = <T extends string, R>({
@@ -137,13 +140,13 @@ const SelectValue = forwardRef<
   { item: SelectItemObject<string> }
 >(function SelectValue({ item }, ref) {
   return (
-    <div className="flex items-center gap-1.5" ref={ref}>
+    <div className="flex min-w-[20px] shrink items-center gap-1.5" ref={ref}>
       {item.icon && (
         <div className="h-5 shrink-0 text-f1-icon">
           <Icon icon={item.icon} />
         </div>
       )}
-      {item.label}
+      <OneEllipsis className="min-w-0 shrink">{item.label}</OneEllipsis>
     </div>
   )
 })
@@ -335,7 +338,7 @@ const SelectComponent = forwardRef(function Select<
     }, 0)
   }
 
-  // const collapsible = localSource.grouping?.collapsible
+  //const collapsible = localSource.grouping?.collapsible
   const defaultOpenGroups = localSource.grouping?.defaultOpenGroups
   const { openGroups, setGroupOpen } = useGroups(
     data?.type === "grouped" ? data.groups : [],
@@ -379,6 +382,7 @@ const SelectComponent = forwardRef(function Select<
               onOpenChange={(open) => setGroupOpen(group.key, open)}
               open={openGroups[group.key]}
               // showOpenChange={collapsible}
+              className="px-4 py-2"
             />
           ),
         })
@@ -455,7 +459,7 @@ const SelectComponent = forwardRef(function Select<
               }
             >
               <button
-                className="flex w-full items-center justify-between"
+                className="flex w-full max-w-full items-center justify-between"
                 aria-label={label || placeholder}
               >
                 {selectedOption && <SelectValue item={selectedOption} />}
