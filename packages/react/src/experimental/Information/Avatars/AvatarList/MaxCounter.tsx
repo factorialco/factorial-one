@@ -1,4 +1,4 @@
-import { sizes, type } from "@/ui/avatar"
+import { type } from "@/ui/avatar"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/ui/hover-card"
 import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
 import { cva } from "cva"
@@ -6,6 +6,7 @@ import { Icon } from "../../../../components/Utilities/Icon"
 import { EllipsisHorizontal } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
 import { Avatar, AvatarVariant } from "../Avatar"
+import { type AvatarListSize } from "./index"
 
 const sizeVariants = cva({
   base: "flex shrink-0 items-center justify-center bg-f1-background-secondary font-medium text-f1-foreground-secondary",
@@ -14,13 +15,11 @@ const sizeVariants = cva({
       xsmall: "h-5 w-5 rounded-xs text-sm",
       small: "h-6 min-w-6 rounded-sm px-1 text-sm",
       medium: "h-8 min-w-8 rounded px-1.5",
-      large: "h-14 min-w-14 rounded-xl px-3 text-2xl",
-      xlarge: "h-18 min-w-18 rounded-[20px] px-4 text-3xl",
-    },
+    } satisfies Record<AvatarListSize, string>,
     type: {
       base: "",
       rounded: "!rounded-full",
-    },
+    } satisfies Record<(typeof type)[number], string>,
   },
   compoundVariants: [
     {
@@ -33,16 +32,6 @@ const sizeVariants = cva({
       type: "rounded",
       className: "px-2",
     },
-    {
-      size: "large",
-      type: "rounded",
-      className: "px-4",
-    },
-    {
-      size: "xlarge",
-      type: "rounded",
-      className: "px-5",
-    },
   ],
   defaultVariants: {
     size: "medium",
@@ -52,7 +41,7 @@ const sizeVariants = cva({
 
 type Props = {
   count: number
-  size?: (typeof sizes)[number]
+  size?: AvatarListSize
   type?: (typeof type)[number]
   list?: AvatarVariant[]
 }

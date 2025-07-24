@@ -16,8 +16,9 @@ const getBadgeSize = (
   const sizeMap: Partial<
     Record<Exclude<ShadAvatarProps["size"], undefined>, BadgeProps["size"]>
   > = {
-    xlarge: "lg",
-    large: "md",
+    xxlarge: "lg",
+    xlarge: "md",
+    large: "sm",
     small: "sm",
     xsmall: "xs",
   } as const
@@ -34,8 +35,9 @@ const getAvatarSize = (
       ModuleAvatarProps["size"]
     >
   > = {
-    xlarge: "md",
-    large: "sm",
+    xxlarge: "md",
+    xlarge: "sm",
+    large: "xs",
     small: "xs",
     xsmall: "xxs",
   } as const
