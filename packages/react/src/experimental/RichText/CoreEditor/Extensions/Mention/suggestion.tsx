@@ -73,12 +73,68 @@ export function createSuggestionConfig(
           range: { from: number; to: number }
         }) => {
           const commandFn = (item: MentionedUser) => {
-            props.command({
-              id: String(item.id),
-              label: item.label,
-              image_url: item.image_url,
-              href: item.href,
-            })
+            // Get the current selection and document state
+            const { state } = props.editor
+            const { from, to } = state.selection
+
+            // Find the actual @ symbol position by looking backwards more conservatively
+            const doc = state.doc
+            const $from = doc.resolve(from)
+
+            // Look backwards character by character to find the @ symbol
+            // but stop at word boundaries to avoid deleting too much
+            let atPosition = -1
+            const currentOffset = $from.parentOffset
+            const parentText = $from.parent.textContent || ""
+
+            // Search backwards from current position, but limit to reasonable mention length
+            for (
+              let i = currentOffset - 1;
+              i >= Math.max(0, currentOffset - 100);
+              i--
+            ) {
+              const char = parentText[i]
+              if (char === "@") {
+                atPosition = from - (currentOffset - i)
+                break
+              }
+              // Stop if we hit whitespace or newline before finding @
+              if (char === " " || char === "\n" || char === "\t") {
+                break
+              }
+            }
+
+            if (atPosition !== -1) {
+              props.editor
+                .chain()
+                .focus()
+                .deleteRange({ from: atPosition, to: to })
+                .run()
+            } else {
+              // Fallback to the provided range if we can't find the @ symbol
+              props.editor.chain().focus().deleteRange(props.range).run()
+            }
+
+            // Then insert the mention
+            props.editor
+              .chain()
+              .focus()
+              .insertContent([
+                {
+                  type: "mention",
+                  attrs: {
+                    id: String(item.id),
+                    label: item.label,
+                    image_url: item.image_url,
+                    href: item.href,
+                  },
+                },
+                {
+                  type: "text",
+                  text: " ",
+                },
+              ])
+              .run()
           }
           component = new ReactRenderer(MentionList, {
             props: { items: props.items, command: commandFn },
