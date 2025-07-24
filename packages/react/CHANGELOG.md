@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.131.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.130.1...factorial-one-react-v1.131.0) (2025-07-24)
+
+
+### Features
+
+* **RichText:** enhance mention insertion ([#2292](https://github.com/factorialco/factorial-one/issues/2292)) ([fa16ec8](https://github.com/factorialco/factorial-one/commit/fa16ec85070f96ed20832b8f2cd6831ca7fedf48))
+
 ## [1.130.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.130.0...factorial-one-react-v1.130.1) (2025-07-22)
 
 
