@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.132.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.2...factorial-one-react-v1.132.0) (2025-07-24)
+
+
+### Features
+
+* **Avatar:** new `large` size ([#2288](https://github.com/factorialco/factorial-one/issues/2288)) ([fdb72d7](https://github.com/factorialco/factorial-one/commit/fdb72d764945cd9c92ae84ff0670a5ac089ee955))
+
 ## [1.131.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.1...factorial-one-react-v1.131.2) (2025-07-24)
 
 
