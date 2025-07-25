@@ -46,6 +46,7 @@ export const Default: Story = {
       lastName: "Moreno",
     },
     title: "Daniel Moreno",
+    description: "This is a cool description",
     metadata: [
       {
         icon: Briefcase,
@@ -169,5 +170,17 @@ export const WithEmoji: Story = {
       type: "emoji",
       emoji: "🐱",
     },
+  },
+}
+
+export const WithImage: Story = {
+  args: {
+    ...Default.args,
+    selectable: true,
+    image: cat,
+  },
+  render: (args) => {
+    const [selected, setSelected] = useState(false)
+    return <OneCard {...args} selected={selected} onSelect={setSelected} />
   },
 }
