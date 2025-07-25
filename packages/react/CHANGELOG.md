@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.133.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.132.1...factorial-one-react-v1.133.0) (2025-07-25)
+
+
+### Features
+
+* add support for full-screen on OneModal ([#2291](https://github.com/factorialco/factorial-one/issues/2291)) ([923f86b](https://github.com/factorialco/factorial-one/commit/923f86b51581f9d714372524eed00fb76c1c8725))
+
 ## [1.132.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.132.0...factorial-one-react-v1.132.1) (2025-07-24)
 
 
