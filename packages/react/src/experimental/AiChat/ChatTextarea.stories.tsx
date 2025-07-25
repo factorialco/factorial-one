@@ -1,7 +1,7 @@
 import { Message } from "@copilotkit/runtime-client-gql"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { useRef, useState } from "react"
-import { ChatTextarea } from "./ChatWindow"
+import { ChatTextarea } from "./components/ChatTextarea"
 
 // Wrapper component to manage state
 const ChatTextareaWrapper = () => {

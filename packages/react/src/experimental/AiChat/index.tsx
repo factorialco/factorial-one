@@ -11,7 +11,7 @@ import {
   ChatWindow,
   MessagesContainer,
   UserMessage,
-} from "./ChatWindow"
+} from "./components"
 
 export type AiChatProps = ComponentProps<typeof CopilotPopup>
 

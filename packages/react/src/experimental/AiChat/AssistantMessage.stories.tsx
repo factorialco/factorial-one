@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react-vite"
-import { AssistantMessage } from "./ChatWindow"
+import { AssistantMessage } from "./components/AssistantMessage"
 
 const meta = {
   title: "Experimental/AiChat/AssistantMessage",
