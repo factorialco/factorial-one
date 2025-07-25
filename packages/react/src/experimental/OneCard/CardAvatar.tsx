@@ -3,11 +3,13 @@ import {
   AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
 import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
+import { FileAvatar } from "@/experimental/Information/Avatars/FileAvatar"
 import { cn } from "@/lib/utils"
 
 type CardAvatarType =
   | AvatarVariant
-  | { type: "emoji"; emoji: string; size?: "sm" | "md" | "lg" }
+  | { type: "emoji"; emoji: string }
+  | { type: "file"; file: File }
 
 interface CardAvatarProps {
   /**
@@ -19,6 +21,16 @@ interface CardAvatarProps {
    * Whether the avatar is displayed with an overlay
    */
   overlay?: boolean
+}
+
+const AvatarRender = ({ avatar }: { avatar: CardAvatarType }) => {
+  if (avatar.type === "emoji") {
+    return <EmojiAvatar emoji={avatar.emoji} size="lg" />
+  }
+  if (avatar.type === "file") {
+    return <FileAvatar file={avatar.file} size="large" />
+  }
+  return <Avatar avatar={avatar} size="large" />
 }
 
 export function CardAvatar({ avatar, overlay = false }: CardAvatarProps) {
@@ -33,11 +45,7 @@ export function CardAvatar({ avatar, overlay = false }: CardAvatarProps) {
         overlay && isRounded && "rounded-full"
       )}
     >
-      {avatar.type === "emoji" ? (
-        <EmojiAvatar emoji={avatar.emoji} size={avatar.size || "md"} />
-      ) : (
-        <Avatar avatar={avatar} size="medium" />
-      )}
+      <AvatarRender avatar={avatar} />
     </div>
   )
 }
