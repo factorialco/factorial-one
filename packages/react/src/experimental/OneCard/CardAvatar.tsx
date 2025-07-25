@@ -21,6 +21,11 @@ interface CardAvatarProps {
    * Whether the avatar is displayed with an overlay
    */
   overlay?: boolean
+
+  /**
+   * Whether the avatar is displayed in a compact layout
+   */
+  compact?: boolean
 }
 
 const AvatarRender = ({ avatar }: { avatar: CardAvatarType }) => {
@@ -33,7 +38,11 @@ const AvatarRender = ({ avatar }: { avatar: CardAvatarType }) => {
   return <Avatar avatar={avatar} size="large" />
 }
 
-export function CardAvatar({ avatar, overlay = false }: CardAvatarProps) {
+export function CardAvatar({
+  avatar,
+  overlay = false,
+  compact = false,
+}: CardAvatarProps) {
   const isRounded = avatar.type === "person"
 
   return (
@@ -41,8 +50,10 @@ export function CardAvatar({ avatar, overlay = false }: CardAvatarProps) {
       className={cn(
         "mb-1.5 flex h-fit w-fit",
         overlay &&
+          !compact &&
           "absolute -top-9 left-0 rounded-md ring-[3px] ring-f1-background",
-        overlay && isRounded && "rounded-full"
+        overlay && isRounded && "rounded-full",
+        compact && "mb-0"
       )}
     >
       <AvatarRender avatar={avatar} />

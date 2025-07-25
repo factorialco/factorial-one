@@ -20,6 +20,11 @@ import { type CardMetadata as CardMetadataType } from "./types"
 
 interface OneCardProps {
   /**
+   * Whether the card has a compact layout
+   */
+  compact?: boolean
+
+  /**
    * The avatar to display in the card
    */
   avatar?: CardAvatarType
@@ -101,6 +106,7 @@ interface OneCardProps {
 }
 
 export function OneCard({
+  compact = false,
   avatar,
   image,
   title,
@@ -123,6 +129,7 @@ export function OneCard({
     <Card
       className={cn(
         "group relative bg-f1-background shadow-none transition-all",
+        compact && "p-3",
         (selectable || (otherActions && otherActions.length > 0)) &&
           !selected &&
           "hover:border-f1-border",
@@ -145,7 +152,12 @@ export function OneCard({
       )}
 
       {image && (
-        <div className="relative -mx-3 -mt-3 mb-4 h-32 overflow-hidden rounded-md">
+        <div
+          className={cn(
+            "relative -mx-3 -mt-3 mb-4 h-32 overflow-hidden rounded-md",
+            compact && "-mx-2 -mt-2 mb-3"
+          )}
+        >
           <Image
             src={image}
             alt={title}
@@ -165,17 +177,30 @@ export function OneCard({
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-start justify-between gap-1">
           <CardHeader
-            className={cn("relative flex-col gap-0 p-0", image && "pt-3")}
-          >
-            {avatar && <CardAvatar avatar={avatar} overlay={!!image} />}
-            <CardTitle className="flex flex-row justify-between gap-1 text-lg font-semibold text-f1-foreground">
-              {title}
-            </CardTitle>
-            {description && (
-              <CardSubtitle className="line-clamp-3 text-base text-f1-foreground-secondary">
-                {description}
-              </CardSubtitle>
+            className={cn(
+              "relative flex-col gap-0 p-0",
+              image && !compact && "pt-3",
+              compact && "flex-row items-center gap-2.5"
             )}
+          >
+            {avatar && (
+              <CardAvatar avatar={avatar} overlay={!!image} compact={compact} />
+            )}
+            <div className="flex flex-col gap-0">
+              <CardTitle
+                className={cn(
+                  "flex flex-row justify-between gap-1 text-lg font-semibold text-f1-foreground",
+                  compact && "text-base"
+                )}
+              >
+                {title}
+              </CardTitle>
+              {description && (
+                <CardSubtitle className="line-clamp-3 text-base text-f1-foreground-secondary">
+                  {description}
+                </CardSubtitle>
+              )}
+            </div>
           </CardHeader>
           {!image && (
             <CardOptions
@@ -189,7 +214,12 @@ export function OneCard({
         </div>
         <CardContent>
           {metadata && (
-            <div className="flex flex-col gap-0.5">
+            <div
+              className={cn(
+                "flex flex-col gap-0.5",
+                compact && "flex-row flex-wrap gap-x-3 gap-y-0"
+              )}
+            >
               {metadata.map((item, index) => (
                 <CardMetadata key={index} metadata={item} />
               ))}

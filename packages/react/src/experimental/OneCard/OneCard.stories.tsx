@@ -218,3 +218,10 @@ export const WithFileAvatar: Story = {
     return <OneCard {...args} selected={selected} onSelect={setSelected} />
   },
 }
+
+export const Compact: Story = {
+  args: {
+    ...Default.args,
+    compact: true,
+  },
+}
