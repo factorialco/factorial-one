@@ -46,6 +46,7 @@ export const Default: Story = {
       lastName: "Moreno",
     },
     title: "Daniel Moreno",
+    description: "This is a cool description",
     metadata: [
       {
         icon: Briefcase,
@@ -90,6 +91,9 @@ export const Default: Story = {
 }
 
 export const WithActions: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     title: "Product designer",
     description:
@@ -133,6 +137,9 @@ export const WithActions: Story = {
 }
 
 export const WithLink: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     ...Default.args,
     link: "/",
@@ -140,6 +147,9 @@ export const WithLink: Story = {
 }
 
 export const Selectable: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     ...Default.args,
     selectable: true,
@@ -151,6 +161,9 @@ export const Selectable: Story = {
 }
 
 export const WithChildren: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     title: "A cool cat",
     description: "This is a cool cat",
@@ -163,11 +176,52 @@ export const WithChildren: Story = {
 }
 
 export const WithEmoji: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     ...Default.args,
     avatar: {
       type: "emoji",
       emoji: "🐱",
     },
+  },
+}
+
+export const WithImage: Story = {
+  args: {
+    ...Default.args,
+    selectable: true,
+    image: cat,
+  },
+  render: (args) => {
+    const [selected, setSelected] = useState(false)
+    return <OneCard {...args} selected={selected} onSelect={setSelected} />
+  },
+}
+
+export const WithFileAvatar: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    ...WithImage.args,
+    selectable: true,
+    image: cat,
+    avatar: {
+      type: "file",
+      file: new File([""], "document.pdf", { type: "application/pdf" }),
+    },
+  },
+  render: (args) => {
+    const [selected, setSelected] = useState(false)
+    return <OneCard {...args} selected={selected} onSelect={setSelected} />
+  },
+}
+
+export const Compact: Story = {
+  args: {
+    ...Default.args,
+    compact: true,
   },
 }
