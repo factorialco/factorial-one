@@ -59,7 +59,7 @@ export function CelebrationAvatar({
               src={src}
               firstName={firstName}
               lastName={lastName}
-              size="xlarge"
+              size="xxlarge"
             />
           </div>
           {canReact && (

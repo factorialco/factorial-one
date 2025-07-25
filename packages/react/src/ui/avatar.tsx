@@ -6,7 +6,14 @@ import * as React from "react"
 import { Image } from "../lib/imageHandler"
 import { cn } from "../lib/utils"
 
-export const sizes = ["xsmall", "small", "medium", "large", "xlarge"] as const
+export const sizes = [
+  "xsmall",
+  "small",
+  "medium",
+  "large",
+  "xlarge",
+  "xxlarge",
+] as const
 
 export const type = ["base", "rounded"] as const
 
@@ -31,8 +38,9 @@ const avatarVariants = cva({
       xsmall: "size-5 rounded-xs text-sm",
       small: "size-6 rounded-sm text-sm",
       medium: "size-8 rounded",
-      large: "size-14 rounded-xl text-2xl",
-      xlarge: "size-18 rounded-[20px] text-3xl",
+      large: "size-10 rounded-md text-lg",
+      xlarge: "size-14 rounded-xl text-2xl",
+      xxlarge: "size-18 rounded-[20px] text-3xl",
     } satisfies Record<(typeof sizes)[number], string>,
     type: {
       base: "",
