@@ -8,7 +8,7 @@ import { ComponentProps, forwardRef, useMemo } from "react"
 import { Badge, BadgeProps } from "../../Badge"
 import { ModuleAvatar, ModuleAvatarProps } from "../../ModuleAvatar"
 import { AvatarBadge } from "../types"
-import { getAvatarColor, getInitials, getMask } from "./utils"
+import { getAvatarColor, getInitials } from "./utils"
 
 const getBadgeSize = (
   size: ShadAvatarProps["size"]
@@ -26,7 +26,7 @@ const getBadgeSize = (
   return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
 }
 
-const getAvatarSize = (
+const getModuleAvatarSize = (
   size: ShadAvatarProps["size"]
 ): ModuleAvatarProps["size"] | undefined => {
   const sizeMap: Partial<
@@ -35,11 +35,12 @@ const getAvatarSize = (
       ModuleAvatarProps["size"]
     >
   > = {
-    xxlarge: "md",
-    xlarge: "sm",
-    large: "xs",
+    xxlarge: "lg",
+    xlarge: "md",
+    large: "sm",
+    medium: "sm",
     small: "xs",
-    xsmall: "xxs",
+    xsmall: "xs",
   } as const
 
   return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
@@ -79,7 +80,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
     const hasAria = Boolean(ariaLabel || ariaLabelledby)
 
     const badgeSize = getBadgeSize(size)
-    const moduleAvatarSize = getAvatarSize(size)
+    const moduleAvatarSize = getModuleAvatarSize(size)
 
     const badgeContent = useMemo(
       () =>
@@ -99,20 +100,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
     return (
       <>
         <div className="relative inline-flex">
-          <div
-            className="h-fit w-fit"
-            style={
-              badge
-                ? {
-                    clipPath: getMask.get(
-                      type === "rounded" ? "rounded" : "base",
-                      size,
-                      badge.type === "module" ? "module" : "default"
-                    ),
-                  }
-                : undefined
-            }
-          >
+          <div className="h-fit w-fit">
             <AvatarComponent
               size={size}
               type={type}
