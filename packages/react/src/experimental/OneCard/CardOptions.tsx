@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
-import { EllipsisHorizontal } from "@/icons/app"
+import { Ellipsis } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
@@ -70,7 +70,7 @@ export function CardOptions({
           <Dropdown items={otherActions} open={isOpen} onOpenChange={setIsOpen}>
             <Button
               label={translations.actions.other}
-              icon={EllipsisHorizontal}
+              icon={Ellipsis}
               variant="ghost"
               size="sm"
               round
