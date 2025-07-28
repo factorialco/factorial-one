@@ -1,18 +1,21 @@
-import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
-import { IconType } from "@/components/Utilities/Icon"
 import { Image } from "@/components/Utilities/Image"
 import { DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { cn, focusRing } from "@/lib/utils"
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardSubtitle,
   CardTitle,
 } from "@/ui/Card"
 import { type ReactNode } from "react"
+import {
+  CardActions,
+  type CardPrimaryAction,
+  type CardSecondaryAction,
+  type CardSecondaryLink,
+} from "./CardActions"
 import { CardAvatar, type CardAvatarType } from "./CardAvatar"
 import { CardMetadata } from "./CardMetadata"
 import { CardOptions } from "./CardOptions"
@@ -57,22 +60,12 @@ interface OneCardProps {
   /**
    * The primary action that displays a primary button in the card footer
    */
-  primaryAction?: {
-    label: string
-    icon?: IconType
-    onClick: () => void
-  }
+  primaryAction?: CardPrimaryAction
 
   /**
-   * The secondary actions that display a secondary button in the card footer
-   * The first secondary action will display its label, while the rest will display
-   * just the icon
+   * The secondary actions - either an array of button actions or a single link
    */
-  secondaryActions?: {
-    label: string
-    icon?: IconType
-    onClick: () => void
-  }[]
+  secondaryActions?: CardSecondaryAction[] | CardSecondaryLink
 
   /**
    * Actions to display in the dropdown menu inside the card content
@@ -116,9 +109,6 @@ export function OneCard({
   onSelect,
   onClick,
 }: OneCardProps) {
-  const hasActions =
-    primaryAction || (secondaryActions && secondaryActions?.length > 0)
-
   return (
     <Card
       className={cn(
@@ -201,38 +191,10 @@ export function OneCard({
           {children}
         </CardContent>
       </div>
-      {hasActions && (
-        <CardFooter
-          className={cn(
-            "justify-between gap-2 [&>div]:z-[1]",
-            "relative -mx-4 mt-4 border-0 border-t border-solid border-t-f1-border-secondary px-4 pt-4"
-          )}
-        >
-          {secondaryActions && (
-            <div className="flex gap-2">
-              {secondaryActions.map((action, index) => (
-                <Button
-                  key={index}
-                  label={action.label}
-                  icon={action.icon}
-                  hideLabel={index > 0}
-                  round={index > 0}
-                  variant="outline"
-                  onClick={action.onClick}
-                />
-              ))}
-            </div>
-          )}
-
-          {primaryAction && (
-            <Button
-              label={primaryAction.label}
-              icon={primaryAction.icon}
-              onClick={primaryAction.onClick}
-            />
-          )}
-        </CardFooter>
-      )}
+      <CardActions
+        primaryAction={primaryAction}
+        secondaryActions={secondaryActions}
+      />
     </Card>
   )
 }
