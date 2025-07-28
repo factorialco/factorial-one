@@ -1,4 +1,4 @@
-import { Icon, IconProps } from "@/components/Utilities/Icon"
+import { Icon, IconProps, IconType } from "@/components/Utilities/Icon"
 import { cn } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
 import { ModuleId, modules } from "./modules"
@@ -21,9 +21,18 @@ const moduleAvatarVariants = cva({
 })
 
 export type ModuleAvatarProps = VariantProps<typeof moduleAvatarVariants> & {
-  module: ModuleId
   withWhiteBorder?: boolean
-}
+} & (
+    | {
+        module: ModuleId
+      }
+    | {
+        /**
+         * @deprecated This component should only render module related icons, not arbitrary icons. The `icon` property will be removed soon. Use the `module` prop instead.
+         */
+        icon: IconType
+      }
+  )
 
 const ICON_SIZES: Record<
   NonNullable<ModuleAvatarProps["size"]>,
@@ -51,7 +60,12 @@ export function ModuleAvatar({
   withWhiteBorder = false,
   ...props
 }: ModuleAvatarProps) {
-  const IconComponent = modules[props.module]
+  if ("icon" in props) {
+    console.warn(
+      "ModuleAvatar:The `icon` prop is deprecated. Use the `module` prop instead."
+    )
+  }
+  const IconComponent = "icon" in props ? props.icon : modules[props.module]
 
   const code = Math.random().toString(36).substring(2, 15)
 

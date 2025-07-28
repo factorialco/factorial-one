@@ -15,6 +15,10 @@ const meta: Meta<typeof ModuleAvatar> = {
       control: "select",
       options: Object.keys(modules).sort((a, b) => a.localeCompare(b)),
     },
+    icon: {
+      description:
+        "DEPRECATED: This component should only render module related icons, not arbitrary icons. Use the `module` prop instead.",
+    },
   },
 }
 
