@@ -221,6 +221,7 @@ export function OneCard({
       <CardActions
         primaryAction={primaryAction}
         secondaryActions={secondaryActions}
+        compact={compact}
       />
     </Card>
   )

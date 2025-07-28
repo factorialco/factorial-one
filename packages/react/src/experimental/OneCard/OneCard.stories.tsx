@@ -232,7 +232,7 @@ export const WithFileAvatar: Story = {
 
 export const Compact: Story = {
   args: {
-    ...Default.args,
+    ...WithActions.args,
     compact: true,
   },
 }
