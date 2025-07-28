@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.134.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.1...factorial-one-react-v1.134.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** image prop ([#2301](https://github.com/factorialco/factorial-one/issues/2301)) ([83b380c](https://github.com/factorialco/factorial-one/commit/83b380c74e4327866d5a297f05813c801d2ab915))
+
 ## [1.133.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.0...factorial-one-react-v1.133.1) (2025-07-28)
 
 
