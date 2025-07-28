@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.135.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.134.0...factorial-one-react-v1.135.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** File as option for the avatar ([#2303](https://github.com/factorialco/factorial-one/issues/2303)) ([9f0b746](https://github.com/factorialco/factorial-one/commit/9f0b746f62b0cdf3f6973b886f70c4ad3a4779e7))
+
+## [1.134.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.1...factorial-one-react-v1.134.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** image prop ([#2301](https://github.com/factorialco/factorial-one/issues/2301)) ([83b380c](https://github.com/factorialco/factorial-one/commit/83b380c74e4327866d5a297f05813c801d2ab915))
+
+## [1.133.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.0...factorial-one-react-v1.133.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* select icon classes and docs ([#2297](https://github.com/factorialco/factorial-one/issues/2297)) ([907ef4a](https://github.com/factorialco/factorial-one/commit/907ef4a4d402403276872eaaa8a37c2f72431516))
+
+## [1.133.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.132.1...factorial-one-react-v1.133.0) (2025-07-25)
+
+
+### Features
+
+* add support for full-screen on OneModal ([#2291](https://github.com/factorialco/factorial-one/issues/2291)) ([923f86b](https://github.com/factorialco/factorial-one/commit/923f86b51581f9d714372524eed00fb76c1c8725))
+
 ## [1.132.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.132.0...factorial-one-react-v1.132.1) (2025-07-24)
 
 
