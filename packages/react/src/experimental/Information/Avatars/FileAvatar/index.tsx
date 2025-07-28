@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, sizes } from "@/ui/avatar"
 import { ElementRef, forwardRef } from "react"
+import { FileDef } from "./types"
 import { getFileTypeInfo } from "./utils"
 
 type FileAvatarSize = Extract<
@@ -12,7 +13,7 @@ export type FileAvatarProps = Omit<
   React.ComponentPropsWithoutRef<typeof Avatar>,
   "type"
 > & {
-  file: File
+  file: FileDef
   size?: FileAvatarSize
 }
 

@@ -29,6 +29,7 @@ describe("FileAvatar", () => {
       { name: "unknown.xyz", type: "undefined" },
     ];
 
+    // Test with File
     fileTypes.map((fileType, index) => {
       const { toJSON } = render(
         <FileAvatar
@@ -36,6 +37,13 @@ describe("FileAvatar", () => {
           file={new File([""], fileType.name, { type: fileType.type })}
         />,
       );
+
+      expect(toJSON()).toMatchSnapshot();
+    });
+
+    // Test with FileDef
+    fileTypes.map((fileType, index) => {
+      const { toJSON } = render(<FileAvatar key={index} file={fileType} />);
 
       expect(toJSON()).toMatchSnapshot();
     });
