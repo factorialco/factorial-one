@@ -123,3 +123,47 @@ export const FinancialValues: Meta<
     },
   },
 }
+
+export const ColoredBars: Meta<typeof BarChart> = {
+  args: {
+    dataConfig: {
+      pulse: {
+        label: "Pulse",
+      },
+    },
+    data: [
+      {
+        label: "Struggling",
+        color: "hsl(var(--mood-super-negative))",
+        values: { pulse: 4000 },
+      },
+      {
+        label: "Not great",
+        color: "hsl(var(--mood-negative))",
+        values: { pulse: 3000 },
+      },
+      {
+        label: "Ok",
+        color: "hsl(var(--mood-neutral))",
+        values: { pulse: 2000 },
+      },
+      {
+        label: "Good",
+        color: "hsl(var(--mood-positive))",
+        values: { pulse: 1500 },
+      },
+      {
+        label: "Great",
+        color: "hsl(var(--mood-super-positive))",
+        values: { pulse: 2000 },
+      },
+    ],
+    xAxis: {
+      hide: false,
+      tickFormatter: (value: string) => value,
+    },
+    onClick: (data) => {
+      console.log("Bar clicked", data)
+    },
+  },
+}
