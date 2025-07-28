@@ -48,7 +48,7 @@ const squirclePath =
  */
 export function ModuleAvatar({
   size = "md",
-  withWhiteBorder = true,
+  withWhiteBorder = false,
   ...props
 }: ModuleAvatarProps) {
   const IconComponent = modules[props.module]

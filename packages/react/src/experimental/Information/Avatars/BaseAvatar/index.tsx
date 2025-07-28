@@ -87,7 +87,11 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
         badge ? (
           <>
             {badge.type === "module" && (
-              <ModuleAvatar module={badge.module} size={moduleAvatarSize} />
+              <ModuleAvatar
+                module={badge.module}
+                size={moduleAvatarSize}
+                withWhiteBorder
+              />
             )}
             {badge.type !== "module" && (
               <Badge type={badge.type} icon={badge.icon} size={badgeSize} />
