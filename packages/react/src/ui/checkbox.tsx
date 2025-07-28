@@ -1,5 +1,5 @@
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
-import { AnimatePresence, motion } from "motion/react"
+import { AnimatePresence } from "motion/react"
 import * as React from "react"
 import { useId } from "react"
 import { Icon } from "../components/Utilities/Icon"
@@ -26,10 +26,10 @@ const Checkbox = React.forwardRef<
         name={checkboxId}
         aria-label={props.title}
         className={cn(
-          "h-5 w-5 shrink-0 rounded-xs border border-solid border-f1-border text-f1-foreground-selected transition-[background-color,border-color] hover:border-f1-border-hover data-[state=checked]:bg-f1-background-selected-bold data-[state=checked]:text-f1-foreground-inverse hover:data-[state=checked]:border-transparent",
+          "relative h-6 w-6 shrink-0 text-f1-foreground-selected data-[state=checked]:text-f1-foreground-inverse",
+          "after:absolute after:left-0.5 after:top-0.5 after:z-[1] after:h-5 after:w-5 after:rounded-xs after:border after:border-solid after:border-f1-border after:transition-[background-color,border-color] after:content-[''] hover:after:border-f1-border-hover data-[state=checked]:after:bg-f1-background-selected-bold hover:data-[state=checked]:after:border-transparent",
           disabled && "cursor-not-allowed opacity-50 hover:border-f1-border",
-          indeterminate &&
-            "data-[state=checked]:bg-f1-background data-[state=checked]:text-f1-foreground-selected hover:data-[state=checked]:border-f1-border-hover",
+          indeterminate && "data-[state=checked]:text-f1-foreground-inverse",
           props.checked &&
             disabled &&
             "data-[state=checked]:bg-f1-background-secondary data-[state=checked]:text-f1-foreground-secondary",
@@ -41,23 +41,12 @@ const Checkbox = React.forwardRef<
         disabled={disabled}
       >
         <AnimatePresence>
-          <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current transition-none">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.6 }}
-              transition={{
-                ease: [0.175, 0.885, 0.32, 1.275],
-                duration: 0.4,
-              }}
-              className="flex items-center justify-center"
-            >
-              {indeterminate ? (
-                <Icon icon={Minus} size="sm" />
-              ) : (
-                <Icon icon={Check} size="sm" />
-              )}
-            </motion.div>
+          <CheckboxPrimitive.Indicator className="absolute inset-0 z-[2] flex items-center justify-center text-current transition-none">
+            {indeterminate ? (
+              <Icon icon={Minus} size="sm" />
+            ) : (
+              <Icon icon={Check} size="sm" />
+            )}
           </CheckboxPrimitive.Indicator>
         </AnimatePresence>
       </CheckboxPrimitive.Root>

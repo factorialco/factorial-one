@@ -57,12 +57,11 @@ export function CardOptions({
   return (
     <div
       className={cn(
-        "flex flex-row gap-2 opacity-100 transition-opacity focus-within:opacity-100 group-hover:opacity-100 sm:opacity-0 [&>div]:z-[1]",
+        "flex flex-row gap-1 opacity-100 transition-opacity focus-within:opacity-100 group-hover:opacity-100 sm:opacity-0 [&>div]:z-[1]",
         isOpen && "opacity-100",
         selected && "opacity-100",
         overlay &&
-          "absolute right-2 top-2 rounded-sm bg-f1-background/60 p-1 shadow-md backdrop-blur-sm",
-        overlay && selectable && "pr-1.5"
+          "absolute right-2 top-2 rounded-sm bg-f1-background/60 p-1 shadow-md backdrop-blur-sm"
       )}
     >
       {hasOtherActions && (

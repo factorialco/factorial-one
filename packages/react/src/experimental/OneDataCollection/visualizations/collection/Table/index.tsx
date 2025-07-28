@@ -368,7 +368,7 @@ export const TableCollection = <
                       }
                     >
                       <GroupHeader
-                        className="px-4"
+                        className="px-3"
                         selectable={!!source.selectable}
                         select={statusToChecked(
                           groupAllSelectedStatus[group.key]
