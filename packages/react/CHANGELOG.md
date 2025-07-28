@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.133.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.0...factorial-one-react-v1.133.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* select icon classes and docs ([#2297](https://github.com/factorialco/factorial-one/issues/2297)) ([907ef4a](https://github.com/factorialco/factorial-one/commit/907ef4a4d402403276872eaaa8a37c2f72431516))
+
 ## [1.133.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.132.1...factorial-one-react-v1.133.0) (2025-07-25)
 
 
