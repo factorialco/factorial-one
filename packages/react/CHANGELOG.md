@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.135.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.134.0...factorial-one-react-v1.135.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** File as option for the avatar ([#2303](https://github.com/factorialco/factorial-one/issues/2303)) ([9f0b746](https://github.com/factorialco/factorial-one/commit/9f0b746f62b0cdf3f6973b886f70c4ad3a4779e7))
+
 ## [1.134.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.1...factorial-one-react-v1.134.0) (2025-07-28)
 
 
