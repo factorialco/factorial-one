@@ -151,3 +151,10 @@ function isDateLike(value: unknown): boolean {
         ("toLocaleDateString" in value || "getTime" in value))
   )
 }
+
+import DOMPurify from "dompurify"
+
+/** Strip HTML tags from a string */
+export function stripHtmlTags(html: string): string {
+  return DOMPurify.sanitize(html, { ALLOWED_TAGS: [] })
+}

@@ -174,6 +174,19 @@ export const NumberValueInputAsObject: Story = {
   },
 }
 
+export const NumberValueInputAsObjectWithUnits: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Speed",
+      render: () => ({
+        type: "number",
+        value: { number: 82, units: "km/h" },
+      }),
+    },
+  },
+}
+
 export const NumberWithPlaceholder: Story = {
   args: {
     item: mockItem,
@@ -263,6 +276,32 @@ export const AmountWithPlaceholder: Story = {
       render: () => ({
         type: "amount",
         value: { amount: undefined, placeholder: "Some placeholder" },
+      }),
+    },
+  },
+}
+
+export const AmountWithSymbol: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Amount",
+      render: () => ({
+        type: "amount",
+        value: { amount: 1233, symbol: "$", symbolPosition: "left" },
+      }),
+    },
+  },
+}
+
+export const AmountWithSymbolRight: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Amount",
+      render: () => ({
+        type: "amount",
+        value: { amount: 1233, symbol: "$", symbolPosition: "right" },
       }),
     },
   },
@@ -471,6 +510,37 @@ export const IconType: Story = {
         value: {
           icon: Placeholder,
           label: "Icon",
+        },
+      }),
+    },
+  },
+}
+
+export const FileType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "File",
+      render: () => ({
+        type: "file",
+        value: {
+          name: "My file",
+          type: "application/pdf",
+        },
+      }),
+    },
+  },
+}
+
+export const FolderType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Folder",
+      render: () => ({
+        type: "folder",
+        value: {
+          name: "My folder",
         },
       }),
     },

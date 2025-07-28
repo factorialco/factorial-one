@@ -26,7 +26,7 @@ export const DateCell = (args: DateCellValue) => {
         shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
       )}
     >
-      {formattedDate}
+      {formattedDate.toString()}
     </div>
   )
 }

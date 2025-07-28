@@ -23,7 +23,7 @@ export const TextCell = (args: TextCellValue) => {
         shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
       )}
     >
-      {value}
+      {value?.toString() ?? ""}
     </span>
   )
 }
