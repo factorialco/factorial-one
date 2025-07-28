@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.136.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.135.0...factorial-one-react-v1.136.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** compact mode ([#2304](https://github.com/factorialco/factorial-one/issues/2304)) ([ee76fe4](https://github.com/factorialco/factorial-one/commit/ee76fe48a212c5517c92b511db24e5895a159107))
+
 ## [1.135.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.134.0...factorial-one-react-v1.135.0) (2025-07-28)
 
 
