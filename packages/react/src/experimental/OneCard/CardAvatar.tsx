@@ -32,7 +32,6 @@ const AvatarRender = ({ avatar }: { avatar: CardAvatarType }) => {
   }
   return <Avatar avatar={avatar} size="large" />
 }
-
 export function CardAvatar({ avatar, overlay = false }: CardAvatarProps) {
   const isRounded = avatar.type === "person"
 
