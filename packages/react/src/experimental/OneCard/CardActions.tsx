@@ -24,11 +24,13 @@ export interface CardSecondaryLink
 interface CardActionsProps {
   primaryAction?: CardPrimaryAction
   secondaryActions?: CardSecondaryAction[] | CardSecondaryLink
+  compact?: boolean
 }
 
 export function CardActions({
   primaryAction,
   secondaryActions,
+  compact = false,
 }: CardActionsProps) {
   const hasActions = primaryAction || secondaryActions
 
@@ -40,7 +42,8 @@ export function CardActions({
     <CardFooter
       className={cn(
         "justify-between gap-2 [&>div]:z-[1]",
-        "relative -mx-4 mt-4 border-0 border-t border-solid border-t-f1-border-secondary px-4 pt-4"
+        "relative -mx-4 mt-4 border-0 border-t border-solid border-t-f1-border-secondary px-4 pt-4",
+        compact && "pt-3"
       )}
     >
       {secondaryActions && (
@@ -55,6 +58,7 @@ export function CardActions({
                 round={index > 0}
                 variant="outline"
                 onClick={action.onClick}
+                size={compact ? "sm" : "md"}
               />
             ))
           ) : (
@@ -74,6 +78,7 @@ export function CardActions({
           label={primaryAction.label}
           icon={primaryAction.icon}
           onClick={primaryAction.onClick}
+          size={compact ? "sm" : "md"}
         />
       )}
     </CardFooter>
