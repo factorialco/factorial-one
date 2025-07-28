@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.136.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.0...factorial-one-react-v1.136.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* **Checkbox:** ensure size is a11y compliant ([#2314](https://github.com/factorialco/factorial-one/issues/2314)) ([7ae4e48](https://github.com/factorialco/factorial-one/commit/7ae4e48f234e08abb1849ff86bc63a3e6eee515e))
+
 ## [1.136.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.135.0...factorial-one-react-v1.136.0) (2025-07-28)
 
 
