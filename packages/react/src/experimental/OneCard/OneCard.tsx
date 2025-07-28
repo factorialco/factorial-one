@@ -154,14 +154,11 @@ export function OneCard({
 
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-start justify-between gap-1">
-          <CardHeader className="relative flex-col gap-0.5 p-0">
+          <CardHeader
+            className={cn("relative flex-col gap-0 p-0", image && "pt-3")}
+          >
             {avatar && <CardAvatar avatar={avatar} overlay={!!image} />}
-            <CardTitle
-              className={cn(
-                "flex flex-row justify-between gap-1 text-lg font-semibold text-f1-foreground",
-                image && "mt-1"
-              )}
-            >
+            <CardTitle className="flex flex-row justify-between gap-1 text-lg font-semibold text-f1-foreground">
               {title}
             </CardTitle>
             {description && (
