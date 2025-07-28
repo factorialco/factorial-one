@@ -82,7 +82,7 @@ const TableHead = React.forwardRef<
     className={cn(
       "relative px-3 py-2.5 text-left align-middle font-medium text-f1-foreground-secondary first:pl-6 last:pr-6",
       "after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-1 after:rounded after:bg-transparent after:transition-colors after:content-[''] first:after:left-3 last:after:right-3 hover:after:bg-f1-background-hover",
-      "[&:has([role=checkbox])]:px-2 [&:has([role=checkbox])]:hover:after:bg-transparent",
+      "[&:has([role=checkbox])]:px-2 [&:has([role=checkbox])]:py-2 [&:has([role=checkbox])]:hover:after:bg-transparent",
       className
     )}
     {...props}
