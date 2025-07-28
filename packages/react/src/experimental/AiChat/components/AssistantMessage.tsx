@@ -4,6 +4,7 @@ import { ThumbsDown, ThumbsUp } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { Markdown, type AssistantMessageProps } from "@copilotkit/react-ui"
+import { type TextMessage } from "@copilotkit/runtime-client-gql"
 import { useRef, useState } from "react"
 import { markdownRenderers } from "../markdownRenderers"
 
@@ -14,8 +15,8 @@ export const AssistantMessage = ({
   isLoading,
   markdownTagRenderers,
   onCopy,
-  onThumbsDown: _onThumbsDown,
-  onThumbsUp: _onThumbsUp,
+  onThumbsDown,
+  onThumbsUp,
 }: AssistantMessageProps) => {
   const translations = useI18n()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -67,7 +68,9 @@ export const AssistantMessage = ({
                   icon={ThumbsUp}
                   hideLabel
                   onClick={(e) => {
-                    // onThumbsUp?.() // temporary ignored
+                    // Blocked! new version of the sdk changes the type of the `message` variable so we can pass it directly
+                    // the current version does not provide enough information to create `TextMessage` correctly
+                    onThumbsUp?.({} as TextMessage)
                     e.currentTarget.blur()
                   }}
                 />
@@ -80,7 +83,9 @@ export const AssistantMessage = ({
                   icon={ThumbsDown}
                   hideLabel
                   onClick={(e) => {
-                    // onThumbsDown?.()
+                    // Blocked! new version of the sdk changes the type of the `message` variable so we can pass it directly
+                    // the current version does not provide enough information to create `TextMessage` correctly
+                    onThumbsDown?.({} as TextMessage)
                     e.currentTarget.blur()
                   }}
                 />
