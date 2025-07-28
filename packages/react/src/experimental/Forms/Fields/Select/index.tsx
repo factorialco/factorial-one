@@ -252,19 +252,30 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
               handleChangeOpenLocal(!openLocal)
             }}
             append={
-              <Icon
-                onClick={() => {
-                  if (disabled) return
-                  handleChangeOpenLocal(!openLocal)
-                }}
-                icon={ChevronDown}
-                size="sm"
+              <div
                 className={cn(
-                  "rounded-2xs bg-f1-background-secondary p-0.5 transition-transform duration-200",
-                  openLocal && "rotate-180",
+                  "rounded-2xs bg-f1-background-secondary p-0.5",
+                  "flex items-center justify-center",
                   !disabled && "cursor-pointer"
                 )}
-              />
+              >
+                <div
+                  className={cn(
+                    "origin-center transition-transform duration-200",
+                    "flex items-center justify-center",
+                    openLocal && "rotate-180"
+                  )}
+                >
+                  <Icon
+                    onClick={() => {
+                      if (disabled) return
+                      handleChangeOpenLocal(!openLocal)
+                    }}
+                    icon={ChevronDown}
+                    size="sm"
+                  />
+                </div>
+              </div>
             }
           >
             <button

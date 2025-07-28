@@ -87,9 +87,11 @@ export const OneModalHeader = ({
     )
   }
 
-  if (modalPosition === "right" && !shownBottomSheet) {
+  const containerClassName = "flex flex-col gap-3 bg-f1-background p-5 pb-3"
+
+  if (module && !shownBottomSheet) {
     return (
-      <div className="flex flex-col gap-3 bg-f1-background p-5 pb-3">
+      <div className={containerClassName}>
         <div className="flex flex-row justify-between">
           {module ? <Module /> : <Actions />}
           <div className="flex flex-row gap-2">
@@ -118,7 +120,7 @@ export const OneModalHeader = ({
   }
 
   return (
-    <div className="flex flex-col gap-3 bg-f1-background p-5 pb-3">
+    <div className={containerClassName}>
       <div className="flex flex-row items-center justify-between">
         {!shownBottomSheet ? (
           !!title && (

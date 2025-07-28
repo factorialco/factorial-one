@@ -159,6 +159,13 @@ export const WithRightPosition: Story = {
   },
 }
 
+export const WithFullscreenPosition: Story = {
+  args: {
+    ...Default.args,
+    position: "fullscreen",
+  },
+}
+
 export const WithModule: Story = {
   args: {
     ...Default.args,
@@ -179,6 +186,13 @@ export const WithModule: Story = {
         </OneModal.Content>
       </>
     ),
+  },
+}
+
+export const WithModuleAndFullscreenPosition: Story = {
+  args: {
+    ...WithModule.args,
+    position: "fullscreen",
   },
 }
 
@@ -207,6 +221,13 @@ export const WithResourceHeader: Story = {
         </OneModal.Content>
       </>
     ),
+  },
+}
+
+export const WithResourceHeaderAndFullscreenPosition: Story = {
+  args: {
+    ...WithResourceHeader.args,
+    position: "fullscreen",
   },
 }
 
