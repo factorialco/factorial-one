@@ -56,7 +56,10 @@ export const MessagesContainer = ({
   const interrupt = useLangGraphInterruptRender()
 
   return (
-    <div className="flex-1 overflow-y-scroll px-4" ref={messagesContainerRef}>
+    <div
+      className="isolate flex-1 overflow-y-scroll px-4"
+      ref={messagesContainerRef}
+    >
       <div className="flex flex-col">
         {messages.map((message, index) => {
           const isCurrentMessage = index === messages.length - 1

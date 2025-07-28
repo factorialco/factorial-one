@@ -63,16 +63,6 @@ export const markdownRenderers: NonNullable<
       {children}
     </em>
   ),
-  ul: ({ children, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul {...props} className={cn("list-disc pl-5", props.className)}>
-      {children}
-    </ul>
-  ),
-  ol: ({ children, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol {...props} className={cn("list-decimal pl-5", props.className)}>
-      {children}
-    </ol>
-  ),
   li: ({ children, ...props }: React.HTMLAttributes<HTMLLIElement>) => (
     <li {...props} className={cn("mb-2", props.className)}>
       {children}
@@ -113,7 +103,7 @@ export const markdownRenderers: NonNullable<
     <ul
       {...props}
       className={cn(
-        "list-disc pl-6 [&>li>ol]:mt-2 [&>li>ul]:mt-2",
+        "list-disc pl-5 [&>li>ol]:mt-2 [&>li>ul]:mt-2",
         props.className
       )}
     >
@@ -124,7 +114,7 @@ export const markdownRenderers: NonNullable<
     <ol
       {...props}
       className={cn(
-        "list-decimal pl-6 [&>li>ol]:mt-2 [&>li>ul]:mt-2",
+        "list-decimal pl-5 [&>li>ol]:mt-2 [&>li>ul]:mt-2",
         props.className
       )}
     >

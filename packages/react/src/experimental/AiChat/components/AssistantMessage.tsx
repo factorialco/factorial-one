@@ -1,5 +1,10 @@
+import { Button, CopyButton } from "@/components/Actions/Button"
 import { Spinner } from "@/experimental"
+import { ThumbsDown, ThumbsUp } from "@/icons/app"
+import { useI18n } from "@/lib/providers/i18n"
+import { cn } from "@/lib/utils"
 import { Markdown, type AssistantMessageProps } from "@copilotkit/react-ui"
+import { useRef, useState } from "react"
 import { markdownRenderers } from "../markdownRenderers"
 
 export const AssistantMessage = ({
@@ -7,23 +12,82 @@ export const AssistantMessage = ({
   isGenerating: _isGenerating,
   isCurrentMessage: _isCurrentMessage,
   isLoading,
-  rawData: _rawData,
   markdownTagRenderers,
-  onCopy: _onCopy,
-  onRegenerate: _onRegenerate,
+  onCopy,
   onThumbsDown: _onThumbsDown,
   onThumbsUp: _onThumbsUp,
 }: AssistantMessageProps) => {
+  const translations = useI18n()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
-    <div className="flex min-h-[20px] w-fit max-w-[330px] flex-col items-start justify-center">
+    <div
+      className="relative isolate flex min-h-[20px] w-fit max-w-[330px] flex-col items-start justify-center last:pb-8"
+      ref={containerRef}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => {
+        console.log("onMouseLeave")
+        setIsHovered(false)
+        containerRef.current?.focus()
+      }}
+    >
       {isLoading && <Spinner size="small" className="text-f1-foreground" />}
       {message && (
-        <div className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1">
-          <Markdown
-            content={message}
-            components={markdownTagRenderers || markdownRenderers}
-          />
-        </div>
+        <>
+          <div className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1">
+            <Markdown
+              content={message}
+              components={markdownTagRenderers || markdownRenderers}
+            />
+          </div>
+
+          <div
+            className={cn(
+              "invisible absolute bottom-1 left-0 mt-1 focus-within:visible",
+              isHovered && "visible"
+            )}
+          >
+            <div className="flex gap-1">
+              <div>
+                <CopyButton
+                  variant="ghost"
+                  valueToCopy={message}
+                  onCopy={(e) => {
+                    e.currentTarget.blur()
+                    onCopy?.(message)
+                  }}
+                />
+              </div>
+              <div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  label={translations.actions.thumbsUp}
+                  icon={ThumbsUp}
+                  hideLabel
+                  onClick={(e) => {
+                    // onThumbsUp?.() // temporary ignored
+                    e.currentTarget.blur()
+                  }}
+                />
+              </div>
+              <div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  label={translations.actions.thumbsDown}
+                  icon={ThumbsDown}
+                  hideLabel
+                  onClick={(e) => {
+                    // onThumbsDown?.()
+                    e.currentTarget.blur()
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </div>
   )

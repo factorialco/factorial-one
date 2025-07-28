@@ -2,7 +2,13 @@ import { Check, LayersFront } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { Button as ShadcnButton } from "@/ui/button"
 import { AnimatePresence, motion } from "motion/react"
-import { ComponentProps, forwardRef, useEffect, useState } from "react"
+import {
+  ComponentProps,
+  forwardRef,
+  MouseEventHandler,
+  useEffect,
+  useState,
+} from "react"
 import { Icon } from "../../Utilities/Icon"
 import { iconOnlyVariants } from "./internal"
 
@@ -13,6 +19,7 @@ export type CopyButtonProps = Omit<
   valueToCopy: string
   copiedTooltipLabel?: string
   copyTooltipLabel?: string
+  onCopy?: MouseEventHandler<HTMLButtonElement>
 }
 
 const copyIconMotionVariants = {
@@ -26,6 +33,7 @@ export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(
   (
     {
       valueToCopy,
+      onCopy,
       copyTooltipLabel: customCopyTooltipLabel,
       copiedTooltipLabel: customCopiedTooltipLabel,
       variant = "neutral",
@@ -55,10 +63,11 @@ export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(
       }
     }, [isCopying])
 
-    const handleCopyClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleCopyClick: MouseEventHandler<HTMLButtonElement> = (event) => {
       event.stopPropagation()
       window.navigator.clipboard.writeText(valueToCopy)
       setIsCopying(true)
+      onCopy?.(event)
     }
 
     return (

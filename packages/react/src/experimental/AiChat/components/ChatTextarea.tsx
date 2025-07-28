@@ -48,7 +48,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
       aria-busy={inProgress}
       ref={formRef}
       className={cn(
-        "relative m-2 flex flex-col gap-3 rounded-xl border border-solid border-f1-border",
+        "relative isolate m-2 flex flex-col gap-3 rounded-xl border border-solid border-f1-border",
         "has-[textarea:focus]:shadow has-[textarea:focus]:outline-none has-[textarea:focus]:ring-1 has-[textarea:focus]:ring-f1-ring has-[textarea:focus]:ring-offset-0"
       )}
       onSubmit={handleSubmit}
