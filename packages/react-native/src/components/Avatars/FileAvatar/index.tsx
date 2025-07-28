@@ -1,9 +1,10 @@
 import { getFileTypeInfo } from "./utils";
 import { Avatar, AvatarFallback } from "../../../ui/avatar";
 import { cn } from "../../../lib/utils";
+import { FileDef } from "./types";
 
 type Props = {
-  file: File;
+  file: FileDef;
   className?: string;
 };
 

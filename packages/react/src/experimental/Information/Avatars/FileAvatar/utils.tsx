@@ -1,3 +1,5 @@
+import { FileDef } from "./types"
+
 type FileTypeInfo = {
   type: string
   color: string
@@ -124,7 +126,7 @@ const EXTENSION_MAP: Record<string, keyof typeof FILE_TYPE_MAP> = {
   markdown: "markdown",
 }
 
-const getFileTypeInfo = (file: File): FileTypeInfo => {
+const getFileTypeInfo = (file: FileDef): FileTypeInfo => {
   const mimeType = file.type.toLowerCase()
 
   const matchedMimeKey = Object.keys(MIME_MATCH_MAP).find((key) =>
