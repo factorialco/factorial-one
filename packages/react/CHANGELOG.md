@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.137.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.1...factorial-one-react-v1.137.0) (2025-07-29)
+
+
+### Features
+
+* **Icons:** thumbs up and down icons ([#2317](https://github.com/factorialco/factorial-one/issues/2317)) ([6b6cc1f](https://github.com/factorialco/factorial-one/commit/6b6cc1f8d7c3ef2ac3253020dc75a69b439a9c79))
+
 ## [1.136.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.0...factorial-one-react-v1.136.1) (2025-07-28)
 
 
