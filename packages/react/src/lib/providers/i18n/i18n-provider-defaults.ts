@@ -173,6 +173,9 @@ export const defaultTranslations = {
     remove: "Remove favorite",
   },
   notifications: "Notifications",
+  ai: {
+    openChat: "Open Chat",
+  },
 } as const
 
 type TranslationShape<T> = {
