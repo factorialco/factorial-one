@@ -31,6 +31,8 @@ describe("I18nProvider", () => {
         moveDown: "Mover abajo",
         close: "Cerrar",
         other: "Otras acciones",
+        thumbsUp: "Like",
+        thumbsDown: "Dislike",
       },
     }
 
