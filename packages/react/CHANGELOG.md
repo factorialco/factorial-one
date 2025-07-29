@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.139.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.138.0...factorial-one-react-v1.139.0) (2025-07-29)
+
+
+### Features
+
+* name prop in inputs ([#2323](https://github.com/factorialco/factorial-one/issues/2323)) ([2860aef](https://github.com/factorialco/factorial-one/commit/2860aef6ca5dcb437dab64ef936a9d2f8a73d58f))
+
 ## [1.138.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.137.0...factorial-one-react-v1.138.0) (2025-07-29)
 
 
