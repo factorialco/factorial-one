@@ -27,6 +27,7 @@ type TagTypeMapping = {
   alert: TagDataType<"alert">
   status: TagDataType<"status">
   balance: TagDataType<"balance">
+  raw: TagDataType<"raw">
 }
 
 export type TagType = keyof TagTypeMapping

@@ -1727,7 +1727,17 @@ export const TableColumnProperties: Story = {
                 },
                 {
                   label: "Languages",
-                  render: (item) => item.languages,
+                  render: (item) => ({
+                    type: "tagList",
+                    value: {
+                      type: "raw",
+                      tags: item.languages.split(",").map((language) => ({
+                        text: language,
+                        description: language,
+                      })),
+                      max: 2,
+                    },
+                  }),
                   sorting: "languages",
                   width: 360, // Wider column for longer text
                 },
