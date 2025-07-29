@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.20.2...factorial-one-core-v1.21.0) (2025-07-29)
+
+
+### Features
+
+* **Icons:** thumbs up and down icons ([#2317](https://github.com/factorialco/factorial-one/issues/2317)) ([6b6cc1f](https://github.com/factorialco/factorial-one/commit/6b6cc1f8d7c3ef2ac3253020dc75a69b439a9c79))
+
 ## [1.20.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.20.1...factorial-one-core-v1.20.2) (2025-07-22)
 
 
