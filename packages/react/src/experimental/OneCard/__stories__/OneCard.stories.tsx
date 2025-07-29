@@ -9,11 +9,19 @@ import {
   Office,
   Star,
 } from "@/icons/app"
-import cat from "@storybook-static/avatars/person04.jpg"
+import image from "@storybook-static/avatars/person04.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
-import { OneCard } from "./OneCard"
+import { OneCard } from "../OneCard"
+
+const SlotComponent = () => {
+  return (
+    <div className="w-full rounded border-2 border-dashed border-f1-border-info bg-f1-background-info p-5 text-center font-medium text-f1-foreground-info">
+      This is a slot (children)
+    </div>
+  )
+}
 
 const meta = {
   component: OneCard,
@@ -46,6 +54,7 @@ export const Default: Story = {
       lastName: "Moreno",
     },
     title: "Daniel Moreno",
+    description: "This is a cool description",
     metadata: [
       {
         icon: Briefcase,
@@ -90,6 +99,9 @@ export const Default: Story = {
 }
 
 export const WithActions: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     title: "Product designer",
     description:
@@ -132,7 +144,21 @@ export const WithActions: Story = {
   },
 }
 
+export const WithActionsAndLink: Story = {
+  args: {
+    ...WithActions.args,
+    secondaryActions: {
+      label: "View more",
+      href: "/",
+      target: "_blank",
+    },
+  },
+}
+
 export const WithLink: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     ...Default.args,
     link: "/",
@@ -140,6 +166,9 @@ export const WithLink: Story = {
 }
 
 export const Selectable: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     ...Default.args,
     selectable: true,
@@ -151,23 +180,62 @@ export const Selectable: Story = {
 }
 
 export const WithChildren: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
-    title: "A cool cat",
-    description: "This is a cool cat",
-    children: (
-      <div className="h-[220px] w-fit overflow-hidden rounded-sm">
-        <img src={cat} alt="cat" className="w-full object-cover" />
-      </div>
-    ),
+    title: "Card with children",
+    children: <SlotComponent />,
   },
 }
 
 export const WithEmoji: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     ...Default.args,
     avatar: {
       type: "emoji",
       emoji: "🐱",
     },
+  },
+}
+
+export const WithImage: Story = {
+  args: {
+    ...Default.args,
+    selectable: true,
+    image: image,
+  },
+  render: (args) => {
+    const [selected, setSelected] = useState(false)
+    return <OneCard {...args} selected={selected} onSelect={setSelected} />
+  },
+}
+
+export const WithFileAvatar: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    ...WithImage.args,
+    selectable: true,
+    image: image,
+    avatar: {
+      type: "file",
+      file: new File([""], "document.pdf", { type: "application/pdf" }),
+    },
+  },
+  render: (args) => {
+    const [selected, setSelected] = useState(false)
+    return <OneCard {...args} selected={selected} onSelect={setSelected} />
+  },
+}
+
+export const Compact: Story = {
+  args: {
+    ...WithActions.args,
+    compact: true,
   },
 }

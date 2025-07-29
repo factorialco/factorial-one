@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.139.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.138.0...factorial-one-react-v1.139.0) (2025-07-29)
+
+
+### Features
+
+* name prop in inputs ([#2323](https://github.com/factorialco/factorial-one/issues/2323)) ([2860aef](https://github.com/factorialco/factorial-one/commit/2860aef6ca5dcb437dab64ef936a9d2f8a73d58f))
+
+## [1.138.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.137.0...factorial-one-react-v1.138.0) (2025-07-29)
+
+
+### Features
+
+* **Card:** testing and structure ([#2319](https://github.com/factorialco/factorial-one/issues/2319)) ([44bbef5](https://github.com/factorialco/factorial-one/commit/44bbef5265632b52ca33676e9f78156c641702dc))
+
+## [1.137.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.1...factorial-one-react-v1.137.0) (2025-07-29)
+
+
+### Features
+
+* **Icons:** thumbs up and down icons ([#2317](https://github.com/factorialco/factorial-one/issues/2317)) ([6b6cc1f](https://github.com/factorialco/factorial-one/commit/6b6cc1f8d7c3ef2ac3253020dc75a69b439a9c79))
+
+## [1.136.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.0...factorial-one-react-v1.136.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* **Checkbox:** ensure size is a11y compliant ([#2314](https://github.com/factorialco/factorial-one/issues/2314)) ([7ae4e48](https://github.com/factorialco/factorial-one/commit/7ae4e48f234e08abb1849ff86bc63a3e6eee515e))
+
+## [1.136.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.135.0...factorial-one-react-v1.136.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** compact mode ([#2304](https://github.com/factorialco/factorial-one/issues/2304)) ([ee76fe4](https://github.com/factorialco/factorial-one/commit/ee76fe48a212c5517c92b511db24e5895a159107))
+
+## [1.135.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.134.0...factorial-one-react-v1.135.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** File as option for the avatar ([#2303](https://github.com/factorialco/factorial-one/issues/2303)) ([9f0b746](https://github.com/factorialco/factorial-one/commit/9f0b746f62b0cdf3f6973b886f70c4ad3a4779e7))
+
+## [1.134.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.1...factorial-one-react-v1.134.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** image prop ([#2301](https://github.com/factorialco/factorial-one/issues/2301)) ([83b380c](https://github.com/factorialco/factorial-one/commit/83b380c74e4327866d5a297f05813c801d2ab915))
+
 ## [1.133.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.0...factorial-one-react-v1.133.1) (2025-07-28)
 
 

@@ -29,6 +29,7 @@ describe("I18nProvider", () => {
         more: "Más",
         moveUp: "Mover arriba",
         moveDown: "Mover abajo",
+        other: "Otras acciones",
       },
     }
 

@@ -1,7 +1,7 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { propertyRenderers } from "@/experimental/OneDataCollection/visualizations/property"
 import React from "react"
-import { CardMetadata as CardMetadataType } from "./types"
+import { CardMetadata as CardMetadataType } from "../types"
 
 const cardPropertyRenderers = {
   text: propertyRenderers.text,
