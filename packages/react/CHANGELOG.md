@@ -1,5 +1,117 @@
 # Changelog
 
+## [1.137.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.1...factorial-one-react-v1.137.0) (2025-07-29)
+
+
+### Features
+
+* **Icons:** thumbs up and down icons ([#2317](https://github.com/factorialco/factorial-one/issues/2317)) ([6b6cc1f](https://github.com/factorialco/factorial-one/commit/6b6cc1f8d7c3ef2ac3253020dc75a69b439a9c79))
+
+## [1.136.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.0...factorial-one-react-v1.136.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* **Checkbox:** ensure size is a11y compliant ([#2314](https://github.com/factorialco/factorial-one/issues/2314)) ([7ae4e48](https://github.com/factorialco/factorial-one/commit/7ae4e48f234e08abb1849ff86bc63a3e6eee515e))
+
+## [1.136.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.135.0...factorial-one-react-v1.136.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** compact mode ([#2304](https://github.com/factorialco/factorial-one/issues/2304)) ([ee76fe4](https://github.com/factorialco/factorial-one/commit/ee76fe48a212c5517c92b511db24e5895a159107))
+
+## [1.135.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.134.0...factorial-one-react-v1.135.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** File as option for the avatar ([#2303](https://github.com/factorialco/factorial-one/issues/2303)) ([9f0b746](https://github.com/factorialco/factorial-one/commit/9f0b746f62b0cdf3f6973b886f70c4ad3a4779e7))
+
+## [1.134.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.1...factorial-one-react-v1.134.0) (2025-07-28)
+
+
+### Features
+
+* **Card:** image prop ([#2301](https://github.com/factorialco/factorial-one/issues/2301)) ([83b380c](https://github.com/factorialco/factorial-one/commit/83b380c74e4327866d5a297f05813c801d2ab915))
+
+## [1.133.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.133.0...factorial-one-react-v1.133.1) (2025-07-28)
+
+
+### Bug Fixes
+
+* select icon classes and docs ([#2297](https://github.com/factorialco/factorial-one/issues/2297)) ([907ef4a](https://github.com/factorialco/factorial-one/commit/907ef4a4d402403276872eaaa8a37c2f72431516))
+
+## [1.133.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.132.1...factorial-one-react-v1.133.0) (2025-07-25)
+
+
+### Features
+
+* add support for full-screen on OneModal ([#2291](https://github.com/factorialco/factorial-one/issues/2291)) ([923f86b](https://github.com/factorialco/factorial-one/commit/923f86b51581f9d714372524eed00fb76c1c8725))
+
+## [1.132.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.132.0...factorial-one-react-v1.132.1) (2025-07-24)
+
+
+### Bug Fixes
+
+* **FileAvatar:** defined sizes & structured stories ([#2289](https://github.com/factorialco/factorial-one/issues/2289)) ([7172713](https://github.com/factorialco/factorial-one/commit/7172713e620f571b8089d7cae8d7c5b235d875c1))
+
+## [1.132.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.2...factorial-one-react-v1.132.0) (2025-07-24)
+
+
+### Features
+
+* **Avatar:** new `large` size ([#2288](https://github.com/factorialco/factorial-one/issues/2288)) ([fdb72d7](https://github.com/factorialco/factorial-one/commit/fdb72d764945cd9c92ae84ff0670a5ac089ee955))
+
+## [1.131.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.1...factorial-one-react-v1.131.2) (2025-07-24)
+
+
+### Bug Fixes
+
+* select icon classes ([f55d9ec](https://github.com/factorialco/factorial-one/commit/f55d9ecd9fc026381e84b4911997ec3266cba90a))
+
+## [1.131.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.131.0...factorial-one-react-v1.131.1) (2025-07-24)
+
+
+### Bug Fixes
+
+* fullHeight ([#2274](https://github.com/factorialco/factorial-one/issues/2274)) ([e237773](https://github.com/factorialco/factorial-one/commit/e2377736d4f19a75d7fca2d5fc4ac8e558085dc0))
+
+## [1.131.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.130.1...factorial-one-react-v1.131.0) (2025-07-24)
+
+
+### Features
+
+* **RichText:** enhance mention insertion ([#2292](https://github.com/factorialco/factorial-one/issues/2292)) ([fa16ec8](https://github.com/factorialco/factorial-one/commit/fa16ec85070f96ed20832b8f2cd6831ca7fedf48))
+
+## [1.130.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.130.0...factorial-one-react-v1.130.1) (2025-07-22)
+
+
+### Bug Fixes
+
+* pulse avatar icon color ([#2282](https://github.com/factorialco/factorial-one/issues/2282)) ([5fdd117](https://github.com/factorialco/factorial-one/commit/5fdd117b2b2c22eb9b2e148a1101c46e3d8208f8))
+
+## [1.130.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.3...factorial-one-react-v1.130.0) (2025-07-22)
+
+
+### Features
+
+* **Card:** use DataCollection's metadata ([#2272](https://github.com/factorialco/factorial-one/issues/2272)) ([71f75f2](https://github.com/factorialco/factorial-one/commit/71f75f24df1deb0b8d41c46010a322924dad6e33))
+
+## [1.129.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.2...factorial-one-react-v1.129.3) (2025-07-22)
+
+
+### Bug Fixes
+
+* **RichTextDisplay:** improve HTML content handling and line break support ([#2284](https://github.com/factorialco/factorial-one/issues/2284)) ([2fc7a2a](https://github.com/factorialco/factorial-one/commit/2fc7a2a9a5d74c7111507fd42d2a960730ac2aa1))
+
+## [1.129.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.1...factorial-one-react-v1.129.2) (2025-07-22)
+
+
+### Bug Fixes
+
+* **RichTextDisplay:** enhance content processing to support line breaks ([#2280](https://github.com/factorialco/factorial-one/issues/2280)) ([17da146](https://github.com/factorialco/factorial-one/commit/17da146147a52ac5cf1812ea611b31ffb4240875))
+
 ## [1.129.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.129.0...factorial-one-react-v1.129.1) (2025-07-21)
 
 

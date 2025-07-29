@@ -1,1 +1,1 @@
-export type ModalPosition = "center" | "left" | "right"
+export type ModalPosition = "center" | "left" | "right" | "fullscreen"

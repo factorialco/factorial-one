@@ -1,10 +1,19 @@
 import { cn } from "@/lib/utils"
-import { Avatar, AvatarFallback } from "@/ui/avatar"
+import { Avatar, AvatarFallback, sizes } from "@/ui/avatar"
 import { ElementRef, forwardRef } from "react"
 import { getFileTypeInfo } from "./utils"
 
-type FileAvatarProps = React.ComponentPropsWithoutRef<typeof Avatar> & {
+type FileAvatarSize = Extract<
+  (typeof sizes)[number],
+  "small" | "medium" | "large"
+>
+
+export type FileAvatarProps = Omit<
+  React.ComponentPropsWithoutRef<typeof Avatar>,
+  "type"
+> & {
   file: File
+  size?: FileAvatarSize
 }
 
 const FileAvatar = forwardRef<ElementRef<typeof Avatar>, FileAvatarProps>(

@@ -3,7 +3,7 @@ import { Icon } from "@/components/Utilities/Icon"
 import {
   Pulse,
   pulseIcon,
-  pulseIconStyle,
+  pulseIconColor,
 } from "@/experimental/Information/Avatars/PulseAvatar"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
@@ -95,10 +95,7 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
           className="flex flex-row items-center justify-between gap-2"
           layout
         >
-          <div
-            className="flex cursor-pointer flex-row items-center gap-2"
-            onClick={handleToggleCollapse}
-          >
+          <div className="flex flex-row items-center gap-2">
             <div className="flex flex-col gap-1">
               <div className="flex flex-row items-center gap-3">
                 <p className="text-f1-text-primary text-lg font-semibold">
@@ -113,7 +110,7 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
                       <Icon
                         icon={pulseIcon[day.mood]}
                         size="lg"
-                        className={pulseIconStyle({ pulse: day.mood })}
+                        color={pulseIconColor[day.mood]}
                       />
                     </div>
                   ))}
@@ -205,7 +202,7 @@ export const MoodTrackerView: React.FC<NodeViewProps> = ({
                         <Icon
                           icon={pulseIcon[day.mood]}
                           size="lg"
-                          className={pulseIconStyle({ pulse: day.mood })}
+                          color={pulseIconColor[day.mood]}
                         />
                       </div>
                       <p className="text-f1-text-primary text-md font-normal">

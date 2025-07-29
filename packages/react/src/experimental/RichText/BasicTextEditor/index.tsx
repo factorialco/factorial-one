@@ -87,7 +87,18 @@ const BasicTextEditorComponent = forwardRef<
       placeholder,
       toolbarLabels,
       slashCommandGroupLabels,
-      aiBlockConfig,
+      aiBlockConfig
+        ? {
+            ...aiBlockConfig,
+            toolbarLabels,
+            slashCommandGroupLabels,
+            moodTrackerLabels,
+            liveCompanionLabels,
+            transcriptLabels,
+            labels: aiBlockLabels,
+            placeholder,
+          }
+        : undefined,
       aiBlockLabels,
       moodTrackerLabels,
       liveCompanionLabels,
@@ -112,16 +123,41 @@ const BasicTextEditorComponent = forwardRef<
       if (!editor || !aiBlockConfig) return
       const cfg = aiBlockLabels
         ? { ...aiBlockConfig, labels: aiBlockLabels }
-        : aiBlockConfig
-      editor.commands.insertAIBlock(
-        { content: null, selectedAction: undefined },
-        cfg
-      )
+        : undefined
+      editor
+        .chain()
+        .focus()
+        .insertContentAt(editor.state.doc.content.size, [
+          {
+            type: "aiBlock",
+            attrs: {
+              data: { content: null, selectedAction: undefined },
+              config: cfg,
+              isCollapsed: false,
+            },
+          },
+          { type: "paragraph" },
+        ])
+        .run()
     },
     insertTranscript: (title, users, messages) => {
       if (!editor) return
       const cfg = transcriptLabels ? { labels: transcriptLabels } : undefined
-      editor.commands.insertTranscript({ title, users, messages }, cfg)
+      editor
+        .chain()
+        .focus()
+        .insertContentAt(editor.state.doc.content.size, [
+          {
+            type: "transcript",
+            attrs: {
+              data: { title, users, messages },
+              config: cfg,
+              isOpen: false,
+            },
+          },
+          { type: "paragraph" },
+        ])
+        .run()
     },
   }))
 
@@ -169,7 +205,11 @@ const BasicTextEditorComponent = forwardRef<
   if (!editor) return null
 
   return (
-    <div className="relative w-full" ref={containerRef} id={editorId}>
+    <div
+      className="basic-text-editor-container relative w-full"
+      ref={containerRef}
+      id={editorId}
+    >
       <DragHandle
         editor={editor}
         tippyOptions={tippyOptions}

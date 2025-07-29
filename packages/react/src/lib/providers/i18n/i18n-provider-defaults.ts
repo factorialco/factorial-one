@@ -36,6 +36,7 @@ export const defaultTranslations = {
     moveDown: "Move down",
     thumbsUp: "Like",
     thumbsDown: "Dislike",
+    other: "Other actions",
   },
   status: {
     selected: {

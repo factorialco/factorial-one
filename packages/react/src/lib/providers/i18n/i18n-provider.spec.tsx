@@ -30,6 +30,7 @@ describe("I18nProvider", () => {
         moveUp: "Mover arriba",
         moveDown: "Mover abajo",
         close: "Cerrar",
+        other: "Otras acciones",
       },
     }
 

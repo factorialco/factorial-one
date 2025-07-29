@@ -75,13 +75,58 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    label: {
+      description: "Label of the select",
+      required: true,
+    },
+    placeholder: {
+      description: "Placeholder of the select",
+    },
+    value: {
+      description: "Current selected value of the select",
+    },
+    defaultItem: {
+      description: "Default item to be selected when component mounts",
+    },
+    size: {
+      control: "select",
+      options: ["sm", "md"],
+      defaultValue: "sm",
+      description: "Size of the select",
+    },
+    disabled: {
+      control: "boolean",
+      description: "Whether the select is disabled",
+    },
+    open: {
+      control: "boolean",
+      description: "Controls whether the select dropdown is open",
+    },
+    hideLabel: {
+      control: "boolean",
+      description:
+        "Whether to hide the label visually (still accessible to screen readers)",
+    },
+    clearable: {
+      control: "boolean",
+      description: "Whether the select value can be cleared",
+    },
+    icon: {
+      description: "Icon to display inside the select input",
+    },
+    labelIcon: {
+      description: "Icon to display next to the label",
+    },
+    error: {
+      description: "Error message to display below the select",
+    },
+    children: {
+      description:
+        "Custom trigger content for the select. When provided, replaces the default input field trigger",
+    },
     showSearchBox: {
       description:
         "Shows a search box. The component will filter the items by name and by description unless searchFunc will be in use",
-    },
-    externalSearch: {
-      description:
-        "Disable the internal filtering when the search box delegating the filtering in the parent. Useful for async data",
     },
     searchValue: {
       description: "Default value for the search box",
@@ -91,6 +136,13 @@ const meta: Meta = {
     },
     searchBoxPlaceholder: {
       description: "Placeholder for the search box",
+    },
+    onSearchChange: {
+      description: "Function called when the search input value changes",
+    },
+    onOpenChange: {
+      description:
+        "Function called when the select dropdown open state changes",
     },
     options: {
       description:
@@ -209,14 +261,14 @@ export const WithLabelIcon: Story = {
   },
 }
 
-export const SizeSm: Story = {
+export const SizeMd: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },
   },
   args: {
     label: "Select a theme",
     icon: Desktop,
-    size: "sm",
+    size: "md",
   },
 }
 

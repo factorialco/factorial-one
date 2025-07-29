@@ -46,22 +46,31 @@ export const Default: Story = {
       lastName: "Moreno",
     },
     title: "Daniel Moreno",
+    description: "This is a cool description",
     metadata: [
       {
-        type: "text",
         icon: Briefcase,
-        title: "Design Engineer",
+        property: {
+          type: "text",
+          value: "Design Engineer",
+        },
       },
       {
-        type: "text",
         icon: CalendarArrowRight,
-        title: "3 years ago",
+        property: {
+          type: "text",
+          value: "3 years ago",
+        },
       },
       {
-        type: "status",
         icon: Star,
-        status: "positive",
-        label: "Active",
+        property: {
+          type: "status",
+          value: {
+            status: "positive",
+            label: "Active",
+          },
+        },
       },
     ],
     otherActions: [
@@ -82,6 +91,9 @@ export const Default: Story = {
 }
 
 export const WithActions: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     title: "Product designer",
     description:
@@ -105,20 +117,40 @@ export const WithActions: Story = {
     ],
     metadata: [
       {
-        type: "tag",
         icon: Office,
-        label: "Barcelona, Spain",
+        property: {
+          type: "tag",
+          value: {
+            label: "Barcelona, Spain",
+          },
+        },
       },
       {
-        type: "text",
         icon: Calendar,
-        title: "10 months ago",
+        property: {
+          type: "text",
+          value: "10 months ago",
+        },
       },
     ],
   },
 }
 
+export const WithActionsAndLink: Story = {
+  args: {
+    ...WithActions.args,
+    secondaryActions: {
+      label: "View more",
+      href: "/",
+      target: "_blank",
+    },
+  },
+}
+
 export const WithLink: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     ...Default.args,
     link: "/",
@@ -126,6 +158,9 @@ export const WithLink: Story = {
 }
 
 export const Selectable: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     ...Default.args,
     selectable: true,
@@ -137,6 +172,9 @@ export const Selectable: Story = {
 }
 
 export const WithChildren: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     title: "A cool cat",
     description: "This is a cool cat",
@@ -149,11 +187,52 @@ export const WithChildren: Story = {
 }
 
 export const WithEmoji: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     ...Default.args,
     avatar: {
       type: "emoji",
       emoji: "🐱",
     },
+  },
+}
+
+export const WithImage: Story = {
+  args: {
+    ...Default.args,
+    selectable: true,
+    image: cat,
+  },
+  render: (args) => {
+    const [selected, setSelected] = useState(false)
+    return <OneCard {...args} selected={selected} onSelect={setSelected} />
+  },
+}
+
+export const WithFileAvatar: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    ...WithImage.args,
+    selectable: true,
+    image: cat,
+    avatar: {
+      type: "file",
+      file: new File([""], "document.pdf", { type: "application/pdf" }),
+    },
+  },
+  render: (args) => {
+    const [selected, setSelected] = useState(false)
+    return <OneCard {...args} selected={selected} onSelect={setSelected} />
+  },
+}
+
+export const Compact: Story = {
+  args: {
+    ...WithActions.args,
+    compact: true,
   },
 }
