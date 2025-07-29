@@ -25,6 +25,10 @@ const meta = {
     maxDecimals: {
       control: { type: "number" },
     },
+    units: {
+      description: "Units to append to the value",
+      control: { type: "text" },
+    },
   },
   parameters: {
     jsx: {
@@ -52,10 +56,18 @@ export const WithStep: Story = {
     min: 1,
     max: 5,
     step: 1,
+    units: "EUR",
   },
   render: (props) => {
     const [value, setValue] = useState<number | null>(props.value ?? 1)
-    return <NumberInput {...props} value={value} onChange={setValue} />
+    return (
+      <NumberInput
+        {...props}
+        value={value}
+        onChange={setValue}
+        units={props.units}
+      />
+    )
   },
 }
 
@@ -134,5 +146,15 @@ export const Clearable: Story = {
   args: {
     label: "Label text here",
     clearable: true,
+  },
+}
+
+export const WithUnits: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Insert amount",
+    units: "EUR",
   },
 }
