@@ -11,6 +11,8 @@ import {
   YAxis,
   YAxisProps,
 } from "recharts"
+import type { Props as LabelProps } from "recharts/types/component/Label"
+import type { CartesianViewBox } from "recharts/types/util/types"
 import { prepareData } from "../utils/bar"
 import { autoColor } from "../utils/colors"
 import {
@@ -46,9 +48,13 @@ const getMaxValueByKey = (
   return label
 }
 
+type ValueFormatter = (value: string | number | undefined) => string | number
+
 export type VerticalBarChartProps<K extends ChartConfig = ChartConfig> =
   ChartPropsBase<K> & {
     label?: boolean
+    showRatio?: boolean
+    valueFormatter?: ValueFormatter
   }
 
 const _VBarChart = <K extends ChartConfig>(
@@ -61,6 +67,8 @@ const _VBarChart = <K extends ChartConfig>(
     aspect,
     hideTooltip = false,
     hideGrid = false,
+    showRatio = false,
+    valueFormatter,
   }: VerticalBarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -68,6 +76,16 @@ const _VBarChart = <K extends ChartConfig>(
   const preparedData = prepareData<K>(data)
   const maxLabelWidth = Math.max(
     ...preparedData.map((el) => measureTextWidth(`${el.x}`))
+  )
+  const totalCategories = bars.reduce(
+    (acc, key) => {
+      acc[key] = data.reduce(
+        (sum, item) => sum + (item.values[key] as number),
+        0
+      )
+      return acc
+    },
+    {} as Record<string, number>
   )
 
   const xAxisProps: XAxisProps = {
@@ -88,7 +106,10 @@ const _VBarChart = <K extends ChartConfig>(
         layout="vertical"
         accessibilityLayer
         data={preparedData}
-        margin={{ left: yAxis && !yAxis.hide ? 0 : 12, right: label ? 32 : 0 }}
+        margin={{
+          left: yAxis && !yAxis.hide ? 8 : 12,
+          right: label || showRatio ? 100 : 0,
+        }}
       >
         {!hideTooltip && (
           <ChartTooltip
@@ -124,13 +145,23 @@ const _VBarChart = <K extends ChartConfig>(
                 radius={4}
                 maxBarSize={24}
               >
-                {label && (
+                {(label || showRatio) && (
                   <LabelList
                     key={`label-{${key}}`}
                     position="right"
                     offset={10}
                     className="fill-f1-foreground"
                     fontSize={12}
+                    formatter={valueFormatter}
+                    content={
+                      showRatio ? (
+                        <CustomLabel
+                          valueFormatter={valueFormatter}
+                          total={totalCategories[key]}
+                          showLabel={label}
+                        />
+                      ) : undefined
+                    }
                   />
                 )}
               </Bar>
@@ -143,3 +174,49 @@ const _VBarChart = <K extends ChartConfig>(
 }
 
 export const VerticalBarChart = fixedForwardRef(_VBarChart)
+
+type CustomLabelProps = LabelProps & {
+  valueFormatter?: ValueFormatter
+  total: number
+  showLabel: boolean
+}
+
+const CustomLabel = ({
+  viewBox,
+  offset = 0,
+  value,
+  valueFormatter,
+  total,
+  showLabel,
+}: CustomLabelProps) => {
+  const { x = 0, y = 0, width = 0, height = 0 } = viewBox as CartesianViewBox
+  const gx = x + width + offset
+  const gy = y + height / 2
+  const firstText = valueFormatter ? valueFormatter(value) : value
+  const firstTextWidth = measureTextWidth(`${firstText}`)
+
+  const percentage = total > 0 ? Math.round((Number(value) / total) * 100) : 0
+
+  return (
+    <g transform={`translate(${gx},${gy + 4})`}>
+      {showLabel && (
+        <text
+          x={0}
+          textAnchor="start"
+          className="fill-f1-foreground-secondary text-sm font-medium"
+        >
+          {firstText}
+        </text>
+      )}
+      {
+        <text
+          x={showLabel ? firstTextWidth + 8 : 0}
+          textAnchor="start"
+          className="fill-f1-foreground text-sm font-medium"
+        >
+          {percentage}%
+        </text>
+      }
+    </g>
+  )
+}
