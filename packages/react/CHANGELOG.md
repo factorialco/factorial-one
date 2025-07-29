@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.140.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.139.0...factorial-one-react-v1.140.0) (2025-07-29)
+
+
+### Features
+
+* add raw type to TagList ([#2321](https://github.com/factorialco/factorial-one/issues/2321)) ([c9e99b3](https://github.com/factorialco/factorial-one/commit/c9e99b3e5bae4d1e973d12b166bb57674cc9f87d))
+
 ## [1.139.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.138.0...factorial-one-react-v1.139.0) (2025-07-29)
 
 
