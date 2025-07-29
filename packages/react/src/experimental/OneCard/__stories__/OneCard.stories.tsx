@@ -9,11 +9,19 @@ import {
   Office,
   Star,
 } from "@/icons/app"
-import cat from "@storybook-static/avatars/person04.jpg"
+import image from "@storybook-static/avatars/person04.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
-import { OneCard } from "./OneCard"
+import { OneCard } from "../OneCard"
+
+const SlotComponent = () => {
+  return (
+    <div className="w-full rounded border-2 border-dashed border-f1-border-info bg-f1-background-info p-5 text-center font-medium text-f1-foreground-info">
+      This is a slot (children)
+    </div>
+  )
+}
 
 const meta = {
   component: OneCard,
@@ -176,13 +184,8 @@ export const WithChildren: Story = {
     chromatic: { disableSnapshot: true },
   },
   args: {
-    title: "A cool cat",
-    description: "This is a cool cat",
-    children: (
-      <div className="h-[220px] w-fit overflow-hidden rounded-sm">
-        <img src={cat} alt="cat" className="w-full object-cover" />
-      </div>
-    ),
+    title: "Card with children",
+    children: <SlotComponent />,
   },
 }
 
@@ -203,7 +206,7 @@ export const WithImage: Story = {
   args: {
     ...Default.args,
     selectable: true,
-    image: cat,
+    image: image,
   },
   render: (args) => {
     const [selected, setSelected] = useState(false)
@@ -218,7 +221,7 @@ export const WithFileAvatar: Story = {
   args: {
     ...WithImage.args,
     selectable: true,
-    image: cat,
+    image: image,
     avatar: {
       type: "file",
       file: new File([""], "document.pdf", { type: "application/pdf" }),

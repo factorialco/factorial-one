@@ -129,6 +129,7 @@ export function OneCard({
           "border-f1-border-selected bg-f1-background-selected-secondary"
       )}
       onClick={onClick}
+      data-testid="card"
     >
       {link && (
         <Link
