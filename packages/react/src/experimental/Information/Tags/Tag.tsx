@@ -4,6 +4,7 @@ import { BalanceTag } from "./BalanceTag"
 import { CompanyTag } from "./CompanyTag"
 import { DotTag, DotTagProps } from "./DotTag"
 import { PersonTag } from "./PersonTag"
+import { RawTag, RawTagProps } from "./RawTag"
 import { StatusTag, StatusTagProps } from "./StatusTag"
 import { TeamTag } from "./TeamTag"
 
@@ -32,9 +33,11 @@ export type TagVariant =
   | BaseTag<{ type: "alert" } & AlertTagProps>
   | BaseTag<{ type: "status" } & StatusTagProps>
   | BaseTag<{ type: "balance" } & BalanceTagProps>
+  | BaseTag<{ type: "raw" } & RawTagProps>
 
 const tagComponent = (tag: TagVariant): ReactNode | undefined => {
   const { type } = tag
+
   if (type === "dot") return <DotTag {...tag} />
   if (type === "person") return <PersonTag {...tag} />
   if (type === "team") return <TeamTag {...tag} />
@@ -42,6 +45,7 @@ const tagComponent = (tag: TagVariant): ReactNode | undefined => {
   if (type === "alert") return <AlertTag {...tag} />
   if (type === "status") return <StatusTag {...tag} />
   if (type === "balance") return <BalanceTag {...tag} />
+  if (type === "raw") return <RawTag {...tag} />
 
   return undefined
 }
