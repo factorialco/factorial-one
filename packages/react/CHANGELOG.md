@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.138.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.137.0...factorial-one-react-v1.138.0) (2025-07-29)
+
+
+### Features
+
+* **Card:** testing and structure ([#2319](https://github.com/factorialco/factorial-one/issues/2319)) ([44bbef5](https://github.com/factorialco/factorial-one/commit/44bbef5265632b52ca33676e9f78156c641702dc))
+
 ## [1.137.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.1...factorial-one-react-v1.137.0) (2025-07-29)
 
 
