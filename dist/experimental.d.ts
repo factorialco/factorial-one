@@ -1,12 +1,12 @@
 import { AlertAvatarProps as AlertAvatarProps_2 } from '../exports';
-import { AlertTagCellValue } from '../OneDataCollection/visualizations/property/types/alertTag';
+import { AlertTagCellValue } from '../../OneDataCollection/visualizations/property/types/alertTag';
 import { AlertTagCellValue as AlertTagCellValue_2 } from './types/alertTag.tsx';
-import { AmountCellValue } from '../OneDataCollection/visualizations/property/types/amount';
+import { AmountCellValue } from '../../OneDataCollection/visualizations/property/types/amount';
 import { AmountCellValue as AmountCellValue_2 } from './types/amount.tsx';
 import { AnchorHTMLAttributes } from 'react';
 import { AreaChartWidgetProps } from './AreaChartWidget';
 import { AriaAttributes } from 'react';
-import { AvatarListCellValue } from '../OneDataCollection/visualizations/property/types/avatarList';
+import { AvatarListCellValue } from '../../OneDataCollection/visualizations/property/types/avatarList';
 import { AvatarListCellValue as AvatarListCellValue_2 } from './types/avatarList.tsx';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { AvatarProps } from '@radix-ui/react-avatar';
@@ -15,26 +15,26 @@ import { baseColors } from '@factorialco/factorial-one-core';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
 import { color as color_2 } from '../../../../ui/avatar';
-import { CompanyCellValue } from '../OneDataCollection/visualizations/property/types/company';
+import { CompanyCellValue } from '../../OneDataCollection/visualizations/property/types/company';
 import { CompanyCellValue as CompanyCellValue_2 } from './types/company.tsx';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
-import { DateCellValue } from '../OneDataCollection/visualizations/property/types/date';
+import { DateCellValue } from '../../OneDataCollection/visualizations/property/types/date';
 import { DateCellValue as DateCellValue_2 } from './types/date.tsx';
 import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
 import { Dispatch } from 'react';
-import { DotTagCellValue } from '../OneDataCollection/visualizations/property/types/dotTag';
+import { DotTagCellValue } from '../../OneDataCollection/visualizations/property/types/dotTag';
 import { DotTagCellValue as DotTagCellValue_2 } from './types/dotTag.tsx';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Editor } from '@tiptap/react';
 import { FC } from 'react';
 import { FieldPath } from 'react-hook-form';
 import { FieldValues } from 'react-hook-form';
-import { FileCellValue } from '../OneDataCollection/visualizations/property/types/file';
+import { FileCellValue } from '../../OneDataCollection/visualizations/property/types/file';
 import { FileCellValue as FileCellValue_2 } from './types/file.tsx';
-import { FolderCellValue } from '../OneDataCollection/visualizations/property/types/folder';
+import { FolderCellValue } from '../../OneDataCollection/visualizations/property/types/folder';
 import { FolderCellValue as FolderCellValue_2 } from './types/folder.tsx';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
@@ -47,15 +47,15 @@ import { JSONContent } from '@tiptap/react';
 import { JSONContent as JSONContent_2 } from '@tiptap/core';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
-import { NumberCellValue } from '../OneDataCollection/visualizations/property/types/number';
+import { NumberCellValue } from '../../OneDataCollection/visualizations/property/types/number';
 import { NumberCellValue as NumberCellValue_2 } from './types/number.tsx';
 import { Observable } from 'zen-observable-ts';
 import { Path } from 'react-hook-form';
-import { PersonCellValue } from '../OneDataCollection/visualizations/property/types/person';
+import { PersonCellValue } from '../../OneDataCollection/visualizations/property/types/person';
 import { PersonCellValue as PersonCellValue_2 } from './types/person.tsx';
 import { PieChartProps } from '../../../components/Charts/PieChart';
 import { PopoverProps } from '@radix-ui/react-popover';
-import { PropertyRendererMetadata } from '../OneDataCollection/visualizations/property/types';
+import { PropertyRendererMetadata } from '../../OneDataCollection/visualizations/property/types';
 import { PropertyRendererMetadata as PropertyRendererMetadata_2 } from './types.ts';
 import { PropsWithChildren } from 'react';
 import * as React_2 from 'react';
@@ -65,16 +65,16 @@ import * as RechartsPrimitive from 'recharts';
 import { RefAttributes } from 'react';
 import { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { sizes as sizes_2 } from '../../../../ui/avatar';
-import { StatusCellValue } from '../OneDataCollection/visualizations/property/types/status';
+import { StatusCellValue } from '../../OneDataCollection/visualizations/property/types/status';
 import { StatusCellValue as StatusCellValue_2 } from './types/status.tsx';
 import { SVGProps } from 'react';
-import { TagCellValue } from '../OneDataCollection/visualizations/property/types/tag';
+import { TagCellValue } from '../../OneDataCollection/visualizations/property/types/tag';
 import { TagCellValue as TagCellValue_2 } from './types/tag.tsx';
-import { TagListCellValue } from '../OneDataCollection/visualizations/property/types/tagList';
+import { TagListCellValue } from '../../OneDataCollection/visualizations/property/types/tagList';
 import { TagListCellValue as TagListCellValue_2 } from './types/tagList.tsx';
-import { TeamCellValue } from '../OneDataCollection/visualizations/property/types/team';
+import { TeamCellValue } from '../../OneDataCollection/visualizations/property/types/team';
 import { TeamCellValue as TeamCellValue_2 } from './types/team.tsx';
-import { TextCellValue } from '../OneDataCollection/visualizations/property/types/text';
+import { TextCellValue } from '../../OneDataCollection/visualizations/property/types/text';
 import { TextCellValue as TextCellValue_2 } from './types/text.tsx';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { type as type_2 } from '../../../../ui/avatar';
@@ -772,10 +772,12 @@ export declare type CalendarMode = "single" | "range";
 
 export declare type CalendarView = "day" | "month" | "year" | "week" | "quarter" | "halfyear";
 
-declare type CardAvatar = AvatarVariant | {
+declare type CardAvatarType = AvatarVariant | {
     type: "emoji";
     emoji: string;
-    size?: "sm" | "md" | "lg";
+} | {
+    type: "file";
+    file: File;
 };
 
 declare type CardMetadata = {
@@ -793,6 +795,12 @@ declare type CardMetadataProperty = {
         value: Parameters<(typeof propertyRenderers)[K]>[0];
     };
 }[CardPropertyType];
+
+declare interface CardPrimaryAction {
+    label: string;
+    icon?: IconType;
+    onClick: () => void;
+}
 
 declare type CardPropertyDefinition<T> = PropertyDefinition_2<T>;
 
@@ -815,6 +823,16 @@ declare const cardPropertyRenderers: {
 };
 
 declare type CardPropertyType = keyof typeof cardPropertyRenderers;
+
+declare interface CardSecondaryAction {
+    label: string;
+    icon?: IconType;
+    onClick: () => void;
+}
+
+declare interface CardSecondaryLink extends Pick<LinkProps_2, "href" | "target" | "disabled"> {
+    label: string;
+}
 
 declare type CardVisualizationOptions<T, _Filters extends FiltersDefinition, _Sortings extends SortingsDefinition> = {
     cardProperties: ReadonlyArray<CardPropertyDefinition<T>>;
@@ -1650,7 +1668,7 @@ threshold?: number;
 debounceTime?: number;
 autoFocus?: boolean;
 onChange?: (value: string) => void;
-} & Pick<InputFieldProps<string>, "disabled" | "size" | "loading" | "placeholder" | "clearable"> & RefAttributes<HTMLInputElement>>;
+} & Pick<InputFieldProps<string>, "name" | "disabled" | "size" | "loading" | "placeholder" | "clearable"> & RefAttributes<HTMLInputElement>>;
 
 declare type FavoriteMenuItem = ({
     type: "icon";
@@ -2091,6 +2109,7 @@ declare type InputFieldProps<T> = {
     labelIcon?: IconType;
     hideLabel?: boolean;
     hidePlaceholder?: boolean;
+    name?: string;
     onClickPlaceholder?: () => void;
     onClickChildren?: () => void;
     onClickContent?: () => void;
@@ -2129,7 +2148,7 @@ declare type InputFieldProps<T> = {
 
 declare type InputFieldSize = (typeof INPUTFIELD_SIZES)[number];
 
-export declare type InputProps<T extends string> = Pick<ComponentProps<typeof Input_2>, "ref"> & Pick<InputFieldProps<T>, "disabled" | "size" | "onChange" | "value" | "placeholder" | "clearable" | "maxLength" | "label" | "labelIcon" | "icon" | "error" | "hideLabel"> & {
+export declare type InputProps<T extends string> = Pick<ComponentProps<typeof Input_2>, "ref"> & Pick<InputFieldProps<T>, "disabled" | "size" | "onChange" | "value" | "placeholder" | "clearable" | "maxLength" | "label" | "labelIcon" | "icon" | "error" | "hideLabel" | "name"> & {
     type?: Exclude<HTMLInputTypeAttribute, "number">;
 };
 
@@ -2168,6 +2187,21 @@ declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
     disabled?: boolean;
 };
+
+declare interface LinkProps_2 extends LinkProps, VariantProps<typeof linkVariants>, DataAttributes {
+    stopPropagation?: boolean;
+}
+
+declare const linkVariants: (props?: ({
+    variant?: "link" | "unstyled" | undefined;
+    disabled?: boolean | undefined;
+} & ({
+    class?: ClassValue;
+    className?: never;
+} | {
+    class?: never;
+    className?: ClassValue;
+})) | undefined) => string;
 
 declare type ListPropertyDefinition<R, Sortings extends SortingsDefinition> = WithOptionalSorting_2<R, Sortings> & PropertyDefinition_2<R>;
 
@@ -2562,13 +2596,21 @@ export declare interface OneCalendarProps {
     maxDate?: Date;
 }
 
-export declare function OneCard({ avatar, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, onClick, }: OneCardProps): JSX_2.Element;
+export declare function OneCard({ compact, avatar, image, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, onClick, }: OneCardProps): JSX_2.Element;
 
 declare interface OneCardProps {
     /**
+     * Whether the card has a compact layout
+     */
+    compact?: boolean;
+    /**
      * The avatar to display in the card
      */
-    avatar?: CardAvatar;
+    avatar?: CardAvatarType;
+    /**
+     * Whether the card has an image
+     */
+    image?: string;
     /**
      * The title of the card
      */
@@ -2592,21 +2634,11 @@ declare interface OneCardProps {
     /**
      * The primary action that displays a primary button in the card footer
      */
-    primaryAction?: {
-        label: string;
-        icon?: IconType;
-        onClick: () => void;
-    };
+    primaryAction?: CardPrimaryAction;
     /**
-     * The secondary actions that display a secondary button in the card footer
-     * The first secondary action will display its label, while the rest will display
-     * just the icon
+     * The secondary actions - either an array of button actions or a single link
      */
-    secondaryActions?: {
-        label: string;
-        icon?: IconType;
-        onClick: () => void;
-    }[];
+    secondaryActions?: CardSecondaryAction[] | CardSecondaryLink;
     /**
      * Actions to display in the dropdown menu inside the card content
      */
@@ -3641,6 +3673,7 @@ export declare type SelectProps<T, R = any> = {
     className?: string;
     selectContentClassName?: string;
     actions?: Action[];
+    name?: string;
 } & Pick<InputFieldProps<T>, "loading" | "hideLabel" | "clearable" | "labelIcon" | "size" | "label" | "error" | "icon" | "placeholder">;
 
 declare type ShadAvatarProps = ComponentProps<typeof Avatar_2>;
@@ -4029,6 +4062,7 @@ declare type TagTypeMapping = {
     alert: TagDataType<"alert">;
     status: TagDataType<"status">;
     balance: TagDataType<"balance">;
+    raw: TagDataType<"raw">;
 };
 
 declare type TagVariant = BaseTag<{
@@ -4045,7 +4079,9 @@ declare type TagVariant = BaseTag<{
     type: "status";
 } & StatusTagProps> | BaseTag<{
     type: "balance";
-} & BalanceTagProps>;
+} & BalanceTagProps> | BaseTag<{
+    type: "raw";
+} & RawTagProps>;
 
 declare interface Task {
     id: number | string;
@@ -4098,7 +4134,7 @@ declare const Textarea_2: React_2.ForwardRefExoticComponent<Omit<React_2.Textare
     value?: string;
 } & Pick<InputFieldProps<string>, "label" | "value" | "onChange" | "onFocus" | "onBlur" | "icon" | "hideLabel" | "maxLength" | "placeholder" | "error" | "labelIcon" | "clearable" | "onClear"> & React_2.RefAttributes<HTMLTextAreaElement>>;
 
-export declare type TextareaProps = Pick<ComponentProps<typeof Textarea_2>, "disabled" | "onChange" | "value" | "placeholder" | "rows" | "cols" | "label" | "labelIcon" | "icon" | "error" | "hideLabel" | "maxLength" | "clearable" | "onBlur" | "onFocus">;
+export declare type TextareaProps = Pick<ComponentProps<typeof Textarea_2>, "disabled" | "onChange" | "value" | "placeholder" | "rows" | "cols" | "label" | "labelIcon" | "icon" | "error" | "hideLabel" | "maxLength" | "clearable" | "onBlur" | "onFocus" | "name">;
 
 declare const THEMES: {
     readonly light: "";
@@ -4546,15 +4582,15 @@ declare module "@tiptap/core" {
 }
 
 
-declare namespace Calendar {
-    var displayName: string;
-}
-
-
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
+}
+
+
+declare namespace Calendar {
+    var displayName: string;
 }

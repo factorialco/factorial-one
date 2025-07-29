@@ -266,6 +266,7 @@ export declare const defaultTranslations: {
         readonly more: "More";
         readonly moveUp: "Move up";
         readonly moveDown: "Move down";
+        readonly other: "Other actions";
     };
     readonly status: {
         readonly selected: {
@@ -1071,15 +1072,15 @@ declare module "@tiptap/core" {
 }
 
 
-declare namespace Calendar {
-    var displayName: string;
-}
-
-
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
+}
+
+
+declare namespace Calendar {
+    var displayName: string;
 }
