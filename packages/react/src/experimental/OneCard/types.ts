@@ -1,6 +1,6 @@
 import { IconType } from "@/components/Utilities/Icon"
 import { propertyRenderers } from "@/experimental/OneDataCollection/visualizations/property"
-import { CardPropertyType } from "./CardMetadata"
+import { CardPropertyType } from "./components/CardMetadata"
 
 /**
  * Card metadata property renderers.
