@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event"
 import React from "react"
 import { describe, expect, it, vi } from "vitest"
 import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
-import type { CardSecondaryLink } from "../CardActions"
+import type { CardSecondaryLink } from "../components/CardActions"
 import { OneCard } from "../OneCard"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
