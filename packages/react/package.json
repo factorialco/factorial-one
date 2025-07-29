@@ -45,9 +45,9 @@
     "vitest:ci": "pnpm run vitest --reporter=dot"
   },
   "peerDependencies": {
-    "@copilotkit/react-core": "^1.9.2",
-    "@copilotkit/react-ui": "^1.9.2",
-    "@copilotkit/runtime": "^1.9.2",
+    "@copilotkit/react-core": "^1.9.3",
+    "@copilotkit/react-ui": "^1.9.3",
+    "@copilotkit/runtime": "^1.9.3",
     "@hookform/resolvers": "^3.9.0",
     "@number-flow/react": "^0.3.0",
     "@radix-ui/react-accordion": "^1.1.2",
