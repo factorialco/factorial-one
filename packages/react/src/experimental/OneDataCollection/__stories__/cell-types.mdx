@@ -118,6 +118,7 @@ type value = {
     placeholder?: string
     units?: string
     unitsPosition?: 'left' | 'right' // default is right
+    decimalPlaces?: number | undefined // if undefined, the number will be rendered as is, if defined, the number will be rendered with the number of decimal places
 }
 ```
 
@@ -151,6 +152,25 @@ render: (item) => ({
   }}
 />
 
+#### With decimal places
+
+<Canvas
+  of={CellTypesDataCollectionStories.NumberValueInputAsObjectWithDecimals}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'number'
+    value: {
+      number: 1234.56789
+      decimalPlaces: 2
+    }
+})
+`,
+  }}
+/>
+
+#### With units
+
 <Canvas
   of={CellTypesDataCollectionStories.NumberValueInputAsObjectWithUnits}
   source={{
@@ -160,6 +180,7 @@ render: (item) => ({
     value: {
       number: 1234
       units: 'km/h',
+      decimalPlaces: 2,
     }
 })
 `,
@@ -253,8 +274,15 @@ Renders a monetary number (right align on table visualizacion)
 type value = number | undefined
 // or
 type value = {
-    amount: Date | undefined
+    amount: number | undefined
     placeholder?: string
+    currency?: CurrencyDef
+}
+
+type CurrencyDef = {
+  symbol: string
+  symbolPosition?: "left" | "right"
+  decimalPlaces: number
 }
 ```
 
@@ -286,15 +314,15 @@ render: (item) => ({
   }}
 />
 
-#### AmountWithSymbol
+#### AmountWithCurrency
 
 <Canvas
 
-of={CellTypesDataCollectionStories.AmountWithSymbol} source={{
+of={CellTypesDataCollectionStories.AmountWithCurrency} source={{
     code: `
 render: (item) => ({
     type: 'amount'
-    value: { amount: 1234, symbol: '$', symbolPosition: 'left' },
+    value: { amount: 1234.56789, currency: { symbol: '$', symbolPosition: 'left', decimalPlaces: 2 } },
   }
 })
 `,
@@ -302,11 +330,11 @@ render: (item) => ({
 
   <Canvas
 
-of={CellTypesDataCollectionStories.AmountWithSymbolRight} source={{
+of={CellTypesDataCollectionStories.AmountWithCurrencyEuro} source={{
     code: `
 render: (item) => ({
     type: 'amount'
-    value: { amount: 1234, symbol: '€', symbolPosition: 'right' },
+    value: { amount: 1234.56789, currency: { symbol: 'EUR', decimalPlaces: 2 } },
   }
 })
 `,
@@ -653,7 +681,7 @@ render: (item) => ({
 
 ### file
 
-Renders a file avatarwith a name
+Renders a file avatar (for file type) and file name
 
 #### Value type
 

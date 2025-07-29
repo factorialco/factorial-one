@@ -6,10 +6,15 @@ import { PropertyRendererMetadata } from "../types"
 import { NumberCell } from "./number"
 import { WithPlaceholder } from "./types"
 
+export interface CurrencyDef {
+  symbol: string
+  symbolPosition?: "left" | "right"
+  decimalPlaces: number
+}
+
 export interface AmountValue extends WithPlaceholder {
   amount: number | undefined
-  symbol?: string
-  symbolPosition?: "left" | "right"
+  currency?: CurrencyDef
 }
 
 export type AmountCellValue = number | undefined | AmountValue
@@ -34,8 +39,9 @@ export const AmountCell = (
     {
       ...(typeof args === "object" && "amount" in args ? args : {}),
       number: amount.amount,
-      units: amount.symbol,
-      unitsPosition: amount.symbolPosition,
+      decimalPlaces: amount.currency?.decimalPlaces,
+      units: amount.currency?.symbol,
+      unitsPosition: amount.currency?.symbolPosition,
     },
     meta
   )

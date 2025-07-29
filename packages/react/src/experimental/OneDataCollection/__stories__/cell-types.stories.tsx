@@ -174,6 +174,19 @@ export const NumberValueInputAsObject: Story = {
   },
 }
 
+export const NumberValueInputAsObjectWithDecimals: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Value",
+      render: () => ({
+        type: "number",
+        value: { number: 1234.56789, decimalPlaces: 0 },
+      }),
+    },
+  },
+}
+
 export const NumberValueInputAsObjectWithUnits: Story = {
   args: {
     item: mockItem,
@@ -181,7 +194,7 @@ export const NumberValueInputAsObjectWithUnits: Story = {
       label: "Speed",
       render: () => ({
         type: "number",
-        value: { number: 82, units: "km/h" },
+        value: { number: 82, units: "km/h", decimalPlaces: 2 },
       }),
     },
   },
@@ -281,27 +294,33 @@ export const AmountWithPlaceholder: Story = {
   },
 }
 
-export const AmountWithSymbol: Story = {
+export const AmountWithCurrency: Story = {
   args: {
     item: mockItem,
     property: {
       label: "Amount",
       render: () => ({
         type: "amount",
-        value: { amount: 1233, symbol: "$", symbolPosition: "left" },
+        value: {
+          amount: 1234.56789,
+          currency: { symbol: "$", symbolPosition: "left", decimalPlaces: 2 },
+        },
       }),
     },
   },
 }
 
-export const AmountWithSymbolRight: Story = {
+export const AmountWithCurrencyEuro: Story = {
   args: {
     item: mockItem,
     property: {
       label: "Amount",
       render: () => ({
         type: "amount",
-        value: { amount: 1233, symbol: "$", symbolPosition: "right" },
+        value: {
+          amount: 1234.56789,
+          currency: { symbol: "EUR", decimalPlaces: 2 },
+        },
       }),
     },
   },
