@@ -23,7 +23,7 @@ const Checkbox = React.forwardRef<
         {...props}
         ref={ref}
         id={checkboxId}
-        name={checkboxId}
+        name={props.name || checkboxId}
         aria-label={props.title}
         className={cn(
           "h-5 w-5 shrink-0 rounded-xs border border-solid border-f1-border text-f1-foreground-selected transition-[background-color,border-color] hover:border-f1-border-hover data-[state=checked]:bg-f1-background-selected-bold data-[state=checked]:text-f1-foreground-inverse hover:data-[state=checked]:border-transparent",

@@ -45,6 +45,7 @@ export type SelectProps<T, R = any> = {
   className?: string
   selectContentClassName?: string
   actions?: Action[]
+  name?: string
 } & Pick<
   InputFieldProps<T>,
   | "loading"
@@ -127,6 +128,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
     labelIcon,
     clearable,
     loading,
+    name,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -248,6 +250,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
             clearable={clearable}
             size={size}
             loading={loading}
+            name={name}
             onClickContent={() => {
               handleChangeOpenLocal(!openLocal)
             }}
