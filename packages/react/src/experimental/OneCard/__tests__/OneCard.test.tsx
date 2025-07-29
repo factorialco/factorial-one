@@ -160,9 +160,6 @@ describe("OneCard Component", () => {
   })
 
   it("renders a secondary action link", async () => {
-    const user = userEvent.setup()
-    const handleSecondaryAction = vi.fn()
-
     const secondaryLink: CardSecondaryLink = {
       label: "View more",
       href: "/test-page",
