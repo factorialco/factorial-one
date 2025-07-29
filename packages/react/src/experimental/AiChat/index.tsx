@@ -1,8 +1,9 @@
 import { CopilotKit } from "@copilotkit/react-core"
 import { CopilotPopup } from "@copilotkit/react-ui"
-// import "@copilotkit/react-ui/styles.css"
 
+import { experimentalComponent } from "@/lib/experimental"
 import type { ComponentProps } from "react"
+
 import {
   AssistantMessage,
   ChatButton,
@@ -20,11 +21,11 @@ export type AiChatProviderProps = Omit<
   "window"
 >
 
-export const AiChatProvider = (props: AiChatProviderProps) => {
+export const AiChatProviderCmp = (props: AiChatProviderProps) => {
   return <CopilotKit {...props} />
 }
 
-export const AiChat = (props: AiChatProps) => {
+export const AiChatCmp = (props: AiChatProps) => {
   return (
     <CopilotPopup
       Window={ChatWindow}
@@ -38,3 +39,15 @@ export const AiChat = (props: AiChatProps) => {
     />
   )
 }
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+const AiChat = experimentalComponent("AiChat", AiChatCmp)
+
+const AiChatProvider = experimentalComponent(
+  "AiChatProvider",
+  AiChatProviderCmp
+)
+
+export { AiChat, AiChatProvider }
