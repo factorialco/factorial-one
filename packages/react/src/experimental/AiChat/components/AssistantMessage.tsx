@@ -45,8 +45,6 @@ export const AssistantMessage = ({
     }, 150)
   }, [])
 
-  console.warn(markdownTagRenderers)
-
   return (
     <div
       className="relative isolate flex min-h-[20px] w-fit max-w-[330px] flex-col items-start justify-center last:mb-8"
@@ -60,7 +58,7 @@ export const AssistantMessage = ({
           <div className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1">
             <Markdown
               content={message}
-              components={{ ...markdownTagRenderers, ...f0MarkdownRenderers }}
+              components={{ ...f0MarkdownRenderers, ...markdownTagRenderers }}
             />
           </div>
 
