@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 import { Markdown, type AssistantMessageProps } from "@copilotkit/react-ui"
 import { type TextMessage } from "@copilotkit/runtime-client-gql"
 import { useCallback, useRef, useState } from "react"
-import { markdownRenderers } from "../markdownRenderers"
+import { markdownRenderers as f0MarkdownRenderers } from "../markdownRenderers"
 
 export const AssistantMessage = ({
   message,
@@ -57,7 +57,7 @@ export const AssistantMessage = ({
           <div className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1">
             <Markdown
               content={message}
-              components={markdownTagRenderers || markdownRenderers}
+              components={{ ...f0MarkdownRenderers, ...markdownTagRenderers }}
             />
           </div>
 
