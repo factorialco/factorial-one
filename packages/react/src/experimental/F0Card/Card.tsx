@@ -5,7 +5,7 @@ const privateProps = ["forceVerticalMetadata"] as const
 
 export type CardProps = Omit<CardInternalProps, (typeof privateProps)[number]>
 
-export const OneCard = forwardRef<HTMLDivElement, CardProps>((props) => {
+export const Card = forwardRef<HTMLDivElement, CardProps>((props) => {
   const publicProps = privateProps.reduce((acc, key) => {
     const { [key]: _, ...rest } = acc
     return rest
@@ -14,4 +14,5 @@ export const OneCard = forwardRef<HTMLDivElement, CardProps>((props) => {
   return <CardInternal {...publicProps} />
 })
 
-OneCard.displayName = "Card"
+Card.displayName = "Card"
+export { Card as F0Card }

@@ -1,13 +1,13 @@
 import { zeroRender as render, screen, userEvent } from "@/testing/test-utils"
 import "@testing-library/jest-dom/vitest"
 import { describe, expect, it, vi } from "vitest"
+import { F0Card } from "../Card"
 import type { CardSecondaryLink } from "../components/CardActions"
-import { OneCard } from "../OneCard"
 
-describe("OneCard Component", () => {
+describe("F0Card Component", () => {
   it("renders title and description correctly", () => {
     render(
-      <OneCard title="Test Card Title" description="Test card description" />
+      <F0Card title="Test Card Title" description="Test card description" />
     )
 
     expect(screen.getByText("Test Card Title")).toBeInTheDocument()
@@ -15,7 +15,7 @@ describe("OneCard Component", () => {
   })
 
   it("renders as a clickable card when link is provided", () => {
-    render(<OneCard title="Linked Card" link="/test-link" />)
+    render(<F0Card title="Linked Card" link="/test-link" />)
 
     const link = screen.getByRole("link", { name: "Linked Card" })
     expect(link).toBeInTheDocument()
@@ -26,14 +26,14 @@ describe("OneCard Component", () => {
     const user = userEvent.setup()
     const handleClick = vi.fn()
 
-    render(<OneCard title="Clickable Card" onClick={handleClick} />)
+    render(<F0Card title="Clickable Card" onClick={handleClick} />)
 
     await user.click(screen.getByText("Clickable Card"))
     expect(handleClick).toHaveBeenCalledTimes(1)
   })
 
   it("renders an image when provided", () => {
-    render(<OneCard title="Image Card" image="/path/to/test-image.jpg" />)
+    render(<F0Card title="Image Card" image="/path/to/test-image.jpg" />)
 
     const image = screen.getByRole("img", { name: "Image Card" })
     expect(image).toHaveAttribute("src", "/path/to/test-image.jpg")
@@ -41,7 +41,7 @@ describe("OneCard Component", () => {
 
   it("renders an avatar when provided", () => {
     render(
-      <OneCard
+      <F0Card
         title="Avatar Card"
         avatar={{ type: "person", firstName: "Daniel", lastName: "Moreno" }}
       />
@@ -55,7 +55,7 @@ describe("OneCard Component", () => {
     const handleSelect = vi.fn()
 
     render(
-      <OneCard
+      <F0Card
         title="Selectable Card"
         selectable={true}
         onSelect={handleSelect}
@@ -89,7 +89,7 @@ describe("OneCard Component", () => {
       },
     ]
 
-    render(<OneCard title="Test Card" otherActions={otherActions} />)
+    render(<F0Card title="Test Card" otherActions={otherActions} />)
 
     const card = screen.getByTestId("card")
     expect(card).toBeInTheDocument()
@@ -109,7 +109,7 @@ describe("OneCard Component", () => {
     const handlePrimaryAction = vi.fn()
 
     render(
-      <OneCard
+      <F0Card
         title="Test Card"
         primaryAction={{
           label: "Primary Action",
@@ -134,7 +134,7 @@ describe("OneCard Component", () => {
     const handlePrimaryAction = vi.fn()
 
     render(
-      <OneCard
+      <F0Card
         title="Test Card"
         primaryAction={{
           label: "Primary Action",
@@ -161,7 +161,7 @@ describe("OneCard Component", () => {
       disabled: false,
     }
 
-    render(<OneCard title="Test Card" secondaryActions={secondaryLink} />)
+    render(<F0Card title="Test Card" secondaryActions={secondaryLink} />)
 
     const card = screen.getByTestId("card")
     expect(card).toBeInTheDocument()

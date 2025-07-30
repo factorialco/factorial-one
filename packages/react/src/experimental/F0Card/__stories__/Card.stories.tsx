@@ -13,7 +13,7 @@ import image from "@storybook-static/avatars/person04.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
-import { OneCard } from "../OneCard"
+import { F0Card } from "../Card"
 
 const SlotComponent = () => {
   return (
@@ -24,7 +24,7 @@ const SlotComponent = () => {
 }
 
 const meta = {
-  component: OneCard,
+  component: F0Card,
   title: "Card",
   parameters: {
     docs: {
@@ -41,7 +41,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof OneCard>
+} satisfies Meta<typeof F0Card>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -175,7 +175,7 @@ export const Selectable: Story = {
   },
   render: (args) => {
     const [selected, setSelected] = useState(false)
-    return <OneCard {...args} selected={selected} onSelect={setSelected} />
+    return <F0Card {...args} selected={selected} onSelect={setSelected} />
   },
 }
 
@@ -210,7 +210,7 @@ export const WithImage: Story = {
   },
   render: (args) => {
     const [selected, setSelected] = useState(false)
-    return <OneCard {...args} selected={selected} onSelect={setSelected} />
+    return <F0Card {...args} selected={selected} onSelect={setSelected} />
   },
 }
 
@@ -229,7 +229,7 @@ export const WithFileAvatar: Story = {
   },
   render: (args) => {
     const [selected, setSelected] = useState(false)
-    return <OneCard {...args} selected={selected} onSelect={setSelected} />
+    return <F0Card {...args} selected={selected} onSelect={setSelected} />
   },
 }
 

@@ -1,5 +1,5 @@
+import { F0Card } from "@/experimental/F0Card"
 import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
-import { OneCard } from "@/experimental/OneCard"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
@@ -183,7 +183,7 @@ const GroupCards = <
               duration: 0.3,
             })}
           >
-            <OneCard
+            <F0Card
               key={index}
               title={title(item)}
               selectable={selectable}
@@ -207,7 +207,7 @@ const GroupCards = <
                   </div>
                 ))}
               </div>
-            </OneCard>
+            </F0Card>
           </motion.div>
         )
       })}
