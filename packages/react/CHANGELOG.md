@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.141.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.140.0...factorial-one-react-v1.141.0) (2025-07-30)
+
+
+### Features
+
+* **Card:** responsive design ([#2315](https://github.com/factorialco/factorial-one/issues/2315)) ([87c546e](https://github.com/factorialco/factorial-one/commit/87c546e106d2535484a3406f076190c2a04875bb))
+
+## [1.140.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.139.0...factorial-one-react-v1.140.0) (2025-07-29)
+
+
+### Features
+
+* add raw type to TagList ([#2321](https://github.com/factorialco/factorial-one/issues/2321)) ([c9e99b3](https://github.com/factorialco/factorial-one/commit/c9e99b3e5bae4d1e973d12b166bb57674cc9f87d))
+
+## [1.139.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.138.0...factorial-one-react-v1.139.0) (2025-07-29)
+
+
+### Features
+
+* name prop in inputs ([#2323](https://github.com/factorialco/factorial-one/issues/2323)) ([2860aef](https://github.com/factorialco/factorial-one/commit/2860aef6ca5dcb437dab64ef936a9d2f8a73d58f))
+
+## [1.138.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.137.0...factorial-one-react-v1.138.0) (2025-07-29)
+
+
+### Features
+
+* **Card:** testing and structure ([#2319](https://github.com/factorialco/factorial-one/issues/2319)) ([44bbef5](https://github.com/factorialco/factorial-one/commit/44bbef5265632b52ca33676e9f78156c641702dc))
+
 ## [1.137.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.1...factorial-one-react-v1.137.0) (2025-07-29)
 
 

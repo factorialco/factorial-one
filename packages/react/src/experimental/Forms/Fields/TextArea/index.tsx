@@ -20,6 +20,7 @@ export type TextareaProps = Pick<
   | "clearable"
   | "onBlur"
   | "onFocus"
+  | "name"
 >
 
 const Textarea: React.FC<TextareaProps> = Component(
