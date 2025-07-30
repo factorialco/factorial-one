@@ -31,7 +31,7 @@ const meta = {
       story: { inline: false, height: "320px" },
     },
   },
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "stable"],
   decorators: [
     (Story) => (
       <div className="flex h-[calc(100vh-32px)] w-full items-center justify-center">

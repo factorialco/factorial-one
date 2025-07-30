@@ -1,4 +1,4 @@
-import { F0Card } from "@/experimental/F0Card"
+import { F0Card } from "@/components/F0Card"
 import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
