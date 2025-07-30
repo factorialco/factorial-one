@@ -75,6 +75,7 @@ export function CardOptions({
               round
               hideLabel
               pressed={isOpen}
+              data-testid="card-options-dropdown"
             />
           </Dropdown>
         </div>

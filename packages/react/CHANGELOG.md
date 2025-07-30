@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.140.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.139.0...factorial-one-react-v1.140.0) (2025-07-29)
+
+
+### Features
+
+* add raw type to TagList ([#2321](https://github.com/factorialco/factorial-one/issues/2321)) ([c9e99b3](https://github.com/factorialco/factorial-one/commit/c9e99b3e5bae4d1e973d12b166bb57674cc9f87d))
+
+## [1.139.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.138.0...factorial-one-react-v1.139.0) (2025-07-29)
+
+
+### Features
+
+* name prop in inputs ([#2323](https://github.com/factorialco/factorial-one/issues/2323)) ([2860aef](https://github.com/factorialco/factorial-one/commit/2860aef6ca5dcb437dab64ef936a9d2f8a73d58f))
+
+## [1.138.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.137.0...factorial-one-react-v1.138.0) (2025-07-29)
+
+
+### Features
+
+* **Card:** testing and structure ([#2319](https://github.com/factorialco/factorial-one/issues/2319)) ([44bbef5](https://github.com/factorialco/factorial-one/commit/44bbef5265632b52ca33676e9f78156c641702dc))
+
+## [1.137.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.1...factorial-one-react-v1.137.0) (2025-07-29)
+
+
+### Features
+
+* **Icons:** thumbs up and down icons ([#2317](https://github.com/factorialco/factorial-one/issues/2317)) ([6b6cc1f](https://github.com/factorialco/factorial-one/commit/6b6cc1f8d7c3ef2ac3253020dc75a69b439a9c79))
+
 ## [1.136.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.136.0...factorial-one-react-v1.136.1) (2025-07-28)
 
 

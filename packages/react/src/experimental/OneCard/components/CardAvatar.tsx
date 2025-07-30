@@ -55,6 +55,7 @@ export function CardAvatar({
         overlay && isRounded && "rounded-full",
         compact && "mb-0"
       )}
+      data-testid="card-avatar"
     >
       <AvatarRender avatar={avatar} />
     </div>

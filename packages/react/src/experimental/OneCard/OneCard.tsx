@@ -15,10 +15,10 @@ import {
   type CardPrimaryAction,
   type CardSecondaryAction,
   type CardSecondaryLink,
-} from "./CardActions"
-import { CardAvatar, type CardAvatarType } from "./CardAvatar"
-import { CardMetadata } from "./CardMetadata"
-import { CardOptions } from "./CardOptions"
+} from "./components/CardActions"
+import { CardAvatar, type CardAvatarType } from "./components/CardAvatar"
+import { CardMetadata } from "./components/CardMetadata"
+import { CardOptions } from "./components/CardOptions"
 import { type CardMetadata as CardMetadataType } from "./types"
 
 interface OneCardProps {
@@ -129,6 +129,7 @@ export function OneCard({
           "border-f1-border-selected bg-f1-background-selected-secondary"
       )}
       onClick={onClick}
+      data-testid="card"
     >
       {link && (
         <Link
