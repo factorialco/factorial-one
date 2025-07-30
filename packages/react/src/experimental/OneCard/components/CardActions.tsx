@@ -41,45 +41,84 @@ export function CardActions({
   return (
     <CardFooter
       className={cn(
-        "justify-between gap-2 [&>div]:z-[1]",
+        "flex-col gap-2 sm:flex-row sm:justify-between [&>div]:z-[1]",
         "relative -mx-4 mt-4 border-0 border-t border-solid border-t-f1-border-secondary px-4 pt-4",
         compact && "pt-3"
       )}
     >
       {secondaryActions && (
-        <div className="flex gap-2">
-          {Array.isArray(secondaryActions) ? (
-            secondaryActions.map((action, index) => (
-              <Button
-                key={index}
-                label={action.label}
-                icon={action.icon}
-                hideLabel={index > 0}
-                round={index > 0}
-                variant="outline"
-                onClick={action.onClick}
-                size={compact ? "sm" : "md"}
-              />
-            ))
-          ) : (
-            <Link
-              href={secondaryActions.href}
-              target={secondaryActions.target}
-              disabled={secondaryActions.disabled}
-            >
-              {secondaryActions.label}
-            </Link>
-          )}
-        </div>
+        <>
+          <div className="flex w-full flex-col gap-2 sm:hidden [&_a]:justify-center [&_button]:w-full [&_div]:w-full [&_div]:justify-center">
+            {Array.isArray(secondaryActions) ? (
+              secondaryActions.map((action, index) => (
+                <Button
+                  key={index}
+                  label={action.label}
+                  icon={action.icon}
+                  variant="outline"
+                  onClick={action.onClick}
+                  size="lg"
+                />
+              ))
+            ) : (
+              <Link
+                href={secondaryActions.href}
+                target={secondaryActions.target}
+                disabled={secondaryActions.disabled}
+              >
+                {secondaryActions.label}
+              </Link>
+            )}
+          </div>
+          <div className="hidden gap-2 sm:flex">
+            {Array.isArray(secondaryActions) ? (
+              secondaryActions.map((action, index) => (
+                <Button
+                  key={index}
+                  label={action.label}
+                  icon={action.icon}
+                  hideLabel={index > 0}
+                  round={index > 0}
+                  variant="outline"
+                  onClick={action.onClick}
+                  size={compact ? "sm" : "md"}
+                />
+              ))
+            ) : (
+              <Link
+                href={secondaryActions.href}
+                target={secondaryActions.target}
+                disabled={secondaryActions.disabled}
+                data-testid="secondary-link-web"
+              >
+                {secondaryActions.label}
+              </Link>
+            )}
+          </div>
+        </>
       )}
 
       {primaryAction && (
-        <Button
-          label={primaryAction.label}
-          icon={primaryAction.icon}
-          onClick={primaryAction.onClick}
-          size={compact ? "sm" : "md"}
-        />
+        <>
+          <div className="flex w-full sm:hidden [&_button]:w-full [&_div]:w-full [&_div]:justify-center">
+            <Button
+              label={primaryAction.label}
+              icon={primaryAction.icon}
+              onClick={primaryAction.onClick}
+              size="lg"
+              data-testid="primary-button-mobile"
+            />
+          </div>
+          <div className="hidden w-fit sm:flex [&_button]:w-fit [&_div]:w-full [&_div]:justify-center">
+            <Button
+              label={primaryAction.label}
+              icon={primaryAction.icon}
+              onClick={primaryAction.onClick}
+              size={compact ? "sm" : "md"}
+              data-testid="primary-button-web"
+            />
+          </div>
+        </>
       )}
     </CardFooter>
   )

@@ -121,7 +121,32 @@ describe("OneCard Component", () => {
     const card = screen.getByTestId("card")
     expect(card).toBeInTheDocument()
 
-    const primaryButton = screen.getByRole("button", { name: "Primary Action" })
+    const primaryButton = screen.getByTestId("primary-button-web")
+    expect(primaryButton).toBeInTheDocument()
+
+    await user.click(primaryButton)
+    expect(handlePrimaryAction).toHaveBeenCalledTimes(1)
+  })
+
+  it("handles primary action on mobile", async () => {
+    Object.defineProperty(window, "innerWidth", { value: 375 })
+    const user = userEvent.setup()
+    const handlePrimaryAction = vi.fn()
+
+    render(
+      <OneCard
+        title="Test Card"
+        primaryAction={{
+          label: "Primary Action",
+          onClick: handlePrimaryAction,
+        }}
+      />
+    )
+
+    const card = screen.getByTestId("card")
+    expect(card).toBeInTheDocument()
+
+    const primaryButton = screen.getByTestId("primary-button-mobile")
     expect(primaryButton).toBeInTheDocument()
 
     await user.click(primaryButton)
@@ -141,7 +166,7 @@ describe("OneCard Component", () => {
     const card = screen.getByTestId("card")
     expect(card).toBeInTheDocument()
 
-    const linkElement = screen.getByRole("link", { name: "View more" })
+    const linkElement = screen.getByTestId("secondary-link-web")
     expect(linkElement).toBeInTheDocument()
     expect(linkElement).toHaveAttribute("href", "/test-page")
     expect(linkElement).toHaveAttribute("target", "_blank")
