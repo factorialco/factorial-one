@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.142.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.141.1...factorial-one-react-v1.142.0) (2025-07-30)
+
+
+### Features
+
+* **RichTextEditor:** add title input and toolbar ([#2333](https://github.com/factorialco/factorial-one/issues/2333)) ([bce76d8](https://github.com/factorialco/factorial-one/commit/bce76d8b45c44db6de8c14af09636a7205e7a7d1))
+
 ## [1.141.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.141.0...factorial-one-react-v1.141.1) (2025-07-30)
 
 
