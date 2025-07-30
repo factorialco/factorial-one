@@ -250,17 +250,19 @@ const BasicTextEditorComponent = forwardRef<
         >
           <div className="flex flex-row">
             <Button
+              round
               variant="ghost"
               size="sm"
-              className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-2xs text-f1-foreground-tertiary hover:bg-f1-background-hover"
+              className="text-f1-foreground-tertiary"
               onClick={handlePlusClick}
             >
               <Icon icon={Plus} size="sm" />
             </Button>
             <Button
+              round
               variant="ghost"
               size="sm"
-              className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-2xs text-f1-foreground-tertiary hover:bg-f1-background-hover"
+              className="text-f1-foreground-tertiary"
               data-drag-handle
               draggable
             >
