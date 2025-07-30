@@ -45,7 +45,7 @@ export const AssistantMessage = ({
     }, 150)
   }, [])
 
-  console.log(markdownTagRenderers)
+  console.warn(markdownTagRenderers)
 
   return (
     <div
