@@ -13,6 +13,7 @@ import image from "@storybook-static/avatars/person04.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
+import { CardInternal } from "../CardInternal"
 import { OneCard } from "../OneCard"
 
 const SlotComponent = () => {
@@ -237,5 +238,11 @@ export const Compact: Story = {
   args: {
     ...WithActions.args,
     compact: true,
+  },
+}
+
+export const CompactWithVerticalMetadata: Story = {
+  render: () => {
+    return <CardInternal {...Compact.args} forceVerticalMetadata />
   },
 }
