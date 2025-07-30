@@ -175,7 +175,13 @@ export function OneCard({
             )}
           >
             {avatar && (
-              <CardAvatar avatar={avatar} overlay={!!image} compact={compact} />
+              <CardAvatar
+                avatar={avatar}
+                overlay={!!image}
+                compact={compact}
+                title={title}
+                description={description}
+              />
             )}
             <div className="flex flex-col gap-0">
               <CardTitle
@@ -186,7 +192,7 @@ export function OneCard({
               >
                 {title}
               </CardTitle>
-              {description && (
+              {description && title && (
                 <CardSubtitle className="line-clamp-3 text-base text-f1-foreground-secondary">
                   {description}
                 </CardSubtitle>

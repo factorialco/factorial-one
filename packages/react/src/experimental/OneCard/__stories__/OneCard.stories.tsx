@@ -65,6 +65,7 @@ export const Default: Story = {
       },
       {
         icon: CalendarArrowRight,
+        tooltip: "Hired",
         property: {
           type: "text",
           value: "3 years ago",
@@ -126,6 +127,7 @@ export const WithActions: Story = {
     metadata: [
       {
         icon: Office,
+        tooltip: "Location",
         property: {
           type: "tag",
           value: {
@@ -135,6 +137,7 @@ export const WithActions: Story = {
       },
       {
         icon: Calendar,
+        tooltip: "Hired",
         property: {
           type: "text",
           value: "10 months ago",
@@ -202,30 +205,64 @@ export const WithEmoji: Story = {
   },
 }
 
-export const WithImage: Story = {
-  args: {
-    ...Default.args,
-    selectable: true,
-    image: image,
-  },
-  render: (args) => {
-    const [selected, setSelected] = useState(false)
-    return <OneCard {...args} selected={selected} onSelect={setSelected} />
-  },
-}
-
 export const WithFileAvatar: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },
   },
   args: {
-    ...WithImage.args,
-    selectable: true,
-    image: image,
+    ...Default.args,
     avatar: {
       type: "file",
       file: new File([""], "document.pdf", { type: "application/pdf" }),
     },
+  },
+}
+
+export const WithPersonAvatar: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    ...Default.args,
+    avatar: {
+      type: "person",
+      firstName: "Daniel",
+      lastName: "Moreno",
+    },
+  },
+}
+
+export const WithTeamAvatar: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    ...Default.args,
+    avatar: {
+      type: "team",
+      name: "Design Team",
+    },
+  },
+}
+
+export const WithCompanyAvatar: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    ...Default.args,
+    avatar: {
+      type: "company",
+      name: "Test de verdad",
+    },
+  },
+}
+
+export const WithImage: Story = {
+  args: {
+    ...Default.args,
+    selectable: true,
+    image: image,
   },
   render: (args) => {
     const [selected, setSelected] = useState(false)

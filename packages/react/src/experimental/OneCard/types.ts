@@ -15,5 +15,6 @@ export type CardMetadataProperty = {
 
 export type CardMetadata = {
   icon: IconType
+  tooltip?: string
   property: CardMetadataProperty
 }

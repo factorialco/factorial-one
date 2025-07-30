@@ -26,22 +26,66 @@ interface CardAvatarProps {
    * Whether the avatar is displayed in a compact layout
    */
   compact?: boolean
+
+  /**
+   * The title to display
+   */
+  title?: string
+
+  /**
+   * The description to display
+   */
+  description?: string
 }
 
-const AvatarRender = ({ avatar }: { avatar: CardAvatarType }) => {
+const AvatarRender = ({
+  avatar,
+  title = "",
+  description = "",
+}: {
+  avatar: CardAvatarType
+  title?: string
+  description?: string
+}) => {
+  let avatarElement = null
+  let titleElement = title
   if (avatar.type === "emoji") {
-    return <EmojiAvatar emoji={avatar.emoji} size="lg" />
+    avatarElement = <EmojiAvatar emoji={avatar.emoji} size={"lg"} />
+  } else if (avatar.type === "file") {
+    avatarElement = <FileAvatar file={avatar.file} size={"large"} />
+  } else {
+    avatarElement = (
+      <Avatar avatar={avatar} size={description ? "large" : "small"} />
+    )
+    if (avatar.type === "person") {
+      titleElement = `${avatar.firstName} ${avatar.lastName}`
+    } else {
+      titleElement = avatar.name
+    }
   }
-  if (avatar.type === "file") {
-    return <FileAvatar file={avatar.file} size="large" />
-  }
-  return <Avatar avatar={avatar} size="large" />
+  return !title ? (
+    <div className="flex flex-row items-center gap-2">
+      {avatarElement}
+      <div className="flex flex-col gap-0">
+        <span className="text-lg font-semibold text-f1-foreground">
+          {titleElement}
+        </span>
+        <span className="line-clamp-1 text-base text-f1-foreground-secondary">
+          {description}
+        </span>
+      </div>
+    </div>
+  ) : (
+    avatarElement
+  )
 }
 
 export function CardAvatar({
   avatar,
   overlay = false,
   compact = false,
+  description = "",
+  title = "",
 }: CardAvatarProps) {
   const isRounded = avatar.type === "person"
 
@@ -57,7 +101,7 @@ export function CardAvatar({
       )}
       data-testid="card-avatar"
     >
-      <AvatarRender avatar={avatar} />
+      <AvatarRender avatar={avatar} title={title} description={description} />
     </div>
   )
 }

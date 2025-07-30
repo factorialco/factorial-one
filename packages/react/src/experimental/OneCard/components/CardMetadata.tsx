@@ -1,4 +1,5 @@
 import { Icon } from "@/components/Utilities/Icon"
+import { Tooltip } from "@/experimental"
 import { propertyRenderers } from "@/experimental/OneDataCollection/visualizations/property"
 import React from "react"
 import { CardMetadata as CardMetadataType } from "../types"
@@ -30,10 +31,18 @@ export function CardMetadata({ metadata }: CardMetadataProps) {
 
   const renderer = cardPropertyRenderers[type as CardPropertyType]
 
+  const iconWithTooltip = metadata.tooltip ? (
+    <Tooltip description={metadata.tooltip}>
+      <Icon icon={metadata.icon} color="default" size="md" />
+    </Tooltip>
+  ) : (
+    <Icon icon={metadata.icon} color="default" size="md" />
+  )
+
   if (!renderer) {
     return (
       <div className="flex h-8 items-center gap-1.5 font-medium">
-        <Icon icon={metadata.icon} color="default" size="md" />
+        {iconWithTooltip}
         <span>Unsupported property type: {type}</span>
       </div>
     )
@@ -46,7 +55,7 @@ export function CardMetadata({ metadata }: CardMetadataProps) {
 
   return (
     <div className="flex h-8 items-center gap-1.5 font-medium">
-      <Icon icon={metadata.icon} color="default" size="md" />
+      {iconWithTooltip}
       {typedRenderer(value, { visualization: "card" })}
     </div>
   )
