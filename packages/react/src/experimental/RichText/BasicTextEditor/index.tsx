@@ -278,7 +278,7 @@ const BasicTextEditorComponent = forwardRef<
 
         <EditorContent
           editor={editor}
-          className="[&>div]:w-full [&>div]:px-16"
+          className="pb-6 [&>div]:w-full [&>div]:px-16"
         />
 
         <EditorBubbleMenu
