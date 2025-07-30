@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.141.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.141.0...factorial-one-react-v1.141.1) (2025-07-30)
+
+
+### Bug Fixes
+
+* **Card:** options dropdown not visible ([#2329](https://github.com/factorialco/factorial-one/issues/2329)) ([11706fa](https://github.com/factorialco/factorial-one/commit/11706fad37a26620a18b05d91c742a411750353c))
+
 ## [1.141.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.140.0...factorial-one-react-v1.141.0) (2025-07-30)
 
 
