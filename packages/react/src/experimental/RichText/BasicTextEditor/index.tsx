@@ -218,7 +218,7 @@ const BasicTextEditorComponent = forwardRef<
 
   return (
     <div
-      className="relative flex w-full flex-col gap-6"
+      className="relative flex h-full w-full flex-col"
       ref={containerRef}
       id={editorId}
     >
@@ -232,17 +232,21 @@ const BasicTextEditorComponent = forwardRef<
           plainHtmlMode={false}
         />
       </div>
-      {onTitleChange && (
-        <div className="flex flex-col px-16">
-          <input
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder={labels.titlePlaceholder || ""}
-            className="text-3xl font-semibold text-f1-foreground placeholder-f1-foreground-tertiary"
-          />
-        </div>
-      )}
-      <div className="basic-text-editor-container">
+
+      <div
+        className="basic-text-editor-container scrollbar-macos h-full overflow-y-auto pt-6"
+        onClick={() => editor.commands.focus()}
+      >
+        {onTitleChange && (
+          <div className="flex flex-col px-16">
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder={labels.titlePlaceholder || ""}
+              className="text-3xl font-semibold text-f1-foreground placeholder-f1-foreground-tertiary"
+            />
+          </div>
+        )}
         <DragHandle
           editor={editor}
           tippyOptions={tippyOptions}
