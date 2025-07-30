@@ -20292,13 +20292,14 @@ function Lv(t) {
   return !!(t instanceof Date || t && typeof t == "object" && ("toLocaleDateString" in t || "getTime" in t));
 }
 const x_ = (t, e) => {
-  var s;
+  var s, o;
   const n = ig(t, "number"), i = ng(t, "number"), r = {
     // defaults
     unitsPosition: "right",
     units: "",
     // if args is an object, use the amount from args, otherwise use the value
     ...typeof t == "object" && "number" in t ? t : {
+      decimalPlaces: void 0,
       number: n
     }
   };
@@ -20306,22 +20307,20 @@ const x_ = (t, e) => {
     "div",
     {
       className: M(
-        "text-f1-foreground",
-        e.visualization === "table" && "text-right",
+        "flex items-center gap-1 text-f1-foreground",
+        e.visualization === "table" && "justify-end",
         i && "text-f1-foreground-secondary"
       ),
       children: [
         r.unitsPosition === "left" && r.units && /* @__PURE__ */ c(Pv, { units: r.units }),
-        ((s = r.number) == null ? void 0 : s.toString()) ?? "",
-        r.unitsPosition === "right" && r.units && /* @__PURE__ */ c(Pv, { units: r.units })
+        r.decimalPlaces !== void 0 ? (s = r.number) == null ? void 0 : s.toFixed(r.decimalPlaces) : ((o = r.number) == null ? void 0 : o.toString()) ?? "",
+        r.unitsPosition !== "left" && r.units && /* @__PURE__ */ c(Pv, { units: r.units })
       ]
     }
   );
 }, Pv = ({ units: t }) => /* @__PURE__ */ c("span", { children: t }), jP = (t, e) => {
+  var i, r, s;
   const n = {
-    // defaults
-    symbolPosition: "right",
-    symbol: "",
     // if args is an object, use the amount from args, otherwise use the value
     ...typeof t == "object" && "amount" in t ? t : {
       amount: t
@@ -20331,8 +20330,9 @@ const x_ = (t, e) => {
     {
       ...typeof t == "object" && "amount" in t ? t : {},
       number: n.amount,
-      units: n.symbol,
-      unitsPosition: n.symbolPosition
+      decimalPlaces: (i = n.currency) == null ? void 0 : i.decimalPlaces,
+      units: (r = n.currency) == null ? void 0 : r.symbol,
+      unitsPosition: (s = n.currency) == null ? void 0 : s.symbolPosition
     },
     e
   );
