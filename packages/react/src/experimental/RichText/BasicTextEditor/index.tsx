@@ -7,6 +7,7 @@ import {
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
 import { Handle, Plus } from "@/icons/app"
 import { Button } from "@/ui/button"
+import { ScrollArea } from "@/ui/scrollarea"
 import DragHandle from "@tiptap/extension-drag-handle-react"
 import { Node } from "@tiptap/pm/model"
 import { Editor, EditorContent, JSONContent, useEditor } from "@tiptap/react"
@@ -233,12 +234,12 @@ const BasicTextEditorComponent = forwardRef<
         />
       </div>
 
-      <div
-        className="basic-text-editor-container scrollbar-macos h-full overflow-y-auto pt-6"
+      <ScrollArea
+        className="basic-text-editor-container h-full gap-6 pt-6"
         onClick={() => editor.commands.focus()}
       >
         {onTitleChange && (
-          <div className="flex flex-col px-16">
+          <div className="flex flex-col px-16 pb-6">
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -288,7 +289,7 @@ const BasicTextEditorComponent = forwardRef<
           isFullscreen={false}
           editorId={editorId}
         />
-      </div>
+      </ScrollArea>
     </div>
   )
 })
