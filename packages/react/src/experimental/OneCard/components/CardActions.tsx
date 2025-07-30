@@ -89,6 +89,7 @@ export function CardActions({
                 href={secondaryActions.href}
                 target={secondaryActions.target}
                 disabled={secondaryActions.disabled}
+                data-testid="secondary-link-web"
               >
                 {secondaryActions.label}
               </Link>
@@ -105,6 +106,7 @@ export function CardActions({
               icon={primaryAction.icon}
               onClick={primaryAction.onClick}
               size="lg"
+              data-testid="primary-button-mobile"
             />
           </div>
           <div className="hidden w-fit sm:flex [&_button]:w-fit [&_div]:w-full [&_div]:justify-center">
@@ -113,6 +115,7 @@ export function CardActions({
               icon={primaryAction.icon}
               onClick={primaryAction.onClick}
               size={compact ? "sm" : "md"}
+              data-testid="primary-button-web"
             />
           </div>
         </>
