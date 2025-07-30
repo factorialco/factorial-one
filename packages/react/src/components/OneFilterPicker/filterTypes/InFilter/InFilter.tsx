@@ -1,8 +1,8 @@
 "use client"
 
 import { Button } from "@/components/Actions/Button"
+import { F0Checkbox } from "@/components/F0Checkbox"
 import { OneEllipsis } from "@/components/OneEllipsis"
-import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { F1SearchBox } from "@/experimental/Forms/Fields/F1SearchBox"
 import { Spinner } from "@/experimental/Information/Spinner"
 import { useI18n } from "@/lib/providers/i18n"
@@ -190,7 +190,7 @@ export function InFilter<T extends string>({
               <span className="max-w-[250px] flex-1 whitespace-nowrap">
                 <OneEllipsis>{option.label}</OneEllipsis>
               </span>
-              <Checkbox
+              <F0Checkbox
                 id={optionId}
                 title={option.label}
                 checked={isSelected}

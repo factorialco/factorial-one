@@ -1,4 +1,3 @@
-import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   act,
   render,
@@ -15,6 +14,7 @@ import {
   I18nProvider,
 } from "../../../../../lib/providers/i18n"
 import { ItemActionsDefinition } from "../../../item-actions"
+import { NavigationFiltersDefinition } from "../../../navigationFilters/types"
 import { SortingsDefinition } from "../../../sortings"
 import { SummariesDefinition } from "../../../summary"
 import type {
