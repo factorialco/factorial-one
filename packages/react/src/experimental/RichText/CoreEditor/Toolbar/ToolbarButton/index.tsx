@@ -55,10 +55,7 @@ export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         aria-label={label}
         {...props}
       >
-        <Icon
-          icon={icon}
-          className={active ? "text-f1-icon-selected" : "text-f1-foreground"}
-        />
+        <Icon icon={icon} color={active ? "selected" : "foreground"} />
         {showLabel && (
           <span
             className={cn(
