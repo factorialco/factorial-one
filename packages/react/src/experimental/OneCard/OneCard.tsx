@@ -13,3 +13,5 @@ export const OneCard = forwardRef<HTMLDivElement, CardProps>((props) => {
 
   return <CardInternal {...publicProps} />
 })
+
+OneCard.displayName = "Card"
