@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.141.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.140.0...factorial-one-react-v1.141.0) (2025-07-30)
+
+
+### Features
+
+* **Card:** responsive design ([#2315](https://github.com/factorialco/factorial-one/issues/2315)) ([87c546e](https://github.com/factorialco/factorial-one/commit/87c546e106d2535484a3406f076190c2a04875bb))
+
 ## [1.140.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.139.0...factorial-one-react-v1.140.0) (2025-07-29)
 
 
