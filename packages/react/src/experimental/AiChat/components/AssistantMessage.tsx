@@ -25,9 +25,10 @@ export const AssistantMessage = ({
 }: AssistantMessageProps) => {
   const translations = useI18n()
   const containerRef = useRef<HTMLDivElement>(null)
-  const [isThumbsUpToggleActive, setIsThumbsUpToggleActive] = useState(false)
-  const [isThumbsDownToggleActive, setIsThumbsDownToggleActive] =
-    useState(false)
+  const [reactionValue, setReactionValue] = useState<"like" | "dislike" | null>(
+    null
+  )
+  useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout>()
 
@@ -87,13 +88,13 @@ export const AssistantMessage = ({
                   variant="ghost"
                   size="sm"
                   label={translations.actions.thumbsUp}
-                  icon={isThumbsUpToggleActive ? ThumbsUpFilled : ThumbsUp}
+                  icon={reactionValue === "like" ? ThumbsUpFilled : ThumbsUp}
                   hideLabel
                   disabled={isGenerating}
                   onClick={(e) => {
+                    setReactionValue((val) => (val === "like" ? null : "like"))
                     // Blocked! new version of the sdk changes the type of the `message` variable so we can pass it directly
                     // the current version does not provide enough information to create `TextMessage` correctly
-                    setIsThumbsUpToggleActive((val) => !val)
                     onThumbsUp?.({} as TextMessage)
                     e.currentTarget.blur()
                   }}
@@ -105,14 +106,16 @@ export const AssistantMessage = ({
                   size="sm"
                   label={translations.actions.thumbsDown}
                   icon={
-                    isThumbsDownToggleActive ? ThumbsDownFilled : ThumbsDown
+                    reactionValue === "dislike" ? ThumbsDownFilled : ThumbsDown
                   }
                   hideLabel
                   disabled={isGenerating}
                   onClick={(e) => {
+                    setReactionValue((val) =>
+                      val === "dislike" ? null : "dislike"
+                    )
                     // Blocked! new version of the sdk changes the type of the `message` variable so we can pass it directly
                     // the current version does not provide enough information to create `TextMessage` correctly
-                    setIsThumbsDownToggleActive((val) => !val)
                     onThumbsDown?.({} as TextMessage)
                     e.currentTarget.blur()
                   }}
