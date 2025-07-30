@@ -1,14 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { expect, within } from "storybook/test"
-import { Checkbox } from "./index"
+import { F0Checkbox } from "../F0Checkbox"
 
 const meta = {
-  component: Checkbox,
+  component: F0Checkbox,
   tags: ["autodocs", "experimental"],
   title: "Checkbox",
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component: "A checkbox component that is used to select items.",
+      },
+    },
   },
   argTypes: {
     title: {
@@ -43,10 +48,10 @@ const meta = {
       description: "The value of the checkbox",
     },
   },
-} satisfies Meta<typeof Checkbox>
+} satisfies Meta<typeof F0Checkbox>
 
 export default meta
-type Story = StoryObj<typeof Checkbox>
+type Story = StoryObj<typeof F0Checkbox>
 
 export const Default: Story = {
   args: {
@@ -55,7 +60,9 @@ export const Default: Story = {
   },
   render: (args) => {
     const [checked, setChecked] = useState(false)
-    return <Checkbox {...args} checked={checked} onCheckedChange={setChecked} />
+    return (
+      <F0Checkbox {...args} checked={checked} onCheckedChange={setChecked} />
+    )
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -72,7 +79,9 @@ export const Disabled: Story = {
   },
   render: (args) => {
     const [checked, setChecked] = useState(false)
-    return <Checkbox {...args} checked={checked} onCheckedChange={setChecked} />
+    return (
+      <F0Checkbox {...args} checked={checked} onCheckedChange={setChecked} />
+    )
   },
 }
 
@@ -83,7 +92,9 @@ export const Indeterminate: Story = {
   },
   render: (args) => {
     const [checked, setChecked] = useState(false)
-    return <Checkbox {...args} checked={checked} onCheckedChange={setChecked} />
+    return (
+      <F0Checkbox {...args} checked={checked} onCheckedChange={setChecked} />
+    )
   },
 }
 
@@ -94,6 +105,8 @@ export const Checked: Story = {
   },
   render: (args) => {
     const [checked, setChecked] = useState(true)
-    return <Checkbox {...args} checked={checked} onCheckedChange={setChecked} />
+    return (
+      <F0Checkbox {...args} checked={checked} onCheckedChange={setChecked} />
+    )
   },
 }
