@@ -204,5 +204,10 @@
     "y-protocols": "^1.0.6",
     "yjs": "^13.6.27",
     "zen-observable-ts": "^1.1.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "esm-env": "npm:esm-env-runtime@^0.1.1"
+    }
   }
 }
