@@ -117,4 +117,61 @@ export default [
       ],
     },
   },
+  // Restrict barrel imports for all files except exports.ts and factorial-one.ts
+  {
+    files: ["**/*.{js,jsx,ts,tsx}"],
+    ignores: ["**/exports.ts", "**/factorial-one.ts"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "@/factorial-one",
+              message:
+                "Barrel imports are not allowed. Use specific component imports instead.",
+            },
+          ],
+          patterns: [
+            {
+              group: [
+                "**/factorial-one.ts",
+                "**/exports.ts",
+                "**/exports",
+                "@/*/exports",
+              ],
+              message:
+                "Barrel imports are not allowed. Use specific component imports instead.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  // Restrict barrel imports for exports.ts and factorial-one.ts files (allow exports.ts imports)
+  {
+    files: ["**/exports.ts", "**/factorial-one.ts"],
+    ignores: [],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "@/factorial-one",
+              message:
+                "Barrel imports are not allowed. Use specific component imports instead.",
+            },
+          ],
+          patterns: [
+            {
+              group: ["**/factorial-one.ts"],
+              message:
+                "Barrel imports are not allowed. Use specific component imports instead.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ]
