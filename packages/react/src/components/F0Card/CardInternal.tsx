@@ -1,3 +1,4 @@
+import { Link } from "@/components/Actions/Link"
 import { Image } from "@/components/Utilities/Image"
 import { DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { cn, focusRing } from "@/lib/utils"
@@ -9,7 +10,6 @@ import {
   CardTitle,
 } from "@/ui/Card"
 import { type ReactNode } from "react"
-import { Link } from "../../factorial-one"
 import {
   CardActions,
   type CardPrimaryAction,

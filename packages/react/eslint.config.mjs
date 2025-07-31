@@ -135,10 +135,20 @@ export default [
           patterns: [
             {
               group: [
+                // factorial-one patterns (all variations)
+                "*factorial-one",
+                "*factorial-one.ts",
+                "*/factorial-one",
+                "**/factorial-one",
                 "**/factorial-one.ts",
-                "**/exports.ts",
+                // exports patterns (all variations)
+                "*exports",
+                "*exports.ts",
+                "*/exports",
                 "**/exports",
+                "**/exports.ts",
                 "@/*/exports",
+                "@/**/exports",
               ],
               message:
                 "Barrel imports are not allowed. Use specific component imports instead.",
@@ -165,7 +175,14 @@ export default [
           ],
           patterns: [
             {
-              group: ["**/factorial-one.ts"],
+              group: [
+                // factorial-one patterns (all variations)
+                "*factorial-one",
+                "*factorial-one.ts",
+                "*/factorial-one",
+                "**/factorial-one",
+                "**/factorial-one.ts",
+              ],
               message:
                 "Barrel imports are not allowed. Use specific component imports instead.",
             },
