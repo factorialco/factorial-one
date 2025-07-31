@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.144.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.144.0...factorial-one-react-v1.144.1) (2025-07-31)
+
+
+### Bug Fixes
+
+* module-avatar invalid module does not fail, just warn ([#2343](https://github.com/factorialco/factorial-one/issues/2343)) ([da31d27](https://github.com/factorialco/factorial-one/commit/da31d270f027fb86baaf14cafc2c875184ea4a07))
+
 ## [1.144.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.143.0...factorial-one-react-v1.144.0) (2025-07-31)
 
 
