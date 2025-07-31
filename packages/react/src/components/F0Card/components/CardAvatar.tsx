@@ -36,7 +36,9 @@ const AvatarRender = ({
   compact?: boolean
 }) => {
   if (avatar.type === "emoji") {
-    return <EmojiAvatar emoji={avatar.emoji} size={compact ? "sm" : "lg"} />
+    return (
+      <EmojiAvatar emoji={avatar.emoji} size={compact ? "small" : "large"} />
+    )
   }
   if (avatar.type === "file") {
     return <FileAvatar file={avatar.file} size={compact ? "small" : "large"} />
