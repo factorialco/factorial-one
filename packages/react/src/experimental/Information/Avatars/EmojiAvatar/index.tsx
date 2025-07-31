@@ -3,22 +3,22 @@ import { cn } from "../../../../lib/utils"
 
 type Props = {
   emoji: string
-  size?: "sm" | "md" | "lg"
+  size?: "small" | "medium" | "large"
 }
 
 const sizes = {
-  sm: "w-6 h-6 rounded-sm",
-  md: "w-9 h-9 rounded",
-  lg: "w-10 h-10 rounded-md",
+  small: "w-6 h-6 rounded-sm",
+  medium: "w-9 h-9 rounded",
+  large: "w-10 h-10 rounded-md",
 }
 
 const imageSizes = {
-  sm: "xs",
-  md: "sm",
-  lg: "md",
+  small: "xs",
+  medium: "sm",
+  large: "md",
 } as const
 
-export const EmojiAvatar = ({ emoji, size = "md" }: Props) => {
+export const EmojiAvatar = ({ emoji, size = "medium" }: Props) => {
   // Check if emoji is a single emoji character using regex
   // \uFE0F is the variation selector that makes emojis display as colored graphics instead of black & white text
   const emojiRegex = /^\p{Emoji}\uFE0F?$/u
