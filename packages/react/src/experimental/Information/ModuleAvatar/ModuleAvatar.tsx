@@ -64,6 +64,12 @@ export function ModuleAvatar({ size = "md", ...props }: ModuleAvatarProps) {
   }
   const IconComponent = "icon" in props ? props.icon : modules[props.module]
 
+  if (!IconComponent) {
+    console.warn(
+      `ModuleAvatar: The module ${"icon" in props ? props.icon : props.module} is not supported.`
+    )
+  }
+
   const code = Math.random().toString(36).substring(2, 15)
 
   const gradientId = `gradient-${code}`
@@ -84,7 +90,9 @@ export function ModuleAvatar({ size = "md", ...props }: ModuleAvatarProps) {
         </defs>
         <path d={squirclePath} fill={`url(#${gradientId})`} />
       </svg>
-      <IconComponent className={iconSizeVariants({ size })} />
+      {IconComponent && (
+        <IconComponent className={iconSizeVariants({ size })} />
+      )}
     </div>
   )
 }
