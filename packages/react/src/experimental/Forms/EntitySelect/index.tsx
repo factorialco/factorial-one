@@ -541,12 +541,7 @@ function getMatchScore(text = "", searchKeys: string[]): number {
     )
 
     if (allWordsMatch) {
-      // Score based on how many words match exactly vs partially
-      const exactMatches = searchWords.filter((searchWord) =>
-        keyWords.some((keyWord) => keyWord === searchWord)
-      ).length
-      // Better score for more exact matches
-      return 2 + (searchWords.length - exactMatches) * 0.1
+      return 1
     }
   }
 
