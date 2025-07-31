@@ -1,4 +1,4 @@
-import { Spinner } from "@/experimental/exports"
+import { Spinner } from "@/experimental/Information/Spinner"
 import { cn } from "@/lib/utils"
 
 interface LoadingEnhanceProps {

@@ -1,9 +1,8 @@
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { AlertCircle, InfoCircle, Warning } from "@/icons/app"
+import { useTextFormatEnforcer } from "@/lib/text"
+import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
-import { IconType } from "../../../../components/Utilities/Icon"
-import { Icon } from "../../../../factorial-one.ts"
-import { AlertCircle, InfoCircle, Warning } from "../../../../icons/app"
-import { useTextFormatEnforcer } from "../../../../lib/text"
-import { cn } from "../../../../lib/utils"
 import { BaseTag } from "../BaseTag"
 
 type Level = "info" | "warning" | "critical"

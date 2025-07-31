@@ -1,8 +1,8 @@
+import { Icon } from "@/components/Utilities/Icon"
+import { ChevronLeft, ChevronRight } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { PropsWithChildren, useLayoutEffect, useRef, useState } from "react"
-import { Icon } from "../../../../factorial-one.ts"
-import { ChevronLeft, ChevronRight } from "../../../../icons/app"
-import { cn } from "../../../../lib/utils"
 
 export const SPACE_FOR_WIDGET_SHADOW = 28
 const GAP = 16
