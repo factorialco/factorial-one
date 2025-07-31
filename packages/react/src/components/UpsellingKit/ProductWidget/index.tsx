@@ -1,16 +1,15 @@
-import {
-  Button,
-  ErrorMessageProps,
-  LoadingStateProps,
-  NextStepsProps,
-  SuccessMessageProps,
-  UpsellingButton,
-} from "@/factorial-one"
+import { Button } from "@/components/Actions/Button"
 import CrossIcon from "@/icons/app/Cross"
 import { ButtonVariant } from "@/ui/button"
 import { Card, CardContent, CardFooter } from "@/ui/Card"
 import { Label } from "@/ui/label"
 import { useEffect, useState } from "react"
+import { LoadingStateProps } from "../UpsellingButton"
+import {
+  ErrorMessageProps,
+  NextStepsProps,
+  SuccessMessageProps,
+} from "../UpsellRequestResponseDialog"
 
 type BaseAction = {
   label: string

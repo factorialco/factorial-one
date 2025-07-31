@@ -3,7 +3,7 @@ import type {
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker/types"
-import { IconType } from "@/factorial-one"
+import { IconType } from "@/components/Utilities/Icon"
 import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"

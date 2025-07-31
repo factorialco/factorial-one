@@ -1,5 +1,5 @@
+import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
-import { Button } from "@/factorial-one"
 import { ButtonVariant } from "@/ui/button"
 
 export type Action = {
