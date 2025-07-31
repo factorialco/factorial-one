@@ -3,7 +3,7 @@ import { useTextFormatEnforcer } from "../../../../lib/text"
 import { cn } from "../../../../lib/utils"
 import { BaseTag } from "../BaseTag"
 
-type Variant = "neutral" | "info" | "positive" | "warning" | "critical"
+export type Variant = "neutral" | "info" | "positive" | "warning" | "critical"
 
 export type StatusVariant = Variant
 
