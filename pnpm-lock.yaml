@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  esm-env: npm:esm-env-runtime@^0.1.1
+
 importers:
 
   .:
@@ -88,8 +91,8 @@ importers:
         specifier: ^3.9.0
         version: 3.10.0(react-hook-form@7.54.2(react@18.3.1))
       '@number-flow/react':
-        specifier: ^0.3.0
-        version: 0.3.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^0.5.10
+        version: 0.5.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-accordion':
         specifier: ^1.1.2
         version: 1.2.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3359,11 +3362,11 @@ packages:
     resolution: {integrity: sha512-q9CRWjpHCMIh5sVyefoD1cA7PkvILqCZsnSOEUUivORLjxCO/Irmue2DprETiNgEqktDBZaM1Bi+jrarx1XdCg==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
-  '@number-flow/react@0.3.5':
-    resolution: {integrity: sha512-jkN4hqdYVbmxlEHD8sPF98f3AmQ3wGhHRJHYfgX9p9TsO3UyEky687qX8HSnTsk0ja6ZULzuHTA8MWoWqqTOQA==}
+  '@number-flow/react@0.5.10':
+    resolution: {integrity: sha512-a8Wh5eNITn7Km4xbddAH7QH8eNmnduR6k34ER1hkHSGO4H2yU1DDnuAWLQM99vciGInFODemSc0tdxrXkJEpbA==}
     peerDependencies:
-      react: ^18 || ^19.0.0-rc-915b914b3a-20240515
-      react-dom: ^18
+      react: ^18 || ^19
+      react-dom: ^18 || ^19
 
   '@open-draft/deferred-promise@2.2.0':
     resolution: {integrity: sha512-CecwLWx3rhxVQF6V4bAgPS5t+So2sTbPgAzafKkVizyi7tlwpcFpdFqq+wqF2OwNBmqFuu6tOyouTuxgpMfzmA==}
@@ -7619,8 +7622,9 @@ packages:
       jiti:
         optional: true
 
-  esm-env@1.2.2:
-    resolution: {integrity: sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==}
+  esm-env-runtime@0.1.1:
+    resolution: {integrity: sha512-s5c/JKEF8faaXr3y1O9IZljnVO4FXFvmxB+/dGAKWUQF2nyjsoALGN5MCNu4ZLbAVLmtNFwU0fwb8FExIRwWmw==}
+    engines: {pnpm: ^9.0.0}
 
   espree@10.3.0:
     resolution: {integrity: sha512-0QYC8b24HWY8zjRnDTL6RiHfDbAWn63qb4LMj1Z4b076A4une81+z03Kg7l7mn/48PUTqoLptSXez8oknU8Clg==}
@@ -10253,8 +10257,8 @@ packages:
   nullthrows@1.1.1:
     resolution: {integrity: sha512-2vPPEi+Z7WqML2jZYddDIfy5Dqb0r2fze2zTxNNknZaFpVHU3mFB3R+DWeJWGVx0ecvttSGlJTI+WG+8Z4cDWw==}
 
-  number-flow@0.3.10:
-    resolution: {integrity: sha512-BpNMhQnRAHOFbi0giD+dMnDoaPibVW22Vl2CWfZZIlpgTtixmbPm+Cv7a7F7FrEc/dTOECMS/T8V5rltIGI0tw==}
+  number-flow@0.5.8:
+    resolution: {integrity: sha512-FPr1DumWyGi5Nucoug14bC6xEz70A1TnhgSHhKyfqjgji2SOTz+iLJxKtv37N5JyJbteGYCm6NQ9p1O4KZ7iiA==}
 
   nwsapi@2.2.16:
     resolution: {integrity: sha512-F1I/bimDpj3ncaNDhfyMWuFqmQDBwDB0Fogc2qpL3BWvkQteFD/8BzWuIRl83rq0DXfm8SGt/HFhLXZyljTXcQ==}
@@ -16470,10 +16474,10 @@ snapshots:
     dependencies:
       semver: 7.7.2
 
-  '@number-flow/react@0.3.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@number-flow/react@0.5.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      esm-env: 1.2.2
-      number-flow: 0.3.10
+      esm-env: esm-env-runtime@0.1.1
+      number-flow: 0.5.8
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
@@ -21505,7 +21509,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  esm-env@1.2.2: {}
+  esm-env-runtime@0.1.1: {}
 
   espree@10.3.0:
     dependencies:
@@ -25050,9 +25054,9 @@ snapshots:
 
   nullthrows@1.1.1: {}
 
-  number-flow@0.3.10:
+  number-flow@0.5.8:
     dependencies:
-      esm-env: 1.2.2
+      esm-env: esm-env-runtime@0.1.1
 
   nwsapi@2.2.16: {}
 
