@@ -1,7 +1,7 @@
 import { zeroRender as render, screen, userEvent } from "@/testing/test-utils"
 import "@testing-library/jest-dom/vitest"
 import { describe, expect, it, vi } from "vitest"
-import { F0Card } from "../Card"
+import { F0Card } from "../F0Card"
 import type { CardSecondaryLink } from "../components/CardActions"
 
 describe("F0Card Component", () => {
