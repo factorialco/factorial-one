@@ -506,12 +506,47 @@ export const EntitySelect = (
   )
 }
 
+function normalizeText(text: string): string {
+  return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+}
+
+function getWordsFromText(text: string): string[] {
+  return normalizeText(text)
+    .split(/\s+/)
+    .filter((word) => word.length > 0)
+}
+
 function getMatchScore(text = "", searchKeys: string[]): number {
-  const lowerText = text.trim().toLowerCase()
+  const searchWords = getWordsFromText(text)
+
+  if (searchWords.length === 0) {
+    return Infinity
+  }
 
   for (const key of searchKeys) {
-    if (key.trim().toLowerCase().includes(lowerText)) {
+    const normalizedKey = normalizeText(key)
+    const keyWords = getWordsFromText(key)
+    // Check if the search text is directly contained (highest priority)
+    const normalizedSearch = normalizeText(text)
+    if (normalizedKey.includes(normalizedSearch)) {
       return 1
+    }
+    // Check if all search words are contained in the key (word-by-word matching)
+    const allWordsMatch = searchWords.every((searchWord) =>
+      keyWords.some((keyWord) => keyWord.includes(searchWord))
+    )
+
+    if (allWordsMatch) {
+      // Score based on how many words match exactly vs partially
+      const exactMatches = searchWords.filter((searchWord) =>
+        keyWords.some((keyWord) => keyWord === searchWord)
+      ).length
+      // Better score for more exact matches
+      return 2 + (searchWords.length - exactMatches) * 0.1
     }
   }
 
