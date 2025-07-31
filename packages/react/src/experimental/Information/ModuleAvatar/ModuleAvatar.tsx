@@ -1,4 +1,5 @@
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconProps, IconType } from "@/components/Utilities/Icon"
+import { cn } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
 import { ModuleId, modules } from "./modules"
 
@@ -6,9 +7,10 @@ const moduleAvatarVariants = cva({
   base: "relative flex shrink-0 items-center justify-center",
   variants: {
     size: {
-      sm: "h-5 w-5",
-      md: "h-6 w-6",
-      lg: "h-8 w-8",
+      sm: "h-4 w-4",
+      md: "h-5 w-5",
+      lg: "h-6 w-6",
+      xl: "h-8 w-8",
       xs: "h-3 w-3",
       xxs: "h-2.5 w-2.5",
     },
@@ -18,24 +20,9 @@ const moduleAvatarVariants = cva({
   },
 })
 
-const iconSizeVariants = cva({
-  base: "relative text-f1-foreground-inverse drop-shadow",
-  variants: {
-    size: {
-      sm: "h-[14px] w-[14px]",
-      md: "h-[18px] w-[18px]",
-      lg: "h-6 w-6",
-      xs: "h-2 w-2",
-      xxs: "h-2 w-2",
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-})
-
-export type ModuleAvatarProps = VariantProps<typeof moduleAvatarVariants> &
-  (
+export type ModuleAvatarProps = VariantProps<typeof moduleAvatarVariants> & {
+  withWhiteBorder?: boolean
+} & (
     | {
         module: ModuleId
       }
@@ -47,6 +34,18 @@ export type ModuleAvatarProps = VariantProps<typeof moduleAvatarVariants> &
       }
   )
 
+const ICON_SIZES: Record<
+  NonNullable<ModuleAvatarProps["size"]>,
+  IconProps["size"]
+> = {
+  sm: "xs",
+  md: "sm",
+  lg: "md",
+  xl: "lg",
+  xs: "xxs",
+  xxs: "xxs",
+}
+
 const squirclePath =
   "M50,0 C43,0 36,0 30,1 23,2 17,5 12,9 5,16 1,25 0,36 0,43 0,57 0,64 1,75 5,84 12,91 17,95 23,98 30,99 36,100 43,100 50,100 57,100 64,100 70,99 77,98 83,95 88,91 95,84 99,75 100,64 100,57 100,43 100,36 99,25 95,16 88,9 83,5 77,2 70,1 64,0 57,0 50,0"
 
@@ -56,7 +55,11 @@ const squirclePath =
  * @experimental
  * @returns
  */
-export function ModuleAvatar({ size = "md", ...props }: ModuleAvatarProps) {
+export function ModuleAvatar({
+  size = "md",
+  withWhiteBorder = false,
+  ...props
+}: ModuleAvatarProps) {
   if ("icon" in props) {
     console.warn(
       "ModuleAvatar:The `icon` prop is deprecated. Use the `module` prop instead."
@@ -69,10 +72,25 @@ export function ModuleAvatar({ size = "md", ...props }: ModuleAvatarProps) {
   const gradientId = `gradient-${code}`
 
   return (
-    <div className={moduleAvatarVariants({ size })} aria-hidden="true">
+    <div
+      className={cn(
+        moduleAvatarVariants({ size }),
+        "flex items-center justify-center"
+      )}
+      aria-hidden="true"
+    >
+      {withWhiteBorder && (
+        <svg
+          viewBox="0 0 96 96"
+          className="absolute -left-[1px] -top-[1px]"
+          preserveAspectRatio="none"
+        >
+          <path d={squirclePath} fill="white" />
+        </svg>
+      )}
       <svg
         viewBox="0 0 100 100"
-        className="absolute h-full w-full"
+        className="absolute"
         preserveAspectRatio="none"
       >
         <defs>
@@ -84,7 +102,12 @@ export function ModuleAvatar({ size = "md", ...props }: ModuleAvatarProps) {
         </defs>
         <path d={squirclePath} fill={`url(#${gradientId})`} />
       </svg>
-      <IconComponent className={iconSizeVariants({ size })} />
+      <Icon
+        icon={IconComponent}
+        size={ICON_SIZES[size]}
+        color="inverse"
+        className="drop-shadow"
+      />
     </div>
   )
 }

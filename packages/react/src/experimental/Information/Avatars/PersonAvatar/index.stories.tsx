@@ -54,6 +54,35 @@ export const WithBadge: Story = {
   },
 }
 
+export const WithModuleBadge: Story = {
+  args: {
+    ...Default.args,
+    badge: {
+      type: "module",
+      module: "timeoff",
+    },
+  },
+}
+
+export const WithModuleBadgeAllSizes: Story = {
+  render: () => (
+    <div className="flex flex-wrap items-start gap-3">
+      {sizes.map((size) => (
+        <PersonAvatar
+          key={size}
+          firstName="Dani"
+          lastName="Moreno"
+          size={size}
+          badge={{
+            type: "module",
+            module: "timeoff",
+          }}
+        />
+      ))}
+    </div>
+  ),
+}
+
 export const WithBadgeTooltip: Story = {
   args: {
     ...Default.args,

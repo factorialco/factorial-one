@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { ModuleAvatar } from "../index"
+import { ModuleAvatar, ModuleAvatarProps } from "../index"
 import { ModuleId, modules } from "../modules"
 
 const meta: Meta<typeof ModuleAvatar> = {
@@ -39,6 +39,21 @@ export const AllModules: Story = {
       {Object.keys(modules).map((module) => (
         <div key={module} title={module}>
           <ModuleAvatar module={module as ModuleId} size="lg" />
+        </div>
+      ))}
+    </div>
+  ),
+}
+
+export const AllSizes: Story = {
+  render: () => (
+    <div className="flex flex-wrap gap-3">
+      {["xxs", "xs", "sm", "md", "lg", "xl"].map((size) => (
+        <div key={size}>
+          <ModuleAvatar
+            module="timeoff"
+            size={size as ModuleAvatarProps["size"]}
+          />
         </div>
       ))}
     </div>

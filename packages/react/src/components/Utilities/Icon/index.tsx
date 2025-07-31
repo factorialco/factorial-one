@@ -16,6 +16,7 @@ const iconVariants = cva({
       md: "w-5 [&_circle]:stroke-md [&_path]:stroke-md [&_rect]:stroke-md",
       sm: "w-4 [&_circle]:stroke-sm [&_path]:stroke-sm [&_rect]:stroke-sm",
       xs: "w-3 [&_circle]:stroke-xs [&_path]:stroke-xs [&_rect]:stroke-xs",
+      xxs: "[&_circle]:stroke-xxs [&_path]:stroke-xxs [&_rect]:stroke-xxs w-2.5",
     },
   },
   defaultVariants: {
@@ -85,7 +86,12 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
         ref={ref}
         {...props}
         animate={state}
-        className={cn(iconVariants({ size }), "select-none", colorClass)}
+        className={cn(
+          iconVariants({ size }),
+          "select-none",
+          colorClass,
+          props.className
+        )}
         style={colorStyle}
       />
     )
@@ -95,7 +101,12 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
     <Component
       ref={ref}
       {...props}
-      className={cn("aspect-square", iconVariants({ size }), colorClass)}
+      className={cn(
+        "aspect-square",
+        iconVariants({ size }),
+        colorClass,
+        props.className
+      )}
       style={colorStyle}
     />
   )
