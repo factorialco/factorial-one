@@ -8,7 +8,7 @@ import { create } from "storybook/theming"
 const theme = create({
   base: "light",
   brandTitle: "Factorial One Design System",
-  brandImage: "./factorial-logo.svg",
+  brandImage: "./f0-light.svg", // CSS will override this based on theme
 })
 
 addons.setConfig({

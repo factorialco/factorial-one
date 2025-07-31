@@ -145,6 +145,15 @@
     background: #202c42;
     color: #647084;
   }
+
+  /* Logo switching based on theme */
+  .sidebar-header a[title="Factorial One Design System"] img {
+    content: url("./f0-light.svg");
+  }
+
+  body.dark .sidebar-header a[title="Factorial One Design System"] img {
+    content: url("./f0-dark.svg");
+  }
 </style>
 
 <script>
