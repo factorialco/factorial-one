@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.145.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.1...factorial-one-react-v1.145.2) (2025-07-31)
+
+
+### Bug Fixes
+
+* export f0card ([#2345](https://github.com/factorialco/factorial-one/issues/2345)) ([dfadd0d](https://github.com/factorialco/factorial-one/commit/dfadd0d1bdb510d242747c28224a33bcaad90aec))
+
 ## [1.145.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.0...factorial-one-react-v1.145.1) (2025-07-31)
 
 
