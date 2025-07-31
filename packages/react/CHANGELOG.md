@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.145.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.0...factorial-one-react-v1.145.1) (2025-07-31)
+
+
+### Bug Fixes
+
+* **Card:** avoid multiple actions rendering ([#2349](https://github.com/factorialco/factorial-one/issues/2349)) ([9caa59e](https://github.com/factorialco/factorial-one/commit/9caa59e34d9cc235c781a981c4cb683146959b8a))
+
 ## [1.145.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.144.1...factorial-one-react-v1.145.0) (2025-07-31)
 
 
