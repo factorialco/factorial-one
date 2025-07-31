@@ -1,5 +1,5 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { FileAvatar } from "@/experimental/exports"
+import { FileAvatar } from "@/experimental/Information/Avatars/FileAvatar"
 import {
   DropdownInternal,
   DropdownItem,

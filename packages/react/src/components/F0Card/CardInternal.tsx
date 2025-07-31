@@ -21,7 +21,7 @@ import { CardMetadata } from "./components/CardMetadata"
 import { CardOptions } from "./components/CardOptions"
 import { type CardMetadata as CardMetadataType } from "./types"
 
-interface OneCardProps {
+export interface CardInternalProps {
   /**
    * Whether the card has a compact layout
    */
@@ -96,9 +96,15 @@ interface OneCardProps {
    * The callback to handle the click of the card
    */
   onClick?: () => void
+
+  /**
+   * Force vertical metadata for compact layout
+   * Private prop
+   */
+  forceVerticalMetadata?: boolean
 }
 
-export function OneCard({
+export function CardInternal({
   compact = false,
   avatar,
   image,
@@ -114,7 +120,8 @@ export function OneCard({
   selected = false,
   onSelect,
   onClick,
-}: OneCardProps) {
+  forceVerticalMetadata = false,
+}: CardInternalProps) {
   return (
     <Card
       className={cn(
@@ -208,7 +215,8 @@ export function OneCard({
             <div
               className={cn(
                 "flex flex-col gap-0.5",
-                compact && "flex-row flex-wrap gap-x-3 gap-y-0"
+                compact && "flex-row flex-wrap gap-x-3 gap-y-0",
+                forceVerticalMetadata && "flex-col gap-y-0.5"
               )}
             >
               {metadata.map((item, index) => (

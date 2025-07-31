@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { PersonAvatar } from "@/experimental/exports"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { Node } from "@tiptap/core"

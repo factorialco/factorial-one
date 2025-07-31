@@ -1,4 +1,4 @@
-import { AvatarBadge } from "@/experimental/exports"
+import { AvatarBadge } from "@/experimental/Information/Avatars/types"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"

@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { Icon } from "@/factorial-one"
+import { Icon } from "@/components/Utilities/Icon"
 import { ExternalLink } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
