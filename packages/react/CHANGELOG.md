@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.144.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.143.0...factorial-one-react-v1.144.0) (2025-07-31)
+
+
+### Features
+
+* **Card:** internal card with private props ([#2336](https://github.com/factorialco/factorial-one/issues/2336)) ([365e76d](https://github.com/factorialco/factorial-one/commit/365e76d9a6c7f751a8f13a886a684f178fac19bd))
+
 ## [1.143.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.142.0...factorial-one-react-v1.143.0) (2025-07-31)
 
 
