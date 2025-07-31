@@ -6,7 +6,6 @@ import { expect, test } from "vitest"
 import { Widget } from "./index"
 
 const renderWidget = () => {
-  console.log("here")
   return zeroRender(
     <Widget>
       <></>
