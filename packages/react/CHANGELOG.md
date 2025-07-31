@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.145.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.144.1...factorial-one-react-v1.145.0) (2025-07-31)
+
+
+### Features
+
+* **Card:** set compact header ([#2346](https://github.com/factorialco/factorial-one/issues/2346)) ([baced08](https://github.com/factorialco/factorial-one/commit/baced083955e754da595eb824e94912223ea1a46))
+
 ## [1.144.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.144.0...factorial-one-react-v1.144.1) (2025-07-31)
 
 

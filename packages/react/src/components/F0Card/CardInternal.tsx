@@ -178,23 +178,33 @@ export function CardInternal({
             className={cn(
               "relative flex-col gap-0 p-0",
               image && !compact && "pt-3",
-              compact && "flex-row items-center gap-2.5"
+              compact && "flex-row items-center gap-2"
             )}
           >
             {avatar && (
               <CardAvatar avatar={avatar} overlay={!!image} compact={compact} />
             )}
-            <div className="flex flex-col gap-0">
+            <div
+              className={cn(
+                "flex flex-col gap-0",
+                compact && "flex-row items-center gap-2"
+              )}
+            >
               <CardTitle
                 className={cn(
                   "flex flex-row justify-between gap-1 text-lg font-semibold text-f1-foreground",
-                  compact && "text-base"
+                  compact && "shrink-0 text-base"
                 )}
               >
                 {title}
               </CardTitle>
               {description && (
-                <CardSubtitle className="line-clamp-3 text-base text-f1-foreground-secondary">
+                <CardSubtitle
+                  className={cn(
+                    "line-clamp-3 text-base text-f1-foreground-secondary",
+                    compact && "line-clamp-1"
+                  )}
+                >
                   {description}
                 </CardSubtitle>
               )}
