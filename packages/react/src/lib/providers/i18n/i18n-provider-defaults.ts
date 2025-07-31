@@ -175,6 +175,7 @@ export const defaultTranslations = {
   notifications: "Notifications",
   ai: {
     openChat: "Open Chat",
+    description: "Chat with AI",
   },
 } as const
 
