@@ -5,7 +5,7 @@
 import {
   StatusTag,
   StatusVariant,
-} from "@/experimental/Information/Tags/exports"
+} from "@/experimental/Information/Tags/StatusTag"
 
 interface StatusValue {
   status: StatusVariant

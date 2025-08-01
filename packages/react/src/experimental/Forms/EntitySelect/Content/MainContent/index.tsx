@@ -1,7 +1,7 @@
 import { VirtualItem } from "@tanstack/react-virtual"
 import React, { useCallback, useMemo } from "react"
 import { cn } from "../../../../../lib/utils"
-import { Spinner } from "../../../../exports"
+import { Spinner } from "../../../../Information/Spinner"
 import { VirtualList } from "../../../../Navigation/VirtualList"
 import { Select } from "../../../Fields/Select"
 import { Action } from "../../../Fields/Select/SelectBottomActions"

@@ -1,4 +1,7 @@
-import { DropdownItem, DropdownItemObject } from "../exports"
+import {
+  DropdownItem,
+  DropdownItemObject,
+} from "@/experimental/Navigation/Dropdown"
 
 /**
  * Defines the structure and configuration of the primary action that can be performed on a collection.
