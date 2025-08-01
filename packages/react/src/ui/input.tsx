@@ -27,6 +27,7 @@ export type InputProps = Omit<
     | "onChange"
     | "role"
     | "onClickContent"
+    | "appendTag"
   >
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -52,6 +53,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       append,
       onChange,
       role,
+      appendTag,
       lengthProvider,
       onClickContent,
       hideLabel,
@@ -86,6 +88,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         onChange={onChange}
         onClickContent={onClickContent}
         name={name}
+        appendTag={appendTag}
       >
         <input
           type={type}
