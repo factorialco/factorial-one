@@ -79,8 +79,16 @@ const _BarChart = <K extends ChartConfig>(
       }
     }
 
+    if (item.color) {
+      return {
+        ...item,
+        fill: item.color,
+      }
+    }
+
     return item
   })
+
   const maxLabelWidth = Math.max(
     ...preparedData.flatMap((el) =>
       bars.map((key) =>
@@ -185,7 +193,6 @@ const _BarChart = <K extends ChartConfig>(
               : undefined
           }
         />
-
         {bars.map((key, index) => (
           <Bar
             key={`bar-${key}`}
@@ -196,11 +203,7 @@ const _BarChart = <K extends ChartConfig>(
                 ? "stack"
                 : undefined
             }
-            fill={
-              highlightLastBar
-                ? (((data: { fill: string }) => data.fill) as unknown as string)
-                : (dataConfig[key].color ?? autoColor(index))
-            }
+            fill={dataConfig[key].color ?? autoColor(index)}
             radius={type === "stacked-by-sign" ? [4, 4, 0, 0] : 4}
             maxBarSize={32}
           >

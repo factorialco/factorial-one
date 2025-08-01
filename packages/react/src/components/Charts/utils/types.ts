@@ -7,6 +7,7 @@ import { ComponentProps } from "react"
 
 export type ChartItem<K extends ChartConfig> = {
   label: string
+  color?: string
   values: {
     [key in keyof K]: number
   }
