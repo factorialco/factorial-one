@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.146.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.146.0...factorial-one-react-v1.146.1) (2025-08-01)
+
+
+### Bug Fixes
+
+* **DataCollection:** empty state types not recognized ([#2322](https://github.com/factorialco/factorial-one/issues/2322)) ([d6a2ba4](https://github.com/factorialco/factorial-one/commit/d6a2ba41901ec3d61693b5f4030a8a96436b5ee4))
+
 ## [1.146.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.2...factorial-one-react-v1.146.0) (2025-08-01)
 
 
