@@ -10,9 +10,7 @@ function renderTOCItem(item: TOCItem, activeItem?: string): React.ReactElement {
   return (
     <Component key={item.id} item={item} isActive={activeItem === item.id}>
       {item.children &&
-        (item.children as TOCItem[]).map((child) =>
-          renderTOCItem(child, activeItem)
-        )}
+        item.children.map((child) => renderTOCItem(child, activeItem))}
     </Component>
   )
 }
@@ -42,6 +40,5 @@ export function TableOfContent({
   )
 }
 
-// Export subcomponents for advanced usage
 export { Item, ItemSectionHeader }
 export type { TOCItem, TOCItemAction, TOCProps }
