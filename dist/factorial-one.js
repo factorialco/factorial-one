@@ -1,8 +1,8 @@
-import { C as h, L as ie, c as de, P as V, a as b, f as ce, b as ue, A as fe, B as he, d as pe, e as me, g as ve, V as ge, h as q, i as xe, j as be, M as H, I as U, F as ye, D as Ce, k as we, l as Ne, m as Le, n as W, S as Pe, o as Se, p as C, U as Y, q as Me, r as ke, s as E, t as Re, u as G, v as Be, w as De, x as Te, y as $e, z as Ie, E as Fe, G as Oe, H as Ee, J as _e, X as je, K as ze, N as Ve, O as qe, Q as He } from "./Card-C3mQe6Af.js";
-import { Z as Ea, T as _a, R as ja, a3 as za, T as Va, W as qa, Y as Ha, a0 as Ua, _ as Wa, a4 as Ya, a5 as Ga, $ as Xa, a2 as Ja, a1 as Qa } from "./Card-C3mQe6Af.js";
+import { C as h, L as ie, c as de, P as V, a as b, f as ce, b as ue, A as fe, B as he, d as pe, e as me, g as ve, V as ge, h as q, i as xe, j as be, M as U, I as H, F as Ce, D as ye, k as we, l as Ne, m as Le, n as W, S as Pe, o as Se, p as y, U as Y, q as Me, r as ke, s as E, t as Re, u as G, v as De, w as Be, x as Te, y as $e, z as Ie, E as Fe, G as Oe, H as Ee, J as _e, X as je, K as ze, N as Ve, O as qe, Q as Ue } from "./F0Card-CPCvRw0Z.js";
+import { Z as Ea, R as _a, a3 as ja, T as za, W as Va, Y as qa, a0 as Ua, _ as Ha, a4 as Wa, a5 as Ya, $ as Ga, a2 as Xa, a1 as Ja } from "./F0Card-CPCvRw0Z.js";
 import { jsx as e, jsxs as d, Fragment as $ } from "react/jsx-runtime";
 import * as I from "react";
-import Ue, { forwardRef as D, useRef as X, useImperativeHandle as We, Children as Ye, useState as g, useEffect as J, createContext as Ge } from "react";
+import He, { forwardRef as B, useRef as X, useImperativeHandle as We, Children as Ye, useState as g, useEffect as J, createContext as Ge } from "react";
 const xa = {
   approvals: {
     history: "Approval history",
@@ -28,6 +28,7 @@ const xa = {
     save: "Save",
     cancel: "Cancel",
     copy: "Copy",
+    close: "Close",
     showAll: "Show all",
     showLess: "Show less",
     skipToContent: "Skip to content",
@@ -38,6 +39,8 @@ const xa = {
     more: "More",
     moveUp: "Move up",
     moveDown: "Move down",
+    thumbsUp: "Like",
+    thumbsDown: "Dislike",
     other: "Other actions"
   },
   status: {
@@ -174,7 +177,11 @@ const xa = {
     favorites: "Favorites",
     remove: "Remove favorite"
   },
-  notifications: "Notifications"
+  notifications: "Notifications",
+  ai: {
+    openChat: "Open Chat",
+    description: "Chat with AI"
+  }
 }, ba = h(
   {
     name: "Link",
@@ -182,7 +189,7 @@ const xa = {
   },
   ie
 );
-var F = "Progress", O = 100, [Xe, ya] = de(F), [Je, Qe] = Xe(F), Q = I.forwardRef(
+var F = "Progress", O = 100, [Xe, Ca] = de(F), [Je, Qe] = Xe(F), Q = I.forwardRef(
   (a, r) => {
     const {
       __scopeProgress: s,
@@ -194,13 +201,13 @@ var F = "Progress", O = 100, [Xe, ya] = de(F), [Je, Qe] = Xe(F), Q = I.forwardRe
     (t || t === 0) && !_(t) && console.error(Ze(`${t}`, "Progress"));
     const u = _(t) ? t : O;
     l !== null && !j(l, u) && console.error(Ae(`${l}`, "Progress"));
-    const o = j(l, u) ? l : null, v = B(o) ? c(o, u) : void 0;
+    const o = j(l, u) ? l : null, v = D(o) ? c(o, u) : void 0;
     return /* @__PURE__ */ e(Je, { scope: s, value: o, max: u, children: /* @__PURE__ */ e(
       V.div,
       {
         "aria-valuemax": u,
         "aria-valuemin": 0,
-        "aria-valuenow": B(o) ? o : void 0,
+        "aria-valuenow": D(o) ? o : void 0,
         "aria-valuetext": v,
         role: "progressbar",
         "data-state": A(o, u),
@@ -235,14 +242,14 @@ function Ke(a, r) {
 function A(a, r) {
   return a == null ? "indeterminate" : a === r ? "complete" : "loading";
 }
-function B(a) {
+function D(a) {
   return typeof a == "number";
 }
 function _(a) {
-  return B(a) && !isNaN(a) && a > 0;
+  return D(a) && !isNaN(a) && a > 0;
 }
 function j(a, r) {
-  return B(a) && !isNaN(a) && a <= r && a >= 0;
+  return D(a) && !isNaN(a) && a <= r && a >= 0;
 }
 function Ze(a, r) {
   return `Invalid prop \`max\` of value \`${a}\` supplied to \`${r}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${O}\`.`;
@@ -295,7 +302,7 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
     ) }),
     s && /* @__PURE__ */ e("div", { className: "flex-shrink-0 text-sm font-medium", children: s })
   ] });
-}, ra = ce(aa), Ca = h(
+}, ra = ce(aa), ya = h(
   {
     name: "AreaChart",
     type: "info"
@@ -342,7 +349,7 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
   sm: 2,
   md: 2,
   lg: 2
-}, la = D(function({ widgets: r, children: s }, l) {
+}, la = B(function({ widgets: r, children: s }, l) {
   const t = X(null);
   We(l, () => t.current);
   const c = Ye.toArray(r).filter((n) => !!n).map((n, u) => /* @__PURE__ */ e("div", { className: "h-full @5xl:h-auto [&>div]:h-full", children: n }, u));
@@ -357,7 +364,7 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
       /* @__PURE__ */ e("div", { className: "flex flex-1 flex-col gap-5", children: c.slice(3) })
     ] })
   ] }) });
-}), ta = D(
+}), ta = B(
   function({ children: r, sideContent: s, mainColumnPosition: l = "left" }, t) {
     return /* @__PURE__ */ e("div", { ref: t, className: "h-full overflow-auto", children: /* @__PURE__ */ d(
       "div",
@@ -390,7 +397,7 @@ const aa = ({ value: a, max: r = 100, label: s, color: l }, t) => {
       narrow: "max-w-screen-lg"
     }
   }
-}), re = Ue.forwardRef(({ children: a, variant: r, className: s, ...l }, t) => /* @__PURE__ */ e(q, { layout: "standard", children: /* @__PURE__ */ e(
+}), re = He.forwardRef(({ children: a, variant: r, className: s, ...l }, t) => /* @__PURE__ */ e(q, { layout: "standard", children: /* @__PURE__ */ e(
   "section",
   {
     ref: t,
@@ -412,16 +419,16 @@ const ka = h(
     type: "layout"
   },
   ta
-), Ba = h(
+), Da = h(
   {
     name: "HomeLayout",
     type: "layout"
   },
   la
 ), na = ({ benefits: a }) => /* @__PURE__ */ e("div", { className: "flex flex-col gap-2", children: a.map((r, s) => /* @__PURE__ */ e(ia, { text: r }, s)) }), ia = ({ text: a }) => /* @__PURE__ */ d("div", { className: "flex flex-row items-start gap-2", children: [
-  /* @__PURE__ */ e(U, { icon: ye, size: "md", className: "text-f1-icon-positive" }),
+  /* @__PURE__ */ e(H, { icon: Ce, size: "md", className: "text-f1-icon-positive" }),
   /* @__PURE__ */ e("span", { children: a })
-] }), se = D(
+] }), se = B(
   ({ title: a, image: r, benefits: s, actions: l, withShadow: t = !0, icon: c, moduleName: n }, u) => /* @__PURE__ */ d(
     "div",
     {
@@ -443,7 +450,7 @@ const ka = h(
           /* @__PURE__ */ d("div", { className: "flex flex-col gap-5", children: [
             /* @__PURE__ */ d("div", { className: "flex flex-col gap-2", children: [
               /* @__PURE__ */ d("div", { className: "flex flex-row items-center gap-2", children: [
-                c && /* @__PURE__ */ e(H, { icon: c }),
+                c && /* @__PURE__ */ e(U, { icon: c }),
                 n && /* @__PURE__ */ e("p", { className: "text-base font-medium text-f1-foreground", children: n })
               ] }),
               /* @__PURE__ */ e("h2", { className: "font-bold text-xl text-f1-foreground", children: a })
@@ -467,12 +474,12 @@ function da({
   const [c, n] = g(a);
   return J(() => {
     n(a);
-  }, [a]), /* @__PURE__ */ e(Ce, { open: c, onOpenChange: (o) => {
+  }, [a]), /* @__PURE__ */ e(ye, { open: c, onOpenChange: (o) => {
     n(o), o || r();
   }, modal: !0, children: /* @__PURE__ */ d(we, { className: "max-h-[620px] w-[760px] overflow-y-auto overflow-x-hidden bg-f1-background", children: [
     /* @__PURE__ */ d("div", { className: "flex flex-row items-center justify-between px-4 py-4", children: [
       /* @__PURE__ */ d(Ne, { className: "flex flex-row items-center gap-2 text-lg font-semibold text-f1-foreground", children: [
-        t && /* @__PURE__ */ e(H, { icon: t, size: "lg" }),
+        t && /* @__PURE__ */ e(U, { icon: t, size: "lg" }),
         s
       ] }),
       /* @__PURE__ */ e(
@@ -498,7 +505,7 @@ function da({
     ] })
   ] }) });
 }
-function Da({
+function Ba({
   isOpen: a,
   onClose: r,
   title: s,
@@ -515,15 +522,15 @@ function Da({
   secondaryAction: i,
   portalContainer: L
 }) {
-  const [S, M] = g(a), [k, x] = g(null), [R, y] = g(!1), m = async () => {
+  const [S, M] = g(a), [k, x] = g(null), [R, C] = g(!1), m = async () => {
     if (f != null && f.onClick) {
-      y(!0);
+      C(!0);
       try {
         await f.onClick(), M(!1), x("success");
       } catch {
         x("error");
       } finally {
-        y(!1);
+        C(!1);
       }
     }
   }, P = () => {
@@ -546,7 +553,7 @@ function Da({
             withShadow: !1,
             actions: /* @__PURE__ */ d("div", { className: "flex gap-3", children: [
               f && /* @__PURE__ */ e(
-                C,
+                y,
                 {
                   variant: f.variant,
                   label: T ? u.label : f.label,
@@ -557,7 +564,7 @@ function Da({
                 }
               ),
               i && /* @__PURE__ */ e(
-                C,
+                y,
                 {
                   onClick: i.onClick,
                   label: i.label,
@@ -609,7 +616,7 @@ function ca({
   return /* @__PURE__ */ e($, { children: v ? null : /* @__PURE__ */ d(Me, { style: { width: c }, className: "relative bg-f1-background p-1", children: [
     /* @__PURE__ */ d(ke, { children: [
       t && /* @__PURE__ */ e("div", { className: "absolute right-2 top-2 z-10", children: /* @__PURE__ */ e(
-        C,
+        y,
         {
           variant: "ghost",
           icon: W,
@@ -660,7 +667,7 @@ function ca({
         },
         i.label
       ) : /* @__PURE__ */ e(
-        C,
+        y,
         {
           label: i.label,
           onClick: i.onClick,
@@ -671,7 +678,7 @@ function ca({
     ) })
   ] }) });
 }
-const ua = D(
+const ua = B(
   function({ primaryAction: r, secondaryAction: s, ...l }, t) {
     const c = (o) => o.variant === "promote" ? /* @__PURE__ */ e(
       G,
@@ -690,7 +697,7 @@ const ua = D(
         variant: o.variant
       }
     ) : /* @__PURE__ */ e(
-      C,
+      y,
       {
         onClick: o.onClick,
         label: o.label,
@@ -699,7 +706,7 @@ const ua = D(
       }
     ), n = (r == null ? void 0 : r.variant) !== "promote" ? r : void 0, u = (s == null ? void 0 : s.variant) !== "promote" ? s : void 0;
     return /* @__PURE__ */ d(
-      Be,
+      De,
       {
         ref: t,
         ...l,
@@ -733,27 +740,27 @@ function Ta({
   onClick: S,
   hideLabel: M = !1
 }) {
-  const [k, x] = g(!1), [R, y] = g(null), [m, P] = g(null), T = (p) => {
+  const [k, x] = g(!1), [R, C] = g(null), [m, P] = g(null), T = (p) => {
     r(p), S && S();
   }, le = async (p) => {
     if (p.type === "upsell") {
       P(p);
       try {
-        await p.onClick(), p.showConfirmation && (x(!0), y("success"));
+        await p.onClick(), p.showConfirmation && (x(!0), C("success"));
       } catch {
-        x(!0), y("error");
+        x(!0), C("error");
       }
     }
   }, te = () => {
-    y(null), x(!1), P(null), r(!1);
+    C(null), x(!1), P(null), r(!1);
   }, oe = a && !k, ne = L == null ? void 0 : L.map((p) => p.type === "upsell" ? {
     ...p,
     onClick: () => le(p)
   } : p);
   return /* @__PURE__ */ d($, { children: [
-    /* @__PURE__ */ d(De, { open: oe, onOpenChange: T, children: [
+    /* @__PURE__ */ d(Be, { open: oe, onOpenChange: T, children: [
       /* @__PURE__ */ e(Te, { asChild: !0, children: /* @__PURE__ */ e(
-        C,
+        y,
         {
           variant: l,
           label: s,
@@ -806,12 +813,12 @@ const $a = h(
     name: "Icon",
     type: "info"
   },
-  U
+  H
 ), fa = Ge(
   null
 ), ha = ({ children: a, fullScreen: r = !0 }) => {
   const s = X(null), [l, t] = g(s.current);
-  return He(() => {
+  return Ue(() => {
     t(s.current);
   }, []), /* @__PURE__ */ e(fa.Provider, { value: { element: l }, children: /* @__PURE__ */ e(
     "div",
@@ -851,26 +858,25 @@ const $a = h(
   }
 ) });
 export {
-  Ca as AreaChart,
+  ya as AreaChart,
   Ea as Await,
   wa as BarChart,
-  C as Button,
-  _a as Card,
+  y as Button,
   Na as CategoryBarChart,
-  ja as CopyButton,
-  za as EmojiImage,
-  Va as F0Card,
+  _a as CopyButton,
+  ja as EmojiImage,
+  za as F0Card,
   Ia as FactorialOneProvider,
-  Ba as HomeLayout,
+  Da as HomeLayout,
   $a as Icon,
   La as LineChart,
   ba as Link,
-  qa as OneFilterPicker,
+  Va as OneFilterPicker,
   Pa as PieChart,
   ze as PrivacyModeProvider,
   se as ProductBlankslate,
-  Ha as ProductCard,
-  Da as ProductModal,
+  qa as ProductCard,
+  Ba as ProductModal,
   ca as ProductWidget,
   Ma as ProgressBarChart,
   ka as StandardLayout,
@@ -882,10 +888,10 @@ export {
   Sa as VerticalBarChart,
   Ua as buildTranslations,
   xa as defaultTranslations,
-  Wa as experimental,
-  Ya as getEmojiLabel,
-  Ga as useEmojiConfetti,
-  Xa as usePrivacyMode,
-  Ja as useReducedMotion,
-  Qa as useXRay
+  Ha as experimental,
+  Wa as getEmojiLabel,
+  Ya as useEmojiConfetti,
+  Ga as usePrivacyMode,
+  Xa as useReducedMotion,
+  Ja as useXRay
 };

@@ -1,9 +1,9 @@
-Factorial One represents a transformative reboot of the visual language for the
-Factorial platform. Its core mission is to enhance consistency and coherence
-across Factorial's user interface, while ensuring a quick, efficient, and
-delightful user and developer experience.
+F0 represents a transformative reboot of the visual language for the Factorial
+platform. Its core mission is to enhance consistency and coherence across
+Factorial's user interface, while ensuring a quick, efficient, and delightful
+user and developer experience.
 
-## Why Factorial One?
+## Why F0?
 
 As Factorial has evolved, it has expanded into a complex suite of features and
 functionalities, resulting in a fragmented user experience. Various sections of
@@ -40,23 +40,23 @@ Here are several benefits of rebooting our design system:
 - **Accessibility**: Ensuring that our platform is accessible to everyone,
   regardless of their abilities, is a priority. This means focusing on the
   accessibility of our components.
-- **Robustness**: Our goal is to make every interaction with Factorial One
-  exceptional. This includes comprehensive testing of components to maintain
-  consistency and coherence.
+- **Robustness**: Our goal is to make every interaction with F0 exceptional.
+  This includes comprehensive testing of components to maintain consistency and
+  coherence.
 
 ## Principles
 
 - **Consistency**: With Factorial's vast features, a consistent visual language
   is key to helping users navigate and leverage their experiences across the
   platform.
-- **Efficiency**: Designed for efficiency, Factorial One aids users in
-  completing tasks swiftly and seamlessly.
+- **Efficiency**: Designed for efficiency, F0 aids users in completing tasks
+  swiftly and seamlessly.
 - **Enjoyability**: We aim for users to enjoy their interaction with Factorial.
-  A visually appealing and coherent experience is central to Factorial One.
+  A visually appealing and coherent experience is central to F0.
 
 ## Technical Choices
 
-Factorial One is crafted using leading technologies:
+F0 is crafted using leading technologies:
 
 - **React**: This design system is built on React, the leading JavaScript
   library for building user interfaces.
@@ -67,9 +67,9 @@ Factorial One is crafted using leading technologies:
 - **Shadcn** and **Radix** for a powerful and accessible baseline for our
   components.
 
-# How to Use Factorial One?
+# How to Use F0?
 
-To integrate Factorial One, install it as a dependency:
+To integrate F0, install it as a dependency:
 
 $ pnpm install @factorialco/factorial-one-react
 

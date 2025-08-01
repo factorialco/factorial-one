@@ -33,6 +33,7 @@ import { JSX as JSX_2 } from 'react';
 import { LineChartConfig } from '../../ui/chart';
 import { LineChartPropsBase } from './utils/types';
 import { LinkProps as LinkProps_3 } from './Link';
+import { MouseEventHandler } from 'react';
 import { NumberCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/number';
 import { NumberCellValue as NumberCellValue_2 } from './types/number.tsx';
 import { PersonCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/person';
@@ -279,10 +280,6 @@ declare type CalendarMode = "single" | "range";
 
 declare type CalendarView = "day" | "month" | "year" | "week" | "quarter" | "halfyear";
 
-declare const Card: ForwardRefExoticComponent<CardProps & RefAttributes<HTMLDivElement>>;
-export { Card }
-export { Card as F0Card }
-
 declare type CardAvatarType = AvatarVariant | {
     type: "emoji";
     emoji: string;
@@ -399,8 +396,6 @@ declare const cardPropertyRenderers: {
 
 declare type CardPropertyType = keyof typeof cardPropertyRenderers;
 
-export declare type CardProps = Omit<CardInternalProps, (typeof privateProps_2)[number]>;
-
 declare interface CardSecondaryAction {
     label: string;
     icon?: IconType;
@@ -432,6 +427,7 @@ declare type CopyButtonProps = Omit<ComponentProps<typeof Button_2>, "onClick" |
     valueToCopy: string;
     copiedTooltipLabel?: string;
     copyTooltipLabel?: string;
+    onCopy?: MouseEventHandler<HTMLButtonElement>;
 };
 
 /**
@@ -490,6 +486,7 @@ export declare const defaultTranslations: {
         readonly save: "Save";
         readonly cancel: "Cancel";
         readonly copy: "Copy";
+        readonly close: "Close";
         readonly showAll: "Show all";
         readonly showLess: "Show less";
         readonly skipToContent: "Skip to content";
@@ -500,6 +497,8 @@ export declare const defaultTranslations: {
         readonly more: "More";
         readonly moveUp: "Move up";
         readonly moveDown: "Move down";
+        readonly thumbsUp: "Like";
+        readonly thumbsDown: "Dislike";
         readonly other: "Other actions";
     };
     readonly status: {
@@ -637,6 +636,10 @@ export declare const defaultTranslations: {
         readonly remove: "Remove favorite";
     };
     readonly notifications: "Notifications";
+    readonly ai: {
+        readonly openChat: "Open Chat";
+        readonly description: "Chat with AI";
+    };
 };
 
 declare type DropdownItem = DropdownItemObject | DropdownItemSeparator;
@@ -676,6 +679,14 @@ export declare interface ErrorMessageProps {
 }
 
 export declare const experimental: <T extends (...args: any[]) => any>(name: string, component: T) => T;
+
+export declare const F0Card: ForwardRefExoticComponent<F0CardProps & RefAttributes<HTMLDivElement>> & {
+    Skeleton: ({ compact }: {
+        compact?: boolean;
+    }) => JSX_2.Element;
+};
+
+export declare type F0CardProps = Omit<CardInternalProps, (typeof privateProps_2)[number]>;
 
 export declare const FactorialOneProvider: React.FC<{
     children: React.ReactNode;
@@ -1374,8 +1385,8 @@ declare global {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        aiBlock: {
-            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
     }
 }
@@ -1383,8 +1394,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        liveCompanion: {
-            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        aiBlock: {
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
         };
     }
 }
@@ -1399,15 +1410,15 @@ declare module "@tiptap/core" {
 }
 
 
+declare namespace Calendar {
+    var displayName: string;
+}
+
+
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
-}
-
-
-declare namespace Calendar {
-    var displayName: string;
 }

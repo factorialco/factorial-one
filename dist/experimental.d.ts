@@ -16,6 +16,8 @@ import { CompanyCellValue } from './types/company.tsx';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
+import { CopilotKit } from '@copilotkit/react-core';
+import { CopilotPopup } from '@copilotkit/react-ui';
 import { DateCellValue } from './types/date.tsx';
 import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
@@ -197,6 +199,21 @@ declare type AIButton = {
     label: string;
     icon: IconType;
 };
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+export declare const AiChat: (props: AiChatProps) => JSX_2.Element;
+
+export declare const AiChatCmp: (props: AiChatProps) => JSX_2.Element;
+
+export declare type AiChatProps = ComponentProps<typeof CopilotPopup>;
+
+export declare const AiChatProvider: (props: AiChatProviderProps) => JSX_2.Element;
+
+export declare const AiChatProviderCmp: (props: AiChatProviderProps) => JSX_2.Element;
+
+export declare type AiChatProviderProps = Omit<ComponentProps<typeof CopilotKit>, "window">;
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "warning" | "positive" | "destructive" | undefined;
@@ -3233,7 +3250,7 @@ declare type Props_4 = {
 
 declare type Props_5 = {
     emoji: string;
-    size?: "sm" | "md" | "lg";
+    size?: "small" | "medium" | "large";
 };
 
 declare type Props_6 = {
@@ -4391,8 +4408,8 @@ declare global {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        aiBlock: {
-            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
     }
 }
@@ -4400,8 +4417,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        liveCompanion: {
-            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        aiBlock: {
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
         };
     }
 }
@@ -4416,15 +4433,15 @@ declare module "@tiptap/core" {
 }
 
 
+declare namespace Calendar {
+    var displayName: string;
+}
+
+
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
-}
-
-
-declare namespace Calendar {
-    var displayName: string;
 }
