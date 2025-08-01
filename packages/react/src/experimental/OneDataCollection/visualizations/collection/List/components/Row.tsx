@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
-import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { F0Checkbox } from "@/components/F0Checkbox"
 import { DropdownItemSeparator } from "@/experimental/Navigation/Dropdown/internal"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
@@ -148,7 +148,7 @@ export const Row = <
         {source.selectable && id !== undefined && (
           // z-10 is needed here to prevent the checkbox from not being selectable when itemHref is provided
           <div className="z-10 hidden items-center justify-end md:flex">
-            <Checkbox
+            <F0Checkbox
               checked={selectedItems.has(id)}
               onCheckedChange={(checked) =>
                 handleSelectItemChange(item, checked)
@@ -221,7 +221,7 @@ export const Row = <
             source.itemActions && "right-12"
           )}
         >
-          <Checkbox
+          <F0Checkbox
             checked={selectedItems.has(id)}
             onCheckedChange={(checked) => handleSelectItemChange(item, checked)}
             title={`Select ${source.selectable(item)}`}

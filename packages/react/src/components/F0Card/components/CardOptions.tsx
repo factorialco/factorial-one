@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { F0Checkbox } from "@/components/F0Checkbox"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { Ellipsis } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
@@ -81,7 +81,7 @@ export function CardOptions({
       )}
       {selectable && (
         <div className="flex items-center justify-center">
-          <Checkbox
+          <F0Checkbox
             title={title}
             checked={selected}
             onCheckedChange={onSelect}

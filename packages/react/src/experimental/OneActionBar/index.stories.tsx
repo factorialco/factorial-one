@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { F0Checkbox } from "@/components/F0Checkbox"
 import {
   Delete,
   EyeInvisible,
@@ -132,7 +132,7 @@ export const Default: Story = {
               className="flex h-[44px] items-center gap-3 border border-solid border-transparent border-b-f1-border-secondary px-2 last:border-b-transparent"
               id={item.id}
             >
-              <Checkbox
+              <F0Checkbox
                 id={item.id}
                 title={item.name}
                 hideLabel

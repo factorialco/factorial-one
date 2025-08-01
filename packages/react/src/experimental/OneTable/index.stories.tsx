@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import React, { useState } from "react"
 import { Button } from "../../components/Actions/Button"
+import { F0Checkbox } from "../../components/F0Checkbox"
 import { Delete, Ellipsis, Pencil } from "../../icons/app"
-import { Checkbox } from "../Forms/Fields/Checkbox"
 import { PersonAvatar } from "../Information/Avatars/exports"
 import {
   RawTag,
@@ -156,7 +156,7 @@ export const Check: Story = {
         <TableHeader>
           <TableRow>
             <TableHead width="fit">
-              <Checkbox
+              <F0Checkbox
                 checked={isAllSelected || isPartiallySelected}
                 indeterminate={isPartiallySelected}
                 onCheckedChange={handleSelectAll}
@@ -173,7 +173,7 @@ export const Check: Story = {
           {sampleData.map((row) => (
             <TableRow key={row.id} selected={selectedRows[row.id]}>
               <TableCell>
-                <Checkbox
+                <F0Checkbox
                   checked={!!selectedRows[row.id]}
                   onCheckedChange={(checked) => {
                     setSelectedRows((prev) => ({
@@ -605,7 +605,7 @@ export const WithLinks: Story = {
       <TableHeader>
         <TableRow>
           <TableHead width="fit">
-            <Checkbox checked={false} title="Select all" hideLabel />
+            <F0Checkbox checked={false} title="Select all" hideLabel />
           </TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
@@ -620,7 +620,7 @@ export const WithLinks: Story = {
         {sampleData.map((row) => (
           <TableRow key={row.id}>
             <TableCell firstCell href="/">
-              <Checkbox checked={false} title="Select" hideLabel />
+              <F0Checkbox checked={false} title="Select" hideLabel />
             </TableCell>
             <TableCell href="/">
               <div className="flex items-center gap-2">
@@ -753,7 +753,7 @@ export const WithOnClick: Story = {
         <TableHeader>
           <TableRow>
             <TableHead width="fit">
-              <Checkbox checked={false} title="Select all" hideLabel />
+              <F0Checkbox checked={false} title="Select all" hideLabel />
             </TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
@@ -768,7 +768,7 @@ export const WithOnClick: Story = {
           {sampleData.map((row) => (
             <TableRow key={row.id}>
               <TableCell firstCell onClick={action}>
-                <Checkbox checked={false} title="Select" hideLabel />
+                <F0Checkbox checked={false} title="Select" hideLabel />
               </TableCell>
               <TableCell onClick={action}>
                 <div className="flex items-center gap-2">
