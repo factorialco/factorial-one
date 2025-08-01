@@ -90,7 +90,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "no-sidebar"],
 } satisfies Meta<typeof ChatTextareaWrapper>
 
 export default meta
