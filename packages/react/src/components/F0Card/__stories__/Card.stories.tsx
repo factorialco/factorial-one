@@ -239,3 +239,21 @@ export const Compact: Story = {
     compact: true,
   },
 }
+
+export const Skeleton: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  render: () => {
+    return <F0Card.Skeleton />
+  },
+}
+
+export const SkeletonCompact: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  render: () => {
+    return <F0Card.Skeleton compact />
+  },
+}

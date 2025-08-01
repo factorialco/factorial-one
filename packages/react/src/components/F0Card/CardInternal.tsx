@@ -9,6 +9,7 @@ import {
   CardSubtitle,
   CardTitle,
 } from "@/ui/Card"
+import { Skeleton } from "@/ui/skeleton"
 import { type ReactNode } from "react"
 import {
   CardActions,
@@ -242,6 +243,51 @@ export function CardInternal({
         secondaryActions={secondaryActions}
         compact={compact}
       />
+    </Card>
+  )
+}
+
+export const CardSkeleton = ({ compact = false }: { compact?: boolean }) => {
+  return (
+    <Card
+      className={cn(
+        "group relative flex flex-col gap-2 bg-f1-background p-4 shadow-none",
+        compact && "p-3"
+      )}
+      aria-busy="true"
+      aria-live="polite"
+    >
+      <CardHeader
+        className={cn(
+          "flex flex-col gap-2.5 p-0",
+          compact && "flex-row items-center gap-2"
+        )}
+      >
+        <Skeleton
+          className={cn("h-10 w-10 rounded-full", compact && "h-6 w-6")}
+        />
+        <div
+          className={cn(
+            "flex flex-col gap-0",
+            compact && "flex-row items-center gap-1.5"
+          )}
+        >
+          <CardTitle className="flex h-6 items-center">
+            <Skeleton className={cn("h-4 w-20 rounded-md", compact && "h-3")} />
+          </CardTitle>
+          <CardSubtitle className="flex h-5 items-center">
+            <Skeleton className="h-3 w-12 rounded-md" />
+          </CardSubtitle>
+        </div>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-0">
+        {Array.from({ length: 3 }).map((_, i) => (
+          <div key={i} className="flex h-6 items-center gap-1.5">
+            <Skeleton className="h-4 w-4 rounded-full" />
+            <Skeleton className="h-3 w-full max-w-20 rounded-md" />
+          </div>
+        ))}
+      </CardContent>
     </Card>
   )
 }
