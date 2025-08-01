@@ -17101,7 +17101,7 @@ function $O({
         isActive: n
       }
     ),
-    e && /* @__PURE__ */ f("div", { className: "ml-4 border-0 border-l border-solid border-f1-border pl-1.5", children: e })
+    e && /* @__PURE__ */ f("div", { className: "ml-4 border-0 border-l border-solid border-f1-border-secondary pl-1.5", children: e })
   ] });
 }
 function Hx(t, e) {
@@ -17121,7 +17121,7 @@ function WG({
       "aria-label": "Table of contents",
       children: [
         /* @__PURE__ */ f("div", { className: "pb-2 pl-6 pr-4 pt-5", children: /* @__PURE__ */ f("h2", { className: "text-lg font-medium text-f1-foreground-secondary", children: t }) }),
-        /* @__PURE__ */ f(Us, { className: "h-full px-3", children: /* @__PURE__ */ f("div", { className: "pb-2", children: e.map((r) => Hx(r, i)) }) })
+        /* @__PURE__ */ f(Us, { className: "h-full px-3", children: e.map((r) => Hx(r, i)) })
       ]
     }
   );
