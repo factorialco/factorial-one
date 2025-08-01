@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/ui/scrollarea"
 import { Item } from "./Item"
-import { SectionHeader } from "./SectionHeader"
+import { ItemSectionHeader } from "./ItemSectionHeader"
 import { TOCItem, TOCItemAction, TOCProps } from "./types"
 
 function renderTOCItem(item: TOCItem, activeItem?: string): React.ReactElement {
-  const Component = item.children ? SectionHeader : Item
+  const Component = item.children ? ItemSectionHeader : Item
 
   return (
     <Component key={item.id} item={item} isActive={activeItem === item.id}>
@@ -43,5 +43,5 @@ export function TableOfContent({
 }
 
 // Export subcomponents for advanced usage
-export { Item, SectionHeader }
+export { Item, ItemSectionHeader }
 export type { TOCItem, TOCItemAction, TOCProps }

@@ -2,17 +2,17 @@ import { ReactNode } from "react"
 import { Item } from "../Item"
 import { TOCItem } from "../types"
 
-interface TOCSectionHeaderProps {
+interface TOCItemSectionHeaderProps {
   item: TOCItem
   children?: ReactNode
   isActive?: boolean
 }
 
-export function SectionHeader({
+export function ItemSectionHeader({
   item,
   children,
   isActive,
-}: TOCSectionHeaderProps) {
+}: TOCItemSectionHeaderProps) {
   return (
     <>
       <Item
