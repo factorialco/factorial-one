@@ -34,45 +34,53 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
     label: "Section header",
     onClick: setActiveItem,
     icon: Placeholder,
+    otherActions: mockOtherActions,
+
     children: [
       {
         id: "item-1-1",
         label: "Section item",
         onClick: setActiveItem,
         icon: Placeholder,
+        otherActions: mockOtherActions,
       },
       {
         id: "item-1-2",
         label: "Section item",
         onClick: setActiveItem,
         icon: Placeholder,
+        otherActions: mockOtherActions,
       },
       {
         id: "item-1-3",
         label: "Section item",
         onClick: setActiveItem,
         disabled: true,
+        otherActions: mockOtherActions,
       },
       {
         id: "item-1-4",
         label: "Section item",
         onClick: setActiveItem,
+        otherActions: mockOtherActions,
       },
       {
         id: "item-1-5",
         label: "Section item",
         onClick: setActiveItem,
+        otherActions: mockOtherActions,
       },
       {
         id: "item-1-6",
         label: "Section item",
         onClick: setActiveItem,
+        otherActions: mockOtherActions,
       },
     ],
   },
   {
     id: "section-2",
-    label: "Label",
+    label: "No actions",
     icon: Placeholder,
     onClick: setActiveItem,
 
@@ -88,17 +96,21 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
         id: "section-2-2",
         label: "Label",
         onClick: setActiveItem,
+        otherActions: mockOtherActions,
+
         children: [
           {
             id: "item-2-2-1",
             label: "Option",
             disabled: true,
             onClick: setActiveItem,
+            otherActions: mockOtherActions,
           },
           {
             id: "item-2-2-2",
             label: "Option",
             onClick: setActiveItem,
+            otherActions: mockOtherActions,
           },
         ],
       },
@@ -108,27 +120,36 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
     id: "item-3",
     label: "Label",
     onClick: setActiveItem,
+    otherActions: mockOtherActions,
   },
   {
     id: "deep-nesting-example",
     label: "4-Level Deep Example",
     icon: Placeholder,
     onClick: setActiveItem,
+    otherActions: mockOtherActions,
+
     children: [
       {
         id: "level-2",
         label: "Level 2 Item",
         onClick: setActiveItem,
+        otherActions: mockOtherActions,
+
         children: [
           {
             id: "level-3",
             label: "Level 3 Item",
             onClick: setActiveItem,
+            otherActions: mockOtherActions,
+
             children: [
               {
                 id: "level-4",
                 label: "Level 4 Item (Max Depth)",
                 onClick: setActiveItem,
+                otherActions: mockOtherActions,
+
                 // TypeScript error if you try to add children here:
                 // in level 4, you can't add children
               },

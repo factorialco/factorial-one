@@ -1,11 +1,10 @@
-import { Button } from "@/components/Actions/Button"
 import { Icon } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental"
-import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
-import { Ellipsis } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
+import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
 import { TOCItem } from "../types"
+import { ItemDropDown } from "./ItemDropDown"
 
 interface TOCItemProps {
   item: TOCItem
@@ -16,6 +15,14 @@ interface TOCItemProps {
 export function Item({ item, counter, isActive }: TOCItemProps) {
   const { label, onClick, icon, disabled, otherActions } = item
   const [open, setOpen] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+
+  // Logic: show dropdown on hover only if counter exists, always visible if no counter
+  // Keep dropdown visible while it's open to prevent flickering
+  const shouldShowDropdown =
+    otherActions &&
+    otherActions.length > 0 &&
+    (counter ? isHovered || open : true)
 
   return (
     <div
@@ -27,44 +34,58 @@ export function Item({ item, counter, isActive }: TOCItemProps) {
         disabled && "cursor-not-allowed opacity-30"
       )}
       onClick={disabled ? undefined : () => onClick?.(item.id)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {icon && <Icon icon={icon} size="sm" className="flex-shrink-0" />}
       <span className="min-w-0 flex-1 truncate text-[14px]" title={label}>
         {label}
       </span>
-      {counter && (
-        <div className="flex-shrink-0">
-          <Counter value={counter} />
-        </div>
-      )}
-      {otherActions && otherActions.length > 0 && (
-        <div onClick={(e) => e.stopPropagation()} className="flex-shrink-0">
-          <Dropdown
-            items={otherActions.map((action): DropdownItem => {
-              if ("type" in action && action.type === "separator") {
-                return action as DropdownItem
-              }
-              return {
-                ...action,
-                type: "item" as const,
-              } as DropdownItem
-            })}
-            open={open}
-            onOpenChange={setOpen}
-          >
-            <Button
-              icon={Ellipsis}
-              label="Actions"
-              hideLabel
-              round
-              variant="ghost"
-              pressed={open}
-              size="sm"
-              disabled={disabled}
-            />
-          </Dropdown>
-        </div>
-      )}
+
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center"
+      >
+        <AnimatePresence mode="wait">
+          {counter && !shouldShowDropdown ? (
+            <motion.div
+              key="counter"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{
+                duration: 0.15,
+                ease: [0.25, 0.1, 0.25, 1],
+              }}
+              className="flex items-center justify-center"
+            >
+              <Counter value={counter} />
+            </motion.div>
+          ) : (
+            otherActions &&
+            otherActions.length > 0 && (
+              <motion.div
+                key="dropdown"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{
+                  duration: 0.15,
+                  ease: [0.25, 0.1, 0.25, 1],
+                }}
+                className="flex items-center justify-center"
+              >
+                <ItemDropDown
+                  otherActions={otherActions}
+                  open={open}
+                  setOpen={setOpen}
+                  disabled={disabled}
+                />
+              </motion.div>
+            )
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   )
 }
