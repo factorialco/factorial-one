@@ -106,7 +106,7 @@ export const CustomMessagesAndActions: Story = {
       fetchData: createPromiseDataFetch(),
     }
 
-    const emptyStates = {
+    const emptyStates: CustomEmptyStates = {
       "no-data": {
         description: "This is a no data custom message",
         emoji: "🤷",
