@@ -8,7 +8,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs", "no-sidebar"],
+  tags: ["autodocs"],
   args: {
     confirmationText: "Confirm",
     onConfirm: fn(),
