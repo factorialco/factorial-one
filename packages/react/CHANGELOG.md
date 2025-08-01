@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.146.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.2...factorial-one-react-v1.146.0) (2025-08-01)
+
+
+### Features
+
+* **Card:** add skeleton ([#2352](https://github.com/factorialco/factorial-one/issues/2352)) ([bbe3aba](https://github.com/factorialco/factorial-one/commit/bbe3abaa4752ad3edaf879f43ce08e0716a321d2))
+
 ## [1.145.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.1...factorial-one-react-v1.145.2) (2025-07-31)
 
 
