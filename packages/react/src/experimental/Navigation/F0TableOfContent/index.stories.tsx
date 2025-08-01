@@ -55,7 +55,6 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
         id: "item-1-3",
         label: "Section item",
         onClick: setActiveItem,
-        disabled: true,
         otherActions: mockOtherActions,
       },
       {
@@ -102,7 +101,6 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
           {
             id: "item-2-2-1",
             label: "Option",
-            disabled: true,
             onClick: setActiveItem,
             otherActions: mockOtherActions,
           },
