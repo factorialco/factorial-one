@@ -40,7 +40,7 @@ function renderTOCItem(
   )
 }
 
-export function TableOfContent({
+export function F0TableOfContent({
   title,
   items,
   className,

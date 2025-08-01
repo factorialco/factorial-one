@@ -1,11 +1,5 @@
 import { TOCItem } from "./types"
 
-/**
- * Finds all parent IDs in the path to the active item
- * @param items - Array of TOC items to search
- * @param activeItemId - ID of the active item
- * @returns Set of IDs that should be expanded
- */
 export function findExpandedPath(
   items: TOCItem[],
   activeItemId?: string

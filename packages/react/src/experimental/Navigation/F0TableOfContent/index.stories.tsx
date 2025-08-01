@@ -2,7 +2,7 @@ import { Placeholder } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
-import { TableOfContent } from "./index"
+import { F0TableOfContent } from "./index"
 import { TOCItem, TOCItemAction } from "./types"
 
 const mockOtherActions: TOCItemAction[] = [
@@ -140,9 +140,9 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
   },
 ]
 
-const meta: Meta<typeof TableOfContent> = {
-  title: "Navigation/TableOfContent",
-  component: TableOfContent,
+const meta: Meta<typeof F0TableOfContent> = {
+  title: "Navigation/F0TableOfContent",
+  component: F0TableOfContent,
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
@@ -172,7 +172,7 @@ const meta: Meta<typeof TableOfContent> = {
   },
   decorators: [
     (Story) => (
-      <div className="h-96 w-fit border border-solid border-f1-border">
+      <div className="h-[600px] w-fit border border-solid border-f1-border">
         <Story />
       </div>
     ),
@@ -181,7 +181,7 @@ const meta: Meta<typeof TableOfContent> = {
     const [activeItem, setActiveItem] = useState("item-2-2-2")
 
     return (
-      <TableOfContent
+      <F0TableOfContent
         {...args}
         items={mockTOCData((id) => setActiveItem(id))}
         activeItem={activeItem}
@@ -195,7 +195,7 @@ const meta: Meta<typeof TableOfContent> = {
 
 export default meta
 
-type Story = StoryObj<typeof TableOfContent>
+type Story = StoryObj<typeof F0TableOfContent>
 
 export const Default: Story = {}
 
