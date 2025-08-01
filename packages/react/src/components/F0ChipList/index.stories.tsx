@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { ChipList } from "./index"
+import { F0ChipList } from "./index"
 
 const meta = {
-  component: ChipList,
+  component: F0ChipList,
   title: "ChipList",
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs", "experimental"],
-} satisfies Meta<typeof ChipList>
+} satisfies Meta<typeof F0ChipList>
 
 export default meta
 type Story = StoryObj<typeof meta>

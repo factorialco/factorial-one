@@ -1,5 +1,6 @@
+import { experimentalComponent } from "@/lib/experimental"
 import { OverflowList } from "@/ui/OverflowList"
-import { Chip, type ChipProps } from "../OneChip"
+import { Chip, type ChipProps } from "../../experimental/OneChip"
 import { ChipCounter } from "./ChipCounter"
 
 type Props = {
@@ -28,7 +29,7 @@ type Props = {
   layout?: "fill" | "compact"
 }
 
-export const ChipList = ({
+const _F0ChipList = ({
   chips,
   max = 4,
   remainingCount: initialRemainingCount,
@@ -78,4 +79,12 @@ export const ChipList = ({
   )
 }
 
-ChipList.displayName = "ChipList"
+_F0ChipList.displayName = "F0ChipList"
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+export const F0ChipList = experimentalComponent<typeof _F0ChipList>(
+  "F0ChipList",
+  _F0ChipList
+)
