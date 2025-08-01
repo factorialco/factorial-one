@@ -166,7 +166,7 @@ const meta: Meta<typeof TableOfContent> = {
   },
   decorators: [
     (Story) => (
-      <div className="h-[400px] w-fit rounded-lg border border-solid border-f1-border">
+      <div className="h-[400px] w-fit border border-solid border-f1-border">
         <Story />
       </div>
     ),

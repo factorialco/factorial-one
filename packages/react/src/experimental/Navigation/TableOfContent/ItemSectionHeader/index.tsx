@@ -21,7 +21,7 @@ export function ItemSectionHeader({
         isActive={isActive}
       />
       {children && (
-        <div className="ml-4 border-0 border-l border-solid border-f1-border pl-1.5">
+        <div className="ml-4 border-0 border-l border-solid border-f1-border-secondary pl-1.5">
           {children}
         </div>
       )}

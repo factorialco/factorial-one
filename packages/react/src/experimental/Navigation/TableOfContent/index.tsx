@@ -32,9 +32,7 @@ export function TableOfContent({
         </h2>
       </div>
       <ScrollArea className="h-full px-3">
-        <div className="pb-2">
-          {items.map((item) => renderTOCItem(item, activeItem))}
-        </div>
+        {items.map((item) => renderTOCItem(item, activeItem))}
       </ScrollArea>
     </nav>
   )
