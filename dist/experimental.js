@@ -17106,9 +17106,7 @@ function $O({
 }
 function Hx(t, e) {
   const n = t.children ? $O : Vx;
-  return /* @__PURE__ */ f(n, { item: t, isActive: e === t.id, children: t.children && t.children.map(
-    (i) => Hx(i, e)
-  ) }, t.id);
+  return /* @__PURE__ */ f(n, { item: t, isActive: e === t.id, children: t.children && t.children.map((i) => Hx(i, e)) }, t.id);
 }
 function WG({
   title: t,
