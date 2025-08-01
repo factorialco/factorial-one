@@ -41483,7 +41483,7 @@ function Rke({
   name: d,
   ...f
 }) {
-  return console.log("test", d), /* @__PURE__ */ b(
+  return /* @__PURE__ */ b(
     cV,
     {
       title: e,
