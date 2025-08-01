@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { fn } from "@storybook/test"
 import { HILActionConfirmation } from "./HILActionConfirmation"
 
 const meta = {
@@ -11,9 +10,9 @@ const meta = {
   tags: ["autodocs"],
   args: {
     confirmationText: "Confirm",
-    onConfirm: fn(),
+    onConfirm: () => {},
     cancelText: "Cancel",
-    onCancel: fn(),
+    onCancel: () => {},
   },
   argTypes: {
     text: {
