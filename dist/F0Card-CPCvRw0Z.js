@@ -42995,66 +42995,6 @@ const C5e = Me(
 ), S5e = _F(C5e, GV);
 S5e.displayName = "BaseBanner";
 const $5e = Gt({
-  base: "flex items-center gap-1 rounded-full border border-solid border-f1-border px-2 py-0.5 font-medium",
-  variants: {
-    variant: {
-      default: "",
-      selected: "border-f1-border-selected bg-f1-background-selected-secondary text-f1-foreground-selected"
-    }
-  },
-  defaultVariants: {
-    variant: "default"
-  }
-}), _5e = ({
-  label: e,
-  variant: t,
-  onClick: n,
-  onClose: r,
-  avatar: a,
-  icon: i
-}) => /* @__PURE__ */ te(
-  "div",
-  {
-    className: ue(
-      $5e({ variant: t }),
-      r && "pr-1.5",
-      a && "pl-0.5",
-      a && (a == null ? void 0 : a.type) !== "person" && "rounded-sm",
-      i && !a && "pl-1.5",
-      n && "cursor-pointer",
-      n && vr()
-    ),
-    onClick: n,
-    onKeyDown: (o) => {
-      (o.key === "Enter" || o.key === " ") && (n == null || n());
-    },
-    tabIndex: n ? 0 : void 0,
-    children: [
-      a && /* @__PURE__ */ b(yo, { avatar: a, size: "xsmall" }),
-      /* @__PURE__ */ te("div", { className: "flex items-center gap-0.5", children: [
-        i && /* @__PURE__ */ b(kt, { icon: i, size: "sm", className: "text-f1-icon" }),
-        e
-      ] }),
-      r && /* @__PURE__ */ b(
-        "button",
-        {
-          type: "button",
-          onClick: (o) => {
-            o.stopPropagation(), r();
-          },
-          className: ue(
-            "-m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full [&_svg]:text-f1-icon-secondary [&_svg]:transition-colors [&_svg]:hover:text-f1-icon [&_svg]:focus:text-f1-icon",
-            t === "selected" && "[&_svg]:text-f1-icon-selected [&_svg]:hover:text-f1-icon-selected-hover [&_svg]:focus:text-f1-icon-selected-hover",
-            vr()
-          ),
-          tabIndex: 0,
-          "aria-label": "Close",
-          children: /* @__PURE__ */ b(kt, { icon: gN, size: "sm" })
-        }
-      )
-    ]
-  }
-), T5e = Gt({
   base: "flex select-none items-center justify-center text-f1-foreground-secondary",
   variants: {
     size: {
@@ -43071,7 +43011,7 @@ function YV({ size: e, className: t }) {
   return /* @__PURE__ */ b(
     "div",
     {
-      className: ue(T5e({ size: e, className: t })),
+      className: ue($5e({ size: e, className: t })),
       "aria-live": "polite",
       "aria-busy": !0,
       children: /* @__PURE__ */ te(
@@ -43123,7 +43063,7 @@ function YV({ size: e, className: t }) {
     }
   );
 }
-const E5e = ({ error: e }) => {
+const _5e = ({ error: e }) => {
   if (!e || e === !0) return null;
   const t = Array.isArray(e) ? e : [e];
   return t.length > 0 && /* @__PURE__ */ te("div", { className: "flex gap-1", children: [
@@ -43198,7 +43138,7 @@ const Kk = Me(
   }
 );
 Kk.displayName = "OneEllipsis";
-const A5e = ({
+const T5e = ({
   label: e,
   required: t,
   htmlFor: n,
@@ -43221,7 +43161,7 @@ const A5e = ({
       t && /* @__PURE__ */ b("span", { className: "text-f1-foreground-critical", "aria-hidden": "true", children: "*" })
     ]
   }
-), KV = "", O5e = (e) => e === KV || e ? e.toString().length === 0 : !0, D5e = (e) => e ? e.toString().length : 0, Uu = Gt({
+), KV = "", E5e = (e) => e === KV || e ? e.toString().length === 0 : !0, A5e = (e) => e ? e.toString().length : 0, Uu = Gt({
   base: "",
   variants: {
     size: {
@@ -43232,7 +43172,7 @@ const A5e = ({
   defaultVariants: {
     size: "md"
   }
-}), N5e = Gt({
+}), O5e = Gt({
   base: "",
   variants: {
     canGrow: {
@@ -43270,7 +43210,7 @@ const A5e = ({
     size: "md",
     canGrow: !1
   }
-}), W5e = Gt({
+}), D5e = Gt({
   base: "",
   variants: {
     size: {
@@ -43296,9 +43236,9 @@ const A5e = ({
     loading: p = !1,
     placeholder: g,
     clearable: v = !1,
-    isEmpty: y = O5e,
+    isEmpty: y = E5e,
     emptyValue: P = KV,
-    lengthProvider: M = D5e,
+    lengthProvider: M = A5e,
     maxLength: k,
     hideMaxLength: C = !1,
     append: x,
@@ -43350,7 +43290,7 @@ const A5e = ({
             {
               className: ue(
                 "flex max-w-full items-center",
-                W5e({ size: c })
+                D5e({ size: c })
               ),
               children: /* @__PURE__ */ te(
                 "div",
@@ -43359,7 +43299,7 @@ const A5e = ({
                   "data-testid": "input-field-top",
                   children: [
                     !i && r && /* @__PURE__ */ b(
-                      A5e,
+                      T5e,
                       {
                         label: r,
                         required: s,
@@ -43393,7 +43333,7 @@ const A5e = ({
                 u ? "focus-within:ring-f1-critical border-f1-border-critical-bold" : "focus-within:ring-f1-ring",
                 n && "border-f1-border-secondary bg-f1-background-secondary",
                 t && "cursor-not-allowed",
-                N5e({ size: c, canGrow: f })
+                O5e({ size: c, canGrow: f })
               ),
               "data-testid": "input-field-wrapper",
               children: [
@@ -43477,7 +43417,7 @@ const A5e = ({
               ]
             }
           ),
-          /* @__PURE__ */ b(E5e, { error: u })
+          /* @__PURE__ */ b(_5e, { error: u })
         ]
       }
     );
@@ -43638,14 +43578,14 @@ JV.displayName = "F1SearchBox";
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const R5e = (e) => e.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(), eH = (...e) => e.filter((t, n, r) => !!t && r.indexOf(t) === n).join(" ");
+const N5e = (e) => e.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(), eH = (...e) => e.filter((t, n, r) => !!t && r.indexOf(t) === n).join(" ");
 /**
  * @license lucide-react v0.383.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-var j5e = {
+var W5e = {
   xmlns: "http://www.w3.org/2000/svg",
   width: 24,
   height: 24,
@@ -43662,7 +43602,7 @@ var j5e = {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const I5e = Me(
+const R5e = Me(
   ({
     color: e = "currentColor",
     size: t = 24,
@@ -43676,7 +43616,7 @@ const I5e = Me(
     "svg",
     {
       ref: u,
-      ...j5e,
+      ...W5e,
       width: t,
       height: t,
       stroke: e,
@@ -43698,10 +43638,10 @@ const I5e = Me(
  */
 const n1 = (e, t) => {
   const n = Me(
-    ({ className: r, ...a }, i) => wc(I5e, {
+    ({ className: r, ...a }, i) => wc(R5e, {
       ref: i,
       iconNode: t,
-      className: eH(`lucide-${R5e(e)}`, r),
+      className: eH(`lucide-${N5e(e)}`, r),
       ...a
     })
   );
@@ -43713,14 +43653,14 @@ const n1 = (e, t) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const L5e = n1("Check", [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]]);
+const j5e = n1("Check", [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]]);
 /**
  * @license lucide-react v0.383.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const F5e = n1("ChevronLeft", [
+const I5e = n1("ChevronLeft", [
   ["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]
 ]);
 /**
@@ -43738,17 +43678,17 @@ const tH = n1("ChevronRight", [
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const z5e = n1("Circle", [
+const L5e = n1("Circle", [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }]
 ]);
-var cP = "rovingFocusGroup.onEntryFocus", V5e = { bubbles: !1, cancelable: !0 }, r1 = "RovingFocusGroup", [RM, nH, H5e] = ZV(r1), [B5e, rH] = ga(
+var cP = "rovingFocusGroup.onEntryFocus", F5e = { bubbles: !1, cancelable: !0 }, r1 = "RovingFocusGroup", [RM, nH, z5e] = ZV(r1), [V5e, rH] = ga(
   r1,
-  [H5e]
-), [q5e, X5e] = B5e(r1), aH = T.forwardRef(
-  (e, t) => /* @__PURE__ */ b(RM.Provider, { scope: e.__scopeRovingFocusGroup, children: /* @__PURE__ */ b(RM.Slot, { scope: e.__scopeRovingFocusGroup, children: /* @__PURE__ */ b(G5e, { ...e, ref: t }) }) })
+  [z5e]
+), [H5e, B5e] = V5e(r1), aH = T.forwardRef(
+  (e, t) => /* @__PURE__ */ b(RM.Provider, { scope: e.__scopeRovingFocusGroup, children: /* @__PURE__ */ b(RM.Slot, { scope: e.__scopeRovingFocusGroup, children: /* @__PURE__ */ b(q5e, { ...e, ref: t }) }) })
 );
 aH.displayName = r1;
-var G5e = T.forwardRef((e, t) => {
+var q5e = T.forwardRef((e, t) => {
   const {
     __scopeRovingFocusGroup: n,
     orientation: r,
@@ -43770,7 +43710,7 @@ var G5e = T.forwardRef((e, t) => {
     if (E)
       return E.addEventListener(cP, k), () => E.removeEventListener(cP, k);
   }, [k]), /* @__PURE__ */ b(
-    q5e,
+    H5e,
     {
       scope: n,
       orientation: r,
@@ -43804,7 +43744,7 @@ var G5e = T.forwardRef((e, t) => {
           onFocus: Te(e.onFocus, (E) => {
             const O = !x.current;
             if (E.target === E.currentTarget && O && !P) {
-              const H = new CustomEvent(cP, V5e);
+              const H = new CustomEvent(cP, F5e);
               if (E.currentTarget.dispatchEvent(H), !H.defaultPrevented) {
                 const j = C().filter((K) => K.focusable), L = j.find((K) => K.active), F = j.find((K) => K.id === v), U = [L, F, ...j].filter(
                   Boolean
@@ -43827,7 +43767,7 @@ var G5e = T.forwardRef((e, t) => {
       active: a = !1,
       tabStopId: i,
       ...o
-    } = e, s = Uo(), u = i || s, c = X5e(iH, n), d = c.currentTabStopId === u, f = nH(n), { onFocusableItemAdd: h, onFocusableItemRemove: p } = c;
+    } = e, s = Uo(), u = i || s, c = B5e(iH, n), d = c.currentTabStopId === u, f = nH(n), { onFocusableItemAdd: h, onFocusableItemRemove: p } = c;
     return T.useEffect(() => {
       if (r)
         return h(), () => p();
@@ -43855,7 +43795,7 @@ var G5e = T.forwardRef((e, t) => {
                 return;
               }
               if (g.target !== g.currentTarget) return;
-              const v = K5e(g, c.orientation, c.dir);
+              const v = Y5e(g, c.orientation, c.dir);
               if (v !== void 0) {
                 if (g.metaKey || g.ctrlKey || g.altKey || g.shiftKey) return;
                 g.preventDefault();
@@ -43864,7 +43804,7 @@ var G5e = T.forwardRef((e, t) => {
                 else if (v === "prev" || v === "next") {
                   v === "prev" && P.reverse();
                   const M = P.indexOf(g.currentTarget);
-                  P = c.loop ? Q5e(P, M + 1) : P.slice(M + 1);
+                  P = c.loop ? U5e(P, M + 1) : P.slice(M + 1);
                 }
                 setTimeout(() => sH(P));
               }
@@ -43876,7 +43816,7 @@ var G5e = T.forwardRef((e, t) => {
   }
 );
 oH.displayName = iH;
-var Y5e = {
+var X5e = {
   ArrowLeft: "prev",
   ArrowUp: "prev",
   ArrowRight: "next",
@@ -43886,33 +43826,33 @@ var Y5e = {
   PageDown: "last",
   End: "last"
 };
-function U5e(e, t) {
+function G5e(e, t) {
   return t !== "rtl" ? e : e === "ArrowLeft" ? "ArrowRight" : e === "ArrowRight" ? "ArrowLeft" : e;
 }
-function K5e(e, t, n) {
-  const r = U5e(e.key, n);
+function Y5e(e, t, n) {
+  const r = G5e(e.key, n);
   if (!(t === "vertical" && ["ArrowLeft", "ArrowRight"].includes(r)) && !(t === "horizontal" && ["ArrowUp", "ArrowDown"].includes(r)))
-    return Y5e[r];
+    return X5e[r];
 }
 function sH(e, t = !1) {
   const n = document.activeElement;
   for (const r of e)
     if (r === n || (r.focus({ preventScroll: t }), document.activeElement !== n)) return;
 }
-function Q5e(e, t) {
+function U5e(e, t) {
   return e.map((n, r) => e[(t + r) % e.length]);
 }
-var Z5e = aH, J5e = oH, jM = ["Enter", " "], eCe = ["ArrowDown", "PageUp", "Home"], uH = ["ArrowUp", "PageDown", "End"], tCe = [...eCe, ...uH], nCe = {
+var K5e = aH, Q5e = oH, jM = ["Enter", " "], Z5e = ["ArrowDown", "PageUp", "Home"], uH = ["ArrowUp", "PageDown", "End"], J5e = [...Z5e, ...uH], eCe = {
   ltr: [...jM, "ArrowRight"],
   rtl: [...jM, "ArrowLeft"]
-}, rCe = {
+}, tCe = {
   ltr: ["ArrowLeft"],
   rtl: ["ArrowRight"]
-}, gm = "Menu", [jf, aCe, iCe] = ZV(gm), [xu, cH] = ga(gm, [
-  iCe,
+}, gm = "Menu", [jf, nCe, rCe] = ZV(gm), [xu, cH] = ga(gm, [
+  rCe,
   Ml,
   rH
-]), a1 = Ml(), lH = rH(), [oCe, Mu] = xu(gm), [sCe, vm] = xu(gm), dH = (e) => {
+]), a1 = Ml(), lH = rH(), [aCe, Mu] = xu(gm), [iCe, vm] = xu(gm), dH = (e) => {
   const { __scopeMenu: t, open: n = !1, children: r, dir: a, onOpenChange: i, modal: o = !0 } = e, s = a1(t), [u, c] = T.useState(null), d = T.useRef(!1), f = gn(i), h = Tk(a);
   return T.useEffect(() => {
     const p = () => {
@@ -43922,7 +43862,7 @@ var Z5e = aH, J5e = oH, jM = ["Enter", " "], eCe = ["ArrowDown", "PageUp", "Home
       document.removeEventListener("keydown", p, { capture: !0 }), document.removeEventListener("pointerdown", g, { capture: !0 }), document.removeEventListener("pointermove", g, { capture: !0 });
     };
   }, []), /* @__PURE__ */ b(ik, { ...s, children: /* @__PURE__ */ b(
-    oCe,
+    aCe,
     {
       scope: t,
       open: n,
@@ -43930,7 +43870,7 @@ var Z5e = aH, J5e = oH, jM = ["Enter", " "], eCe = ["ArrowDown", "PageUp", "Home
       content: u,
       onContentChange: c,
       children: /* @__PURE__ */ b(
-        sCe,
+        iCe,
         {
           scope: t,
           onClose: T.useCallback(() => f(!1), [f]),
@@ -43944,26 +43884,26 @@ var Z5e = aH, J5e = oH, jM = ["Enter", " "], eCe = ["ArrowDown", "PageUp", "Home
   ) });
 };
 dH.displayName = gm;
-var uCe = "MenuAnchor", Qk = T.forwardRef(
+var oCe = "MenuAnchor", Qk = T.forwardRef(
   (e, t) => {
     const { __scopeMenu: n, ...r } = e, a = a1(n);
     return /* @__PURE__ */ b(Rv, { ...a, ...r, ref: t });
   }
 );
-Qk.displayName = uCe;
-var Zk = "MenuPortal", [cCe, fH] = xu(Zk, {
+Qk.displayName = oCe;
+var Zk = "MenuPortal", [sCe, fH] = xu(Zk, {
   forceMount: void 0
 }), mH = (e) => {
   const { __scopeMenu: t, forceMount: n, children: r, container: a } = e, i = Mu(Zk, t);
-  return /* @__PURE__ */ b(cCe, { scope: t, forceMount: n, children: /* @__PURE__ */ b(nr, { present: n || i.open, children: /* @__PURE__ */ b(dm, { asChild: !0, container: a, children: r }) }) });
+  return /* @__PURE__ */ b(sCe, { scope: t, forceMount: n, children: /* @__PURE__ */ b(nr, { present: n || i.open, children: /* @__PURE__ */ b(dm, { asChild: !0, container: a, children: r }) }) });
 };
 mH.displayName = Zk;
-var ja = "MenuContent", [lCe, Jk] = xu(ja), hH = T.forwardRef(
+var ja = "MenuContent", [uCe, Jk] = xu(ja), hH = T.forwardRef(
   (e, t) => {
     const n = fH(ja, e.__scopeMenu), { forceMount: r = n.forceMount, ...a } = e, i = Mu(ja, e.__scopeMenu), o = vm(ja, e.__scopeMenu);
-    return /* @__PURE__ */ b(jf.Provider, { scope: e.__scopeMenu, children: /* @__PURE__ */ b(nr, { present: r || i.open, children: /* @__PURE__ */ b(jf.Slot, { scope: e.__scopeMenu, children: o.modal ? /* @__PURE__ */ b(dCe, { ...a, ref: t }) : /* @__PURE__ */ b(fCe, { ...a, ref: t }) }) }) });
+    return /* @__PURE__ */ b(jf.Provider, { scope: e.__scopeMenu, children: /* @__PURE__ */ b(nr, { present: r || i.open, children: /* @__PURE__ */ b(jf.Slot, { scope: e.__scopeMenu, children: o.modal ? /* @__PURE__ */ b(cCe, { ...a, ref: t }) : /* @__PURE__ */ b(lCe, { ...a, ref: t }) }) }) });
   }
-), dCe = T.forwardRef(
+), cCe = T.forwardRef(
   (e, t) => {
     const n = Mu(ja, e.__scopeMenu), r = T.useRef(null), a = wt(t, r);
     return T.useEffect(() => {
@@ -43986,7 +43926,7 @@ var ja = "MenuContent", [lCe, Jk] = xu(ja), hH = T.forwardRef(
       }
     );
   }
-), fCe = T.forwardRef((e, t) => {
+), lCe = T.forwardRef((e, t) => {
   const n = Mu(ja, e.__scopeMenu);
   return /* @__PURE__ */ b(
     e5,
@@ -44016,9 +43956,9 @@ var ja = "MenuContent", [lCe, Jk] = xu(ja), hH = T.forwardRef(
       onDismiss: p,
       disableOutsideScroll: g,
       ...v
-    } = e, y = Mu(ja, n), P = vm(ja, n), M = a1(n), k = lH(n), C = aCe(n), [x, S] = T.useState(null), $ = T.useRef(null), E = wt(t, $, y.onContentChange), O = T.useRef(0), H = T.useRef(""), j = T.useRef(0), L = T.useRef(null), F = T.useRef("right"), B = T.useRef(0), U = g ? Yv : T.Fragment, K = g ? { as: cu, allowPinchZoom: !0 } : void 0, X = (ee) => {
+    } = e, y = Mu(ja, n), P = vm(ja, n), M = a1(n), k = lH(n), C = nCe(n), [x, S] = T.useState(null), $ = T.useRef(null), E = wt(t, $, y.onContentChange), O = T.useRef(0), H = T.useRef(""), j = T.useRef(0), L = T.useRef(null), F = T.useRef("right"), B = T.useRef(0), U = g ? Yv : T.Fragment, K = g ? { as: cu, allowPinchZoom: !0 } : void 0, X = (ee) => {
       var ce, me;
-      const R = H.current + ee, W = C().filter((se) => !se.disabled), ne = document.activeElement, ae = (ce = W.find((se) => se.ref.current === ne)) == null ? void 0 : ce.textValue, fe = W.map((se) => se.textValue), le = kCe(fe, R, ae), pe = (me = W.find((se) => se.textValue === le)) == null ? void 0 : me.ref.current;
+      const R = H.current + ee, W = C().filter((se) => !se.disabled), ne = document.activeElement, ae = (ce = W.find((se) => se.ref.current === ne)) == null ? void 0 : ce.textValue, fe = W.map((se) => se.textValue), le = xCe(fe, R, ae), pe = (me = W.find((se) => se.textValue === le)) == null ? void 0 : me.ref.current;
       (function se(he) {
         H.current = he, window.clearTimeout(O.current), he !== "" && (O.current = window.setTimeout(() => se(""), 1e3));
       })(R), pe && setTimeout(() => pe.focus());
@@ -44026,10 +43966,10 @@ var ja = "MenuContent", [lCe, Jk] = xu(ja), hH = T.forwardRef(
     T.useEffect(() => () => window.clearTimeout(O.current), []), Mk();
     const Y = T.useCallback((ee) => {
       var W, ne;
-      return F.current === ((W = L.current) == null ? void 0 : W.side) && SCe(ee, (ne = L.current) == null ? void 0 : ne.area);
+      return F.current === ((W = L.current) == null ? void 0 : W.side) && kCe(ee, (ne = L.current) == null ? void 0 : ne.area);
     }, []);
     return /* @__PURE__ */ b(
-      lCe,
+      uCe,
       {
         scope: n,
         searchRef: H,
@@ -44077,7 +44017,7 @@ var ja = "MenuContent", [lCe, Jk] = xu(ja), hH = T.forwardRef(
                 onInteractOutside: h,
                 onDismiss: p,
                 children: /* @__PURE__ */ b(
-                  Z5e,
+                  K5e,
                   {
                     asChild: !0,
                     ...k,
@@ -44106,10 +44046,10 @@ var ja = "MenuContent", [lCe, Jk] = xu(ja), hH = T.forwardRef(
                           const W = ee.target.closest("[data-radix-menu-content]") === ee.currentTarget, ne = ee.ctrlKey || ee.altKey || ee.metaKey, ae = ee.key.length === 1;
                           W && (ee.key === "Tab" && ee.preventDefault(), !ne && ae && X(ee.key));
                           const fe = $.current;
-                          if (ee.target !== fe || !tCe.includes(ee.key)) return;
+                          if (ee.target !== fe || !J5e.includes(ee.key)) return;
                           ee.preventDefault();
                           const pe = C().filter((ce) => !ce.disabled).map((ce) => ce.ref.current);
-                          uH.includes(ee.key) && pe.reverse(), xCe(pe);
+                          uH.includes(ee.key) && pe.reverse(), wCe(pe);
                         }),
                         onBlur: Te(e.onBlur, (ee) => {
                           ee.currentTarget.contains(ee.target) || (window.clearTimeout(O.current), H.current = "");
@@ -44137,20 +44077,20 @@ var ja = "MenuContent", [lCe, Jk] = xu(ja), hH = T.forwardRef(
   }
 );
 hH.displayName = ja;
-var mCe = "MenuGroup", t5 = T.forwardRef(
+var dCe = "MenuGroup", t5 = T.forwardRef(
   (e, t) => {
     const { __scopeMenu: n, ...r } = e;
     return /* @__PURE__ */ b(gt.div, { role: "group", ...r, ref: t });
   }
 );
-t5.displayName = mCe;
-var hCe = "MenuLabel", pH = T.forwardRef(
+t5.displayName = dCe;
+var fCe = "MenuLabel", pH = T.forwardRef(
   (e, t) => {
     const { __scopeMenu: n, ...r } = e;
     return /* @__PURE__ */ b(gt.div, { ...r, ref: t });
   }
 );
-pH.displayName = hCe;
+pH.displayName = fCe;
 var Dg = "MenuItem", K7 = "menu.itemSelect", i1 = T.forwardRef(
   (e, t) => {
     const { disabled: n = !1, onSelect: r, ...a } = e, i = T.useRef(null), o = vm(Dg, e.__scopeMenu), s = Jk(Dg, e.__scopeMenu), u = wt(t, i), c = T.useRef(!1), d = () => {
@@ -44196,7 +44136,7 @@ var gH = T.forwardRef(
         scope: n,
         disabled: r,
         textValue: a ?? h,
-        children: /* @__PURE__ */ b(J5e, { asChild: !0, ...s, focusable: !r, children: /* @__PURE__ */ b(
+        children: /* @__PURE__ */ b(Q5e, { asChild: !0, ...s, focusable: !r, children: /* @__PURE__ */ b(
           gt.div,
           {
             role: "menuitem",
@@ -44222,7 +44162,7 @@ var gH = T.forwardRef(
       }
     );
   }
-), pCe = "MenuCheckboxItem", vH = T.forwardRef(
+), mCe = "MenuCheckboxItem", vH = T.forwardRef(
   (e, t) => {
     const { checked: n = !1, onCheckedChange: r, ...a } = e;
     return /* @__PURE__ */ b(xH, { scope: e.__scopeMenu, checked: n, children: /* @__PURE__ */ b(
@@ -44242,21 +44182,21 @@ var gH = T.forwardRef(
     ) });
   }
 );
-vH.displayName = pCe;
-var yH = "MenuRadioGroup", [gCe, vCe] = xu(
+vH.displayName = mCe;
+var yH = "MenuRadioGroup", [hCe, pCe] = xu(
   yH,
   { value: void 0, onValueChange: () => {
   } }
 ), bH = T.forwardRef(
   (e, t) => {
     const { value: n, onValueChange: r, ...a } = e, i = gn(r);
-    return /* @__PURE__ */ b(gCe, { scope: e.__scopeMenu, value: n, onValueChange: i, children: /* @__PURE__ */ b(t5, { ...a, ref: t }) });
+    return /* @__PURE__ */ b(hCe, { scope: e.__scopeMenu, value: n, onValueChange: i, children: /* @__PURE__ */ b(t5, { ...a, ref: t }) });
   }
 );
 bH.displayName = yH;
 var wH = "MenuRadioItem", PH = T.forwardRef(
   (e, t) => {
-    const { value: n, ...r } = e, a = vCe(wH, e.__scopeMenu), i = n === a.value;
+    const { value: n, ...r } = e, a = pCe(wH, e.__scopeMenu), i = n === a.value;
     return /* @__PURE__ */ b(xH, { scope: e.__scopeMenu, checked: i, children: /* @__PURE__ */ b(
       i1,
       {
@@ -44278,12 +44218,12 @@ var wH = "MenuRadioItem", PH = T.forwardRef(
   }
 );
 PH.displayName = wH;
-var n5 = "MenuItemIndicator", [xH, yCe] = xu(
+var n5 = "MenuItemIndicator", [xH, gCe] = xu(
   n5,
   { checked: !1 }
 ), MH = T.forwardRef(
   (e, t) => {
-    const { __scopeMenu: n, forceMount: r, ...a } = e, i = yCe(n5, n);
+    const { __scopeMenu: n, forceMount: r, ...a } = e, i = gCe(n5, n);
     return /* @__PURE__ */ b(
       nr,
       {
@@ -44301,7 +44241,7 @@ var n5 = "MenuItemIndicator", [xH, yCe] = xu(
   }
 );
 MH.displayName = n5;
-var bCe = "MenuSeparator", kH = T.forwardRef(
+var vCe = "MenuSeparator", kH = T.forwardRef(
   (e, t) => {
     const { __scopeMenu: n, ...r } = e;
     return /* @__PURE__ */ b(
@@ -44315,15 +44255,15 @@ var bCe = "MenuSeparator", kH = T.forwardRef(
     );
   }
 );
-kH.displayName = bCe;
-var wCe = "MenuArrow", CH = T.forwardRef(
+kH.displayName = vCe;
+var yCe = "MenuArrow", CH = T.forwardRef(
   (e, t) => {
     const { __scopeMenu: n, ...r } = e, a = a1(n);
     return /* @__PURE__ */ b(sk, { ...a, ...r, ref: t });
   }
 );
-CH.displayName = wCe;
-var PCe = "MenuSub", [g2t, SH] = xu(PCe), Td = "MenuSubTrigger", $H = T.forwardRef(
+CH.displayName = yCe;
+var bCe = "MenuSub", [g2t, SH] = xu(bCe), Td = "MenuSubTrigger", $H = T.forwardRef(
   (e, t) => {
     const n = Mu(Td, e.__scopeMenu), r = vm(Td, e.__scopeMenu), a = SH(Td, e.__scopeMenu), i = Jk(Td, e.__scopeMenu), o = T.useRef(null), { pointerGraceTimerRef: s, onPointerGraceIntentChange: u } = i, c = { __scopeMenu: e.__scopeMenu }, d = T.useCallback(() => {
       o.current && window.clearTimeout(o.current), o.current = null;
@@ -44387,7 +44327,7 @@ var PCe = "MenuSub", [g2t, SH] = xu(PCe), Td = "MenuSubTrigger", $H = T.forwardR
         onKeyDown: Te(e.onKeyDown, (f) => {
           var p;
           const h = i.searchRef.current !== "";
-          e.disabled || h && f.key === " " || nCe[r.dir].includes(f.key) && (n.onOpenChange(!0), (p = n.content) == null || p.focus(), f.preventDefault());
+          e.disabled || h && f.key === " " || eCe[r.dir].includes(f.key) && (n.onOpenChange(!0), (p = n.content) == null || p.focus(), f.preventDefault());
         })
       }
     ) });
@@ -44422,7 +44362,7 @@ var _H = "MenuSubContent", TH = T.forwardRef(
         }),
         onKeyDown: Te(e.onKeyDown, (d) => {
           var p;
-          const f = d.currentTarget.contains(d.target), h = rCe[o.dir].includes(d.key);
+          const f = d.currentTarget.contains(d.target), h = tCe[o.dir].includes(d.key);
           f && h && (i.onOpenChange(!1), (p = s.trigger) == null || p.focus(), d.preventDefault());
         })
       }
@@ -44439,24 +44379,24 @@ function Ng(e) {
 function r5(e) {
   return Ng(e) ? "indeterminate" : e ? "checked" : "unchecked";
 }
-function xCe(e) {
+function wCe(e) {
   const t = document.activeElement;
   for (const n of e)
     if (n === t || (n.focus(), document.activeElement !== t)) return;
 }
-function MCe(e, t) {
+function PCe(e, t) {
   return e.map((n, r) => e[(t + r) % e.length]);
 }
-function kCe(e, t, n) {
+function xCe(e, t, n) {
   const a = t.length > 1 && Array.from(t).every((c) => c === t[0]) ? t[0] : t, i = n ? e.indexOf(n) : -1;
-  let o = MCe(e, Math.max(i, 0));
+  let o = PCe(e, Math.max(i, 0));
   a.length === 1 && (o = o.filter((c) => c !== n));
   const u = o.find(
     (c) => c.toLowerCase().startsWith(a.toLowerCase())
   );
   return u !== n ? u : void 0;
 }
-function CCe(e, t) {
+function MCe(e, t) {
   const { x: n, y: r } = e;
   let a = !1;
   for (let i = 0, o = t.length - 1; i < t.length; o = i++) {
@@ -44465,18 +44405,18 @@ function CCe(e, t) {
   }
   return a;
 }
-function SCe(e, t) {
+function kCe(e, t) {
   if (!t) return !1;
   const n = { x: e.clientX, y: e.clientY };
-  return CCe(n, t);
+  return MCe(n, t);
 }
 function If(e) {
   return (t) => t.pointerType === "mouse" ? e(t) : void 0;
 }
-var $Ce = dH, _Ce = Qk, TCe = mH, ECe = hH, ACe = t5, OCe = pH, DCe = i1, NCe = vH, WCe = bH, RCe = PH, jCe = MH, ICe = kH, LCe = CH, FCe = $H, zCe = TH, a5 = "DropdownMenu", [VCe, v2t] = ga(
+var CCe = dH, SCe = Qk, $Ce = mH, _Ce = hH, TCe = t5, ECe = pH, ACe = i1, OCe = vH, DCe = bH, NCe = PH, WCe = MH, RCe = kH, jCe = CH, ICe = $H, LCe = TH, a5 = "DropdownMenu", [FCe, v2t] = ga(
   a5,
   [cH]
-), Fr = cH(), [HCe, AH] = VCe(a5), OH = (e) => {
+), Fr = cH(), [zCe, AH] = FCe(a5), OH = (e) => {
   const {
     __scopeDropdownMenu: t,
     children: n,
@@ -44491,7 +44431,7 @@ var $Ce = dH, _Ce = Qk, TCe = mH, ECe = hH, ACe = t5, OCe = pH, DCe = i1, NCe = 
     onChange: o
   });
   return /* @__PURE__ */ b(
-    HCe,
+    zCe,
     {
       scope: t,
       triggerId: Uo(),
@@ -44501,7 +44441,7 @@ var $Ce = dH, _Ce = Qk, TCe = mH, ECe = hH, ACe = t5, OCe = pH, DCe = i1, NCe = 
       onOpenChange: f,
       onOpenToggle: T.useCallback(() => f((h) => !h), [f]),
       modal: s,
-      children: /* @__PURE__ */ b($Ce, { ...u, open: d, onOpenChange: f, dir: r, modal: s, children: n })
+      children: /* @__PURE__ */ b(CCe, { ...u, open: d, onOpenChange: f, dir: r, modal: s, children: n })
     }
   );
 };
@@ -44509,7 +44449,7 @@ OH.displayName = a5;
 var DH = "DropdownMenuTrigger", NH = T.forwardRef(
   (e, t) => {
     const { __scopeDropdownMenu: n, disabled: r = !1, ...a } = e, i = AH(DH, n), o = Fr(n);
-    return /* @__PURE__ */ b(_Ce, { asChild: !0, ...o, children: /* @__PURE__ */ b(
+    return /* @__PURE__ */ b(SCe, { asChild: !0, ...o, children: /* @__PURE__ */ b(
       gt.button,
       {
         type: "button",
@@ -44533,16 +44473,16 @@ var DH = "DropdownMenuTrigger", NH = T.forwardRef(
   }
 );
 NH.displayName = DH;
-var BCe = "DropdownMenuPortal", WH = (e) => {
+var VCe = "DropdownMenuPortal", WH = (e) => {
   const { __scopeDropdownMenu: t, ...n } = e, r = Fr(t);
-  return /* @__PURE__ */ b(TCe, { ...r, ...n });
+  return /* @__PURE__ */ b($Ce, { ...r, ...n });
 };
-WH.displayName = BCe;
+WH.displayName = VCe;
 var RH = "DropdownMenuContent", jH = T.forwardRef(
   (e, t) => {
     const { __scopeDropdownMenu: n, ...r } = e, a = AH(RH, n), i = Fr(n), o = T.useRef(!1);
     return /* @__PURE__ */ b(
-      ECe,
+      _Ce,
       {
         id: a.contentId,
         "aria-labelledby": a.triggerId,
@@ -44570,68 +44510,68 @@ var RH = "DropdownMenuContent", jH = T.forwardRef(
   }
 );
 jH.displayName = RH;
-var qCe = "DropdownMenuGroup", XCe = T.forwardRef(
+var HCe = "DropdownMenuGroup", BCe = T.forwardRef(
+  (e, t) => {
+    const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
+    return /* @__PURE__ */ b(TCe, { ...a, ...r, ref: t });
+  }
+);
+BCe.displayName = HCe;
+var qCe = "DropdownMenuLabel", IH = T.forwardRef(
+  (e, t) => {
+    const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
+    return /* @__PURE__ */ b(ECe, { ...a, ...r, ref: t });
+  }
+);
+IH.displayName = qCe;
+var XCe = "DropdownMenuItem", LH = T.forwardRef(
   (e, t) => {
     const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
     return /* @__PURE__ */ b(ACe, { ...a, ...r, ref: t });
   }
 );
-XCe.displayName = qCe;
-var GCe = "DropdownMenuLabel", IH = T.forwardRef(
-  (e, t) => {
-    const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
-    return /* @__PURE__ */ b(OCe, { ...a, ...r, ref: t });
-  }
-);
-IH.displayName = GCe;
-var YCe = "DropdownMenuItem", LH = T.forwardRef(
-  (e, t) => {
-    const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
-    return /* @__PURE__ */ b(DCe, { ...a, ...r, ref: t });
-  }
-);
-LH.displayName = YCe;
-var UCe = "DropdownMenuCheckboxItem", FH = T.forwardRef((e, t) => {
+LH.displayName = XCe;
+var GCe = "DropdownMenuCheckboxItem", FH = T.forwardRef((e, t) => {
+  const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
+  return /* @__PURE__ */ b(OCe, { ...a, ...r, ref: t });
+});
+FH.displayName = GCe;
+var YCe = "DropdownMenuRadioGroup", UCe = T.forwardRef((e, t) => {
+  const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
+  return /* @__PURE__ */ b(DCe, { ...a, ...r, ref: t });
+});
+UCe.displayName = YCe;
+var KCe = "DropdownMenuRadioItem", zH = T.forwardRef((e, t) => {
   const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
   return /* @__PURE__ */ b(NCe, { ...a, ...r, ref: t });
 });
-FH.displayName = UCe;
-var KCe = "DropdownMenuRadioGroup", QCe = T.forwardRef((e, t) => {
+zH.displayName = KCe;
+var QCe = "DropdownMenuItemIndicator", VH = T.forwardRef((e, t) => {
   const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
   return /* @__PURE__ */ b(WCe, { ...a, ...r, ref: t });
 });
-QCe.displayName = KCe;
-var ZCe = "DropdownMenuRadioItem", zH = T.forwardRef((e, t) => {
+VH.displayName = QCe;
+var ZCe = "DropdownMenuSeparator", HH = T.forwardRef((e, t) => {
   const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
   return /* @__PURE__ */ b(RCe, { ...a, ...r, ref: t });
 });
-zH.displayName = ZCe;
-var JCe = "DropdownMenuItemIndicator", VH = T.forwardRef((e, t) => {
-  const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
-  return /* @__PURE__ */ b(jCe, { ...a, ...r, ref: t });
-});
-VH.displayName = JCe;
-var eSe = "DropdownMenuSeparator", HH = T.forwardRef((e, t) => {
+HH.displayName = ZCe;
+var JCe = "DropdownMenuArrow", eSe = T.forwardRef(
+  (e, t) => {
+    const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
+    return /* @__PURE__ */ b(jCe, { ...a, ...r, ref: t });
+  }
+);
+eSe.displayName = JCe;
+var tSe = "DropdownMenuSubTrigger", BH = T.forwardRef((e, t) => {
   const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
   return /* @__PURE__ */ b(ICe, { ...a, ...r, ref: t });
 });
-HH.displayName = eSe;
-var tSe = "DropdownMenuArrow", nSe = T.forwardRef(
-  (e, t) => {
-    const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
-    return /* @__PURE__ */ b(LCe, { ...a, ...r, ref: t });
-  }
-);
-nSe.displayName = tSe;
-var rSe = "DropdownMenuSubTrigger", BH = T.forwardRef((e, t) => {
-  const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
-  return /* @__PURE__ */ b(FCe, { ...a, ...r, ref: t });
-});
-BH.displayName = rSe;
-var aSe = "DropdownMenuSubContent", qH = T.forwardRef((e, t) => {
+BH.displayName = tSe;
+var nSe = "DropdownMenuSubContent", qH = T.forwardRef((e, t) => {
   const { __scopeDropdownMenu: n, ...r } = e, a = Fr(n);
   return /* @__PURE__ */ b(
-    zCe,
+    LCe,
     {
       ...a,
       ...r,
@@ -44647,9 +44587,9 @@ var aSe = "DropdownMenuSubContent", qH = T.forwardRef((e, t) => {
     }
   );
 });
-qH.displayName = aSe;
-var iSe = OH, oSe = NH, XH = WH, GH = jH, YH = IH, UH = LH, KH = FH, QH = zH, ZH = VH, JH = HH, eB = BH, tB = qH;
-const sSe = iSe, uSe = oSe, y2t = XH, cSe = T.forwardRef(({ className: e, inset: t, children: n, ...r }, a) => /* @__PURE__ */ te(
+qH.displayName = nSe;
+var rSe = OH, aSe = NH, XH = WH, GH = jH, YH = IH, UH = LH, KH = FH, QH = zH, ZH = VH, JH = HH, eB = BH, tB = qH;
+const iSe = rSe, oSe = aSe, y2t = XH, sSe = T.forwardRef(({ className: e, inset: t, children: n, ...r }, a) => /* @__PURE__ */ te(
   eB,
   {
     ref: a,
@@ -44665,8 +44605,8 @@ const sSe = iSe, uSe = oSe, y2t = XH, cSe = T.forwardRef(({ className: e, inset:
     ]
   }
 ));
-cSe.displayName = eB.displayName;
-const lSe = T.forwardRef(({ className: e, ...t }, n) => /* @__PURE__ */ b(
+sSe.displayName = eB.displayName;
+const uSe = T.forwardRef(({ className: e, ...t }, n) => /* @__PURE__ */ b(
   tB,
   {
     ref: n,
@@ -44677,7 +44617,7 @@ const lSe = T.forwardRef(({ className: e, ...t }, n) => /* @__PURE__ */ b(
     ...t
   }
 ));
-lSe.displayName = tB.displayName;
+uSe.displayName = tB.displayName;
 const nB = T.forwardRef(({ className: e, sideOffset: t = 4, ...n }, r) => /* @__PURE__ */ b(XH, { children: /* @__PURE__ */ b(
   GH,
   {
@@ -44707,7 +44647,7 @@ const rB = T.forwardRef(({ className: e, inset: t, ...n }, r) => /* @__PURE__ */
   }
 ));
 rB.displayName = UH.displayName;
-const dSe = T.forwardRef(({ className: e, children: t, checked: n, ...r }, a) => /* @__PURE__ */ te(
+const cSe = T.forwardRef(({ className: e, children: t, checked: n, ...r }, a) => /* @__PURE__ */ te(
   KH,
   {
     ref: a,
@@ -44718,13 +44658,13 @@ const dSe = T.forwardRef(({ className: e, children: t, checked: n, ...r }, a) =>
     checked: n,
     ...r,
     children: [
-      /* @__PURE__ */ b("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ b(ZH, { children: /* @__PURE__ */ b(L5e, { className: "h-4 w-4" }) }) }),
+      /* @__PURE__ */ b("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ b(ZH, { children: /* @__PURE__ */ b(j5e, { className: "h-4 w-4" }) }) }),
       t
     ]
   }
 ));
-dSe.displayName = KH.displayName;
-const fSe = T.forwardRef(({ className: e, children: t, ...n }, r) => /* @__PURE__ */ te(
+cSe.displayName = KH.displayName;
+const lSe = T.forwardRef(({ className: e, children: t, ...n }, r) => /* @__PURE__ */ te(
   QH,
   {
     ref: r,
@@ -44734,13 +44674,13 @@ const fSe = T.forwardRef(({ className: e, children: t, ...n }, r) => /* @__PURE_
     ),
     ...n,
     children: [
-      /* @__PURE__ */ b("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ b(ZH, { children: /* @__PURE__ */ b(z5e, { className: "h-2 w-2 fill-current" }) }) }),
+      /* @__PURE__ */ b("span", { className: "absolute left-2 flex h-3.5 w-3.5 items-center justify-center", children: /* @__PURE__ */ b(ZH, { children: /* @__PURE__ */ b(L5e, { className: "h-2 w-2 fill-current" }) }) }),
       t
     ]
   }
 ));
-fSe.displayName = QH.displayName;
-const mSe = T.forwardRef(({ className: e, inset: t, ...n }, r) => /* @__PURE__ */ b(
+lSe.displayName = QH.displayName;
+const dSe = T.forwardRef(({ className: e, inset: t, ...n }, r) => /* @__PURE__ */ b(
   YH,
   {
     ref: r,
@@ -44752,7 +44692,7 @@ const mSe = T.forwardRef(({ className: e, inset: t, ...n }, r) => /* @__PURE__ *
     ...n
   }
 ));
-mSe.displayName = YH.displayName;
+dSe.displayName = YH.displayName;
 const aB = T.forwardRef(({ className: e, ...t }, n) => /* @__PURE__ */ b(
   JH,
   {
@@ -44762,7 +44702,7 @@ const aB = T.forwardRef(({ className: e, ...t }, n) => /* @__PURE__ */ b(
   }
 ));
 aB.displayName = JH.displayName;
-const hSe = ({ item: e }) => {
+const fSe = ({ item: e }) => {
   const {
     label: t,
     icon: n,
@@ -44788,7 +44728,7 @@ const hSe = ({ item: e }) => {
     }
   ) : /* @__PURE__ */ b("div", { ...s, className: u, children: /* @__PURE__ */ b(QM, { item: e }) }) });
 };
-function pSe({
+function mSe({
   items: e,
   icon: t = a3,
   align: n = "start",
@@ -44799,8 +44739,8 @@ function pSe({
   ...s
 }) {
   const [u, c] = We(!1), d = i !== void 0 && o !== void 0, f = d ? i : u;
-  return /* @__PURE__ */ te(sSe, { open: f, onOpenChange: d ? o : c, children: [
-    /* @__PURE__ */ b(uSe, { asChild: !0, children: a || /* @__PURE__ */ b(
+  return /* @__PURE__ */ te(iSe, { open: f, onOpenChange: d ? o : c, children: [
+    /* @__PURE__ */ b(oSe, { asChild: !0, children: a || /* @__PURE__ */ b(
       Sn,
       {
         ...s,
@@ -44814,11 +44754,11 @@ function pSe({
       }
     ) }),
     /* @__PURE__ */ b(nB, { align: n, children: e.map(
-      (p, g) => p.type === "separator" ? /* @__PURE__ */ b(aB, {}, g) : /* @__PURE__ */ b(hSe, { item: p }, g)
+      (p, g) => p.type === "separator" ? /* @__PURE__ */ b(aB, {}, g) : /* @__PURE__ */ b(fSe, { item: p }, g)
     ) })
   ] });
 }
-var gSe = "Label", iB = T.forwardRef((e, t) => /* @__PURE__ */ b(
+var hSe = "Label", iB = T.forwardRef((e, t) => /* @__PURE__ */ b(
   gt.label,
   {
     ...e,
@@ -44829,9 +44769,9 @@ var gSe = "Label", iB = T.forwardRef((e, t) => /* @__PURE__ */ b(
     }
   }
 ));
-iB.displayName = gSe;
+iB.displayName = hSe;
 var oB = iB;
-const vSe = T.forwardRef(({ className: e, ...t }, n) => /* @__PURE__ */ b(
+const pSe = T.forwardRef(({ className: e, ...t }, n) => /* @__PURE__ */ b(
   oB,
   {
     ref: n,
@@ -44842,7 +44782,7 @@ const vSe = T.forwardRef(({ className: e, ...t }, n) => /* @__PURE__ */ b(
     ...t
   }
 ));
-vSe.displayName = oB.displayName;
+pSe.displayName = oB.displayName;
 function Ie(e) {
   const t = Object.prototype.toString.call(e);
   return e instanceof Date || typeof e == "object" && t === "[object Date]" ? new e.constructor(+e) : typeof e == "number" || t === "[object Number]" || typeof e == "string" || t === "[object String]" ? new Date(e) : /* @__PURE__ */ new Date(NaN);
@@ -44868,10 +44808,10 @@ function vn(e, t) {
     r
   ), n);
 }
-const i5 = 6048e5, ySe = 864e5, bSe = 6e4, wSe = 36e5, PSe = 1e3, b2t = 525600, w2t = 43200, P2t = 1440;
-let xSe = {};
+const i5 = 6048e5, gSe = 864e5, vSe = 6e4, ySe = 36e5, bSe = 1e3, b2t = 525600, w2t = 43200, P2t = 1440;
+let wSe = {};
 function ku() {
-  return xSe;
+  return wSe;
 }
 function ur(e, t) {
   var s, u, c, d;
@@ -44909,9 +44849,9 @@ function tl(e) {
 }
 function ci(e, t) {
   const n = vi(e), r = vi(t), a = +n - tl(n), i = +r - tl(r);
-  return Math.round((a - i) / ySe);
+  return Math.round((a - i) / gSe);
 }
-function MSe(e) {
+function PSe(e) {
   const t = sB(e), n = zt(e, 0);
   return n.setFullYear(t, 0, 4), n.setHours(0, 0, 0, 0), Ha(n);
 }
@@ -44922,14 +44862,14 @@ function IM(e, t) {
 function as(e, t) {
   return vn(e, t * 12);
 }
-function kSe(e) {
+function xSe(e) {
   let t;
   return e.forEach(function(n) {
     const r = Ie(n);
     (t === void 0 || t < r || isNaN(Number(r))) && (t = r);
   }), t || /* @__PURE__ */ new Date(NaN);
 }
-function CSe(e) {
+function MSe(e) {
   let t;
   return e.forEach((n) => {
     const r = Ie(n);
@@ -44943,7 +44883,7 @@ function Zr(e, t) {
 function o5(e) {
   return e instanceof Date || typeof e == "object" && Object.prototype.toString.call(e) === "[object Date]";
 }
-function SSe(e) {
+function kSe(e) {
   if (!o5(e) && typeof e != "number")
     return !1;
   const t = Ie(e);
@@ -44953,11 +44893,11 @@ function Lf(e, t) {
   const n = Ie(e), r = Ie(t), a = n.getFullYear() - r.getFullYear(), i = n.getMonth() - r.getMonth();
   return a * 12 + i;
 }
-function $Se(e, t, n) {
+function CSe(e, t, n) {
   const r = ur(e, n), a = ur(t, n), i = +r - tl(r), o = +a - tl(a);
   return Math.round((i - o) / i5);
 }
-function _Se(e, t) {
+function SSe(e, t) {
   const n = Ie(e), r = Ie(t), a = Q7(n, r), i = Math.abs(ci(n, r));
   n.setDate(n.getDate() - a * i);
   const o = +(Q7(n, r) === -a), s = a * (i - o);
@@ -45003,7 +44943,7 @@ function s5(e) {
   const t = Ie(e), n = t.getMonth(), r = n - n % 3 + 3;
   return t.setMonth(r, 0), t.setHours(23, 59, 59, 999), t;
 }
-const TSe = {
+const $Se = {
   lessThanXSeconds: {
     one: "less than a second",
     other: "less than {{count}} seconds"
@@ -45067,7 +45007,7 @@ const TSe = {
   }
 }, Cu = (e, t, n) => {
   let r;
-  const a = TSe[e];
+  const a = $Se[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", t.toString()), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "in " + r : r + " ago" : r;
 };
 function q(e) {
@@ -45076,42 +45016,42 @@ function q(e) {
     return e.formats[n] || e.formats[e.defaultWidth];
   };
 }
-const ESe = {
+const _Se = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
   short: "MM/dd/yyyy"
-}, ASe = {
+}, TSe = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, OSe = {
+}, ESe = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, DSe = {
+}, ASe = {
   date: q({
-    formats: ESe,
+    formats: _Se,
     defaultWidth: "full"
   }),
   time: q({
-    formats: ASe,
+    formats: TSe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: OSe,
+    formats: ESe,
     defaultWidth: "full"
   })
-}, NSe = {
+}, OSe = {
   lastWeek: "'last' eeee 'at' p",
   yesterday: "'yesterday at' p",
   today: "'today at' p",
   tomorrow: "'tomorrow at' p",
   nextWeek: "eeee 'at' p",
   other: "P"
-}, gs = (e, t, n, r) => NSe[e];
+}, gs = (e, t, n, r) => OSe[e];
 function A(e) {
   return (t, n) => {
     const r = n != null && n.context ? String(n.context) : "standalone";
@@ -45127,15 +45067,15 @@ function A(e) {
     return a[i];
   };
 }
-const WSe = {
+const DSe = {
   narrow: ["B", "A"],
   abbreviated: ["BC", "AD"],
   wide: ["Before Christ", "Anno Domini"]
-}, RSe = {
+}, NSe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"]
-}, jSe = {
+}, WSe = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "Jan",
@@ -45165,7 +45105,7 @@ const WSe = {
     "November",
     "December"
   ]
-}, ISe = {
+}, RSe = {
   narrow: ["S", "M", "T", "W", "T", "F", "S"],
   short: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
   abbreviated: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -45178,7 +45118,7 @@ const WSe = {
     "Friday",
     "Saturday"
   ]
-}, LSe = {
+}, jSe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -45209,7 +45149,7 @@ const WSe = {
     evening: "evening",
     night: "night"
   }
-}, FSe = {
+}, ISe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -45240,7 +45180,7 @@ const WSe = {
     evening: "in the evening",
     night: "at night"
   }
-}, zSe = (e, t) => {
+}, LSe = (e, t) => {
   const n = Number(e), r = n % 100;
   if (r > 20 || r < 10)
     switch (r % 10) {
@@ -45253,28 +45193,28 @@ const WSe = {
     }
   return n + "th";
 }, vs = {
-  ordinalNumber: zSe,
+  ordinalNumber: LSe,
   era: A({
-    values: WSe,
+    values: DSe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: RSe,
+    values: NSe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: jSe,
+    values: WSe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: ISe,
+    values: RSe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: LSe,
+    values: jSe,
     defaultWidth: "wide",
-    formattingValues: FSe,
+    formattingValues: ISe,
     defaultFormattingWidth: "wide"
   })
 };
@@ -45283,9 +45223,9 @@ function D(e) {
     const r = n.width, a = r && e.matchPatterns[r] || e.matchPatterns[e.defaultMatchWidth], i = t.match(a);
     if (!i)
       return null;
-    const o = i[0], s = r && e.parsePatterns[r] || e.parsePatterns[e.defaultParseWidth], u = Array.isArray(s) ? HSe(s, (f) => f.test(o)) : (
+    const o = i[0], s = r && e.parsePatterns[r] || e.parsePatterns[e.defaultParseWidth], u = Array.isArray(s) ? zSe(s, (f) => f.test(o)) : (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- I challange you to fix the type
-      VSe(s, (f) => f.test(o))
+      FSe(s, (f) => f.test(o))
     );
     let c;
     c = e.valueCallback ? e.valueCallback(u) : u, c = n.valueCallback ? (
@@ -45296,12 +45236,12 @@ function D(e) {
     return { value: c, rest: d };
   };
 }
-function VSe(e, t) {
+function FSe(e, t) {
   for (const n in e)
     if (Object.prototype.hasOwnProperty.call(e, n) && t(e[n]))
       return n;
 }
-function HSe(e, t) {
+function zSe(e, t) {
   for (let n = 0; n < e.length; n++)
     if (t(e[n]))
       return n;
@@ -45318,23 +45258,23 @@ function Se(e) {
     return { value: o, rest: s };
   };
 }
-const BSe = /^(\d+)(th|st|nd|rd)?/i, qSe = /\d+/i, XSe = {
+const VSe = /^(\d+)(th|st|nd|rd)?/i, HSe = /\d+/i, BSe = {
   narrow: /^(b|a)/i,
   abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
   wide: /^(before christ|before common era|anno domini|common era)/i
-}, GSe = {
+}, qSe = {
   any: [/^b/i, /^(a|c)/i]
-}, YSe = {
+}, XSe = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234](th|st|nd|rd)? quarter/i
-}, USe = {
+}, GSe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, KSe = {
+}, YSe = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,
   wide: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i
-}, QSe = {
+}, USe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -45363,18 +45303,18 @@ const BSe = /^(\d+)(th|st|nd|rd)?/i, qSe = /\d+/i, XSe = {
     /^n/i,
     /^d/i
   ]
-}, ZSe = {
+}, KSe = {
   narrow: /^[smtwf]/i,
   short: /^(su|mo|tu|we|th|fr|sa)/i,
   abbreviated: /^(sun|mon|tue|wed|thu|fri|sat)/i,
   wide: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
-}, JSe = {
+}, QSe = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
   any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
-}, e$e = {
+}, ZSe = {
   narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
   any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
-}, t$e = {
+}, JSe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -45387,45 +45327,45 @@ const BSe = /^(\d+)(th|st|nd|rd)?/i, qSe = /\d+/i, XSe = {
   }
 }, ys = {
   ordinalNumber: Se({
-    matchPattern: BSe,
-    parsePattern: qSe,
+    matchPattern: VSe,
+    parsePattern: HSe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: XSe,
+    matchPatterns: BSe,
     defaultMatchWidth: "wide",
-    parsePatterns: GSe,
+    parsePatterns: qSe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: YSe,
+    matchPatterns: XSe,
     defaultMatchWidth: "wide",
-    parsePatterns: USe,
+    parsePatterns: GSe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: YSe,
+    defaultMatchWidth: "wide",
+    parsePatterns: USe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: KSe,
     defaultMatchWidth: "wide",
     parsePatterns: QSe,
     defaultParseWidth: "any"
   }),
-  day: D({
-    matchPatterns: ZSe,
-    defaultMatchWidth: "wide",
-    parsePatterns: JSe,
-    defaultParseWidth: "any"
-  }),
   dayPeriod: D({
-    matchPatterns: e$e,
+    matchPatterns: ZSe,
     defaultMatchWidth: "any",
-    parsePatterns: t$e,
+    parsePatterns: JSe,
     defaultParseWidth: "any"
   })
 }, o1 = {
   code: "en-US",
   formatDistance: Cu,
-  formatLong: DSe,
+  formatLong: ASe,
   formatRelative: gs,
   localize: vs,
   match: ys,
@@ -45434,12 +45374,12 @@ const BSe = /^(\d+)(th|st|nd|rd)?/i, qSe = /\d+/i, XSe = {
     firstWeekContainsDate: 1
   }
 };
-function n$e(e) {
+function e$e(e) {
   const t = Ie(e);
   return ci(t, Da(t)) + 1;
 }
 function u5(e) {
-  const t = Ie(e), n = +Ha(t) - +MSe(t);
+  const t = Ie(e), n = +Ha(t) - +PSe(t);
   return Math.round(n / i5) + 1;
 }
 function c5(e, t) {
@@ -45451,13 +45391,13 @@ function c5(e, t) {
   const c = ur(u, t);
   return n.getTime() >= s.getTime() ? r + 1 : n.getTime() >= c.getTime() ? r : r - 1;
 }
-function r$e(e, t) {
+function t$e(e, t) {
   var s, u, c, d;
   const n = ku(), r = (t == null ? void 0 : t.firstWeekContainsDate) ?? ((u = (s = t == null ? void 0 : t.locale) == null ? void 0 : s.options) == null ? void 0 : u.firstWeekContainsDate) ?? n.firstWeekContainsDate ?? ((d = (c = n.locale) == null ? void 0 : c.options) == null ? void 0 : d.firstWeekContainsDate) ?? 1, a = c5(e, t), i = zt(e, 0);
   return i.setFullYear(a, 0, r), i.setHours(0, 0, 0, 0), ur(i, t);
 }
 function l5(e, t) {
-  const n = Ie(e), r = +ur(n, t) - +r$e(n, t);
+  const n = Ie(e), r = +ur(n, t) - +t$e(n, t);
   return Math.round(r / i5) + 1;
 }
 function Nt(e, t) {
@@ -45722,7 +45662,7 @@ const jo = {
   },
   // Day of year
   D: function(e, t, n) {
-    const r = n$e(e);
+    const r = e$e(e);
     return t === "Do" ? n.ordinalNumber(r, { unit: "dayOfYear" }) : Nt(r, t.length);
   },
   // Day of week
@@ -46116,7 +46056,7 @@ const tD = (e, t) => {
     default:
       return t.time({ width: "full" });
   }
-}, a$e = (e, t) => {
+}, n$e = (e, t) => {
   const n = e.match(/(P+)(p+)?/) || [], r = n[1], a = n[2];
   if (!a)
     return tD(e, t);
@@ -46139,44 +46079,44 @@ const tD = (e, t) => {
   return i.replace("{{date}}", tD(r, t)).replace("{{time}}", uB(a, t));
 }, LM = {
   p: uB,
-  P: a$e
-}, i$e = /^D+$/, o$e = /^Y+$/, s$e = ["D", "DD", "YY", "YYYY"];
+  P: n$e
+}, r$e = /^D+$/, a$e = /^Y+$/, i$e = ["D", "DD", "YY", "YYYY"];
 function cB(e) {
-  return i$e.test(e);
+  return r$e.test(e);
 }
 function lB(e) {
-  return o$e.test(e);
+  return a$e.test(e);
 }
 function FM(e, t, n) {
-  const r = u$e(e, t, n);
-  if (console.warn(r), s$e.includes(e)) throw new RangeError(r);
+  const r = o$e(e, t, n);
+  if (console.warn(r), i$e.includes(e)) throw new RangeError(r);
 }
-function u$e(e, t, n) {
+function o$e(e, t, n) {
   const r = e[0] === "Y" ? "years" : "days of the month";
   return `Use \`${e.toLowerCase()}\` instead of \`${e}\` (in \`${t}\`) for formatting ${r} to the input \`${n}\`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md`;
 }
-const c$e = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g, l$e = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g, d$e = /^'([^]*?)'?$/, f$e = /''/g, m$e = /[a-zA-Z]/;
+const s$e = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g, u$e = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g, c$e = /^'([^]*?)'?$/, l$e = /''/g, d$e = /[a-zA-Z]/;
 function bs(e, t, n) {
   var d, f, h, p, g, v, y, P;
   const r = ku(), a = (n == null ? void 0 : n.locale) ?? r.locale ?? o1, i = (n == null ? void 0 : n.firstWeekContainsDate) ?? ((f = (d = n == null ? void 0 : n.locale) == null ? void 0 : d.options) == null ? void 0 : f.firstWeekContainsDate) ?? r.firstWeekContainsDate ?? ((p = (h = r.locale) == null ? void 0 : h.options) == null ? void 0 : p.firstWeekContainsDate) ?? 1, o = (n == null ? void 0 : n.weekStartsOn) ?? ((v = (g = n == null ? void 0 : n.locale) == null ? void 0 : g.options) == null ? void 0 : v.weekStartsOn) ?? r.weekStartsOn ?? ((P = (y = r.locale) == null ? void 0 : y.options) == null ? void 0 : P.weekStartsOn) ?? 0, s = Ie(e);
-  if (!SSe(s))
+  if (!kSe(s))
     throw new RangeError("Invalid time value");
-  let u = t.match(l$e).map((M) => {
+  let u = t.match(u$e).map((M) => {
     const k = M[0];
     if (k === "p" || k === "P") {
       const C = LM[k];
       return C(M, a.formatLong);
     }
     return M;
-  }).join("").match(c$e).map((M) => {
+  }).join("").match(s$e).map((M) => {
     if (M === "''")
       return { isToken: !1, value: "'" };
     const k = M[0];
     if (k === "'")
-      return { isToken: !1, value: h$e(M) };
+      return { isToken: !1, value: f$e(M) };
     if (Z7[k])
       return { isToken: !0, value: M };
-    if (k.match(m$e))
+    if (k.match(d$e))
       throw new RangeError(
         "Format string contains an unescaped latin alphabet character `" + k + "`"
       );
@@ -46196,34 +46136,34 @@ function bs(e, t, n) {
     return C(s, k, a.localize, c);
   }).join("");
 }
-function h$e(e) {
-  const t = e.match(d$e);
-  return t ? t[1].replace(f$e, "'") : e;
+function f$e(e) {
+  const t = e.match(c$e);
+  return t ? t[1].replace(l$e, "'") : e;
 }
-function p$e(e) {
+function m$e(e) {
   const t = Ie(e), n = t.getFullYear(), r = t.getMonth(), a = zt(e, 0);
   return a.setFullYear(n, r + 1, 0), a.setHours(0, 0, 0, 0), a.getDate();
 }
-function g$e() {
+function h$e() {
   return Object.assign({}, ku());
 }
-function v$e(e) {
+function p$e(e) {
   let n = Ie(e).getDay();
   return n === 0 && (n = 7), n;
 }
 function nD(e) {
   return Ie(e).getMonth();
 }
-function y$e(e) {
+function g$e(e) {
   return Math.trunc(+Ie(e) / 1e3);
 }
-function b$e(e) {
+function v$e(e) {
   const t = Ie(e), n = t.getMonth();
   return t.setFullYear(t.getFullYear(), n + 1, 0), t.setHours(0, 0, 0, 0), t;
 }
-function w$e(e, t) {
-  return $Se(
-    b$e(e),
+function y$e(e, t) {
+  return CSe(
+    v$e(e),
     Lt(e),
     t
   ) + 1;
@@ -46240,7 +46180,7 @@ function dB(e, t) {
   const n = Ie(e), r = Ie(t);
   return +n == +r;
 }
-function P$e(e, t) {
+function b$e(e, t) {
   const n = t instanceof Date ? zt(t, 0) : new t(0);
   return n.setFullYear(
     e.getFullYear(),
@@ -46253,7 +46193,7 @@ function P$e(e, t) {
     e.getMilliseconds()
   ), n;
 }
-const x$e = 10;
+const w$e = 10;
 class fB {
   constructor() {
     Ee(this, "subPriority", 0);
@@ -46262,7 +46202,7 @@ class fB {
     return !0;
   }
 }
-class M$e extends fB {
+class P$e extends fB {
   constructor(t, n, r, a, i) {
     super(), this.value = t, this.validateValue = n, this.setValue = r, this.priority = a, i && (this.subPriority = i);
   }
@@ -46273,21 +46213,21 @@ class M$e extends fB {
     return this.setValue(t, n, this.value, r);
   }
 }
-class k$e extends fB {
+class x$e extends fB {
   constructor() {
     super(...arguments);
-    Ee(this, "priority", x$e);
+    Ee(this, "priority", w$e);
     Ee(this, "subPriority", -1);
   }
   set(n, r) {
-    return r.timestampIsSet ? n : zt(n, P$e(n, Date));
+    return r.timestampIsSet ? n : zt(n, b$e(n, Date));
   }
 }
 class Ct {
   run(t, n, r, a) {
     const i = this.parse(t, n, r, a);
     return i ? {
-      setter: new M$e(
+      setter: new P$e(
         i.value,
         this.validate,
         this.set,
@@ -46301,7 +46241,7 @@ class Ct {
     return !0;
   }
 }
-class C$e extends Ct {
+class M$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 140);
@@ -46396,7 +46336,7 @@ function $i(e, t) {
     };
   const r = n[1] === "+" ? 1 : -1, a = n[2] ? parseInt(n[2], 10) : 0, i = n[3] ? parseInt(n[3], 10) : 0, o = n[5] ? parseInt(n[5], 10) : 0;
   return {
-    value: r * (a * wSe + i * bSe + o * PSe),
+    value: r * (a * ySe + i * vSe + o * bSe),
     rest: t.slice(n[0].length)
   };
 }
@@ -46462,7 +46402,7 @@ function hB(e, t) {
 function pB(e) {
   return e % 400 === 0 || e % 4 === 0 && e % 100 !== 0;
 }
-class S$e extends Ct {
+class k$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 130);
@@ -46503,7 +46443,7 @@ class S$e extends Ct {
     return n.setFullYear(o, 0, 1), n.setHours(0, 0, 0, 0), n;
   }
 }
-class $$e extends Ct {
+class C$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 130);
@@ -46562,7 +46502,7 @@ class $$e extends Ct {
     return n.setFullYear(s, 0, i.firstWeekContainsDate), n.setHours(0, 0, 0, 0), ur(n, i);
   }
 }
-class _$e extends Ct {
+class S$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 130);
@@ -46592,7 +46532,7 @@ class _$e extends Ct {
     return i.setFullYear(a, 0, 4), i.setHours(0, 0, 0, 0), Ha(i);
   }
 }
-class T$e extends Ct {
+class $$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 130);
@@ -46605,7 +46545,7 @@ class T$e extends Ct {
     return n.setFullYear(a, 0, 1), n.setHours(0, 0, 0, 0), n;
   }
 }
-class E$e extends Ct {
+class _$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 120);
@@ -46672,7 +46612,7 @@ class E$e extends Ct {
     return n.setMonth((a - 1) * 3, 1), n.setHours(0, 0, 0, 0), n;
   }
 }
-class A$e extends Ct {
+class T$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 120);
@@ -46739,7 +46679,7 @@ class A$e extends Ct {
     return n.setMonth((a - 1) * 3, 1), n.setHours(0, 0, 0, 0), n;
   }
 }
-class O$e extends Ct {
+class E$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "incompatibleTokens", [
@@ -46807,7 +46747,7 @@ class O$e extends Ct {
     return n.setMonth(a, 1), n.setHours(0, 0, 0, 0), n;
   }
 }
-class D$e extends Ct {
+class A$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 110);
@@ -46875,11 +46815,11 @@ class D$e extends Ct {
     return n.setMonth(a, 1), n.setHours(0, 0, 0, 0), n;
   }
 }
-function N$e(e, t, n) {
+function O$e(e, t, n) {
   const r = Ie(e), a = l5(r, n) - t;
   return r.setDate(r.getDate() - a * 7), r;
 }
-class W$e extends Ct {
+class D$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 100);
@@ -46913,14 +46853,14 @@ class W$e extends Ct {
     return r >= 1 && r <= 53;
   }
   set(n, r, a, i) {
-    return ur(N$e(n, a, i), i);
+    return ur(O$e(n, a, i), i);
   }
 }
-function R$e(e, t) {
+function N$e(e, t) {
   const n = Ie(e), r = u5(n) - t;
   return n.setDate(n.getDate() - r * 7), n;
 }
-class j$e extends Ct {
+class W$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 100);
@@ -46955,10 +46895,10 @@ class j$e extends Ct {
     return r >= 1 && r <= 53;
   }
   set(n, r, a) {
-    return Ha(R$e(n, a));
+    return Ha(N$e(n, a));
   }
 }
-const I$e = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], L$e = [
+const R$e = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], j$e = [
   31,
   29,
   31,
@@ -46972,7 +46912,7 @@ const I$e = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31], L$e = [
   30,
   31
 ];
-class F$e extends Ct {
+class I$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 90);
@@ -47004,13 +46944,13 @@ class F$e extends Ct {
   }
   validate(n, r) {
     const a = n.getFullYear(), i = pB(a), o = n.getMonth();
-    return i ? r >= 1 && r <= L$e[o] : r >= 1 && r <= I$e[o];
+    return i ? r >= 1 && r <= j$e[o] : r >= 1 && r <= R$e[o];
   }
   set(n, r, a) {
     return n.setDate(a), n.setHours(0, 0, 0, 0), n;
   }
 }
-class z$e extends Ct {
+class L$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 90);
@@ -47057,7 +46997,7 @@ function f5(e, t, n) {
   const r = ku(), a = (n == null ? void 0 : n.weekStartsOn) ?? ((h = (f = n == null ? void 0 : n.locale) == null ? void 0 : f.options) == null ? void 0 : h.weekStartsOn) ?? r.weekStartsOn ?? ((g = (p = r.locale) == null ? void 0 : p.options) == null ? void 0 : g.weekStartsOn) ?? 0, i = Ie(e), o = i.getDay(), u = (t % 7 + 7) % 7, c = 7 - a, d = t < 0 || t > 6 ? t - (o + c) % 7 : (u + c) % 7 - (o + c) % 7;
   return Jt(i, d);
 }
-class V$e extends Ct {
+class F$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 90);
@@ -47098,7 +47038,7 @@ class V$e extends Ct {
     return n = f5(n, a, i), n.setHours(0, 0, 0, 0), n;
   }
 }
-class H$e extends Ct {
+class z$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 90);
@@ -47169,7 +47109,7 @@ class H$e extends Ct {
     return n = f5(n, a, i), n.setHours(0, 0, 0, 0), n;
   }
 }
-class B$e extends Ct {
+class V$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 90);
@@ -47240,11 +47180,11 @@ class B$e extends Ct {
     return n = f5(n, a, i), n.setHours(0, 0, 0, 0), n;
   }
 }
-function q$e(e, t) {
-  const n = Ie(e), r = v$e(n), a = t - r;
+function H$e(e, t) {
+  const n = Ie(e), r = p$e(n), a = t - r;
   return Jt(n, a);
 }
-class X$e extends Ct {
+class B$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 90);
@@ -47337,10 +47277,10 @@ class X$e extends Ct {
     return r >= 1 && r <= 7;
   }
   set(n, r, a) {
-    return n = q$e(n, a), n.setHours(0, 0, 0, 0), n;
+    return n = H$e(n, a), n.setHours(0, 0, 0, 0), n;
   }
 }
-class G$e extends Ct {
+class q$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 80);
@@ -47381,7 +47321,7 @@ class G$e extends Ct {
     return n.setHours(d5(a), 0, 0, 0), n;
   }
 }
-class Y$e extends Ct {
+class X$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 80);
@@ -47422,7 +47362,7 @@ class Y$e extends Ct {
     return n.setHours(d5(a), 0, 0, 0), n;
   }
 }
-class U$e extends Ct {
+class G$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 80);
@@ -47463,7 +47403,7 @@ class U$e extends Ct {
     return n.setHours(d5(a), 0, 0, 0), n;
   }
 }
-class K$e extends Ct {
+class Y$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 70);
@@ -47487,7 +47427,7 @@ class K$e extends Ct {
     return i && a < 12 ? n.setHours(a + 12, 0, 0, 0) : !i && a === 12 ? n.setHours(0, 0, 0, 0) : n.setHours(a, 0, 0, 0), n;
   }
 }
-class Q$e extends Ct {
+class U$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 70);
@@ -47510,7 +47450,7 @@ class Q$e extends Ct {
     return n.setHours(a, 0, 0, 0), n;
   }
 }
-class Z$e extends Ct {
+class K$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 70);
@@ -47533,7 +47473,7 @@ class Z$e extends Ct {
     return n.getHours() >= 12 && a < 12 ? n.setHours(a + 12, 0, 0, 0) : n.setHours(a, 0, 0, 0), n;
   }
 }
-class J$e extends Ct {
+class Q$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 70);
@@ -47557,7 +47497,7 @@ class J$e extends Ct {
     return n.setHours(i, 0, 0, 0), n;
   }
 }
-class e_e extends Ct {
+class Z$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 60);
@@ -47580,7 +47520,7 @@ class e_e extends Ct {
     return n.setMinutes(a, 0, 0), n;
   }
 }
-class t_e extends Ct {
+class J$e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 50);
@@ -47603,7 +47543,7 @@ class t_e extends Ct {
     return n.setSeconds(a, 0), n;
   }
 }
-class n_e extends Ct {
+class e_e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 30);
@@ -47617,7 +47557,7 @@ class n_e extends Ct {
     return n.setMilliseconds(a), n;
   }
 }
-class r_e extends Ct {
+class t_e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 10);
@@ -47654,7 +47594,7 @@ class r_e extends Ct {
     );
   }
 }
-class a_e extends Ct {
+class n_e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 10);
@@ -47691,7 +47631,7 @@ class a_e extends Ct {
     );
   }
 }
-class i_e extends Ct {
+class r_e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 40);
@@ -47704,7 +47644,7 @@ class i_e extends Ct {
     return [zt(n, a * 1e3), { timestampIsSet: !0 }];
   }
 }
-class o_e extends Ct {
+class a_e extends Ct {
   constructor() {
     super(...arguments);
     Ee(this, "priority", 20);
@@ -47717,59 +47657,59 @@ class o_e extends Ct {
     return [zt(n, a), { timestampIsSet: !0 }];
   }
 }
-const s_e = {
-  G: new C$e(),
-  y: new S$e(),
-  Y: new $$e(),
-  R: new _$e(),
-  u: new T$e(),
-  Q: new E$e(),
-  q: new A$e(),
-  M: new O$e(),
-  L: new D$e(),
-  w: new W$e(),
-  I: new j$e(),
-  d: new F$e(),
-  D: new z$e(),
-  E: new V$e(),
-  e: new H$e(),
-  c: new B$e(),
-  i: new X$e(),
-  a: new G$e(),
-  b: new Y$e(),
-  B: new U$e(),
-  h: new K$e(),
-  H: new Q$e(),
-  K: new Z$e(),
-  k: new J$e(),
-  m: new e_e(),
-  s: new t_e(),
-  S: new n_e(),
-  X: new r_e(),
-  x: new a_e(),
-  t: new i_e(),
-  T: new o_e()
-}, u_e = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g, c_e = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g, l_e = /^'([^]*?)'?$/, d_e = /''/g, f_e = /\S/, m_e = /[a-zA-Z]/;
+const i_e = {
+  G: new M$e(),
+  y: new k$e(),
+  Y: new C$e(),
+  R: new S$e(),
+  u: new $$e(),
+  Q: new _$e(),
+  q: new T$e(),
+  M: new E$e(),
+  L: new A$e(),
+  w: new D$e(),
+  I: new W$e(),
+  d: new I$e(),
+  D: new L$e(),
+  E: new F$e(),
+  e: new z$e(),
+  c: new V$e(),
+  i: new B$e(),
+  a: new q$e(),
+  b: new X$e(),
+  B: new G$e(),
+  h: new Y$e(),
+  H: new U$e(),
+  K: new K$e(),
+  k: new Q$e(),
+  m: new Z$e(),
+  s: new J$e(),
+  S: new e_e(),
+  X: new t_e(),
+  x: new n_e(),
+  t: new r_e(),
+  T: new a_e()
+}, o_e = /[yYQqMLwIdDecihHKkms]o|(\w)\1*|''|'(''|[^'])+('|$)|./g, s_e = /P+p+|P+|p+|''|'(''|[^'])+('|$)|./g, u_e = /^'([^]*?)'?$/, c_e = /''/g, l_e = /\S/, d_e = /[a-zA-Z]/;
 function Rg(e, t, n, r) {
   var v, y, P, M;
-  const a = g$e(), i = a.locale ?? o1, o = a.firstWeekContainsDate ?? ((y = (v = a.locale) == null ? void 0 : v.options) == null ? void 0 : y.firstWeekContainsDate) ?? 1, s = a.weekStartsOn ?? ((M = (P = a.locale) == null ? void 0 : P.options) == null ? void 0 : M.weekStartsOn) ?? 0;
+  const a = h$e(), i = a.locale ?? o1, o = a.firstWeekContainsDate ?? ((y = (v = a.locale) == null ? void 0 : v.options) == null ? void 0 : y.firstWeekContainsDate) ?? 1, s = a.weekStartsOn ?? ((M = (P = a.locale) == null ? void 0 : P.options) == null ? void 0 : M.weekStartsOn) ?? 0;
   if (t === "")
     return e === "" ? Ie(n) : zt(n, NaN);
   const u = {
     firstWeekContainsDate: o,
     weekStartsOn: s,
     locale: i
-  }, c = [new k$e()], d = t.match(c_e).map((k) => {
+  }, c = [new x$e()], d = t.match(s_e).map((k) => {
     const C = k[0];
     if (C in LM) {
       const x = LM[C];
       return x(k, i.formatLong);
     }
     return k;
-  }).join("").match(u_e), f = [];
+  }).join("").match(o_e), f = [];
   for (let k of d) {
     lB(k) && FM(k, t, e), cB(k) && FM(k, t, e);
-    const C = k[0], x = s_e[C];
+    const C = k[0], x = i_e[C];
     if (x) {
       const { incompatibleTokens: S } = x;
       if (Array.isArray(S)) {
@@ -47795,17 +47735,17 @@ function Rg(e, t, n, r) {
         return zt(n, NaN);
       c.push($.setter), e = $.rest;
     } else {
-      if (C.match(m_e))
+      if (C.match(d_e))
         throw new RangeError(
           "Format string contains an unescaped latin alphabet character `" + C + "`"
         );
-      if (k === "''" ? k = "'" : C === "'" && (k = h_e(k)), e.indexOf(k) === 0)
+      if (k === "''" ? k = "'" : C === "'" && (k = f_e(k)), e.indexOf(k) === 0)
         e = e.slice(k.length);
       else
         return zt(n, NaN);
     }
   }
-  if (e.length > 0 && f_e.test(e))
+  if (e.length > 0 && l_e.test(e))
     return zt(n, NaN);
   const h = c.map((k) => k.priority).sort((k, C) => C - k).filter((k, C, x) => x.indexOf(k) === C).map(
     (k) => c.filter((C) => C.priority === k).sort((C, x) => x.subPriority - C.subPriority)
@@ -47822,8 +47762,8 @@ function Rg(e, t, n, r) {
   }
   return zt(n, p);
 }
-function h_e(e) {
-  return e.match(l_e)[1].replace(d_e, "'");
+function f_e(e) {
+  return e.match(u_e)[1].replace(c_e, "'");
 }
 function bn(e, t, n) {
   const r = ur(e, n), a = ur(t, n);
@@ -47850,14 +47790,14 @@ function lP(e, t) {
 function Vd(e, t) {
   const n = Ie(e), r = n.getFullYear(), a = n.getDate(), i = zt(e, 0);
   i.setFullYear(r, t, 15), i.setHours(0, 0, 0, 0);
-  const o = p$e(i);
+  const o = m$e(i);
   return n.setMonth(t, Math.min(a, o)), n;
 }
 function rD(e, t) {
   const n = Ie(e);
   return isNaN(+n) ? zt(e, NaN) : (n.setFullYear(t), n);
 }
-const p_e = Gt({
+const m_e = Gt({
   base: "flex items-center justify-center border border-solid",
   variants: {
     type: {
@@ -47876,29 +47816,29 @@ const p_e = Gt({
     type: "info",
     size: "md"
   }
-}), g_e = ({ icon: e, type: t, size: n }) => {
+}), h_e = ({ icon: e, type: t, size: n }) => {
   const r = {
     critical: Vg,
     warning: yN,
     info: vN,
     positive: n3
   };
-  return /* @__PURE__ */ b("div", { className: p_e({ type: t, size: n }), children: /* @__PURE__ */ b(kt, { icon: e ?? r[t], size: n }) });
+  return /* @__PURE__ */ b("div", { className: m_e({ type: t, size: n }), children: /* @__PURE__ */ b(kt, { icon: e ?? r[t], size: n }) });
 }, Sl = typeof window < "u", Qo = (e, t, n) => {
   const r = document.createElement(e), [a, i] = Array.isArray(t) ? [void 0, t] : [t, n];
   return a && Object.assign(r, a), i == null || i.forEach((o) => r.appendChild(o)), r;
-}, v_e = (e, t) => {
+}, p_e = (e, t) => {
   var n;
   return t === "left" ? e.offsetLeft : (((n = e.offsetParent instanceof HTMLElement ? e.offsetParent : null) == null ? void 0 : n.offsetWidth) ?? 0) - e.offsetWidth - e.offsetLeft;
-}, y_e = (e) => e.offsetWidth > 0 && e.offsetHeight > 0, b_e = (e, t) => {
+}, g_e = (e) => e.offsetWidth > 0 && e.offsetHeight > 0, v_e = (e, t) => {
   Sl && !customElements.get(e) && customElements.define(e, t);
 };
-function w_e(e, t, { reverse: n = !1 } = {}) {
+function y_e(e, t, { reverse: n = !1 } = {}) {
   const r = e.length;
   for (let a = n ? r - 1 : 0; n ? a >= 0 : a < r; n ? a-- : a++)
     t(e[a], a);
 }
-function P_e(e, t, n, r) {
+function b_e(e, t, n, r) {
   const a = t.formatToParts(e);
   n && a.unshift({ type: "prefix", value: n }), r && a.push({ type: "suffix", value: r });
   const i = [], o = [], s = [], u = [], c = {}, d = (v) => `${v}:${c[v] = (c[v] ?? -1) + 1}`;
@@ -47938,14 +47878,14 @@ function P_e(e, t, n, r) {
     value: typeof e == "string" ? parseFloat(e) : e
   };
 }
-const x_e = String.raw, vB = String.raw, M_e = Sl && (() => {
+const w_e = String.raw, vB = String.raw, P_e = Sl && (() => {
   try {
     document.createElement("div").animate({ opacity: 0 }, { easing: "linear(0, 1)" });
   } catch {
     return !1;
   }
   return !0;
-})(), k_e = Sl && typeof CSS < "u" && CSS.supports && CSS.supports("line-height", "mod(1,1)"), aD = Sl && typeof matchMedia < "u" ? matchMedia("(prefers-reduced-motion: reduce)") : null, jg = "--_number-flow-d-opacity", m5 = "--_number-flow-d-width", Ig = "--_number-flow-dx", h5 = "--_number-flow-d", C_e = (() => {
+})(), x_e = Sl && typeof CSS < "u" && CSS.supports && CSS.supports("line-height", "mod(1,1)"), aD = Sl && typeof matchMedia < "u" ? matchMedia("(prefers-reduced-motion: reduce)") : null, jg = "--_number-flow-d-opacity", m5 = "--_number-flow-d-width", Ig = "--_number-flow-dx", h5 = "--_number-flow-d", M_e = (() => {
   try {
     return CSS.registerProperty({
       name: jg,
@@ -47971,12 +47911,12 @@ const x_e = String.raw, vB = String.raw, M_e = Sl && (() => {
   } catch {
     return !1;
   }
-})(), p5 = "var(--number-flow-char-height, 1em)", ro = "var(--number-flow-mask-height, 0.25em)", zM = `calc(${ro} / 2)`, VM = "var(--number-flow-mask-width, 0.5em)", js = `calc(${VM} / var(--scale-x))`, ep = "#000 0, transparent 71%", iD = vB`:host{display:inline-block;direction:ltr;white-space:nowrap;isolation:isolate;line-height:${p5} !important}.number,.number__inner{display:inline-block;transform-origin:left top}:host([data-will-change]) :is(.number,.number__inner,.section,.digit,.digit__num,.symbol){will-change:transform}.number{--scale-x:calc(1 + var(${m5}) / var(--width));transform:translateX(var(${Ig})) scaleX(var(--scale-x));margin:0 calc(-1 * ${VM});position:relative;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 ${js},#000 calc(100% - ${js}),transparent ),linear-gradient(to bottom,transparent 0,#000 ${ro},#000 calc(100% - ${ro}),transparent 100% ),radial-gradient(at bottom right,${ep}),radial-gradient(at bottom left,${ep}),radial-gradient(at top left,${ep}),radial-gradient(at top right,${ep});-webkit-mask-size:100% calc(100% - ${ro} * 2),calc(100% - ${js} * 2) 100%,${js} ${ro},${js} ${ro},${js} ${ro},${js} ${ro};-webkit-mask-position:center,center,top left,top right,bottom right,bottom left;-webkit-mask-repeat:no-repeat}.number__inner{padding:${zM} ${VM};transform:scaleX(calc(1 / var(--scale-x))) translateX(calc(-1 * var(${Ig})))}:host > :not(.number){z-index:5}.section,.symbol{display:inline-block;position:relative;isolation:isolate}.section::after{content:'\200b';display:inline-block}.section--justify-left{transform-origin:center left}.section--justify-right{transform-origin:center right}.section > [inert],.symbol > [inert]{margin:0 !important;position:absolute !important;z-index:-1}.digit{display:inline-block;position:relative;--c:var(--current) + var(${h5})}.digit__num,.number .section::after{padding:${zM} 0}.digit__num{display:inline-block;--offset-raw:mod(var(--length) + var(--n) - mod(var(--c),var(--length)),var(--length));--offset:calc( var(--offset-raw) - var(--length) * round(down,var(--offset-raw) / (var(--length) / 2),1) );--y:clamp(-100%,var(--offset) * 100%,100%);transform:translateY(var(--y))}.digit__num[inert]{position:absolute;top:0;left:50%;transform:translateX(-50%) translateY(var(--y))}.digit:not(.is-spinning) .digit__num[inert]{display:none}.symbol__value{display:inline-block;mix-blend-mode:plus-lighter;white-space:pre}.section--justify-left .symbol > [inert]{left:0}.section--justify-right .symbol > [inert]{right:0}.animate-presence{opacity:calc(1 + var(${jg}))}`, S_e = Sl ? HTMLElement : class {
-}, $_e = vB`:host{display:inline-block;direction:ltr;white-space:nowrap;line-height:${p5} !important}span{display:inline-block}:host([data-will-change]) span{will-change:transform}.number,.digit{padding:${zM} 0}.symbol{white-space:pre}`, __e = (e) => `<span class="${e.type === "integer" || e.type === "fraction" ? "digit" : "symbol"}" part="${e.type === "integer" || e.type === "fraction" ? `digit ${e.type}-digit` : `symbol ${e.type}`}">${e.value}</span>`, tp = (e, t) => `<span part="${t}">${e.reduce((n, r) => n + __e(r), "")}</span>`, T_e = (e) => (
+})(), p5 = "var(--number-flow-char-height, 1em)", ro = "var(--number-flow-mask-height, 0.25em)", zM = `calc(${ro} / 2)`, VM = "var(--number-flow-mask-width, 0.5em)", js = `calc(${VM} / var(--scale-x))`, ep = "#000 0, transparent 71%", iD = vB`:host{display:inline-block;direction:ltr;white-space:nowrap;isolation:isolate;line-height:${p5} !important}.number,.number__inner{display:inline-block;transform-origin:left top}:host([data-will-change]) :is(.number,.number__inner,.section,.digit,.digit__num,.symbol){will-change:transform}.number{--scale-x:calc(1 + var(${m5}) / var(--width));transform:translateX(var(${Ig})) scaleX(var(--scale-x));margin:0 calc(-1 * ${VM});position:relative;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 ${js},#000 calc(100% - ${js}),transparent ),linear-gradient(to bottom,transparent 0,#000 ${ro},#000 calc(100% - ${ro}),transparent 100% ),radial-gradient(at bottom right,${ep}),radial-gradient(at bottom left,${ep}),radial-gradient(at top left,${ep}),radial-gradient(at top right,${ep});-webkit-mask-size:100% calc(100% - ${ro} * 2),calc(100% - ${js} * 2) 100%,${js} ${ro},${js} ${ro},${js} ${ro},${js} ${ro};-webkit-mask-position:center,center,top left,top right,bottom right,bottom left;-webkit-mask-repeat:no-repeat}.number__inner{padding:${zM} ${VM};transform:scaleX(calc(1 / var(--scale-x))) translateX(calc(-1 * var(${Ig})))}:host > :not(.number){z-index:5}.section,.symbol{display:inline-block;position:relative;isolation:isolate}.section::after{content:'\200b';display:inline-block}.section--justify-left{transform-origin:center left}.section--justify-right{transform-origin:center right}.section > [inert],.symbol > [inert]{margin:0 !important;position:absolute !important;z-index:-1}.digit{display:inline-block;position:relative;--c:var(--current) + var(${h5})}.digit__num,.number .section::after{padding:${zM} 0}.digit__num{display:inline-block;--offset-raw:mod(var(--length) + var(--n) - mod(var(--c),var(--length)),var(--length));--offset:calc( var(--offset-raw) - var(--length) * round(down,var(--offset-raw) / (var(--length) / 2),1) );--y:clamp(-100%,var(--offset) * 100%,100%);transform:translateY(var(--y))}.digit__num[inert]{position:absolute;top:0;left:50%;transform:translateX(-50%) translateY(var(--y))}.digit:not(.is-spinning) .digit__num[inert]{display:none}.symbol__value{display:inline-block;mix-blend-mode:plus-lighter;white-space:pre}.section--justify-left .symbol > [inert]{left:0}.section--justify-right .symbol > [inert]{right:0}.animate-presence{opacity:calc(1 + var(${jg}))}`, k_e = Sl ? HTMLElement : class {
+}, C_e = vB`:host{display:inline-block;direction:ltr;white-space:nowrap;line-height:${p5} !important}span{display:inline-block}:host([data-will-change]) span{will-change:transform}.number,.digit{padding:${zM} 0}.symbol{white-space:pre}`, S_e = (e) => `<span class="${e.type === "integer" || e.type === "fraction" ? "digit" : "symbol"}" part="${e.type === "integer" || e.type === "fraction" ? `digit ${e.type}-digit` : `symbol ${e.type}`}">${e.value}</span>`, tp = (e, t) => `<span part="${t}">${e.reduce((n, r) => n + S_e(r), "")}</span>`, $_e = (e) => (
   // shadowroot="open" non-standard attribute for old Chrome:
-  x_e`<template shadowroot="open" shadowrootmode="open"
+  w_e`<template shadowroot="open" shadowrootmode="open"
 			><style>
-				${$_e}</style
+				${C_e}</style
 			><span role="img" aria-label="${e.valueAsString}"
 				>${tp(e.pre, "left")}<span part="number" class="number"
 					>${tp(e.integer, "integer")}${tp(e.fraction, "fraction")}</span
@@ -47986,9 +47926,9 @@ const x_e = String.raw, vB = String.raw, M_e = Sl && (() => {
 			style="font-kerning: none; display: inline-block; line-height: ${p5} !important; padding: ${ro} 0;"
 			>${e.valueAsString}</span
 		>`
-), E_e = k_e && M_e && C_e;
+), __e = x_e && P_e && M_e;
 let np;
-class yB extends S_e {
+class yB extends k_e {
   constructor() {
     super(), this.created = !1, this.batched = !1;
     const { animated: t, ...n } = this.constructor.defaultProps;
@@ -48011,8 +47951,8 @@ class yB extends S_e {
     const { pre: r, integer: a, fraction: i, post: o, value: s } = t;
     if (this.created) {
       const u = this._data;
-      this._data = t, this.computedTrend = typeof this.trend == "function" ? this.trend(u.value, s) : this.trend, this.computedAnimated = E_e && this._animated && (!this.respectMotionPreference || !(aD != null && aD.matches)) && // https://github.com/barvian/number-flow/issues/9
-      y_e(this), (n = this.plugins) == null || n.forEach((c) => {
+      this._data = t, this.computedTrend = typeof this.trend == "function" ? this.trend(u.value, s) : this.trend, this.computedAnimated = __e && this._animated && (!this.respectMotionPreference || !(aD != null && aD.matches)) && // https://github.com/barvian/number-flow/issues/9
+      g_e(this), (n = this.plugins) == null || n.forEach((c) => {
         var d;
         return (d = c.onUpdate) == null ? void 0 : d.call(c, t, u, this);
       }), this.batched || this.willUpdate(), this._pre.update(r), this._num.update({ integer: a, fraction: i }), this._post.update(o), this.batched || this.didUpdate();
@@ -48031,7 +47971,7 @@ class yB extends S_e {
       this._pre = new sD(this, r, {
         justify: "right",
         part: "left"
-      }), this.shadowRoot.appendChild(this._pre.el), this._num = new A_e(this, a, i), this.shadowRoot.appendChild(this._num.el), this._post = new sD(this, o, {
+      }), this.shadowRoot.appendChild(this._pre.el), this._num = new T_e(this, a, i), this.shadowRoot.appendChild(this._num.el), this._post = new sD(this, o, {
         justify: "left",
         part: "right"
       }), this.shadowRoot.appendChild(this._post.el), this.created = !0;
@@ -48074,7 +48014,7 @@ yB.defaultProps = {
   plugins: void 0,
   digits: void 0
 };
-class A_e {
+class T_e {
   constructor(t, n, r, { className: a, ...i } = {}) {
     this.flow = t, this._integer = new oD(t, n, {
       justify: "right",
@@ -48124,7 +48064,7 @@ class bB {
     const a = t.type === "integer" || t.type === "fraction" ? new PB(this, t.type, n ? 0 : t.value, t.pos, {
       ...r,
       onRemove: this.onCharRemove(t.key)
-    }) : new O_e(this, t.type, t.value, {
+    }) : new E_e(this, t.type, t.value, {
       ...r,
       onRemove: this.onCharRemove(t.key)
     });
@@ -48135,14 +48075,14 @@ class bB {
   }
   pop(t) {
     t.forEach((n) => {
-      n.el.style.top = `${n.el.offsetTop}px`, n.el.style[this.justify] = `${v_e(n.el, this.justify)}px`;
+      n.el.style.top = `${n.el.offsetTop}px`, n.el.style[this.justify] = `${p_e(n.el, this.justify)}px`;
     }), t.forEach((n) => {
       n.el.setAttribute("inert", ""), n.present = !1;
     });
   }
   addNewAndUpdateExisting(t) {
     const n = /* @__PURE__ */ new Map(), r = /* @__PURE__ */ new Map(), a = this.justify === "left", i = a ? "prepend" : "append";
-    if (w_e(t, (o) => {
+    if (y_e(t, (o) => {
       let s;
       this.children.has(o.key) ? (s = this.children.get(o.key), r.set(o, s), this.unpop(s), s.present = !0) : (s = this.addChar(o, { startDigitsAtZero: !0, animateIn: !0 }), n.set(o, s)), this.el[i](s.el);
     }, { reverse: a }), this.flow.computedAnimated) {
@@ -48281,7 +48221,7 @@ class PB extends wB {
     return r < 0 && this.value > this._prevValue ? this.value - this.length - this._prevValue : r > 0 && this.value < this._prevValue ? this.length - this._prevValue + this.value : n;
   }
 }
-class O_e extends wB {
+class E_e extends wB {
   constructor(t, n, r, a) {
     const i = Qo("span", {
       className: "symbol__value",
@@ -48332,7 +48272,7 @@ class O_e extends wB {
   }
 }
 var eN;
-const D_e = parseInt((eN = T.version.match(/^(\d+)\./)) == null ? void 0 : eN[1]), g5 = D_e >= 19, N_e = [
+const A_e = parseInt((eN = T.version.match(/^(\d+)\./)) == null ? void 0 : eN[1]), g5 = A_e >= 19, O_e = [
   "data",
   "digits"
 ];
@@ -48341,8 +48281,8 @@ class v5 extends yB {
     this[t] = JSON.parse(r);
   }
 }
-v5.observedAttributes = g5 ? [] : N_e;
-b_e("number-flow-react", v5);
+v5.observedAttributes = g5 ? [] : O_e;
+v_e("number-flow-react", v5);
 const dP = {}, uD = g5 ? (e) => e : JSON.stringify;
 function cD(e) {
   const { transformTiming: t, spinTiming: n, opacityTiming: r, animated: a, respectMotionPreference: i, trend: o, plugins: s, ...u } = e;
@@ -48359,7 +48299,7 @@ function cD(e) {
     u
   ];
 }
-class W_e extends T.Component {
+class D_e extends T.Component {
   // Update the non-`data` props to avoid JSON serialization
   // Data needs to be set in render still:
   updateProperties(t) {
@@ -48406,7 +48346,7 @@ class W_e extends T.Component {
         class: r,
         ...f,
         dangerouslySetInnerHTML: {
-          __html: Sl ? "" : T_e(a)
+          __html: Sl ? "" : $_e(a)
         },
         suppressHydrationWarning: !0,
         digits: uD(u),
@@ -48419,9 +48359,9 @@ class W_e extends T.Component {
     super(t), this.handleRef = this.handleRef.bind(this);
   }
 }
-const R_e = /* @__PURE__ */ T.forwardRef(function({ value: t, locales: n, format: r, prefix: a, suffix: i, ...o }, s) {
+const N_e = /* @__PURE__ */ T.forwardRef(function({ value: t, locales: n, format: r, prefix: a, suffix: i, ...o }, s) {
   T.useImperativeHandle(s, () => u.current, []);
-  const u = T.useRef(), c = T.useContext(j_e);
+  const u = T.useRef(), c = T.useContext(W_e);
   c == null || c.useRegister(u);
   const d = T.useMemo(() => n ? JSON.stringify(n) : "", [
     n
@@ -48430,7 +48370,7 @@ const R_e = /* @__PURE__ */ T.forwardRef(function({ value: t, locales: n, format
   ]), h = T.useMemo(() => {
     var g;
     const p = dP[g = `${d}:${f}`] ?? (dP[g] = new Intl.NumberFormat(n, r));
-    return P_e(t, p, a, i);
+    return b_e(t, p, a, i);
   }, [
     t,
     d,
@@ -48438,13 +48378,13 @@ const R_e = /* @__PURE__ */ T.forwardRef(function({ value: t, locales: n, format
     a,
     i
   ]);
-  return /* @__PURE__ */ T.createElement(W_e, {
+  return /* @__PURE__ */ T.createElement(D_e, {
     ...o,
     group: c,
     data: h,
     innerRef: u
   });
-}), j_e = /* @__PURE__ */ T.createContext(void 0), I_e = Gt({
+}), W_e = /* @__PURE__ */ T.createContext(void 0), R_e = Gt({
   base: "inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all",
   variants: {
     size: {
@@ -48464,7 +48404,7 @@ const R_e = /* @__PURE__ */ T.forwardRef(function({ value: t, locales: n, format
 });
 function xB({ size: e, type: t, value: n, maxValue: r }) {
   const a = r && n > r ? `+${r}` : n;
-  return /* @__PURE__ */ b("div", { className: ue("text-f1-foreground", I_e({ size: e, type: t })), children: a });
+  return /* @__PURE__ */ b("div", { className: ue("text-f1-foreground", R_e({ size: e, type: t })), children: a });
 }
 const MB = Wt(null);
 function x2t({ children: e, layout: t }) {
@@ -48522,13 +48462,13 @@ function k2t({
     }
   ) }) });
 }
-function L_e(e) {
+function j_e(e) {
   return Object.prototype.toString.call(e) === "[object Object]";
 }
 function lD(e) {
-  return L_e(e) || Array.isArray(e);
+  return j_e(e) || Array.isArray(e);
 }
-function F_e() {
+function I_e() {
   return !!(typeof window < "u" && window.document && window.document.createElement);
 }
 function y5(e, t) {
@@ -48543,7 +48483,7 @@ function y5(e, t) {
 function dD(e) {
   return e.concat().sort((t, n) => t.name > n.name ? 1 : -1).map((t) => t.options);
 }
-function z_e(e, t) {
+function L_e(e, t) {
   if (e.length !== t.length) return !1;
   const n = dD(e), r = dD(t);
   return n.every((a, i) => {
@@ -48572,12 +48512,12 @@ function w5(e) {
 function Hd(e, t) {
   return dn(e - t);
 }
-function V_e(e, t) {
+function F_e(e, t) {
   if (e === 0 || t === 0 || dn(e) <= dn(t)) return 0;
   const n = Hd(dn(e), dn(t));
   return dn(n / e);
 }
-function H_e(e) {
+function z_e(e) {
   return Math.round(e * 100) / 100;
 }
 function zf(e) {
@@ -48607,7 +48547,7 @@ function kB(e, t) {
 function qM(e, t) {
   return typeof t.MouseEvent < "u" && e instanceof t.MouseEvent;
 }
-function B_e(e, t) {
+function V_e(e, t) {
   const n = {
     start: r,
     center: a,
@@ -48652,7 +48592,7 @@ function Hf() {
   };
   return r;
 }
-function q_e(e, t, n, r) {
+function H_e(e, t, n, r) {
   const a = Hf(), i = 1e3 / 60;
   let o = null, s = 0, u = 0;
   function c() {
@@ -48690,7 +48630,7 @@ function q_e(e, t, n, r) {
     render: r
   };
 }
-function X_e(e, t) {
+function B_e(e, t) {
   const n = t === "rtl", r = e === "y", a = r ? "y" : "x", i = r ? "x" : "y", o = !r && n ? -1 : 1, s = d(), u = f();
   function c(g) {
     const {
@@ -48773,7 +48713,7 @@ function CB(e, t, n) {
   };
   return f;
 }
-function G_e(e, t, n, r, a, i, o, s, u, c, d, f, h, p, g, v, y, P, M) {
+function q_e(e, t, n, r, a, i, o, s, u, c, d, f, h, p, g, v, y, P, M) {
   const {
     cross: k,
     direction: C
@@ -48828,7 +48768,7 @@ function G_e(e, t, n, r, a, i, o, s, u, c, d, f, h, p, g, v, y, P, M) {
     Re > v && (Y = !0), c.useFriction(0.3).useDuration(0.75), s.start(), a.add(C(it)), G.preventDefault();
   }
   function me(G) {
-    const Z = d.byDistance(0, !1).index !== f.get(), _e = i.pointerUp(G) * fe(), Re = le(C(_e), Z), De = V_e(_e, Re), it = L - 10 * De, nt = P + De / 50;
+    const Z = d.byDistance(0, !1).index !== f.get(), _e = i.pointerUp(G) * fe(), Re = le(C(_e), Z), De = F_e(_e, Re), it = L - 10 * De, nt = P + De / 50;
     X = !1, K = !1, E.clear(), c.useDuration(it).useFriction(nt), u.distance(Re, !g), ee = !1, h.emit("pointerUp");
   }
   function se(G) {
@@ -48843,7 +48783,7 @@ function G_e(e, t, n, r, a, i, o, s, u, c, d, f, h, p, g, v, y, P, M) {
     pointerDown: he
   };
 }
-function Y_e(e, t) {
+function X_e(e, t) {
   let r, a;
   function i(f) {
     return f.timeStamp;
@@ -48871,7 +48811,7 @@ function Y_e(e, t) {
     readPoint: o
   };
 }
-function U_e() {
+function G_e() {
   function e(n) {
     const {
       offsetTop: r,
@@ -48892,7 +48832,7 @@ function U_e() {
     measure: e
   };
 }
-function K_e(e) {
+function Y_e(e) {
   function t(r) {
     return e * (r / 100);
   }
@@ -48900,7 +48840,7 @@ function K_e(e) {
     measure: t
   };
 }
-function Q_e(e, t, n, r, a, i, o) {
+function U_e(e, t, n, r, a, i, o) {
   const s = [e].concat(r);
   let u, c, d = [], f = !1;
   function h(y) {
@@ -48933,7 +48873,7 @@ function Q_e(e, t, n, r, a, i, o) {
     destroy: g
   };
 }
-function Z_e(e, t, n, r, a, i) {
+function K_e(e, t, n, r, a, i) {
   let o = 0, s = 0, u = a, c = i, d = e.get(), f = 0;
   function h() {
     const S = r.get() - e.get(), $ = !u;
@@ -48978,7 +48918,7 @@ function Z_e(e, t, n, r, a, i) {
   };
   return x;
 }
-function J_e(e, t, n, r, a) {
+function Q_e(e, t, n, r, a) {
   const i = a.measure(10), o = a.measure(50), s = fu(0.1, 0.99);
   let u = !1;
   function c() {
@@ -48998,7 +48938,7 @@ function J_e(e, t, n, r, a) {
     toggleActive: f
   };
 }
-function e6e(e, t, n, r, a) {
+function Z_e(e, t, n, r, a) {
   const i = fu(-t + e, 0), o = f(), s = d(), u = h();
   function c(g, v) {
     return Hd(g, v) <= 1;
@@ -49030,13 +48970,13 @@ function e6e(e, t, n, r, a) {
     scrollContainLimit: s
   };
 }
-function t6e(e, t, n) {
+function J_e(e, t, n) {
   const r = t[0], a = n ? r - e : mi(t);
   return {
     limit: fu(a, r)
   };
 }
-function n6e(e, t, n, r) {
+function e6e(e, t, n, r) {
   const i = t.min + 0.1, o = t.max + 0.1, {
     reachedMin: s,
     reachedMax: u
@@ -49053,7 +48993,7 @@ function n6e(e, t, n, r) {
     loop: d
   };
 }
-function r6e(e) {
+function t6e(e) {
   const {
     max: t,
     length: n
@@ -49066,7 +49006,7 @@ function r6e(e) {
     get: r
   };
 }
-function a6e(e, t, n, r, a) {
+function n6e(e, t, n, r, a) {
   const {
     startEdge: i,
     endEdge: o
@@ -49087,7 +49027,7 @@ function a6e(e, t, n, r, a) {
     snapsAligned: d
   };
 }
-function i6e(e, t, n, r, a, i) {
+function r6e(e, t, n, r, a, i) {
   const {
     groupSlides: o
   } = a, {
@@ -49113,7 +49053,7 @@ function i6e(e, t, n, r, a, i) {
     slideRegistry: c
   };
 }
-function o6e(e, t, n, r, a) {
+function a6e(e, t, n, r, a) {
   const {
     reachedAny: i,
     removeOffset: o,
@@ -49169,7 +49109,7 @@ function o6e(e, t, n, r, a) {
     shortcut: d
   };
 }
-function s6e(e, t, n, r, a, i, o) {
+function i6e(e, t, n, r, a, i, o) {
   function s(f) {
     const h = f.distance, p = f.index !== t.get();
     i.add(h), h && (r.duration() ? e.start() : (e.update(), e.render(1), e.update())), p && (n.set(t.get()), t.set(f.index), o.emit("select"));
@@ -49187,7 +49127,7 @@ function s6e(e, t, n, r, a, i, o) {
     index: c
   };
 }
-function u6e(e, t, n, r, a, i, o, s) {
+function o6e(e, t, n, r, a, i, o, s) {
   const u = {
     passive: !0,
     capture: !0
@@ -49249,7 +49189,7 @@ function SB(e, t) {
   }
   function u(h) {
     if (i) return;
-    const p = H_e(e.direction(h));
+    const p = z_e(e.direction(h));
     p !== a && (r.transform = n(p), a = p);
   }
   function c(h) {
@@ -49264,7 +49204,7 @@ function SB(e, t) {
     toggleActive: c
   };
 }
-function c6e(e, t, n, r, a, i, o, s, u) {
+function s6e(e, t, n, r, a, i, o, s, u) {
   const d = zf(a), f = zf(a).reverse(), h = P().concat(M());
   function p($, E) {
     return $.reduce((O, H) => O - a[H], E);
@@ -49327,7 +49267,7 @@ function c6e(e, t, n, r, a, i, o, s, u) {
     loopPoints: h
   };
 }
-function l6e(e, t, n) {
+function u6e(e, t, n) {
   let r, a = !1;
   function i(u) {
     if (!n) return;
@@ -49352,7 +49292,7 @@ function l6e(e, t, n) {
     destroy: o
   };
 }
-function d6e(e, t, n, r) {
+function c6e(e, t, n, r) {
   const a = {};
   let i = null, o = null, s, u = !1;
   function c() {
@@ -49389,7 +49329,7 @@ function d6e(e, t, n, r) {
     get: h
   };
 }
-function f6e(e, t, n, r, a, i) {
+function l6e(e, t, n, r, a, i) {
   const {
     measureSize: o,
     startEdge: s,
@@ -49418,7 +49358,7 @@ function f6e(e, t, n, r, a, i) {
     endGap: f
   };
 }
-function m6e(e, t, n, r, a, i, o, s, u) {
+function d6e(e, t, n, r, a, i, o, s, u) {
   const {
     startEdge: c,
     endEdge: d,
@@ -49443,7 +49383,7 @@ function m6e(e, t, n, r, a, i, o, s, u) {
     groupSlides: v
   };
 }
-function h6e(e, t, n, r, a, i, o) {
+function f6e(e, t, n, r, a, i, o) {
   const {
     align: s,
     axis: u,
@@ -49461,20 +49401,20 @@ function h6e(e, t, n, r, a, i, o) {
     watchSlides: C,
     watchDrag: x,
     watchFocus: S
-  } = i, $ = 2, E = U_e(), O = E.measure(t), H = n.map(E.measure), j = X_e(u, c), L = j.measureSize(O), F = K_e(L), B = B_e(s, L), U = !f && !!M, K = f || !!M, {
+  } = i, $ = 2, E = G_e(), O = E.measure(t), H = n.map(E.measure), j = B_e(u, c), L = j.measureSize(O), F = Y_e(L), B = V_e(s, L), U = !f && !!M, K = f || !!M, {
     slideSizes: X,
     slideSizesWithGaps: Y,
     startGap: ee,
     endGap: R
-  } = f6e(j, O, H, n, K, a), W = m6e(j, L, y, f, O, H, ee, R, $), {
+  } = l6e(j, O, H, n, K, a), W = d6e(j, L, y, f, O, H, ee, R, $), {
     snaps: ne,
     snapsAligned: ae
-  } = a6e(j, B, O, H, W), fe = -mi(ne) + mi(Y), {
+  } = n6e(j, B, O, H, W), fe = -mi(ne) + mi(Y), {
     snapsContained: le,
     scrollContainLimit: pe
-  } = e6e(L, fe, ae, M, $), ce = U ? le : ae, {
+  } = Z_e(L, fe, ae, M, $), ce = U ? le : ae, {
     limit: me
-  } = t6e(fe, ce, f), se = CB(wm(ce), d, f), he = se.clone(), ge = zf(n), G = ({
+  } = J_e(fe, ce, f), se = CB(wm(ce), d, f), he = se.clone(), ge = zf(n), G = ({
     dragHandler: _n,
     scrollBody: cr,
     scrollBounds: Tn,
@@ -49503,9 +49443,9 @@ function h6e(e, t, n, r, a, i, o) {
     An && ws.stop();
     const Qn = Tn.get() * Qe + rr.get() * (1 - Qe);
     Kn.set(Qn), vt && (zr.loop(_n.direction()), Ga.loop()), cr.to(Kn.get()), An && Fe.emit("settle"), ut || Fe.emit("scroll");
-  }, Z = q_e(r, a, () => G(yr), (_n) => Pe(yr, _n)), _e = 0.68, Re = ce[se.get()], De = Ed(Re), it = Ed(Re), nt = Ed(Re), st = Ed(Re), yt = Z_e(De, nt, it, st, h, _e), Ut = o6e(f, ce, fe, me, st), en = s6e(Z, se, he, yt, Ut, st, o), Rn = r6e(me), tn = Hf(), Gn = d6e(t, n, o, v), {
+  }, Z = H_e(r, a, () => G(yr), (_n) => Pe(yr, _n)), _e = 0.68, Re = ce[se.get()], De = Ed(Re), it = Ed(Re), nt = Ed(Re), st = Ed(Re), yt = K_e(De, nt, it, st, h, _e), Ut = a6e(f, ce, fe, me, st), en = i6e(Z, se, he, yt, Ut, st, o), Rn = t6e(me), tn = Hf(), Gn = c6e(t, n, o, v), {
     slideRegistry: Yn
-  } = i6e(U, M, ce, pe, W, ge), Un = u6e(e, n, Yn, en, yt, tn, o, S), yr = {
+  } = r6e(U, M, ce, pe, W, ge), Un = o6e(e, n, Yn, en, yt, tn, o, S), yr = {
     ownerDocument: r,
     ownerWindow: a,
     eventHandler: o,
@@ -49513,7 +49453,7 @@ function h6e(e, t, n, r, a, i, o) {
     slideRects: H,
     animation: Z,
     axis: j,
-    dragHandler: G_e(j, e, r, a, st, Y_e(j, a), De, Z, en, yt, Ut, se, o, F, p, g, P, _e, x),
+    dragHandler: q_e(j, e, r, a, st, X_e(j, a), De, Z, en, yt, Ut, se, o, F, p, g, P, _e, x),
     eventStore: tn,
     percentOfView: F,
     index: se,
@@ -49523,18 +49463,18 @@ function h6e(e, t, n, r, a, i, o) {
     offsetLocation: nt,
     previousLocation: it,
     options: i,
-    resizeHandler: Q_e(t, o, a, n, j, k, E),
+    resizeHandler: U_e(t, o, a, n, j, k, E),
     scrollBody: yt,
-    scrollBounds: J_e(me, nt, st, yt, F),
-    scrollLooper: n6e(fe, me, nt, [De, nt, it, st]),
+    scrollBounds: Q_e(me, nt, st, yt, F),
+    scrollLooper: e6e(fe, me, nt, [De, nt, it, st]),
     scrollProgress: Rn,
     scrollSnapList: ce.map(Rn.get),
     scrollSnaps: ce,
     scrollTarget: Ut,
     scrollTo: en,
-    slideLooper: c6e(j, L, fe, X, Y, ne, ce, nt, n),
+    slideLooper: s6e(j, L, fe, X, Y, ne, ce, nt, n),
     slideFocus: Un,
-    slidesHandler: l6e(t, o, C),
+    slidesHandler: u6e(t, o, C),
     slidesInView: Gn,
     slideIndexes: ge,
     slideRegistry: Yn,
@@ -49544,7 +49484,7 @@ function h6e(e, t, n, r, a, i, o) {
   };
   return yr;
 }
-function p6e() {
+function m6e() {
   let e = {}, t;
   function n(c) {
     t = c;
@@ -49573,7 +49513,7 @@ function p6e() {
   };
   return u;
 }
-const g6e = {
+const h6e = {
   align: "center",
   axis: "x",
   container: null,
@@ -49595,7 +49535,7 @@ const g6e = {
   watchSlides: !0,
   watchFocus: !0
 };
-function v6e(e) {
+function p6e(e) {
   function t(i, o) {
     return kB(i, o || {});
   }
@@ -49612,7 +49552,7 @@ function v6e(e) {
     optionsMediaQueries: r
   };
 }
-function y6e(e) {
+function g6e(e) {
   let t = [];
   function n(i, o) {
     return t = o.filter(({
@@ -49630,7 +49570,7 @@ function y6e(e) {
   };
 }
 function Lg(e, t, n) {
-  const r = e.ownerDocument, a = r.defaultView, i = v6e(a), o = y6e(i), s = Hf(), u = p6e(), {
+  const r = e.ownerDocument, a = r.defaultView, i = p6e(a), o = g6e(i), s = Hf(), u = m6e(), {
     mergeOptions: c,
     optionsAtMedia: d,
     optionsMediaQueries: f
@@ -49639,7 +49579,7 @@ function Lg(e, t, n) {
     off: p,
     emit: g
   } = u, v = j;
-  let y = !1, P, M = c(g6e, Lg.globalOptions), k = c(M), C = [], x, S, $;
+  let y = !1, P, M = c(h6e, Lg.globalOptions), k = c(M), C = [], x, S, $;
   function E() {
     const {
       container: ge,
@@ -49650,7 +49590,7 @@ function Lg(e, t, n) {
     $ = [].slice.call(Z || S.children);
   }
   function O(ge) {
-    const G = h6e(e, S, $, r, a, ge, u);
+    const G = f6e(e, S, $, r, a, ge, u);
     if (ge.loop && !G.slideLooper.canLoop()) {
       const Pe = Object.assign({}, ge, {
         loop: !1
@@ -49759,9 +49699,9 @@ function x5(e = {}, t = []) {
   return Je(() => {
     y5(n.current, e) || (n.current = e, u());
   }, [e, u]), Je(() => {
-    z_e(r.current, t) || (r.current = t, u());
+    L_e(r.current, t) || (r.current = t, u());
   }, [t, u]), Je(() => {
-    if (F_e() && o) {
+    if (I_e() && o) {
       Lg.globalOptions = x5.globalOptions;
       const c = Lg(o, n.current, r.current);
       return i(c), () => c.destroy();
@@ -49770,7 +49710,7 @@ function x5(e = {}, t = []) {
   }, [o, i]), [s, a];
 }
 x5.globalOptions = void 0;
-const hn = 28, hD = 16, b6e = ({ children: e }) => {
+const hn = 28, hD = 16, v6e = ({ children: e }) => {
   const t = bt(null), [n, r] = We(!0), [a, i] = We(!1);
   hu(() => {
     const d = t.current;
@@ -50159,7 +50099,7 @@ const DB = T.forwardRef(({ ...e }, t) => {
   ) });
 });
 DB.displayName = "CarouselDots";
-const w6e = {
+const y6e = {
   active: !0,
   breakpoints: {},
   delay: 4e3,
@@ -50171,11 +50111,11 @@ const w6e = {
   stopOnLastSnap: !1,
   rootNode: null
 };
-function P6e(e, t) {
+function b6e(e, t) {
   const n = e.scrollSnapList();
   return typeof t == "number" ? n.map(() => t) : t(n, e);
 }
-function x6e(e, t) {
+function w6e(e, t) {
   const n = e.rootNode();
   return t && t(n) || n;
 }
@@ -50186,13 +50126,13 @@ function M5(e = {}) {
     const {
       mergeOptions: K,
       optionsAtMedia: X
-    } = U, Y = K(w6e, M5.globalOptions), ee = K(Y, e);
+    } = U, Y = K(y6e, M5.globalOptions), ee = K(Y, e);
     if (t = X(ee), n.scrollSnapList().length <= 1) return;
-    d = t.jump, r = !1, a = P6e(n, t.delay);
+    d = t.jump, r = !1, a = b6e(n, t.delay);
     const {
       eventStore: R,
       ownerDocument: W
-    } = n.internalEngine(), ne = !!n.internalEngine().options.watchDrag, ae = x6e(n, t.rootNode);
+    } = n.internalEngine(), ne = !!n.internalEngine().options.watchDrag, ae = w6e(n, t.rootNode);
     R.add(W, "visibilitychange", P), ne && n.on("pointerDown", k), ne && !t.stopOnInteraction && n.on("pointerUp", C), t.stopOnMouseEnter && R.add(ae, "mouseenter", x), t.stopOnMouseEnter && !t.stopOnInteraction && R.add(ae, "mouseleave", S), t.stopOnFocusIn && n.on("slideFocusStart", y), t.stopOnFocusIn && !t.stopOnInteraction && R.add(n.containerNode(), "focusout", v), t.playOnInit && v();
   }
   function h() {
@@ -50292,18 +50232,18 @@ function ru() {
     return e;
   }, ru.apply(this, arguments);
 }
-var M6e = 0.996, k6e = function(t, n) {
-  return n === void 0 && (n = M6e), t * n / (1 - n);
+var P6e = 0.996, x6e = function(t, n) {
+  return n === void 0 && (n = P6e), t * n / (1 - n);
 };
-function C6e(e) {
+function M6e(e) {
   return e[e.length - 1];
 }
-function S6e(e) {
+function k6e(e) {
   return e.reduce(function(t, n) {
     return t + n;
   }) / e.length;
 }
-var $6e = function(t, n, r) {
+var C6e = function(t, n, r) {
   return Math.min(Math.max(n, t), r);
 };
 function fP(e, t) {
@@ -50321,7 +50261,7 @@ function rl(e) {
     t !== null && typeof t == "object" && !Object.isFrozen(t) && rl(t);
   }), e;
 }
-function _6e() {
+function S6e() {
   var e = {};
   function t(a, i) {
     return e[a] = (e[a] || []).concat(i), function() {
@@ -50344,7 +50284,7 @@ function _6e() {
     dispatch: r
   });
 }
-function T6e(e) {
+function $6e(e) {
   var t = [], n = function(o) {
     return o.addEventListener("wheel", e, {
       passive: !1
@@ -50364,19 +50304,19 @@ function T6e(e) {
     disconnect: a
   });
 }
-var E6e = 16 * 1.125, A6e = typeof window < "u" && window.innerHeight || 800, mP = [1, E6e, A6e];
-function O6e(e) {
+var _6e = 16 * 1.125, T6e = typeof window < "u" && window.innerHeight || 800, mP = [1, _6e, T6e];
+function E6e(e) {
   var t = e.deltaX * mP[e.deltaMode], n = e.deltaY * mP[e.deltaMode], r = (e.deltaZ || 0) * mP[e.deltaMode];
   return {
     timeStamp: e.timeStamp,
     axisDelta: [t, n, r]
   };
 }
-var D6e = [-1, -1, -1];
-function N6e(e, t) {
+var A6e = [-1, -1, -1];
+function O6e(e, t) {
   if (!t)
     return e;
-  var n = t === !0 ? D6e : t.map(function(r) {
+  var n = t === !0 ? A6e : t.map(function(r) {
     return r ? -1 : 1;
   });
   return ru({}, e, {
@@ -50385,16 +50325,16 @@ function N6e(e, t) {
     })
   });
 }
-var W6e = 700, R6e = function(t) {
+var D6e = 700, N6e = function(t) {
   return ru({}, t, {
     axisDelta: t.axisDelta.map(function(n) {
-      return $6e(n, -700, W6e);
+      return C6e(n, -700, D6e);
     })
   });
-}, hP = process.env.NODE_ENV !== "production", j6e = 0.6, I6e = 0.96, L6e = 2, gD = 5, vD = /* @__PURE__ */ rl({
+}, hP = process.env.NODE_ENV !== "production", W6e = 0.6, R6e = 0.96, j6e = 2, gD = 5, vD = /* @__PURE__ */ rl({
   preventWheelAction: !0,
   reverseSign: [!0, !0, !1]
-}), F6e = 400;
+}), I6e = 400;
 function yD() {
   return {
     isStarted: !1,
@@ -50407,12 +50347,12 @@ function yD() {
     accelerationFactors: [],
     scrollPoints: [],
     scrollPointsToMerge: [],
-    willEndTimeout: F6e
+    willEndTimeout: I6e
   };
 }
-function z6e(e) {
+function L6e(e) {
   e === void 0 && (e = {});
-  var t = _6e(), n = t.on, r = t.off, a = t.dispatch, i = vD, o = yD(), s, u = !1, c, d = function(B) {
+  var t = S6e(), n = t.on, r = t.off, a = t.dispatch, i = vD, o = yD(), s, u = !1, c, d = function(B) {
     Array.isArray(B) ? B.forEach(function(U) {
       return g(U);
     }) : g(B);
@@ -50432,7 +50372,7 @@ function z6e(e) {
       axisMovement: o.axisMovement,
       get axisMovementProjection() {
         return fP(U.axisMovement, U.axisVelocity.map(function(K) {
-          return k6e(K);
+          return x6e(K);
         }));
       }
     }, B);
@@ -50453,7 +50393,7 @@ function z6e(e) {
         return hP && console.warn("unsupported preventWheelAction value: " + X, "warn"), !1;
     }
   }, g = function(B) {
-    var U = R6e(N6e(O6e(B), i.reverseSign)), K = U.axisDelta, X = U.timeStamp, Y = pD(K);
+    var U = N6e(O6e(E6e(B), i.reverseSign)), K = U.axisDelta, X = U.timeStamp, Y = pD(K);
     if (B.preventDefault && p(Y, K) && B.preventDefault(), o.isStarted ? o.isMomentum && Y > Math.max(2, o.lastAbsDelta * 2) && (E(!0), S()) : S(), Y === 0 && Object.is && Object.is(B.deltaX, -0)) {
       u = !0;
       return;
@@ -50466,16 +50406,16 @@ function z6e(e) {
       isStart: !o.isStartPublished
     }), o.isStartPublished = !0, $();
   }, v = function() {
-    o.scrollPointsToMerge.length === L6e ? (o.scrollPoints.unshift({
+    o.scrollPointsToMerge.length === j6e ? (o.scrollPoints.unshift({
       axisDeltaSum: o.scrollPointsToMerge.map(function(B) {
         return B.axisDelta;
       }).reduce(fP),
-      timeStamp: S6e(o.scrollPointsToMerge.map(function(B) {
+      timeStamp: k6e(o.scrollPointsToMerge.map(function(B) {
         return B.timeStamp;
       }))
     }), P(), o.scrollPointsToMerge.length = 0, o.scrollPoints.length = 1, o.isMomentum || C()) : o.isStartPublished || y();
   }, y = function() {
-    o.axisVelocity = C6e(o.scrollPointsToMerge).axisDelta.map(function(B) {
+    o.axisVelocity = M6e(o.scrollPointsToMerge).axisDelta.map(function(B) {
       return B / o.willEndTimeout;
     });
   }, P = function() {
@@ -50497,7 +50437,7 @@ function z6e(e) {
     var U = Math.ceil(B / 10) * 10 * 1.2;
     o.isMomentum || (U = Math.max(100, U * 2)), o.willEndTimeout = Math.min(1e3, Math.round(U));
   }, k = function(B) {
-    return B === 0 ? !0 : B <= I6e && B >= j6e;
+    return B === 0 ? !0 : B <= R6e && B >= W6e;
   }, C = function() {
     if (o.accelerationFactors.length >= gD) {
       if (u && (u = !1, pD(o.axisVelocity) >= 0.2)) {
@@ -50528,7 +50468,7 @@ function z6e(e) {
     }) : h({
       isEnding: !0
     }), o.isMomentum = !1, o.isStarted = !1);
-  }, O = T6e(d), H = O.observe, j = O.unobserve, L = O.disconnect;
+  }, O = $6e(d), H = O.observe, j = O.unobserve, L = O.disconnect;
   return f(e), rl({
     on: n,
     off: r,
@@ -50539,7 +50479,7 @@ function z6e(e) {
     updateOptions: f
   });
 }
-var V6e = {
+var F6e = {
   active: !0,
   breakpoints: {},
   wheelDraggingClass: "is-wheel-dragging",
@@ -50547,15 +50487,15 @@ var V6e = {
   target: void 0
 };
 k5.globalOptions = void 0;
-var H6e = process.env.NODE_ENV !== "production";
+var z6e = process.env.NODE_ENV !== "production";
 function k5(e) {
   e === void 0 && (e = {});
   var t, n = function() {
   };
   function r(i, o) {
-    var s, u, c = o.mergeOptions, d = o.optionsAtMedia, f = c(V6e, k5.globalOptions), h = c(f, e);
+    var s, u, c = o.mergeOptions, d = o.optionsAtMedia, f = c(F6e, k5.globalOptions), h = c(f, e);
     t = d(h);
-    var p = i.internalEngine(), g = (s = t.target) != null ? s : i.containerNode().parentNode, v = (u = t.forceWheelAxis) != null ? u : p.options.axis, y = z6e({
+    var p = i.internalEngine(), g = (s = t.target) != null ? s : i.containerNode().parentNode, v = (u = t.forceWheelAxis) != null ? u : p.options.axis, y = L6e({
       preventWheelAction: v,
       reverseSign: [!0, !0, !1]
     }), P = y.observe(g), M = y.on("wheel", L), k = !1, C;
@@ -50563,7 +50503,7 @@ function k5(e) {
       try {
         C = new MouseEvent("mousedown", F.event), j(C);
       } catch {
-        return H6e && console.warn("Legacy browser requires events-polyfill (https://github.com/xiel/embla-carousel-wheel-gestures#legacy-browsers)"), n();
+        return z6e && console.warn("Legacy browser requires events-polyfill (https://github.com/xiel/embla-carousel-wheel-gestures#legacy-browsers)"), n();
       }
       k = !0, $(), t.wheelDraggingClass && g.classList.add(t.wheelDraggingClass);
     }
@@ -50626,7 +50566,7 @@ function k5(e) {
   };
   return a;
 }
-const B6e = Gt({
+const V6e = Gt({
   variants: {
     peek: { true: "", false: "" },
     default: {
@@ -50754,7 +50694,7 @@ const C2t = ({
             return /* @__PURE__ */ b(
               EB,
               {
-                className: B6e({
+                className: V6e({
                   default: md(t.default, o),
                   xs: md(
                     t.xs,
@@ -50791,8 +50731,8 @@ const C2t = ({
         r && /* @__PURE__ */ b(DB, {})
       ] })
     }
-  ) : /* @__PURE__ */ b(b6e, { children: e });
-}, q6e = {
+  ) : /* @__PURE__ */ b(v6e, { children: e });
+}, H6e = {
   lessThanXSeconds: {
     one: "minder as 'n sekonde",
     other: "minder as {{count}} sekondes"
@@ -50854,54 +50794,54 @@ const C2t = ({
     one: "byna 1 jaar",
     other: "byna {{count}} jaar"
   }
-}, X6e = (e, t, n) => {
+}, B6e = (e, t, n) => {
   let r;
-  const a = q6e[e];
+  const a = H6e[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "oor " + r : r + " gelede" : r;
-}, G6e = {
+}, q6e = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
   short: "yyyy/MM/dd"
-}, Y6e = {
+}, X6e = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, U6e = {
+}, G6e = {
   full: "{{date}} 'om' {{time}}",
   long: "{{date}} 'om' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, K6e = {
+}, Y6e = {
   date: q({
-    formats: G6e,
+    formats: q6e,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Y6e,
+    formats: X6e,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: U6e,
+    formats: G6e,
     defaultWidth: "full"
   })
-}, Q6e = {
+}, U6e = {
   lastWeek: "'verlede' eeee 'om' p",
   yesterday: "'gister om' p",
   today: "'vandag om' p",
   tomorrow: "'môre om' p",
   nextWeek: "eeee 'om' p",
   other: "P"
-}, Z6e = (e, t, n, r) => Q6e[e], J6e = {
+}, K6e = (e, t, n, r) => U6e[e], Q6e = {
   narrow: ["vC", "nC"],
   abbreviated: ["vC", "nC"],
   wide: ["voor Christus", "na Christus"]
-}, e8e = {
+}, Z6e = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
   wide: ["1ste kwartaal", "2de kwartaal", "3de kwartaal", "4de kwartaal"]
-}, t8e = {
+}, J6e = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "Jan",
@@ -50931,7 +50871,7 @@ const C2t = ({
     "November",
     "Desember"
   ]
-}, n8e = {
+}, e8e = {
   narrow: ["S", "M", "D", "W", "D", "V", "S"],
   short: ["So", "Ma", "Di", "Wo", "Do", "Vr", "Sa"],
   abbreviated: ["Son", "Maa", "Din", "Woe", "Don", "Vry", "Sat"],
@@ -50944,7 +50884,7 @@ const C2t = ({
     "Vrydag",
     "Saterdag"
   ]
-}, r8e = {
+}, t8e = {
   narrow: {
     am: "vm",
     pm: "nm",
@@ -50975,7 +50915,7 @@ const C2t = ({
     evening: "laat middag",
     night: "aand"
   }
-}, a8e = {
+}, n8e = {
   narrow: {
     am: "vm",
     pm: "nm",
@@ -51006,7 +50946,7 @@ const C2t = ({
     evening: "uur die aand",
     night: "uur die aand"
   }
-}, i8e = (e) => {
+}, r8e = (e) => {
   const t = Number(e), n = t % 100;
   if (n < 20)
     switch (n) {
@@ -51017,48 +50957,48 @@ const C2t = ({
         return t + "de";
     }
   return t + "ste";
-}, o8e = {
-  ordinalNumber: i8e,
+}, a8e = {
+  ordinalNumber: r8e,
   era: A({
-    values: J6e,
+    values: Q6e,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: e8e,
+    values: Z6e,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: t8e,
+    values: J6e,
     defaultWidth: "wide"
   }),
   day: A({
-    values: n8e,
+    values: e8e,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: r8e,
+    values: t8e,
     defaultWidth: "wide",
-    formattingValues: a8e,
+    formattingValues: n8e,
     defaultFormattingWidth: "wide"
   })
-}, s8e = /^(\d+)(ste|de)?/i, u8e = /\d+/i, c8e = {
+}, i8e = /^(\d+)(ste|de)?/i, o8e = /\d+/i, s8e = {
   narrow: /^([vn]\.? ?C\.?)/,
   abbreviated: /^([vn]\. ?C\.?)/,
   wide: /^((voor|na) Christus)/
-}, l8e = {
+}, u8e = {
   any: [/^v/, /^n/]
-}, d8e = {
+}, c8e = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
   wide: /^[1234](st|d)e kwartaal/i
-}, f8e = {
+}, l8e = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, m8e = {
+}, d8e = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(Jan|Feb|Mrt|Apr|Mei|Jun|Jul|Aug|Sep|Okt|Nov|Dec)\.?/i,
   wide: /^(Januarie|Februarie|Maart|April|Mei|Junie|Julie|Augustus|September|Oktober|November|Desember)/i
-}, h8e = {
+}, f8e = {
   narrow: [
     /^J/i,
     /^F/i,
@@ -51087,17 +51027,17 @@ const C2t = ({
     /^Nov/i,
     /^Dec/i
   ]
-}, p8e = {
+}, m8e = {
   narrow: /^[smdwv]/i,
   short: /^(So|Ma|Di|Wo|Do|Vr|Sa)/i,
   abbreviated: /^(Son|Maa|Din|Woe|Don|Vry|Sat)/i,
   wide: /^(Sondag|Maandag|Dinsdag|Woensdag|Donderdag|Vrydag|Saterdag)/i
-}, g8e = {
+}, h8e = {
   narrow: [/^S/i, /^M/i, /^D/i, /^W/i, /^D/i, /^V/i, /^S/i],
   any: [/^So/i, /^Ma/i, /^Di/i, /^Wo/i, /^Do/i, /^Vr/i, /^Sa/i]
-}, v8e = {
+}, p8e = {
   any: /^(vm|nm|middernag|(?:uur )?die (oggend|middag|aand))/i
-}, y8e = {
+}, g8e = {
   any: {
     am: /^vm/i,
     pm: /^nm/i,
@@ -51108,55 +51048,55 @@ const C2t = ({
     evening: /laat middag/i,
     night: /aand/i
   }
-}, b8e = {
+}, v8e = {
   ordinalNumber: Se({
-    matchPattern: s8e,
-    parsePattern: u8e,
+    matchPattern: i8e,
+    parsePattern: o8e,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: c8e,
+    matchPatterns: s8e,
     defaultMatchWidth: "wide",
-    parsePatterns: l8e,
+    parsePatterns: u8e,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: d8e,
+    matchPatterns: c8e,
     defaultMatchWidth: "wide",
-    parsePatterns: f8e,
+    parsePatterns: l8e,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: d8e,
+    defaultMatchWidth: "wide",
+    parsePatterns: f8e,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: m8e,
     defaultMatchWidth: "wide",
     parsePatterns: h8e,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: p8e,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: g8e,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: v8e,
-    defaultMatchWidth: "any",
-    parsePatterns: y8e,
-    defaultParseWidth: "any"
   })
-}, w8e = {
+}, y8e = {
   code: "af",
-  formatDistance: X6e,
-  formatLong: K6e,
-  formatRelative: Z6e,
-  localize: o8e,
-  match: b8e,
+  formatDistance: B6e,
+  formatLong: Y6e,
+  formatRelative: K6e,
+  localize: a8e,
+  match: v8e,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, P8e = {
+}, b8e = {
   lessThanXSeconds: {
     one: "أقل من ثانية",
     two: "أقل من ثانيتين",
@@ -51248,54 +51188,54 @@ const C2t = ({
     threeToTen: "ما يقارب {{count}} سنوات",
     other: "ما يقارب {{count}} سنة"
   }
-}, x8e = (e, t, n) => {
-  const r = P8e[e];
+}, w8e = (e, t, n) => {
+  const r = b8e[e];
   let a;
   return typeof r == "string" ? a = r : t === 1 ? a = r.one : t === 2 ? a = r.two : t <= 10 ? a = r.threeToTen.replace("{{count}}", String(t)) : a = r.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "خلال " + a : "منذ " + a : a;
-}, M8e = {
+}, P8e = {
   full: "EEEE، do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
   short: "dd/MM/yyyy"
-}, k8e = {
+}, x8e = {
   full: "HH:mm:ss",
   long: "HH:mm:ss",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, C8e = {
+}, M8e = {
   full: "{{date}} 'عند الساعة' {{time}}",
   long: "{{date}} 'عند الساعة' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, S8e = {
+}, k8e = {
   date: q({
-    formats: M8e,
+    formats: P8e,
     defaultWidth: "full"
   }),
   time: q({
-    formats: k8e,
+    formats: x8e,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: C8e,
+    formats: M8e,
     defaultWidth: "full"
   })
-}, $8e = {
+}, C8e = {
   lastWeek: "eeee 'الماضي عند الساعة' p",
   yesterday: "'الأمس عند الساعة' p",
   today: "'اليوم عند الساعة' p",
   tomorrow: "'غدا عند الساعة' p",
   nextWeek: "eeee 'القادم عند الساعة' p",
   other: "P"
-}, _8e = (e) => $8e[e], T8e = {
+}, S8e = (e) => C8e[e], $8e = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
   wide: ["قبل الميلاد", "بعد الميلاد"]
-}, E8e = {
+}, _8e = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
   wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
-}, A8e = {
+}, T8e = {
   narrow: ["ي", "ف", "م", "أ", "م", "ي", "ي", "أ", "س", "أ", "ن", "د"],
   abbreviated: [
     "يناير",
@@ -51325,7 +51265,7 @@ const C2t = ({
     "نوفمبر",
     "ديسمبر"
   ]
-}, O8e = {
+}, E8e = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
   short: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
   abbreviated: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
@@ -51338,7 +51278,7 @@ const C2t = ({
     "الجمعة",
     "السبت"
   ]
-}, D8e = {
+}, A8e = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -51369,7 +51309,7 @@ const C2t = ({
     night: "الليل",
     midnight: "منتصف الليل"
   }
-}, N8e = {
+}, O8e = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -51400,48 +51340,48 @@ const C2t = ({
     night: "في الليل",
     midnight: "منتصف الليل"
   }
-}, W8e = (e) => String(e), R8e = {
-  ordinalNumber: W8e,
+}, D8e = (e) => String(e), N8e = {
+  ordinalNumber: D8e,
   era: A({
-    values: T8e,
+    values: $8e,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: E8e,
+    values: _8e,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: A8e,
+    values: T8e,
     defaultWidth: "wide"
   }),
   day: A({
-    values: O8e,
+    values: E8e,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: D8e,
+    values: A8e,
     defaultWidth: "wide",
-    formattingValues: N8e,
+    formattingValues: O8e,
     defaultFormattingWidth: "wide"
   })
-}, j8e = /^(\d+)(th|st|nd|rd)?/i, I8e = /\d+/i, L8e = {
+}, W8e = /^(\d+)(th|st|nd|rd)?/i, R8e = /\d+/i, j8e = {
   narrow: /[قب]/,
   abbreviated: /[قب]\.م\./,
   wide: /(قبل|بعد) الميلاد/
-}, F8e = {
+}, I8e = {
   any: [/قبل/, /بعد/]
-}, z8e = {
+}, L8e = {
   narrow: /^[1234]/i,
   abbreviated: /ر[1234]/,
   wide: /الربع (الأول|الثاني|الثالث|الرابع)/
-}, V8e = {
+}, F8e = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, H8e = {
+}, z8e = {
   narrow: /^[أيفمسند]/,
   abbreviated: /^(يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/,
   wide: /^(يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/
-}, B8e = {
+}, V8e = {
   narrow: [
     /^ي/i,
     /^ف/i,
@@ -51470,12 +51410,12 @@ const C2t = ({
     /^نوفمبر/i,
     /^ديسمبر/i
   ]
-}, q8e = {
+}, H8e = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
-}, X8e = {
+}, B8e = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
   wide: [
     /^الأحد/i,
@@ -51487,10 +51427,10 @@ const C2t = ({
     /^السبت/i
   ],
   any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
-}, G8e = {
+}, q8e = {
   narrow: /^(ص|م|منتصف الليل|الظهر|بعد الظهر|في الصباح|في المساء|في الليل)/,
   any: /^(ص|م|منتصف الليل|الظهر|بعد الظهر|في الصباح|في المساء|في الليل)/
-}, Y8e = {
+}, X8e = {
   any: {
     am: /^ص/,
     pm: /^م/,
@@ -51501,55 +51441,55 @@ const C2t = ({
     evening: /في المساء/,
     night: /في الليل/
   }
-}, U8e = {
+}, G8e = {
   ordinalNumber: Se({
-    matchPattern: j8e,
-    parsePattern: I8e,
+    matchPattern: W8e,
+    parsePattern: R8e,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: L8e,
+    matchPatterns: j8e,
     defaultMatchWidth: "wide",
-    parsePatterns: F8e,
+    parsePatterns: I8e,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: z8e,
+    matchPatterns: L8e,
     defaultMatchWidth: "wide",
-    parsePatterns: V8e,
+    parsePatterns: F8e,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: z8e,
+    defaultMatchWidth: "wide",
+    parsePatterns: V8e,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: H8e,
     defaultMatchWidth: "wide",
     parsePatterns: B8e,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: q8e,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: X8e,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: G8e,
-    defaultMatchWidth: "any",
-    parsePatterns: Y8e,
-    defaultParseWidth: "any"
   })
-}, K8e = {
+}, Y8e = {
   code: "ar",
-  formatDistance: x8e,
-  formatLong: S8e,
-  formatRelative: _8e,
-  localize: R8e,
-  match: U8e,
+  formatDistance: w8e,
+  formatLong: k8e,
+  formatRelative: S8e,
+  localize: N8e,
+  match: G8e,
   options: {
     weekStartsOn: 6,
     firstWeekContainsDate: 1
   }
-}, Q8e = {
+}, U8e = {
   lessThanXSeconds: {
     one: "أقل من ثانية واحدة",
     two: "أقل من ثانتين",
@@ -51641,55 +51581,55 @@ const C2t = ({
     threeToTen: "{{count}} أعوام تقريباً",
     other: "{{count}} عام تقريباً"
   }
-}, Z8e = (e, t, n) => {
+}, K8e = (e, t, n) => {
   n = n || {};
-  const r = Q8e[e];
+  const r = U8e[e];
   let a;
   return typeof r == "string" ? a = r : t === 1 ? a = r.one : t === 2 ? a = r.two : t <= 10 ? a = r.threeToTen.replace("{{count}}", String(t)) : a = r.other.replace("{{count}}", String(t)), n.addSuffix ? n.comparison && n.comparison > 0 ? "في خلال " + a : "منذ " + a : a;
-}, J8e = {
+}, Q8e = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
   short: "MM/dd/yyyy"
-}, eTe = {
+}, Z8e = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, tTe = {
+}, J8e = {
   full: "{{date}} 'عند' {{time}}",
   long: "{{date}} 'عند' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, nTe = {
+}, eTe = {
   date: q({
-    formats: J8e,
+    formats: Q8e,
     defaultWidth: "full"
   }),
   time: q({
-    formats: eTe,
+    formats: Z8e,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: tTe,
+    formats: J8e,
     defaultWidth: "full"
   })
-}, rTe = {
+}, tTe = {
   lastWeek: "'أخر' eeee 'عند' p",
   yesterday: "'أمس عند' p",
   today: "'اليوم عند' p",
   tomorrow: "'غداً عند' p",
   nextWeek: "eeee 'عند' p",
   other: "P"
-}, aTe = (e, t, n, r) => rTe[e], iTe = {
+}, nTe = (e, t, n, r) => tTe[e], rTe = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
   wide: ["قبل الميلاد", "بعد الميلاد"]
-}, oTe = {
+}, aTe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
   wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
-}, sTe = {
+}, iTe = {
   narrow: ["ج", "ف", "م", "أ", "م", "ج", "ج", "أ", "س", "أ", "ن", "د"],
   abbreviated: [
     "جانـ",
@@ -51719,7 +51659,7 @@ const C2t = ({
     "نوفمبر",
     "ديسمبر"
   ]
-}, uTe = {
+}, oTe = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
   short: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
   abbreviated: ["أحد", "اثنـ", "ثلا", "أربـ", "خميـ", "جمعة", "سبت"],
@@ -51732,7 +51672,7 @@ const C2t = ({
     "الجمعة",
     "السبت"
   ]
-}, cTe = {
+}, sTe = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -51763,7 +51703,7 @@ const C2t = ({
     evening: "مساءاً",
     night: "ليلاً"
   }
-}, lTe = {
+}, uTe = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -51794,48 +51734,48 @@ const C2t = ({
     evening: "في المساء",
     night: "في الليل"
   }
-}, dTe = (e) => String(e), fTe = {
-  ordinalNumber: dTe,
+}, cTe = (e) => String(e), lTe = {
+  ordinalNumber: cTe,
   era: A({
-    values: iTe,
+    values: rTe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: oTe,
+    values: aTe,
     defaultWidth: "wide",
     argumentCallback: (e) => Number(e) - 1
   }),
   month: A({
-    values: sTe,
+    values: iTe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: uTe,
+    values: oTe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: cTe,
+    values: sTe,
     defaultWidth: "wide",
-    formattingValues: lTe,
+    formattingValues: uTe,
     defaultFormattingWidth: "wide"
   })
-}, mTe = /^(\d+)(th|st|nd|rd)?/i, hTe = /\d+/i, pTe = {
+}, dTe = /^(\d+)(th|st|nd|rd)?/i, fTe = /\d+/i, mTe = {
   narrow: /^(ق|ب)/i,
   abbreviated: /^(ق\.?\s?م\.?|ق\.?\s?م\.?\s?|a\.?\s?d\.?|c\.?\s?)/i,
   wide: /^(قبل الميلاد|قبل الميلاد|بعد الميلاد|بعد الميلاد)/i
-}, gTe = {
+}, hTe = {
   any: [/^قبل/i, /^بعد/i]
-}, vTe = {
+}, pTe = {
   narrow: /^[1234]/i,
   abbreviated: /^ر[1234]/i,
   wide: /^الربع [1234]/i
-}, yTe = {
+}, gTe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, bTe = {
+}, vTe = {
   narrow: /^[جفمأسند]/i,
   abbreviated: /^(جان|فيف|مار|أفر|ماي|جوا|جوي|أوت|سبت|أكت|نوف|ديس)/i,
   wide: /^(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/i
-}, wTe = {
+}, yTe = {
   narrow: [
     /^ج/i,
     /^ف/i,
@@ -51864,12 +51804,12 @@ const C2t = ({
     /^نوف/i,
     /^ديس/i
   ]
-}, PTe = {
+}, bTe = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|اثن|ثلا|أرب|خمي|جمعة|سبت)/i,
   wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
-}, xTe = {
+}, wTe = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
   wide: [
     /^الأحد/i,
@@ -51881,10 +51821,10 @@ const C2t = ({
     /^السبت/i
   ],
   any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
-}, MTe = {
+}, PTe = {
   narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
   any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
-}, kTe = {
+}, xTe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -51895,55 +51835,55 @@ const C2t = ({
     evening: /evening/i,
     night: /night/i
   }
-}, CTe = {
+}, MTe = {
   ordinalNumber: Se({
-    matchPattern: mTe,
-    parsePattern: hTe,
+    matchPattern: dTe,
+    parsePattern: fTe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: pTe,
+    matchPatterns: mTe,
     defaultMatchWidth: "wide",
-    parsePatterns: gTe,
+    parsePatterns: hTe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: vTe,
+    matchPatterns: pTe,
     defaultMatchWidth: "wide",
-    parsePatterns: yTe,
+    parsePatterns: gTe,
     defaultParseWidth: "any",
     valueCallback: (e) => Number(e) + 1
   }),
   month: D({
+    matchPatterns: vTe,
+    defaultMatchWidth: "wide",
+    parsePatterns: yTe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: bTe,
     defaultMatchWidth: "wide",
     parsePatterns: wTe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: PTe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: xTe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: MTe,
-    defaultMatchWidth: "any",
-    parsePatterns: kTe,
-    defaultParseWidth: "any"
   })
-}, STe = {
+}, kTe = {
   code: "ar-DZ",
-  formatDistance: Z8e,
-  formatLong: nTe,
-  formatRelative: aTe,
-  localize: fTe,
-  match: CTe,
+  formatDistance: K8e,
+  formatLong: eTe,
+  formatRelative: nTe,
+  localize: lTe,
+  match: MTe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, $Te = {
+}, CTe = {
   lessThanXSeconds: {
     one: "أقل من ثانية",
     two: "أقل من ثانيتين",
@@ -52035,54 +51975,54 @@ const C2t = ({
     threeToTen: "{{count}} أعوام تقريبًا",
     other: "{{count}} عام تقريبًا"
   }
-}, _Te = (e, t, n) => {
+}, STe = (e, t, n) => {
   let r;
-  const a = $Te[e];
+  const a = CTe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : t === 2 ? r = a.two : t <= 10 ? r = a.threeToTen.replace("{{count}}", String(t)) : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? `في خلال ${r}` : `منذ ${r}` : r;
-}, TTe = {
+}, $Te = {
   full: "EEEE، do MMMM y",
   long: "do MMMM y",
   medium: "dd/MMM/y",
   short: "d/MM/y"
-}, ETe = {
+}, _Te = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, ATe = {
+}, TTe = {
   full: "{{date}} 'الساعة' {{time}}",
   long: "{{date}} 'الساعة' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, OTe = {
+}, ETe = {
   date: q({
-    formats: TTe,
+    formats: $Te,
     defaultWidth: "full"
   }),
   time: q({
-    formats: ETe,
+    formats: _Te,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: ATe,
+    formats: TTe,
     defaultWidth: "full"
   })
-}, DTe = {
+}, ATe = {
   lastWeek: "eeee 'اللي جاي الساعة' p",
   yesterday: "'إمبارح الساعة' p",
   today: "'النهاردة الساعة' p",
   tomorrow: "'بكرة الساعة' p",
   nextWeek: "eeee 'الساعة' p",
   other: "P"
-}, NTe = (e, t, n, r) => DTe[e], WTe = {
+}, OTe = (e, t, n, r) => ATe[e], DTe = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م", "ب.م"],
   wide: ["قبل الميلاد", "بعد الميلاد"]
-}, RTe = {
+}, NTe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
   wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
-}, jTe = {
+}, WTe = {
   narrow: ["ي", "ف", "م", "أ", "م", "ي", "ي", "أ", "س", "أ", "ن", "د"],
   abbreviated: [
     "ينا",
@@ -52112,7 +52052,7 @@ const C2t = ({
     "نوفمبر",
     "ديسمبر"
   ]
-}, ITe = {
+}, RTe = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
   short: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
   abbreviated: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
@@ -52125,7 +52065,7 @@ const C2t = ({
     "الجمعة",
     "السبت"
   ]
-}, LTe = {
+}, jTe = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -52156,7 +52096,7 @@ const C2t = ({
     evening: "مساءً",
     night: "ليلاً"
   }
-}, FTe = {
+}, ITe = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -52187,49 +52127,49 @@ const C2t = ({
     evening: "في المساء",
     night: "في الليل"
   }
-}, zTe = (e, t) => String(e), VTe = {
-  ordinalNumber: zTe,
+}, LTe = (e, t) => String(e), FTe = {
+  ordinalNumber: LTe,
   era: A({
-    values: WTe,
+    values: DTe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: RTe,
+    values: NTe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: jTe,
+    values: WTe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: ITe,
+    values: RTe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: LTe,
+    values: jTe,
     defaultWidth: "wide",
-    formattingValues: FTe,
+    formattingValues: ITe,
     defaultFormattingWidth: "wide"
   })
-}, HTe = /^(\d+)/, BTe = /\d+/i, qTe = {
+}, zTe = /^(\d+)/, VTe = /\d+/i, HTe = {
   narrow: /^(ق|ب)/g,
   abbreviated: /^(ق.م|ب.م)/g,
   wide: /^(قبل الميلاد|بعد الميلاد)/g
-}, XTe = {
+}, BTe = {
   any: [/^ق/g, /^ب/g]
-}, GTe = {
+}, qTe = {
   narrow: /^[1234]/,
   abbreviated: /^ر[1234]/,
   wide: /^الربع (الأول|الثاني|الثالث|الرابع)/
-}, YTe = {
+}, XTe = {
   wide: [/الربع الأول/, /الربع الثاني/, /الربع الثالث/, /الربع الرابع/],
   any: [/1/, /2/, /3/, /4/]
-}, UTe = {
+}, GTe = {
   narrow: /^(ي|ف|م|أ|س|ن|د)/,
   abbreviated: /^(ينا|فبر|مارس|أبريل|مايو|يونـ|يولـ|أغسـ|سبتـ|أكتـ|نوفـ|ديسـ)/,
   wide: /^(يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/
-}, KTe = {
+}, YTe = {
   narrow: [
     /^ي/,
     /^ف/,
@@ -52258,20 +52198,20 @@ const C2t = ({
     /^نوف/,
     /^ديس/
   ]
-}, QTe = {
+}, UTe = {
   narrow: /^(ح|ن|ث|ر|خ|ج|س)/,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/,
   abbreviated: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/,
   wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/
-}, ZTe = {
+}, KTe = {
   narrow: [/^ح/, /^ن/, /^ث/, /^ر/, /^خ/, /^ج/, /^س/],
   any: [/أحد/, /اثنين/, /ثلاثاء/, /أربعاء/, /خميس/, /جمعة/, /سبت/]
-}, JTe = {
+}, QTe = {
   narrow: /^(ص|م|ن|ظ|في الصباح|بعد الظهر|في المساء|في الليل)/,
   abbreviated: /^(ص|م|نصف الليل|ظهراً|في الصباح|بعد الظهر|في المساء|في الليل)/,
   wide: /^(ص|م|نصف الليل|في الصباح|ظهراً|بعد الظهر|في المساء|في الليل)/,
   any: /^(ص|م|صباح|ظهر|مساء|ليل)/
-}, e9e = {
+}, ZTe = {
   any: {
     am: /^ص/,
     pm: /^م/,
@@ -52282,57 +52222,57 @@ const C2t = ({
     evening: /^م/,
     night: /^ل/
   }
-}, t9e = {
+}, JTe = {
   ordinalNumber: Se({
-    matchPattern: HTe,
-    parsePattern: BTe,
+    matchPattern: zTe,
+    parsePattern: VTe,
     valueCallback: function(e) {
       return parseInt(e, 10);
     }
   }),
   era: D({
-    matchPatterns: qTe,
+    matchPatterns: HTe,
     defaultMatchWidth: "wide",
-    parsePatterns: XTe,
+    parsePatterns: BTe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: GTe,
+    matchPatterns: qTe,
     defaultMatchWidth: "wide",
-    parsePatterns: YTe,
+    parsePatterns: XTe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: GTe,
+    defaultMatchWidth: "wide",
+    parsePatterns: YTe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: UTe,
     defaultMatchWidth: "wide",
     parsePatterns: KTe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: QTe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: ZTe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: JTe,
-    defaultMatchWidth: "any",
-    parsePatterns: e9e,
-    defaultParseWidth: "any"
   })
-}, n9e = {
+}, e9e = {
   code: "ar-EG",
-  formatDistance: _Te,
-  formatLong: OTe,
-  formatRelative: NTe,
-  localize: VTe,
-  match: t9e,
+  formatDistance: STe,
+  formatLong: ETe,
+  formatRelative: OTe,
+  localize: FTe,
+  match: JTe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, r9e = {
+}, t9e = {
   lessThanXSeconds: {
     one: "أقل من ثانية واحدة",
     two: "أقل من ثانتين",
@@ -52424,55 +52364,55 @@ const C2t = ({
     threeToTen: "{{count}} أعوام تقريباً",
     other: "{{count}} عام تقريباً"
   }
-}, a9e = (e, t, n) => {
+}, n9e = (e, t, n) => {
   n = n || {};
-  const r = r9e[e];
+  const r = t9e[e];
   let a;
   return typeof r == "string" ? a = r : t === 1 ? a = r.one : t === 2 ? a = r.two : t <= 10 ? a = r.threeToTen.replace("{{count}}", String(t)) : a = r.other.replace("{{count}}", String(t)), n.addSuffix ? n.comparison && n.comparison > 0 ? "في خلال " + a : "منذ " + a : a;
-}, i9e = {
+}, r9e = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
   short: "MM/dd/yyyy"
-}, o9e = {
+}, a9e = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, s9e = {
+}, i9e = {
   full: "{{date}} 'عند' {{time}}",
   long: "{{date}} 'عند' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, u9e = {
+}, o9e = {
   date: q({
-    formats: i9e,
+    formats: r9e,
     defaultWidth: "full"
   }),
   time: q({
-    formats: o9e,
+    formats: a9e,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: s9e,
+    formats: i9e,
     defaultWidth: "full"
   })
-}, c9e = {
+}, s9e = {
   lastWeek: "'أخر' eeee 'عند' p",
   yesterday: "'أمس عند' p",
   today: "'اليوم عند' p",
   tomorrow: "'غداً عند' p",
   nextWeek: "eeee 'عند' p",
   other: "P"
-}, l9e = (e, t, n, r) => c9e[e], d9e = {
+}, u9e = (e, t, n, r) => s9e[e], c9e = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
   wide: ["قبل الميلاد", "بعد الميلاد"]
-}, f9e = {
+}, l9e = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
   wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
-}, m9e = {
+}, d9e = {
   narrow: ["ي", "ف", "م", "أ", "م", "ي", "ي", "غ", "ش", "أ", "ن", "د"],
   abbreviated: [
     "ينا",
@@ -52502,7 +52442,7 @@ const C2t = ({
     "نونبر",
     "دجنبر"
   ]
-}, h9e = {
+}, f9e = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
   short: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
   abbreviated: ["أحد", "اثنـ", "ثلا", "أربـ", "خميـ", "جمعة", "سبت"],
@@ -52515,7 +52455,7 @@ const C2t = ({
     "الجمعة",
     "السبت"
   ]
-}, p9e = {
+}, m9e = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -52546,7 +52486,7 @@ const C2t = ({
     evening: "مساءاً",
     night: "ليلاً"
   }
-}, g9e = {
+}, h9e = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -52577,48 +52517,48 @@ const C2t = ({
     evening: "في المساء",
     night: "في الليل"
   }
-}, v9e = (e) => String(e), y9e = {
-  ordinalNumber: v9e,
+}, p9e = (e) => String(e), g9e = {
+  ordinalNumber: p9e,
   era: A({
-    values: d9e,
+    values: c9e,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: f9e,
+    values: l9e,
     defaultWidth: "wide",
     argumentCallback: (e) => Number(e) - 1
   }),
   month: A({
-    values: m9e,
+    values: d9e,
     defaultWidth: "wide"
   }),
   day: A({
-    values: h9e,
+    values: f9e,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: p9e,
+    values: m9e,
     defaultWidth: "wide",
-    formattingValues: g9e,
+    formattingValues: h9e,
     defaultFormattingWidth: "wide"
   })
-}, b9e = /^(\d+)(th|st|nd|rd)?/i, w9e = /\d+/i, P9e = {
+}, v9e = /^(\d+)(th|st|nd|rd)?/i, y9e = /\d+/i, b9e = {
   narrow: /^(ق|ب)/i,
   abbreviated: /^(ق\.?\s?م\.?|ق\.?\s?م\.?\s?|a\.?\s?d\.?|c\.?\s?)/i,
   wide: /^(قبل الميلاد|قبل الميلاد|بعد الميلاد|بعد الميلاد)/i
-}, x9e = {
+}, w9e = {
   any: [/^قبل/i, /^بعد/i]
-}, M9e = {
+}, P9e = {
   narrow: /^[1234]/i,
   abbreviated: /^ر[1234]/i,
   wide: /^الربع [1234]/i
-}, k9e = {
+}, x9e = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, C9e = {
+}, M9e = {
   narrow: /^[يفمأمسند]/i,
   abbreviated: /^(ين|ف|مار|أب|ماي|يون|يول|غش|شت|أك|ن|د)/i,
   wide: /^(ين|ف|مار|أب|ماي|يون|يول|غش|شت|أك|ن|د)/i
-}, S9e = {
+}, k9e = {
   narrow: [
     /^ي/i,
     /^ف/i,
@@ -52647,12 +52587,12 @@ const C2t = ({
     /^ن/i,
     /^د/i
   ]
-}, $9e = {
+}, C9e = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|إثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|إثن|ثلا|أرب|خمي|جمعة|سبت)/i,
   wide: /^(الأحد|الإثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
-}, _9e = {
+}, S9e = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
   wide: [
     /^الأحد/i,
@@ -52664,10 +52604,10 @@ const C2t = ({
     /^السبت/i
   ],
   any: [/^أح/i, /^إث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
-}, T9e = {
+}, $9e = {
   narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
   any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
-}, E9e = {
+}, _9e = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -52678,56 +52618,56 @@ const C2t = ({
     evening: /evening/i,
     night: /night/i
   }
-}, A9e = {
+}, T9e = {
   ordinalNumber: Se({
-    matchPattern: b9e,
-    parsePattern: w9e,
+    matchPattern: v9e,
+    parsePattern: y9e,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: P9e,
+    matchPatterns: b9e,
     defaultMatchWidth: "wide",
-    parsePatterns: x9e,
+    parsePatterns: w9e,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: M9e,
+    matchPatterns: P9e,
     defaultMatchWidth: "wide",
-    parsePatterns: k9e,
+    parsePatterns: x9e,
     defaultParseWidth: "any",
     valueCallback: (e) => Number(e) + 1
   }),
   month: D({
+    matchPatterns: M9e,
+    defaultMatchWidth: "wide",
+    parsePatterns: k9e,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: C9e,
     defaultMatchWidth: "wide",
     parsePatterns: S9e,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: $9e,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: _9e,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: T9e,
-    defaultMatchWidth: "any",
-    parsePatterns: E9e,
-    defaultParseWidth: "any"
   })
-}, O9e = {
+}, E9e = {
   code: "ar-MA",
-  formatDistance: a9e,
-  formatLong: u9e,
-  formatRelative: l9e,
-  localize: y9e,
-  match: A9e,
+  formatDistance: n9e,
+  formatLong: o9e,
+  formatRelative: u9e,
+  localize: g9e,
+  match: T9e,
   options: {
     // Monday is 1
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, D9e = {
+}, A9e = {
   lessThanXSeconds: {
     one: "أقل من ثانية واحدة",
     two: "أقل من ثانتين",
@@ -52819,54 +52759,54 @@ const C2t = ({
     threeToTen: "{{count}} أعوام تقريباً",
     other: "{{count}} عام تقريباً"
   }
-}, N9e = (e, t, n) => {
+}, O9e = (e, t, n) => {
   let r;
-  const a = D9e[e];
+  const a = A9e[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : t === 2 ? r = a.two : t <= 10 ? r = a.threeToTen.replace("{{count}}", String(t)) : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "في خلال " + r : "منذ " + r : r;
-}, W9e = {
+}, D9e = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
   short: "MM/dd/yyyy"
-}, R9e = {
+}, N9e = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, j9e = {
+}, W9e = {
   full: "{{date}} 'عند' {{time}}",
   long: "{{date}} 'عند' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, I9e = {
+}, R9e = {
   date: q({
-    formats: W9e,
+    formats: D9e,
     defaultWidth: "full"
   }),
   time: q({
-    formats: R9e,
+    formats: N9e,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: j9e,
+    formats: W9e,
     defaultWidth: "full"
   })
-}, L9e = {
+}, j9e = {
   lastWeek: "'أخر' eeee 'عند' p",
   yesterday: "'أمس عند' p",
   today: "'اليوم عند' p",
   tomorrow: "'غداً عند' p",
   nextWeek: "eeee 'عند' p",
   other: "P"
-}, F9e = (e, t, n, r) => L9e[e], z9e = {
+}, I9e = (e, t, n, r) => j9e[e], L9e = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
   wide: ["قبل الميلاد", "بعد الميلاد"]
-}, V9e = {
+}, F9e = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
   wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
-}, H9e = {
+}, z9e = {
   narrow: ["ي", "ف", "م", "أ", "م", "ي", "ي", "أ", "س", "أ", "ن", "د"],
   abbreviated: [
     "ينا",
@@ -52896,7 +52836,7 @@ const C2t = ({
     "نوفمبر",
     "ديسمبر"
   ]
-}, B9e = {
+}, V9e = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
   short: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
   abbreviated: ["أحد", "اثنـ", "ثلا", "أربـ", "خميـ", "جمعة", "سبت"],
@@ -52909,7 +52849,7 @@ const C2t = ({
     "الجمعة",
     "السبت"
   ]
-}, q9e = {
+}, H9e = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -52940,7 +52880,7 @@ const C2t = ({
     evening: "مساءاً",
     night: "ليلاً"
   }
-}, X9e = {
+}, B9e = {
   narrow: {
     am: "ص",
     pm: "م",
@@ -52971,48 +52911,48 @@ const C2t = ({
     evening: "في المساء",
     night: "في الليل"
   }
-}, G9e = (e) => String(e), Y9e = {
-  ordinalNumber: G9e,
+}, q9e = (e) => String(e), X9e = {
+  ordinalNumber: q9e,
   era: A({
-    values: z9e,
+    values: L9e,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: V9e,
+    values: F9e,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: H9e,
+    values: z9e,
     defaultWidth: "wide"
   }),
   day: A({
-    values: B9e,
+    values: V9e,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: q9e,
+    values: H9e,
     defaultWidth: "wide",
-    formattingValues: X9e,
+    formattingValues: B9e,
     defaultFormattingWidth: "wide"
   })
-}, U9e = /^(\d+)(th|st|nd|rd)?/i, K9e = /\d+/i, Q9e = {
+}, G9e = /^(\d+)(th|st|nd|rd)?/i, Y9e = /\d+/i, U9e = {
   narrow: /^(ق|ب)/i,
   abbreviated: /^(ق\.?\s?م\.?|ق\.?\s?م\.?\s?|a\.?\s?d\.?|c\.?\s?)/i,
   wide: /^(قبل الميلاد|قبل الميلاد|بعد الميلاد|بعد الميلاد)/i
-}, Z9e = {
+}, K9e = {
   any: [/^قبل/i, /^بعد/i]
-}, J9e = {
+}, Q9e = {
   narrow: /^[1234]/i,
   abbreviated: /^ر[1234]/i,
   wide: /^الربع [1234]/i
-}, eEe = {
+}, Z9e = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, tEe = {
+}, J9e = {
   narrow: /^[يفمأمسند]/i,
   abbreviated: /^(ين|ف|مار|أب|ماي|يون|يول|أغ|س|أك|ن|د)/i,
   wide: /^(ين|ف|مار|أب|ماي|يون|يول|أغ|س|أك|ن|د)/i
-}, nEe = {
+}, eEe = {
   narrow: [
     /^ي/i,
     /^ف/i,
@@ -53041,12 +52981,12 @@ const C2t = ({
     /^ن/i,
     /^د/i
   ]
-}, rEe = {
+}, tEe = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|اثن|ثلا|أرب|خمي|جمعة|سبت)/i,
   wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
-}, aEe = {
+}, nEe = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
   wide: [
     /^الأحد/i,
@@ -53058,10 +52998,10 @@ const C2t = ({
     /^السبت/i
   ],
   any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
-}, iEe = {
+}, rEe = {
   narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
   any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
-}, oEe = {
+}, aEe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -53072,55 +53012,55 @@ const C2t = ({
     evening: /evening/i,
     night: /night/i
   }
-}, sEe = {
+}, iEe = {
   ordinalNumber: Se({
-    matchPattern: U9e,
-    parsePattern: K9e,
+    matchPattern: G9e,
+    parsePattern: Y9e,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Q9e,
+    matchPatterns: U9e,
     defaultMatchWidth: "wide",
-    parsePatterns: Z9e,
+    parsePatterns: K9e,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: J9e,
+    matchPatterns: Q9e,
     defaultMatchWidth: "wide",
-    parsePatterns: eEe,
+    parsePatterns: Z9e,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: J9e,
+    defaultMatchWidth: "wide",
+    parsePatterns: eEe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: tEe,
     defaultMatchWidth: "wide",
     parsePatterns: nEe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: rEe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: aEe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: iEe,
-    defaultMatchWidth: "any",
-    parsePatterns: oEe,
-    defaultParseWidth: "any"
   })
-}, uEe = {
+}, oEe = {
   code: "ar-SA",
-  formatDistance: N9e,
-  formatLong: I9e,
-  formatRelative: F9e,
-  localize: Y9e,
-  match: sEe,
+  formatDistance: O9e,
+  formatLong: R9e,
+  formatRelative: I9e,
+  localize: X9e,
+  match: iEe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, cEe = {
+}, sEe = {
   lessThanXSeconds: {
     one: "أقل من ثانية",
     two: "أقل من زوز ثواني",
@@ -53212,54 +53152,54 @@ const C2t = ({
     threeToTen: "{{count}} أعوام تقريب",
     other: "{{count}} عام تقريب"
   }
-}, lEe = (e, t, n) => {
-  const r = cEe[e];
+}, uEe = (e, t, n) => {
+  const r = sEe[e];
   let a;
   return typeof r == "string" ? a = r : t === 1 ? a = r.one : t === 2 ? a = r.two : t <= 10 ? a = r.threeToTen.replace("{{count}}", String(t)) : a = r.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "في " + a : "عندو " + a : a;
-}, dEe = {
+}, cEe = {
   full: "EEEE، do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
   short: "dd/MM/yyyy"
-}, fEe = {
+}, lEe = {
   full: "HH:mm:ss",
   long: "HH:mm:ss",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, mEe = {
+}, dEe = {
   full: "{{date}} 'مع' {{time}}",
   long: "{{date}} 'مع' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, hEe = {
+}, fEe = {
   date: q({
-    formats: dEe,
+    formats: cEe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: fEe,
+    formats: lEe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: mEe,
+    formats: dEe,
     defaultWidth: "full"
   })
-}, pEe = {
+}, mEe = {
   lastWeek: "eeee 'إلي فات مع' p",
   yesterday: "'البارح مع' p",
   today: "'اليوم مع' p",
   tomorrow: "'غدوة مع' p",
   nextWeek: "eeee 'الجمعة الجاية مع' p 'نهار'",
   other: "P"
-}, gEe = (e) => pEe[e], vEe = {
+}, hEe = (e) => mEe[e], pEe = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
   wide: ["قبل الميلاد", "بعد الميلاد"]
-}, yEe = {
+}, gEe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ر1", "ر2", "ر3", "ر4"],
   wide: ["الربع الأول", "الربع الثاني", "الربع الثالث", "الربع الرابع"]
-}, bEe = {
+}, vEe = {
   narrow: ["د", "ن", "أ", "س", "أ", "ج", "ج", "م", "أ", "م", "ف", "ج"],
   abbreviated: [
     "جانفي",
@@ -53289,7 +53229,7 @@ const C2t = ({
     "نوفمبر",
     "ديسمبر"
   ]
-}, wEe = {
+}, yEe = {
   narrow: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
   short: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
   abbreviated: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"],
@@ -53302,7 +53242,7 @@ const C2t = ({
     "الجمعة",
     "السبت"
   ]
-}, PEe = {
+}, bEe = {
   narrow: {
     am: "ص",
     pm: "ع",
@@ -53333,7 +53273,7 @@ const C2t = ({
     night: "الليل",
     midnight: "نص الليل"
   }
-}, xEe = {
+}, wEe = {
   narrow: {
     am: "ص",
     pm: "ع",
@@ -53364,48 +53304,48 @@ const C2t = ({
     night: "في الليل",
     midnight: "نص الليل"
   }
-}, MEe = (e) => String(e), kEe = {
-  ordinalNumber: MEe,
+}, PEe = (e) => String(e), xEe = {
+  ordinalNumber: PEe,
   era: A({
-    values: vEe,
+    values: pEe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: yEe,
+    values: gEe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: bEe,
+    values: vEe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: wEe,
+    values: yEe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: PEe,
+    values: bEe,
     defaultWidth: "wide",
-    formattingValues: xEe,
+    formattingValues: wEe,
     defaultFormattingWidth: "wide"
   })
-}, CEe = /^(\d+)(th|st|nd|rd)?/i, SEe = /\d+/i, $Ee = {
+}, MEe = /^(\d+)(th|st|nd|rd)?/i, kEe = /\d+/i, CEe = {
   narrow: /[قب]/,
   abbreviated: /[قب]\.م\./,
   wide: /(قبل|بعد) الميلاد/
-}, _Ee = {
+}, SEe = {
   any: [/قبل/, /بعد/]
-}, TEe = {
+}, $Ee = {
   narrow: /^[1234]/i,
   abbreviated: /ر[1234]/,
   wide: /الربع (الأول|الثاني|الثالث|الرابع)/
-}, EEe = {
+}, _Ee = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, AEe = {
+}, TEe = {
   narrow: /^[جفمأسند]/,
   abbreviated: /^(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/,
   wide: /^(جانفي|فيفري|مارس|أفريل|ماي|جوان|جويلية|أوت|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/
-}, OEe = {
+}, EEe = {
   narrow: [
     /^ج/i,
     /^ف/i,
@@ -53434,12 +53374,12 @@ const C2t = ({
     /^نوفمبر/i,
     /^ديسمبر/i
   ]
-}, DEe = {
+}, AEe = {
   narrow: /^[حنثرخجس]/i,
   short: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   abbreviated: /^(أحد|اثنين|ثلاثاء|أربعاء|خميس|جمعة|سبت)/i,
   wide: /^(الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة|السبت)/i
-}, NEe = {
+}, OEe = {
   narrow: [/^ح/i, /^ن/i, /^ث/i, /^ر/i, /^خ/i, /^ج/i, /^س/i],
   wide: [
     /^الأحد/i,
@@ -53451,10 +53391,10 @@ const C2t = ({
     /^السبت/i
   ],
   any: [/^أح/i, /^اث/i, /^ث/i, /^أر/i, /^خ/i, /^ج/i, /^س/i]
-}, WEe = {
+}, DEe = {
   narrow: /^(ص|ع|ن ل|ل|(في|مع) (صباح|قايلة|عشية|ليل))/,
   any: /^([صع]|نص الليل|قايلة|(في|مع) (صباح|قايلة|عشية|ليل))/
-}, REe = {
+}, NEe = {
   any: {
     am: /^ص/,
     pm: /^ع/,
@@ -53465,55 +53405,55 @@ const C2t = ({
     evening: /عشية/,
     night: /ليل/
   }
-}, jEe = {
+}, WEe = {
   ordinalNumber: Se({
-    matchPattern: CEe,
-    parsePattern: SEe,
+    matchPattern: MEe,
+    parsePattern: kEe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: $Ee,
+    matchPatterns: CEe,
     defaultMatchWidth: "wide",
-    parsePatterns: _Ee,
+    parsePatterns: SEe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: TEe,
+    matchPatterns: $Ee,
     defaultMatchWidth: "wide",
-    parsePatterns: EEe,
+    parsePatterns: _Ee,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: TEe,
+    defaultMatchWidth: "wide",
+    parsePatterns: EEe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: AEe,
     defaultMatchWidth: "wide",
     parsePatterns: OEe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: DEe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: NEe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: WEe,
-    defaultMatchWidth: "any",
-    parsePatterns: REe,
-    defaultParseWidth: "any"
   })
-}, IEe = {
+}, REe = {
   code: "ar-TN",
-  formatDistance: lEe,
-  formatLong: hEe,
-  formatRelative: gEe,
-  localize: kEe,
-  match: jEe,
+  formatDistance: uEe,
+  formatLong: fEe,
+  formatRelative: hEe,
+  localize: xEe,
+  match: WEe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, LEe = {
+}, jEe = {
   lessThanXSeconds: {
     one: "bir saniyədən az",
     other: "{{count}} bir saniyədən az"
@@ -53575,54 +53515,54 @@ const C2t = ({
     one: "demək olar ki 1 il",
     other: "demək olar ki {{count}} il"
   }
-}, FEe = (e, t, n) => {
+}, IEe = (e, t, n) => {
   let r;
-  const a = LEe[e];
+  const a = jEe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + " sonra" : r + " əvvəl" : r;
-}, zEe = {
+}, LEe = {
   full: "EEEE, do MMMM y 'il'",
   long: "do MMMM y 'il'",
   medium: "d MMM y 'il'",
   short: "dd.MM.yyyy"
-}, VEe = {
+}, FEe = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, HEe = {
+}, zEe = {
   full: "{{date}} {{time}} - 'də'",
   long: "{{date}} {{time}} - 'də'",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, BEe = {
+}, VEe = {
   date: q({
-    formats: zEe,
+    formats: LEe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: VEe,
+    formats: FEe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: HEe,
+    formats: zEe,
     defaultWidth: "full"
   })
-}, qEe = {
+}, HEe = {
   lastWeek: "'sonuncu' eeee p -'də'",
   yesterday: "'dünən' p -'də'",
   today: "'bugün' p -'də'",
   tomorrow: "'sabah' p -'də'",
   nextWeek: "eeee p -'də'",
   other: "P"
-}, XEe = (e, t, n, r) => qEe[e], GEe = {
+}, BEe = (e, t, n, r) => HEe[e], qEe = {
   narrow: ["e.ə", "b.e"],
   abbreviated: ["e.ə", "b.e"],
   wide: ["eramızdan əvvəl", "bizim era"]
-}, YEe = {
+}, XEe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
   wide: ["1ci kvartal", "2ci kvartal", "3cü kvartal", "4cü kvartal"]
-}, UEe = {
+}, GEe = {
   narrow: ["Y", "F", "M", "A", "M", "İ", "İ", "A", "S", "O", "N", "D"],
   abbreviated: [
     "Yan",
@@ -53652,7 +53592,7 @@ const C2t = ({
     "Noyabr",
     "Dekabr"
   ]
-}, KEe = {
+}, YEe = {
   narrow: ["B.", "B.e", "Ç.a", "Ç.", "C.a", "C.", "Ş."],
   short: ["B.", "B.e", "Ç.a", "Ç.", "C.a", "C.", "Ş."],
   abbreviated: ["Baz", "Baz.e", "Çər.a", "Çər", "Cüm.a", "Cüm", "Şə"],
@@ -53665,7 +53605,7 @@ const C2t = ({
     "Cümə",
     "Şənbə"
   ]
-}, QEe = {
+}, UEe = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -53696,7 +53636,7 @@ const C2t = ({
     evening: "axşam",
     night: "gecə"
   }
-}, ZEe = {
+}, KEe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -53746,56 +53686,56 @@ const C2t = ({
   30: "-uncu",
   60: "-ıncı",
   90: "-ıncı"
-}, JEe = (e) => {
+}, QEe = (e) => {
   if (e === 0)
     return e + "-ıncı";
   const t = e % 10, n = e % 100 - t, r = e >= 100 ? 100 : null;
   return hd[t] ? hd[t] : hd[n] ? hd[n] : r !== null ? hd[r] : "";
-}, eAe = (e, t) => {
-  const n = Number(e), r = JEe(n);
+}, ZEe = (e, t) => {
+  const n = Number(e), r = QEe(n);
   return n + r;
-}, tAe = {
-  ordinalNumber: eAe,
+}, JEe = {
+  ordinalNumber: ZEe,
   era: A({
-    values: GEe,
+    values: qEe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: YEe,
+    values: XEe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: UEe,
+    values: GEe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: KEe,
+    values: YEe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: QEe,
+    values: UEe,
     defaultWidth: "wide",
-    formattingValues: ZEe,
+    formattingValues: KEe,
     defaultFormattingWidth: "wide"
   })
-}, nAe = /^(\d+)(-?(ci|inci|nci|uncu|üncü|ncı))?/i, rAe = /\d+/i, aAe = {
+}, eAe = /^(\d+)(-?(ci|inci|nci|uncu|üncü|ncı))?/i, tAe = /\d+/i, nAe = {
   narrow: /^(b|a)$/i,
   abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)$/i,
   wide: /^(bizim eradan əvvəl|bizim era)$/i
-}, iAe = {
+}, rAe = {
   any: [/^b$/i, /^(a|c)$/i]
-}, oAe = {
+}, aAe = {
   narrow: /^[1234]$/i,
   abbreviated: /^K[1234]$/i,
   wide: /^[1234](ci)? kvartal$/i
-}, sAe = {
+}, iAe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, uAe = {
+}, oAe = {
   narrow: /^[(?-i)yfmaisond]$/i,
   abbreviated: /^(Yan|Fev|Mar|Apr|May|İyun|İyul|Avq|Sen|Okt|Noy|Dek)$/i,
   wide: /^(Yanvar|Fevral|Mart|Aprel|May|İyun|İyul|Avgust|Sentyabr|Oktyabr|Noyabr|Dekabr)$/i
-}, cAe = {
+}, sAe = {
   narrow: [
     /^[(?-i)y]$/i,
     /^[(?-i)f]$/i,
@@ -53838,12 +53778,12 @@ const C2t = ({
     /^Noyabr$/i,
     /^Dekabr$/i
   ]
-}, lAe = {
+}, uAe = {
   narrow: /^(B\.|B\.e|Ç\.a|Ç\.|C\.a|C\.|Ş\.)$/i,
   short: /^(B\.|B\.e|Ç\.a|Ç\.|C\.a|C\.|Ş\.)$/i,
   abbreviated: /^(Baz\.e|Çər|Çər\.a|Cüm|Cüm\.a|Şə)$/i,
   wide: /^(Bazar|Bazar ertəsi|Çərşənbə axşamı|Çərşənbə|Cümə axşamı|Cümə|Şənbə)$/i
-}, dAe = {
+}, cAe = {
   narrow: [
     /^B\.$/i,
     /^B\.e$/i,
@@ -53880,10 +53820,10 @@ const C2t = ({
     /^C\.$/i,
     /^Ş\.$/i
   ]
-}, fAe = {
+}, lAe = {
   narrow: /^(a|p|gecəyarı|gün|səhər|gündüz|axşam|gecə)$/i,
   any: /^(am|pm|a\.m\.|p\.m\.|AM|PM|gecəyarı|gün|səhər|gündüz|axşam|gecə)$/i
-}, mAe = {
+}, dAe = {
   any: {
     am: /^a$/i,
     pm: /^p$/i,
@@ -53894,50 +53834,50 @@ const C2t = ({
     evening: /axşam$/i,
     night: /gecə$/i
   }
-}, hAe = {
+}, fAe = {
   ordinalNumber: Se({
-    matchPattern: nAe,
-    parsePattern: rAe,
+    matchPattern: eAe,
+    parsePattern: tAe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: aAe,
+    matchPatterns: nAe,
     defaultMatchWidth: "wide",
-    parsePatterns: iAe,
+    parsePatterns: rAe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: oAe,
+    matchPatterns: aAe,
     defaultMatchWidth: "wide",
-    parsePatterns: sAe,
+    parsePatterns: iAe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
-    matchPatterns: uAe,
+    matchPatterns: oAe,
     defaultMatchWidth: "wide",
-    parsePatterns: cAe,
+    parsePatterns: sAe,
     defaultParseWidth: "narrow"
   }),
   day: D({
-    matchPatterns: lAe,
+    matchPatterns: uAe,
     defaultMatchWidth: "wide",
-    parsePatterns: dAe,
+    parsePatterns: cAe,
     defaultParseWidth: "any"
   }),
   dayPeriod: D({
-    matchPatterns: fAe,
+    matchPatterns: lAe,
     defaultMatchWidth: "any",
-    parsePatterns: mAe,
+    parsePatterns: dAe,
     defaultParseWidth: "any"
   })
-}, pAe = {
+}, mAe = {
   code: "az",
-  formatDistance: FEe,
-  formatLong: BEe,
-  formatRelative: XEe,
-  localize: tAe,
-  match: hAe,
+  formatDistance: IEe,
+  formatLong: VEe,
+  formatRelative: BEe,
+  localize: JEe,
+  match: fAe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
@@ -53952,7 +53892,7 @@ function pd(e, t) {
 function Cr(e) {
   return (t, n) => n && n.addSuffix ? n.comparison && n.comparison > 0 ? e.future ? pd(e.future, t) : "праз " + pd(e.regular, t) : e.past ? pd(e.past, t) : pd(e.regular, t) + " таму" : pd(e.regular, t);
 }
-const gAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "праз паўхвіліны" : "паўхвіліны таму" : "паўхвіліны", vAe = {
+const hAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "праз паўхвіліны" : "паўхвіліны таму" : "паўхвіліны", pAe = {
   lessThanXSeconds: Cr({
     regular: {
       one: "менш за секунду",
@@ -53984,7 +53924,7 @@ const gAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "п�
       pluralGenitive: "праз {{count}} секунд"
     }
   }),
-  halfAMinute: gAe,
+  halfAMinute: hAe,
   lessThanXMinutes: Cr({
     regular: {
       one: "менш за хвіліну",
@@ -54133,29 +54073,29 @@ const gAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "п�
       pluralGenitive: "амаль праз {{count}} гадоў"
     }
   })
-}, yAe = (e, t, n) => (n = n || {}, vAe[e](t, n)), bAe = {
+}, gAe = (e, t, n) => (n = n || {}, pAe[e](t, n)), vAe = {
   full: "EEEE, d MMMM y 'г.'",
   long: "d MMMM y 'г.'",
   medium: "d MMM y 'г.'",
   short: "dd.MM.y"
-}, wAe = {
+}, yAe = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, PAe = {
+}, bAe = {
   any: "{{date}}, {{time}}"
-}, xAe = {
+}, wAe = {
   date: q({
-    formats: bAe,
+    formats: vAe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: wAe,
+    formats: yAe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: PAe,
+    formats: bAe,
     defaultWidth: "any"
   })
 }, C5 = [
@@ -54167,7 +54107,7 @@ const gAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "п�
   "пятніцу",
   "суботу"
 ];
-function MAe(e) {
+function PAe(e) {
   const t = C5[e];
   switch (e) {
     case 0:
@@ -54184,7 +54124,7 @@ function MAe(e) {
 function NB(e) {
   return "'у " + C5[e] + " а' p";
 }
-function kAe(e) {
+function xAe(e) {
   const t = C5[e];
   switch (e) {
     case 0:
@@ -54198,31 +54138,31 @@ function kAe(e) {
       return "'у наступны " + t + " а' p";
   }
 }
-const CAe = (e, t, n) => {
+const MAe = (e, t, n) => {
   const r = Ie(e), a = r.getDay();
-  return bn(r, t, n) ? NB(a) : MAe(a);
-}, SAe = (e, t, n) => {
+  return bn(r, t, n) ? NB(a) : PAe(a);
+}, kAe = (e, t, n) => {
   const r = Ie(e), a = r.getDay();
-  return bn(r, t, n) ? NB(a) : kAe(a);
-}, $Ae = {
-  lastWeek: CAe,
+  return bn(r, t, n) ? NB(a) : xAe(a);
+}, CAe = {
+  lastWeek: MAe,
   yesterday: "'учора а' p",
   today: "'сёння а' p",
   tomorrow: "'заўтра а' p",
-  nextWeek: SAe,
+  nextWeek: kAe,
   other: "P"
-}, _Ae = (e, t, n, r) => {
-  const a = $Ae[e];
+}, SAe = (e, t, n, r) => {
+  const a = CAe[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, TAe = {
+}, $Ae = {
   narrow: ["да н.э.", "н.э."],
   abbreviated: ["да н. э.", "н. э."],
   wide: ["да нашай эры", "нашай эры"]
-}, EAe = {
+}, _Ae = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ы кв.", "2-і кв.", "3-і кв.", "4-ы кв."],
   wide: ["1-ы квартал", "2-і квартал", "3-і квартал", "4-ы квартал"]
-}, AAe = {
+}, TAe = {
   narrow: ["С", "Л", "С", "К", "М", "Ч", "Л", "Ж", "В", "К", "Л", "С"],
   abbreviated: [
     "студз.",
@@ -54252,7 +54192,7 @@ const CAe = (e, t, n) => {
     "лістапад",
     "снежань"
   ]
-}, OAe = {
+}, EAe = {
   narrow: ["С", "Л", "С", "К", "М", "Ч", "Л", "Ж", "В", "К", "Л", "С"],
   abbreviated: [
     "студз.",
@@ -54282,7 +54222,7 @@ const CAe = (e, t, n) => {
     "лістапада",
     "снежня"
   ]
-}, DAe = {
+}, AAe = {
   narrow: ["Н", "П", "А", "С", "Ч", "П", "С"],
   short: ["нд", "пн", "аў", "ср", "чц", "пт", "сб"],
   abbreviated: ["нядз", "пан", "аўт", "сер", "чац", "пят", "суб"],
@@ -54295,7 +54235,7 @@ const CAe = (e, t, n) => {
     "пятніца",
     "субота"
   ]
-}, NAe = {
+}, OAe = {
   narrow: {
     am: "ДП",
     pm: "ПП",
@@ -54326,7 +54266,7 @@ const CAe = (e, t, n) => {
     evening: "вечар",
     night: "ноч"
   }
-}, WAe = {
+}, DAe = {
   narrow: {
     am: "ДП",
     pm: "ПП",
@@ -54357,54 +54297,54 @@ const CAe = (e, t, n) => {
     evening: "вечара",
     night: "ночы"
   }
-}, RAe = (e, t) => {
+}, NAe = (e, t) => {
   const n = String(t == null ? void 0 : t.unit), r = Number(e);
   let a;
   return n === "date" ? a = "-га" : n === "hour" || n === "minute" || n === "second" ? a = "-я" : a = (r % 10 === 2 || r % 10 === 3) && r % 100 !== 12 && r % 100 !== 13 ? "-і" : "-ы", r + a;
-}, jAe = {
-  ordinalNumber: RAe,
+}, WAe = {
+  ordinalNumber: NAe,
   era: A({
-    values: TAe,
+    values: $Ae,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: EAe,
+    values: _Ae,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: AAe,
+    values: TAe,
     defaultWidth: "wide",
-    formattingValues: OAe,
+    formattingValues: EAe,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: DAe,
+    values: AAe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: NAe,
+    values: OAe,
     defaultWidth: "any",
-    formattingValues: WAe,
+    formattingValues: DAe,
     defaultFormattingWidth: "wide"
   })
-}, IAe = /^(\d+)(-?(е|я|га|і|ы|ае|ая|яя|шы|гі|ці|ты|мы))?/i, LAe = /\d+/i, FAe = {
+}, RAe = /^(\d+)(-?(е|я|га|і|ы|ае|ая|яя|шы|гі|ці|ты|мы))?/i, jAe = /\d+/i, IAe = {
   narrow: /^((да )?н\.?\s?э\.?)/i,
   abbreviated: /^((да )?н\.?\s?э\.?)/i,
   wide: /^(да нашай эры|нашай эры|наша эра)/i
-}, zAe = {
+}, LAe = {
   any: [/^д/i, /^н/i]
-}, VAe = {
+}, FAe = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[ыі]?)? кв.?/i,
   wide: /^[1234](-?[ыі]?)? квартал/i
-}, HAe = {
+}, zAe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, BAe = {
+}, VAe = {
   narrow: /^[слкмчжв]/i,
   abbreviated: /^(студз|лют|сак|крас|ма[йя]|чэрв|ліп|жн|вер|кастр|ліст|снеж)\.?/i,
   wide: /^(студзен[ья]|лют(ы|ага)|сакавіка?|красавіка?|ма[йя]|чэрвен[ья]|ліпен[ья]|жні(вень|ўня)|верас(ень|ня)|кастрычніка?|лістапада?|снеж(ань|ня))/i
-}, qAe = {
+}, HAe = {
   narrow: [
     /^с/i,
     /^л/i,
@@ -54433,19 +54373,19 @@ const CAe = (e, t, n) => {
     /^ліс/i,
     /^сн/i
   ]
-}, XAe = {
+}, BAe = {
   narrow: /^[нпасч]/i,
   short: /^(нд|ня|пн|па|аў|ат|ср|се|чц|ча|пт|пя|сб|су)\.?/i,
   abbreviated: /^(нядз?|ндз|пнд|пан|аўт|срд|сер|чцв|чац|птн|пят|суб).?/i,
   wide: /^(нядзел[яі]|панядзел(ак|ка)|аўтор(ак|ка)|серад[аы]|чацв(ер|ярга)|пятніц[аы]|субот[аы])/i
-}, GAe = {
+}, qAe = {
   narrow: [/^н/i, /^п/i, /^а/i, /^с/i, /^ч/i, /^п/i, /^с/i],
   any: [/^н/i, /^п[ан]/i, /^а/i, /^с[ер]/i, /^ч/i, /^п[ят]/i, /^с[уб]/i]
-}, YAe = {
+}, XAe = {
   narrow: /^([дп]п|поўн\.?|поўд\.?|ран\.?|дзень|дня|веч\.?|ночы?)/i,
   abbreviated: /^([дп]п|поўн\.?|поўд\.?|ран\.?|дзень|дня|веч\.?|ночы?)/i,
   wide: /^([дп]п|поўнач|поўдзень|раніц[аы]|дзень|дня|вечара?|ночы?)/i
-}, UAe = {
+}, GAe = {
   any: {
     am: /^дп/i,
     pm: /^пп/i,
@@ -54456,50 +54396,50 @@ const CAe = (e, t, n) => {
     evening: /^в/i,
     night: /^н/i
   }
-}, KAe = {
+}, YAe = {
   ordinalNumber: Se({
-    matchPattern: IAe,
-    parsePattern: LAe,
+    matchPattern: RAe,
+    parsePattern: jAe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: FAe,
+    matchPatterns: IAe,
     defaultMatchWidth: "wide",
-    parsePatterns: zAe,
+    parsePatterns: LAe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: VAe,
+    matchPatterns: FAe,
     defaultMatchWidth: "wide",
-    parsePatterns: HAe,
+    parsePatterns: zAe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: VAe,
+    defaultMatchWidth: "wide",
+    parsePatterns: HAe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: BAe,
     defaultMatchWidth: "wide",
     parsePatterns: qAe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: XAe,
     defaultMatchWidth: "wide",
     parsePatterns: GAe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: YAe,
-    defaultMatchWidth: "wide",
-    parsePatterns: UAe,
-    defaultParseWidth: "any"
   })
-}, QAe = {
+}, UAe = {
   code: "be",
-  formatDistance: yAe,
-  formatLong: xAe,
-  formatRelative: _Ae,
-  localize: jAe,
-  match: KAe,
+  formatDistance: gAe,
+  formatLong: wAe,
+  formatRelative: SAe,
+  localize: WAe,
+  match: YAe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
@@ -54514,7 +54454,7 @@ function gd(e, t) {
 function Sr(e) {
   return (t, n) => n && n.addSuffix ? n.comparison && n.comparison > 0 ? e.future ? gd(e.future, t) : "праз " + gd(e.regular, t) : e.past ? gd(e.past, t) : gd(e.regular, t) + " таму" : gd(e.regular, t);
 }
-const ZAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "праз паўхвіліны" : "паўхвіліны таму" : "паўхвіліны", JAe = {
+const KAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "праз паўхвіліны" : "паўхвіліны таму" : "паўхвіліны", QAe = {
   lessThanXSeconds: Sr({
     regular: {
       one: "менш за секунду",
@@ -54546,7 +54486,7 @@ const ZAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "п�
       pluralGenitive: "праз {{count}} секунд"
     }
   }),
-  halfAMinute: ZAe,
+  halfAMinute: KAe,
   lessThanXMinutes: Sr({
     regular: {
       one: "менш за хвіліну",
@@ -54695,29 +54635,29 @@ const ZAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "п�
       pluralGenitive: "амаль праз {{count}} гадоў"
     }
   })
-}, eOe = (e, t, n) => (n = n || {}, JAe[e](t, n)), tOe = {
+}, ZAe = (e, t, n) => (n = n || {}, QAe[e](t, n)), JAe = {
   full: "EEEE, d MMMM y 'г.'",
   long: "d MMMM y 'г.'",
   medium: "d MMM y 'г.'",
   short: "dd.MM.y"
-}, nOe = {
+}, eOe = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, rOe = {
+}, tOe = {
   any: "{{date}}, {{time}}"
-}, aOe = {
+}, nOe = {
   date: q({
-    formats: tOe,
+    formats: JAe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: nOe,
+    formats: eOe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: rOe,
+    formats: tOe,
     defaultWidth: "any"
   })
 }, S5 = [
@@ -54729,7 +54669,7 @@ const ZAe = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "п�
   "пятніцу",
   "суботу"
 ];
-function iOe(e) {
+function rOe(e) {
   const t = S5[e];
   switch (e) {
     case 0:
@@ -54746,7 +54686,7 @@ function iOe(e) {
 function WB(e) {
   return "'у " + S5[e] + " а' p";
 }
-function oOe(e) {
+function aOe(e) {
   const t = S5[e];
   switch (e) {
     case 0:
@@ -54760,31 +54700,31 @@ function oOe(e) {
       return "'у наступны " + t + " а' p";
   }
 }
-const sOe = (e, t, n) => {
+const iOe = (e, t, n) => {
   const r = Ie(e), a = r.getDay();
-  return bn(r, t, n) ? WB(a) : iOe(a);
-}, uOe = (e, t, n) => {
+  return bn(r, t, n) ? WB(a) : rOe(a);
+}, oOe = (e, t, n) => {
   const r = Ie(e), a = r.getDay();
-  return bn(r, t, n) ? WB(a) : oOe(a);
-}, cOe = {
-  lastWeek: sOe,
+  return bn(r, t, n) ? WB(a) : aOe(a);
+}, sOe = {
+  lastWeek: iOe,
   yesterday: "'учора а' p",
   today: "'сёньня а' p",
   tomorrow: "'заўтра а' p",
-  nextWeek: uOe,
+  nextWeek: oOe,
   other: "P"
-}, lOe = (e, t, n, r) => {
-  const a = cOe[e];
+}, uOe = (e, t, n, r) => {
+  const a = sOe[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, dOe = {
+}, cOe = {
   narrow: ["да н.э.", "н.э."],
   abbreviated: ["да н. э.", "н. э."],
   wide: ["да нашай эры", "нашай эры"]
-}, fOe = {
+}, lOe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ы кв.", "2-і кв.", "3-і кв.", "4-ы кв."],
   wide: ["1-ы квартал", "2-і квартал", "3-і квартал", "4-ы квартал"]
-}, mOe = {
+}, dOe = {
   narrow: ["С", "Л", "С", "К", "Т", "Ч", "Л", "Ж", "В", "К", "Л", "С"],
   abbreviated: [
     "студз.",
@@ -54814,7 +54754,7 @@ const sOe = (e, t, n) => {
     "лістапад",
     "сьнежань"
   ]
-}, hOe = {
+}, fOe = {
   narrow: ["С", "Л", "С", "К", "Т", "Ч", "Л", "Ж", "В", "К", "Л", "С"],
   abbreviated: [
     "студз.",
@@ -54844,7 +54784,7 @@ const sOe = (e, t, n) => {
     "лістапада",
     "сьнежня"
   ]
-}, pOe = {
+}, mOe = {
   narrow: ["Н", "П", "А", "С", "Ч", "П", "С"],
   short: ["нд", "пн", "аў", "ср", "чц", "пт", "сб"],
   abbreviated: ["нядз", "пан", "аўт", "сер", "чаць", "пят", "суб"],
@@ -54857,7 +54797,7 @@ const sOe = (e, t, n) => {
     "пятніца",
     "субота"
   ]
-}, gOe = {
+}, hOe = {
   narrow: {
     am: "ДП",
     pm: "ПП",
@@ -54888,7 +54828,7 @@ const sOe = (e, t, n) => {
     evening: "вечар",
     night: "ноч"
   }
-}, vOe = {
+}, pOe = {
   narrow: {
     am: "ДП",
     pm: "ПП",
@@ -54919,54 +54859,54 @@ const sOe = (e, t, n) => {
     evening: "вечара",
     night: "ночы"
   }
-}, yOe = (e, t) => {
+}, gOe = (e, t) => {
   const n = String(t == null ? void 0 : t.unit), r = Number(e);
   let a;
   return n === "date" ? a = "-га" : n === "hour" || n === "minute" || n === "second" ? a = "-я" : a = (r % 10 === 2 || r % 10 === 3) && r % 100 !== 12 && r % 100 !== 13 ? "-і" : "-ы", r + a;
-}, bOe = {
-  ordinalNumber: yOe,
+}, vOe = {
+  ordinalNumber: gOe,
   era: A({
-    values: dOe,
+    values: cOe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: fOe,
+    values: lOe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: mOe,
+    values: dOe,
     defaultWidth: "wide",
-    formattingValues: hOe,
+    formattingValues: fOe,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: pOe,
+    values: mOe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: gOe,
+    values: hOe,
     defaultWidth: "any",
-    formattingValues: vOe,
+    formattingValues: pOe,
     defaultFormattingWidth: "wide"
   })
-}, wOe = /^(\d+)(-?(е|я|га|і|ы|ае|ая|яя|шы|гі|ці|ты|мы))?/i, POe = /\d+/i, xOe = {
+}, yOe = /^(\d+)(-?(е|я|га|і|ы|ае|ая|яя|шы|гі|ці|ты|мы))?/i, bOe = /\d+/i, wOe = {
   narrow: /^((да )?н\.?\s?э\.?)/i,
   abbreviated: /^((да )?н\.?\s?э\.?)/i,
   wide: /^(да нашай эры|нашай эры|наша эра)/i
-}, MOe = {
+}, POe = {
   any: [/^д/i, /^н/i]
-}, kOe = {
+}, xOe = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[ыі]?)? кв.?/i,
   wide: /^[1234](-?[ыі]?)? квартал/i
-}, COe = {
+}, MOe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, SOe = {
+}, kOe = {
   narrow: /^[слкмчжв]/i,
   abbreviated: /^(студз|лют|сак|крас|тр(ав)?|чэрв|ліп|жн|вер|кастр|ліст|сьнеж)\.?/i,
   wide: /^(студзен[ья]|лют(ы|ага)|сакавіка?|красавіка?|тра(вень|ўня)|чэрвен[ья]|ліпен[ья]|жні(вень|ўня)|верас(ень|ня)|кастрычніка?|лістапада?|сьнеж(ань|ня))/i
-}, $Oe = {
+}, COe = {
   narrow: [
     /^с/i,
     /^л/i,
@@ -54995,19 +54935,19 @@ const sOe = (e, t, n) => {
     /^ліс/i,
     /^сн/i
   ]
-}, _Oe = {
+}, SOe = {
   narrow: /^[нпасч]/i,
   short: /^(нд|ня|пн|па|аў|ат|ср|се|чц|ча|пт|пя|сб|су)\.?/i,
   abbreviated: /^(нядз?|ндз|пнд|пан|аўт|срд|сер|чцьв|чаць|птн|пят|суб).?/i,
   wide: /^(нядзел[яі]|панядзел(ак|ка)|аўтор(ак|ка)|серад[аы]|чацьв(ер|ярга)|пятніц[аы]|субот[аы])/i
-}, TOe = {
+}, $Oe = {
   narrow: [/^н/i, /^п/i, /^а/i, /^с/i, /^ч/i, /^п/i, /^с/i],
   any: [/^н/i, /^п[ан]/i, /^а/i, /^с[ер]/i, /^ч/i, /^п[ят]/i, /^с[уб]/i]
-}, EOe = {
+}, _Oe = {
   narrow: /^([дп]п|поўн\.?|поўд\.?|ран\.?|дзень|дня|веч\.?|ночы?)/i,
   abbreviated: /^([дп]п|поўн\.?|поўд\.?|ран\.?|дзень|дня|веч\.?|ночы?)/i,
   wide: /^([дп]п|поўнач|поўдзень|раніц[аы]|дзень|дня|вечара?|ночы?)/i
-}, AOe = {
+}, TOe = {
   any: {
     am: /^дп/i,
     pm: /^пп/i,
@@ -55018,55 +54958,55 @@ const sOe = (e, t, n) => {
     evening: /^в/i,
     night: /^н/i
   }
-}, OOe = {
+}, EOe = {
   ordinalNumber: Se({
-    matchPattern: wOe,
-    parsePattern: POe,
+    matchPattern: yOe,
+    parsePattern: bOe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: xOe,
+    matchPatterns: wOe,
     defaultMatchWidth: "wide",
-    parsePatterns: MOe,
+    parsePatterns: POe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: kOe,
+    matchPatterns: xOe,
     defaultMatchWidth: "wide",
-    parsePatterns: COe,
+    parsePatterns: MOe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: kOe,
+    defaultMatchWidth: "wide",
+    parsePatterns: COe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: SOe,
     defaultMatchWidth: "wide",
     parsePatterns: $Oe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: _Oe,
     defaultMatchWidth: "wide",
     parsePatterns: TOe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: EOe,
-    defaultMatchWidth: "wide",
-    parsePatterns: AOe,
-    defaultParseWidth: "any"
   })
-}, DOe = {
+}, AOe = {
   code: "be-tarask",
-  formatDistance: eOe,
-  formatLong: aOe,
-  formatRelative: lOe,
-  localize: bOe,
-  match: OOe,
+  formatDistance: ZAe,
+  formatLong: nOe,
+  formatRelative: uOe,
+  localize: vOe,
+  match: EOe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, NOe = {
+}, OOe = {
   lessThanXSeconds: {
     one: "по-малко от секунда",
     other: "по-малко от {{count}} секунди"
@@ -55128,33 +55068,33 @@ const sOe = (e, t, n) => {
     one: "почти година",
     other: "почти {{count}} години"
   }
-}, WOe = (e, t, n) => {
+}, DOe = (e, t, n) => {
   let r;
-  const a = NOe[e];
+  const a = OOe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "след " + r : "преди " + r : r;
-}, ROe = {
+}, NOe = {
   full: "EEEE, dd MMMM yyyy",
   long: "dd MMMM yyyy",
   medium: "dd MMM yyyy",
   short: "dd/MM/yyyy"
-}, jOe = {
+}, WOe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "H:mm"
-}, IOe = {
+}, ROe = {
   any: "{{date}} {{time}}"
-}, LOe = {
+}, jOe = {
   date: q({
-    formats: ROe,
+    formats: NOe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: jOe,
+    formats: WOe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: IOe,
+    formats: ROe,
     defaultWidth: "any"
   })
 }, $5 = [
@@ -55166,7 +55106,7 @@ const sOe = (e, t, n) => {
   "петък",
   "събота"
 ];
-function FOe(e) {
+function IOe(e) {
   const t = $5[e];
   switch (e) {
     case 0:
@@ -55184,7 +55124,7 @@ function RB(e) {
   const t = $5[e];
   return e === 2 ? "'във " + t + " в' p" : "'в " + t + " в' p";
 }
-function zOe(e) {
+function LOe(e) {
   const t = $5[e];
   switch (e) {
     case 0:
@@ -55198,27 +55138,27 @@ function zOe(e) {
       return "'следващия " + t + " в' p";
   }
 }
-const VOe = (e, t, n) => {
+const FOe = (e, t, n) => {
   const r = Ie(e), a = r.getDay();
-  return bn(r, t, n) ? RB(a) : FOe(a);
-}, HOe = (e, t, n) => {
+  return bn(r, t, n) ? RB(a) : IOe(a);
+}, zOe = (e, t, n) => {
   const r = Ie(e), a = r.getDay();
-  return bn(r, t, n) ? RB(a) : zOe(a);
-}, BOe = {
-  lastWeek: VOe,
+  return bn(r, t, n) ? RB(a) : LOe(a);
+}, VOe = {
+  lastWeek: FOe,
   yesterday: "'вчера в' p",
   today: "'днес в' p",
   tomorrow: "'утре в' p",
-  nextWeek: HOe,
+  nextWeek: zOe,
   other: "P"
-}, qOe = (e, t, n, r) => {
-  const a = BOe[e];
+}, HOe = (e, t, n, r) => {
+  const a = VOe[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, XOe = {
+}, BOe = {
   narrow: ["пр.н.е.", "н.е."],
   abbreviated: ["преди н. е.", "н. е."],
   wide: ["преди новата ера", "новата ера"]
-}, GOe = {
+}, qOe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-во тримес.", "2-ро тримес.", "3-то тримес.", "4-то тримес."],
   wide: [
@@ -55227,7 +55167,7 @@ const VOe = (e, t, n) => {
     "3-то тримесечие",
     "4-то тримесечие"
   ]
-}, YOe = {
+}, XOe = {
   abbreviated: [
     "яну",
     "фев",
@@ -55256,7 +55196,7 @@ const VOe = (e, t, n) => {
     "ноември",
     "декември"
   ]
-}, UOe = {
+}, GOe = {
   narrow: ["Н", "П", "В", "С", "Ч", "П", "С"],
   short: ["нд", "пн", "вт", "ср", "чт", "пт", "сб"],
   abbreviated: ["нед", "пон", "вто", "сря", "чет", "пет", "съб"],
@@ -55269,7 +55209,7 @@ const VOe = (e, t, n) => {
     "петък",
     "събота"
   ]
-}, KOe = {
+}, YOe = {
   wide: {
     am: "преди обяд",
     pm: "след обяд",
@@ -55281,17 +55221,17 @@ const VOe = (e, t, n) => {
     night: "през нощта"
   }
 };
-function QOe(e) {
+function UOe(e) {
   return e === "year" || e === "week" || e === "minute" || e === "second";
 }
-function ZOe(e) {
+function KOe(e) {
   return e === "quarter";
 }
 function Is(e, t, n, r, a) {
-  const i = ZOe(t) ? a : QOe(t) ? r : n;
+  const i = KOe(t) ? a : UOe(t) ? r : n;
   return e + "-" + i;
 }
-const JOe = (e, t) => {
+const QOe = (e, t) => {
   const n = Number(e), r = t == null ? void 0 : t.unit;
   if (n === 0)
     return Is(0, r, "ев", "ева", "ево");
@@ -55311,53 +55251,53 @@ const JOe = (e, t) => {
         return Is(n, r, "ми", "ма", "мо");
     }
   return Is(n, r, "ти", "та", "то");
-}, e7e = {
-  ordinalNumber: JOe,
+}, ZOe = {
+  ordinalNumber: QOe,
   era: A({
-    values: XOe,
+    values: BOe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: GOe,
+    values: qOe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: YOe,
+    values: XOe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: UOe,
+    values: GOe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: KOe,
+    values: YOe,
     defaultWidth: "wide"
   })
-}, t7e = /^(\d+)(-?[врмт][аи]|-?т?(ен|на)|-?(ев|ева))?/i, n7e = /\d+/i, r7e = {
+}, JOe = /^(\d+)(-?[врмт][аи]|-?т?(ен|на)|-?(ев|ева))?/i, e7e = /\d+/i, t7e = {
   narrow: /^((пр)?н\.?\s?е\.?)/i,
   abbreviated: /^((пр)?н\.?\s?е\.?)/i,
   wide: /^(преди новата ера|новата ера|нова ера)/i
-}, a7e = {
+}, n7e = {
   any: [/^п/i, /^н/i]
-}, i7e = {
+}, r7e = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[врт]?o?)? тримес.?/i,
   wide: /^[1234](-?[врт]?о?)? тримесечие/i
-}, o7e = {
+}, a7e = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, s7e = {
+}, i7e = {
   narrow: /^[нпвсч]/i,
   short: /^(нд|пн|вт|ср|чт|пт|сб)/i,
   abbreviated: /^(нед|пон|вто|сря|чет|пет|съб)/i,
   wide: /^(неделя|понеделник|вторник|сряда|четвъртък|петък|събота)/i
-}, u7e = {
+}, o7e = {
   narrow: [/^н/i, /^п/i, /^в/i, /^с/i, /^ч/i, /^п/i, /^с/i],
   any: [/^н[ед]/i, /^п[он]/i, /^вт/i, /^ср/i, /^ч[ет]/i, /^п[ет]/i, /^с[ъб]/i]
-}, c7e = {
+}, s7e = {
   abbreviated: /^(яну|фев|мар|апр|май|юни|юли|авг|сеп|окт|ное|дек)/i,
   wide: /^(януари|февруари|март|април|май|юни|юли|август|септември|октомври|ноември|декември)/i
-}, l7e = {
+}, u7e = {
   any: [
     /^я/i,
     /^ф/i,
@@ -55372,9 +55312,9 @@ const JOe = (e, t) => {
     /^но/i,
     /^де/i
   ]
-}, d7e = {
+}, c7e = {
   any: /^(преди о|след о|в по|на о|през|веч|сут|следо)/i
-}, f7e = {
+}, l7e = {
   any: {
     am: /^преди о/i,
     pm: /^след о/i,
@@ -55385,55 +55325,55 @@ const JOe = (e, t) => {
     evening: /^веч/i,
     night: /^през н/i
   }
-}, m7e = {
+}, d7e = {
   ordinalNumber: Se({
-    matchPattern: t7e,
-    parsePattern: n7e,
+    matchPattern: JOe,
+    parsePattern: e7e,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: r7e,
+    matchPatterns: t7e,
     defaultMatchWidth: "wide",
-    parsePatterns: a7e,
+    parsePatterns: n7e,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: i7e,
+    matchPatterns: r7e,
     defaultMatchWidth: "wide",
-    parsePatterns: o7e,
+    parsePatterns: a7e,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
-    matchPatterns: c7e,
-    defaultMatchWidth: "wide",
-    parsePatterns: l7e,
-    defaultParseWidth: "any"
-  }),
-  day: D({
     matchPatterns: s7e,
     defaultMatchWidth: "wide",
     parsePatterns: u7e,
     defaultParseWidth: "any"
   }),
+  day: D({
+    matchPatterns: i7e,
+    defaultMatchWidth: "wide",
+    parsePatterns: o7e,
+    defaultParseWidth: "any"
+  }),
   dayPeriod: D({
-    matchPatterns: d7e,
+    matchPatterns: c7e,
     defaultMatchWidth: "any",
-    parsePatterns: f7e,
+    parsePatterns: l7e,
     defaultParseWidth: "any"
   })
-}, h7e = {
+}, f7e = {
   code: "bg",
-  formatDistance: WOe,
-  formatLong: LOe,
-  formatRelative: qOe,
-  localize: e7e,
-  match: m7e,
+  formatDistance: DOe,
+  formatLong: jOe,
+  formatRelative: HOe,
+  localize: ZOe,
+  match: d7e,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, p7e = {
+}, m7e = {
   locale: {
     1: "১",
     2: "২",
@@ -55446,15 +55386,15 @@ const JOe = (e, t) => {
     9: "৯",
     0: "০"
   }
-}, g7e = {
+}, h7e = {
   narrow: ["খ্রিঃপূঃ", "খ্রিঃ"],
   abbreviated: ["খ্রিঃপূর্ব", "খ্রিঃ"],
   wide: ["খ্রিস্টপূর্ব", "খ্রিস্টাব্দ"]
-}, v7e = {
+}, p7e = {
   narrow: ["১", "২", "৩", "৪"],
   abbreviated: ["১ত্রৈ", "২ত্রৈ", "৩ত্রৈ", "৪ত্রৈ"],
   wide: ["১ম ত্রৈমাসিক", "২য় ত্রৈমাসিক", "৩য় ত্রৈমাসিক", "৪র্থ ত্রৈমাসিক"]
-}, y7e = {
+}, g7e = {
   narrow: [
     "জানু",
     "ফেব্রু",
@@ -55497,7 +55437,7 @@ const JOe = (e, t) => {
     "নভেম্বর",
     "ডিসেম্বর"
   ]
-}, b7e = {
+}, v7e = {
   narrow: ["র", "সো", "ম", "বু", "বৃ", "শু", "শ"],
   short: ["রবি", "সোম", "মঙ্গল", "বুধ", "বৃহ", "শুক্র", "শনি"],
   abbreviated: ["রবি", "সোম", "মঙ্গল", "বুধ", "বৃহ", "শুক্র", "শনি"],
@@ -55510,7 +55450,7 @@ const JOe = (e, t) => {
     "শুক্রবার",
     "শনিবার"
   ]
-}, w7e = {
+}, y7e = {
   narrow: {
     am: "পূ",
     pm: "অপ",
@@ -55541,7 +55481,7 @@ const JOe = (e, t) => {
     evening: "সন্ধ্যা",
     night: "রাত"
   }
-}, P7e = {
+}, b7e = {
   narrow: {
     am: "পূ",
     pm: "অপ",
@@ -55573,7 +55513,7 @@ const JOe = (e, t) => {
     night: "রাত"
   }
 };
-function x7e(e, t) {
+function w7e(e, t) {
   if (e > 18 && e <= 31)
     return t + "শে";
   switch (e) {
@@ -55588,10 +55528,10 @@ function x7e(e, t) {
       return t + "ই";
   }
 }
-const M7e = (e, t) => {
+const P7e = (e, t) => {
   const n = Number(e), r = jB(n);
   if ((t == null ? void 0 : t.unit) === "date")
-    return x7e(n, r);
+    return w7e(n, r);
   if (n > 10 || n === 0) return r + "তম";
   switch (n % 10) {
     case 2:
@@ -55607,35 +55547,35 @@ const M7e = (e, t) => {
 };
 function jB(e) {
   return e.toString().replace(/\d/g, function(t) {
-    return p7e.locale[t];
+    return m7e.locale[t];
   });
 }
-const k7e = {
-  ordinalNumber: M7e,
+const x7e = {
+  ordinalNumber: P7e,
   era: A({
-    values: g7e,
+    values: h7e,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: v7e,
+    values: p7e,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: y7e,
+    values: g7e,
     defaultWidth: "wide"
   }),
   day: A({
-    values: b7e,
+    values: v7e,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: w7e,
+    values: y7e,
     defaultWidth: "wide",
-    formattingValues: P7e,
+    formattingValues: b7e,
     defaultFormattingWidth: "wide"
   })
-}, C7e = {
+}, M7e = {
   lessThanXSeconds: {
     one: "প্রায় ১ সেকেন্ড",
     other: "প্রায় {{count}} সেকেন্ড"
@@ -55697,64 +55637,64 @@ const k7e = {
     one: "প্রায় ১ বছর",
     other: "প্রায় {{count}} বছর"
   }
-}, S7e = (e, t, n) => {
+}, k7e = (e, t, n) => {
   let r;
-  const a = C7e[e];
+  const a = M7e[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", jB(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + " এর মধ্যে" : r + " আগে" : r;
-}, $7e = {
+}, C7e = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
   short: "MM/dd/yyyy"
-}, _7e = {
+}, S7e = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, T7e = {
+}, $7e = {
   full: "{{date}} {{time}} 'সময়'",
   long: "{{date}} {{time}} 'সময়'",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, E7e = {
+}, _7e = {
   date: q({
-    formats: $7e,
+    formats: C7e,
     defaultWidth: "full"
   }),
   time: q({
-    formats: _7e,
+    formats: S7e,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: T7e,
+    formats: $7e,
     defaultWidth: "full"
   })
-}, A7e = {
+}, T7e = {
   lastWeek: "'গত' eeee 'সময়' p",
   yesterday: "'গতকাল' 'সময়' p",
   today: "'আজ' 'সময়' p",
   tomorrow: "'আগামীকাল' 'সময়' p",
   nextWeek: "eeee 'সময়' p",
   other: "P"
-}, O7e = (e, t, n, r) => A7e[e], D7e = /^(\d+)(ম|য়|র্থ|ষ্ঠ|শে|ই|তম)?/i, N7e = /\d+/i, W7e = {
+}, E7e = (e, t, n, r) => T7e[e], A7e = /^(\d+)(ম|য়|র্থ|ষ্ঠ|শে|ই|তম)?/i, O7e = /\d+/i, D7e = {
   narrow: /^(খ্রিঃপূঃ|খ্রিঃ)/i,
   abbreviated: /^(খ্রিঃপূর্ব|খ্রিঃ)/i,
   wide: /^(খ্রিস্টপূর্ব|খ্রিস্টাব্দ)/i
-}, R7e = {
+}, N7e = {
   narrow: [/^খ্রিঃপূঃ/i, /^খ্রিঃ/i],
   abbreviated: [/^খ্রিঃপূর্ব/i, /^খ্রিঃ/i],
   wide: [/^খ্রিস্টপূর্ব/i, /^খ্রিস্টাব্দ/i]
-}, j7e = {
+}, W7e = {
   narrow: /^[১২৩৪]/i,
   abbreviated: /^[১২৩৪]ত্রৈ/i,
   wide: /^[১২৩৪](ম|য়|র্থ)? ত্রৈমাসিক/i
-}, I7e = {
+}, R7e = {
   any: [/১/i, /২/i, /৩/i, /৪/i]
-}, L7e = {
+}, j7e = {
   narrow: /^(জানু|ফেব্রু|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্ট|অক্টো|নভে|ডিসে)/i,
   abbreviated: /^(জানু|ফেব্রু|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্ট|অক্টো|নভে|ডিসে)/i,
   wide: /^(জানুয়ারি|ফেব্রুয়ারি|মার্চ|এপ্রিল|মে|জুন|জুলাই|আগস্ট|সেপ্টেম্বর|অক্টোবর|নভেম্বর|ডিসেম্বর)/i
-}, F7e = {
+}, I7e = {
   any: [
     /^জানু/i,
     /^ফেব্রু/i,
@@ -55769,12 +55709,12 @@ const k7e = {
     /^নভে/i,
     /^ডিসে/i
   ]
-}, z7e = {
+}, L7e = {
   narrow: /^(র|সো|ম|বু|বৃ|শু|শ)+/i,
   short: /^(রবি|সোম|মঙ্গল|বুধ|বৃহ|শুক্র|শনি)+/i,
   abbreviated: /^(রবি|সোম|মঙ্গল|বুধ|বৃহ|শুক্র|শনি)+/i,
   wide: /^(রবিবার|সোমবার|মঙ্গলবার|বুধবার|বৃহস্পতিবার |শুক্রবার|শনিবার)+/i
-}, V7e = {
+}, F7e = {
   narrow: [/^র/i, /^সো/i, /^ম/i, /^বু/i, /^বৃ/i, /^শু/i, /^শ/i],
   short: [/^রবি/i, /^সোম/i, /^মঙ্গল/i, /^বুধ/i, /^বৃহ/i, /^শুক্র/i, /^শনি/i],
   abbreviated: [
@@ -55795,11 +55735,11 @@ const k7e = {
     /^শুক্রবার/i,
     /^শনিবার/i
   ]
-}, H7e = {
+}, z7e = {
   narrow: /^(পূ|অপ|মধ্যরাত|মধ্যাহ্ন|সকাল|বিকাল|সন্ধ্যা|রাত)/i,
   abbreviated: /^(পূর্বাহ্ন|অপরাহ্ন|মধ্যরাত|মধ্যাহ্ন|সকাল|বিকাল|সন্ধ্যা|রাত)/i,
   wide: /^(পূর্বাহ্ন|অপরাহ্ন|মধ্যরাত|মধ্যাহ্ন|সকাল|বিকাল|সন্ধ্যা|রাত)/i
-}, B7e = {
+}, V7e = {
   any: {
     am: /^পূ/i,
     pm: /^অপ/i,
@@ -55810,55 +55750,55 @@ const k7e = {
     evening: /সন্ধ্যা/i,
     night: /রাত/i
   }
-}, q7e = {
+}, H7e = {
   ordinalNumber: Se({
-    matchPattern: D7e,
-    parsePattern: N7e,
+    matchPattern: A7e,
+    parsePattern: O7e,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: W7e,
+    matchPatterns: D7e,
     defaultMatchWidth: "wide",
-    parsePatterns: R7e,
+    parsePatterns: N7e,
     defaultParseWidth: "wide"
   }),
   quarter: D({
-    matchPatterns: j7e,
+    matchPatterns: W7e,
     defaultMatchWidth: "wide",
-    parsePatterns: I7e,
+    parsePatterns: R7e,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
-    matchPatterns: L7e,
+    matchPatterns: j7e,
     defaultMatchWidth: "wide",
-    parsePatterns: F7e,
+    parsePatterns: I7e,
     defaultParseWidth: "any"
   }),
   day: D({
-    matchPatterns: z7e,
+    matchPatterns: L7e,
     defaultMatchWidth: "wide",
-    parsePatterns: V7e,
+    parsePatterns: F7e,
     defaultParseWidth: "wide"
   }),
   dayPeriod: D({
-    matchPatterns: H7e,
+    matchPatterns: z7e,
     defaultMatchWidth: "wide",
-    parsePatterns: B7e,
+    parsePatterns: V7e,
     defaultParseWidth: "any"
   })
-}, X7e = {
+}, B7e = {
   code: "bn",
-  formatDistance: S7e,
-  formatLong: E7e,
-  formatRelative: O7e,
-  localize: k7e,
-  match: q7e,
+  formatDistance: k7e,
+  formatLong: _7e,
+  formatRelative: E7e,
+  localize: x7e,
+  match: H7e,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, G7e = {
+}, q7e = {
   lessThanXSeconds: {
     one: {
       standalone: "manje od 1 sekunde",
@@ -55995,40 +55935,40 @@ const k7e = {
     dual: "gotovo {{count}} godine",
     other: "gotovo {{count}} godina"
   }
-}, Y7e = (e, t, n) => {
+}, X7e = (e, t, n) => {
   let r;
-  const a = G7e[e];
+  const a = q7e[e];
   return typeof a == "string" ? r = a : t === 1 ? n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r = a.one.withPrepositionIn : r = a.one.withPrepositionAgo : r = a.one.standalone : t % 10 > 1 && t % 10 < 5 && // if last digit is between 2 and 4
   String(t).substr(-2, 1) !== "1" ? r = a.dual.replace("{{count}}", String(t)) : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "za " + r : "prije " + r : r;
-}, U7e = {
+}, G7e = {
   full: "EEEE, d. MMMM yyyy.",
   long: "d. MMMM yyyy.",
   medium: "d. MMM yy.",
   short: "dd. MM. yy."
-}, K7e = {
+}, Y7e = {
   full: "HH:mm:ss (zzzz)",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Q7e = {
+}, U7e = {
   full: "{{date}} 'u' {{time}}",
   long: "{{date}} 'u' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, Z7e = {
+}, K7e = {
   date: q({
-    formats: U7e,
+    formats: G7e,
     defaultWidth: "full"
   }),
   time: q({
-    formats: K7e,
+    formats: Y7e,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Q7e,
+    formats: U7e,
     defaultWidth: "full"
   })
-}, J7e = {
+}, Q7e = {
   lastWeek: (e) => {
     switch (e.getDay()) {
       case 0:
@@ -56057,104 +55997,104 @@ const k7e = {
     }
   },
   other: "P"
-}, eDe = (e, t, n, r) => {
-  const a = J7e[e];
+}, Z7e = (e, t, n, r) => {
+  const a = Q7e[e];
   return typeof a == "function" ? a(t) : a;
-}, tDe = {
+}, J7e = {
   narrow: ["pr.n.e.", "AD"],
   abbreviated: ["pr. Hr.", "po. Hr."],
   wide: ["Prije Hrista", "Poslije Hrista"]
-}, nDe = {
+}, eDe = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. kv.", "2. kv.", "3. kv.", "4. kv."],
   wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
+}, tDe = {
+  narrow: [
+    "1.",
+    "2.",
+    "3.",
+    "4.",
+    "5.",
+    "6.",
+    "7.",
+    "8.",
+    "9.",
+    "10.",
+    "11.",
+    "12."
+  ],
+  abbreviated: [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "maj",
+    "jun",
+    "jul",
+    "avg",
+    "sep",
+    "okt",
+    "nov",
+    "dec"
+  ],
+  wide: [
+    "januar",
+    "februar",
+    "mart",
+    "april",
+    "maj",
+    "juni",
+    "juli",
+    "avgust",
+    "septembar",
+    "oktobar",
+    "novembar",
+    "decembar"
+  ]
+}, nDe = {
+  narrow: [
+    "1.",
+    "2.",
+    "3.",
+    "4.",
+    "5.",
+    "6.",
+    "7.",
+    "8.",
+    "9.",
+    "10.",
+    "11.",
+    "12."
+  ],
+  abbreviated: [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "maj",
+    "jun",
+    "jul",
+    "avg",
+    "sep",
+    "okt",
+    "nov",
+    "dec"
+  ],
+  wide: [
+    "januar",
+    "februar",
+    "mart",
+    "april",
+    "maj",
+    "juni",
+    "juli",
+    "avgust",
+    "septembar",
+    "oktobar",
+    "novembar",
+    "decembar"
+  ]
 }, rDe = {
-  narrow: [
-    "1.",
-    "2.",
-    "3.",
-    "4.",
-    "5.",
-    "6.",
-    "7.",
-    "8.",
-    "9.",
-    "10.",
-    "11.",
-    "12."
-  ],
-  abbreviated: [
-    "jan",
-    "feb",
-    "mar",
-    "apr",
-    "maj",
-    "jun",
-    "jul",
-    "avg",
-    "sep",
-    "okt",
-    "nov",
-    "dec"
-  ],
-  wide: [
-    "januar",
-    "februar",
-    "mart",
-    "april",
-    "maj",
-    "juni",
-    "juli",
-    "avgust",
-    "septembar",
-    "oktobar",
-    "novembar",
-    "decembar"
-  ]
-}, aDe = {
-  narrow: [
-    "1.",
-    "2.",
-    "3.",
-    "4.",
-    "5.",
-    "6.",
-    "7.",
-    "8.",
-    "9.",
-    "10.",
-    "11.",
-    "12."
-  ],
-  abbreviated: [
-    "jan",
-    "feb",
-    "mar",
-    "apr",
-    "maj",
-    "jun",
-    "jul",
-    "avg",
-    "sep",
-    "okt",
-    "nov",
-    "dec"
-  ],
-  wide: [
-    "januar",
-    "februar",
-    "mart",
-    "april",
-    "maj",
-    "juni",
-    "juli",
-    "avgust",
-    "septembar",
-    "oktobar",
-    "novembar",
-    "decembar"
-  ]
-}, iDe = {
   narrow: ["N", "P", "U", "S", "Č", "P", "S"],
   short: ["ned", "pon", "uto", "sre", "čet", "pet", "sub"],
   abbreviated: ["ned", "pon", "uto", "sre", "čet", "pet", "sub"],
@@ -56167,7 +56107,7 @@ const k7e = {
     "petak",
     "subota"
   ]
-}, oDe = {
+}, aDe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -56198,7 +56138,7 @@ const k7e = {
     evening: "uveče",
     night: "noću"
   }
-}, sDe = {
+}, iDe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -56229,53 +56169,53 @@ const k7e = {
     evening: "uveče",
     night: "noću"
   }
-}, uDe = (e, t) => {
+}, oDe = (e, t) => {
   const n = Number(e);
   return String(n) + ".";
-}, cDe = {
-  ordinalNumber: uDe,
+}, sDe = {
+  ordinalNumber: oDe,
   era: A({
-    values: tDe,
+    values: J7e,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: nDe,
+    values: eDe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: rDe,
+    values: tDe,
     defaultWidth: "wide",
-    formattingValues: aDe,
+    formattingValues: nDe,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: iDe,
+    values: rDe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: oDe,
+    values: aDe,
     defaultWidth: "wide",
-    formattingValues: sDe,
+    formattingValues: iDe,
     defaultFormattingWidth: "wide"
   })
-}, lDe = /^(\d+)\./i, dDe = /\d+/i, fDe = {
+}, uDe = /^(\d+)\./i, cDe = /\d+/i, lDe = {
   narrow: /^(pr\.n\.e\.|AD)/i,
   abbreviated: /^(pr\.\s?Hr\.|po\.\s?Hr\.)/i,
   wide: /^(Prije Hrista|prije nove ere|Poslije Hrista|nova era)/i
-}, mDe = {
+}, dDe = {
   any: [/^pr/i, /^(po|nova)/i]
-}, hDe = {
+}, fDe = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?kv\.?/i,
   wide: /^[1234]\. kvartal/i
-}, pDe = {
+}, mDe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, gDe = {
+}, hDe = {
   narrow: /^(10|11|12|[123456789])\./i,
   abbreviated: /^(jan|feb|mar|apr|maj|jun|jul|avg|sep|okt|nov|dec)/i,
   wide: /^((januar|januara)|(februar|februara)|(mart|marta)|(april|aprila)|(maj|maja)|(juni|juna)|(juli|jula)|(avgust|avgusta)|(septembar|septembra)|(oktobar|oktobra)|(novembar|novembra)|(decembar|decembra))/i
-}, vDe = {
+}, pDe = {
   narrow: [
     /^1/i,
     /^2/i,
@@ -56304,17 +56244,17 @@ const k7e = {
     /^n/i,
     /^d/i
   ]
-}, yDe = {
+}, gDe = {
   narrow: /^[npusčc]/i,
   short: /^(ned|pon|uto|sre|(čet|cet)|pet|sub)/i,
   abbreviated: /^(ned|pon|uto|sre|(čet|cet)|pet|sub)/i,
   wide: /^(nedjelja|ponedjeljak|utorak|srijeda|(četvrtak|cetvrtak)|petak|subota)/i
-}, bDe = {
+}, vDe = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
   any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
-}, wDe = {
+}, yDe = {
   any: /^(am|pm|ponoc|ponoć|(po)?podne|uvece|uveče|noću|poslije podne|ujutru)/i
-}, PDe = {
+}, bDe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -56325,55 +56265,55 @@ const k7e = {
     evening: /(uvece|uveče)/i,
     night: /(nocu|noću)/i
   }
-}, xDe = {
+}, wDe = {
   ordinalNumber: Se({
-    matchPattern: lDe,
-    parsePattern: dDe,
+    matchPattern: uDe,
+    parsePattern: cDe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: fDe,
+    matchPatterns: lDe,
     defaultMatchWidth: "wide",
-    parsePatterns: mDe,
+    parsePatterns: dDe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: hDe,
+    matchPatterns: fDe,
     defaultMatchWidth: "wide",
-    parsePatterns: pDe,
+    parsePatterns: mDe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: hDe,
+    defaultMatchWidth: "wide",
+    parsePatterns: pDe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: gDe,
     defaultMatchWidth: "wide",
     parsePatterns: vDe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: yDe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: bDe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: wDe,
-    defaultMatchWidth: "any",
-    parsePatterns: PDe,
-    defaultParseWidth: "any"
   })
-}, MDe = {
+}, PDe = {
   code: "bs",
-  formatDistance: Y7e,
-  formatLong: Z7e,
-  formatRelative: eDe,
-  localize: cDe,
-  match: xDe,
+  formatDistance: X7e,
+  formatLong: K7e,
+  formatRelative: Z7e,
+  localize: sDe,
+  match: wDe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, kDe = {
+}, xDe = {
   lessThanXSeconds: {
     one: "menys d'un segon",
     eleven: "menys d'onze segons",
@@ -56438,61 +56378,61 @@ const k7e = {
     one: "gairebé un any",
     other: "gairebé {{count}} anys"
   }
-}, CDe = (e, t, n) => {
+}, MDe = (e, t, n) => {
   let r;
-  const a = kDe[e];
+  const a = xDe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : t === 11 && a.eleven ? r = a.eleven : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "en " + r : "fa " + r : r;
-}, SDe = {
+}, kDe = {
   full: "EEEE, d 'de' MMMM y",
   long: "d 'de' MMMM y",
   medium: "d MMM y",
   short: "dd/MM/y"
-}, $De = {
+}, CDe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, _De = {
+}, SDe = {
   full: "{{date}} 'a les' {{time}}",
   long: "{{date}} 'a les' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, TDe = {
+}, $De = {
   date: q({
-    formats: SDe,
+    formats: kDe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: $De,
+    formats: CDe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: _De,
+    formats: SDe,
     defaultWidth: "full"
   })
-}, EDe = {
+}, _De = {
   lastWeek: "'el' eeee 'passat a la' LT",
   yesterday: "'ahir a la' p",
   today: "'avui a la' p",
   tomorrow: "'demà a la' p",
   nextWeek: "eeee 'a la' p",
   other: "P"
-}, ADe = {
+}, TDe = {
   lastWeek: "'el' eeee 'passat a les' p",
   yesterday: "'ahir a les' p",
   today: "'avui a les' p",
   tomorrow: "'demà a les' p",
   nextWeek: "eeee 'a les' p",
   other: "P"
-}, ODe = (e, t, n, r) => t.getHours() !== 1 ? ADe[e] : EDe[e], DDe = {
+}, EDe = (e, t, n, r) => t.getHours() !== 1 ? TDe[e] : _De[e], ADe = {
   narrow: ["aC", "dC"],
   abbreviated: ["a. de C.", "d. de C."],
   wide: ["abans de Crist", "després de Crist"]
-}, NDe = {
+}, ODe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
   wide: ["1r trimestre", "2n trimestre", "3r trimestre", "4t trimestre"]
-}, WDe = {
+}, DDe = {
   narrow: [
     "GN",
     "FB",
@@ -56540,7 +56480,7 @@ const k7e = {
     "novembre",
     "desembre"
   ]
-}, RDe = {
+}, NDe = {
   narrow: ["dg.", "dl.", "dt.", "dm.", "dj.", "dv.", "ds."],
   short: ["dg.", "dl.", "dt.", "dm.", "dj.", "dv.", "ds."],
   abbreviated: ["dg.", "dl.", "dt.", "dm.", "dj.", "dv.", "ds."],
@@ -56553,7 +56493,7 @@ const k7e = {
     "divendres",
     "dissabte"
   ]
-}, jDe = {
+}, WDe = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -56584,7 +56524,7 @@ const k7e = {
     evening: "vespre",
     night: "nit"
   }
-}, IDe = {
+}, RDe = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -56615,7 +56555,7 @@ const k7e = {
     evening: "del vespre",
     night: "de la nit"
   }
-}, LDe = (e, t) => {
+}, jDe = (e, t) => {
   const n = Number(e), r = n % 100;
   if (r > 20 || r < 10)
     switch (r % 10) {
@@ -56629,50 +56569,50 @@ const k7e = {
         return n + "t";
     }
   return n + "è";
-}, FDe = {
-  ordinalNumber: LDe,
+}, IDe = {
+  ordinalNumber: jDe,
   era: A({
-    values: DDe,
+    values: ADe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: NDe,
+    values: ODe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: WDe,
+    values: DDe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: RDe,
+    values: NDe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: jDe,
+    values: WDe,
     defaultWidth: "wide",
-    formattingValues: IDe,
+    formattingValues: RDe,
     defaultFormattingWidth: "wide"
   })
-}, zDe = /^(\d+)(è|r|n|r|t)?/i, VDe = /\d+/i, HDe = {
+}, LDe = /^(\d+)(è|r|n|r|t)?/i, FDe = /\d+/i, zDe = {
   narrow: /^(aC|dC)/i,
   abbreviated: /^(a. de C.|d. de C.)/i,
   wide: /^(abans de Crist|despr[eé]s de Crist)/i
-}, BDe = {
+}, VDe = {
   narrow: [/^aC/i, /^dC/i],
   abbreviated: [/^(a. de C.)/i, /^(d. de C.)/i],
   wide: [/^(abans de Crist)/i, /^(despr[eé]s de Crist)/i]
-}, qDe = {
+}, HDe = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
   wide: /^[1234](è|r|n|r|t)? trimestre/i
-}, XDe = {
+}, BDe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, GDe = {
+}, qDe = {
   narrow: /^(GN|FB|MÇ|AB|MG|JN|JL|AG|ST|OC|NV|DS)/i,
   abbreviated: /^(gen.|febr.|març|abr.|maig|juny|jul.|ag.|set.|oct.|nov.|des.)/i,
   wide: /^(gener|febrer|març|abril|maig|juny|juliol|agost|setembre|octubre|novembre|desembre)/i
-}, YDe = {
+}, XDe = {
   narrow: [
     /^GN/i,
     /^FB/i,
@@ -56715,12 +56655,12 @@ const k7e = {
     /^novembre/i,
     /^desembre/i
   ]
-}, UDe = {
+}, GDe = {
   narrow: /^(dg\.|dl\.|dt\.|dm\.|dj\.|dv\.|ds\.)/i,
   short: /^(dg\.|dl\.|dt\.|dm\.|dj\.|dv\.|ds\.)/i,
   abbreviated: /^(dg\.|dl\.|dt\.|dm\.|dj\.|dv\.|ds\.)/i,
   wide: /^(diumenge|dilluns|dimarts|dimecres|dijous|divendres|dissabte)/i
-}, KDe = {
+}, YDe = {
   narrow: [/^dg./i, /^dl./i, /^dt./i, /^dm./i, /^dj./i, /^dv./i, /^ds./i],
   abbreviated: [/^dg./i, /^dl./i, /^dt./i, /^dm./i, /^dj./i, /^dv./i, /^ds./i],
   wide: [
@@ -56732,11 +56672,11 @@ const k7e = {
     /^divendres/i,
     /^disssabte/i
   ]
-}, QDe = {
+}, UDe = {
   narrow: /^(a|p|mn|md|(del|de la) (matí|tarda|vespre|nit))/i,
   abbreviated: /^([ap]\.?\s?m\.?|mitjanit|migdia|(del|de la) (matí|tarda|vespre|nit))/i,
   wide: /^(ante meridiem|post meridiem|mitjanit|migdia|(del|de la) (matí|tarda|vespre|nit))/i
-}, ZDe = {
+}, KDe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -56747,55 +56687,55 @@ const k7e = {
     evening: /vespre/i,
     night: /nit/i
   }
-}, JDe = {
+}, QDe = {
   ordinalNumber: Se({
-    matchPattern: zDe,
-    parsePattern: VDe,
+    matchPattern: LDe,
+    parsePattern: FDe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: HDe,
+    matchPatterns: zDe,
     defaultMatchWidth: "wide",
-    parsePatterns: BDe,
+    parsePatterns: VDe,
     defaultParseWidth: "wide"
   }),
   quarter: D({
-    matchPatterns: qDe,
+    matchPatterns: HDe,
     defaultMatchWidth: "wide",
-    parsePatterns: XDe,
+    parsePatterns: BDe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: qDe,
+    defaultMatchWidth: "wide",
+    parsePatterns: XDe,
+    defaultParseWidth: "wide"
+  }),
+  day: D({
     matchPatterns: GDe,
     defaultMatchWidth: "wide",
     parsePatterns: YDe,
     defaultParseWidth: "wide"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: UDe,
     defaultMatchWidth: "wide",
     parsePatterns: KDe,
-    defaultParseWidth: "wide"
-  }),
-  dayPeriod: D({
-    matchPatterns: QDe,
-    defaultMatchWidth: "wide",
-    parsePatterns: ZDe,
     defaultParseWidth: "any"
   })
-}, eNe = {
+}, ZDe = {
   code: "ca",
-  formatDistance: CDe,
-  formatLong: TDe,
-  formatRelative: ODe,
-  localize: FDe,
-  match: JDe,
+  formatDistance: MDe,
+  formatLong: $De,
+  formatRelative: EDe,
+  localize: IDe,
+  match: QDe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, tNe = {
+}, JDe = {
   lessThanXSeconds: {
     one: "کەمتر لە یەک چرکە",
     other: "کەمتر لە {{count}} چرکە"
@@ -56857,54 +56797,54 @@ const k7e = {
     one: "بەنزیکەیی ساڵێک  ",
     other: "بەنزیکەیی {{count}} ساڵ"
   }
-}, nNe = (e, t, n) => {
+}, eNe = (e, t, n) => {
   let r;
-  const a = tNe[e];
+  const a = JDe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", t.toString()), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "لە ماوەی " + r + "دا" : r + "پێش ئێستا" : r;
-}, rNe = {
+}, tNe = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
   short: "MM/dd/yyyy"
-}, aNe = {
+}, nNe = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, iNe = {
+}, rNe = {
   full: "{{date}} 'کاتژمێر' {{time}}",
   long: "{{date}} 'کاتژمێر' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, oNe = {
+}, aNe = {
   date: q({
-    formats: rNe,
+    formats: tNe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: aNe,
+    formats: nNe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: iNe,
+    formats: rNe,
     defaultWidth: "full"
   })
-}, sNe = {
+}, iNe = {
   lastWeek: "'هەفتەی ڕابردوو' eeee 'کاتژمێر' p",
   yesterday: "'دوێنێ کاتژمێر' p",
   today: "'ئەمڕۆ کاتژمێر' p",
   tomorrow: "'بەیانی کاتژمێر' p",
   nextWeek: "eeee 'کاتژمێر' p",
   other: "P"
-}, uNe = (e, t, n, r) => sNe[e], cNe = {
+}, oNe = (e, t, n, r) => iNe[e], sNe = {
   narrow: ["پ", "د"],
   abbreviated: ["پ-ز", "د-ز"],
   wide: ["پێش زاین", "دوای زاین"]
-}, lNe = {
+}, uNe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["چ1م", "چ2م", "چ3م", "چ4م"],
   wide: ["چارەگی یەکەم", "چارەگی دووەم", "چارەگی سێیەم", "چارەگی چوارەم"]
-}, dNe = {
+}, cNe = {
   narrow: [
     "ک-د",
     "ش",
@@ -56947,7 +56887,7 @@ const k7e = {
     "تشرینی دووەم",
     "کانوونی یەکەم"
   ]
-}, fNe = {
+}, lNe = {
   narrow: ["ی-ش", "د-ش", "س-ش", "چ-ش", "پ-ش", "هە", "ش"],
   short: ["یە-شە", "دوو-شە", "سێ-شە", "چو-شە", "پێ-شە", "هەی", "شە"],
   abbreviated: [
@@ -56968,7 +56908,7 @@ const k7e = {
     "هەینی",
     "شەمە"
   ]
-}, mNe = {
+}, dNe = {
   narrow: {
     am: "پ",
     pm: "د",
@@ -56999,7 +56939,7 @@ const k7e = {
     evening: "ئێوارە",
     night: "شەو"
   }
-}, hNe = {
+}, fNe = {
   narrow: {
     am: "پ",
     pm: "د",
@@ -57030,49 +56970,49 @@ const k7e = {
     evening: "لە ئێوارەدا",
     night: "لە شەودا"
   }
-}, pNe = (e, t) => String(e), gNe = {
-  ordinalNumber: pNe,
+}, mNe = (e, t) => String(e), hNe = {
+  ordinalNumber: mNe,
   era: A({
-    values: cNe,
+    values: sNe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: lNe,
+    values: uNe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: dNe,
+    values: cNe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: fNe,
+    values: lNe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: mNe,
+    values: dNe,
     defaultWidth: "wide",
-    formattingValues: hNe,
+    formattingValues: fNe,
     defaultFormattingWidth: "wide"
   })
-}, vNe = /^(\d+)(th|st|nd|rd)?/i, yNe = /\d+/i, bNe = {
+}, pNe = /^(\d+)(th|st|nd|rd)?/i, gNe = /\d+/i, vNe = {
   narrow: /^(پ|د)/i,
   abbreviated: /^(پ-ز|د.ز)/i,
   wide: /^(پێش زاین| دوای زاین)/i
-}, wNe = {
+}, yNe = {
   any: [/^د/g, /^پ/g]
-}, PNe = {
+}, bNe = {
   narrow: /^[1234]/i,
   abbreviated: /^م[1234]چ/i,
   wide: /^(یەکەم|دووەم|سێیەم| چوارەم) (چارەگی)? quarter/i
-}, xNe = {
+}, wNe = {
   wide: [/چارەگی یەکەم/, /چارەگی دووەم/, /چارەگی سيیەم/, /چارەگی چوارەم/],
   any: [/1/i, /2/i, /3/i, /4/i]
-}, MNe = {
+}, PNe = {
   narrow: /^(ک-د|ش|ئا|ن|م|ح|ت|ئە|تش-ی|تش-د|ک-ی)/i,
   abbreviated: /^(کان-دوو|شوب|ئاد|نیس|مایس|حوز|تەم|ئاب|ئەل|تش-یەک|تش-دوو|کان-یەک)/i,
   wide: /^(کانوونی دووەم|شوبات|ئادار|نیسان|مایس|حوزەیران|تەمموز|ئاب|ئەیلول|تشرینی یەکەم|تشرینی دووەم|کانوونی یەکەم)/i
-}, kNe = {
+}, xNe = {
   narrow: [
     /^ک-د/i,
     /^ش/i,
@@ -57101,20 +57041,20 @@ const k7e = {
     /^تش-دوو/i,
     /^|کان-یەک/i
   ]
-}, CNe = {
+}, MNe = {
   narrow: /^(ش|ی|د|س|چ|پ|هە)/i,
   short: /^(یە-شە|دوو-شە|سێ-شە|چو-شە|پێ-شە|هە|شە)/i,
   abbreviated: /^(یەک-شەم|دوو-شەم|سێ-شەم|چوار-شەم|پێنخ-شەم|هەینی|شەمە)/i,
   wide: /^(یەک شەمە|دوو شەمە|سێ شەمە|چوار شەمە|پێنج شەمە|هەینی|شەمە)/i
-}, SNe = {
+}, kNe = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
   any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
-}, $Ne = {
+}, CNe = {
   narrow: /^(پ|د|ن-ش|ن| (بەیانی|دوای نیوەڕۆ|ئێوارە|شەو))/i,
   abbreviated: /^(پ-ن|د-ن|نیوە شەو|نیوەڕۆ|بەیانی|دوای نیوەڕۆ|ئێوارە|شەو)/,
   wide: /^(پێش نیوەڕۆ|دوای نیوەڕۆ|نیوەڕۆ|نیوە شەو|لەبەیانیدا|لەدواینیوەڕۆدا|لە ئێوارەدا|لە شەودا)/,
   any: /^(پ|د|بەیانی|نیوەڕۆ|ئێوارە|شەو)/
-}, _Ne = {
+}, SNe = {
   any: {
     am: /^د/i,
     pm: /^پ/i,
@@ -57125,55 +57065,55 @@ const k7e = {
     evening: /ئێوارە/i,
     night: /شەو/i
   }
-}, TNe = {
+}, $Ne = {
   ordinalNumber: Se({
-    matchPattern: vNe,
-    parsePattern: yNe,
+    matchPattern: pNe,
+    parsePattern: gNe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: bNe,
+    matchPatterns: vNe,
     defaultMatchWidth: "wide",
-    parsePatterns: wNe,
+    parsePatterns: yNe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: PNe,
+    matchPatterns: bNe,
     defaultMatchWidth: "wide",
-    parsePatterns: xNe,
+    parsePatterns: wNe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: PNe,
+    defaultMatchWidth: "wide",
+    parsePatterns: xNe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: MNe,
     defaultMatchWidth: "wide",
     parsePatterns: kNe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: CNe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: SNe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: $Ne,
-    defaultMatchWidth: "any",
-    parsePatterns: _Ne,
-    defaultParseWidth: "any"
   })
-}, ENe = {
+}, _Ne = {
   code: "ckb",
-  formatDistance: nNe,
-  formatLong: oNe,
-  formatRelative: uNe,
-  localize: gNe,
-  match: TNe,
+  formatDistance: eNe,
+  formatLong: aNe,
+  formatRelative: oNe,
+  localize: hNe,
+  match: $Ne,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, ANe = {
+}, TNe = {
   lessThanXSeconds: {
     one: {
       regular: "méně než 1 sekunda",
@@ -57437,42 +57377,42 @@ const k7e = {
       future: "skoro za {{count}} roků"
     }
   }
-}, ONe = (e, t, n) => {
+}, ENe = (e, t, n) => {
   let r;
-  const a = ANe[e];
+  const a = TNe[e];
   a.type === "other" ? r = a.other : t === 1 ? r = a.one : t > 1 && t < 5 ? r = a.few : r = a.many;
   const i = (n == null ? void 0 : n.addSuffix) === !0, o = n == null ? void 0 : n.comparison;
   let s;
   return i && o === -1 ? s = r.past : i && o === 1 ? s = r.future : s = r.regular, s.replace("{{count}}", String(t));
-}, DNe = {
+}, ANe = {
   full: "EEEE, d. MMMM yyyy",
   long: "d. MMMM yyyy",
   medium: "d. M. yyyy",
   short: "dd.MM.yyyy"
-}, NNe = {
+}, ONe = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, WNe = {
+}, DNe = {
   full: "{{date}} 'v' {{time}}",
   long: "{{date}} 'v' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, RNe = {
+}, NNe = {
   date: q({
-    formats: DNe,
+    formats: ANe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: NNe,
+    formats: ONe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: WNe,
+    formats: DNe,
     defaultWidth: "full"
   })
-}, jNe = [
+}, WNe = [
   "neděli",
   "pondělí",
   "úterý",
@@ -57480,28 +57420,28 @@ const k7e = {
   "čtvrtek",
   "pátek",
   "sobotu"
-], INe = {
+], RNe = {
   lastWeek: "'poslední' eeee 've' p",
   yesterday: "'včera v' p",
   today: "'dnes v' p",
   tomorrow: "'zítra v' p",
   nextWeek: (e) => {
     const t = e.getDay();
-    return "'v " + jNe[t] + " o' p";
+    return "'v " + WNe[t] + " o' p";
   },
   other: "P"
-}, LNe = (e, t) => {
-  const n = INe[e];
+}, jNe = (e, t) => {
+  const n = RNe[e];
   return typeof n == "function" ? n(t) : n;
-}, FNe = {
+}, INe = {
   narrow: ["př. n. l.", "n. l."],
   abbreviated: ["př. n. l.", "n. l."],
   wide: ["před naším letopočtem", "našeho letopočtu"]
-}, zNe = {
+}, LNe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1. čtvrtletí", "2. čtvrtletí", "3. čtvrtletí", "4. čtvrtletí"],
   wide: ["1. čtvrtletí", "2. čtvrtletí", "3. čtvrtletí", "4. čtvrtletí"]
-}, VNe = {
+}, FNe = {
   narrow: ["L", "Ú", "B", "D", "K", "Č", "Č", "S", "Z", "Ř", "L", "P"],
   abbreviated: [
     "led",
@@ -57531,7 +57471,7 @@ const k7e = {
     "listopad",
     "prosinec"
   ]
-}, HNe = {
+}, zNe = {
   narrow: ["L", "Ú", "B", "D", "K", "Č", "Č", "S", "Z", "Ř", "L", "P"],
   abbreviated: [
     "led",
@@ -57561,12 +57501,12 @@ const k7e = {
     "listopadu",
     "prosince"
   ]
-}, BNe = {
+}, VNe = {
   narrow: ["ne", "po", "út", "st", "čt", "pá", "so"],
   short: ["ne", "po", "út", "st", "čt", "pá", "so"],
   abbreviated: ["ned", "pon", "úte", "stř", "čtv", "pát", "sob"],
   wide: ["neděle", "pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota"]
-}, qNe = {
+}, HNe = {
   narrow: {
     am: "dop.",
     pm: "odp.",
@@ -57597,7 +57537,7 @@ const k7e = {
     evening: "večer",
     night: "noc"
   }
-}, XNe = {
+}, BNe = {
   narrow: {
     am: "dop.",
     pm: "odp.",
@@ -57628,50 +57568,50 @@ const k7e = {
     evening: "večer",
     night: "noc"
   }
-}, GNe = (e, t) => Number(e) + ".", YNe = {
-  ordinalNumber: GNe,
+}, qNe = (e, t) => Number(e) + ".", XNe = {
+  ordinalNumber: qNe,
   era: A({
-    values: FNe,
+    values: INe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: zNe,
+    values: LNe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: VNe,
+    values: FNe,
     defaultWidth: "wide",
-    formattingValues: HNe,
+    formattingValues: zNe,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: BNe,
+    values: VNe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: qNe,
+    values: HNe,
     defaultWidth: "wide",
-    formattingValues: XNe,
+    formattingValues: BNe,
     defaultFormattingWidth: "wide"
   })
-}, UNe = /^(\d+)\.?/i, KNe = /\d+/i, QNe = {
+}, GNe = /^(\d+)\.?/i, YNe = /\d+/i, UNe = {
   narrow: /^(p[řr](\.|ed) Kr\.|p[řr](\.|ed) n\. l\.|po Kr\.|n\. l\.)/i,
   abbreviated: /^(p[řr](\.|ed) Kr\.|p[řr](\.|ed) n\. l\.|po Kr\.|n\. l\.)/i,
   wide: /^(p[řr](\.|ed) Kristem|p[řr](\.|ed) na[šs][íi]m letopo[čc]tem|po Kristu|na[šs]eho letopo[čc]tu)/i
-}, ZNe = {
+}, KNe = {
   any: [/^p[řr]/i, /^(po|n)/i]
-}, JNe = {
+}, QNe = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\. [čc]tvrtlet[íi]/i,
   wide: /^[1234]\. [čc]tvrtlet[íi]/i
-}, eWe = {
+}, ZNe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, tWe = {
+}, JNe = {
   narrow: /^[lúubdkčcszřrlp]/i,
   abbreviated: /^(led|[úu]no|b[řr]e|dub|kv[ěe]|[čc]vn|[čc]vc|srp|z[áa][řr]|[řr][íi]j|lis|pro)/i,
   wide: /^(leden|ledna|[úu]nora?|b[řr]ezen|b[řr]ezna|duben|dubna|kv[ěe]ten|kv[ěe]tna|[čc]erven(ec|ce)?|[čc]ervna|srpen|srpna|z[áa][řr][íi]|[řr][íi]jen|[řr][íi]jna|listopad(a|u)?|prosinec|prosince)/i
-}, nWe = {
+}, eWe = {
   narrow: [
     /^l/i,
     /^[úu]/i,
@@ -57700,17 +57640,17 @@ const k7e = {
     /^lis/i,
     /^pro/i
   ]
-}, rWe = {
+}, tWe = {
   narrow: /^[npuúsčps]/i,
   short: /^(ne|po|[úu]t|st|[čc]t|p[áa]|so)/i,
   abbreviated: /^(ned|pon|[úu]te|st[rř]|[čc]tv|p[áa]t|sob)/i,
   wide: /^(ned[ěe]le|pond[ěe]l[íi]|[úu]ter[ýy]|st[řr]eda|[čc]tvrtek|p[áa]tek|sobota)/i
-}, aWe = {
+}, nWe = {
   narrow: [/^n/i, /^p/i, /^[úu]/i, /^s/i, /^[čc]/i, /^p/i, /^s/i],
   any: [/^ne/i, /^po/i, /^[úu]t/i, /^st/i, /^[čc]t/i, /^p[áa]/i, /^so/i]
-}, iWe = {
+}, rWe = {
   any: /^dopoledne|dop\.?|odpoledne|odp\.?|p[ůu]lnoc|poledne|r[áa]no|odpoledne|ve[čc]er|(v )?noci?/i
-}, oWe = {
+}, aWe = {
   any: {
     am: /^dop/i,
     pm: /^odp/i,
@@ -57721,55 +57661,55 @@ const k7e = {
     evening: /ve[čc]er/i,
     night: /noc/i
   }
-}, sWe = {
+}, iWe = {
   ordinalNumber: Se({
-    matchPattern: UNe,
-    parsePattern: KNe,
+    matchPattern: GNe,
+    parsePattern: YNe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: QNe,
+    matchPatterns: UNe,
     defaultMatchWidth: "wide",
-    parsePatterns: ZNe,
+    parsePatterns: KNe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: JNe,
+    matchPatterns: QNe,
     defaultMatchWidth: "wide",
-    parsePatterns: eWe,
+    parsePatterns: ZNe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: JNe,
+    defaultMatchWidth: "wide",
+    parsePatterns: eWe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: tWe,
     defaultMatchWidth: "wide",
     parsePatterns: nWe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: rWe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: aWe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: iWe,
-    defaultMatchWidth: "any",
-    parsePatterns: oWe,
-    defaultParseWidth: "any"
   })
-}, uWe = {
+}, oWe = {
   code: "cs",
-  formatDistance: ONe,
-  formatLong: RNe,
-  formatRelative: LNe,
-  localize: YNe,
-  match: sWe,
+  formatDistance: ENe,
+  formatLong: NNe,
+  formatRelative: jNe,
+  localize: XNe,
+  match: iWe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, cWe = {
+}, sWe = {
   lessThanXSeconds: {
     one: "llai na eiliad",
     other: "llai na {{count}} eiliad"
@@ -57842,54 +57782,54 @@ const k7e = {
     two: "bron 2 flynedd",
     other: "bron {{count}} mlynedd"
   }
-}, lWe = (e, t, n) => {
+}, uWe = (e, t, n) => {
   let r;
-  const a = cWe[e];
+  const a = sWe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : t === 2 && a.two ? r = a.two : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "mewn " + r : r + " yn ôl" : r;
-}, dWe = {
+}, cWe = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
   short: "dd/MM/yyyy"
-}, fWe = {
+}, lWe = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, mWe = {
+}, dWe = {
   full: "{{date}} 'am' {{time}}",
   long: "{{date}} 'am' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, hWe = {
+}, fWe = {
   date: q({
-    formats: dWe,
+    formats: cWe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: fWe,
+    formats: lWe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: mWe,
+    formats: dWe,
     defaultWidth: "full"
   })
-}, pWe = {
+}, mWe = {
   lastWeek: "eeee 'diwethaf am' p",
   yesterday: "'ddoe am' p",
   today: "'heddiw am' p",
   tomorrow: "'yfory am' p",
   nextWeek: "eeee 'am' p",
   other: "P"
-}, gWe = (e, t, n, r) => pWe[e], vWe = {
+}, hWe = (e, t, n, r) => mWe[e], pWe = {
   narrow: ["C", "O"],
   abbreviated: ["CC", "OC"],
   wide: ["Cyn Crist", "Ar ôl Crist"]
-}, yWe = {
+}, gWe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Ch1", "Ch2", "Ch3", "Ch4"],
   wide: ["Chwarter 1af", "2ail chwarter", "3ydd chwarter", "4ydd chwarter"]
-}, bWe = {
+}, vWe = {
   narrow: ["I", "Ch", "Ma", "E", "Mi", "Me", "G", "A", "Md", "H", "T", "Rh"],
   abbreviated: [
     "Ion",
@@ -57919,7 +57859,7 @@ const k7e = {
     "Tachwedd",
     "Rhagfyr"
   ]
-}, wWe = {
+}, yWe = {
   narrow: ["S", "Ll", "M", "M", "I", "G", "S"],
   short: ["Su", "Ll", "Ma", "Me", "Ia", "Gw", "Sa"],
   abbreviated: ["Sul", "Llun", "Maw", "Mer", "Iau", "Gwe", "Sad"],
@@ -57932,7 +57872,7 @@ const k7e = {
     "dydd Gwener",
     "dydd Sadwrn"
   ]
-}, PWe = {
+}, bWe = {
   narrow: {
     am: "b",
     pm: "h",
@@ -57963,7 +57903,7 @@ const k7e = {
     evening: "gyda'r nos",
     night: "nos"
   }
-}, xWe = {
+}, wWe = {
   narrow: {
     am: "b",
     pm: "h",
@@ -57994,7 +57934,7 @@ const k7e = {
     evening: "gyda'r nos",
     night: "yn y nos"
   }
-}, MWe = (e, t) => {
+}, PWe = (e, t) => {
   const n = Number(e);
   if (n < 20)
     switch (n) {
@@ -58029,49 +57969,49 @@ const k7e = {
   else if (n >= 50 && n <= 60 || n === 80 || n >= 100)
     return n + "fed";
   return n + "ain";
-}, kWe = {
-  ordinalNumber: MWe,
+}, xWe = {
+  ordinalNumber: PWe,
   era: A({
-    values: vWe,
+    values: pWe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: yWe,
+    values: gWe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: bWe,
+    values: vWe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: wWe,
+    values: yWe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: PWe,
+    values: bWe,
     defaultWidth: "wide",
-    formattingValues: xWe,
+    formattingValues: wWe,
     defaultFormattingWidth: "wide"
   })
-}, CWe = /^(\d+)(af|ail|ydd|ed|fed|eg|ain)?/i, SWe = /\d+/i, $We = {
+}, MWe = /^(\d+)(af|ail|ydd|ed|fed|eg|ain)?/i, kWe = /\d+/i, CWe = {
   narrow: /^(c|o)/i,
   abbreviated: /^(c\.?\s?c\.?|o\.?\s?c\.?)/i,
   wide: /^(cyn christ|ar ôl crist|ar ol crist)/i
-}, _We = {
+}, SWe = {
   wide: [/^c/i, /^(ar ôl crist|ar ol crist)/i],
   any: [/^c/i, /^o/i]
-}, TWe = {
+}, $We = {
   narrow: /^[1234]/i,
   abbreviated: /^ch[1234]/i,
   wide: /^(chwarter 1af)|([234](ail|ydd)? chwarter)/i
-}, EWe = {
+}, _We = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, AWe = {
+}, TWe = {
   narrow: /^(i|ch|m|e|g|a|h|t|rh)/i,
   abbreviated: /^(ion|chwe|maw|ebr|mai|meh|gor|aws|med|hyd|tach|rhag)/i,
   wide: /^(ionawr|chwefror|mawrth|ebrill|mai|mehefin|gorffennaf|awst|medi|hydref|tachwedd|rhagfyr)/i
-}, OWe = {
+}, EWe = {
   narrow: [
     /^i/i,
     /^ch/i,
@@ -58100,12 +58040,12 @@ const k7e = {
     /^t/i,
     /^rh/i
   ]
-}, DWe = {
+}, AWe = {
   narrow: /^(s|ll|m|i|g)/i,
   short: /^(su|ll|ma|me|ia|gw|sa)/i,
   abbreviated: /^(sul|llun|maw|mer|iau|gwe|sad)/i,
   wide: /^dydd (sul|llun|mawrth|mercher|iau|gwener|sadwrn)/i
-}, NWe = {
+}, OWe = {
   narrow: [/^s/i, /^ll/i, /^m/i, /^m/i, /^i/i, /^g/i, /^s/i],
   wide: [
     /^dydd su/i,
@@ -58117,10 +58057,10 @@ const k7e = {
     /^dydd sa/i
   ],
   any: [/^su/i, /^ll/i, /^ma/i, /^me/i, /^i/i, /^g/i, /^sa/i]
-}, WWe = {
+}, DWe = {
   narrow: /^(b|h|hn|hd|(yn y|y|yr|gyda'r) (bore|prynhawn|nos|hwyr))/i,
   any: /^(y\.?\s?[bh]\.?|hanner nos|hanner dydd|(yn y|y|yr|gyda'r) (bore|prynhawn|nos|hwyr))/i
-}, RWe = {
+}, NWe = {
   any: {
     am: /^b|(y\.?\s?b\.?)/i,
     pm: /^h|(y\.?\s?h\.?)|(yr hwyr)/i,
@@ -58131,55 +58071,55 @@ const k7e = {
     evening: /^gyda'r nos$/i,
     night: /blah/i
   }
-}, jWe = {
+}, WWe = {
   ordinalNumber: Se({
-    matchPattern: CWe,
-    parsePattern: SWe,
+    matchPattern: MWe,
+    parsePattern: kWe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: $We,
+    matchPatterns: CWe,
     defaultMatchWidth: "wide",
-    parsePatterns: _We,
+    parsePatterns: SWe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: TWe,
+    matchPatterns: $We,
     defaultMatchWidth: "wide",
-    parsePatterns: EWe,
+    parsePatterns: _We,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: TWe,
+    defaultMatchWidth: "wide",
+    parsePatterns: EWe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: AWe,
     defaultMatchWidth: "wide",
     parsePatterns: OWe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: DWe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: NWe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: WWe,
-    defaultMatchWidth: "any",
-    parsePatterns: RWe,
-    defaultParseWidth: "any"
   })
-}, IWe = {
+}, RWe = {
   code: "cy",
-  formatDistance: lWe,
-  formatLong: hWe,
-  formatRelative: gWe,
-  localize: kWe,
-  match: jWe,
+  formatDistance: uWe,
+  formatLong: fWe,
+  formatRelative: hWe,
+  localize: xWe,
+  match: WWe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, LWe = {
+}, jWe = {
   lessThanXSeconds: {
     one: "mindre end ét sekund",
     other: "mindre end {{count}} sekunder"
@@ -58241,54 +58181,54 @@ const k7e = {
     one: "næsten 1 år",
     other: "næsten {{count}} år"
   }
-}, FWe = (e, t, n) => {
+}, IWe = (e, t, n) => {
   let r;
-  const a = LWe[e];
+  const a = jWe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "om " + r : r + " siden" : r;
-}, zWe = {
+}, LWe = {
   full: "EEEE 'den' d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
   short: "dd/MM/y"
-}, VWe = {
+}, FWe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, HWe = {
+}, zWe = {
   full: "{{date}} 'kl'. {{time}}",
   long: "{{date}} 'kl'. {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, BWe = {
+}, VWe = {
   date: q({
-    formats: zWe,
+    formats: LWe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: VWe,
+    formats: FWe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: HWe,
+    formats: zWe,
     defaultWidth: "full"
   })
-}, qWe = {
+}, HWe = {
   lastWeek: "'sidste' eeee 'kl.' p",
   yesterday: "'i går kl.' p",
   today: "'i dag kl.' p",
   tomorrow: "'i morgen kl.' p",
   nextWeek: "'på' eeee 'kl.' p",
   other: "P"
-}, XWe = (e, t, n, r) => qWe[e], GWe = {
+}, BWe = (e, t, n, r) => HWe[e], qWe = {
   narrow: ["fvt", "vt"],
   abbreviated: ["f.v.t.", "v.t."],
   wide: ["før vesterlandsk tidsregning", "vesterlandsk tidsregning"]
-}, YWe = {
+}, XWe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1. kvt.", "2. kvt.", "3. kvt.", "4. kvt."],
   wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
-}, UWe = {
+}, GWe = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "jan.",
@@ -58318,7 +58258,7 @@ const k7e = {
     "november",
     "december"
   ]
-}, KWe = {
+}, YWe = {
   narrow: ["S", "M", "T", "O", "T", "F", "L"],
   short: ["sø", "ma", "ti", "on", "to", "fr", "lø"],
   abbreviated: ["søn.", "man.", "tir.", "ons.", "tor.", "fre.", "lør."],
@@ -58331,7 +58271,7 @@ const k7e = {
     "fredag",
     "lørdag"
   ]
-}, QWe = {
+}, UWe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -58362,7 +58302,7 @@ const k7e = {
     evening: "aften",
     night: "nat"
   }
-}, ZWe = {
+}, KWe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -58393,48 +58333,48 @@ const k7e = {
     evening: "om aftenen",
     night: "om natten"
   }
-}, JWe = (e, t) => Number(e) + ".", eRe = {
-  ordinalNumber: JWe,
+}, QWe = (e, t) => Number(e) + ".", ZWe = {
+  ordinalNumber: QWe,
   era: A({
-    values: GWe,
+    values: qWe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: YWe,
+    values: XWe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: UWe,
+    values: GWe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: KWe,
+    values: YWe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: QWe,
+    values: UWe,
     defaultWidth: "wide",
-    formattingValues: ZWe,
+    formattingValues: KWe,
     defaultFormattingWidth: "wide"
   })
-}, tRe = /^(\d+)(\.)?/i, nRe = /\d+/i, rRe = {
+}, JWe = /^(\d+)(\.)?/i, eRe = /\d+/i, tRe = {
   narrow: /^(fKr|fvt|eKr|vt)/i,
   abbreviated: /^(f\.Kr\.?|f\.v\.t\.?|e\.Kr\.?|v\.t\.)/i,
   wide: /^(f.Kr.|før vesterlandsk tidsregning|e.Kr.|vesterlandsk tidsregning)/i
-}, aRe = {
+}, nRe = {
   any: [/^f/i, /^(v|e)/i]
-}, iRe = {
+}, rRe = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]. kvt\./i,
   wide: /^[1234]\.? kvartal/i
-}, oRe = {
+}, aRe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, sRe = {
+}, iRe = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan.|feb.|mar.|apr.|maj|jun.|jul.|aug.|sep.|okt.|nov.|dec.)/i,
   wide: /^(januar|februar|marts|april|maj|juni|juli|august|september|oktober|november|december)/i
-}, uRe = {
+}, oRe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -58463,18 +58403,18 @@ const k7e = {
     /^n/i,
     /^d/i
   ]
-}, cRe = {
+}, sRe = {
   narrow: /^[smtofl]/i,
   short: /^(søn.|man.|tir.|ons.|tor.|fre.|lør.)/i,
   abbreviated: /^(søn|man|tir|ons|tor|fre|lør)/i,
   wide: /^(søndag|mandag|tirsdag|onsdag|torsdag|fredag|lørdag)/i
-}, lRe = {
+}, uRe = {
   narrow: [/^s/i, /^m/i, /^t/i, /^o/i, /^t/i, /^f/i, /^l/i],
   any: [/^s/i, /^m/i, /^ti/i, /^o/i, /^to/i, /^f/i, /^l/i]
-}, dRe = {
+}, cRe = {
   narrow: /^(a|p|midnat|middag|(om) (morgenen|eftermiddagen|aftenen|natten))/i,
   any: /^([ap]\.?\s?m\.?|midnat|middag|(om) (morgenen|eftermiddagen|aftenen|natten))/i
-}, fRe = {
+}, lRe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -58485,50 +58425,50 @@ const k7e = {
     evening: /aften/i,
     night: /nat/i
   }
-}, mRe = {
+}, dRe = {
   ordinalNumber: Se({
-    matchPattern: tRe,
-    parsePattern: nRe,
+    matchPattern: JWe,
+    parsePattern: eRe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: rRe,
+    matchPatterns: tRe,
     defaultMatchWidth: "wide",
-    parsePatterns: aRe,
+    parsePatterns: nRe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: iRe,
+    matchPatterns: rRe,
     defaultMatchWidth: "wide",
-    parsePatterns: oRe,
+    parsePatterns: aRe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: iRe,
+    defaultMatchWidth: "wide",
+    parsePatterns: oRe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: sRe,
     defaultMatchWidth: "wide",
     parsePatterns: uRe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: cRe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: lRe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: dRe,
-    defaultMatchWidth: "any",
-    parsePatterns: fRe,
-    defaultParseWidth: "any"
   })
-}, hRe = {
+}, fRe = {
   code: "da",
-  formatDistance: FWe,
-  formatLong: BWe,
-  formatRelative: XWe,
-  localize: eRe,
-  match: mRe,
+  formatDistance: IWe,
+  formatLong: VWe,
+  formatRelative: BWe,
+  localize: ZWe,
+  match: dRe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
@@ -58692,7 +58632,7 @@ const k7e = {
   let r;
   const a = n != null && n.addSuffix ? bD[e].withPreposition : bD[e].standalone;
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "in " + r : "vor " + r : r;
-}, pRe = {
+}, mRe = {
   full: "EEEE, do MMMM y",
   // Montag, 7. Januar 2018
   long: "do MMMM y",
@@ -58701,41 +58641,41 @@ const k7e = {
   // 7. Jan. 2018
   short: "dd.MM.y"
   // 07.01.2018
-}, gRe = {
+}, hRe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, vRe = {
+}, pRe = {
   full: "{{date}} 'um' {{time}}",
   long: "{{date}} 'um' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
 }, LB = {
   date: q({
-    formats: pRe,
+    formats: mRe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: gRe,
+    formats: hRe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: vRe,
+    formats: pRe,
     defaultWidth: "full"
   })
-}, yRe = {
+}, gRe = {
   lastWeek: "'letzten' eeee 'um' p",
   yesterday: "'gestern um' p",
   today: "'heute um' p",
   tomorrow: "'morgen um' p",
   nextWeek: "eeee 'um' p",
   other: "P"
-}, FB = (e, t, n, r) => yRe[e], bRe = {
+}, FB = (e, t, n, r) => gRe[e], vRe = {
   narrow: ["v.Chr.", "n.Chr."],
   abbreviated: ["v.Chr.", "n.Chr."],
   wide: ["vor Christus", "nach Christus"]
-}, wRe = {
+}, yRe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"]
@@ -58769,7 +58709,7 @@ const k7e = {
     "November",
     "Dezember"
   ]
-}, PRe = {
+}, bRe = {
   narrow: XM.narrow,
   abbreviated: [
     "Jan.",
@@ -58786,7 +58726,7 @@ const k7e = {
     "Dez."
   ],
   wide: XM.wide
-}, xRe = {
+}, wRe = {
   narrow: ["S", "M", "D", "M", "D", "F", "S"],
   short: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
   abbreviated: ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
@@ -58799,7 +58739,7 @@ const k7e = {
     "Freitag",
     "Samstag"
   ]
-}, MRe = {
+}, PRe = {
   narrow: {
     am: "vm.",
     pm: "nm.",
@@ -58830,7 +58770,7 @@ const k7e = {
     evening: "Abend",
     night: "Nacht"
   }
-}, kRe = {
+}, xRe = {
   narrow: {
     am: "vm.",
     pm: "nm.",
@@ -58861,49 +58801,49 @@ const k7e = {
     evening: "abends",
     night: "nachts"
   }
-}, CRe = (e) => Number(e) + ".", SRe = {
-  ordinalNumber: CRe,
+}, MRe = (e) => Number(e) + ".", kRe = {
+  ordinalNumber: MRe,
   era: A({
-    values: bRe,
+    values: vRe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: wRe,
+    values: yRe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
     values: XM,
-    formattingValues: PRe,
+    formattingValues: bRe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: xRe,
+    values: wRe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: MRe,
+    values: PRe,
     defaultWidth: "wide",
-    formattingValues: kRe,
+    formattingValues: xRe,
     defaultFormattingWidth: "wide"
   })
-}, $Re = /^(\d+)(\.)?/i, _Re = /\d+/i, TRe = {
+}, CRe = /^(\d+)(\.)?/i, SRe = /\d+/i, $Re = {
   narrow: /^(v\.? ?Chr\.?|n\.? ?Chr\.?)/i,
   abbreviated: /^(v\.? ?Chr\.?|n\.? ?Chr\.?)/i,
   wide: /^(vor Christus|vor unserer Zeitrechnung|nach Christus|unserer Zeitrechnung)/i
-}, ERe = {
+}, _Re = {
   any: [/^v/i, /^n/i]
-}, ARe = {
+}, TRe = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234](\.)? Quartal/i
-}, ORe = {
+}, ERe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, DRe = {
+}, ARe = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(j[aä]n|feb|mär[z]?|apr|mai|jun[i]?|jul[i]?|aug|sep|okt|nov|dez)\.?/i,
   wide: /^(januar|februar|märz|april|mai|juni|juli|august|september|oktober|november|dezember)/i
-}, NRe = {
+}, ORe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -58932,18 +58872,18 @@ const k7e = {
     /^n/i,
     /^d/i
   ]
-}, WRe = {
+}, DRe = {
   narrow: /^[smdmf]/i,
   short: /^(so|mo|di|mi|do|fr|sa)/i,
   abbreviated: /^(son?|mon?|die?|mit?|don?|fre?|sam?)\.?/i,
   wide: /^(sonntag|montag|dienstag|mittwoch|donnerstag|freitag|samstag)/i
-}, RRe = {
+}, NRe = {
   any: [/^so/i, /^mo/i, /^di/i, /^mi/i, /^do/i, /^f/i, /^sa/i]
-}, jRe = {
+}, WRe = {
   narrow: /^(vm\.?|nm\.?|Mitternacht|Mittag|morgens|nachm\.?|abends|nachts)/i,
   abbreviated: /^(vorm\.?|nachm\.?|Mitternacht|Mittag|morgens|nachm\.?|abends|nachts)/i,
   wide: /^(vormittags|nachmittags|Mitternacht|Mittag|morgens|nachmittags|abends|nachts)/i
-}, IRe = {
+}, RRe = {
   any: {
     am: /^v/i,
     pm: /^n/i,
@@ -58958,57 +58898,57 @@ const k7e = {
   }
 }, zB = {
   ordinalNumber: Se({
-    matchPattern: $Re,
-    parsePattern: _Re,
+    matchPattern: CRe,
+    parsePattern: SRe,
     valueCallback: (e) => parseInt(e)
   }),
   era: D({
-    matchPatterns: TRe,
+    matchPatterns: $Re,
     defaultMatchWidth: "wide",
-    parsePatterns: ERe,
+    parsePatterns: _Re,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: ARe,
+    matchPatterns: TRe,
     defaultMatchWidth: "wide",
-    parsePatterns: ORe,
+    parsePatterns: ERe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: ARe,
+    defaultMatchWidth: "wide",
+    parsePatterns: ORe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: DRe,
     defaultMatchWidth: "wide",
     parsePatterns: NRe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: WRe,
     defaultMatchWidth: "wide",
     parsePatterns: RRe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: jRe,
-    defaultMatchWidth: "wide",
-    parsePatterns: IRe,
-    defaultParseWidth: "any"
   })
-}, LRe = {
+}, jRe = {
   code: "de",
   formatDistance: IB,
   formatLong: LB,
   formatRelative: FB,
-  localize: SRe,
+  localize: kRe,
   match: zB,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, FRe = {
+}, IRe = {
   narrow: ["v.Chr.", "n.Chr."],
   abbreviated: ["v.Chr.", "n.Chr."],
   wide: ["vor Christus", "nach Christus"]
-}, zRe = {
+}, LRe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"]
@@ -59042,7 +58982,7 @@ const k7e = {
     "November",
     "Dezember"
   ]
-}, VRe = {
+}, FRe = {
   narrow: GM.narrow,
   abbreviated: [
     "Jän.",
@@ -59059,7 +58999,7 @@ const k7e = {
     "Dez."
   ],
   wide: GM.wide
-}, HRe = {
+}, zRe = {
   narrow: ["S", "M", "D", "M", "D", "F", "S"],
   short: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
   abbreviated: ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
@@ -59072,7 +59012,7 @@ const k7e = {
     "Freitag",
     "Samstag"
   ]
-}, BRe = {
+}, VRe = {
   narrow: {
     am: "vm.",
     pm: "nm.",
@@ -59103,7 +59043,7 @@ const k7e = {
     evening: "Abend",
     night: "Nacht"
   }
-}, qRe = {
+}, HRe = {
   narrow: {
     am: "vm.",
     pm: "nm.",
@@ -59134,44 +59074,44 @@ const k7e = {
     evening: "abends",
     night: "nachts"
   }
-}, XRe = (e) => Number(e) + ".", GRe = {
-  ordinalNumber: XRe,
+}, BRe = (e) => Number(e) + ".", qRe = {
+  ordinalNumber: BRe,
   era: A({
-    values: FRe,
+    values: IRe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: zRe,
+    values: LRe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
     values: GM,
-    formattingValues: VRe,
+    formattingValues: FRe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: HRe,
+    values: zRe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: BRe,
+    values: VRe,
     defaultWidth: "wide",
-    formattingValues: qRe,
+    formattingValues: HRe,
     defaultFormattingWidth: "wide"
   })
-}, YRe = {
+}, XRe = {
   code: "de-AT",
   formatDistance: IB,
   formatLong: LB,
   formatRelative: FB,
-  localize: GRe,
+  localize: qRe,
   match: zB,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, URe = {
+}, GRe = {
   lessThanXSeconds: {
     one: "λιγότερο από ένα δευτερόλεπτο",
     other: "λιγότερο από {{count}} δευτερόλεπτα"
@@ -59233,39 +59173,39 @@ const k7e = {
     one: "περίπου 1 χρόνο",
     other: "περίπου {{count}} χρόνια"
   }
-}, KRe = (e, t, n) => {
+}, YRe = (e, t, n) => {
   let r;
-  const a = URe[e];
+  const a = GRe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "σε " + r : r + " πριν" : r;
-}, QRe = {
+}, URe = {
   full: "EEEE, d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "d/M/yy"
-}, ZRe = {
+}, KRe = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, JRe = {
+}, QRe = {
   full: "{{date}} - {{time}}",
   long: "{{date}} - {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, eje = {
+}, ZRe = {
   date: q({
-    formats: QRe,
+    formats: URe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: ZRe,
+    formats: KRe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: JRe,
+    formats: QRe,
     defaultWidth: "full"
   })
-}, tje = {
+}, JRe = {
   lastWeek: (e) => {
     switch (e.getDay()) {
       case 6:
@@ -59279,18 +59219,18 @@ const k7e = {
   tomorrow: "'αύριο στις' p",
   nextWeek: "eeee 'στις' p",
   other: "P"
-}, nje = (e, t) => {
-  const n = tje[e];
+}, eje = (e, t) => {
+  const n = JRe[e];
   return typeof n == "function" ? n(t) : n;
-}, rje = {
+}, tje = {
   narrow: ["πΧ", "μΧ"],
   abbreviated: ["π.Χ.", "μ.Χ."],
   wide: ["προ Χριστού", "μετά Χριστόν"]
-}, aje = {
+}, nje = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Τ1", "Τ2", "Τ3", "Τ4"],
   wide: ["1ο τρίμηνο", "2ο τρίμηνο", "3ο τρίμηνο", "4ο τρίμηνο"]
-}, ije = {
+}, rje = {
   narrow: ["Ι", "Φ", "Μ", "Α", "Μ", "Ι", "Ι", "Α", "Σ", "Ο", "Ν", "Δ"],
   abbreviated: [
     "Ιαν",
@@ -59320,7 +59260,7 @@ const k7e = {
     "Νοέμβριος",
     "Δεκέμβριος"
   ]
-}, oje = {
+}, aje = {
   narrow: ["Ι", "Φ", "Μ", "Α", "Μ", "Ι", "Ι", "Α", "Σ", "Ο", "Ν", "Δ"],
   abbreviated: [
     "Ιαν",
@@ -59350,7 +59290,7 @@ const k7e = {
     "Νοεμβρίου",
     "Δεκεμβρίου"
   ]
-}, sje = {
+}, ije = {
   narrow: ["Κ", "Δ", "T", "Τ", "Π", "Π", "Σ"],
   short: ["Κυ", "Δε", "Τρ", "Τε", "Πέ", "Πα", "Σά"],
   abbreviated: ["Κυρ", "Δευ", "Τρί", "Τετ", "Πέμ", "Παρ", "Σάβ"],
@@ -59363,7 +59303,7 @@ const k7e = {
     "Παρασκευή",
     "Σάββατο"
   ]
-}, uje = {
+}, oje = {
   narrow: {
     am: "πμ",
     pm: "μμ",
@@ -59394,52 +59334,52 @@ const k7e = {
     evening: "βράδυ",
     night: "νύχτα"
   }
-}, cje = (e, t) => {
+}, sje = (e, t) => {
   const n = Number(e), r = t == null ? void 0 : t.unit;
   let a;
   return r === "year" || r === "month" ? a = "ος" : r === "week" || r === "dayOfYear" || r === "day" || r === "hour" || r === "date" ? a = "η" : a = "ο", n + a;
-}, lje = {
-  ordinalNumber: cje,
+}, uje = {
+  ordinalNumber: sje,
   era: A({
-    values: rje,
+    values: tje,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: aje,
+    values: nje,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: ije,
+    values: rje,
     defaultWidth: "wide",
-    formattingValues: oje,
+    formattingValues: aje,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: sje,
+    values: ije,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: uje,
+    values: oje,
     defaultWidth: "wide"
   })
-}, dje = /^(\d+)(ος|η|ο)?/i, fje = /\d+/i, mje = {
+}, cje = /^(\d+)(ος|η|ο)?/i, lje = /\d+/i, dje = {
   narrow: /^(πΧ|μΧ)/i,
   abbreviated: /^(π\.?\s?χ\.?|π\.?\s?κ\.?\s?χ\.?|μ\.?\s?χ\.?|κ\.?\s?χ\.?)/i,
   wide: /^(προ Χριστο(ύ|υ)|πριν απ(ό|ο) την Κοιν(ή|η) Χρονολογ(ί|ι)α|μετ(ά|α) Χριστ(ό|ο)ν|Κοιν(ή|η) Χρονολογ(ί|ι)α)/i
-}, hje = {
+}, fje = {
   any: [/^π/i, /^(μ|κ)/i]
-}, pje = {
+}, mje = {
   narrow: /^[1234]/i,
   abbreviated: /^τ[1234]/i,
   wide: /^[1234]ο? τρ(ί|ι)μηνο/i
-}, gje = {
+}, hje = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, vje = {
+}, pje = {
   narrow: /^[ιφμαμιιασονδ]/i,
   abbreviated: /^(ιαν|φεβ|μ[άα]ρ|απρ|μ[άα][ιΐ]|ιο[ύυ]ν|ιο[ύυ]λ|α[ύυ]γ|σεπ|οκτ|νο[έε]|δεκ)/i,
   wide: /^(μ[άα][ιΐ]|α[ύυ]γο[υύ]στ)(ος|ου)|(ιανου[άα]ρ|φεβρου[άα]ρ|μ[άα]ρτ|απρ[ίι]λ|ιο[ύυ]ν|ιο[ύυ]λ|σεπτ[έε]μβρ|οκτ[ώω]βρ|νο[έε]μβρ|δεκ[έε]μβρ)(ιος|ίου)/i
-}, yje = {
+}, gje = {
   narrow: [
     /^ι/i,
     /^φ/i,
@@ -59468,18 +59408,18 @@ const k7e = {
     /^ν/i,
     /^δ/i
   ]
-}, bje = {
+}, vje = {
   narrow: /^[κδτπσ]/i,
   short: /^(κυ|δε|τρ|τε|π[εέ]|π[αά]|σ[αά])/i,
   abbreviated: /^(κυρ|δευ|τρι|τετ|πεμ|παρ|σαβ)/i,
   wide: /^(κυριακ(ή|η)|δευτ(έ|ε)ρα|τρ(ί|ι)τη|τετ(ά|α)ρτη|π(έ|ε)μπτη|παρασκευ(ή|η)|σ(ά|α)ββατο)/i
-}, wje = {
+}, yje = {
   narrow: [/^κ/i, /^δ/i, /^τ/i, /^τ/i, /^π/i, /^π/i, /^σ/i],
   any: [/^κ/i, /^δ/i, /^τρ/i, /^τε/i, /^π[εέ]/i, /^π[αά]/i, /^σ/i]
-}, Pje = {
+}, bje = {
   narrow: /^(πμ|μμ|μεσ(ά|α)νυχτα|μεσημ(έ|ε)ρι|πρω(ί|ι)|απ(ό|ο)γευμα|βρ(ά|α)δυ|ν(ύ|υ)χτα)/i,
   any: /^([πμ]\.?\s?μ\.?|μεσ(ά|α)νυχτα|μεσημ(έ|ε)ρι|πρω(ί|ι)|απ(ό|ο)γευμα|βρ(ά|α)δυ|ν(ύ|υ)χτα)/i
-}, xje = {
+}, wje = {
   any: {
     am: /^πμ|π\.\s?μ\./i,
     pm: /^μμ|μ\.\s?μ\./i,
@@ -59490,86 +59430,86 @@ const k7e = {
     evening: /βρ(ά|α)δυ/i,
     night: /ν(ύ|υ)χτα/i
   }
-}, Mje = {
+}, Pje = {
   ordinalNumber: Se({
-    matchPattern: dje,
-    parsePattern: fje,
+    matchPattern: cje,
+    parsePattern: lje,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: mje,
+    matchPatterns: dje,
     defaultMatchWidth: "wide",
-    parsePatterns: hje,
+    parsePatterns: fje,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: pje,
+    matchPatterns: mje,
     defaultMatchWidth: "wide",
-    parsePatterns: gje,
+    parsePatterns: hje,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: pje,
+    defaultMatchWidth: "wide",
+    parsePatterns: gje,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: vje,
     defaultMatchWidth: "wide",
     parsePatterns: yje,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: bje,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: wje,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Pje,
-    defaultMatchWidth: "any",
-    parsePatterns: xje,
-    defaultParseWidth: "any"
   })
-}, kje = {
+}, xje = {
   code: "el",
-  formatDistance: KRe,
-  formatLong: eje,
-  formatRelative: nje,
-  localize: lje,
-  match: Mje,
+  formatDistance: YRe,
+  formatLong: ZRe,
+  formatRelative: eje,
+  localize: uje,
+  match: Pje,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, Cje = {
+}, Mje = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
   short: "dd/MM/yyyy"
-}, Sje = {
+}, kje = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, $je = {
+}, Cje = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, _je = {
+}, Sje = {
   date: q({
-    formats: Cje,
+    formats: Mje,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Sje,
+    formats: kje,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: $je,
+    formats: Cje,
     defaultWidth: "full"
   })
-}, Tje = {
+}, $je = {
   code: "en-AU",
   formatDistance: Cu,
-  formatLong: _je,
+  formatLong: Sje,
   formatRelative: gs,
   localize: vs,
   match: ys,
@@ -59577,7 +59517,7 @@ const k7e = {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, Eje = {
+}, _je = {
   lessThanXSeconds: {
     one: "less than a second",
     other: "less than {{count}} seconds"
@@ -59639,42 +59579,42 @@ const k7e = {
     one: "almost a year",
     other: "almost {{count}} years"
   }
-}, Aje = (e, t, n) => {
+}, Tje = (e, t, n) => {
   let r;
-  const a = Eje[e];
+  const a = _je[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", t.toString()), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "in " + r : r + " ago" : r;
-}, Oje = {
+}, Eje = {
   full: "EEEE, MMMM do, yyyy",
   long: "MMMM do, yyyy",
   medium: "MMM d, yyyy",
   short: "yyyy-MM-dd"
-}, Dje = {
+}, Aje = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, Nje = {
+}, Oje = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Wje = {
+}, Dje = {
   date: q({
-    formats: Oje,
+    formats: Eje,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Dje,
+    formats: Aje,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Nje,
+    formats: Oje,
     defaultWidth: "full"
   })
-}, Rje = {
+}, Nje = {
   code: "en-CA",
-  formatDistance: Aje,
-  formatLong: Wje,
+  formatDistance: Tje,
+  formatLong: Dje,
   formatRelative: gs,
   localize: vs,
   match: ys,
@@ -59682,35 +59622,35 @@ const k7e = {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, jje = {
+}, Wje = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
   short: "dd/MM/yyyy"
-}, Ije = {
+}, Rje = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Lje = {
+}, jje = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
 }, VB = {
   date: q({
-    formats: jje,
+    formats: Wje,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Ije,
+    formats: Rje,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Lje,
+    formats: jje,
     defaultWidth: "full"
   })
-}, Fje = {
+}, Ije = {
   code: "en-GB",
   formatDistance: Cu,
   formatLong: VB,
@@ -59721,7 +59661,7 @@ const k7e = {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, zje = {
+}, Lje = {
   code: "en-IE",
   formatDistance: Cu,
   formatLong: VB,
@@ -59732,38 +59672,38 @@ const k7e = {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, Vje = {
+}, Fje = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM, yyyy",
   medium: "d MMM, yyyy",
   short: "dd/MM/yyyy"
-}, Hje = {
+}, zje = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, Bje = {
+}, Vje = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, qje = {
+}, Hje = {
   date: q({
-    formats: Vje,
+    formats: Fje,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Hje,
+    formats: zje,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Bje,
+    formats: Vje,
     defaultWidth: "full"
   })
-}, Xje = {
+}, Bje = {
   code: "en-IN",
   formatDistance: Cu,
-  formatLong: qje,
+  formatLong: Hje,
   formatRelative: gs,
   localize: vs,
   match: ys,
@@ -59773,38 +59713,38 @@ const k7e = {
     firstWeekContainsDate: 4
     // The week that contains Jan 4th is the first week of the year.
   }
-}, Gje = {
+}, qje = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
   short: "dd/MM/yyyy"
-}, Yje = {
+}, Xje = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, Uje = {
+}, Gje = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Kje = {
+}, Yje = {
   date: q({
-    formats: Gje,
+    formats: qje,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Yje,
+    formats: Xje,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Uje,
+    formats: Gje,
     defaultWidth: "full"
   })
-}, Qje = {
+}, Uje = {
   code: "en-NZ",
   formatDistance: Cu,
-  formatLong: Kje,
+  formatLong: Yje,
   formatRelative: gs,
   localize: vs,
   match: ys,
@@ -59812,38 +59752,38 @@ const k7e = {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, Zje = {
+}, Kje = {
   full: "EEEE, dd MMMM yyyy",
   long: "dd MMMM yyyy",
   medium: "dd MMM yyyy",
   short: "yyyy/MM/dd"
-}, Jje = {
+}, Qje = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, eIe = {
+}, Zje = {
   full: "{{date}} 'at' {{time}}",
   long: "{{date}} 'at' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, tIe = {
+}, Jje = {
   date: q({
-    formats: Zje,
+    formats: Kje,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Jje,
+    formats: Qje,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: eIe,
+    formats: Zje,
     defaultWidth: "full"
   })
-}, nIe = {
+}, eIe = {
   code: "en-ZA",
   formatDistance: Cu,
-  formatLong: tIe,
+  formatLong: Jje,
   formatRelative: gs,
   localize: vs,
   match: ys,
@@ -59853,7 +59793,7 @@ const k7e = {
     firstWeekContainsDate: 1
     // The week that contains Jan 1st is the first week of the year.
   }
-}, rIe = {
+}, tIe = {
   lessThanXSeconds: {
     one: "malpli ol sekundo",
     other: "malpli ol {{count}} sekundoj"
@@ -59915,47 +59855,47 @@ const k7e = {
     one: "preskaŭ 1 jaro",
     other: "preskaŭ {{count}} jaroj"
   }
-}, aIe = (e, t, n) => {
+}, nIe = (e, t, n) => {
   let r;
-  const a = rIe[e];
+  const a = tIe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n != null && n.comparison && n.comparison > 0 ? "post " + r : "antaŭ " + r : r;
-}, iIe = {
+}, rIe = {
   full: "EEEE, do 'de' MMMM y",
   long: "y-MMMM-dd",
   medium: "y-MMM-dd",
   short: "yyyy-MM-dd"
-}, oIe = {
+}, aIe = {
   full: "Ho 'horo kaj' m:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, sIe = {
+}, iIe = {
   any: "{{date}} {{time}}"
-}, uIe = {
+}, oIe = {
   date: q({
-    formats: iIe,
+    formats: rIe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: oIe,
+    formats: aIe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: sIe,
+    formats: iIe,
     defaultWidth: "any"
   })
-}, cIe = {
+}, sIe = {
   lastWeek: "'pasinta' eeee 'je' p",
   yesterday: "'hieraŭ je' p",
   today: "'hodiaŭ je' p",
   tomorrow: "'morgaŭ je' p",
   nextWeek: "eeee 'je' p",
   other: "P"
-}, lIe = (e, t, n, r) => cIe[e], dIe = {
+}, uIe = (e, t, n, r) => sIe[e], cIe = {
   narrow: ["aK", "pK"],
   abbreviated: ["a.K.E.", "p.K.E."],
   wide: ["antaŭ Komuna Erao", "Komuna Erao"]
-}, fIe = {
+}, lIe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
   wide: [
@@ -59964,7 +59904,7 @@ const k7e = {
     "3-a kvaronjaro",
     "4-a kvaronjaro"
   ]
-}, mIe = {
+}, dIe = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "jan",
@@ -59994,7 +59934,7 @@ const k7e = {
     "novembro",
     "decembro"
   ]
-}, hIe = {
+}, fIe = {
   narrow: ["D", "L", "M", "M", "Ĵ", "V", "S"],
   short: ["di", "lu", "ma", "me", "ĵa", "ve", "sa"],
   abbreviated: ["dim", "lun", "mar", "mer", "ĵaŭ", "ven", "sab"],
@@ -60007,7 +59947,7 @@ const k7e = {
     "vendredo",
     "sabato"
   ]
-}, pIe = {
+}, mIe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -60038,48 +59978,48 @@ const k7e = {
     evening: "vespere",
     night: "nokte"
   }
-}, gIe = (e) => Number(e) + "-a", vIe = {
-  ordinalNumber: gIe,
+}, hIe = (e) => Number(e) + "-a", pIe = {
+  ordinalNumber: hIe,
   era: A({
-    values: dIe,
+    values: cIe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: fIe,
+    values: lIe,
     defaultWidth: "wide",
     argumentCallback: function(e) {
       return Number(e) - 1;
     }
   }),
   month: A({
-    values: mIe,
+    values: dIe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: hIe,
+    values: fIe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: pIe,
+    values: mIe,
     defaultWidth: "wide"
   })
-}, yIe = /^(\d+)(-?a)?/i, bIe = /\d+/i, wIe = {
+}, gIe = /^(\d+)(-?a)?/i, vIe = /\d+/i, yIe = {
   narrow: /^([ap]k)/i,
   abbreviated: /^([ap]\.?\s?k\.?\s?e\.?)/i,
   wide: /^((antaǔ |post )?komuna erao)/i
-}, PIe = {
+}, bIe = {
   any: [/^a/i, /^[kp]/i]
-}, xIe = {
+}, wIe = {
   narrow: /^[1234]/i,
   abbreviated: /^k[1234]/i,
   wide: /^[1234](-?a)? kvaronjaro/i
-}, MIe = {
+}, PIe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, kIe = {
+}, xIe = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mar|apr|maj|jun|jul|a(ŭ|ux|uh|u)g|sep|okt|nov|dec)/i,
   wide: /^(januaro|februaro|marto|aprilo|majo|junio|julio|a(ŭ|ux|uh|u)gusto|septembro|oktobro|novembro|decembro)/i
-}, CIe = {
+}, MIe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -60108,19 +60048,19 @@ const k7e = {
     /^n/i,
     /^d/i
   ]
-}, SIe = {
+}, kIe = {
   narrow: /^[dlmĵjvs]/i,
   short: /^(di|lu|ma|me|(ĵ|jx|jh|j)a|ve|sa)/i,
   abbreviated: /^(dim|lun|mar|mer|(ĵ|jx|jh|j)a(ŭ|ux|uh|u)|ven|sab)/i,
   wide: /^(diman(ĉ|cx|ch|c)o|lundo|mardo|merkredo|(ĵ|jx|jh|j)a(ŭ|ux|uh|u)do|vendredo|sabato)/i
-}, $Ie = {
+}, CIe = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^(j|ĵ)/i, /^v/i, /^s/i],
   any: [/^d/i, /^l/i, /^ma/i, /^me/i, /^(j|ĵ)/i, /^v/i, /^s/i]
-}, _Ie = {
+}, SIe = {
   narrow: /^([ap]|(posttagmez|noktomez|tagmez|maten|vesper|nokt)[eo])/i,
   abbreviated: /^([ap][.\s]?t[.\s]?m[.\s]?|(posttagmez|noktomez|tagmez|maten|vesper|nokt)[eo])/i,
   wide: /^(anta(ŭ|ux)tagmez|posttagmez|noktomez|tagmez|maten|vesper|nokt)[eo]/i
-}, TIe = {
+}, $Ie = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -60131,59 +60071,59 @@ const k7e = {
     evening: /^v/i,
     night: /^n/i
   }
-}, EIe = {
+}, _Ie = {
   ordinalNumber: Se({
-    matchPattern: yIe,
-    parsePattern: bIe,
+    matchPattern: gIe,
+    parsePattern: vIe,
     valueCallback: function(e) {
       return parseInt(e, 10);
     }
   }),
   era: D({
-    matchPatterns: wIe,
+    matchPatterns: yIe,
     defaultMatchWidth: "wide",
-    parsePatterns: PIe,
+    parsePatterns: bIe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: xIe,
+    matchPatterns: wIe,
     defaultMatchWidth: "wide",
-    parsePatterns: MIe,
+    parsePatterns: PIe,
     defaultParseWidth: "any",
     valueCallback: function(e) {
       return e + 1;
     }
   }),
   month: D({
+    matchPatterns: xIe,
+    defaultMatchWidth: "wide",
+    parsePatterns: MIe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: kIe,
     defaultMatchWidth: "wide",
     parsePatterns: CIe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: SIe,
     defaultMatchWidth: "wide",
     parsePatterns: $Ie,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: _Ie,
-    defaultMatchWidth: "wide",
-    parsePatterns: TIe,
-    defaultParseWidth: "any"
   })
-}, AIe = {
+}, TIe = {
   code: "eo",
-  formatDistance: aIe,
-  formatLong: uIe,
-  formatRelative: lIe,
-  localize: vIe,
-  match: EIe,
+  formatDistance: nIe,
+  formatLong: oIe,
+  formatRelative: uIe,
+  localize: pIe,
+  match: _Ie,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, OIe = {
+}, EIe = {
   lessThanXSeconds: {
     one: "menos de un segundo",
     other: "menos de {{count}} segundos"
@@ -60245,61 +60185,61 @@ const k7e = {
     one: "casi 1 año",
     other: "casi {{count}} años"
   }
-}, DIe = (e, t, n) => {
+}, AIe = (e, t, n) => {
   let r;
-  const a = OIe[e];
+  const a = EIe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", t.toString()), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "en " + r : "hace " + r : r;
-}, NIe = {
+}, OIe = {
   full: "EEEE, d 'de' MMMM 'de' y",
   long: "d 'de' MMMM 'de' y",
   medium: "d MMM y",
   short: "dd/MM/y"
-}, WIe = {
+}, DIe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, RIe = {
+}, NIe = {
   full: "{{date}} 'a las' {{time}}",
   long: "{{date}} 'a las' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, jIe = {
+}, WIe = {
   date: q({
-    formats: NIe,
+    formats: OIe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: WIe,
+    formats: DIe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: RIe,
+    formats: NIe,
     defaultWidth: "full"
   })
-}, IIe = {
+}, RIe = {
   lastWeek: "'el' eeee 'pasado a la' p",
   yesterday: "'ayer a la' p",
   today: "'hoy a la' p",
   tomorrow: "'mañana a la' p",
   nextWeek: "eeee 'a la' p",
   other: "P"
-}, LIe = {
+}, jIe = {
   lastWeek: "'el' eeee 'pasado a las' p",
   yesterday: "'ayer a las' p",
   today: "'hoy a las' p",
   tomorrow: "'mañana a las' p",
   nextWeek: "eeee 'a las' p",
   other: "P"
-}, FIe = (e, t, n, r) => t.getHours() !== 1 ? LIe[e] : IIe[e], zIe = {
+}, IIe = (e, t, n, r) => t.getHours() !== 1 ? jIe[e] : RIe[e], LIe = {
   narrow: ["AC", "DC"],
   abbreviated: ["AC", "DC"],
   wide: ["antes de cristo", "después de cristo"]
-}, VIe = {
+}, FIe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
   wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
-}, HIe = {
+}, zIe = {
   narrow: ["e", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
   abbreviated: [
     "ene",
@@ -60329,7 +60269,7 @@ const k7e = {
     "noviembre",
     "diciembre"
   ]
-}, BIe = {
+}, VIe = {
   narrow: ["d", "l", "m", "m", "j", "v", "s"],
   short: ["do", "lu", "ma", "mi", "ju", "vi", "sá"],
   abbreviated: ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"],
@@ -60342,7 +60282,7 @@ const k7e = {
     "viernes",
     "sábado"
   ]
-}, qIe = {
+}, HIe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -60373,7 +60313,7 @@ const k7e = {
     evening: "tarde",
     night: "noche"
   }
-}, XIe = {
+}, BIe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -60404,52 +60344,52 @@ const k7e = {
     evening: "de la tarde",
     night: "de la noche"
   }
-}, GIe = (e, t) => Number(e) + "º", YIe = {
-  ordinalNumber: GIe,
+}, qIe = (e, t) => Number(e) + "º", XIe = {
+  ordinalNumber: qIe,
   era: A({
-    values: zIe,
+    values: LIe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: VIe,
+    values: FIe,
     defaultWidth: "wide",
     argumentCallback: (e) => Number(e) - 1
   }),
   month: A({
-    values: HIe,
+    values: zIe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: BIe,
+    values: VIe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: qIe,
+    values: HIe,
     defaultWidth: "wide",
-    formattingValues: XIe,
+    formattingValues: BIe,
     defaultFormattingWidth: "wide"
   })
-}, UIe = /^(\d+)(º)?/i, KIe = /\d+/i, QIe = {
+}, GIe = /^(\d+)(º)?/i, YIe = /\d+/i, UIe = {
   narrow: /^(ac|dc|a|d)/i,
   abbreviated: /^(a\.?\s?c\.?|a\.?\s?e\.?\s?c\.?|d\.?\s?c\.?|e\.?\s?c\.?)/i,
   wide: /^(antes de cristo|antes de la era com[uú]n|despu[eé]s de cristo|era com[uú]n)/i
-}, ZIe = {
+}, KIe = {
   any: [/^ac/i, /^dc/i],
   wide: [
     /^(antes de cristo|antes de la era com[uú]n)/i,
     /^(despu[eé]s de cristo|era com[uú]n)/i
   ]
-}, JIe = {
+}, QIe = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
   wide: /^[1234](º)? trimestre/i
-}, eLe = {
+}, ZIe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, tLe = {
+}, JIe = {
   narrow: /^[efmajsond]/i,
   abbreviated: /^(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)/i,
   wide: /^(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/i
-}, nLe = {
+}, eLe = {
   narrow: [
     /^e/i,
     /^f/i,
@@ -60478,18 +60418,18 @@ const k7e = {
     /^nov/i,
     /^dic/i
   ]
-}, rLe = {
+}, tLe = {
   narrow: /^[dlmjvs]/i,
   short: /^(do|lu|ma|mi|ju|vi|s[áa])/i,
   abbreviated: /^(dom|lun|mar|mi[ée]|jue|vie|s[áa]b)/i,
   wide: /^(domingo|lunes|martes|mi[ée]rcoles|jueves|viernes|s[áa]bado)/i
-}, aLe = {
+}, nLe = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^j/i, /^v/i, /^s/i],
   any: [/^do/i, /^lu/i, /^ma/i, /^mi/i, /^ju/i, /^vi/i, /^sa/i]
-}, iLe = {
+}, rLe = {
   narrow: /^(a|p|mn|md|(de la|a las) (mañana|tarde|noche))/i,
   any: /^([ap]\.?\s?m\.?|medianoche|mediodia|(de la|a las) (mañana|tarde|noche))/i
-}, oLe = {
+}, aLe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -60500,52 +60440,52 @@ const k7e = {
     evening: /tarde/i,
     night: /noche/i
   }
-}, sLe = {
+}, iLe = {
   ordinalNumber: Se({
-    matchPattern: UIe,
-    parsePattern: KIe,
+    matchPattern: GIe,
+    parsePattern: YIe,
     valueCallback: function(e) {
       return parseInt(e, 10);
     }
   }),
   era: D({
-    matchPatterns: QIe,
+    matchPatterns: UIe,
     defaultMatchWidth: "wide",
-    parsePatterns: ZIe,
+    parsePatterns: KIe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: JIe,
+    matchPatterns: QIe,
     defaultMatchWidth: "wide",
-    parsePatterns: eLe,
+    parsePatterns: ZIe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: JIe,
+    defaultMatchWidth: "wide",
+    parsePatterns: eLe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: tLe,
     defaultMatchWidth: "wide",
     parsePatterns: nLe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: rLe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: aLe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: iLe,
-    defaultMatchWidth: "any",
-    parsePatterns: oLe,
-    defaultParseWidth: "any"
   })
-}, uLe = {
+}, oLe = {
   code: "es",
-  formatDistance: DIe,
-  formatLong: jIe,
-  formatRelative: FIe,
-  localize: YIe,
-  match: sLe,
+  formatDistance: AIe,
+  formatLong: WIe,
+  formatRelative: IIe,
+  localize: XIe,
+  match: iLe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
@@ -60705,50 +60645,50 @@ const k7e = {
       other: "peaaegu {{count}} aasta"
     }
   }
-}, cLe = (e, t, n) => {
+}, sLe = (e, t, n) => {
   const r = n != null && n.addSuffix ? wD[e].withPreposition : wD[e].standalone;
   let a;
   return typeof r == "string" ? a = r : t === 1 ? a = r.one : a = r.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? a + " pärast" : a + " eest" : a;
-}, lLe = {
+}, uLe = {
   full: "EEEE, d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
   short: "dd.MM.y"
-}, dLe = {
+}, cLe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, fLe = {
+}, lLe = {
   full: "{{date}} 'kell' {{time}}",
   long: "{{date}} 'kell' {{time}}",
   medium: "{{date}}. {{time}}",
   short: "{{date}}. {{time}}"
-}, mLe = {
+}, dLe = {
   date: q({
-    formats: lLe,
+    formats: uLe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: dLe,
+    formats: cLe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: fLe,
+    formats: lLe,
     defaultWidth: "full"
   })
-}, hLe = {
+}, fLe = {
   lastWeek: "'eelmine' eeee 'kell' p",
   yesterday: "'eile kell' p",
   today: "'täna kell' p",
   tomorrow: "'homme kell' p",
   nextWeek: "'järgmine' eeee 'kell' p",
   other: "P"
-}, pLe = (e, t, n, r) => hLe[e], gLe = {
+}, mLe = (e, t, n, r) => fLe[e], hLe = {
   narrow: ["e.m.a", "m.a.j"],
   abbreviated: ["e.m.a", "m.a.j"],
   wide: ["enne meie ajaarvamist", "meie ajaarvamise järgi"]
-}, vLe = {
+}, pLe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
   wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
@@ -60803,7 +60743,7 @@ const k7e = {
     "reede",
     "laupäev"
   ]
-}, yLe = {
+}, gLe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -60834,7 +60774,7 @@ const k7e = {
     evening: "õhtu",
     night: "öö"
   }
-}, bLe = {
+}, vLe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -60865,14 +60805,14 @@ const k7e = {
     evening: "õhtul",
     night: "öösel"
   }
-}, wLe = (e, t) => Number(e) + ".", PLe = {
-  ordinalNumber: wLe,
+}, yLe = (e, t) => Number(e) + ".", bLe = {
+  ordinalNumber: yLe,
   era: A({
-    values: gLe,
+    values: hLe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: vLe,
+    values: pLe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
@@ -60889,28 +60829,28 @@ const k7e = {
     defaultFormattingWidth: "wide"
   }),
   dayPeriod: A({
-    values: yLe,
+    values: gLe,
     defaultWidth: "wide",
-    formattingValues: bLe,
+    formattingValues: vLe,
     defaultFormattingWidth: "wide"
   })
-}, xLe = /^\d+\./i, MLe = /\d+/i, kLe = {
+}, wLe = /^\d+\./i, PLe = /\d+/i, xLe = {
   narrow: /^(e\.m\.a|m\.a\.j|eKr|pKr)/i,
   abbreviated: /^(e\.m\.a|m\.a\.j|eKr|pKr)/i,
   wide: /^(enne meie ajaarvamist|meie ajaarvamise järgi|enne Kristust|pärast Kristust)/i
-}, CLe = {
+}, MLe = {
   any: [/^e/i, /^(m|p)/i]
-}, SLe = {
+}, kLe = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
   wide: /^[1234](\.)? kvartal/i
-}, $Le = {
+}, CLe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, _Le = {
+}, SLe = {
   narrow: /^[jvmasond]/i,
   abbreviated: /^(jaan|veebr|märts|apr|mai|juuni|juuli|aug|sept|okt|nov|dets)/i,
   wide: /^(jaanuar|veebruar|märts|aprill|mai|juuni|juuli|august|september|oktoober|november|detsember)/i
-}, TLe = {
+}, $Le = {
   narrow: [
     /^j/i,
     /^v/i,
@@ -60939,16 +60879,16 @@ const k7e = {
     /^n/i,
     /^d/i
   ]
-}, ELe = {
+}, _Le = {
   narrow: /^[petknrl]/i,
   short: /^[petknrl]/i,
   abbreviated: /^(püh?|esm?|tei?|kolm?|nel?|ree?|laup?)\.?/i,
   wide: /^(pühapäev|esmaspäev|teisipäev|kolmapäev|neljapäev|reede|laupäev)/i
-}, ALe = {
+}, TLe = {
   any: [/^p/i, /^e/i, /^t/i, /^k/i, /^n/i, /^r/i, /^l/i]
-}, OLe = {
+}, ELe = {
   any: /^(am|pm|keskööl?|keskpäev(al)?|hommik(ul)?|pärastlõunal?|õhtul?|öö(sel)?)/i
-}, DLe = {
+}, ALe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -60959,55 +60899,55 @@ const k7e = {
     evening: /õhtu/i,
     night: /öö/i
   }
-}, NLe = {
+}, OLe = {
   ordinalNumber: Se({
-    matchPattern: xLe,
-    parsePattern: MLe,
+    matchPattern: wLe,
+    parsePattern: PLe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: kLe,
+    matchPatterns: xLe,
     defaultMatchWidth: "wide",
-    parsePatterns: CLe,
+    parsePatterns: MLe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: SLe,
+    matchPatterns: kLe,
     defaultMatchWidth: "wide",
-    parsePatterns: $Le,
+    parsePatterns: CLe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: SLe,
+    defaultMatchWidth: "wide",
+    parsePatterns: $Le,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: _Le,
     defaultMatchWidth: "wide",
     parsePatterns: TLe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: ELe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: ALe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: OLe,
-    defaultMatchWidth: "any",
-    parsePatterns: DLe,
-    defaultParseWidth: "any"
   })
-}, WLe = {
+}, DLe = {
   code: "et",
-  formatDistance: cLe,
-  formatLong: mLe,
-  formatRelative: pLe,
-  localize: PLe,
-  match: NLe,
+  formatDistance: sLe,
+  formatLong: dLe,
+  formatRelative: mLe,
+  localize: bLe,
+  match: OLe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, RLe = {
+}, NLe = {
   lessThanXSeconds: {
     one: "segundo bat baino gutxiago",
     other: "{{count}} segundo baino gutxiago"
@@ -61069,57 +61009,57 @@ const k7e = {
     one: "ia 1 urte",
     other: "ia {{count}} urte"
   }
-}, jLe = (e, t, n) => {
+}, WLe = (e, t, n) => {
   let r;
-  const a = RLe[e];
+  const a = NLe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "en " + r : "duela " + r : r;
-}, ILe = {
+}, RLe = {
   full: "EEEE, y'ko' MMMM'ren' d'a' y'ren'",
   long: "y'ko' MMMM'ren' d'a'",
   medium: "y MMM d",
   short: "yy/MM/dd"
-}, LLe = {
+}, jLe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, FLe = {
+}, ILe = {
   full: "{{date}} 'tan' {{time}}",
   long: "{{date}} 'tan' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, zLe = {
+}, LLe = {
   date: q({
-    formats: ILe,
+    formats: RLe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: LLe,
+    formats: jLe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: FLe,
+    formats: ILe,
     defaultWidth: "full"
   })
-}, VLe = {
+}, FLe = {
   lastWeek: "'joan den' eeee, LT",
   yesterday: "'atzo,' p",
   today: "'gaur,' p",
   tomorrow: "'bihar,' p",
   nextWeek: "eeee, p",
   other: "P"
-}, HLe = {
+}, zLe = {
   lastWeek: "'joan den' eeee, p",
   yesterday: "'atzo,' p",
   today: "'gaur,' p",
   tomorrow: "'bihar,' p",
   nextWeek: "eeee, p",
   other: "P"
-}, BLe = (e, t) => t.getHours() !== 1 ? HLe[e] : VLe[e], qLe = {
+}, VLe = (e, t) => t.getHours() !== 1 ? zLe[e] : FLe[e], HLe = {
   narrow: ["k.a.", "k.o."],
   abbreviated: ["k.a.", "k.o."],
   wide: ["kristo aurretik", "kristo ondoren"]
-}, XLe = {
+}, BLe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1H", "2H", "3H", "4H"],
   wide: [
@@ -61128,7 +61068,7 @@ const k7e = {
     "3. hiruhilekoa",
     "4. hiruhilekoa"
   ]
-}, GLe = {
+}, qLe = {
   narrow: ["u", "o", "m", "a", "m", "e", "u", "a", "i", "u", "a", "a"],
   abbreviated: [
     "urt",
@@ -61158,7 +61098,7 @@ const k7e = {
     "azaroa",
     "abendua"
   ]
-}, YLe = {
+}, XLe = {
   narrow: ["i", "a", "a", "a", "o", "o", "l"],
   short: ["ig", "al", "as", "az", "og", "or", "lr"],
   abbreviated: ["iga", "ast", "ast", "ast", "ost", "ost", "lar"],
@@ -61171,7 +61111,7 @@ const k7e = {
     "ostirala",
     "larunbata"
   ]
-}, ULe = {
+}, GLe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -61202,7 +61142,7 @@ const k7e = {
     evening: "arratsaldea",
     night: "gaua"
   }
-}, KLe = {
+}, YLe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -61233,50 +61173,50 @@ const k7e = {
     evening: "arratsaldean",
     night: "gauean"
   }
-}, QLe = (e, t) => Number(e) + ".", ZLe = {
-  ordinalNumber: QLe,
+}, ULe = (e, t) => Number(e) + ".", KLe = {
+  ordinalNumber: ULe,
   era: A({
-    values: qLe,
+    values: HLe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: XLe,
+    values: BLe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: GLe,
+    values: qLe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: YLe,
+    values: XLe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: ULe,
+    values: GLe,
     defaultWidth: "wide",
-    formattingValues: KLe,
+    formattingValues: YLe,
     defaultFormattingWidth: "wide"
   })
-}, JLe = /^(\d+)(.)?/i, eFe = /\d+/i, tFe = {
+}, QLe = /^(\d+)(.)?/i, ZLe = /\d+/i, JLe = {
   narrow: /^(k.a.|k.o.)/i,
   abbreviated: /^(k.a.|k.o.)/i,
   wide: /^(kristo aurretik|kristo ondoren)/i
-}, nFe = {
+}, eFe = {
   narrow: [/^k.a./i, /^k.o./i],
   abbreviated: [/^(k.a.)/i, /^(k.o.)/i],
   wide: [/^(kristo aurretik)/i, /^(kristo ondoren)/i]
-}, rFe = {
+}, tFe = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]H/i,
   wide: /^[1234](.)? hiruhilekoa/i
-}, aFe = {
+}, nFe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, iFe = {
+}, rFe = {
   narrow: /^[uomaei]/i,
   abbreviated: /^(urt|ots|mar|api|mai|eka|uzt|abu|ira|urr|aza|abe)/i,
   wide: /^(urtarrila|otsaila|martxoa|apirila|maiatza|ekaina|uztaila|abuztua|iraila|urria|azaroa|abendua)/i
-}, oFe = {
+}, aFe = {
   narrow: [
     /^u/i,
     /^o/i,
@@ -61305,12 +61245,12 @@ const k7e = {
     /^aza/i,
     /^abe/i
   ]
-}, sFe = {
+}, iFe = {
   narrow: /^[iaol]/i,
   short: /^(ig|al|as|az|og|or|lr)/i,
   abbreviated: /^(iga|ast|ast|ast|ost|ost|lar)/i,
   wide: /^(igandea|astelehena|asteartea|asteazkena|osteguna|ostirala|larunbata)/i
-}, uFe = {
+}, oFe = {
   narrow: [/^i/i, /^a/i, /^a/i, /^a/i, /^o/i, /^o/i, /^l/i],
   short: [/^ig/i, /^al/i, /^as/i, /^az/i, /^og/i, /^or/i, /^lr/i],
   abbreviated: [/^iga/i, /^ast/i, /^ast/i, /^ast/i, /^ost/i, /^ost/i, /^lar/i],
@@ -61323,10 +61263,10 @@ const k7e = {
     /^ostirala/i,
     /^larunbata/i
   ]
-}, cFe = {
+}, sFe = {
   narrow: /^(a|p|ge|eg|((goiza|goizean)|arratsaldea|(gaua|gauean)))/i,
   any: /^([ap]\.?\s?m\.?|gauerdia|eguerdia|((goiza|goizean)|arratsaldea|(gaua|gauean)))/i
-}, lFe = {
+}, uFe = {
   narrow: {
     am: /^a/i,
     pm: /^p/i,
@@ -61347,55 +61287,55 @@ const k7e = {
     evening: /arratsaldea/i,
     night: /gau/i
   }
-}, dFe = {
+}, cFe = {
   ordinalNumber: Se({
-    matchPattern: JLe,
-    parsePattern: eFe,
+    matchPattern: QLe,
+    parsePattern: ZLe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: tFe,
+    matchPatterns: JLe,
     defaultMatchWidth: "wide",
-    parsePatterns: nFe,
+    parsePatterns: eFe,
     defaultParseWidth: "wide"
   }),
   quarter: D({
-    matchPatterns: rFe,
+    matchPatterns: tFe,
     defaultMatchWidth: "wide",
-    parsePatterns: aFe,
+    parsePatterns: nFe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
-    matchPatterns: iFe,
+    matchPatterns: rFe,
     defaultMatchWidth: "wide",
-    parsePatterns: oFe,
+    parsePatterns: aFe,
     defaultParseWidth: "any"
   }),
   day: D({
-    matchPatterns: sFe,
+    matchPatterns: iFe,
     defaultMatchWidth: "wide",
-    parsePatterns: uFe,
+    parsePatterns: oFe,
     defaultParseWidth: "wide"
   }),
   dayPeriod: D({
-    matchPatterns: cFe,
+    matchPatterns: sFe,
     defaultMatchWidth: "any",
-    parsePatterns: lFe,
+    parsePatterns: uFe,
     defaultParseWidth: "any"
   })
-}, fFe = {
+}, lFe = {
   code: "eu",
-  formatDistance: jLe,
-  formatLong: zLe,
-  formatRelative: BLe,
-  localize: ZLe,
-  match: dFe,
+  formatDistance: WLe,
+  formatLong: LLe,
+  formatRelative: VLe,
+  localize: KLe,
+  match: cFe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, mFe = {
+}, dFe = {
   lessThanXSeconds: {
     one: "کمتر از یک ثانیه",
     other: "کمتر از {{count}} ثانیه"
@@ -61457,54 +61397,54 @@ const k7e = {
     one: "نزدیک 1 سال",
     other: "نزدیک {{count}} سال"
   }
-}, hFe = (e, t, n) => {
+}, fFe = (e, t, n) => {
   let r;
-  const a = mFe[e];
+  const a = dFe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "در " + r : r + " قبل" : r;
-}, pFe = {
+}, mFe = {
   full: "EEEE do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
   short: "yyyy/MM/dd"
-}, gFe = {
+}, hFe = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, vFe = {
+}, pFe = {
   full: "{{date}} 'در' {{time}}",
   long: "{{date}} 'در' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, yFe = {
+}, gFe = {
   date: q({
-    formats: pFe,
+    formats: mFe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: gFe,
+    formats: hFe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: vFe,
+    formats: pFe,
     defaultWidth: "full"
   })
-}, bFe = {
+}, vFe = {
   lastWeek: "eeee 'گذشته در' p",
   yesterday: "'دیروز در' p",
   today: "'امروز در' p",
   tomorrow: "'فردا در' p",
   nextWeek: "eeee 'در' p",
   other: "P"
-}, wFe = (e, t, n, r) => bFe[e], PFe = {
+}, yFe = (e, t, n, r) => vFe[e], bFe = {
   narrow: ["ق", "ب"],
   abbreviated: ["ق.م.", "ب.م."],
   wide: ["قبل از میلاد", "بعد از میلاد"]
-}, xFe = {
+}, wFe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["س‌م1", "س‌م2", "س‌م3", "س‌م4"],
   wide: ["سه‌ماهه 1", "سه‌ماهه 2", "سه‌ماهه 3", "سه‌ماهه 4"]
-}, MFe = {
+}, PFe = {
   narrow: ["ژ", "ف", "م", "آ", "م", "ج", "ج", "آ", "س", "ا", "ن", "د"],
   abbreviated: [
     "ژانـ",
@@ -61534,7 +61474,7 @@ const k7e = {
     "نوامبر",
     "دسامبر"
   ]
-}, kFe = {
+}, xFe = {
   narrow: ["ی", "د", "س", "چ", "پ", "ج", "ش"],
   short: ["1ش", "2ش", "3ش", "4ش", "5ش", "ج", "ش"],
   abbreviated: [
@@ -61547,7 +61487,7 @@ const k7e = {
     "شنبه"
   ],
   wide: ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه", "شنبه"]
-}, CFe = {
+}, MFe = {
   narrow: {
     am: "ق",
     pm: "ب",
@@ -61578,7 +61518,7 @@ const k7e = {
     evening: "عصر",
     night: "شب"
   }
-}, SFe = {
+}, kFe = {
   narrow: {
     am: "ق",
     pm: "ب",
@@ -61609,48 +61549,48 @@ const k7e = {
     evening: "عصر",
     night: "شب"
   }
-}, $Fe = (e, t) => String(e), _Fe = {
-  ordinalNumber: $Fe,
+}, CFe = (e, t) => String(e), SFe = {
+  ordinalNumber: CFe,
   era: A({
-    values: PFe,
+    values: bFe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: xFe,
+    values: wFe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: MFe,
+    values: PFe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: kFe,
+    values: xFe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: CFe,
+    values: MFe,
     defaultWidth: "wide",
-    formattingValues: SFe,
+    formattingValues: kFe,
     defaultFormattingWidth: "wide"
   })
-}, TFe = /^(\d+)(th|st|nd|rd)?/i, EFe = /\d+/i, AFe = {
+}, $Fe = /^(\d+)(th|st|nd|rd)?/i, _Fe = /\d+/i, TFe = {
   narrow: /^(ق|ب)/i,
   abbreviated: /^(ق\.?\s?م\.?|ق\.?\s?د\.?\s?م\.?|م\.?\s?|د\.?\s?م\.?)/i,
   wide: /^(قبل از میلاد|قبل از دوران مشترک|میلادی|دوران مشترک|بعد از میلاد)/i
-}, OFe = {
+}, EFe = {
   any: [/^قبل/i, /^بعد/i]
-}, DFe = {
+}, AFe = {
   narrow: /^[1234]/i,
   abbreviated: /^س‌م[1234]/i,
   wide: /^سه‌ماهه [1234]/i
-}, NFe = {
+}, OFe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, WFe = {
+}, DFe = {
   narrow: /^[جژفمآاماسند]/i,
   abbreviated: /^(جنو|ژانـ|ژانویه|فوریه|فور|مارس|آوریل|آپر|مه|می|ژوئن|جون|جول|جولـ|ژوئیه|اوت|آگو|سپتمبر|سپتامبر|اکتبر|اکتوبر|نوامبر|نوامـ|دسامبر|دسامـ|دسم)/i,
   wide: /^(ژانویه|جنوری|فبروری|فوریه|مارچ|مارس|آپریل|اپریل|ایپریل|آوریل|مه|می|ژوئن|جون|جولای|ژوئیه|آگست|اگست|آگوست|اوت|سپتمبر|سپتامبر|اکتبر|اکتوبر|نوامبر|نومبر|دسامبر|دسمبر)/i
-}, RFe = {
+}, NFe = {
   narrow: [
     /^(ژ|ج)/i,
     /^ف/i,
@@ -61679,12 +61619,12 @@ const k7e = {
     /^ن/i,
     /^د/i
   ]
-}, jFe = {
+}, WFe = {
   narrow: /^[شیدسچپج]/i,
   short: /^(ش|ج|1ش|2ش|3ش|4ش|5ش)/i,
   abbreviated: /^(یکشنبه|دوشنبه|سه‌شنبه|چهارشنبه|پنج‌شنبه|جمعه|شنبه)/i,
   wide: /^(یکشنبه|دوشنبه|سه‌شنبه|چهارشنبه|پنج‌شنبه|جمعه|شنبه)/i
-}, IFe = {
+}, RFe = {
   narrow: [/^ی/i, /^دو/i, /^س/i, /^چ/i, /^پ/i, /^ج/i, /^ش/i],
   any: [
     /^(ی|1ش|یکشنبه)/i,
@@ -61695,11 +61635,11 @@ const k7e = {
     /^(ج|جمعه)/i,
     /^(ش|شنبه)/i
   ]
-}, LFe = {
+}, jFe = {
   narrow: /^(ب|ق|ن|ظ|ص|ب.ظ.|ع|ش)/i,
   abbreviated: /^(ق.ظ.|ب.ظ.|نیمه‌شب|ظهر|صبح|بعدازظهر|عصر|شب)/i,
   wide: /^(قبل‌ازظهر|نیمه‌شب|ظهر|صبح|بعدازظهر|عصر|شب)/i
-}, FFe = {
+}, IFe = {
   any: {
     am: /^(ق|ق.ظ.|قبل‌ازظهر)/i,
     pm: /^(ب|ب.ظ.|بعدازظهر)/i,
@@ -61710,50 +61650,50 @@ const k7e = {
     evening: /(ع|عصر)/i,
     night: /(ش|شب)/i
   }
-}, zFe = {
+}, LFe = {
   ordinalNumber: Se({
-    matchPattern: TFe,
-    parsePattern: EFe,
+    matchPattern: $Fe,
+    parsePattern: _Fe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: AFe,
+    matchPatterns: TFe,
     defaultMatchWidth: "wide",
-    parsePatterns: OFe,
+    parsePatterns: EFe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: DFe,
+    matchPatterns: AFe,
     defaultMatchWidth: "wide",
-    parsePatterns: NFe,
+    parsePatterns: OFe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: DFe,
+    defaultMatchWidth: "wide",
+    parsePatterns: NFe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: WFe,
     defaultMatchWidth: "wide",
     parsePatterns: RFe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: jFe,
     defaultMatchWidth: "wide",
     parsePatterns: IFe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: LFe,
-    defaultMatchWidth: "wide",
-    parsePatterns: FFe,
-    defaultParseWidth: "any"
   })
-}, VFe = {
+}, FFe = {
   code: "fa-IR",
-  formatDistance: hFe,
-  formatLong: yFe,
-  formatRelative: wFe,
-  localize: _Fe,
-  match: zFe,
+  formatDistance: fFe,
+  formatLong: gFe,
+  formatRelative: yFe,
+  localize: SFe,
+  match: LFe,
   options: {
     weekStartsOn: 6,
     firstWeekContainsDate: 1
@@ -61768,7 +61708,7 @@ function kD(e) {
 function CD(e) {
   return e.replace(/tuntia?/, "tunnin");
 }
-function HFe(e) {
+function zFe(e) {
   return e.replace(/päivää?/, "päivän");
 }
 function SD(e) {
@@ -61780,7 +61720,7 @@ function $D(e) {
 function rp(e) {
   return e.replace(/(vuosi|vuotta)/, "vuoden");
 }
-const BFe = {
+const VFe = {
   lessThanXSeconds: {
     one: "alle sekunti",
     other: "alle {{count}} sekuntia",
@@ -61819,7 +61759,7 @@ const BFe = {
   xDays: {
     one: "päivä",
     other: "{{count}} päivää",
-    futureTense: HFe
+    futureTense: zFe
   },
   aboutXWeeks: {
     one: "noin viikko",
@@ -61861,49 +61801,49 @@ const BFe = {
     other: "lähes {{count}} vuotta",
     futureTense: rp
   }
-}, qFe = (e, t, n) => {
-  const r = BFe[e], a = t === 1 ? r.one : r.other.replace("{{count}}", String(t));
+}, HFe = (e, t, n) => {
+  const r = VFe[e], a = t === 1 ? r.one : r.other.replace("{{count}}", String(t));
   return n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r.futureTense(a) + " kuluttua" : a + " sitten" : a;
-}, XFe = {
+}, BFe = {
   full: "eeee d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
   short: "d.M.y"
-}, GFe = {
+}, qFe = {
   full: "HH.mm.ss zzzz",
   long: "HH.mm.ss z",
   medium: "HH.mm.ss",
   short: "HH.mm"
-}, YFe = {
+}, XFe = {
   full: "{{date}} 'klo' {{time}}",
   long: "{{date}} 'klo' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, UFe = {
+}, GFe = {
   date: q({
-    formats: XFe,
+    formats: BFe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: GFe,
+    formats: qFe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: YFe,
+    formats: XFe,
     defaultWidth: "full"
   })
-}, KFe = {
+}, YFe = {
   lastWeek: "'viime' eeee 'klo' p",
   yesterday: "'eilen klo' p",
   today: "'tänään klo' p",
   tomorrow: "'huomenna klo' p",
   nextWeek: "'ensi' eeee 'klo' p",
   other: "P"
-}, QFe = (e, t, n, r) => KFe[e], ZFe = {
+}, UFe = (e, t, n, r) => YFe[e], KFe = {
   narrow: ["eaa.", "jaa."],
   abbreviated: ["eaa.", "jaa."],
   wide: ["ennen ajanlaskun alkua", "jälkeen ajanlaskun alun"]
-}, JFe = {
+}, QFe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1. kvartaali", "2. kvartaali", "3. kvartaali", "4. kvartaali"]
@@ -61937,7 +61877,7 @@ const BFe = {
     "marraskuu",
     "joulukuu"
   ]
-}, eze = {
+}, ZFe = {
   narrow: YM.narrow,
   abbreviated: YM.abbreviated,
   wide: [
@@ -61967,7 +61907,7 @@ const BFe = {
     "perjantai",
     "lauantai"
   ]
-}, tze = {
+}, JFe = {
   narrow: pp.narrow,
   short: pp.short,
   abbreviated: pp.abbreviated,
@@ -61980,7 +61920,7 @@ const BFe = {
     "perjantaina",
     "lauantaina"
   ]
-}, nze = {
+}, eze = {
   narrow: {
     am: "ap",
     pm: "ip",
@@ -62011,50 +61951,50 @@ const BFe = {
     evening: "illalla",
     night: "yöllä"
   }
-}, rze = (e, t) => Number(e) + ".", aze = {
-  ordinalNumber: rze,
+}, tze = (e, t) => Number(e) + ".", nze = {
+  ordinalNumber: tze,
   era: A({
-    values: ZFe,
+    values: KFe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: JFe,
+    values: QFe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
     values: YM,
     defaultWidth: "wide",
-    formattingValues: eze,
+    formattingValues: ZFe,
     defaultFormattingWidth: "wide"
   }),
   day: A({
     values: pp,
     defaultWidth: "wide",
-    formattingValues: tze,
+    formattingValues: JFe,
     defaultFormattingWidth: "wide"
   }),
   dayPeriod: A({
-    values: nze,
+    values: eze,
     defaultWidth: "wide"
   })
-}, ize = /^(\d+)(\.)/i, oze = /\d+/i, sze = {
+}, rze = /^(\d+)(\.)/i, aze = /\d+/i, ize = {
   narrow: /^(e|j)/i,
   abbreviated: /^(eaa.|jaa.)/i,
   wide: /^(ennen ajanlaskun alkua|jälkeen ajanlaskun alun)/i
-}, uze = {
+}, oze = {
   any: [/^e/i, /^j/i]
-}, cze = {
+}, sze = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234]\.? kvartaali/i
-}, lze = {
+}, uze = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, dze = {
+}, cze = {
   narrow: /^[thmkeslj]/i,
   abbreviated: /^(tammi|helmi|maalis|huhti|touko|kesä|heinä|elo|syys|loka|marras|joulu)/i,
   wide: /^(tammikuu|helmikuu|maaliskuu|huhtikuu|toukokuu|kesäkuu|heinäkuu|elokuu|syyskuu|lokakuu|marraskuu|joulukuu)(ta)?/i
-}, fze = {
+}, lze = {
   narrow: [
     /^t/i,
     /^h/i,
@@ -62083,18 +62023,18 @@ const BFe = {
     /^mar/i,
     /^j/i
   ]
-}, mze = {
+}, dze = {
   narrow: /^[smtkpl]/i,
   short: /^(su|ma|ti|ke|to|pe|la)/i,
   abbreviated: /^(sunn.|maan.|tiis.|kesk.|torst.|perj.|la)/i,
   wide: /^(sunnuntai|maanantai|tiistai|keskiviikko|torstai|perjantai|lauantai)(na)?/i
-}, hze = {
+}, fze = {
   narrow: [/^s/i, /^m/i, /^t/i, /^k/i, /^t/i, /^p/i, /^l/i],
   any: [/^s/i, /^m/i, /^ti/i, /^k/i, /^to/i, /^p/i, /^l/i]
-}, pze = {
+}, mze = {
   narrow: /^(ap|ip|keskiyö|keskipäivä|aamupäivällä|iltapäivällä|illalla|yöllä)/i,
   any: /^(ap|ip|keskiyöllä|keskipäivällä|aamupäivällä|iltapäivällä|illalla|yöllä)/i
-}, gze = {
+}, hze = {
   any: {
     am: /^ap/i,
     pm: /^ip/i,
@@ -62105,55 +62045,55 @@ const BFe = {
     evening: /illalla/i,
     night: /yöllä/i
   }
-}, vze = {
+}, pze = {
   ordinalNumber: Se({
-    matchPattern: ize,
-    parsePattern: oze,
+    matchPattern: rze,
+    parsePattern: aze,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: sze,
+    matchPatterns: ize,
     defaultMatchWidth: "wide",
-    parsePatterns: uze,
+    parsePatterns: oze,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: cze,
+    matchPatterns: sze,
     defaultMatchWidth: "wide",
-    parsePatterns: lze,
+    parsePatterns: uze,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: cze,
+    defaultMatchWidth: "wide",
+    parsePatterns: lze,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: dze,
     defaultMatchWidth: "wide",
     parsePatterns: fze,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: mze,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: hze,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: pze,
-    defaultMatchWidth: "any",
-    parsePatterns: gze,
-    defaultParseWidth: "any"
   })
-}, yze = {
+}, gze = {
   code: "fi",
-  formatDistance: qFe,
-  formatLong: UFe,
-  formatRelative: QFe,
-  localize: aze,
-  match: vze,
+  formatDistance: HFe,
+  formatLong: GFe,
+  formatRelative: UFe,
+  localize: nze,
+  match: pze,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, bze = {
+}, vze = {
   lessThanXSeconds: {
     one: "moins d’une seconde",
     other: "moins de {{count}} secondes"
@@ -62217,52 +62157,52 @@ const BFe = {
   }
 }, _5 = (e, t, n) => {
   let r;
-  const a = bze[e];
+  const a = vze[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "dans " + r : "il y a " + r : r;
-}, wze = {
+}, yze = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "dd/MM/y"
-}, Pze = {
+}, bze = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, xze = {
+}, wze = {
   full: "{{date}} 'à' {{time}}",
   long: "{{date}} 'à' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Mze = {
+}, Pze = {
   date: q({
-    formats: wze,
+    formats: yze,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Pze,
+    formats: bze,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: xze,
+    formats: wze,
     defaultWidth: "full"
   })
-}, kze = {
+}, xze = {
   lastWeek: "eeee 'dernier à' p",
   yesterday: "'hier à' p",
   today: "'aujourd’hui à' p",
   tomorrow: "'demain à' p'",
   nextWeek: "eeee 'prochain à' p",
   other: "P"
-}, HB = (e, t, n, r) => kze[e], Cze = {
+}, HB = (e, t, n, r) => xze[e], Mze = {
   narrow: ["av. J.-C", "ap. J.-C"],
   abbreviated: ["av. J.-C", "ap. J.-C"],
   wide: ["avant Jésus-Christ", "après Jésus-Christ"]
-}, Sze = {
+}, kze = {
   narrow: ["T1", "T2", "T3", "T4"],
   abbreviated: ["1er trim.", "2ème trim.", "3ème trim.", "4ème trim."],
   wide: ["1er trimestre", "2ème trimestre", "3ème trimestre", "4ème trimestre"]
-}, $ze = {
+}, Cze = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "janv.",
@@ -62292,7 +62232,7 @@ const BFe = {
     "novembre",
     "décembre"
   ]
-}, _ze = {
+}, Sze = {
   narrow: ["D", "L", "M", "M", "J", "V", "S"],
   short: ["di", "lu", "ma", "me", "je", "ve", "sa"],
   abbreviated: ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."],
@@ -62305,7 +62245,7 @@ const BFe = {
     "vendredi",
     "samedi"
   ]
-}, Tze = {
+}, $ze = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -62336,57 +62276,57 @@ const BFe = {
     evening: "du soir",
     night: "du matin"
   }
-}, Eze = (e, t) => {
+}, _ze = (e, t) => {
   const n = Number(e), r = t == null ? void 0 : t.unit;
   if (n === 0) return "0";
   const a = ["year", "week", "hour", "minute", "second"];
   let i;
   return n === 1 ? i = r && a.includes(r) ? "ère" : "er" : i = "ème", n + i;
-}, Aze = ["MMM", "MMMM"], T5 = {
+}, Tze = ["MMM", "MMMM"], T5 = {
   preprocessor: (e, t) => e.getDate() === 1 || !t.some(
-    (r) => r.isToken && Aze.includes(r.value)
+    (r) => r.isToken && Tze.includes(r.value)
   ) ? t : t.map(
     (r) => r.isToken && r.value === "do" ? { isToken: !0, value: "d" } : r
   ),
-  ordinalNumber: Eze,
+  ordinalNumber: _ze,
   era: A({
-    values: Cze,
+    values: Mze,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Sze,
+    values: kze,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: $ze,
+    values: Cze,
     defaultWidth: "wide"
   }),
   day: A({
-    values: _ze,
+    values: Sze,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Tze,
+    values: $ze,
     defaultWidth: "wide"
   })
-}, Oze = /^(\d+)(ième|ère|ème|er|e)?/i, Dze = /\d+/i, Nze = {
+}, Eze = /^(\d+)(ième|ère|ème|er|e)?/i, Aze = /\d+/i, Oze = {
   narrow: /^(av\.J\.C|ap\.J\.C|ap\.J\.-C)/i,
   abbreviated: /^(av\.J\.-C|av\.J-C|apr\.J\.-C|apr\.J-C|ap\.J-C)/i,
   wide: /^(avant Jésus-Christ|après Jésus-Christ)/i
-}, Wze = {
+}, Dze = {
   any: [/^av/i, /^ap/i]
-}, Rze = {
+}, Nze = {
   narrow: /^T?[1234]/i,
   abbreviated: /^[1234](er|ème|e)? trim\.?/i,
   wide: /^[1234](er|ème|e)? trimestre/i
-}, jze = {
+}, Wze = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Ize = {
+}, Rze = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(janv|févr|mars|avr|mai|juin|juill|juil|août|sept|oct|nov|déc)\.?/i,
   wide: /^(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)/i
-}, Lze = {
+}, jze = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -62415,18 +62355,18 @@ const BFe = {
     /^n/i,
     /^d/i
   ]
-}, Fze = {
+}, Ize = {
   narrow: /^[lmjvsd]/i,
   short: /^(di|lu|ma|me|je|ve|sa)/i,
   abbreviated: /^(dim|lun|mar|mer|jeu|ven|sam)\.?/i,
   wide: /^(dimanche|lundi|mardi|mercredi|jeudi|vendredi|samedi)/i
-}, zze = {
+}, Lze = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^j/i, /^v/i, /^s/i],
   any: [/^di/i, /^lu/i, /^ma/i, /^me/i, /^je/i, /^ve/i, /^sa/i]
-}, Vze = {
+}, Fze = {
   narrow: /^(a|p|minuit|midi|mat\.?|ap\.?m\.?|soir|nuit)/i,
   any: /^([ap]\.?\s?m\.?|du matin|de l'après[-\s]midi|du soir|de la nuit)/i
-}, Hze = {
+}, zze = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -62439,45 +62379,45 @@ const BFe = {
   }
 }, E5 = {
   ordinalNumber: Se({
-    matchPattern: Oze,
-    parsePattern: Dze,
+    matchPattern: Eze,
+    parsePattern: Aze,
     valueCallback: (e) => parseInt(e)
   }),
   era: D({
-    matchPatterns: Nze,
+    matchPatterns: Oze,
     defaultMatchWidth: "wide",
-    parsePatterns: Wze,
+    parsePatterns: Dze,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Rze,
+    matchPatterns: Nze,
     defaultMatchWidth: "wide",
-    parsePatterns: jze,
+    parsePatterns: Wze,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Rze,
+    defaultMatchWidth: "wide",
+    parsePatterns: jze,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Ize,
     defaultMatchWidth: "wide",
     parsePatterns: Lze,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Fze,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: zze,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Vze,
-    defaultMatchWidth: "any",
-    parsePatterns: Hze,
-    defaultParseWidth: "any"
   })
-}, Bze = {
+}, Vze = {
   code: "fr",
   formatDistance: _5,
-  formatLong: Mze,
+  formatLong: Pze,
   formatRelative: HB,
   localize: T5,
   match: E5,
@@ -62485,38 +62425,38 @@ const BFe = {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, qze = {
+}, Hze = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "yy-MM-dd"
-}, Xze = {
+}, Bze = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Gze = {
+}, qze = {
   full: "{{date}} 'à' {{time}}",
   long: "{{date}} 'à' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Yze = {
+}, Xze = {
   date: q({
-    formats: qze,
+    formats: Hze,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Xze,
+    formats: Bze,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Gze,
+    formats: qze,
     defaultWidth: "full"
   })
-}, Uze = {
+}, Gze = {
   code: "fr-CA",
   formatDistance: _5,
-  formatLong: Yze,
+  formatLong: Xze,
   formatRelative: HB,
   localize: T5,
   match: E5,
@@ -62525,53 +62465,53 @@ const BFe = {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, Kze = {
+}, Yze = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "dd.MM.y"
-}, Qze = {
+}, Uze = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Zze = {
+}, Kze = {
   full: "{{date}} 'à' {{time}}",
   long: "{{date}} 'à' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Jze = {
+}, Qze = {
   date: q({
-    formats: Kze,
+    formats: Yze,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Qze,
+    formats: Uze,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Zze,
+    formats: Kze,
     defaultWidth: "full"
   })
-}, eVe = {
+}, Zze = {
   lastWeek: "eeee 'la semaine dernière à' p",
   yesterday: "'hier à' p",
   today: "'aujourd’hui à' p",
   tomorrow: "'demain à' p'",
   nextWeek: "eeee 'la semaine prochaine à' p",
   other: "P"
-}, tVe = (e, t, n, r) => eVe[e], nVe = {
+}, Jze = (e, t, n, r) => Zze[e], eVe = {
   code: "fr-CH",
   formatDistance: _5,
-  formatLong: Jze,
-  formatRelative: tVe,
+  formatLong: Qze,
+  formatRelative: Jze,
   localize: T5,
   match: E5,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, rVe = {
+}, tVe = {
   lessThanXSeconds: {
     one: "minder as 1 sekonde",
     other: "minder as {{count}} sekonden"
@@ -62633,54 +62573,54 @@ const BFe = {
     one: "hast 1 jier",
     other: "hast {{count}} jier"
   }
-}, aVe = (e, t, n) => {
+}, nVe = (e, t, n) => {
   let r;
-  const a = rVe[e];
+  const a = tVe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "oer " + r : r + " lyn" : r;
-}, iVe = {
+}, rVe = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "dd-MM-y"
-}, oVe = {
+}, aVe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, sVe = {
+}, iVe = {
   full: "{{date}} 'om' {{time}}",
   long: "{{date}} 'om' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, uVe = {
+}, oVe = {
   date: q({
-    formats: iVe,
+    formats: rVe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: oVe,
+    formats: aVe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: sVe,
+    formats: iVe,
     defaultWidth: "full"
   })
-}, cVe = {
+}, sVe = {
   lastWeek: "'ôfrûne' eeee 'om' p",
   yesterday: "'juster om' p",
   today: "'hjoed om' p",
   tomorrow: "'moarn om' p",
   nextWeek: "eeee 'om' p",
   other: "P"
-}, lVe = (e, t, n, r) => cVe[e], dVe = {
+}, uVe = (e, t, n, r) => sVe[e], cVe = {
   narrow: ["f.K.", "n.K."],
   abbreviated: ["f.Kr.", "n.Kr."],
   wide: ["foar Kristus", "nei Kristus"]
-}, fVe = {
+}, lVe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
   wide: ["1e fearnsjier", "2e fearnsjier", "3e fearnsjier", "4e fearnsjier"]
-}, mVe = {
+}, dVe = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
   abbreviated: [
     "jan.",
@@ -62710,7 +62650,7 @@ const BFe = {
     "novimber",
     "desimber"
   ]
-}, hVe = {
+}, fVe = {
   narrow: ["s", "m", "t", "w", "t", "f", "s"],
   short: ["si", "mo", "ti", "wo", "to", "fr", "so"],
   abbreviated: ["snein", "moa", "tii", "woa", "ton", "fre", "sneon"],
@@ -62723,7 +62663,7 @@ const BFe = {
     "freed",
     "sneon"
   ]
-}, pVe = {
+}, mVe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -62754,46 +62694,46 @@ const BFe = {
     evening: "jûns",
     night: "nachts"
   }
-}, gVe = (e, t) => Number(e) + "e", vVe = {
-  ordinalNumber: gVe,
+}, hVe = (e, t) => Number(e) + "e", pVe = {
+  ordinalNumber: hVe,
   era: A({
-    values: dVe,
+    values: cVe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: fVe,
+    values: lVe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: mVe,
+    values: dVe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: hVe,
+    values: fVe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: pVe,
+    values: mVe,
     defaultWidth: "wide"
   })
-}, yVe = /^(\d+)e?/i, bVe = /\d+/i, wVe = {
+}, gVe = /^(\d+)e?/i, vVe = /\d+/i, yVe = {
   narrow: /^([fn]\.? ?K\.?)/,
   abbreviated: /^([fn]\. ?Kr\.?)/,
   wide: /^((foar|nei) Kristus)/
-}, PVe = {
+}, bVe = {
   any: [/^f/, /^n/]
-}, xVe = {
+}, wVe = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
   wide: /^[1234]e fearnsjier/i
-}, MVe = {
+}, PVe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, kVe = {
+}, xVe = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan.|feb.|mrt.|apr.|mai.|jun.|jul.|aug.|sep.|okt.|nov.|des.)/i,
   wide: /^(jannewaris|febrewaris|maart|april|maaie|juny|july|augustus|septimber|oktober|novimber|desimber)/i
-}, CVe = {
+}, MVe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -62822,17 +62762,17 @@ const BFe = {
     /^nov/i,
     /^des/i
   ]
-}, SVe = {
+}, kVe = {
   narrow: /^[smtwf]/i,
   short: /^(si|mo|ti|wo|to|fr|so)/i,
   abbreviated: /^(snein|moa|tii|woa|ton|fre|sneon)/i,
   wide: /^(snein|moandei|tiisdei|woansdei|tongersdei|freed|sneon)/i
-}, $Ve = {
+}, CVe = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
   any: [/^sn/i, /^mo/i, /^ti/i, /^wo/i, /^to/i, /^fr/i, /^sn/i]
-}, _Ve = {
+}, SVe = {
   any: /^(am|pm|middernacht|middeis|moarns|middei|jûns|nachts)/i
-}, TVe = {
+}, $Ve = {
   any: {
     am: /^am/i,
     pm: /^pm/i,
@@ -62843,55 +62783,55 @@ const BFe = {
     evening: /jûns/i,
     night: /nachts/i
   }
-}, EVe = {
+}, _Ve = {
   ordinalNumber: Se({
-    matchPattern: yVe,
-    parsePattern: bVe,
+    matchPattern: gVe,
+    parsePattern: vVe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: wVe,
+    matchPatterns: yVe,
     defaultMatchWidth: "wide",
-    parsePatterns: PVe,
+    parsePatterns: bVe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: xVe,
+    matchPatterns: wVe,
     defaultMatchWidth: "wide",
-    parsePatterns: MVe,
+    parsePatterns: PVe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: xVe,
+    defaultMatchWidth: "wide",
+    parsePatterns: MVe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: kVe,
     defaultMatchWidth: "wide",
     parsePatterns: CVe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: SVe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: $Ve,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: _Ve,
-    defaultMatchWidth: "any",
-    parsePatterns: TVe,
-    defaultParseWidth: "any"
   })
-}, AVe = {
+}, TVe = {
   code: "fy",
-  formatDistance: aVe,
-  formatLong: uVe,
-  formatRelative: lVe,
-  localize: vVe,
-  match: EVe,
+  formatDistance: nVe,
+  formatLong: oVe,
+  formatRelative: uVe,
+  localize: pVe,
+  match: _Ve,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, OVe = {
+}, EVe = {
   lessThanXSeconds: {
     one: "nas lugha na diog",
     other: "nas lugha na {{count}} diogan"
@@ -62959,39 +62899,39 @@ const BFe = {
     one: "cha mhòr bliadhna",
     other: "cha mhòr {{count}} bliadhnaichean"
   }
-}, DVe = (e, t, n) => {
+}, AVe = (e, t, n) => {
   let r;
-  const a = OVe[e];
+  const a = EVe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : t === 2 && a.two ? r = a.two : t === 20 && a.twenty ? r = a.twenty : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "ann an " + r : "o chionn " + r : r;
-}, NVe = {
+}, OVe = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
   short: "MM/dd/yyyy"
-}, WVe = {
+}, DVe = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, RVe = {
+}, NVe = {
   full: "{{date}} 'aig' {{time}}",
   long: "{{date}} 'aig' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, jVe = {
+}, WVe = {
   date: q({
-    formats: NVe,
+    formats: OVe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: WVe,
+    formats: DVe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: RVe,
+    formats: NVe,
     defaultWidth: "full"
   })
-}, IVe = {
+}, RVe = {
   lastWeek: "'mu dheireadh' eeee 'aig' p",
   //FIX
   yesterday: "'an-dè aig' p",
@@ -62999,11 +62939,11 @@ const BFe = {
   tomorrow: "'a-màireach aig' p",
   nextWeek: "eeee 'aig' p",
   other: "P"
-}, LVe = (e, t, n, r) => IVe[e], FVe = {
+}, jVe = (e, t, n, r) => RVe[e], IVe = {
   narrow: ["R", "A"],
   abbreviated: ["RC", "AD"],
   wide: ["ro Chrìosta", "anno domini"]
-}, zVe = {
+}, LVe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["C1", "C2", "C3", "C4"],
   wide: [
@@ -63012,7 +62952,7 @@ const BFe = {
     "an treas cairteal",
     "an ceathramh cairteal"
   ]
-}, VVe = {
+}, FVe = {
   narrow: ["F", "G", "M", "G", "C", "Ò", "I", "L", "S", "D", "S", "D"],
   abbreviated: [
     "Faoi",
@@ -63042,7 +62982,7 @@ const BFe = {
     "An t-Samhain",
     "An Dùbhlachd"
   ]
-}, HVe = {
+}, zVe = {
   narrow: ["D", "L", "M", "C", "A", "H", "S"],
   short: ["Dò", "Lu", "Mà", "Ci", "Ar", "Ha", "Sa"],
   abbreviated: ["Did", "Dil", "Dim", "Dic", "Dia", "Dih", "Dis"],
@@ -63055,7 +62995,7 @@ const BFe = {
     "Dihaoine",
     "Disathairne"
   ]
-}, BVe = {
+}, VVe = {
   narrow: {
     am: "m",
     pm: "f",
@@ -63086,7 +63026,7 @@ const BFe = {
     evening: "feasgar",
     night: "oidhche"
   }
-}, qVe = {
+}, HVe = {
   narrow: {
     am: "m",
     pm: "f",
@@ -63117,7 +63057,7 @@ const BFe = {
     evening: "feasgar",
     night: "air an oidhche"
   }
-}, XVe = (e) => {
+}, BVe = (e) => {
   const t = Number(e), n = t % 100;
   if (n > 20 || n < 10)
     switch (n % 10) {
@@ -63127,48 +63067,48 @@ const BFe = {
         return t + "na";
     }
   return n === 12 ? t + "na" : t + "mh";
-}, GVe = {
-  ordinalNumber: XVe,
+}, qVe = {
+  ordinalNumber: BVe,
   era: A({
-    values: FVe,
+    values: IVe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: zVe,
+    values: LVe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: VVe,
+    values: FVe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: HVe,
+    values: zVe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: BVe,
+    values: VVe,
     defaultWidth: "wide",
-    formattingValues: qVe,
+    formattingValues: HVe,
     defaultFormattingWidth: "wide"
   })
-}, YVe = /^(\d+)(d|na|tr|mh)?/i, UVe = /\d+/i, KVe = {
+}, XVe = /^(\d+)(d|na|tr|mh)?/i, GVe = /\d+/i, YVe = {
   narrow: /^(r|a)/i,
   abbreviated: /^(r\.?\s?c\.?|r\.?\s?a\.?\s?c\.?|a\.?\s?d\.?|a\.?\s?c\.?)/i,
   wide: /^(ro Chrìosta|ron aois choitchinn|anno domini|aois choitcheann)/i
-}, QVe = {
+}, UVe = {
   any: [/^b/i, /^(a|c)/i]
-}, ZVe = {
+}, KVe = {
   narrow: /^[1234]/i,
   abbreviated: /^c[1234]/i,
   wide: /^[1234](cd|na|tr|mh)? cairteal/i
-}, JVe = {
+}, QVe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, eHe = {
+}, ZVe = {
   narrow: /^[fgmcòilsd]/i,
   abbreviated: /^(faoi|gear|màrt|gibl|cèit|ògmh|iuch|lùn|sult|dàmh|samh|dùbh)/i,
   wide: /^(am faoilleach|an gearran|am màrt|an giblean|an cèitean|an t-Ògmhios|an t-Iuchar|an lùnastal|an t-Sultain|an dàmhair|an t-Samhain|an dùbhlachd)/i
-}, tHe = {
+}, JVe = {
   narrow: [
     /^f/i,
     /^g/i,
@@ -63197,18 +63137,18 @@ const BFe = {
     /^sa/i,
     /^d/i
   ]
-}, nHe = {
+}, eHe = {
   narrow: /^[dlmcahs]/i,
   short: /^(dò|lu|mà|ci|ar|ha|sa)/i,
   abbreviated: /^(did|dil|dim|dic|dia|dih|dis)/i,
   wide: /^(didòmhnaich|diluain|dimàirt|diciadain|diardaoin|dihaoine|disathairne)/i
-}, rHe = {
+}, tHe = {
   narrow: [/^d/i, /^l/i, /^m/i, /^c/i, /^a/i, /^h/i, /^s/i],
   any: [/^d/i, /^l/i, /^m/i, /^c/i, /^a/i, /^h/i, /^s/i]
-}, aHe = {
+}, nHe = {
   narrow: /^(a|p|mi|n|(san|aig) (madainn|feasgar|feasgar|oidhche))/i,
   any: /^([ap]\.?\s?m\.?|meadhan oidhche|meadhan là|(san|aig) (madainn|feasgar|feasgar|oidhche))/i
-}, iHe = {
+}, rHe = {
   any: {
     am: /^m/i,
     pm: /^f/i,
@@ -63219,55 +63159,55 @@ const BFe = {
     evening: /feasgar/i,
     night: /air an oidhche/i
   }
-}, oHe = {
+}, aHe = {
   ordinalNumber: Se({
-    matchPattern: YVe,
-    parsePattern: UVe,
+    matchPattern: XVe,
+    parsePattern: GVe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: KVe,
+    matchPatterns: YVe,
     defaultMatchWidth: "wide",
-    parsePatterns: QVe,
+    parsePatterns: UVe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: ZVe,
+    matchPatterns: KVe,
     defaultMatchWidth: "wide",
-    parsePatterns: JVe,
+    parsePatterns: QVe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: ZVe,
+    defaultMatchWidth: "wide",
+    parsePatterns: JVe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: eHe,
     defaultMatchWidth: "wide",
     parsePatterns: tHe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: nHe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: rHe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: aHe,
-    defaultMatchWidth: "any",
-    parsePatterns: iHe,
-    defaultParseWidth: "any"
   })
-}, sHe = {
+}, iHe = {
   code: "gd",
-  formatDistance: DVe,
-  formatLong: jVe,
-  formatRelative: LVe,
-  localize: GVe,
-  match: oHe,
+  formatDistance: AVe,
+  formatLong: WVe,
+  formatRelative: jVe,
+  localize: qVe,
+  match: aHe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, uHe = {
+}, oHe = {
   lessThanXSeconds: {
     one: "menos dun segundo",
     other: "menos de {{count}} segundos"
@@ -63329,61 +63269,61 @@ const BFe = {
     one: "case un ano",
     other: "case {{count}} anos"
   }
-}, cHe = (e, t, n) => {
+}, sHe = (e, t, n) => {
   let r;
-  const a = uHe[e];
+  const a = oHe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "en " + r : "hai " + r : r;
-}, lHe = {
+}, uHe = {
   full: "EEEE, d 'de' MMMM y",
   long: "d 'de' MMMM y",
   medium: "d MMM y",
   short: "dd/MM/y"
-}, dHe = {
+}, cHe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, fHe = {
+}, lHe = {
   full: "{{date}} 'ás' {{time}}",
   long: "{{date}} 'ás' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, mHe = {
+}, dHe = {
   date: q({
-    formats: lHe,
+    formats: uHe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: dHe,
+    formats: cHe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: fHe,
+    formats: lHe,
     defaultWidth: "full"
   })
-}, hHe = {
+}, fHe = {
   lastWeek: "'o' eeee 'pasado á' LT",
   yesterday: "'onte á' p",
   today: "'hoxe á' p",
   tomorrow: "'mañá á' p",
   nextWeek: "eeee 'á' p",
   other: "P"
-}, pHe = {
+}, mHe = {
   lastWeek: "'o' eeee 'pasado ás' p",
   yesterday: "'onte ás' p",
   today: "'hoxe ás' p",
   tomorrow: "'mañá ás' p",
   nextWeek: "eeee 'ás' p",
   other: "P"
-}, gHe = (e, t, n, r) => t.getHours() !== 1 ? pHe[e] : hHe[e], vHe = {
+}, hHe = (e, t, n, r) => t.getHours() !== 1 ? mHe[e] : fHe[e], pHe = {
   narrow: ["AC", "DC"],
   abbreviated: ["AC", "DC"],
   wide: ["antes de cristo", "despois de cristo"]
-}, yHe = {
+}, gHe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
   wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
-}, bHe = {
+}, vHe = {
   narrow: ["e", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
   abbreviated: [
     "xan",
@@ -63413,12 +63353,12 @@ const BFe = {
     "novembro",
     "decembro"
   ]
-}, wHe = {
+}, yHe = {
   narrow: ["d", "l", "m", "m", "j", "v", "s"],
   short: ["do", "lu", "ma", "me", "xo", "ve", "sa"],
   abbreviated: ["dom", "lun", "mar", "mer", "xov", "ven", "sab"],
   wide: ["domingo", "luns", "martes", "mércores", "xoves", "venres", "sábado"]
-}, PHe = {
+}, bHe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -63449,7 +63389,7 @@ const BFe = {
     evening: "tardiña",
     night: "noite"
   }
-}, xHe = {
+}, wHe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -63480,52 +63420,52 @@ const BFe = {
     evening: "da tardiña",
     night: "da noite"
   }
-}, MHe = (e, t) => Number(e) + "º", kHe = {
-  ordinalNumber: MHe,
+}, PHe = (e, t) => Number(e) + "º", xHe = {
+  ordinalNumber: PHe,
   era: A({
-    values: vHe,
+    values: pHe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: yHe,
+    values: gHe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: bHe,
+    values: vHe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: wHe,
+    values: yHe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: PHe,
+    values: bHe,
     defaultWidth: "wide",
-    formattingValues: xHe,
+    formattingValues: wHe,
     defaultFormattingWidth: "wide"
   })
-}, CHe = /^(\d+)(º)?/i, SHe = /\d+/i, $He = {
+}, MHe = /^(\d+)(º)?/i, kHe = /\d+/i, CHe = {
   narrow: /^(ac|dc|a|d)/i,
   abbreviated: /^(a\.?\s?c\.?|a\.?\s?e\.?\s?c\.?|d\.?\s?c\.?|e\.?\s?c\.?)/i,
   wide: /^(antes de cristo|antes da era com[uú]n|despois de cristo|era com[uú]n)/i
-}, _He = {
+}, SHe = {
   any: [/^ac/i, /^dc/i],
   wide: [
     /^(antes de cristo|antes da era com[uú]n)/i,
     /^(despois de cristo|era com[uú]n)/i
   ]
-}, THe = {
+}, $He = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
   wide: /^[1234](º)? trimestre/i
-}, EHe = {
+}, _He = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, AHe = {
+}, THe = {
   narrow: /^[xfmasond]/i,
   abbreviated: /^(xan|feb|mar|abr|mai|xun|xul|ago|set|out|nov|dec)/i,
   wide: /^(xaneiro|febreiro|marzo|abril|maio|xuño|xullo|agosto|setembro|outubro|novembro|decembro)/i
-}, OHe = {
+}, EHe = {
   narrow: [
     /^x/i,
     /^f/i,
@@ -63554,18 +63494,18 @@ const BFe = {
     /^nov/i,
     /^dec/i
   ]
-}, DHe = {
+}, AHe = {
   narrow: /^[dlmxvs]/i,
   short: /^(do|lu|ma|me|xo|ve|sa)/i,
   abbreviated: /^(dom|lun|mar|mer|xov|ven|sab)/i,
   wide: /^(domingo|luns|martes|m[eé]rcores|xoves|venres|s[áa]bado)/i
-}, NHe = {
+}, OHe = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^x/i, /^v/i, /^s/i],
   any: [/^do/i, /^lu/i, /^ma/i, /^me/i, /^xo/i, /^ve/i, /^sa/i]
-}, WHe = {
+}, DHe = {
   narrow: /^(a|p|mn|md|(da|[aá]s) (mañ[aá]|tarde|noite))/i,
   any: /^([ap]\.?\s?m\.?|medianoite|mediod[ií]a|(da|[aá]s) (mañ[aá]|tarde|noite))/i
-}, RHe = {
+}, NHe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -63576,55 +63516,55 @@ const BFe = {
     evening: /tardiña/i,
     night: /noite/i
   }
-}, jHe = {
+}, WHe = {
   ordinalNumber: Se({
-    matchPattern: CHe,
-    parsePattern: SHe,
+    matchPattern: MHe,
+    parsePattern: kHe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: $He,
+    matchPatterns: CHe,
     defaultMatchWidth: "wide",
-    parsePatterns: _He,
+    parsePatterns: SHe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: THe,
+    matchPatterns: $He,
     defaultMatchWidth: "wide",
-    parsePatterns: EHe,
+    parsePatterns: _He,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: THe,
+    defaultMatchWidth: "wide",
+    parsePatterns: EHe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: AHe,
     defaultMatchWidth: "wide",
     parsePatterns: OHe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: DHe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: NHe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: WHe,
-    defaultMatchWidth: "any",
-    parsePatterns: RHe,
-    defaultParseWidth: "any"
   })
-}, IHe = {
+}, RHe = {
   code: "gl",
-  formatDistance: cHe,
-  formatLong: mHe,
-  formatRelative: gHe,
-  localize: kHe,
-  match: jHe,
+  formatDistance: sHe,
+  formatLong: dHe,
+  formatRelative: hHe,
+  localize: xHe,
+  match: WHe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, LHe = {
+}, jHe = {
   lessThanXSeconds: {
     one: "હમણાં",
     // CLDR #1461
@@ -63688,11 +63628,11 @@ const BFe = {
     one: "લગભગ 1 વર્ષ",
     other: "લગભગ {{count}} વર્ષ"
   }
-}, FHe = (e, t, n) => {
+}, IHe = (e, t, n) => {
   let r;
-  const a = LHe[e];
+  const a = jHe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + "માં" : r + " પહેલાં" : r;
-}, zHe = {
+}, LHe = {
   full: "EEEE, d MMMM, y",
   // CLDR #1825
   long: "d MMMM, y",
@@ -63701,7 +63641,7 @@ const BFe = {
   // CLDR #1827
   short: "d/M/yy"
   // CLDR #1828
-}, VHe = {
+}, FHe = {
   full: "hh:mm:ss a zzzz",
   // CLDR #1829
   long: "hh:mm:ss a z",
@@ -63710,7 +63650,7 @@ const BFe = {
   // CLDR #1831
   short: "hh:mm a"
   // CLDR #1832
-}, HHe = {
+}, zHe = {
   full: "{{date}} {{time}}",
   // CLDR #1833
   long: "{{date}} {{time}}",
@@ -63719,20 +63659,20 @@ const BFe = {
   // CLDR #1835
   short: "{{date}} {{time}}"
   // CLDR #1836
-}, BHe = {
+}, VHe = {
   date: q({
-    formats: zHe,
+    formats: LHe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: VHe,
+    formats: FHe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: HHe,
+    formats: zHe,
     defaultWidth: "full"
   })
-}, qHe = {
+}, HHe = {
   lastWeek: "'પાછલા' eeee p",
   // CLDR #1384
   yesterday: "'ગઈકાલે' p",
@@ -63744,15 +63684,15 @@ const BFe = {
   nextWeek: "eeee p",
   // CLDR #1386
   other: "P"
-}, XHe = (e, t, n, r) => qHe[e], GHe = {
+}, BHe = (e, t, n, r) => HHe[e], qHe = {
   narrow: ["ઈસપૂ", "ઈસ"],
   abbreviated: ["ઈ.સ.પૂર્વે", "ઈ.સ."],
   wide: ["ઈસવીસન પૂર્વે", "ઈસવીસન"]
-}, YHe = {
+}, XHe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1લો ત્રિમાસ", "2જો ત્રિમાસ", "3જો ત્રિમાસ", "4થો ત્રિમાસ"]
-}, UHe = {
+}, GHe = {
   narrow: ["જા", "ફે", "મા", "એ", "મે", "જૂ", "જુ", "ઓ", "સ", "ઓ", "ન", "ડિ"],
   abbreviated: [
     "જાન્યુ",
@@ -63782,7 +63722,7 @@ const BFe = {
     "નવેમ્બર",
     "ડિસેમ્બર"
   ]
-}, KHe = {
+}, YHe = {
   narrow: ["ર", "સો", "મં", "બુ", "ગુ", "શુ", "શ"],
   short: ["ર", "સો", "મં", "બુ", "ગુ", "શુ", "શ"],
   abbreviated: ["રવિ", "સોમ", "મંગળ", "બુધ", "ગુરુ", "શુક્ર", "શનિ"],
@@ -63795,7 +63735,7 @@ const BFe = {
     "શુક્રવાર",
     "શનિવાર"
   ]
-}, QHe = {
+}, UHe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -63826,7 +63766,7 @@ const BFe = {
     evening: "સાંજે",
     night: "રાત્રે"
   }
-}, ZHe = {
+}, KHe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -63857,49 +63797,49 @@ const BFe = {
     evening: "સાંજે",
     night: "રાત્રે"
   }
-}, JHe = (e, t) => String(e), eBe = {
-  ordinalNumber: JHe,
+}, QHe = (e, t) => String(e), ZHe = {
+  ordinalNumber: QHe,
   era: A({
-    values: GHe,
+    values: qHe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: YHe,
+    values: XHe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: UHe,
+    values: GHe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: KHe,
+    values: YHe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: QHe,
+    values: UHe,
     defaultWidth: "wide",
-    formattingValues: ZHe,
+    formattingValues: KHe,
     defaultFormattingWidth: "wide"
   })
-}, tBe = /^(\d+)(લ|જ|થ|ઠ્ઠ|મ)?/i, nBe = /\d+/i, rBe = {
+}, JHe = /^(\d+)(લ|જ|થ|ઠ્ઠ|મ)?/i, eBe = /\d+/i, tBe = {
   narrow: /^(ઈસપૂ|ઈસ)/i,
   abbreviated: /^(ઈ\.સ\.પૂર્વે|ઈ\.સ\.)/i,
   wide: /^(ઈસવીસન\sપૂર્વે|ઈસવીસન)/i
-}, aBe = {
+}, nBe = {
   any: [/^ઈસપૂ/i, /^ઈસ/i]
-}, iBe = {
+}, rBe = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234](લો|જો|થો)? ત્રિમાસ/i
-}, oBe = {
+}, aBe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, sBe = {
+}, iBe = {
   // eslint-disable-next-line no-misleading-character-class
   narrow: /^[જાફેમાએમેજૂજુઓસઓનડિ]/i,
   abbreviated: /^(જાન્યુ|ફેબ્રુ|માર્ચ|એપ્રિલ|મે|જૂન|જુલાઈ|ઑગસ્ટ|સપ્ટે|ઓક્ટો|નવે|ડિસે)/i,
   wide: /^(જાન્યુઆરી|ફેબ્રુઆરી|માર્ચ|એપ્રિલ|મે|જૂન|જુલાઇ|ઓગસ્ટ|સપ્ટેમ્બર|ઓક્ટોબર|નવેમ્બર|ડિસેમ્બર)/i
-}, uBe = {
+}, oBe = {
   narrow: [
     /^જા/i,
     /^ફે/i,
@@ -63928,18 +63868,18 @@ const BFe = {
     /^ન/i,
     /^ડિ/i
   ]
-}, cBe = {
+}, sBe = {
   narrow: /^(ર|સો|મં|બુ|ગુ|શુ|શ)/i,
   short: /^(ર|સો|મં|બુ|ગુ|શુ|શ)/i,
   abbreviated: /^(રવિ|સોમ|મંગળ|બુધ|ગુરુ|શુક્ર|શનિ)/i,
   wide: /^(રવિવાર|સોમવાર|મંગળવાર|બુધવાર|ગુરુવાર|શુક્રવાર|શનિવાર)/i
-}, lBe = {
+}, uBe = {
   narrow: [/^ર/i, /^સો/i, /^મં/i, /^બુ/i, /^ગુ/i, /^શુ/i, /^શ/i],
   any: [/^ર/i, /^સો/i, /^મં/i, /^બુ/i, /^ગુ/i, /^શુ/i, /^શ/i]
-}, dBe = {
+}, cBe = {
   narrow: /^(a|p|મ\.?|સ|બ|સાં|રા)/i,
   any: /^(a|p|મ\.?|સ|બ|સાં|રા)/i
-}, fBe = {
+}, lBe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -63950,55 +63890,55 @@ const BFe = {
     evening: /સાં/i,
     night: /રા/i
   }
-}, mBe = {
+}, dBe = {
   ordinalNumber: Se({
-    matchPattern: tBe,
-    parsePattern: nBe,
+    matchPattern: JHe,
+    parsePattern: eBe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: rBe,
+    matchPatterns: tBe,
     defaultMatchWidth: "wide",
-    parsePatterns: aBe,
+    parsePatterns: nBe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: iBe,
+    matchPatterns: rBe,
     defaultMatchWidth: "wide",
-    parsePatterns: oBe,
+    parsePatterns: aBe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: iBe,
+    defaultMatchWidth: "wide",
+    parsePatterns: oBe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: sBe,
     defaultMatchWidth: "wide",
     parsePatterns: uBe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: cBe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: lBe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: dBe,
-    defaultMatchWidth: "any",
-    parsePatterns: fBe,
-    defaultParseWidth: "any"
   })
-}, hBe = {
+}, fBe = {
   code: "gu",
-  formatDistance: FHe,
-  formatLong: BHe,
-  formatRelative: XHe,
-  localize: eBe,
-  match: mBe,
+  formatDistance: IHe,
+  formatLong: VHe,
+  formatRelative: BHe,
+  localize: ZHe,
+  match: dBe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, pBe = {
+}, mBe = {
   lessThanXSeconds: {
     one: "פחות משנייה",
     two: "פחות משתי שניות",
@@ -64075,56 +64015,56 @@ const BFe = {
     two: "כמעט שנתיים",
     other: "כמעט {{count}} שנים"
   }
-}, gBe = (e, t, n) => {
+}, hBe = (e, t, n) => {
   if (e === "xDays" && (n != null && n.addSuffix) && t <= 2)
     return n.comparison && n.comparison > 0 ? t === 1 ? "מחר" : "מחרתיים" : t === 1 ? "אתמול" : "שלשום";
   let r;
-  const a = pBe[e];
+  const a = mBe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : t === 2 ? r = a.two : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "בעוד " + r : "לפני " + r : r;
-}, vBe = {
+}, pBe = {
   full: "EEEE, d בMMMM y",
   long: "d בMMMM y",
   medium: "d בMMM y",
   short: "d.M.y"
-}, yBe = {
+}, gBe = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, bBe = {
+}, vBe = {
   full: "{{date}} 'בשעה' {{time}}",
   long: "{{date}} 'בשעה' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, wBe = {
+}, yBe = {
   date: q({
-    formats: vBe,
+    formats: pBe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: yBe,
+    formats: gBe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: bBe,
+    formats: vBe,
     defaultWidth: "full"
   })
-}, PBe = {
+}, bBe = {
   lastWeek: "eeee 'שעבר בשעה' p",
   yesterday: "'אתמול בשעה' p",
   today: "'היום בשעה' p",
   tomorrow: "'מחר בשעה' p",
   nextWeek: "eeee 'בשעה' p",
   other: "P"
-}, xBe = (e, t, n, r) => PBe[e], MBe = {
+}, wBe = (e, t, n, r) => bBe[e], PBe = {
   narrow: ["לפנה״ס", "לספירה"],
   abbreviated: ["לפנה״ס", "לספירה"],
   wide: ["לפני הספירה", "לספירה"]
-}, kBe = {
+}, xBe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["רבעון 1", "רבעון 2", "רבעון 3", "רבעון 4"]
-}, CBe = {
+}, MBe = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
   abbreviated: [
     "ינו׳",
@@ -64154,7 +64094,7 @@ const BFe = {
     "נובמבר",
     "דצמבר"
   ]
-}, SBe = {
+}, kBe = {
   narrow: ["א׳", "ב׳", "ג׳", "ד׳", "ה׳", "ו׳", "ש׳"],
   short: ["א׳", "ב׳", "ג׳", "ד׳", "ה׳", "ו׳", "ש׳"],
   abbreviated: [
@@ -64175,7 +64115,7 @@ const BFe = {
     "יום שישי",
     "יום שבת"
   ]
-}, $Be = {
+}, CBe = {
   narrow: {
     am: "לפנה״צ",
     pm: "אחה״צ",
@@ -64206,7 +64146,7 @@ const BFe = {
     evening: "ערב",
     night: "לילה"
   }
-}, _Be = {
+}, SBe = {
   narrow: {
     am: "לפנה״צ",
     pm: "אחה״צ",
@@ -64237,7 +64177,7 @@ const BFe = {
     evening: "בערב",
     night: "בלילה"
   }
-}, TBe = (e, t) => {
+}, $Be = (e, t) => {
   const n = Number(e);
   if (n <= 0 || n > 10) return String(n);
   const r = String(t == null ? void 0 : t.unit), a = ["year", "hour", "minute", "second"].indexOf(r) >= 0, i = [
@@ -64264,48 +64204,48 @@ const BFe = {
     "עשירית"
   ], s = n - 1;
   return a ? o[s] : i[s];
-}, EBe = {
-  ordinalNumber: TBe,
+}, _Be = {
+  ordinalNumber: $Be,
   era: A({
-    values: MBe,
+    values: PBe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: kBe,
+    values: xBe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: CBe,
+    values: MBe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: SBe,
+    values: kBe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: $Be,
+    values: CBe,
     defaultWidth: "wide",
-    formattingValues: _Be,
+    formattingValues: SBe,
     defaultFormattingWidth: "wide"
   })
-}, ABe = /^(\d+|(ראשון|שני|שלישי|רביעי|חמישי|שישי|שביעי|שמיני|תשיעי|עשירי|ראשונה|שנייה|שלישית|רביעית|חמישית|שישית|שביעית|שמינית|תשיעית|עשירית))/i, OBe = /^(\d+|רא|שנ|של|רב|ח|שי|שב|שמ|ת|ע)/i, DBe = {
+}, TBe = /^(\d+|(ראשון|שני|שלישי|רביעי|חמישי|שישי|שביעי|שמיני|תשיעי|עשירי|ראשונה|שנייה|שלישית|רביעית|חמישית|שישית|שביעית|שמינית|תשיעית|עשירית))/i, EBe = /^(\d+|רא|שנ|של|רב|ח|שי|שב|שמ|ת|ע)/i, ABe = {
   narrow: /^ל(ספירה|פנה״ס)/i,
   abbreviated: /^ל(ספירה|פנה״ס)/i,
   wide: /^ל(פני ה)?ספירה/i
-}, NBe = {
+}, OBe = {
   any: [/^לפ/i, /^לס/i]
-}, WBe = {
+}, DBe = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^רבעון [1234]/i
-}, RBe = {
+}, NBe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, jBe = {
+}, WBe = {
   narrow: /^\d+/i,
   abbreviated: /^(ינו|פבר|מרץ|אפר|מאי|יוני|יולי|אוג|ספט|אוק|נוב|דצמ)׳?/i,
   wide: /^(ינואר|פברואר|מרץ|אפריל|מאי|יוני|יולי|אוגוסט|ספטמבר|אוקטובר|נובמבר|דצמבר)/i
-}, IBe = {
+}, RBe = {
   narrow: [
     /^1$/i,
     /^2/i,
@@ -64334,18 +64274,18 @@ const BFe = {
     /^נ/i,
     /^ד/i
   ]
-}, LBe = {
+}, jBe = {
   narrow: /^[אבגדהוש]׳/i,
   short: /^[אבגדהוש]׳/i,
   abbreviated: /^(שבת|יום (א|ב|ג|ד|ה|ו)׳)/i,
   wide: /^יום (ראשון|שני|שלישי|רביעי|חמישי|שישי|שבת)/i
-}, FBe = {
+}, IBe = {
   abbreviated: [/א׳$/i, /ב׳$/i, /ג׳$/i, /ד׳$/i, /ה׳$/i, /ו׳$/i, /^ש/i],
   wide: [/ן$/i, /ני$/i, /לישי$/i, /עי$/i, /מישי$/i, /שישי$/i, /ת$/i],
   any: [/^א/i, /^ב/i, /^ג/i, /^ד/i, /^ה/i, /^ו/i, /^ש/i]
-}, zBe = {
+}, LBe = {
   any: /^(אחר ה|ב)?(חצות|צהריים|בוקר|ערב|לילה|אחה״צ|לפנה״צ)/i
-}, VBe = {
+}, FBe = {
   any: {
     am: /^לפ/i,
     pm: /^אחה/i,
@@ -64356,53 +64296,53 @@ const BFe = {
     evening: /ערב/i,
     night: /לילה/i
   }
-}, HBe = ["רא", "שנ", "של", "רב", "ח", "שי", "שב", "שמ", "ת", "ע"], BBe = {
+}, zBe = ["רא", "שנ", "של", "רב", "ח", "שי", "שב", "שמ", "ת", "ע"], VBe = {
   ordinalNumber: Se({
-    matchPattern: ABe,
-    parsePattern: OBe,
+    matchPattern: TBe,
+    parsePattern: EBe,
     valueCallback: (e) => {
       const t = parseInt(e, 10);
-      return isNaN(t) ? HBe.indexOf(e) + 1 : t;
+      return isNaN(t) ? zBe.indexOf(e) + 1 : t;
     }
   }),
   era: D({
-    matchPatterns: DBe,
+    matchPatterns: ABe,
     defaultMatchWidth: "wide",
-    parsePatterns: NBe,
+    parsePatterns: OBe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: WBe,
+    matchPatterns: DBe,
     defaultMatchWidth: "wide",
-    parsePatterns: RBe,
+    parsePatterns: NBe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: WBe,
+    defaultMatchWidth: "wide",
+    parsePatterns: RBe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: jBe,
     defaultMatchWidth: "wide",
     parsePatterns: IBe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: LBe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: FBe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: zBe,
-    defaultMatchWidth: "any",
-    parsePatterns: VBe,
-    defaultParseWidth: "any"
   })
-}, qBe = {
+}, HBe = {
   code: "he",
-  formatDistance: gBe,
-  formatLong: wBe,
-  formatRelative: xBe,
-  localize: EBe,
-  match: BBe,
+  formatDistance: hBe,
+  formatLong: yBe,
+  formatRelative: wBe,
+  localize: _Be,
+  match: VBe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
@@ -64432,15 +64372,15 @@ const BFe = {
     "९": "9",
     "०": "0"
   }
-}, XBe = {
+}, BBe = {
   narrow: ["ईसा-पूर्व", "ईस्वी"],
   abbreviated: ["ईसा-पूर्व", "ईस्वी"],
   wide: ["ईसा-पूर्व", "ईसवी सन"]
-}, GBe = {
+}, qBe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ति1", "ति2", "ति3", "ति4"],
   wide: ["पहली तिमाही", "दूसरी तिमाही", "तीसरी तिमाही", "चौथी तिमाही"]
-}, YBe = {
+}, XBe = {
   narrow: [
     "ज",
     "फ़",
@@ -64483,7 +64423,7 @@ const BFe = {
     "नवंबर",
     "दिसंबर"
   ]
-}, UBe = {
+}, GBe = {
   narrow: ["र", "सो", "मं", "बु", "गु", "शु", "श"],
   short: ["र", "सो", "मं", "बु", "गु", "शु", "श"],
   abbreviated: ["रवि", "सोम", "मंगल", "बुध", "गुरु", "शुक्र", "शनि"],
@@ -64496,7 +64436,7 @@ const BFe = {
     "शुक्रवार",
     "शनिवार"
   ]
-}, KBe = {
+}, YBe = {
   narrow: {
     am: "पूर्वाह्न",
     pm: "अपराह्न",
@@ -64527,7 +64467,7 @@ const BFe = {
     evening: "शाम",
     night: "रात"
   }
-}, QBe = {
+}, UBe = {
   narrow: {
     am: "पूर्वाह्न",
     pm: "अपराह्न",
@@ -64558,11 +64498,11 @@ const BFe = {
     evening: "शाम",
     night: "रात"
   }
-}, ZBe = (e, t) => {
+}, KBe = (e, t) => {
   const n = Number(e);
   return qB(n);
 };
-function JBe(e) {
+function QBe(e) {
   const t = e.toString().replace(/[१२३४५६७८९०]/g, function(n) {
     return BB.number[n];
   });
@@ -64573,32 +64513,32 @@ function qB(e) {
     return BB.locale[t];
   });
 }
-const eqe = {
-  ordinalNumber: ZBe,
+const ZBe = {
+  ordinalNumber: KBe,
   era: A({
-    values: XBe,
+    values: BBe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: GBe,
+    values: qBe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: YBe,
+    values: XBe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: UBe,
+    values: GBe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: KBe,
+    values: YBe,
     defaultWidth: "wide",
-    formattingValues: QBe,
+    formattingValues: UBe,
     defaultFormattingWidth: "wide"
   })
-}, tqe = {
+}, JBe = {
   lessThanXSeconds: {
     one: "१ सेकंड से कम",
     // CLDR #1310
@@ -64666,11 +64606,11 @@ const eqe = {
     one: "लगभग १ वर्ष",
     other: "लगभग {{count}} वर्ष"
   }
-}, nqe = (e, t, n) => {
+}, eqe = (e, t, n) => {
   let r;
-  const a = tqe[e];
+  const a = JBe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", qB(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + "मे " : r + " पहले" : r;
-}, rqe = {
+}, tqe = {
   full: "EEEE, do MMMM, y",
   // CLDR #1787
   long: "do MMMM, y",
@@ -64679,7 +64619,7 @@ const eqe = {
   // CLDR #1789
   short: "dd/MM/yyyy"
   // CLDR #1790
-}, aqe = {
+}, nqe = {
   full: "h:mm:ss a zzzz",
   // CLDR #1791
   long: "h:mm:ss a z",
@@ -64688,7 +64628,7 @@ const eqe = {
   // CLDR #1793
   short: "h:mm a"
   // CLDR #1794
-}, iqe = {
+}, rqe = {
   full: "{{date}} 'को' {{time}}",
   // CLDR #1795
   long: "{{date}} 'को' {{time}}",
@@ -64697,44 +64637,44 @@ const eqe = {
   // CLDR #1797
   short: "{{date}}, {{time}}"
   // CLDR #1798
-}, oqe = {
+}, aqe = {
   date: q({
-    formats: rqe,
+    formats: tqe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: aqe,
+    formats: nqe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: iqe,
+    formats: rqe,
     defaultWidth: "full"
   })
-}, sqe = {
+}, iqe = {
   lastWeek: "'पिछले' eeee p",
   yesterday: "'कल' p",
   today: "'आज' p",
   tomorrow: "'कल' p",
   nextWeek: "eeee 'को' p",
   other: "P"
-}, uqe = (e, t, n, r) => sqe[e], cqe = /^[०१२३४५६७८९]+/i, lqe = /^[०१२३४५६७८९]+/i, dqe = {
+}, oqe = (e, t, n, r) => iqe[e], sqe = /^[०१२३४५६७८९]+/i, uqe = /^[०१२३४५६७८९]+/i, cqe = {
   narrow: /^(ईसा-पूर्व|ईस्वी)/i,
   abbreviated: /^(ईसा\.?\s?पूर्व\.?|ईसा\.?)/i,
   wide: /^(ईसा-पूर्व|ईसवी पूर्व|ईसवी सन|ईसवी)/i
-}, fqe = {
+}, lqe = {
   any: [/^b/i, /^(a|c)/i]
-}, mqe = {
+}, dqe = {
   narrow: /^[1234]/i,
   abbreviated: /^ति[1234]/i,
   wide: /^[1234](पहली|दूसरी|तीसरी|चौथी)? तिमाही/i
-}, hqe = {
+}, fqe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, pqe = {
+}, mqe = {
   // eslint-disable-next-line no-misleading-character-class
   narrow: /^[जफ़माअप्मईजूनजुअगसिअक्तनदि]/i,
   abbreviated: /^(जन|फ़र|मार्च|अप्|मई|जून|जुल|अग|सित|अक्तू|नव|दिस)/i,
   wide: /^(जनवरी|फ़रवरी|मार्च|अप्रैल|मई|जून|जुलाई|अगस्त|सितंबर|अक्तूबर|नवंबर|दिसंबर)/i
-}, gqe = {
+}, hqe = {
   narrow: [
     /^ज/i,
     /^फ़/i,
@@ -64763,19 +64703,19 @@ const eqe = {
     /^नव/i,
     /^दिस/i
   ]
-}, vqe = {
+}, pqe = {
   // eslint-disable-next-line no-misleading-character-class
   narrow: /^[रविसोममंगलबुधगुरुशुक्रशनि]/i,
   short: /^(रवि|सोम|मंगल|बुध|गुरु|शुक्र|शनि)/i,
   abbreviated: /^(रवि|सोम|मंगल|बुध|गुरु|शुक्र|शनि)/i,
   wide: /^(रविवार|सोमवार|मंगलवार|बुधवार|गुरुवार|शुक्रवार|शनिवार)/i
-}, yqe = {
+}, gqe = {
   narrow: [/^रवि/i, /^सोम/i, /^मंगल/i, /^बुध/i, /^गुरु/i, /^शुक्र/i, /^शनि/i],
   any: [/^रवि/i, /^सोम/i, /^मंगल/i, /^बुध/i, /^गुरु/i, /^शुक्र/i, /^शनि/i]
-}, bqe = {
+}, vqe = {
   narrow: /^(पू|अ|म|द.\?|सु|दो|शा|रा)/i,
   any: /^(पूर्वाह्न|अपराह्न|म|द.\?|सु|दो|शा|रा)/i
-}, wqe = {
+}, yqe = {
   any: {
     am: /^पूर्वाह्न/i,
     pm: /^अपराह्न/i,
@@ -64786,55 +64726,55 @@ const eqe = {
     evening: /शा/i,
     night: /रा/i
   }
-}, Pqe = {
+}, bqe = {
   ordinalNumber: Se({
-    matchPattern: cqe,
-    parsePattern: lqe,
-    valueCallback: JBe
+    matchPattern: sqe,
+    parsePattern: uqe,
+    valueCallback: QBe
   }),
   era: D({
-    matchPatterns: dqe,
+    matchPatterns: cqe,
     defaultMatchWidth: "wide",
-    parsePatterns: fqe,
+    parsePatterns: lqe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: mqe,
+    matchPatterns: dqe,
     defaultMatchWidth: "wide",
-    parsePatterns: hqe,
+    parsePatterns: fqe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: mqe,
+    defaultMatchWidth: "wide",
+    parsePatterns: hqe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: pqe,
     defaultMatchWidth: "wide",
     parsePatterns: gqe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: vqe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: yqe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: bqe,
-    defaultMatchWidth: "any",
-    parsePatterns: wqe,
-    defaultParseWidth: "any"
   })
-}, xqe = {
+}, wqe = {
   code: "hi",
-  formatDistance: nqe,
-  formatLong: oqe,
-  formatRelative: uqe,
-  localize: eqe,
-  match: Pqe,
+  formatDistance: eqe,
+  formatLong: aqe,
+  formatRelative: oqe,
+  localize: ZBe,
+  match: bqe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 4
   }
-}, Mqe = {
+}, Pqe = {
   lessThanXSeconds: {
     one: {
       standalone: "manje od 1 sekunde",
@@ -64971,40 +64911,40 @@ const eqe = {
     dual: "gotovo {{count}} godine",
     other: "gotovo {{count}} godina"
   }
-}, kqe = (e, t, n) => {
+}, xqe = (e, t, n) => {
   let r;
-  const a = Mqe[e];
+  const a = Pqe[e];
   return typeof a == "string" ? r = a : t === 1 ? n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r = a.one.withPrepositionIn : r = a.one.withPrepositionAgo : r = a.one.standalone : t % 10 > 1 && t % 10 < 5 && // if last digit is between 2 and 4
   String(t).substr(-2, 1) !== "1" ? r = a.dual.replace("{{count}}", String(t)) : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "za " + r : "prije " + r : r;
-}, Cqe = {
+}, Mqe = {
   full: "EEEE, d. MMMM y.",
   long: "d. MMMM y.",
   medium: "d. MMM y.",
   short: "dd. MM. y."
-}, Sqe = {
+}, kqe = {
   full: "HH:mm:ss (zzzz)",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, $qe = {
+}, Cqe = {
   full: "{{date}} 'u' {{time}}",
   long: "{{date}} 'u' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, _qe = {
+}, Sqe = {
   date: q({
-    formats: Cqe,
+    formats: Mqe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Sqe,
+    formats: kqe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: $qe,
+    formats: Cqe,
     defaultWidth: "full"
   })
-}, Tqe = {
+}, $qe = {
   lastWeek: (e) => {
     switch (e.getDay()) {
       case 0:
@@ -65033,18 +64973,18 @@ const eqe = {
     }
   },
   other: "P"
-}, Eqe = (e, t, n, r) => {
-  const a = Tqe[e];
+}, _qe = (e, t, n, r) => {
+  const a = $qe[e];
   return typeof a == "function" ? a(t) : a;
-}, Aqe = {
+}, Tqe = {
   narrow: ["pr.n.e.", "AD"],
   abbreviated: ["pr. Kr.", "po. Kr."],
   wide: ["Prije Krista", "Poslije Krista"]
-}, Oqe = {
+}, Eqe = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. kv.", "2. kv.", "3. kv.", "4. kv."],
   wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
-}, Dqe = {
+}, Aqe = {
   narrow: [
     "1.",
     "2.",
@@ -65087,7 +65027,7 @@ const eqe = {
     "studeni",
     "prosinac"
   ]
-}, Nqe = {
+}, Oqe = {
   narrow: [
     "1.",
     "2.",
@@ -65130,7 +65070,7 @@ const eqe = {
     "studenog",
     "prosinca"
   ]
-}, Wqe = {
+}, Dqe = {
   narrow: ["N", "P", "U", "S", "Č", "P", "S"],
   short: ["ned", "pon", "uto", "sri", "čet", "pet", "sub"],
   abbreviated: ["ned", "pon", "uto", "sri", "čet", "pet", "sub"],
@@ -65143,7 +65083,7 @@ const eqe = {
     "petak",
     "subota"
   ]
-}, Rqe = {
+}, Nqe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -65174,7 +65114,7 @@ const eqe = {
     evening: "navečer",
     night: "noću"
   }
-}, jqe = {
+}, Wqe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -65205,50 +65145,50 @@ const eqe = {
     evening: "navečer",
     night: "noću"
   }
-}, Iqe = (e, t) => Number(e) + ".", Lqe = {
-  ordinalNumber: Iqe,
+}, Rqe = (e, t) => Number(e) + ".", jqe = {
+  ordinalNumber: Rqe,
   era: A({
-    values: Aqe,
+    values: Tqe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Oqe,
+    values: Eqe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Dqe,
+    values: Aqe,
     defaultWidth: "wide",
-    formattingValues: Nqe,
+    formattingValues: Oqe,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: Wqe,
+    values: Dqe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: jqe,
+    values: Wqe,
     defaultWidth: "wide",
-    formattingValues: Rqe,
+    formattingValues: Nqe,
     defaultFormattingWidth: "wide"
   })
-}, Fqe = /^(\d+)\./i, zqe = /\d+/i, Vqe = {
+}, Iqe = /^(\d+)\./i, Lqe = /\d+/i, Fqe = {
   narrow: /^(pr\.n\.e\.|AD)/i,
   abbreviated: /^(pr\.\s?Kr\.|po\.\s?Kr\.)/i,
   wide: /^(Prije Krista|prije nove ere|Poslije Krista|nova era)/i
-}, Hqe = {
+}, zqe = {
   any: [/^pr/i, /^(po|nova)/i]
-}, Bqe = {
+}, Vqe = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?kv\.?/i,
   wide: /^[1234]\. kvartal/i
-}, qqe = {
+}, Hqe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Xqe = {
+}, Bqe = {
   narrow: /^(10|11|12|[123456789])\./i,
   abbreviated: /^(sij|velj|(ožu|ozu)|tra|svi|lip|srp|kol|ruj|lis|stu|pro)/i,
   wide: /^((siječanj|siječnja|sijecanj|sijecnja)|(veljača|veljače|veljaca|veljace)|(ožujak|ožujka|ozujak|ozujka)|(travanj|travnja)|(svibanj|svibnja)|(lipanj|lipnja)|(srpanj|srpnja)|(kolovoz|kolovoza)|(rujan|rujna)|(listopad|listopada)|(studeni|studenog)|(prosinac|prosinca))/i
-}, Gqe = {
+}, qqe = {
   narrow: [
     /1/i,
     /2/i,
@@ -65291,17 +65231,17 @@ const eqe = {
     /^stu/i,
     /^pro/i
   ]
-}, Yqe = {
+}, Xqe = {
   narrow: /^[npusčc]/i,
   short: /^(ned|pon|uto|sri|(čet|cet)|pet|sub)/i,
   abbreviated: /^(ned|pon|uto|sri|(čet|cet)|pet|sub)/i,
   wide: /^(nedjelja|ponedjeljak|utorak|srijeda|(četvrtak|cetvrtak)|petak|subota)/i
-}, Uqe = {
+}, Gqe = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
   any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
-}, Kqe = {
+}, Yqe = {
   any: /^(am|pm|ponoc|ponoć|(po)?podne|navecer|navečer|noću|poslije podne|ujutro)/i
-}, Qqe = {
+}, Uqe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -65312,55 +65252,55 @@ const eqe = {
     evening: /(navece|naveče)/i,
     night: /(nocu|noću)/i
   }
-}, Zqe = {
+}, Kqe = {
   ordinalNumber: Se({
-    matchPattern: Fqe,
-    parsePattern: zqe,
+    matchPattern: Iqe,
+    parsePattern: Lqe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Vqe,
+    matchPatterns: Fqe,
     defaultMatchWidth: "wide",
-    parsePatterns: Hqe,
+    parsePatterns: zqe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Bqe,
+    matchPatterns: Vqe,
     defaultMatchWidth: "wide",
-    parsePatterns: qqe,
+    parsePatterns: Hqe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
-    matchPatterns: Xqe,
+    matchPatterns: Bqe,
     defaultMatchWidth: "wide",
-    parsePatterns: Gqe,
+    parsePatterns: qqe,
     defaultParseWidth: "wide"
   }),
   day: D({
-    matchPatterns: Yqe,
+    matchPatterns: Xqe,
     defaultMatchWidth: "wide",
-    parsePatterns: Uqe,
+    parsePatterns: Gqe,
     defaultParseWidth: "any"
   }),
   dayPeriod: D({
-    matchPatterns: Kqe,
+    matchPatterns: Yqe,
     defaultMatchWidth: "any",
-    parsePatterns: Qqe,
+    parsePatterns: Uqe,
     defaultParseWidth: "any"
   })
-}, Jqe = {
+}, Qqe = {
   code: "hr",
-  formatDistance: kqe,
-  formatLong: _qe,
-  formatRelative: Eqe,
-  localize: Lqe,
-  match: Zqe,
+  formatDistance: xqe,
+  formatLong: Sqe,
+  formatRelative: _qe,
+  localize: jqe,
+  match: Kqe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, eXe = {
+}, Zqe = {
   lessThanXSeconds: {
     one: "mwens pase yon segond",
     other: "mwens pase {{count}} segond"
@@ -65422,54 +65362,54 @@ const eqe = {
     one: "prèske 1 an",
     other: "prèske {{count}} an"
   }
-}, tXe = (e, t, n) => {
+}, Jqe = (e, t, n) => {
   let r;
-  const a = eXe[e];
+  const a = Zqe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "nan " + r : "sa fè " + r : r;
-}, nXe = {
+}, eXe = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "dd/MM/y"
-}, rXe = {
+}, tXe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, aXe = {
+}, nXe = {
   full: "{{date}} 'nan lè' {{time}}",
   long: "{{date}} 'nan lè' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, iXe = {
+}, rXe = {
   date: q({
-    formats: nXe,
+    formats: eXe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: rXe,
+    formats: tXe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: aXe,
+    formats: nXe,
     defaultWidth: "full"
   })
-}, oXe = {
+}, aXe = {
   lastWeek: "eeee 'pase nan lè' p",
   yesterday: "'yè nan lè' p",
   today: "'jodi a' p",
   tomorrow: "'demen nan lè' p'",
   nextWeek: "eeee 'pwochen nan lè' p",
   other: "P"
-}, sXe = (e, t, n, r) => oXe[e], uXe = {
+}, iXe = (e, t, n, r) => aXe[e], oXe = {
   narrow: ["av. J.-K", "ap. J.-K"],
   abbreviated: ["av. J.-K", "ap. J.-K"],
   wide: ["anvan Jezi Kris", "apre Jezi Kris"]
-}, cXe = {
+}, sXe = {
   narrow: ["T1", "T2", "T3", "T4"],
   abbreviated: ["1ye trim.", "2yèm trim.", "3yèm trim.", "4yèm trim."],
   wide: ["1ye trimès", "2yèm trimès", "3yèm trimès", "4yèm trimès"]
-}, lXe = {
+}, uXe = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "O", "S", "O", "N", "D"],
   abbreviated: [
     "janv.",
@@ -65499,12 +65439,12 @@ const eqe = {
     "novanm",
     "desanm"
   ]
-}, dXe = {
+}, cXe = {
   narrow: ["D", "L", "M", "M", "J", "V", "S"],
   short: ["di", "le", "ma", "mè", "je", "va", "sa"],
   abbreviated: ["dim.", "len.", "mad.", "mèk.", "jed.", "van.", "sam."],
   wide: ["dimanch", "lendi", "madi", "mèkredi", "jedi", "vandredi", "samdi"]
-}, fXe = {
+}, lXe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -65535,49 +65475,49 @@ const eqe = {
     evening: "nan aswè",
     night: "nan maten"
   }
-}, mXe = (e, t) => {
+}, dXe = (e, t) => {
   const n = Number(e);
   return n === 0 ? String(n) : n + (n === 1 ? "ye" : "yèm");
-}, hXe = {
-  ordinalNumber: mXe,
+}, fXe = {
+  ordinalNumber: dXe,
   era: A({
-    values: uXe,
+    values: oXe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: cXe,
+    values: sXe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: lXe,
+    values: uXe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: dXe,
+    values: cXe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: fXe,
+    values: lXe,
     defaultWidth: "wide"
   })
-}, pXe = /^(\d+)(ye|yèm)?/i, gXe = /\d+/i, vXe = {
+}, mXe = /^(\d+)(ye|yèm)?/i, hXe = /\d+/i, pXe = {
   narrow: /^(av\.J\.K|ap\.J\.K|ap\.J\.-K)/i,
   abbreviated: /^(av\.J\.-K|av\.J-K|apr\.J\.-K|apr\.J-K|ap\.J-K)/i,
   wide: /^(avan Jezi Kris|apre Jezi Kris)/i
-}, yXe = {
+}, gXe = {
   any: [/^av/i, /^ap/i]
-}, bXe = {
+}, vXe = {
   narrow: /^[1234]/i,
   abbreviated: /^t[1234]/i,
   wide: /^[1234](ye|yèm)? trimès/i
-}, wXe = {
+}, yXe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, PXe = {
+}, bXe = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(janv|fevr|mas|avr|me|jen|jiyè|out|sept|okt|nov|des)\.?/i,
   wide: /^(janvye|fevrye|mas|avril|me|jen|jiyè|out|septanm|oktòb|novanm|desanm)/i
-}, xXe = {
+}, wXe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -65606,18 +65546,18 @@ const eqe = {
     /^n/i,
     /^d/i
   ]
-}, MXe = {
+}, PXe = {
   narrow: /^[lmjvsd]/i,
   short: /^(di|le|ma|me|je|va|sa)/i,
   abbreviated: /^(dim|len|mad|mèk|jed|van|sam)\.?/i,
   wide: /^(dimanch|lendi|madi|mèkredi|jedi|vandredi|samdi)/i
-}, kXe = {
+}, xXe = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^j/i, /^v/i, /^s/i],
   any: [/^di/i, /^le/i, /^ma/i, /^mè/i, /^je/i, /^va/i, /^sa/i]
-}, CXe = {
+}, MXe = {
   narrow: /^(a|p|minwit|midi|mat\.?|ap\.?m\.?|swa)/i,
   any: /^([ap]\.?\s?m\.?|nan maten|nan aprèmidi|nan aswè)/i
-}, SXe = {
+}, kXe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -65628,60 +65568,60 @@ const eqe = {
     evening: /sw/i,
     night: /nwit/i
   }
-}, $Xe = {
+}, CXe = {
   ordinalNumber: Se({
-    matchPattern: pXe,
-    parsePattern: gXe,
+    matchPattern: mXe,
+    parsePattern: hXe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: vXe,
+    matchPatterns: pXe,
     defaultMatchWidth: "wide",
-    parsePatterns: yXe,
+    parsePatterns: gXe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: bXe,
+    matchPatterns: vXe,
     defaultMatchWidth: "wide",
-    parsePatterns: wXe,
+    parsePatterns: yXe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: bXe,
+    defaultMatchWidth: "wide",
+    parsePatterns: wXe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: PXe,
     defaultMatchWidth: "wide",
     parsePatterns: xXe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: MXe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: kXe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: CXe,
-    defaultMatchWidth: "any",
-    parsePatterns: SXe,
-    defaultParseWidth: "any"
   })
-}, _Xe = {
+}, SXe = {
   code: "ht",
-  formatDistance: tXe,
-  formatLong: iXe,
-  formatRelative: sXe,
-  localize: hXe,
-  match: $Xe,
+  formatDistance: Jqe,
+  formatLong: rXe,
+  formatRelative: iXe,
+  localize: fXe,
+  match: CXe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, TXe = {
+}, $Xe = {
   about: "körülbelül",
   over: "több mint",
   almost: "majdnem",
   lessthan: "kevesebb mint"
-}, EXe = {
+}, _Xe = {
   xseconds: " másodperc",
   halfaminute: "fél perc",
   xminutes: " perc",
@@ -65690,7 +65630,7 @@ const eqe = {
   xweeks: " hét",
   xmonths: " hónap",
   xyears: " év"
-}, AXe = {
+}, TXe = {
   xseconds: {
     "-1": " másodperccel ezelőtt",
     1: " másodperc múlva",
@@ -65731,43 +65671,43 @@ const eqe = {
     1: " év múlva",
     0: " éve"
   }
-}, OXe = (e, t, n) => {
-  const r = e.match(/about|over|almost|lessthan/i), a = r ? e.replace(r[0], "") : e, i = (n == null ? void 0 : n.addSuffix) === !0, o = a.toLowerCase(), s = (n == null ? void 0 : n.comparison) || 0, u = i ? AXe[o][s] : EXe[o];
+}, EXe = (e, t, n) => {
+  const r = e.match(/about|over|almost|lessthan/i), a = r ? e.replace(r[0], "") : e, i = (n == null ? void 0 : n.addSuffix) === !0, o = a.toLowerCase(), s = (n == null ? void 0 : n.comparison) || 0, u = i ? TXe[o][s] : _Xe[o];
   let c = o === "halfaminute" ? u : t + u;
   if (r) {
     const d = r[0].toLowerCase();
-    c = TXe[d] + " " + c;
+    c = $Xe[d] + " " + c;
   }
   return c;
-}, DXe = {
+}, AXe = {
   full: "y. MMMM d., EEEE",
   long: "y. MMMM d.",
   medium: "y. MMM d.",
   short: "y. MM. dd."
-}, NXe = {
+}, OXe = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, WXe = {
+}, DXe = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, RXe = {
+}, NXe = {
   date: q({
-    formats: DXe,
+    formats: AXe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: NXe,
+    formats: OXe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: WXe,
+    formats: DXe,
     defaultWidth: "full"
   })
-}, jXe = [
+}, WXe = [
   "vasárnap",
   "hétfőn",
   "kedden",
@@ -65778,33 +65718,33 @@ const eqe = {
 ];
 function _D(e) {
   return (t) => {
-    const n = jXe[t.getDay()];
+    const n = WXe[t.getDay()];
     return `${e ? "" : "'múlt' "}'${n}' p'-kor'`;
   };
 }
-const IXe = {
+const RXe = {
   lastWeek: _D(!1),
   yesterday: "'tegnap' p'-kor'",
   today: "'ma' p'-kor'",
   tomorrow: "'holnap' p'-kor'",
   nextWeek: _D(!0),
   other: "P"
-}, LXe = (e, t) => {
-  const n = IXe[e];
+}, jXe = (e, t) => {
+  const n = RXe[e];
   return typeof n == "function" ? n(t) : n;
-}, FXe = {
+}, IXe = {
   narrow: ["ie.", "isz."],
   abbreviated: ["i. e.", "i. sz."],
   wide: ["Krisztus előtt", "időszámításunk szerint"]
-}, zXe = {
+}, LXe = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. n.év", "2. n.év", "3. n.év", "4. n.év"],
   wide: ["1. negyedév", "2. negyedév", "3. negyedév", "4. negyedév"]
-}, VXe = {
+}, FXe = {
   narrow: ["I.", "II.", "III.", "IV."],
   abbreviated: ["I. n.év", "II. n.év", "III. n.év", "IV. n.év"],
   wide: ["I. negyedév", "II. negyedév", "III. negyedév", "IV. negyedév"]
-}, HXe = {
+}, zXe = {
   narrow: ["J", "F", "M", "Á", "M", "J", "J", "A", "Sz", "O", "N", "D"],
   abbreviated: [
     "jan.",
@@ -65834,7 +65774,7 @@ const IXe = {
     "november",
     "december"
   ]
-}, BXe = {
+}, VXe = {
   narrow: ["V", "H", "K", "Sz", "Cs", "P", "Sz"],
   short: ["V", "H", "K", "Sze", "Cs", "P", "Szo"],
   abbreviated: ["V", "H", "K", "Sze", "Cs", "P", "Szo"],
@@ -65847,7 +65787,7 @@ const IXe = {
     "péntek",
     "szombat"
   ]
-}, qXe = {
+}, HXe = {
   narrow: {
     am: "de.",
     pm: "du.",
@@ -65878,50 +65818,50 @@ const IXe = {
     evening: "este",
     night: "éjjel"
   }
-}, XXe = (e, t) => Number(e) + ".", GXe = {
-  ordinalNumber: XXe,
+}, BXe = (e, t) => Number(e) + ".", qXe = {
+  ordinalNumber: BXe,
   era: A({
-    values: FXe,
+    values: IXe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: zXe,
+    values: LXe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1,
-    formattingValues: VXe,
+    formattingValues: FXe,
     defaultFormattingWidth: "wide"
   }),
   month: A({
-    values: HXe,
+    values: zXe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: BXe,
+    values: VXe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: qXe,
+    values: HXe,
     defaultWidth: "wide"
   })
-}, YXe = /^(\d+)\.?/i, UXe = /\d+/i, KXe = {
+}, XXe = /^(\d+)\.?/i, GXe = /\d+/i, YXe = {
   narrow: /^(ie\.|isz\.)/i,
   abbreviated: /^(i\.\s?e\.?|b?\s?c\s?e|i\.\s?sz\.?)/i,
   wide: /^(Krisztus előtt|időszámításunk előtt|időszámításunk szerint|i\. sz\.)/i
-}, QXe = {
+}, UXe = {
   narrow: [/ie/i, /isz/i],
   abbreviated: [/^(i\.?\s?e\.?|b\s?ce)/i, /^(i\.?\s?sz\.?|c\s?e)/i],
   any: [/előtt/i, /(szerint|i. sz.)/i]
-}, ZXe = {
+}, KXe = {
   narrow: /^[1234]\.?/i,
   abbreviated: /^[1234]?\.?\s?n\.év/i,
   wide: /^([1234]|I|II|III|IV)?\.?\s?negyedév/i
-}, JXe = {
+}, QXe = {
   any: [/1|I$/i, /2|II$/i, /3|III/i, /4|IV/i]
-}, eGe = {
+}, ZXe = {
   narrow: /^[jfmaásond]|sz/i,
   abbreviated: /^(jan\.?|febr\.?|márc\.?|ápr\.?|máj\.?|jún\.?|júl\.?|aug\.?|szept\.?|okt\.?|nov\.?|dec\.?)/i,
   wide: /^(január|február|március|április|május|június|július|augusztus|szeptember|október|november|december)/i
-}, tGe = {
+}, JXe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -65950,17 +65890,17 @@ const IXe = {
     /^n/i,
     /^d/i
   ]
-}, nGe = {
+}, eGe = {
   narrow: /^([vhkpc]|sz|cs|sz)/i,
   short: /^([vhkp]|sze|cs|szo)/i,
   abbreviated: /^([vhkp]|sze|cs|szo)/i,
   wide: /^(vasárnap|hétfő|kedd|szerda|csütörtök|péntek|szombat)/i
-}, rGe = {
+}, tGe = {
   narrow: [/^v/i, /^h/i, /^k/i, /^sz/i, /^c/i, /^p/i, /^sz/i],
   any: [/^v/i, /^h/i, /^k/i, /^sze/i, /^c/i, /^p/i, /^szo/i]
-}, aGe = {
+}, nGe = {
   any: /^((de|du)\.?|éjfél|délután|dél|reggel|este|éjjel)/i
-}, iGe = {
+}, rGe = {
   any: {
     am: /^de\.?/i,
     pm: /^du\.?/i,
@@ -65971,55 +65911,55 @@ const IXe = {
     evening: /es/i,
     night: /éjj/i
   }
-}, oGe = {
+}, aGe = {
   ordinalNumber: Se({
-    matchPattern: YXe,
-    parsePattern: UXe,
+    matchPattern: XXe,
+    parsePattern: GXe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: KXe,
+    matchPatterns: YXe,
     defaultMatchWidth: "wide",
-    parsePatterns: QXe,
+    parsePatterns: UXe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: ZXe,
+    matchPatterns: KXe,
     defaultMatchWidth: "wide",
-    parsePatterns: JXe,
+    parsePatterns: QXe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: ZXe,
+    defaultMatchWidth: "wide",
+    parsePatterns: JXe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: eGe,
     defaultMatchWidth: "wide",
     parsePatterns: tGe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: nGe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: rGe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: aGe,
-    defaultMatchWidth: "any",
-    parsePatterns: iGe,
-    defaultParseWidth: "any"
   })
-}, sGe = {
+}, iGe = {
   code: "hu",
-  formatDistance: OXe,
-  formatLong: RXe,
-  formatRelative: LXe,
-  localize: GXe,
-  match: oGe,
+  formatDistance: EXe,
+  formatLong: NXe,
+  formatRelative: jXe,
+  localize: qXe,
+  match: aGe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, uGe = {
+}, oGe = {
   lessThanXSeconds: {
     one: "ավելի քիչ քան 1 վայրկյան",
     other: "ավելի քիչ քան {{count}} վայրկյան"
@@ -66081,54 +66021,54 @@ const IXe = {
     one: "համարյա 1 տարի",
     other: "համարյա {{count}} տարի"
   }
-}, cGe = (e, t, n) => {
+}, sGe = (e, t, n) => {
   let r;
-  const a = uGe[e];
+  const a = oGe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + " հետո" : r + " առաջ" : r;
-}, lGe = {
+}, uGe = {
   full: "d MMMM, y, EEEE",
   long: "d MMMM, y",
   medium: "d MMM, y",
   short: "dd.MM.yyyy"
-}, dGe = {
+}, cGe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, fGe = {
+}, lGe = {
   full: "{{date}} 'ժ․'{{time}}",
   long: "{{date}} 'ժ․'{{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, mGe = {
+}, dGe = {
   date: q({
-    formats: lGe,
+    formats: uGe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: dGe,
+    formats: cGe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: fGe,
+    formats: lGe,
     defaultWidth: "full"
   })
-}, hGe = {
+}, fGe = {
   lastWeek: "'նախորդ' eeee p'֊ին'",
   yesterday: "'երեկ' p'֊ին'",
   today: "'այսօր' p'֊ին'",
   tomorrow: "'վաղը' p'֊ին'",
   nextWeek: "'հաջորդ' eeee p'֊ին'",
   other: "P"
-}, pGe = (e, t, n, r) => hGe[e], gGe = {
+}, mGe = (e, t, n, r) => fGe[e], hGe = {
   narrow: ["Ք", "Մ"],
   abbreviated: ["ՔԱ", "ՄԹ"],
   wide: ["Քրիստոսից առաջ", "Մեր թվարկության"]
-}, vGe = {
+}, pGe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Ք1", "Ք2", "Ք3", "Ք4"],
   wide: ["1֊ին քառորդ", "2֊րդ քառորդ", "3֊րդ քառորդ", "4֊րդ քառորդ"]
-}, yGe = {
+}, gGe = {
   narrow: ["Հ", "Փ", "Մ", "Ա", "Մ", "Հ", "Հ", "Օ", "Ս", "Հ", "Ն", "Դ"],
   abbreviated: [
     "հուն",
@@ -66158,7 +66098,7 @@ const IXe = {
     "նոյեմբեր",
     "դեկտեմբեր"
   ]
-}, bGe = {
+}, vGe = {
   narrow: ["Կ", "Ե", "Ե", "Չ", "Հ", "Ո", "Շ"],
   short: ["կր", "եր", "եք", "չք", "հգ", "ուր", "շբ"],
   abbreviated: ["կիր", "երկ", "երք", "չոր", "հնգ", "ուրբ", "շաբ"],
@@ -66171,7 +66111,7 @@ const IXe = {
     "ուրբաթ",
     "շաբաթ"
   ]
-}, wGe = {
+}, yGe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -66202,7 +66142,7 @@ const IXe = {
     evening: "երեկո",
     night: "գիշեր"
   }
-}, PGe = {
+}, bGe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -66233,51 +66173,51 @@ const IXe = {
     evening: "երեկոյան",
     night: "գիշերը"
   }
-}, xGe = (e, t) => {
+}, wGe = (e, t) => {
   const n = Number(e), r = n % 100;
   return r < 10 && r % 10 === 1 ? n + "֊ին" : n + "֊րդ";
-}, MGe = {
-  ordinalNumber: xGe,
+}, PGe = {
+  ordinalNumber: wGe,
   era: A({
-    values: gGe,
+    values: hGe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: vGe,
+    values: pGe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: yGe,
+    values: gGe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: bGe,
+    values: vGe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: wGe,
+    values: yGe,
     defaultWidth: "wide",
-    formattingValues: PGe,
+    formattingValues: bGe,
     defaultFormattingWidth: "wide"
   })
-}, kGe = /^(\d+)((-|֊)?(ին|րդ))?/i, CGe = /\d+/i, SGe = {
+}, xGe = /^(\d+)((-|֊)?(ին|րդ))?/i, MGe = /\d+/i, kGe = {
   narrow: /^(Ք|Մ)/i,
   abbreviated: /^(Ք\.?\s?Ա\.?|Մ\.?\s?Թ\.?\s?Ա\.?|Մ\.?\s?Թ\.?|Ք\.?\s?Հ\.?)/i,
   wide: /^(քրիստոսից առաջ|մեր թվարկությունից առաջ|մեր թվարկության|քրիստոսից հետո)/i
-}, $Ge = {
+}, CGe = {
   any: [/^ք/i, /^մ/i]
-}, _Ge = {
+}, SGe = {
   narrow: /^[1234]/i,
   abbreviated: /^ք[1234]/i,
   wide: /^[1234]((-|֊)?(ին|րդ)) քառորդ/i
-}, TGe = {
+}, $Ge = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, EGe = {
+}, _Ge = {
   narrow: /^[հփմաօսնդ]/i,
   abbreviated: /^(հուն|փետ|մար|ապր|մայ|հուն|հուլ|օգս|սեպ|հոկ|նոյ|դեկ)/i,
   wide: /^(հունվար|փետրվար|մարտ|ապրիլ|մայիս|հունիս|հուլիս|օգոստոս|սեպտեմբեր|հոկտեմբեր|նոյեմբեր|դեկտեմբեր)/i
-}, AGe = {
+}, TGe = {
   narrow: [
     /^հ/i,
     /^փ/i,
@@ -66306,20 +66246,20 @@ const IXe = {
     /^ն/i,
     /^դ/i
   ]
-}, OGe = {
+}, EGe = {
   narrow: /^[եչհոշկ]/i,
   short: /^(կր|եր|եք|չք|հգ|ուր|շբ)/i,
   abbreviated: /^(կիր|երկ|երք|չոր|հնգ|ուրբ|շաբ)/i,
   wide: /^(կիրակի|երկուշաբթի|երեքշաբթի|չորեքշաբթի|հինգշաբթի|ուրբաթ|շաբաթ)/i
-}, DGe = {
+}, AGe = {
   narrow: [/^կ/i, /^ե/i, /^ե/i, /^չ/i, /^հ/i, /^(ո|Ո)/, /^շ/i],
   short: [/^կ/i, /^եր/i, /^եք/i, /^չ/i, /^հ/i, /^(ո|Ո)/, /^շ/i],
   abbreviated: [/^կ/i, /^երկ/i, /^երք/i, /^չ/i, /^հ/i, /^(ո|Ո)/, /^շ/i],
   wide: [/^կ/i, /^երկ/i, /^երե/i, /^չ/i, /^հ/i, /^(ո|Ո)/, /^շ/i]
-}, NGe = {
+}, OGe = {
   narrow: /^([ap]|կեսգշ|կեսօր|(առավոտը?|ցերեկը?|երեկո(յան)?|գիշերը?))/i,
   any: /^([ap]\.?\s?m\.?|կեսգիշեր(ին)?|կեսօր(ին)?|(առավոտը?|ցերեկը?|երեկո(յան)?|գիշերը?))/i
-}, WGe = {
+}, DGe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -66330,55 +66270,55 @@ const IXe = {
     evening: /երեկո/i,
     night: /գիշեր/i
   }
-}, RGe = {
+}, NGe = {
   ordinalNumber: Se({
-    matchPattern: kGe,
-    parsePattern: CGe,
+    matchPattern: xGe,
+    parsePattern: MGe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: SGe,
+    matchPatterns: kGe,
     defaultMatchWidth: "wide",
-    parsePatterns: $Ge,
+    parsePatterns: CGe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: _Ge,
+    matchPatterns: SGe,
     defaultMatchWidth: "wide",
-    parsePatterns: TGe,
+    parsePatterns: $Ge,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
-    matchPatterns: EGe,
+    matchPatterns: _Ge,
     defaultMatchWidth: "wide",
-    parsePatterns: AGe,
+    parsePatterns: TGe,
     defaultParseWidth: "any"
   }),
   day: D({
-    matchPatterns: OGe,
+    matchPatterns: EGe,
     defaultMatchWidth: "wide",
-    parsePatterns: DGe,
+    parsePatterns: AGe,
     defaultParseWidth: "wide"
   }),
   dayPeriod: D({
-    matchPatterns: NGe,
+    matchPatterns: OGe,
     defaultMatchWidth: "any",
-    parsePatterns: WGe,
+    parsePatterns: DGe,
     defaultParseWidth: "any"
   })
-}, jGe = {
+}, WGe = {
   code: "hy",
-  formatDistance: cGe,
-  formatLong: mGe,
-  formatRelative: pGe,
-  localize: MGe,
-  match: RGe,
+  formatDistance: sGe,
+  formatLong: dGe,
+  formatRelative: mGe,
+  localize: PGe,
+  match: NGe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, IGe = {
+}, RGe = {
   lessThanXSeconds: {
     one: "kurang dari 1 detik",
     other: "kurang dari {{count}} detik"
@@ -66440,54 +66380,54 @@ const IXe = {
     one: "hampir 1 tahun",
     other: "hampir {{count}} tahun"
   }
-}, LGe = (e, t, n) => {
+}, jGe = (e, t, n) => {
   let r;
-  const a = IGe[e];
+  const a = RGe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", t.toString()), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "dalam waktu " + r : r + " yang lalu" : r;
-}, FGe = {
+}, IGe = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
   short: "d/M/yyyy"
-}, zGe = {
+}, LGe = {
   full: "HH.mm.ss",
   long: "HH.mm.ss",
   medium: "HH.mm",
   short: "HH.mm"
-}, VGe = {
+}, FGe = {
   full: "{{date}} 'pukul' {{time}}",
   long: "{{date}} 'pukul' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, HGe = {
+}, zGe = {
   date: q({
-    formats: FGe,
+    formats: IGe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: zGe,
+    formats: LGe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: VGe,
+    formats: FGe,
     defaultWidth: "full"
   })
-}, BGe = {
+}, VGe = {
   lastWeek: "eeee 'lalu pukul' p",
   yesterday: "'Kemarin pukul' p",
   today: "'Hari ini pukul' p",
   tomorrow: "'Besok pukul' p",
   nextWeek: "eeee 'pukul' p",
   other: "P"
-}, qGe = (e, t, n, r) => BGe[e], XGe = {
+}, HGe = (e, t, n, r) => VGe[e], BGe = {
   narrow: ["SM", "M"],
   abbreviated: ["SM", "M"],
   wide: ["Sebelum Masehi", "Masehi"]
-}, GGe = {
+}, qGe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
   wide: ["Kuartal ke-1", "Kuartal ke-2", "Kuartal ke-3", "Kuartal ke-4"]
-}, YGe = {
+}, XGe = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "Jan",
@@ -66517,12 +66457,12 @@ const IXe = {
     "November",
     "Desember"
   ]
-}, UGe = {
+}, GGe = {
   narrow: ["M", "S", "S", "R", "K", "J", "S"],
   short: ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
   abbreviated: ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
   wide: ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"]
-}, KGe = {
+}, YGe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -66553,7 +66493,7 @@ const IXe = {
     evening: "sore",
     night: "malam"
   }
-}, QGe = {
+}, UGe = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -66584,48 +66524,48 @@ const IXe = {
     evening: "sore",
     night: "malam"
   }
-}, ZGe = (e, t) => "ke-" + Number(e), JGe = {
-  ordinalNumber: ZGe,
+}, KGe = (e, t) => "ke-" + Number(e), QGe = {
+  ordinalNumber: KGe,
   era: A({
-    values: XGe,
+    values: BGe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: GGe,
+    values: qGe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: YGe,
+    values: XGe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: UGe,
+    values: GGe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: KGe,
+    values: YGe,
     defaultWidth: "wide",
-    formattingValues: QGe,
+    formattingValues: UGe,
     defaultFormattingWidth: "wide"
   })
-}, eYe = /^ke-(\d+)?/i, tYe = /\d+/i, nYe = {
+}, ZGe = /^ke-(\d+)?/i, JGe = /\d+/i, eYe = {
   narrow: /^(sm|m)/i,
   abbreviated: /^(s\.?\s?m\.?|s\.?\s?e\.?\s?u\.?|m\.?|e\.?\s?u\.?)/i,
   wide: /^(sebelum masehi|sebelum era umum|masehi|era umum)/i
-}, rYe = {
+}, tYe = {
   any: [/^s/i, /^(m|e)/i]
-}, aYe = {
+}, nYe = {
   narrow: /^[1234]/i,
   abbreviated: /^K-?\s[1234]/i,
   wide: /^Kuartal ke-?\s?[1234]/i
-}, iYe = {
+}, rYe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, oYe = {
+}, aYe = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mar|apr|mei|jun|jul|agt|sep|okt|nov|des)/i,
   wide: /^(januari|februari|maret|april|mei|juni|juli|agustus|september|oktober|november|desember)/i
-}, sYe = {
+}, iYe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -66654,18 +66594,18 @@ const IXe = {
     /^n/i,
     /^d/i
   ]
-}, uYe = {
+}, oYe = {
   narrow: /^[srkjm]/i,
   short: /^(min|sen|sel|rab|kam|jum|sab)/i,
   abbreviated: /^(min|sen|sel|rab|kam|jum|sab)/i,
   wide: /^(minggu|senin|selasa|rabu|kamis|jumat|sabtu)/i
-}, cYe = {
+}, sYe = {
   narrow: [/^m/i, /^s/i, /^s/i, /^r/i, /^k/i, /^j/i, /^s/i],
   any: [/^m/i, /^sen/i, /^sel/i, /^r/i, /^k/i, /^j/i, /^sa/i]
-}, lYe = {
+}, uYe = {
   narrow: /^(a|p|tengah m|tengah h|(di(\swaktu)?) (pagi|siang|sore|malam))/i,
   any: /^([ap]\.?\s?m\.?|tengah malam|tengah hari|(di(\swaktu)?) (pagi|siang|sore|malam))/i
-}, dYe = {
+}, cYe = {
   any: {
     am: /^a/i,
     pm: /^pm/i,
@@ -66676,55 +66616,55 @@ const IXe = {
     evening: /sore/i,
     night: /malam/i
   }
-}, fYe = {
+}, lYe = {
   ordinalNumber: Se({
-    matchPattern: eYe,
-    parsePattern: tYe,
+    matchPattern: ZGe,
+    parsePattern: JGe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: nYe,
+    matchPatterns: eYe,
     defaultMatchWidth: "wide",
-    parsePatterns: rYe,
+    parsePatterns: tYe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: aYe,
+    matchPatterns: nYe,
     defaultMatchWidth: "wide",
-    parsePatterns: iYe,
+    parsePatterns: rYe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: aYe,
+    defaultMatchWidth: "wide",
+    parsePatterns: iYe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: oYe,
     defaultMatchWidth: "wide",
     parsePatterns: sYe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: uYe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: cYe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: lYe,
-    defaultMatchWidth: "any",
-    parsePatterns: dYe,
-    defaultParseWidth: "any"
   })
-}, mYe = {
+}, dYe = {
   code: "id",
-  formatDistance: LGe,
-  formatLong: HGe,
-  formatRelative: qGe,
-  localize: JGe,
-  match: fYe,
+  formatDistance: jGe,
+  formatLong: zGe,
+  formatRelative: HGe,
+  localize: QGe,
+  match: lYe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, hYe = {
+}, fYe = {
   lessThanXSeconds: {
     one: "minna en 1 sekúnda",
     other: "minna en {{count}} sekúndur"
@@ -66786,54 +66726,54 @@ const IXe = {
     one: "næstum 1 ár",
     other: "næstum {{count}} ár"
   }
-}, pYe = (e, t, n) => {
+}, mYe = (e, t, n) => {
   let r;
-  const a = hYe[e];
+  const a = fYe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", t.toString()), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "í " + r : r + " síðan" : r;
-}, gYe = {
+}, hYe = {
   full: "EEEE, do MMMM y",
   long: "do MMMM y",
   medium: "do MMM y",
   short: "d.MM.y"
-}, vYe = {
+}, pYe = {
   full: "'kl'. HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, yYe = {
+}, gYe = {
   full: "{{date}} 'kl.' {{time}}",
   long: "{{date}} 'kl.' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, bYe = {
+}, vYe = {
   date: q({
-    formats: gYe,
+    formats: hYe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: vYe,
+    formats: pYe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: yYe,
+    formats: gYe,
     defaultWidth: "full"
   })
-}, wYe = {
+}, yYe = {
   lastWeek: "'síðasta' dddd 'kl.' p",
   yesterday: "'í gær kl.' p",
   today: "'í dag kl.' p",
   tomorrow: "'á morgun kl.' p",
   nextWeek: "dddd 'kl.' p",
   other: "P"
-}, PYe = (e, t, n, r) => wYe[e], xYe = {
+}, bYe = (e, t, n, r) => yYe[e], wYe = {
   narrow: ["f.Kr.", "e.Kr."],
   abbreviated: ["f.Kr.", "e.Kr."],
   wide: ["fyrir Krist", "eftir Krist"]
-}, MYe = {
+}, PYe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1F", "2F", "3F", "4F"],
   wide: ["1. fjórðungur", "2. fjórðungur", "3. fjórðungur", "4. fjórðungur"]
-}, kYe = {
+}, xYe = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "Á", "S", "Ó", "N", "D"],
   abbreviated: [
     "jan.",
@@ -66863,7 +66803,7 @@ const IXe = {
     "nóvember",
     "desember"
   ]
-}, CYe = {
+}, MYe = {
   narrow: ["S", "M", "Þ", "M", "F", "F", "L"],
   short: ["Su", "Má", "Þr", "Mi", "Fi", "Fö", "La"],
   abbreviated: ["sun.", "mán.", "þri.", "mið.", "fim.", "fös.", "lau."],
@@ -66876,7 +66816,7 @@ const IXe = {
     "föstudagur",
     "laugardagur"
   ]
-}, SYe = {
+}, kYe = {
   narrow: {
     am: "f",
     pm: "e",
@@ -66907,7 +66847,7 @@ const IXe = {
     evening: "kvöld",
     night: "nótt"
   }
-}, $Ye = {
+}, CYe = {
   narrow: {
     am: "f",
     pm: "e",
@@ -66938,48 +66878,48 @@ const IXe = {
     evening: "um kvöld",
     night: "um nótt"
   }
-}, _Ye = (e, t) => Number(e) + ".", TYe = {
-  ordinalNumber: _Ye,
+}, SYe = (e, t) => Number(e) + ".", $Ye = {
+  ordinalNumber: SYe,
   era: A({
-    values: xYe,
+    values: wYe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: MYe,
+    values: PYe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: kYe,
+    values: xYe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: CYe,
+    values: MYe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: SYe,
+    values: kYe,
     defaultWidth: "wide",
-    formattingValues: $Ye,
+    formattingValues: CYe,
     defaultFormattingWidth: "wide"
   })
-}, EYe = /^(\d+)(\.)?/i, AYe = /\d+(\.)?/i, OYe = {
+}, _Ye = /^(\d+)(\.)?/i, TYe = /\d+(\.)?/i, EYe = {
   narrow: /^(f\.Kr\.|e\.Kr\.)/i,
   abbreviated: /^(f\.Kr\.|e\.Kr\.)/i,
   wide: /^(fyrir Krist|eftir Krist)/i
-}, DYe = {
+}, AYe = {
   any: [/^(f\.Kr\.)/i, /^(e\.Kr\.)/i]
-}, NYe = {
+}, OYe = {
   narrow: /^[1234]\.?/i,
   abbreviated: /^q[1234]\.?/i,
   wide: /^[1234]\.? fjórðungur/i
-}, WYe = {
+}, DYe = {
   any: [/1\.?/i, /2\.?/i, /3\.?/i, /4\.?/i]
-}, RYe = {
+}, NYe = {
   narrow: /^[jfmásónd]/i,
   abbreviated: /^(jan\.|feb\.|mars\.|apríl\.|maí|júní|júlí|águst|sep\.|oct\.|nov\.|dec\.)/i,
   wide: /^(januar|febrúar|mars|apríl|maí|júní|júlí|águst|september|október|nóvember|desember)/i
-}, jYe = {
+}, WYe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -67008,18 +66948,18 @@ const IXe = {
     /^n/i,
     /^d/i
   ]
-}, IYe = {
+}, RYe = {
   narrow: /^[smtwf]/i,
   short: /^(su|má|þr|mi|fi|fö|la)/i,
   abbreviated: /^(sun|mán|þri|mið|fim|fös|lau)\.?/i,
   wide: /^(sunnudagur|mánudagur|þriðjudagur|miðvikudagur|fimmtudagur|föstudagur|laugardagur)/i
-}, LYe = {
+}, jYe = {
   narrow: [/^s/i, /^m/i, /^þ/i, /^m/i, /^f/i, /^f/i, /^l/i],
   any: [/^su/i, /^má/i, /^þr/i, /^mi/i, /^fi/i, /^fö/i, /^la/i]
-}, FYe = {
+}, IYe = {
   narrow: /^(f|e|síðdegis|(á|að|um) (morgni|kvöld|nótt|miðnætti))/i,
   any: /^(fyrir hádegi|eftir hádegi|[ef]\.?h\.?|síðdegis|morgunn|(á|að|um) (morgni|kvöld|nótt|miðnætti))/i
-}, zYe = {
+}, LYe = {
   any: {
     am: /^f/i,
     pm: /^e/i,
@@ -67030,55 +66970,55 @@ const IXe = {
     evening: /kvöld/i,
     night: /nótt/i
   }
-}, VYe = {
+}, FYe = {
   ordinalNumber: Se({
-    matchPattern: EYe,
-    parsePattern: AYe,
+    matchPattern: _Ye,
+    parsePattern: TYe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: OYe,
+    matchPatterns: EYe,
     defaultMatchWidth: "wide",
-    parsePatterns: DYe,
+    parsePatterns: AYe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: NYe,
+    matchPatterns: OYe,
     defaultMatchWidth: "wide",
-    parsePatterns: WYe,
+    parsePatterns: DYe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: NYe,
+    defaultMatchWidth: "wide",
+    parsePatterns: WYe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: RYe,
     defaultMatchWidth: "wide",
     parsePatterns: jYe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: IYe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: LYe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: FYe,
-    defaultMatchWidth: "any",
-    parsePatterns: zYe,
-    defaultParseWidth: "any"
   })
-}, HYe = {
+}, zYe = {
   code: "is",
-  formatDistance: pYe,
-  formatLong: bYe,
-  formatRelative: PYe,
-  localize: TYe,
-  match: VYe,
+  formatDistance: mYe,
+  formatLong: vYe,
+  formatRelative: bYe,
+  localize: $Ye,
+  match: FYe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, BYe = {
+}, VYe = {
   lessThanXSeconds: {
     one: "meno di un secondo",
     other: "meno di {{count}} secondi"
@@ -67142,34 +67082,34 @@ const IXe = {
   }
 }, XB = (e, t, n) => {
   let r;
-  const a = BYe[e];
+  const a = VYe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", t.toString()), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "tra " + r : r + " fa" : r;
-}, qYe = {
+}, HYe = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "dd/MM/y"
-}, XYe = {
+}, BYe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, GYe = {
+}, qYe = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, YYe = {
+}, XYe = {
   date: q({
-    formats: qYe,
+    formats: HYe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: XYe,
+    formats: BYe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: GYe,
+    formats: qYe,
     defaultWidth: "full"
   })
 }, A5 = [
@@ -67181,7 +67121,7 @@ const IXe = {
   "venerdì",
   "sabato"
 ];
-function UYe(e) {
+function GYe(e) {
   switch (e) {
     case 0:
       return "'domenica scorsa alle' p";
@@ -67192,7 +67132,7 @@ function UYe(e) {
 function TD(e) {
   return "'" + A5[e] + " alle' p";
 }
-function KYe(e) {
+function YYe(e) {
   switch (e) {
     case 0:
       return "'domenica prossima alle' p";
@@ -67200,31 +67140,31 @@ function KYe(e) {
       return "'" + A5[e] + " prossimo alle' p";
   }
 }
-const QYe = {
+const UYe = {
   lastWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? TD(r) : UYe(r);
+    return bn(e, t, n) ? TD(r) : GYe(r);
   },
   yesterday: "'ieri alle' p",
   today: "'oggi alle' p",
   tomorrow: "'domani alle' p",
   nextWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? TD(r) : KYe(r);
+    return bn(e, t, n) ? TD(r) : YYe(r);
   },
   other: "P"
 }, GB = (e, t, n, r) => {
-  const a = QYe[e];
+  const a = UYe[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, ZYe = {
+}, KYe = {
   narrow: ["aC", "dC"],
   abbreviated: ["a.C.", "d.C."],
   wide: ["avanti Cristo", "dopo Cristo"]
-}, JYe = {
+}, QYe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
   wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
-}, eUe = {
+}, ZYe = {
   narrow: ["G", "F", "M", "A", "M", "G", "L", "A", "S", "O", "N", "D"],
   abbreviated: [
     "gen",
@@ -67254,7 +67194,7 @@ const QYe = {
     "novembre",
     "dicembre"
   ]
-}, tUe = {
+}, JYe = {
   narrow: ["D", "L", "M", "M", "G", "V", "S"],
   short: ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
   abbreviated: ["dom", "lun", "mar", "mer", "gio", "ven", "sab"],
@@ -67267,7 +67207,7 @@ const QYe = {
     "venerdì",
     "sabato"
   ]
-}, nUe = {
+}, eUe = {
   narrow: {
     am: "m.",
     pm: "p.",
@@ -67298,7 +67238,7 @@ const QYe = {
     evening: "sera",
     night: "notte"
   }
-}, rUe = {
+}, tUe = {
   narrow: {
     am: "m.",
     pm: "p.",
@@ -67329,51 +67269,51 @@ const QYe = {
     evening: "di sera",
     night: "di notte"
   }
-}, aUe = (e, t) => {
+}, nUe = (e, t) => {
   const n = Number(e);
   return String(n);
 }, YB = {
-  ordinalNumber: aUe,
+  ordinalNumber: nUe,
   era: A({
-    values: ZYe,
+    values: KYe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: JYe,
+    values: QYe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: eUe,
+    values: ZYe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: tUe,
+    values: JYe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: nUe,
+    values: eUe,
     defaultWidth: "wide",
-    formattingValues: rUe,
+    formattingValues: tUe,
     defaultFormattingWidth: "wide"
   })
-}, iUe = /^(\d+)(º)?/i, oUe = /\d+/i, sUe = {
+}, rUe = /^(\d+)(º)?/i, aUe = /\d+/i, iUe = {
   narrow: /^(aC|dC)/i,
   abbreviated: /^(a\.?\s?C\.?|a\.?\s?e\.?\s?v\.?|d\.?\s?C\.?|e\.?\s?v\.?)/i,
   wide: /^(avanti Cristo|avanti Era Volgare|dopo Cristo|Era Volgare)/i
-}, uUe = {
+}, oUe = {
   any: [/^a/i, /^(d|e)/i]
-}, cUe = {
+}, sUe = {
   narrow: /^[1234]/i,
   abbreviated: /^t[1234]/i,
   wide: /^[1234](º)? trimestre/i
-}, lUe = {
+}, uUe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, dUe = {
+}, cUe = {
   narrow: /^[gfmalsond]/i,
   abbreviated: /^(gen|feb|mar|apr|mag|giu|lug|ago|set|ott|nov|dic)/i,
   wide: /^(gennaio|febbraio|marzo|aprile|maggio|giugno|luglio|agosto|settembre|ottobre|novembre|dicembre)/i
-}, fUe = {
+}, lUe = {
   narrow: [
     /^g/i,
     /^f/i,
@@ -67402,18 +67342,18 @@ const QYe = {
     /^n/i,
     /^d/i
   ]
-}, mUe = {
+}, dUe = {
   narrow: /^[dlmgvs]/i,
   short: /^(do|lu|ma|me|gi|ve|sa)/i,
   abbreviated: /^(dom|lun|mar|mer|gio|ven|sab)/i,
   wide: /^(domenica|luned[i|ì]|marted[i|ì]|mercoled[i|ì]|gioved[i|ì]|venerd[i|ì]|sabato)/i
-}, hUe = {
+}, fUe = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^g/i, /^v/i, /^s/i],
   any: [/^d/i, /^l/i, /^ma/i, /^me/i, /^g/i, /^v/i, /^s/i]
-}, pUe = {
+}, mUe = {
   narrow: /^(a|m\.|p|mezzanotte|mezzogiorno|(di|del) (mattina|pomeriggio|sera|notte))/i,
   any: /^([ap]\.?\s?m\.?|mezzanotte|mezzogiorno|(di|del) (mattina|pomeriggio|sera|notte))/i
-}, gUe = {
+}, hUe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -67426,45 +67366,45 @@ const QYe = {
   }
 }, UB = {
   ordinalNumber: Se({
-    matchPattern: iUe,
-    parsePattern: oUe,
+    matchPattern: rUe,
+    parsePattern: aUe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: sUe,
+    matchPatterns: iUe,
     defaultMatchWidth: "wide",
-    parsePatterns: uUe,
+    parsePatterns: oUe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: cUe,
+    matchPatterns: sUe,
     defaultMatchWidth: "wide",
-    parsePatterns: lUe,
+    parsePatterns: uUe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: cUe,
+    defaultMatchWidth: "wide",
+    parsePatterns: lUe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: dUe,
     defaultMatchWidth: "wide",
     parsePatterns: fUe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: mUe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: hUe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: pUe,
-    defaultMatchWidth: "any",
-    parsePatterns: gUe,
-    defaultParseWidth: "any"
   })
-}, vUe = {
+}, pUe = {
   code: "it",
   formatDistance: XB,
-  formatLong: YYe,
+  formatLong: XYe,
   formatRelative: GB,
   localize: YB,
   match: UB,
@@ -67472,38 +67412,38 @@ const QYe = {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, yUe = {
+}, gUe = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "dd.MM.y"
-}, bUe = {
+}, vUe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, wUe = {
+}, yUe = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, PUe = {
+}, bUe = {
   date: q({
-    formats: yUe,
+    formats: gUe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: bUe,
+    formats: vUe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: wUe,
+    formats: yUe,
     defaultWidth: "full"
   })
-}, xUe = {
+}, wUe = {
   code: "it-CH",
   formatDistance: XB,
-  formatLong: PUe,
+  formatLong: bUe,
   formatRelative: GB,
   localize: YB,
   match: UB,
@@ -67511,7 +67451,7 @@ const QYe = {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, MUe = {
+}, PUe = {
   lessThanXSeconds: {
     one: "1秒未満",
     other: "{{count}}秒未満",
@@ -67577,55 +67517,55 @@ const QYe = {
     one: "1年近く",
     other: "{{count}}年近く"
   }
-}, kUe = (e, t, n) => {
+}, xUe = (e, t, n) => {
   n = n || {};
   let r;
-  const a = MUe[e];
+  const a = PUe[e];
   return typeof a == "string" ? r = a : t === 1 ? n.addSuffix && a.oneWithSuffix ? r = a.oneWithSuffix : r = a.one : n.addSuffix && a.otherWithSuffix ? r = a.otherWithSuffix.replace("{{count}}", String(t)) : r = a.other.replace("{{count}}", String(t)), n.addSuffix ? n.comparison && n.comparison > 0 ? r + "後" : r + "前" : r;
-}, CUe = {
+}, MUe = {
   full: "y年M月d日EEEE",
   long: "y年M月d日",
   medium: "y/MM/dd",
   short: "y/MM/dd"
-}, SUe = {
+}, kUe = {
   full: "H時mm分ss秒 zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, $Ue = {
+}, CUe = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, _Ue = {
+}, SUe = {
   date: q({
-    formats: CUe,
+    formats: MUe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: SUe,
+    formats: kUe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: $Ue,
+    formats: CUe,
     defaultWidth: "full"
   })
-}, TUe = {
+}, $Ue = {
   lastWeek: "先週のeeeeのp",
   yesterday: "昨日のp",
   today: "今日のp",
   tomorrow: "明日のp",
   nextWeek: "翌週のeeeeのp",
   other: "P"
-}, EUe = (e, t, n, r) => TUe[e], AUe = {
+}, _Ue = (e, t, n, r) => $Ue[e], TUe = {
   narrow: ["BC", "AC"],
   abbreviated: ["紀元前", "西暦"],
   wide: ["紀元前", "西暦"]
-}, OUe = {
+}, EUe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["第1四半期", "第2四半期", "第3四半期", "第4四半期"]
-}, DUe = {
+}, AUe = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
   abbreviated: [
     "1月",
@@ -67655,12 +67595,12 @@ const QYe = {
     "11月",
     "12月"
   ]
-}, NUe = {
+}, OUe = {
   narrow: ["日", "月", "火", "水", "木", "金", "土"],
   short: ["日", "月", "火", "水", "木", "金", "土"],
   abbreviated: ["日", "月", "火", "水", "木", "金", "土"],
   wide: ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"]
-}, WUe = {
+}, DUe = {
   narrow: {
     am: "午前",
     pm: "午後",
@@ -67691,7 +67631,7 @@ const QYe = {
     evening: "夜",
     night: "深夜"
   }
-}, RUe = {
+}, NUe = {
   narrow: {
     am: "午前",
     pm: "午後",
@@ -67722,7 +67662,7 @@ const QYe = {
     evening: "夜",
     night: "深夜"
   }
-}, jUe = (e, t) => {
+}, WUe = (e, t) => {
   const n = Number(e);
   switch (String(t == null ? void 0 : t.unit)) {
     case "year":
@@ -67744,49 +67684,49 @@ const QYe = {
     default:
       return `${n}`;
   }
-}, IUe = {
-  ordinalNumber: jUe,
+}, RUe = {
+  ordinalNumber: WUe,
   era: A({
-    values: AUe,
+    values: TUe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: OUe,
+    values: EUe,
     defaultWidth: "wide",
     argumentCallback: (e) => Number(e) - 1
   }),
   month: A({
-    values: DUe,
+    values: AUe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: NUe,
+    values: OUe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: WUe,
+    values: DUe,
     defaultWidth: "wide",
-    formattingValues: RUe,
+    formattingValues: NUe,
     defaultFormattingWidth: "wide"
   })
-}, LUe = /^第?\d+(年|四半期|月|週|日|時|分|秒)?/i, FUe = /\d+/i, zUe = {
+}, jUe = /^第?\d+(年|四半期|月|週|日|時|分|秒)?/i, IUe = /\d+/i, LUe = {
   narrow: /^(B\.?C\.?|A\.?D\.?)/i,
   abbreviated: /^(紀元[前後]|西暦)/i,
   wide: /^(紀元[前後]|西暦)/i
-}, VUe = {
+}, FUe = {
   narrow: [/^B/i, /^A/i],
   any: [/^(紀元前)/i, /^(西暦|紀元後)/i]
-}, HUe = {
+}, zUe = {
   narrow: /^[1234]/i,
   abbreviated: /^Q[1234]/i,
   wide: /^第[1234一二三四１２３４]四半期/i
-}, BUe = {
+}, VUe = {
   any: [/(1|一|１)/i, /(2|二|２)/i, /(3|三|３)/i, /(4|四|４)/i]
-}, qUe = {
+}, HUe = {
   narrow: /^([123456789]|1[012])/,
   abbreviated: /^([123456789]|1[012])月/i,
   wide: /^([123456789]|1[012])月/i
-}, XUe = {
+}, BUe = {
   any: [
     /^1\D/,
     /^2/,
@@ -67801,16 +67741,16 @@ const QYe = {
     /^11/,
     /^12/
   ]
-}, GUe = {
+}, qUe = {
   narrow: /^[日月火水木金土]/,
   short: /^[日月火水木金土]/,
   abbreviated: /^[日月火水木金土]/,
   wide: /^[日月火水木金土]曜日/
-}, YUe = {
+}, XUe = {
   any: [/^日/, /^月/, /^火/, /^水/, /^木/, /^金/, /^土/]
-}, UUe = {
+}, GUe = {
   any: /^(AM|PM|午前|午後|正午|深夜|真夜中|夜|朝)/i
-}, KUe = {
+}, YUe = {
   any: {
     am: /^(A|午前)/i,
     pm: /^(P|午後)/i,
@@ -67821,57 +67761,57 @@ const QYe = {
     evening: /^夜/i,
     night: /^深夜/i
   }
-}, QUe = {
+}, UUe = {
   ordinalNumber: Se({
-    matchPattern: LUe,
-    parsePattern: FUe,
+    matchPattern: jUe,
+    parsePattern: IUe,
     valueCallback: function(e) {
       return parseInt(e, 10);
     }
   }),
   era: D({
-    matchPatterns: zUe,
+    matchPatterns: LUe,
     defaultMatchWidth: "wide",
-    parsePatterns: VUe,
+    parsePatterns: FUe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: HUe,
+    matchPatterns: zUe,
     defaultMatchWidth: "wide",
-    parsePatterns: BUe,
+    parsePatterns: VUe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: HUe,
+    defaultMatchWidth: "wide",
+    parsePatterns: BUe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: qUe,
     defaultMatchWidth: "wide",
     parsePatterns: XUe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: GUe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: YUe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: UUe,
-    defaultMatchWidth: "any",
-    parsePatterns: KUe,
-    defaultParseWidth: "any"
   })
-}, ZUe = {
+}, KUe = {
   code: "ja",
-  formatDistance: kUe,
-  formatLong: _Ue,
-  formatRelative: EUe,
-  localize: IUe,
-  match: QUe,
+  formatDistance: xUe,
+  formatLong: SUe,
+  formatRelative: _Ue,
+  localize: RUe,
+  match: UUe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, JUe = {
+}, QUe = {
   lessThanXSeconds: {
     one: "1びょうみまん",
     other: "{{count}}びょうみまん",
@@ -67937,55 +67877,55 @@ const QYe = {
     one: "1ねんちかく",
     other: "{{count}}ねんちかく"
   }
-}, eKe = (e, t, n) => {
+}, ZUe = (e, t, n) => {
   n = n || {};
   let r;
-  const a = JUe[e];
+  const a = QUe[e];
   return typeof a == "string" ? r = a : t === 1 ? n.addSuffix && a.oneWithSuffix ? r = a.oneWithSuffix : r = a.one : n.addSuffix && a.otherWithSuffix ? r = a.otherWithSuffix.replace("{{count}}", String(t)) : r = a.other.replace("{{count}}", String(t)), n.addSuffix ? n.comparison && n.comparison > 0 ? r + "あと" : r + "まえ" : r;
-}, tKe = {
+}, JUe = {
   full: "yねんMがつdにちEEEE",
   long: "yねんMがつdにち",
   medium: "y/MM/dd",
   short: "y/MM/dd"
-}, nKe = {
+}, eKe = {
   full: "Hじmmふんssびょう zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, rKe = {
+}, tKe = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, aKe = {
+}, nKe = {
   date: q({
-    formats: tKe,
+    formats: JUe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: nKe,
+    formats: eKe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: rKe,
+    formats: tKe,
     defaultWidth: "full"
   })
-}, iKe = {
+}, rKe = {
   lastWeek: "せんしゅうのeeeeのp",
   yesterday: "きのうのp",
   today: "きょうのp",
   tomorrow: "あしたのp",
   nextWeek: "よくしゅうのeeeeのp",
   other: "P"
-}, oKe = (e, t, n, r) => iKe[e], sKe = {
+}, aKe = (e, t, n, r) => rKe[e], iKe = {
   narrow: ["BC", "AC"],
   abbreviated: ["きげんぜん", "せいれき"],
   wide: ["きげんぜん", "せいれき"]
-}, uKe = {
+}, oKe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["だい1しはんき", "だい2しはんき", "だい3しはんき", "だい4しはんき"]
-}, cKe = {
+}, sKe = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
   abbreviated: [
     "1がつ",
@@ -68015,7 +67955,7 @@ const QYe = {
     "11がつ",
     "12がつ"
   ]
-}, lKe = {
+}, uKe = {
   narrow: ["にち", "げつ", "か", "すい", "もく", "きん", "ど"],
   short: ["にち", "げつ", "か", "すい", "もく", "きん", "ど"],
   abbreviated: ["にち", "げつ", "か", "すい", "もく", "きん", "ど"],
@@ -68028,7 +67968,7 @@ const QYe = {
     "きんようび",
     "どようび"
   ]
-}, dKe = {
+}, cKe = {
   narrow: {
     am: "ごぜん",
     pm: "ごご",
@@ -68059,7 +67999,7 @@ const QYe = {
     evening: "よる",
     night: "しんや"
   }
-}, fKe = {
+}, lKe = {
   narrow: {
     am: "ごぜん",
     pm: "ごご",
@@ -68090,7 +68030,7 @@ const QYe = {
     evening: "よる",
     night: "しんや"
   }
-}, mKe = (e, t) => {
+}, dKe = (e, t) => {
   const n = Number(e);
   switch (String(t == null ? void 0 : t.unit)) {
     case "year":
@@ -68112,49 +68052,49 @@ const QYe = {
     default:
       return `${n}`;
   }
-}, hKe = {
-  ordinalNumber: mKe,
+}, fKe = {
+  ordinalNumber: dKe,
   era: A({
-    values: sKe,
+    values: iKe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: uKe,
+    values: oKe,
     defaultWidth: "wide",
     argumentCallback: (e) => Number(e) - 1
   }),
   month: A({
-    values: cKe,
+    values: sKe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: lKe,
+    values: uKe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: dKe,
+    values: cKe,
     defaultWidth: "wide",
-    formattingValues: fKe,
+    formattingValues: lKe,
     defaultFormattingWidth: "wide"
   })
-}, pKe = /^だ?い?\d+(ねん|しはんき|がつ|しゅう|にち|じ|ふん|びょう)?/i, gKe = /\d+/i, vKe = {
+}, mKe = /^だ?い?\d+(ねん|しはんき|がつ|しゅう|にち|じ|ふん|びょう)?/i, hKe = /\d+/i, pKe = {
   narrow: /^(B\.?C\.?|A\.?D\.?)/i,
   abbreviated: /^(きげん[前後]|せいれき)/i,
   wide: /^(きげん[前後]|せいれき)/i
-}, yKe = {
+}, gKe = {
   narrow: [/^B/i, /^A/i],
   any: [/^(きげんぜん)/i, /^(せいれき|きげんご)/i]
-}, bKe = {
+}, vKe = {
   narrow: /^[1234]/i,
   abbreviated: /^Q[1234]/i,
   wide: /^だい[1234一二三四１２３４]しはんき/i
-}, wKe = {
+}, yKe = {
   any: [/(1|一|１)/i, /(2|二|２)/i, /(3|三|３)/i, /(4|四|４)/i]
-}, PKe = {
+}, bKe = {
   narrow: /^([123456789]|1[012])/,
   abbreviated: /^([123456789]|1[012])がつ/i,
   wide: /^([123456789]|1[012])がつ/i
-}, xKe = {
+}, wKe = {
   any: [
     /^1\D/,
     /^2/,
@@ -68169,16 +68109,16 @@ const QYe = {
     /^11/,
     /^12/
   ]
-}, MKe = {
+}, PKe = {
   narrow: /^(にち|げつ|か|すい|もく|きん|ど)/,
   short: /^(にち|げつ|か|すい|もく|きん|ど)/,
   abbreviated: /^(にち|げつ|か|すい|もく|きん|ど)/,
   wide: /^(にち|げつ|か|すい|もく|きん|ど)ようび/
-}, kKe = {
+}, xKe = {
   any: [/^にち/, /^げつ/, /^か/, /^すい/, /^もく/, /^きん/, /^ど/]
-}, CKe = {
+}, MKe = {
   any: /^(AM|PM|ごぜん|ごご|しょうご|しんや|まよなか|よる|あさ)/i
-}, SKe = {
+}, kKe = {
   any: {
     am: /^(A|ごぜん)/i,
     pm: /^(P|ごご)/i,
@@ -68189,57 +68129,57 @@ const QYe = {
     evening: /^よる/i,
     night: /^しんや/i
   }
-}, $Ke = {
+}, CKe = {
   ordinalNumber: Se({
-    matchPattern: pKe,
-    parsePattern: gKe,
+    matchPattern: mKe,
+    parsePattern: hKe,
     valueCallback: function(e) {
       return parseInt(e, 10);
     }
   }),
   era: D({
-    matchPatterns: vKe,
+    matchPatterns: pKe,
     defaultMatchWidth: "wide",
-    parsePatterns: yKe,
+    parsePatterns: gKe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: bKe,
+    matchPatterns: vKe,
     defaultMatchWidth: "wide",
-    parsePatterns: wKe,
+    parsePatterns: yKe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: bKe,
+    defaultMatchWidth: "wide",
+    parsePatterns: wKe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: PKe,
     defaultMatchWidth: "wide",
     parsePatterns: xKe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: MKe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: kKe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: CKe,
-    defaultMatchWidth: "any",
-    parsePatterns: SKe,
-    defaultParseWidth: "any"
   })
-}, _Ke = {
+}, SKe = {
   code: "ja-Hira",
-  formatDistance: eKe,
-  formatLong: aKe,
-  formatRelative: oKe,
-  localize: hKe,
-  match: $Ke,
+  formatDistance: ZUe,
+  formatLong: nKe,
+  formatRelative: aKe,
+  localize: fKe,
+  match: CKe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, TKe = {
+}, $Ke = {
   lessThanXSeconds: {
     past: "{{count}} წამზე ნაკლები ხნის წინ",
     present: "{{count}} წამზე ნაკლები",
@@ -68320,54 +68260,54 @@ const QYe = {
     present: "თითქმის {{count}} წელი",
     future: "თითქმის {{count}} წელში"
   }
-}, EKe = (e, t, n) => {
+}, _Ke = (e, t, n) => {
   let r;
-  const a = TKe[e];
+  const a = $Ke[e];
   return typeof a == "string" ? r = a : n != null && n.addSuffix && n.comparison && n.comparison > 0 ? r = a.future.replace("{{count}}", String(t)) : n != null && n.addSuffix ? r = a.past.replace("{{count}}", String(t)) : r = a.present.replace("{{count}}", String(t)), r;
-}, AKe = {
+}, TKe = {
   full: "EEEE, do MMMM, y",
   long: "do, MMMM, y",
   medium: "d, MMM, y",
   short: "dd/MM/yyyy"
-}, OKe = {
+}, EKe = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, DKe = {
+}, AKe = {
   full: "{{date}} {{time}}'-ზე'",
   long: "{{date}} {{time}}'-ზე'",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, NKe = {
+}, OKe = {
   date: q({
-    formats: AKe,
+    formats: TKe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: OKe,
+    formats: EKe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: DKe,
+    formats: AKe,
     defaultWidth: "full"
   })
-}, WKe = {
+}, DKe = {
   lastWeek: "'წინა' eeee p'-ზე'",
   yesterday: "'გუშინ' p'-ზე'",
   today: "'დღეს' p'-ზე'",
   tomorrow: "'ხვალ' p'-ზე'",
   nextWeek: "'შემდეგი' eeee p'-ზე'",
   other: "P"
-}, RKe = (e, t, n, r) => WKe[e], jKe = {
+}, NKe = (e, t, n, r) => DKe[e], WKe = {
   narrow: ["ჩ.წ-მდე", "ჩ.წ"],
   abbreviated: ["ჩვ.წ-მდე", "ჩვ.წ"],
   wide: ["ჩვენს წელთაღრიცხვამდე", "ჩვენი წელთაღრიცხვით"]
-}, IKe = {
+}, RKe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ლი კვ", "2-ე კვ", "3-ე კვ", "4-ე კვ"],
   wide: ["1-ლი კვარტალი", "2-ე კვარტალი", "3-ე კვარტალი", "4-ე კვარტალი"]
-}, LKe = {
+}, jKe = {
   narrow: [
     "ია",
     "თე",
@@ -68410,7 +68350,7 @@ const QYe = {
     "ნოემბერი",
     "დეკემბერი"
   ]
-}, FKe = {
+}, IKe = {
   narrow: ["კვ", "ორ", "სა", "ოთ", "ხუ", "პა", "შა"],
   short: ["კვი", "ორშ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"],
   abbreviated: ["კვი", "ორშ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"],
@@ -68423,7 +68363,7 @@ const QYe = {
     "პარასკევი",
     "შაბათი"
   ]
-}, zKe = {
+}, LKe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -68454,7 +68394,7 @@ const QYe = {
     evening: "საღამო",
     night: "ღამე"
   }
-}, VKe = {
+}, FKe = {
   narrow: {
     am: "a",
     pm: "p",
@@ -68485,52 +68425,52 @@ const QYe = {
     evening: "საღამოს",
     night: "ღამით"
   }
-}, HKe = (e) => {
+}, zKe = (e) => {
   const t = Number(e);
   return t === 1 ? t + "-ლი" : t + "-ე";
-}, BKe = {
-  ordinalNumber: HKe,
+}, VKe = {
+  ordinalNumber: zKe,
   era: A({
-    values: jKe,
+    values: WKe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: IKe,
+    values: RKe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: LKe,
+    values: jKe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: FKe,
+    values: IKe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: zKe,
+    values: LKe,
     defaultWidth: "wide",
-    formattingValues: VKe,
+    formattingValues: FKe,
     defaultFormattingWidth: "wide"
   })
-}, qKe = /^(\d+)(-ლი|-ე)?/i, XKe = /\d+/i, GKe = {
+}, HKe = /^(\d+)(-ლი|-ე)?/i, BKe = /\d+/i, qKe = {
   narrow: /^(ჩვ?\.წ)/i,
   abbreviated: /^(ჩვ?\.წ)/i,
   wide: /^(ჩვენს წელთაღრიცხვამდე|ქრისტეშობამდე|ჩვენი წელთაღრიცხვით|ქრისტეშობიდან)/i
-}, YKe = {
+}, XKe = {
   any: [
     /^(ჩვენს წელთაღრიცხვამდე|ქრისტეშობამდე)/i,
     /^(ჩვენი წელთაღრიცხვით|ქრისტეშობიდან)/i
   ]
-}, UKe = {
+}, GKe = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]-(ლი|ე)? კვ/i,
   wide: /^[1234]-(ლი|ე)? კვარტალი/i
-}, KKe = {
+}, YKe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, QKe = {
+}, UKe = {
   any: /^(ია|თე|მა|აპ|მს|ვნ|ვლ|აგ|სე|ოქ|ნო|დე)/i
-}, ZKe = {
+}, KKe = {
   any: [
     /^ია/i,
     /^თ/i,
@@ -68545,15 +68485,15 @@ const QYe = {
     /^ნ/i,
     /^დ/i
   ]
-}, JKe = {
+}, QKe = {
   narrow: /^(კვ|ორ|სა|ოთ|ხუ|პა|შა)/i,
   short: /^(კვი|ორშ|სამ|ოთხ|ხუთ|პარ|შაბ)/i,
   wide: /^(კვირა|ორშაბათი|სამშაბათი|ოთხშაბათი|ხუთშაბათი|პარასკევი|შაბათი)/i
-}, eQe = {
+}, ZKe = {
   any: [/^კვ/i, /^ორ/i, /^სა/i, /^ოთ/i, /^ხუ/i, /^პა/i, /^შა/i]
-}, tQe = {
+}, JKe = {
   any: /^([ap]\.?\s?m\.?|შუაღ|დილ)/i
-}, nQe = {
+}, eQe = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -68564,55 +68504,55 @@ const QYe = {
     evening: /საღამო/i,
     night: /ღამ/i
   }
-}, rQe = {
+}, tQe = {
   ordinalNumber: Se({
-    matchPattern: qKe,
-    parsePattern: XKe,
+    matchPattern: HKe,
+    parsePattern: BKe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: GKe,
+    matchPatterns: qKe,
     defaultMatchWidth: "wide",
-    parsePatterns: YKe,
+    parsePatterns: XKe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: UKe,
+    matchPatterns: GKe,
     defaultMatchWidth: "wide",
-    parsePatterns: KKe,
+    parsePatterns: YKe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
-    matchPatterns: QKe,
+    matchPatterns: UKe,
     defaultMatchWidth: "any",
-    parsePatterns: ZKe,
+    parsePatterns: KKe,
     defaultParseWidth: "any"
   }),
   day: D({
-    matchPatterns: JKe,
+    matchPatterns: QKe,
     defaultMatchWidth: "wide",
-    parsePatterns: eQe,
+    parsePatterns: ZKe,
     defaultParseWidth: "any"
   }),
   dayPeriod: D({
-    matchPatterns: tQe,
+    matchPatterns: JKe,
     defaultMatchWidth: "any",
-    parsePatterns: nQe,
+    parsePatterns: eQe,
     defaultParseWidth: "any"
   })
-}, aQe = {
+}, nQe = {
   code: "ka",
-  formatDistance: EKe,
-  formatLong: NKe,
-  formatRelative: RKe,
-  localize: BKe,
-  match: rQe,
+  formatDistance: _Ke,
+  formatLong: OKe,
+  formatRelative: NKe,
+  localize: VKe,
+  match: tQe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, iQe = {
+}, rQe = {
   lessThanXSeconds: {
     regular: {
       one: "1 секундтан аз",
@@ -68790,32 +68730,32 @@ function vd(e, t) {
   const n = t % 10, r = t % 100;
   return n === 1 && r !== 11 ? e.singularNominative.replace("{{count}}", String(t)) : n >= 2 && n <= 4 && (r < 10 || r > 20) ? e.singularGenitive.replace("{{count}}", String(t)) : e.pluralGenitive.replace("{{count}}", String(t));
 }
-const oQe = (e, t, n) => {
-  const r = iQe[e];
+const aQe = (e, t, n) => {
+  const r = rQe[e];
   return typeof r == "function" ? r(n) : r.type === "weeks" ? t === 1 ? r.one : r.other.replace("{{count}}", String(t)) : n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r.future ? vd(r.future, t) : vd(r.regular, t) + " кейін" : r.past ? vd(r.past, t) : vd(r.regular, t) + " бұрын" : vd(r.regular, t);
-}, sQe = {
+}, iQe = {
   full: "EEEE, do MMMM y 'ж.'",
   long: "do MMMM y 'ж.'",
   medium: "d MMM y 'ж.'",
   short: "dd.MM.yyyy"
-}, uQe = {
+}, oQe = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, cQe = {
+}, sQe = {
   any: "{{date}}, {{time}}"
-}, lQe = {
+}, uQe = {
   date: q({
-    formats: sQe,
+    formats: iQe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: uQe,
+    formats: oQe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: cQe,
+    formats: sQe,
     defaultWidth: "any"
   })
 }, O5 = [
@@ -68827,100 +68767,100 @@ const oQe = (e, t, n) => {
   "жұмада",
   "сенбіде"
 ];
-function dQe(e) {
+function cQe(e) {
   return "'өткен " + O5[e] + " сағат' p'-де'";
 }
 function ED(e) {
   return "'" + O5[e] + " сағат' p'-де'";
 }
-function fQe(e) {
+function lQe(e) {
   return "'келесі " + O5[e] + " сағат' p'-де'";
 }
-const mQe = {
+const dQe = {
   lastWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? ED(r) : dQe(r);
+    return bn(e, t, n) ? ED(r) : cQe(r);
   },
   yesterday: "'кеше сағат' p'-де'",
   today: "'бүгін сағат' p'-де'",
   tomorrow: "'ертең сағат' p'-де'",
   nextWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? ED(r) : fQe(r);
+    return bn(e, t, n) ? ED(r) : lQe(r);
   },
   other: "P"
-}, hQe = (e, t, n, r) => {
-  const a = mQe[e];
+}, fQe = (e, t, n, r) => {
+  const a = dQe[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, pQe = {
+}, mQe = {
   narrow: ["б.з.д.", "б.з."],
   abbreviated: ["б.з.д.", "б.з."],
   wide: ["біздің заманымызға дейін", "біздің заманымыз"]
-}, gQe = {
+}, hQe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ші тоқ.", "2-ші тоқ.", "3-ші тоқ.", "4-ші тоқ."],
   wide: ["1-ші тоқсан", "2-ші тоқсан", "3-ші тоқсан", "4-ші тоқсан"]
+}, pQe = {
+  narrow: ["Қ", "А", "Н", "С", "М", "М", "Ш", "Т", "Қ", "Қ", "Қ", "Ж"],
+  abbreviated: [
+    "қаң",
+    "ақп",
+    "нау",
+    "сәу",
+    "мам",
+    "мау",
+    "шіл",
+    "там",
+    "қыр",
+    "қаз",
+    "қар",
+    "жел"
+  ],
+  wide: [
+    "қаңтар",
+    "ақпан",
+    "наурыз",
+    "сәуір",
+    "мамыр",
+    "маусым",
+    "шілде",
+    "тамыз",
+    "қыркүйек",
+    "қазан",
+    "қараша",
+    "желтоқсан"
+  ]
+}, gQe = {
+  narrow: ["Қ", "А", "Н", "С", "М", "М", "Ш", "Т", "Қ", "Қ", "Қ", "Ж"],
+  abbreviated: [
+    "қаң",
+    "ақп",
+    "нау",
+    "сәу",
+    "мам",
+    "мау",
+    "шіл",
+    "там",
+    "қыр",
+    "қаз",
+    "қар",
+    "жел"
+  ],
+  wide: [
+    "қаңтар",
+    "ақпан",
+    "наурыз",
+    "сәуір",
+    "мамыр",
+    "маусым",
+    "шілде",
+    "тамыз",
+    "қыркүйек",
+    "қазан",
+    "қараша",
+    "желтоқсан"
+  ]
 }, vQe = {
-  narrow: ["Қ", "А", "Н", "С", "М", "М", "Ш", "Т", "Қ", "Қ", "Қ", "Ж"],
-  abbreviated: [
-    "қаң",
-    "ақп",
-    "нау",
-    "сәу",
-    "мам",
-    "мау",
-    "шіл",
-    "там",
-    "қыр",
-    "қаз",
-    "қар",
-    "жел"
-  ],
-  wide: [
-    "қаңтар",
-    "ақпан",
-    "наурыз",
-    "сәуір",
-    "мамыр",
-    "маусым",
-    "шілде",
-    "тамыз",
-    "қыркүйек",
-    "қазан",
-    "қараша",
-    "желтоқсан"
-  ]
-}, yQe = {
-  narrow: ["Қ", "А", "Н", "С", "М", "М", "Ш", "Т", "Қ", "Қ", "Қ", "Ж"],
-  abbreviated: [
-    "қаң",
-    "ақп",
-    "нау",
-    "сәу",
-    "мам",
-    "мау",
-    "шіл",
-    "там",
-    "қыр",
-    "қаз",
-    "қар",
-    "жел"
-  ],
-  wide: [
-    "қаңтар",
-    "ақпан",
-    "наурыз",
-    "сәуір",
-    "мамыр",
-    "маусым",
-    "шілде",
-    "тамыз",
-    "қыркүйек",
-    "қазан",
-    "қараша",
-    "желтоқсан"
-  ]
-}, bQe = {
   narrow: ["Ж", "Д", "С", "С", "Б", "Ж", "С"],
   short: ["жс", "дс", "сс", "ср", "бс", "жм", "сб"],
   abbreviated: ["жс", "дс", "сс", "ср", "бс", "жм", "сб"],
@@ -68933,7 +68873,7 @@ const mQe = {
     "жұма",
     "сенбі"
   ]
-}, wQe = {
+}, yQe = {
   narrow: {
     am: "ТД",
     pm: "ТК",
@@ -68954,7 +68894,7 @@ const mQe = {
     evening: "кеш",
     night: "түн"
   }
-}, PQe = {
+}, bQe = {
   narrow: {
     am: "ТД",
     pm: "ТК",
@@ -68996,53 +68936,53 @@ const mQe = {
   80: "-ші",
   90: "-шы",
   100: "-ші"
-}, xQe = (e, t) => {
+}, wQe = (e, t) => {
   const n = Number(e), r = n % 10, a = n >= 100 ? 100 : null, i = pP[n] || pP[r] || a && pP[a] || "";
   return n + i;
-}, MQe = {
-  ordinalNumber: xQe,
+}, PQe = {
+  ordinalNumber: wQe,
   era: A({
-    values: pQe,
+    values: mQe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: gQe,
+    values: hQe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: vQe,
+    values: pQe,
     defaultWidth: "wide",
-    formattingValues: yQe,
+    formattingValues: gQe,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: bQe,
+    values: vQe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: wQe,
+    values: yQe,
     defaultWidth: "any",
-    formattingValues: PQe,
+    formattingValues: bQe,
     defaultFormattingWidth: "wide"
   })
-}, kQe = /^(\d+)(-?(ші|шы))?/i, CQe = /\d+/i, SQe = {
+}, xQe = /^(\d+)(-?(ші|шы))?/i, MQe = /\d+/i, kQe = {
   narrow: /^((б )?з\.?\s?д\.?)/i,
   abbreviated: /^((б )?з\.?\s?д\.?)/i,
   wide: /^(біздің заманымызға дейін|біздің заманымыз|біздің заманымыздан)/i
-}, $Qe = {
+}, CQe = {
   any: [/^б/i, /^з/i]
-}, _Qe = {
+}, SQe = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?ші)? тоқ.?/i,
   wide: /^[1234](-?ші)? тоқсан/i
-}, TQe = {
+}, $Qe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, EQe = {
+}, _Qe = {
   narrow: /^(қ|а|н|с|м|мау|ш|т|қыр|қаз|қар|ж)/i,
   abbreviated: /^(қаң|ақп|нау|сәу|мам|мау|шіл|там|қыр|қаз|қар|жел)/i,
   wide: /^(қаңтар|ақпан|наурыз|сәуір|мамыр|маусым|шілде|тамыз|қыркүйек|қазан|қараша|желтоқсан)/i
-}, AQe = {
+}, TQe = {
   narrow: [
     /^қ/i,
     /^а/i,
@@ -69085,11 +69025,11 @@ const mQe = {
     /^қ/i,
     /^ж/i
   ]
-}, OQe = {
+}, EQe = {
   narrow: /^(ж|д|с|с|б|ж|с)/i,
   short: /^(жс|дс|сс|ср|бс|жм|сб)/i,
   wide: /^(жексенбі|дүйсенбі|сейсенбі|сәрсенбі|бейсенбі|жұма|сенбі)/i
-}, DQe = {
+}, AQe = {
   narrow: [/^ж/i, /^д/i, /^с/i, /^с/i, /^б/i, /^ж/i, /^с/i],
   short: [/^жс/i, /^дс/i, /^сс/i, /^ср/i, /^бс/i, /^жм/i, /^сб/i],
   any: [
@@ -69101,11 +69041,11 @@ const mQe = {
     /^ж[ұм]/i,
     /^се[н]/i
   ]
-}, NQe = {
+}, OQe = {
   narrow: /^Т\.?\s?[ДК]\.?|түн ортасында|((түсте|таңертең|таңда|таңертең|таңмен|таң|күндіз|күн|кеште|кеш|түнде|түн)\.?)/i,
   wide: /^Т\.?\s?[ДК]\.?|түн ортасында|((түсте|таңертең|таңда|таңертең|таңмен|таң|күндіз|күн|кеште|кеш|түнде|түн)\.?)/i,
   any: /^Т\.?\s?[ДК]\.?|түн ортасында|((түсте|таңертең|таңда|таңертең|таңмен|таң|күндіз|күн|кеште|кеш|түнде|түн)\.?)/i
-}, WQe = {
+}, DQe = {
   any: {
     am: /^ТД/i,
     pm: /^ТК/i,
@@ -69116,55 +69056,55 @@ const mQe = {
     evening: /кеш/i,
     night: /түн/i
   }
-}, RQe = {
+}, NQe = {
   ordinalNumber: Se({
-    matchPattern: kQe,
-    parsePattern: CQe,
+    matchPattern: xQe,
+    parsePattern: MQe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: SQe,
+    matchPatterns: kQe,
     defaultMatchWidth: "wide",
-    parsePatterns: $Qe,
+    parsePatterns: CQe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: _Qe,
+    matchPatterns: SQe,
     defaultMatchWidth: "wide",
-    parsePatterns: TQe,
+    parsePatterns: $Qe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: _Qe,
+    defaultMatchWidth: "wide",
+    parsePatterns: TQe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: EQe,
     defaultMatchWidth: "wide",
     parsePatterns: AQe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: OQe,
     defaultMatchWidth: "wide",
     parsePatterns: DQe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: NQe,
-    defaultMatchWidth: "wide",
-    parsePatterns: WQe,
-    defaultParseWidth: "any"
   })
-}, jQe = {
+}, WQe = {
   code: "kk",
-  formatDistance: oQe,
-  formatLong: lQe,
-  formatRelative: hQe,
-  localize: MQe,
-  match: RQe,
+  formatDistance: aQe,
+  formatLong: uQe,
+  formatRelative: fQe,
+  localize: PQe,
+  match: NQe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, IQe = {
+}, RQe = {
   lessThanXSeconds: "តិចជាង {{count}} វិនាទី",
   xSeconds: "{{count}} វិនាទី",
   halfAMinute: "កន្លះនាទី",
@@ -69181,53 +69121,53 @@ const mQe = {
   xYears: "{{count}} ឆ្នាំ",
   overXYears: "ជាង {{count}} ឆ្នាំ",
   almostXYears: "ជិត {{count}} ឆ្នាំ"
-}, LQe = (e, t, n) => {
-  let a = IQe[e];
+}, jQe = (e, t, n) => {
+  let a = RQe[e];
   return typeof t == "number" && (a = a.replace("{{count}}", t.toString())), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "ក្នុងរយៈពេល " + a : a + "មុន" : a;
-}, FQe = {
+}, IQe = {
   full: "EEEE do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
   short: "dd/MM/yyyy"
-}, zQe = {
+}, LQe = {
   full: "h:mm:ss a",
   long: "h:mm:ss a",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, VQe = {
+}, FQe = {
   full: "{{date}} 'ម៉ោង' {{time}}",
   long: "{{date}} 'ម៉ោង' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, HQe = {
+}, zQe = {
   date: q({
-    formats: FQe,
+    formats: IQe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: zQe,
+    formats: LQe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: VQe,
+    formats: FQe,
     defaultWidth: "full"
   })
-}, BQe = {
+}, VQe = {
   lastWeek: "'ថ្ងៃ'eeee'ស​ប្តា​ហ៍​មុនម៉ោង' p",
   yesterday: "'ម្សិលមិញនៅម៉ោង' p",
   today: "'ថ្ងៃនេះម៉ោង' p",
   tomorrow: "'ថ្ងៃស្អែកម៉ោង' p",
   nextWeek: "'ថ្ងៃ'eeee'ស​ប្តា​ហ៍​ក្រោយម៉ោង' p",
   other: "P"
-}, qQe = (e, t, n, r) => BQe[e], XQe = {
+}, HQe = (e, t, n, r) => VQe[e], BQe = {
   narrow: ["ម.គស", "គស"],
   abbreviated: ["មុនគ.ស", "គ.ស"],
   wide: ["មុនគ្រិស្តសករាជ", "នៃគ្រិស្តសករាជ"]
-}, GQe = {
+}, qQe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["ត្រីមាសទី 1", "ត្រីមាសទី 2", "ត្រីមាសទី 3", "ត្រីមាសទី 4"]
-}, YQe = {
+}, XQe = {
   narrow: [
     "ម.ក",
     "ក.ម",
@@ -69270,12 +69210,12 @@ const mQe = {
     "វិច្ឆិកា",
     "ធ្នូ"
   ]
-}, UQe = {
+}, GQe = {
   narrow: ["អា", "ច", "អ", "ព", "ព្រ", "សុ", "ស"],
   short: ["អា", "ច", "អ", "ព", "ព្រ", "សុ", "ស"],
   abbreviated: ["អា", "ច", "អ", "ព", "ព្រ", "សុ", "ស"],
   wide: ["អាទិត្យ", "ចន្ទ", "អង្គារ", "ពុធ", "ព្រហស្បតិ៍", "សុក្រ", "សៅរ៍"]
-}, KQe = {
+}, YQe = {
   narrow: {
     am: "ព្រឹក",
     pm: "ល្ងាច",
@@ -69306,7 +69246,7 @@ const mQe = {
     evening: "ពេលល្ងាច",
     night: "ពេលយប់"
   }
-}, QQe = {
+}, UQe = {
   narrow: {
     am: "ព្រឹក",
     pm: "ល្ងាច",
@@ -69337,48 +69277,48 @@ const mQe = {
     evening: "ពេលល្ងាច",
     night: "ពេលយប់"
   }
-}, ZQe = (e, t) => Number(e).toString(), JQe = {
-  ordinalNumber: ZQe,
+}, KQe = (e, t) => Number(e).toString(), QQe = {
+  ordinalNumber: KQe,
   era: A({
-    values: XQe,
+    values: BQe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: GQe,
+    values: qQe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: YQe,
+    values: XQe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: UQe,
+    values: GQe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: KQe,
+    values: YQe,
     defaultWidth: "wide",
-    formattingValues: QQe,
+    formattingValues: UQe,
     defaultFormattingWidth: "wide"
   })
-}, eZe = /^(\d+)(th|st|nd|rd)?/i, tZe = /\d+/i, nZe = {
+}, ZQe = /^(\d+)(th|st|nd|rd)?/i, JQe = /\d+/i, eZe = {
   narrow: /^(ម\.)?គស/i,
   abbreviated: /^(មុន)?គ\.ស/i,
   wide: /^(មុន|នៃ)គ្រិស្តសករាជ/i
-}, rZe = {
+}, tZe = {
   any: [/^(ម|មុន)គ\.?ស/i, /^(នៃ)?គ\.?ស/i]
-}, aZe = {
+}, nZe = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^(ត្រីមាស)(ទី)?\s?[1234]/i
-}, iZe = {
+}, rZe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, oZe = {
+}, aZe = {
   narrow: /^(ម\.ក|ក\.ម|មិ|ម\.ស|ឧ\.ស|ម\.ថ|ក\.ដ|សី|កញ|តុ|វិ|ធ)/i,
   abbreviated: /^(មករា|កុម្ភៈ|មីនា|មេសា|ឧសភា|មិថុនា|កក្កដា|សីហា|កញ្ញា|តុលា|វិច្ឆិកា|ធ្នូ)/i,
   wide: /^(មករា|កុម្ភៈ|មីនា|មេសា|ឧសភា|មិថុនា|កក្កដា|សីហា|កញ្ញា|តុលា|វិច្ឆិកា|ធ្នូ)/i
-}, sZe = {
+}, iZe = {
   narrow: [
     /^ម\.ក/i,
     /^ក\.ម/i,
@@ -69407,18 +69347,18 @@ const mQe = {
     /^វិច/i,
     /^ធ/i
   ]
-}, uZe = {
+}, oZe = {
   narrow: /^(អា|ច|អ|ព|ព្រ|សុ|ស)/i,
   short: /^(អា|ច|អ|ព|ព្រ|សុ|ស)/i,
   abbreviated: /^(អា|ច|អ|ព|ព្រ|សុ|ស)/i,
   wide: /^(អាទិត្យ|ចន្ទ|អង្គារ|ពុធ|ព្រហស្បតិ៍|សុក្រ|សៅរ៍)/i
-}, cZe = {
+}, sZe = {
   narrow: [/^អា/i, /^ច/i, /^អ/i, /^ព/i, /^ព្រ/i, /^សុ/i, /^ស/i],
   any: [/^អា/i, /^ច/i, /^អ/i, /^ព/i, /^ព្រ/i, /^សុ/i, /^សៅ/i]
-}, lZe = {
+}, uZe = {
   narrow: /^(ព្រឹក|ល្ងាច|ពេលព្រឹក|ពេលថ្ងៃត្រង់|ពេលល្ងាច|ពេលរសៀល|ពេលយប់|ពេលកណ្ដាលអធ្រាត្រ)/i,
   any: /^(ព្រឹក|ល្ងាច|ពេលព្រឹក|ពេលថ្ងៃត្រង់|ពេលល្ងាច|ពេលរសៀល|ពេលយប់|ពេលកណ្ដាលអធ្រាត្រ)/i
-}, dZe = {
+}, cZe = {
   any: {
     am: /^ព្រឹក/i,
     pm: /^ល្ងាច/i,
@@ -69429,57 +69369,57 @@ const mQe = {
     evening: /ពេលល្ងាច/i,
     night: /ពេលយប់/i
   }
-}, fZe = {
+}, lZe = {
   ordinalNumber: Se({
-    matchPattern: eZe,
-    parsePattern: tZe,
+    matchPattern: ZQe,
+    parsePattern: JQe,
     valueCallback: function(e) {
       return parseInt(e, 10);
     }
   }),
   era: D({
-    matchPatterns: nZe,
+    matchPatterns: eZe,
     defaultMatchWidth: "wide",
-    parsePatterns: rZe,
+    parsePatterns: tZe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: aZe,
+    matchPatterns: nZe,
     defaultMatchWidth: "wide",
-    parsePatterns: iZe,
+    parsePatterns: rZe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: aZe,
+    defaultMatchWidth: "wide",
+    parsePatterns: iZe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: oZe,
     defaultMatchWidth: "wide",
     parsePatterns: sZe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: uZe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: cZe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: lZe,
-    defaultMatchWidth: "any",
-    parsePatterns: dZe,
-    defaultParseWidth: "any"
   })
-}, mZe = {
+}, dZe = {
   code: "km",
-  formatDistance: LQe,
-  formatLong: HQe,
-  formatRelative: qQe,
-  localize: JQe,
-  match: fZe,
+  formatDistance: jQe,
+  formatLong: zQe,
+  formatRelative: HQe,
+  localize: QQe,
+  match: lZe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, hZe = {
+}, fZe = {
   lessThanXSeconds: {
     one: {
       default: "1 ಸೆಕೆಂಡ್‌ಗಿಂತ ಕಡಿಮೆ",
@@ -69651,11 +69591,11 @@ const mQe = {
 function AD(e, t) {
   return t != null && t.addSuffix ? t.comparison && t.comparison > 0 ? e.future : e.past : e.default;
 }
-const pZe = (e, t, n) => {
+const mZe = (e, t, n) => {
   let r;
-  const a = hZe[e];
+  const a = fZe[e];
   return a.one && t === 1 ? r = AD(a.one, n) : r = AD(a.other, n), r.replace("{{count}}", String(t));
-}, gZe = {
+}, hZe = {
   full: "EEEE, MMMM d, y",
   // CLDR 1816
   long: "MMMM d, y",
@@ -69664,7 +69604,7 @@ const pZe = (e, t, n) => {
   // CLDR 1818
   short: "d/M/yy"
   // CLDR 1819
-}, vZe = {
+}, pZe = {
   full: "hh:mm:ss a zzzz",
   // CLDR 1820
   long: "hh:mm:ss a z",
@@ -69673,7 +69613,7 @@ const pZe = (e, t, n) => {
   // CLDR 1822
   short: "hh:mm a"
   // CLDR 1823
-}, yZe = {
+}, gZe = {
   full: "{{date}} {{time}}",
   // CLDR 1824
   long: "{{date}} {{time}}",
@@ -69682,39 +69622,39 @@ const pZe = (e, t, n) => {
   // CLDR 1826
   short: "{{date}} {{time}}"
   // CLDR 1827
-}, bZe = {
+}, vZe = {
   date: q({
-    formats: gZe,
+    formats: hZe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: vZe,
+    formats: pZe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: yZe,
+    formats: gZe,
     defaultWidth: "full"
   })
-}, wZe = {
+}, yZe = {
   lastWeek: "'ಕಳೆದ' eeee p 'ಕ್ಕೆ'",
   yesterday: "'ನಿನ್ನೆ' p 'ಕ್ಕೆ'",
   today: "'ಇಂದು' p 'ಕ್ಕೆ'",
   tomorrow: "'ನಾಳೆ' p 'ಕ್ಕೆ'",
   nextWeek: "eeee p 'ಕ್ಕೆ'",
   other: "P"
-}, PZe = (e, t, n, r) => wZe[e], xZe = {
+}, bZe = (e, t, n, r) => yZe[e], wZe = {
   narrow: ["ಕ್ರಿ.ಪೂ", "ಕ್ರಿ.ಶ"],
   abbreviated: ["ಕ್ರಿ.ಪೂ", "ಕ್ರಿ.ಶ"],
   // CLDR #1618, #1620
   wide: ["ಕ್ರಿಸ್ತ ಪೂರ್ವ", "ಕ್ರಿಸ್ತ ಶಕ"]
   // CLDR #1614, #1616
-}, MZe = {
+}, PZe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["ತ್ರೈ 1", "ತ್ರೈ 2", "ತ್ರೈ 3", "ತ್ರೈ 4"],
   // CLDR #1630 - #1638
   wide: ["1ನೇ ತ್ರೈಮಾಸಿಕ", "2ನೇ ತ್ರೈಮಾಸಿಕ", "3ನೇ ತ್ರೈಮಾಸಿಕ", "4ನೇ ತ್ರೈಮಾಸಿಕ"]
   // CLDR #1622 - #1629
-}, kZe = {
+}, xZe = {
   narrow: ["ಜ", "ಫೆ", "ಮಾ", "ಏ", "ಮೇ", "ಜೂ", "ಜು", "ಆ", "ಸೆ", "ಅ", "ನ", "ಡಿ"],
   abbreviated: [
     "ಜನ",
@@ -69744,7 +69684,7 @@ const pZe = (e, t, n) => {
     "ನವೆಂಬರ್",
     "ಡಿಸೆಂಬರ್"
   ]
-}, CZe = {
+}, MZe = {
   narrow: ["ಭಾ", "ಸೋ", "ಮಂ", "ಬು", "ಗು", "ಶು", "ಶ"],
   short: ["ಭಾನು", "ಸೋಮ", "ಮಂಗಳ", "ಬುಧ", "ಗುರು", "ಶುಕ್ರ", "ಶನಿ"],
   abbreviated: ["ಭಾನು", "ಸೋಮ", "ಮಂಗಳ", "ಬುಧ", "ಗುರು", "ಶುಕ್ರ", "ಶನಿ"],
@@ -69757,7 +69697,7 @@ const pZe = (e, t, n) => {
     "ಶುಕ್ರವಾರ",
     "ಶನಿವಾರ"
   ]
-}, SZe = {
+}, kZe = {
   narrow: {
     am: "ಪೂರ್ವಾಹ್ನ",
     pm: "ಅಪರಾಹ್ನ",
@@ -69788,7 +69728,7 @@ const pZe = (e, t, n) => {
     evening: "ಸಂಜೆ",
     night: "ರಾತ್ರಿ"
   }
-}, $Ze = {
+}, CZe = {
   narrow: {
     am: "ಪೂ",
     pm: "ಅ",
@@ -69819,48 +69759,48 @@ const pZe = (e, t, n) => {
     evening: "ಸಂಜೆ",
     night: "ರಾತ್ರಿ"
   }
-}, _Ze = (e, t) => Number(e) + "ನೇ", TZe = {
-  ordinalNumber: _Ze,
+}, SZe = (e, t) => Number(e) + "ನೇ", $Ze = {
+  ordinalNumber: SZe,
   era: A({
-    values: xZe,
+    values: wZe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: MZe,
+    values: PZe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: kZe,
+    values: xZe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: CZe,
+    values: MZe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: SZe,
+    values: kZe,
     defaultWidth: "wide",
-    formattingValues: $Ze,
+    formattingValues: CZe,
     defaultFormattingWidth: "wide"
   })
-}, EZe = /^(\d+)(ನೇ|ನೆ)?/i, AZe = /\d+/i, OZe = {
+}, _Ze = /^(\d+)(ನೇ|ನೆ)?/i, TZe = /\d+/i, EZe = {
   narrow: /^(ಕ್ರಿ.ಪೂ|ಕ್ರಿ.ಶ)/i,
   abbreviated: /^(ಕ್ರಿ\.?\s?ಪೂ\.?|ಕ್ರಿ\.?\s?ಶ\.?|ಪ್ರ\.?\s?ಶ\.?)/i,
   wide: /^(ಕ್ರಿಸ್ತ ಪೂರ್ವ|ಕ್ರಿಸ್ತ ಶಕ|ಪ್ರಸಕ್ತ ಶಕ)/i
-}, DZe = {
+}, AZe = {
   any: [/^ಪೂ/i, /^(ಶ|ಪ್ರ)/i]
-}, NZe = {
+}, OZe = {
   narrow: /^[1234]/i,
   abbreviated: /^ತ್ರೈ[1234]|ತ್ರೈ [1234]| [1234]ತ್ರೈ/i,
   wide: /^[1234](ನೇ)? ತ್ರೈಮಾಸಿಕ/i
-}, WZe = {
+}, DZe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, RZe = {
+}, NZe = {
   narrow: /^(ಜೂ|ಜು|ಜ|ಫೆ|ಮಾ|ಏ|ಮೇ|ಆ|ಸೆ|ಅ|ನ|ಡಿ)/i,
   abbreviated: /^(ಜನ|ಫೆಬ್ರ|ಮಾರ್ಚ್|ಏಪ್ರಿ|ಮೇ|ಜೂನ್|ಜುಲೈ|ಆಗ|ಸೆಪ್ಟೆಂ|ಅಕ್ಟೋ|ನವೆಂ|ಡಿಸೆಂ)/i,
   wide: /^(ಜನವರಿ|ಫೆಬ್ರವರಿ|ಮಾರ್ಚ್|ಏಪ್ರಿಲ್|ಮೇ|ಜೂನ್|ಜುಲೈ|ಆಗಸ್ಟ್|ಸೆಪ್ಟೆಂಬರ್|ಅಕ್ಟೋಬರ್|ನವೆಂಬರ್|ಡಿಸೆಂಬರ್)/i
-}, jZe = {
+}, WZe = {
   narrow: [
     /^ಜ$/i,
     /^ಫೆ/i,
@@ -69889,18 +69829,18 @@ const pZe = (e, t, n) => {
     /^ನ/i,
     /^ಡಿ/i
   ]
-}, IZe = {
+}, RZe = {
   narrow: /^(ಭಾ|ಸೋ|ಮ|ಬು|ಗು|ಶು|ಶ)/i,
   short: /^(ಭಾನು|ಸೋಮ|ಮಂಗಳ|ಬುಧ|ಗುರು|ಶುಕ್ರ|ಶನಿ)/i,
   abbreviated: /^(ಭಾನು|ಸೋಮ|ಮಂಗಳ|ಬುಧ|ಗುರು|ಶುಕ್ರ|ಶನಿ)/i,
   wide: /^(ಭಾನುವಾರ|ಸೋಮವಾರ|ಮಂಗಳವಾರ|ಬುಧವಾರ|ಗುರುವಾರ|ಶುಕ್ರವಾರ|ಶನಿವಾರ)/i
-}, LZe = {
+}, jZe = {
   narrow: [/^ಭಾ/i, /^ಸೋ/i, /^ಮ/i, /^ಬು/i, /^ಗು/i, /^ಶು/i, /^ಶ/i],
   any: [/^ಭಾ/i, /^ಸೋ/i, /^ಮ/i, /^ಬು/i, /^ಗು/i, /^ಶು/i, /^ಶ/i]
-}, FZe = {
+}, IZe = {
   narrow: /^(ಪೂ|ಅ|ಮಧ್ಯರಾತ್ರಿ|ಮಧ್ಯಾನ್ಹ|ಬೆಳಗ್ಗೆ|ಸಂಜೆ|ರಾತ್ರಿ)/i,
   any: /^(ಪೂರ್ವಾಹ್ನ|ಅಪರಾಹ್ನ|ಮಧ್ಯರಾತ್ರಿ|ಮಧ್ಯಾನ್ಹ|ಬೆಳಗ್ಗೆ|ಸಂಜೆ|ರಾತ್ರಿ)/i
-}, zZe = {
+}, LZe = {
   any: {
     am: /^ಪೂ/i,
     pm: /^ಅ/i,
@@ -69911,55 +69851,55 @@ const pZe = (e, t, n) => {
     evening: /ಸಂಜೆ/i,
     night: /ರಾತ್ರಿ/i
   }
-}, VZe = {
+}, FZe = {
   ordinalNumber: Se({
-    matchPattern: EZe,
-    parsePattern: AZe,
+    matchPattern: _Ze,
+    parsePattern: TZe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: OZe,
+    matchPatterns: EZe,
     defaultMatchWidth: "wide",
-    parsePatterns: DZe,
+    parsePatterns: AZe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: NZe,
+    matchPatterns: OZe,
     defaultMatchWidth: "wide",
-    parsePatterns: WZe,
+    parsePatterns: DZe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: NZe,
+    defaultMatchWidth: "wide",
+    parsePatterns: WZe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: RZe,
     defaultMatchWidth: "wide",
     parsePatterns: jZe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: IZe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: LZe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: FZe,
-    defaultMatchWidth: "any",
-    parsePatterns: zZe,
-    defaultParseWidth: "any"
   })
-}, HZe = {
+}, zZe = {
   code: "kn",
-  formatDistance: pZe,
-  formatLong: bZe,
-  formatRelative: PZe,
-  localize: TZe,
-  match: VZe,
+  formatDistance: mZe,
+  formatLong: vZe,
+  formatRelative: bZe,
+  localize: $Ze,
+  match: FZe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, BZe = {
+}, VZe = {
   lessThanXSeconds: {
     one: "1초 미만",
     other: "{{count}}초 미만"
@@ -70021,54 +69961,54 @@ const pZe = (e, t, n) => {
     one: "거의 1년",
     other: "거의 {{count}}년"
   }
-}, qZe = (e, t, n) => {
+}, HZe = (e, t, n) => {
   let r;
-  const a = BZe[e];
+  const a = VZe[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", t.toString()), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + " 후" : r + " 전" : r;
-}, XZe = {
+}, BZe = {
   full: "y년 M월 d일 EEEE",
   long: "y년 M월 d일",
   medium: "y.MM.dd",
   short: "y.MM.dd"
-}, GZe = {
+}, qZe = {
   full: "a H시 mm분 ss초 zzzz",
   long: "a H:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, YZe = {
+}, XZe = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, UZe = {
+}, GZe = {
   date: q({
-    formats: XZe,
+    formats: BZe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: GZe,
+    formats: qZe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: YZe,
+    formats: XZe,
     defaultWidth: "full"
   })
-}, KZe = {
+}, YZe = {
   lastWeek: "'지난' eeee p",
   yesterday: "'어제' p",
   today: "'오늘' p",
   tomorrow: "'내일' p",
   nextWeek: "'다음' eeee p",
   other: "P"
-}, QZe = (e, t, n, r) => KZe[e], ZZe = {
+}, UZe = (e, t, n, r) => YZe[e], KZe = {
   narrow: ["BC", "AD"],
   abbreviated: ["BC", "AD"],
   wide: ["기원전", "서기"]
-}, JZe = {
+}, QZe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1분기", "2분기", "3분기", "4분기"]
-}, eJe = {
+}, ZZe = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
   abbreviated: [
     "1월",
@@ -70098,12 +70038,12 @@ const pZe = (e, t, n) => {
     "11월",
     "12월"
   ]
-}, tJe = {
+}, JZe = {
   narrow: ["일", "월", "화", "수", "목", "금", "토"],
   short: ["일", "월", "화", "수", "목", "금", "토"],
   abbreviated: ["일", "월", "화", "수", "목", "금", "토"],
   wide: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"]
-}, nJe = {
+}, eJe = {
   narrow: {
     am: "오전",
     pm: "오후",
@@ -70134,7 +70074,7 @@ const pZe = (e, t, n) => {
     evening: "저녁",
     night: "밤"
   }
-}, rJe = {
+}, tJe = {
   narrow: {
     am: "오전",
     pm: "오후",
@@ -70165,7 +70105,7 @@ const pZe = (e, t, n) => {
     evening: "저녁",
     night: "밤"
   }
-}, aJe = (e, t) => {
+}, nJe = (e, t) => {
   const n = Number(e);
   switch (String(t == null ? void 0 : t.unit)) {
     case "minute":
@@ -70176,48 +70116,48 @@ const pZe = (e, t, n) => {
     default:
       return n + "번째";
   }
-}, iJe = {
-  ordinalNumber: aJe,
+}, rJe = {
+  ordinalNumber: nJe,
   era: A({
-    values: ZZe,
+    values: KZe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: JZe,
+    values: QZe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: eJe,
+    values: ZZe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: tJe,
+    values: JZe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: nJe,
+    values: eJe,
     defaultWidth: "wide",
-    formattingValues: rJe,
+    formattingValues: tJe,
     defaultFormattingWidth: "wide"
   })
-}, oJe = /^(\d+)(일|번째)?/i, sJe = /\d+/i, uJe = {
+}, aJe = /^(\d+)(일|번째)?/i, iJe = /\d+/i, oJe = {
   narrow: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
   abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
   wide: /^(기원전|서기)/i
-}, cJe = {
+}, sJe = {
   any: [/^(bc|기원전)/i, /^(ad|서기)/i]
-}, lJe = {
+}, uJe = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234]사?분기/i
-}, dJe = {
+}, cJe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, fJe = {
+}, lJe = {
   narrow: /^(1[012]|[123456789])/,
   abbreviated: /^(1[012]|[123456789])월/i,
   wide: /^(1[012]|[123456789])월/i
-}, mJe = {
+}, dJe = {
   any: [
     /^1월?$/,
     /^2/,
@@ -70232,16 +70172,16 @@ const pZe = (e, t, n) => {
     /^11/,
     /^12/
   ]
-}, hJe = {
+}, fJe = {
   narrow: /^[일월화수목금토]/,
   short: /^[일월화수목금토]/,
   abbreviated: /^[일월화수목금토]/,
   wide: /^[일월화수목금토]요일/
-}, pJe = {
+}, mJe = {
   any: [/^일/, /^월/, /^화/, /^수/, /^목/, /^금/, /^토/]
-}, gJe = {
+}, hJe = {
   any: /^(am|pm|오전|오후|자정|정오|아침|저녁|밤)/i
-}, vJe = {
+}, pJe = {
   any: {
     am: /^(am|오전)/i,
     pm: /^(pm|오후)/i,
@@ -70252,55 +70192,55 @@ const pZe = (e, t, n) => {
     evening: /^저녁/i,
     night: /^밤/i
   }
-}, yJe = {
+}, gJe = {
   ordinalNumber: Se({
-    matchPattern: oJe,
-    parsePattern: sJe,
+    matchPattern: aJe,
+    parsePattern: iJe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: uJe,
+    matchPatterns: oJe,
     defaultMatchWidth: "wide",
-    parsePatterns: cJe,
+    parsePatterns: sJe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: lJe,
+    matchPatterns: uJe,
     defaultMatchWidth: "wide",
-    parsePatterns: dJe,
+    parsePatterns: cJe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: lJe,
+    defaultMatchWidth: "wide",
+    parsePatterns: dJe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: fJe,
     defaultMatchWidth: "wide",
     parsePatterns: mJe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: hJe,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: pJe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: gJe,
-    defaultMatchWidth: "any",
-    parsePatterns: vJe,
-    defaultParseWidth: "any"
   })
-}, bJe = {
+}, vJe = {
   code: "ko",
-  formatDistance: qZe,
-  formatLong: UZe,
-  formatRelative: QZe,
-  localize: iJe,
-  match: yJe,
+  formatDistance: HZe,
+  formatLong: GZe,
+  formatRelative: UZe,
+  localize: rJe,
+  match: gJe,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, wJe = {
+}, yJe = {
   lessThanXSeconds: {
     standalone: {
       one: "manner wéi eng Sekonn",
@@ -70455,21 +70395,21 @@ const pZe = (e, t, n) => {
       other: "bal {{count}} Joer"
     }
   }
-}, PJe = ["d", "h", "n", "t", "z"], xJe = ["a,", "e", "i", "o", "u"], MJe = [0, 1, 2, 3, 8, 9], kJe = [40, 50, 60, 70];
+}, bJe = ["d", "h", "n", "t", "z"], wJe = ["a,", "e", "i", "o", "u"], PJe = [0, 1, 2, 3, 8, 9], xJe = [40, 50, 60, 70];
 function OD(e) {
   const t = e.charAt(0).toLowerCase();
-  if (xJe.indexOf(t) != -1 || PJe.indexOf(t) != -1)
+  if (wJe.indexOf(t) != -1 || bJe.indexOf(t) != -1)
     return !0;
   const n = e.split(" ")[0], r = parseInt(n);
-  return !isNaN(r) && MJe.indexOf(r % 10) != -1 && kJe.indexOf(
+  return !isNaN(r) && PJe.indexOf(r % 10) != -1 && xJe.indexOf(
     parseInt(n.substring(0, 2))
   ) == -1;
 }
-const CJe = (e, t, n) => {
+const MJe = (e, t, n) => {
   let r;
-  const a = wJe[e], i = n != null && n.addSuffix ? a.withPreposition : a.standalone;
+  const a = yJe[e], i = n != null && n.addSuffix ? a.withPreposition : a.standalone;
   return typeof i == "string" ? r = i : t === 1 ? r = i.one : r = i.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "a" + (OD(r) ? "n" : "") + " " + r : "viru" + (OD(r) ? "n" : "") + " " + r : r;
-}, SJe = {
+}, kJe = {
   full: "EEEE, do MMMM y",
   // Méindeg, 7. Januar 2018
   long: "do MMMM y",
@@ -70478,30 +70418,30 @@ const CJe = (e, t, n) => {
   // 7. Jan 2018
   short: "dd.MM.yy"
   // 07.01.18
-}, $Je = {
+}, CJe = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, _Je = {
+}, SJe = {
   full: "{{date}} 'um' {{time}}",
   long: "{{date}} 'um' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, TJe = {
+}, $Je = {
   date: q({
-    formats: SJe,
+    formats: kJe,
     defaultWidth: "full"
   }),
   time: q({
-    formats: $Je,
+    formats: CJe,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: _Je,
+    formats: SJe,
     defaultWidth: "full"
   })
-}, EJe = {
+}, _Je = {
   lastWeek: (e) => {
     const t = e.getDay();
     let n = "'läschte";
@@ -70512,18 +70452,18 @@ const CJe = (e, t, n) => {
   tomorrow: "'moien um' p",
   nextWeek: "eeee 'um' p",
   other: "P"
-}, AJe = (e, t, n, r) => {
-  const a = EJe[e];
+}, TJe = (e, t, n, r) => {
+  const a = _Je[e];
   return typeof a == "function" ? a(t) : a;
-}, OJe = {
+}, EJe = {
   narrow: ["v.Chr.", "n.Chr."],
   abbreviated: ["v.Chr.", "n.Chr."],
   wide: ["viru Christus", "no Christus"]
-}, DJe = {
+}, AJe = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1. Quartal", "2. Quartal", "3. Quartal", "4. Quartal"]
-}, NJe = {
+}, OJe = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "Jan",
@@ -70553,7 +70493,7 @@ const CJe = (e, t, n) => {
     "November",
     "Dezember"
   ]
-}, WJe = {
+}, DJe = {
   narrow: ["S", "M", "D", "M", "D", "F", "S"],
   short: ["So", "Mé", "Dë", "Më", "Do", "Fr", "Sa"],
   abbreviated: ["So.", "Mé.", "Dë.", "Më.", "Do.", "Fr.", "Sa."],
@@ -70566,7 +70506,7 @@ const CJe = (e, t, n) => {
     "Freideg",
     "Samschdeg"
   ]
-}, RJe = {
+}, NJe = {
   narrow: {
     am: "mo.",
     pm: "nomë.",
@@ -70597,7 +70537,7 @@ const CJe = (e, t, n) => {
     evening: "Owend",
     night: "Nuecht"
   }
-}, jJe = {
+}, WJe = {
   narrow: {
     am: "mo.",
     pm: "nom.",
@@ -70628,48 +70568,48 @@ const CJe = (e, t, n) => {
     evening: "owes",
     night: "nuets"
   }
-}, IJe = (e, t) => Number(e) + ".", LJe = {
-  ordinalNumber: IJe,
+}, RJe = (e, t) => Number(e) + ".", jJe = {
+  ordinalNumber: RJe,
   era: A({
-    values: OJe,
+    values: EJe,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: DJe,
+    values: AJe,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: NJe,
+    values: OJe,
     defaultWidth: "wide"
   }),
   day: A({
-    values: WJe,
+    values: DJe,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: RJe,
+    values: NJe,
     defaultWidth: "wide",
-    formattingValues: jJe,
+    formattingValues: WJe,
     defaultFormattingWidth: "wide"
   })
-}, FJe = /^(\d+)(\.)?/i, zJe = /\d+/i, VJe = {
+}, IJe = /^(\d+)(\.)?/i, LJe = /\d+/i, FJe = {
   narrow: /^(v\.? ?Chr\.?|n\.? ?Chr\.?)/i,
   abbreviated: /^(v\.? ?Chr\.?|n\.? ?Chr\.?)/i,
   wide: /^(viru Christus|virun eiser Zäitrechnung|no Christus|eiser Zäitrechnung)/i
-}, HJe = {
+}, zJe = {
   any: [/^v/i, /^n/i]
-}, BJe = {
+}, VJe = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234](\.)? Quartal/i
-}, qJe = {
+}, HJe = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, XJe = {
+}, BJe = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mäe|abr|mee|jun|jul|aug|sep|okt|nov|dez)/i,
   wide: /^(januar|februar|mäerz|abrëll|mee|juni|juli|august|september|oktober|november|dezember)/i
-}, GJe = {
+}, qJe = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -70698,18 +70638,18 @@ const CJe = (e, t, n) => {
     /^n/i,
     /^d/i
   ]
-}, YJe = {
+}, XJe = {
   narrow: /^[smdf]/i,
   short: /^(so|mé|dë|më|do|fr|sa)/i,
   abbreviated: /^(son?|méi?|dën?|mët?|don?|fre?|sam?)\.?/i,
   wide: /^(sonndeg|méindeg|dënschdeg|mëttwoch|donneschdeg|freideg|samschdeg)/i
-}, UJe = {
+}, GJe = {
   any: [/^so/i, /^mé/i, /^dë/i, /^më/i, /^do/i, /^f/i, /^sa/i]
-}, KJe = {
+}, YJe = {
   narrow: /^(mo\.?|nomë\.?|Mëtternuecht|mëttes|moies|nomëttes|owes|nuets)/i,
   abbreviated: /^(moi\.?|nomët\.?|Mëtternuecht|mëttes|moies|nomëttes|owes|nuets)/i,
   wide: /^(moies|nomëttes|Mëtternuecht|mëttes|moies|nomëttes|owes|nuets)/i
-}, QJe = {
+}, UJe = {
   any: {
     am: /^m/i,
     pm: /^n/i,
@@ -70722,50 +70662,50 @@ const CJe = (e, t, n) => {
     night: /nuets/i
     // will never be matched. Night is matched by `pm`
   }
-}, ZJe = {
+}, KJe = {
   ordinalNumber: Se({
-    matchPattern: FJe,
-    parsePattern: zJe,
+    matchPattern: IJe,
+    parsePattern: LJe,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: VJe,
+    matchPatterns: FJe,
     defaultMatchWidth: "wide",
-    parsePatterns: HJe,
+    parsePatterns: zJe,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: BJe,
+    matchPatterns: VJe,
     defaultMatchWidth: "wide",
-    parsePatterns: qJe,
+    parsePatterns: HJe,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: BJe,
+    defaultMatchWidth: "wide",
+    parsePatterns: qJe,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: XJe,
     defaultMatchWidth: "wide",
     parsePatterns: GJe,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: YJe,
     defaultMatchWidth: "wide",
     parsePatterns: UJe,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: KJe,
-    defaultMatchWidth: "wide",
-    parsePatterns: QJe,
-    defaultParseWidth: "any"
   })
-}, JJe = {
+}, QJe = {
   code: "lb",
-  formatDistance: CJe,
-  formatLong: TJe,
-  formatRelative: AJe,
-  localize: LJe,
-  match: ZJe,
+  formatDistance: MJe,
+  formatLong: $Je,
+  formatRelative: TJe,
+  localize: jJe,
+  match: KJe,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
@@ -70798,7 +70738,7 @@ function ND(e) {
 function Ho(e) {
   return KB[e].split("_");
 }
-const eet = {
+const ZJe = {
   lessThanXSeconds: {
     one: DD,
     other: $r
@@ -70860,10 +70800,10 @@ const eet = {
     one: Yr,
     other: $r
   }
-}, tet = (e, t, n) => {
+}, JJe = (e, t, n) => {
   const r = e.match(/about|over|almost|lessthan/i), a = r ? e.replace(r[0], "") : e, i = (n == null ? void 0 : n.comparison) !== void 0 && n.comparison > 0;
   let o;
-  const s = eet[e];
+  const s = ZJe[e];
   if (typeof s == "string" ? o = s : t === 1 ? o = s.one(
     t,
     (n == null ? void 0 : n.addSuffix) === !0,
@@ -70879,54 +70819,54 @@ const eet = {
     o = KB[u] + " " + o;
   }
   return n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "po " + o : "prieš " + o : o;
-}, net = {
+}, eet = {
   full: "y 'm'. MMMM d 'd'., EEEE",
   long: "y 'm'. MMMM d 'd'.",
   medium: "y-MM-dd",
   short: "y-MM-dd"
-}, ret = {
+}, tet = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, aet = {
+}, net = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, iet = {
+}, ret = {
   date: q({
-    formats: net,
+    formats: eet,
     defaultWidth: "full"
   }),
   time: q({
-    formats: ret,
+    formats: tet,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: aet,
+    formats: net,
     defaultWidth: "full"
   })
-}, oet = {
+}, aet = {
   lastWeek: "'Praėjusį' eeee p",
   yesterday: "'Vakar' p",
   today: "'Šiandien' p",
   tomorrow: "'Rytoj' p",
   nextWeek: "eeee p",
   other: "P"
-}, set = (e, t, n, r) => oet[e], uet = {
+}, iet = (e, t, n, r) => aet[e], oet = {
   narrow: ["pr. Kr.", "po Kr."],
   abbreviated: ["pr. Kr.", "po Kr."],
   wide: ["prieš Kristų", "po Kristaus"]
-}, cet = {
+}, set = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["I ketv.", "II ketv.", "III ketv.", "IV ketv."],
   wide: ["I ketvirtis", "II ketvirtis", "III ketvirtis", "IV ketvirtis"]
-}, det = {
+}, uet = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["I k.", "II k.", "III k.", "IV k."],
   wide: ["I ketvirtis", "II ketvirtis", "III ketvirtis", "IV ketvirtis"]
-}, fet = {
+}, cet = {
   narrow: ["S", "V", "K", "B", "G", "B", "L", "R", "R", "S", "L", "G"],
   abbreviated: [
     "saus.",
@@ -70956,7 +70896,7 @@ const eet = {
     "lapkritis",
     "gruodis"
   ]
-}, met = {
+}, det = {
   narrow: ["S", "V", "K", "B", "G", "B", "L", "R", "R", "S", "L", "G"],
   abbreviated: [
     "saus.",
@@ -70986,7 +70926,7 @@ const eet = {
     "lapkričio",
     "gruodžio"
   ]
-}, het = {
+}, fet = {
   narrow: ["S", "P", "A", "T", "K", "P", "Š"],
   short: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
   abbreviated: ["sk", "pr", "an", "tr", "kt", "pn", "št"],
@@ -70999,7 +70939,7 @@ const eet = {
     "penktadienis",
     "šeštadienis"
   ]
-}, pet = {
+}, met = {
   narrow: ["S", "P", "A", "T", "K", "P", "Š"],
   short: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
   abbreviated: ["sk", "pr", "an", "tr", "kt", "pn", "št"],
@@ -71012,7 +70952,7 @@ const eet = {
     "penktadienį",
     "šeštadienį"
   ]
-}, get = {
+}, het = {
   narrow: {
     am: "pr. p.",
     pm: "pop.",
@@ -71043,7 +70983,7 @@ const eet = {
     evening: "vakaras",
     night: "naktis"
   }
-}, vet = {
+}, pet = {
   narrow: {
     am: "pr. p.",
     pm: "pop.",
@@ -71074,56 +71014,56 @@ const eet = {
     evening: "vakaras",
     night: "naktis"
   }
-}, yet = (e, t) => Number(e) + "-oji", bet = {
-  ordinalNumber: yet,
+}, get = (e, t) => Number(e) + "-oji", vet = {
+  ordinalNumber: get,
   era: A({
-    values: uet,
+    values: oet,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: cet,
+    values: set,
     defaultWidth: "wide",
-    formattingValues: det,
+    formattingValues: uet,
     defaultFormattingWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
+    values: cet,
+    defaultWidth: "wide",
+    formattingValues: det,
+    defaultFormattingWidth: "wide"
+  }),
+  day: A({
     values: fet,
     defaultWidth: "wide",
     formattingValues: met,
     defaultFormattingWidth: "wide"
   }),
-  day: A({
+  dayPeriod: A({
     values: het,
     defaultWidth: "wide",
     formattingValues: pet,
     defaultFormattingWidth: "wide"
-  }),
-  dayPeriod: A({
-    values: get,
-    defaultWidth: "wide",
-    formattingValues: vet,
-    defaultFormattingWidth: "wide"
   })
-}, wet = /^(\d+)(-oji)?/i, Pet = /\d+/i, xet = {
+}, yet = /^(\d+)(-oji)?/i, bet = /\d+/i, wet = {
   narrow: /^p(r|o)\.?\s?(kr\.?|me)/i,
   abbreviated: /^(pr\.\s?(kr\.|m\.\s?e\.)|po\s?kr\.|mūsų eroje)/i,
   wide: /^(prieš Kristų|prieš mūsų erą|po Kristaus|mūsų eroje)/i
-}, Met = {
+}, Pet = {
   wide: [/prieš/i, /(po|mūsų)/i],
   any: [/^pr/i, /^(po|m)/i]
-}, ket = {
+}, xet = {
   narrow: /^([1234])/i,
   abbreviated: /^(I|II|III|IV)\s?ketv?\.?/i,
   wide: /^(I|II|III|IV)\s?ketvirtis/i
-}, Cet = {
+}, Met = {
   narrow: [/1/i, /2/i, /3/i, /4/i],
   any: [/I$/i, /II$/i, /III/i, /IV/i]
-}, $et = {
+}, ket = {
   narrow: /^[svkbglr]/i,
   abbreviated: /^(saus\.|vas\.|kov\.|bal\.|geg\.|birž\.|liep\.|rugp\.|rugs\.|spal\.|lapkr\.|gruod\.)/i,
   wide: /^(sausi(s|o)|vasari(s|o)|kov(a|o)s|balandž?i(s|o)|gegužės?|birželi(s|o)|liep(a|os)|rugpjū(t|č)i(s|o)|rugsėj(is|o)|spali(s|o)|lapkri(t|č)i(s|o)|gruodž?i(s|o))/i
-}, _et = {
+}, Cet = {
   narrow: [
     /^s/i,
     /^v/i,
@@ -71152,19 +71092,19 @@ const eet = {
     /^lapkr/i,
     /^gruod/i
   ]
-}, Tet = {
+}, $et = {
   narrow: /^[spatkš]/i,
   short: /^(sk|pr|an|tr|kt|pn|št)/i,
   abbreviated: /^(sk|pr|an|tr|kt|pn|št)/i,
   wide: /^(sekmadien(is|į)|pirmadien(is|į)|antradien(is|į)|trečiadien(is|į)|ketvirtadien(is|į)|penktadien(is|į)|šeštadien(is|į))/i
-}, Eet = {
+}, _et = {
   narrow: [/^s/i, /^p/i, /^a/i, /^t/i, /^k/i, /^p/i, /^š/i],
   wide: [/^se/i, /^pi/i, /^an/i, /^tr/i, /^ke/i, /^pe/i, /^še/i],
   any: [/^sk/i, /^pr/i, /^an/i, /^tr/i, /^kt/i, /^pn/i, /^št/i]
-}, Aet = {
+}, Tet = {
   narrow: /^(pr.\s?p.|pop.|vidurnaktis|(vidurdienis|perpiet)|rytas|(diena|popietė)|vakaras|naktis)/i,
   any: /^(priešpiet|popiet$|vidurnaktis|(vidurdienis|perpiet)|rytas|(diena|popietė)|vakaras|naktis)/i
-}, Oet = {
+}, Eet = {
   narrow: {
     am: /^pr/i,
     pm: /^pop./i,
@@ -71185,50 +71125,50 @@ const eet = {
     evening: /vakaras/i,
     night: /naktis/i
   }
-}, Det = {
+}, Aet = {
   ordinalNumber: Se({
-    matchPattern: wet,
-    parsePattern: Pet,
+    matchPattern: yet,
+    parsePattern: bet,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: xet,
+    matchPatterns: wet,
     defaultMatchWidth: "wide",
-    parsePatterns: Met,
+    parsePatterns: Pet,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: ket,
+    matchPatterns: xet,
     defaultMatchWidth: "wide",
-    parsePatterns: Cet,
+    parsePatterns: Met,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: ket,
+    defaultMatchWidth: "wide",
+    parsePatterns: Cet,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: $et,
     defaultMatchWidth: "wide",
     parsePatterns: _et,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Tet,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Eet,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Aet,
-    defaultMatchWidth: "any",
-    parsePatterns: Oet,
-    defaultParseWidth: "any"
   })
-}, Net = {
+}, Oet = {
   code: "lt",
-  formatDistance: tet,
-  formatLong: iet,
-  formatRelative: set,
-  localize: bet,
-  match: Det,
+  formatDistance: JJe,
+  formatLong: ret,
+  formatRelative: iet,
+  localize: vet,
+  match: Aet,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
@@ -71244,7 +71184,7 @@ function _r(e) {
     }
   };
 }
-const Wet = {
+const Det = {
   lessThanXSeconds: _r({
     one: ["mazāk par {{time}}", "sekundi", "sekundi"],
     other: [
@@ -71349,35 +71289,35 @@ const Wet = {
     one: ["gandrīz 1 {{time}}", "gads", "gada"],
     other: ["vairāk nekā {{count}} {{time}}", "gads", "gadi", "gada", "gadiem"]
   })
-}, Ret = (e, t, n) => {
-  const r = Wet[e](t, n);
+}, Net = (e, t, n) => {
+  const r = Det[e](t, n);
   return n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "pēc " + r : "pirms " + r : r;
-}, jet = {
+}, Wet = {
   full: "EEEE, y. 'gada' d. MMMM",
   long: "y. 'gada' d. MMMM",
   medium: "dd.MM.y.",
   short: "dd.MM.y."
-}, Iet = {
+}, Ret = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Let = {
+}, jet = {
   full: "{{date}} 'plkst.' {{time}}",
   long: "{{date}} 'plkst.' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Fet = {
+}, Iet = {
   date: q({
-    formats: jet,
+    formats: Wet,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Iet,
+    formats: Ret,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Let,
+    formats: jet,
     defaultWidth: "full"
   })
 }, WD = [
@@ -71388,21 +71328,21 @@ const Wet = {
   "ceturtdienā",
   "piektdienā",
   "sestdienā"
-], zet = {
+], Let = {
   lastWeek: (e, t, n) => bn(e, t, n) ? "eeee 'plkst.' p" : "'Pagājušā " + WD[e.getDay()] + " plkst.' p",
   yesterday: "'Vakar plkst.' p",
   today: "'Šodien plkst.' p",
   tomorrow: "'Rīt plkst.' p",
   nextWeek: (e, t, n) => bn(e, t, n) ? "eeee 'plkst.' p" : "'Nākamajā " + WD[e.getDay()] + " plkst.' p",
   other: "P"
-}, Vet = (e, t, n, r) => {
-  const a = zet[e];
+}, Fet = (e, t, n, r) => {
+  const a = Let[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, Het = {
+}, zet = {
   narrow: ["p.m.ē", "m.ē"],
   abbreviated: ["p. m. ē.", "m. ē."],
   wide: ["pirms mūsu ēras", "mūsu ērā"]
-}, Bet = {
+}, Vet = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1. cet.", "2. cet.", "3. cet.", "4. cet."],
   wide: [
@@ -71411,7 +71351,7 @@ const Wet = {
     "trešais ceturksnis",
     "ceturtais ceturksnis"
   ]
-}, qet = {
+}, Het = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1. cet.", "2. cet.", "3. cet.", "4. cet."],
   wide: [
@@ -71420,7 +71360,7 @@ const Wet = {
     "trešajā ceturksnī",
     "ceturtajā ceturksnī"
   ]
-}, Xet = {
+}, Bet = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "janv.",
@@ -71450,7 +71390,7 @@ const Wet = {
     "novembris",
     "decembris"
   ]
-}, Get = {
+}, qet = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "janv.",
@@ -71480,7 +71420,7 @@ const Wet = {
     "novembrī",
     "decembrī"
   ]
-}, Yet = {
+}, Xet = {
   narrow: ["S", "P", "O", "T", "C", "P", "S"],
   short: ["Sv", "P", "O", "T", "C", "Pk", "S"],
   abbreviated: [
@@ -71501,7 +71441,7 @@ const Wet = {
     "piektdiena",
     "sestdiena"
   ]
-}, Uet = {
+}, Get = {
   narrow: ["S", "P", "O", "T", "C", "P", "S"],
   short: ["Sv", "P", "O", "T", "C", "Pk", "S"],
   abbreviated: [
@@ -71522,7 +71462,7 @@ const Wet = {
     "piektdienā",
     "sestdienā"
   ]
-}, Ket = {
+}, Yet = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -71553,7 +71493,7 @@ const Wet = {
     evening: "vakars",
     night: "nakts"
   }
-}, Qet = {
+}, Uet = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -71584,56 +71524,56 @@ const Wet = {
     evening: "vakarā",
     night: "naktī"
   }
-}, Zet = (e, t) => Number(e) + ".", Jet = {
-  ordinalNumber: Zet,
+}, Ket = (e, t) => Number(e) + ".", Qet = {
+  ordinalNumber: Ket,
   era: A({
-    values: Het,
+    values: zet,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Bet,
+    values: Vet,
     defaultWidth: "wide",
-    formattingValues: qet,
+    formattingValues: Het,
     defaultFormattingWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
+    values: Bet,
+    defaultWidth: "wide",
+    formattingValues: qet,
+    defaultFormattingWidth: "wide"
+  }),
+  day: A({
     values: Xet,
     defaultWidth: "wide",
     formattingValues: Get,
     defaultFormattingWidth: "wide"
   }),
-  day: A({
+  dayPeriod: A({
     values: Yet,
     defaultWidth: "wide",
     formattingValues: Uet,
     defaultFormattingWidth: "wide"
-  }),
-  dayPeriod: A({
-    values: Ket,
-    defaultWidth: "wide",
-    formattingValues: Qet,
-    defaultFormattingWidth: "wide"
   })
-}, ett = /^(\d+)\./i, ttt = /\d+/i, ntt = {
+}, Zet = /^(\d+)\./i, Jet = /\d+/i, ett = {
   narrow: /^(p\.m\.ē|m\.ē)/i,
   abbreviated: /^(p\. m\. ē\.|m\. ē\.)/i,
   wide: /^(pirms mūsu ēras|mūsu ērā)/i
-}, rtt = {
+}, ttt = {
   any: [/^p/i, /^m/i]
-}, att = {
+}, ntt = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](\. cet\.)/i,
   wide: /^(pirma(is|jā)|otra(is|jā)|treša(is|jā)|ceturta(is|jā)) ceturksn(is|ī)/i
-}, itt = {
+}, rtt = {
   narrow: [/^1/i, /^2/i, /^3/i, /^4/i],
   abbreviated: [/^1/i, /^2/i, /^3/i, /^4/i],
   wide: [/^p/i, /^o/i, /^t/i, /^c/i]
-}, ott = {
+}, att = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(janv\.|febr\.|marts|apr\.|maijs|jūn\.|jūl\.|aug\.|sept\.|okt\.|nov\.|dec\.)/i,
   wide: /^(janvār(is|ī)|februār(is|ī)|mart[sā]|aprīl(is|ī)|maij[sā]|jūnij[sā]|jūlij[sā]|august[sā]|septembr(is|ī)|oktobr(is|ī)|novembr(is|ī)|decembr(is|ī))/i
-}, stt = {
+}, itt = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -71662,19 +71602,19 @@ const Wet = {
     /^n/i,
     /^d/i
   ]
-}, utt = {
+}, ott = {
   narrow: /^[spotc]/i,
   short: /^(sv|pi|o|t|c|pk|s)/i,
   abbreviated: /^(svētd\.|pirmd\.|otrd.\|trešd\.|ceturtd\.|piektd\.|sestd\.)/i,
   wide: /^(svētdien(a|ā)|pirmdien(a|ā)|otrdien(a|ā)|trešdien(a|ā)|ceturtdien(a|ā)|piektdien(a|ā)|sestdien(a|ā))/i
-}, ctt = {
+}, stt = {
   narrow: [/^s/i, /^p/i, /^o/i, /^t/i, /^c/i, /^p/i, /^s/i],
   any: [/^sv/i, /^pi/i, /^o/i, /^t/i, /^c/i, /^p/i, /^se/i]
-}, ltt = {
+}, utt = {
   narrow: /^(am|pm|pusn\.|pusd\.|rīt(s|ā)|dien(a|ā)|vakar(s|ā)|nakt(s|ī))/,
   abbreviated: /^(am|pm|pusn\.|pusd\.|rīt(s|ā)|pēcpusd\.|vakar(s|ā)|nakt(s|ī))/,
   wide: /^(am|pm|pusnakt(s|ī)|pusdienlaik(s|ā)|rīt(s|ā)|pēcpusdien(a|ā)|vakar(s|ā)|nakt(s|ī))/i
-}, dtt = {
+}, ctt = {
   any: {
     am: /^am/i,
     pm: /^pm/i,
@@ -71685,55 +71625,55 @@ const Wet = {
     evening: /^v/i,
     night: /^n/i
   }
-}, ftt = {
+}, ltt = {
   ordinalNumber: Se({
-    matchPattern: ett,
-    parsePattern: ttt,
+    matchPattern: Zet,
+    parsePattern: Jet,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: ntt,
+    matchPatterns: ett,
     defaultMatchWidth: "wide",
-    parsePatterns: rtt,
+    parsePatterns: ttt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: att,
+    matchPatterns: ntt,
     defaultMatchWidth: "wide",
-    parsePatterns: itt,
+    parsePatterns: rtt,
     defaultParseWidth: "wide",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: att,
+    defaultMatchWidth: "wide",
+    parsePatterns: itt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: ott,
     defaultMatchWidth: "wide",
     parsePatterns: stt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: utt,
     defaultMatchWidth: "wide",
     parsePatterns: ctt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: ltt,
-    defaultMatchWidth: "wide",
-    parsePatterns: dtt,
-    defaultParseWidth: "any"
   })
-}, mtt = {
+}, dtt = {
   code: "lv",
-  formatDistance: Ret,
-  formatLong: Fet,
-  formatRelative: Vet,
-  localize: Jet,
-  match: ftt,
+  formatDistance: Net,
+  formatLong: Iet,
+  formatRelative: Fet,
+  localize: Qet,
+  match: ltt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, htt = {
+}, ftt = {
   lessThanXSeconds: {
     one: "помалку од секунда",
     other: "помалку од {{count}} секунди"
@@ -71795,33 +71735,33 @@ const Wet = {
     one: "безмалку 1 година",
     other: "безмалку {{count}} години"
   }
-}, ptt = (e, t, n) => {
+}, mtt = (e, t, n) => {
   let r;
-  const a = htt[e];
+  const a = ftt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "за " + r : "пред " + r : r;
-}, gtt = {
+}, htt = {
   full: "EEEE, dd MMMM yyyy",
   long: "dd MMMM yyyy",
   medium: "dd MMM yyyy",
   short: "dd/MM/yyyy"
-}, vtt = {
+}, ptt = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "H:mm"
-}, ytt = {
+}, gtt = {
   any: "{{date}} {{time}}"
-}, btt = {
+}, vtt = {
   date: q({
-    formats: gtt,
+    formats: htt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: vtt,
+    formats: ptt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: ytt,
+    formats: gtt,
     defaultWidth: "any"
   })
 }, D5 = [
@@ -71833,7 +71773,7 @@ const Wet = {
   "петок",
   "сабота"
 ];
-function wtt(e) {
+function ytt(e) {
   const t = D5[e];
   switch (e) {
     case 0:
@@ -71861,7 +71801,7 @@ function RD(e) {
       return "'овој " + t + " вo' p";
   }
 }
-function Ptt(e) {
+function btt(e) {
   const t = D5[e];
   switch (e) {
     case 0:
@@ -71875,31 +71815,31 @@ function Ptt(e) {
       return "'следниот " + t + " вo' p";
   }
 }
-const xtt = {
+const wtt = {
   lastWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? RD(r) : wtt(r);
+    return bn(e, t, n) ? RD(r) : ytt(r);
   },
   yesterday: "'вчера во' p",
   today: "'денес во' p",
   tomorrow: "'утре во' p",
   nextWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? RD(r) : Ptt(r);
+    return bn(e, t, n) ? RD(r) : btt(r);
   },
   other: "P"
-}, Mtt = (e, t, n, r) => {
-  const a = xtt[e];
+}, Ptt = (e, t, n, r) => {
+  const a = wtt[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, ktt = {
+}, xtt = {
   narrow: ["пр.н.е.", "н.е."],
   abbreviated: ["пред н. е.", "н. е."],
   wide: ["пред нашата ера", "нашата ера"]
-}, Ctt = {
+}, Mtt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-ви кв.", "2-ри кв.", "3-ти кв.", "4-ти кв."],
   wide: ["1-ви квартал", "2-ри квартал", "3-ти квартал", "4-ти квартал"]
-}, Stt = {
+}, ktt = {
   abbreviated: [
     "јан",
     "фев",
@@ -71928,7 +71868,7 @@ const xtt = {
     "ноември",
     "декември"
   ]
-}, $tt = {
+}, Ctt = {
   narrow: ["Н", "П", "В", "С", "Ч", "П", "С"],
   short: ["не", "по", "вт", "ср", "че", "пе", "са"],
   abbreviated: ["нед", "пон", "вто", "сре", "чет", "пет", "саб"],
@@ -71941,7 +71881,7 @@ const xtt = {
     "петок",
     "сабота"
   ]
-}, _tt = {
+}, Stt = {
   wide: {
     am: "претпладне",
     pm: "попладне",
@@ -71952,7 +71892,7 @@ const xtt = {
     evening: "навечер",
     night: "ноќе"
   }
-}, Ttt = (e, t) => {
+}, $tt = (e, t) => {
   const n = Number(e), r = n % 100;
   if (r > 20 || r < 10)
     switch (r % 10) {
@@ -71965,53 +71905,53 @@ const xtt = {
         return n + "-ми";
     }
   return n + "-ти";
-}, Ett = {
-  ordinalNumber: Ttt,
+}, _tt = {
+  ordinalNumber: $tt,
   era: A({
-    values: ktt,
+    values: xtt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Ctt,
+    values: Mtt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Stt,
+    values: ktt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: $tt,
+    values: Ctt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: _tt,
+    values: Stt,
     defaultWidth: "wide"
   })
-}, Att = /^(\d+)(-?[врмт][и])?/i, Ott = /\d+/i, Dtt = {
+}, Ttt = /^(\d+)(-?[врмт][и])?/i, Ett = /\d+/i, Att = {
   narrow: /^((пр)?н\.?\s?е\.?)/i,
   abbreviated: /^((пр)?н\.?\s?е\.?)/i,
   wide: /^(пред нашата ера|нашата ера)/i
-}, Ntt = {
+}, Ott = {
   any: [/^п/i, /^н/i]
-}, Wtt = {
+}, Dtt = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[врт]?и?)? кв.?/i,
   wide: /^[1234](-?[врт]?и?)? квартал/i
-}, Rtt = {
+}, Ntt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, jtt = {
+}, Wtt = {
   narrow: /^[нпвсч]/i,
   short: /^(не|по|вт|ср|че|пе|са)/i,
   abbreviated: /^(нед|пон|вто|сре|чет|пет|саб)/i,
   wide: /^(недела|понеделник|вторник|среда|четврток|петок|сабота)/i
-}, Itt = {
+}, Rtt = {
   narrow: [/^н/i, /^п/i, /^в/i, /^с/i, /^ч/i, /^п/i, /^с/i],
   any: [/^н[ед]/i, /^п[он]/i, /^вт/i, /^ср/i, /^ч[ет]/i, /^п[ет]/i, /^с[аб]/i]
-}, Ltt = {
+}, jtt = {
   abbreviated: /^(јан|фев|мар|апр|мај|јун|јул|авг|сеп|окт|ноем|дек)/i,
   wide: /^(јануари|февруари|март|април|мај|јуни|јули|август|септември|октомври|ноември|декември)/i
-}, Ftt = {
+}, Itt = {
   any: [
     /^ја/i,
     /^Ф/i,
@@ -72026,9 +71966,9 @@ const xtt = {
     /^но/i,
     /^де/i
   ]
-}, ztt = {
+}, Ltt = {
   any: /^(претп|попл|полноќ|утро|пладне|вечер|ноќ)/i
-}, Vtt = {
+}, Ftt = {
   any: {
     am: /претпладне/i,
     pm: /попладне/i,
@@ -72039,55 +71979,55 @@ const xtt = {
     evening: /навечер/i,
     night: /ноќе/i
   }
-}, Htt = {
+}, ztt = {
   ordinalNumber: Se({
-    matchPattern: Att,
-    parsePattern: Ott,
+    matchPattern: Ttt,
+    parsePattern: Ett,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Dtt,
+    matchPatterns: Att,
     defaultMatchWidth: "wide",
-    parsePatterns: Ntt,
+    parsePatterns: Ott,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Wtt,
+    matchPatterns: Dtt,
     defaultMatchWidth: "wide",
-    parsePatterns: Rtt,
+    parsePatterns: Ntt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
-    matchPatterns: Ltt,
-    defaultMatchWidth: "wide",
-    parsePatterns: Ftt,
-    defaultParseWidth: "any"
-  }),
-  day: D({
     matchPatterns: jtt,
     defaultMatchWidth: "wide",
     parsePatterns: Itt,
     defaultParseWidth: "any"
   }),
+  day: D({
+    matchPatterns: Wtt,
+    defaultMatchWidth: "wide",
+    parsePatterns: Rtt,
+    defaultParseWidth: "any"
+  }),
   dayPeriod: D({
-    matchPatterns: ztt,
+    matchPatterns: Ltt,
     defaultMatchWidth: "any",
-    parsePatterns: Vtt,
+    parsePatterns: Ftt,
     defaultParseWidth: "any"
   })
-}, Btt = {
+}, Vtt = {
   code: "mk",
-  formatDistance: ptt,
-  formatLong: btt,
-  formatRelative: Mtt,
-  localize: Ett,
-  match: Htt,
+  formatDistance: mtt,
+  formatLong: vtt,
+  formatRelative: Ptt,
+  localize: _tt,
+  match: ztt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, qtt = {
+}, Htt = {
   lessThanXSeconds: {
     one: "секунд хүрэхгүй",
     other: "{{count}} секунд хүрэхгүй"
@@ -72149,9 +72089,9 @@ const xtt = {
     one: "бараг 1 жил",
     other: "бараг {{count}} жил"
   }
-}, Xtt = (e, t, n) => {
+}, Btt = (e, t, n) => {
   let r;
-  const a = qtt[e];
+  const a = Htt[e];
   if (typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix) {
     const i = r.split(" "), o = i.pop();
     switch (r = i.join(" "), o) {
@@ -72188,50 +72128,50 @@ const xtt = {
     return n.comparison && n.comparison > 0 ? r + " дараа" : r + " өмнө";
   }
   return r;
-}, Gtt = {
+}, qtt = {
   full: "y 'оны' MMMM'ын' d, EEEE 'гараг'",
   long: "y 'оны' MMMM'ын' d",
   medium: "y 'оны' MMM'ын' d",
   short: "y.MM.dd"
-}, Ytt = {
+}, Xtt = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, Utt = {
+}, Gtt = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, Ktt = {
+}, Ytt = {
   date: q({
-    formats: Gtt,
+    formats: qtt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Ytt,
+    formats: Xtt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Utt,
+    formats: Gtt,
     defaultWidth: "full"
   })
-}, Qtt = {
+}, Utt = {
   lastWeek: "'өнгөрсөн' eeee 'гарагийн' p 'цагт'",
   yesterday: "'өчигдөр' p 'цагт'",
   today: "'өнөөдөр' p 'цагт'",
   tomorrow: "'маргааш' p 'цагт'",
   nextWeek: "'ирэх' eeee 'гарагийн' p 'цагт'",
   other: "P"
-}, Ztt = (e, t, n, r) => Qtt[e], Jtt = {
+}, Ktt = (e, t, n, r) => Utt[e], Qtt = {
   narrow: ["НТӨ", "НТ"],
   abbreviated: ["НТӨ", "НТ"],
   wide: ["нийтийн тооллын өмнөх", "нийтийн тооллын"]
-}, ent = {
+}, Ztt = {
   narrow: ["I", "II", "III", "IV"],
   abbreviated: ["I улирал", "II улирал", "III улирал", "IV улирал"],
   wide: ["1-р улирал", "2-р улирал", "3-р улирал", "4-р улирал"]
-}, tnt = {
+}, Jtt = {
   narrow: [
     "I",
     "II",
@@ -72274,7 +72214,7 @@ const xtt = {
     "Арваннэгдүгээр сар",
     "Арван хоёрдугаар сар"
   ]
-}, nnt = {
+}, ent = {
   narrow: [
     "I",
     "II",
@@ -72317,17 +72257,17 @@ const xtt = {
     "арваннэгдүгээр сар",
     "арван хоёрдугаар сар"
   ]
-}, rnt = {
+}, tnt = {
   narrow: ["Н", "Д", "М", "Л", "П", "Б", "Б"],
   short: ["Ня", "Да", "Мя", "Лх", "Пү", "Ба", "Бя"],
   abbreviated: ["Ням", "Дав", "Мяг", "Лха", "Пүр", "Баа", "Бям"],
   wide: ["Ням", "Даваа", "Мягмар", "Лхагва", "Пүрэв", "Баасан", "Бямба"]
-}, ant = {
+}, nnt = {
   narrow: ["Н", "Д", "М", "Л", "П", "Б", "Б"],
   short: ["Ня", "Да", "Мя", "Лх", "Пү", "Ба", "Бя"],
   abbreviated: ["Ням", "Дав", "Мяг", "Лха", "Пүр", "Баа", "Бям"],
   wide: ["ням", "даваа", "мягмар", "лхагва", "пүрэв", "баасан", "бямба"]
-}, int = {
+}, rnt = {
   narrow: {
     am: "ү.ө.",
     pm: "ү.х.",
@@ -72358,50 +72298,50 @@ const xtt = {
     evening: "орой",
     night: "шөнө"
   }
-}, ont = (e, t) => String(e), snt = {
-  ordinalNumber: ont,
+}, ant = (e, t) => String(e), int = {
+  ordinalNumber: ant,
   era: A({
-    values: Jtt,
+    values: Qtt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: ent,
+    values: Ztt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
+    values: Jtt,
+    defaultWidth: "wide",
+    formattingValues: ent,
+    defaultFormattingWidth: "wide"
+  }),
+  day: A({
     values: tnt,
     defaultWidth: "wide",
     formattingValues: nnt,
     defaultFormattingWidth: "wide"
   }),
-  day: A({
-    values: rnt,
-    defaultWidth: "wide",
-    formattingValues: ant,
-    defaultFormattingWidth: "wide"
-  }),
   dayPeriod: A({
-    values: int,
+    values: rnt,
     defaultWidth: "wide"
   })
-}, unt = /\d+/i, cnt = /\d+/i, lnt = {
+}, ont = /\d+/i, snt = /\d+/i, unt = {
   narrow: /^(нтө|нт)/i,
   abbreviated: /^(нтө|нт)/i,
   wide: /^(нийтийн тооллын өмнө|нийтийн тооллын)/i
-}, dnt = {
+}, cnt = {
   any: [/^(нтө|нийтийн тооллын өмнө)/i, /^(нт|нийтийн тооллын)/i]
-}, fnt = {
+}, lnt = {
   narrow: /^(iv|iii|ii|i)/i,
   abbreviated: /^(iv|iii|ii|i) улирал/i,
   wide: /^[1-4]-р улирал/i
-}, mnt = {
+}, dnt = {
   any: [/^(i(\s|$)|1)/i, /^(ii(\s|$)|2)/i, /^(iii(\s|$)|3)/i, /^(iv(\s|$)|4)/i]
-}, hnt = {
+}, fnt = {
   narrow: /^(xii|xi|x|ix|viii|vii|vi|v|iv|iii|ii|i)/i,
   abbreviated: /^(1-р сар|2-р сар|3-р сар|4-р сар|5-р сар|6-р сар|7-р сар|8-р сар|9-р сар|10-р сар|11-р сар|12-р сар)/i,
   wide: /^(нэгдүгээр сар|хоёрдугаар сар|гуравдугаар сар|дөрөвдүгээр сар|тавдугаар сар|зургаадугаар сар|долоодугаар сар|наймдугаар сар|есдүгээр сар|аравдугаар сар|арван нэгдүгээр сар|арван хоёрдугаар сар)/i
-}, pnt = {
+}, mnt = {
   narrow: [
     /^i$/i,
     /^ii$/i,
@@ -72430,18 +72370,18 @@ const xtt = {
     /^(11|арван нэгдүгээр)/i,
     /^(12|арван хоёрдугаар)/i
   ]
-}, gnt = {
+}, hnt = {
   narrow: /^[ндмлпбб]/i,
   short: /^(ня|да|мя|лх|пү|ба|бя)/i,
   abbreviated: /^(ням|дав|мяг|лха|пүр|баа|бям)/i,
   wide: /^(ням|даваа|мягмар|лхагва|пүрэв|баасан|бямба)/i
-}, vnt = {
+}, pnt = {
   narrow: [/^н/i, /^д/i, /^м/i, /^л/i, /^п/i, /^б/i, /^б/i],
   any: [/^ня/i, /^да/i, /^мя/i, /^лх/i, /^пү/i, /^ба/i, /^бя/i]
-}, ynt = {
+}, gnt = {
   narrow: /^(ү\.ө\.|ү\.х\.|шөнө дунд|үд дунд|өглөө|өдөр|орой|шөнө)/i,
   any: /^(ү\.ө\.|ү\.х\.|шөнө дунд|үд дунд|өглөө|өдөр|орой|шөнө)/i
-}, bnt = {
+}, vnt = {
   any: {
     am: /^ү\.ө\./i,
     pm: /^ү\.х\./i,
@@ -72452,55 +72392,55 @@ const xtt = {
     evening: /орой/i,
     night: /шөнө/i
   }
-}, wnt = {
+}, ynt = {
   ordinalNumber: Se({
-    matchPattern: unt,
-    parsePattern: cnt,
+    matchPattern: ont,
+    parsePattern: snt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: lnt,
+    matchPatterns: unt,
     defaultMatchWidth: "wide",
-    parsePatterns: dnt,
+    parsePatterns: cnt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: fnt,
+    matchPatterns: lnt,
     defaultMatchWidth: "wide",
-    parsePatterns: mnt,
+    parsePatterns: dnt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: fnt,
+    defaultMatchWidth: "wide",
+    parsePatterns: mnt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: hnt,
     defaultMatchWidth: "wide",
     parsePatterns: pnt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: gnt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: vnt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: ynt,
-    defaultMatchWidth: "any",
-    parsePatterns: bnt,
-    defaultParseWidth: "any"
   })
-}, Pnt = {
+}, bnt = {
   code: "mn",
-  formatDistance: Xtt,
-  formatLong: Ktt,
-  formatRelative: Ztt,
-  localize: snt,
-  match: wnt,
+  formatDistance: Btt,
+  formatLong: Ytt,
+  formatRelative: Ktt,
+  localize: int,
+  match: ynt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, xnt = {
+}, wnt = {
   lessThanXSeconds: {
     one: "kurang dari 1 saat",
     other: "kurang dari {{count}} saat"
@@ -72562,54 +72502,54 @@ const xtt = {
     one: "hampir 1 tahun",
     other: "hampir {{count}} tahun"
   }
-}, Mnt = (e, t, n) => {
+}, Pnt = (e, t, n) => {
   let r;
-  const a = xnt[e];
+  const a = wnt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "dalam masa " + r : r + " yang lalu" : r;
-}, knt = {
+}, xnt = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
   short: "d/M/yyyy"
-}, Cnt = {
+}, Mnt = {
   full: "HH.mm.ss",
   long: "HH.mm.ss",
   medium: "HH.mm",
   short: "HH.mm"
-}, Snt = {
+}, knt = {
   full: "{{date}} 'pukul' {{time}}",
   long: "{{date}} 'pukul' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, $nt = {
+}, Cnt = {
   date: q({
-    formats: knt,
+    formats: xnt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Cnt,
+    formats: Mnt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Snt,
+    formats: knt,
     defaultWidth: "full"
   })
-}, _nt = {
+}, Snt = {
   lastWeek: "eeee 'lepas pada jam' p",
   yesterday: "'Semalam pada jam' p",
   today: "'Hari ini pada jam' p",
   tomorrow: "'Esok pada jam' p",
   nextWeek: "eeee 'pada jam' p",
   other: "P"
-}, Tnt = (e, t, n, r) => _nt[e], Ent = {
+}, $nt = (e, t, n, r) => Snt[e], _nt = {
   narrow: ["SM", "M"],
   abbreviated: ["SM", "M"],
   wide: ["Sebelum Masihi", "Masihi"]
-}, Ant = {
+}, Tnt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["S1", "S2", "S3", "S4"],
   wide: ["Suku pertama", "Suku kedua", "Suku ketiga", "Suku keempat"]
-}, Ont = {
+}, Ent = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "O", "S", "O", "N", "D"],
   abbreviated: [
     "Jan",
@@ -72639,12 +72579,12 @@ const xtt = {
     "November",
     "Disember"
   ]
-}, Dnt = {
+}, Ant = {
   narrow: ["A", "I", "S", "R", "K", "J", "S"],
   short: ["Ahd", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"],
   abbreviated: ["Ahd", "Isn", "Sel", "Rab", "Kha", "Jum", "Sab"],
   wide: ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"]
-}, Nnt = {
+}, Ont = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -72675,7 +72615,7 @@ const xtt = {
     evening: "petang",
     night: "malam"
   }
-}, Wnt = {
+}, Dnt = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -72706,48 +72646,48 @@ const xtt = {
     evening: "petang",
     night: "malam"
   }
-}, Rnt = (e, t) => "ke-" + Number(e), jnt = {
-  ordinalNumber: Rnt,
+}, Nnt = (e, t) => "ke-" + Number(e), Wnt = {
+  ordinalNumber: Nnt,
   era: A({
-    values: Ent,
+    values: _nt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Ant,
+    values: Tnt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Ont,
+    values: Ent,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Dnt,
+    values: Ant,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Nnt,
+    values: Ont,
     defaultWidth: "wide",
-    formattingValues: Wnt,
+    formattingValues: Dnt,
     defaultFormattingWidth: "wide"
   })
-}, Int = /^ke-(\d+)?/i, Lnt = /petama|\d+/i, Fnt = {
+}, Rnt = /^ke-(\d+)?/i, jnt = /petama|\d+/i, Int = {
   narrow: /^(sm|m)/i,
   abbreviated: /^(s\.?\s?m\.?|m\.?)/i,
   wide: /^(sebelum masihi|masihi)/i
-}, znt = {
+}, Lnt = {
   any: [/^s/i, /^(m)/i]
-}, Vnt = {
+}, Fnt = {
   narrow: /^[1234]/i,
   abbreviated: /^S[1234]/i,
   wide: /Suku (pertama|kedua|ketiga|keempat)/i
-}, Hnt = {
+}, znt = {
   any: [/pertama|1/i, /kedua|2/i, /ketiga|3/i, /keempat|4/i]
-}, Bnt = {
+}, Vnt = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mac|apr|mei|jun|jul|ogo|sep|okt|nov|dis)/i,
   wide: /^(januari|februari|mac|april|mei|jun|julai|ogos|september|oktober|november|disember)/i
-}, qnt = {
+}, Hnt = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -72776,18 +72716,18 @@ const xtt = {
     /^n/i,
     /^d/i
   ]
-}, Xnt = {
+}, Bnt = {
   narrow: /^[aisrkj]/i,
   short: /^(ahd|isn|sel|rab|kha|jum|sab)/i,
   abbreviated: /^(ahd|isn|sel|rab|kha|jum|sab)/i,
   wide: /^(ahad|isnin|selasa|rabu|khamis|jumaat|sabtu)/i
-}, Gnt = {
+}, qnt = {
   narrow: [/^a/i, /^i/i, /^s/i, /^r/i, /^k/i, /^j/i, /^s/i],
   any: [/^a/i, /^i/i, /^se/i, /^r/i, /^k/i, /^j/i, /^sa/i]
-}, Ynt = {
+}, Xnt = {
   narrow: /^(am|pm|tengah malam|tengah hari|pagi|petang|malam)/i,
   any: /^([ap]\.?\s?m\.?|tengah malam|tengah hari|pagi|petang|malam)/i
-}, Unt = {
+}, Gnt = {
   any: {
     am: /^a/i,
     pm: /^pm/i,
@@ -72798,55 +72738,55 @@ const xtt = {
     evening: /pe/i,
     night: /m/i
   }
-}, Knt = {
+}, Ynt = {
   ordinalNumber: Se({
-    matchPattern: Int,
-    parsePattern: Lnt,
+    matchPattern: Rnt,
+    parsePattern: jnt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Fnt,
+    matchPatterns: Int,
     defaultMatchWidth: "wide",
-    parsePatterns: znt,
+    parsePatterns: Lnt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Vnt,
+    matchPatterns: Fnt,
     defaultMatchWidth: "wide",
-    parsePatterns: Hnt,
+    parsePatterns: znt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Vnt,
+    defaultMatchWidth: "wide",
+    parsePatterns: Hnt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Bnt,
     defaultMatchWidth: "wide",
     parsePatterns: qnt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Xnt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Gnt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Ynt,
-    defaultMatchWidth: "any",
-    parsePatterns: Unt,
-    defaultParseWidth: "any"
   })
-}, Qnt = {
+}, Unt = {
   code: "ms",
-  formatDistance: Mnt,
-  formatLong: $nt,
-  formatRelative: Tnt,
-  localize: jnt,
-  match: Knt,
+  formatDistance: Pnt,
+  formatLong: Cnt,
+  formatRelative: $nt,
+  localize: Wnt,
+  match: Ynt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, Znt = {
+}, Knt = {
   lessThanXSeconds: {
     one: "inqas minn sekonda",
     other: "inqas minn {{count}} sekondi"
@@ -72912,54 +72852,54 @@ const xtt = {
     two: "kważi sentejn",
     other: "kważi {{count}} snin"
   }
-}, Jnt = (e, t, n) => {
+}, Qnt = (e, t, n) => {
   let r;
-  const a = Znt[e];
+  const a = Knt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : t === 2 && a.two ? r = a.two : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "f'" + r : r + " ilu" : r;
-}, ert = {
+}, Znt = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
   short: "dd/MM/yyyy"
-}, trt = {
+}, Jnt = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, nrt = {
+}, ert = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, rrt = {
+}, trt = {
   date: q({
-    formats: ert,
+    formats: Znt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: trt,
+    formats: Jnt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: nrt,
+    formats: ert,
     defaultWidth: "full"
   })
-}, art = {
+}, nrt = {
   lastWeek: "eeee 'li għadda' 'fil-'p",
   yesterday: "'Il-bieraħ fil-'p",
   today: "'Illum fil-'p",
   tomorrow: "'Għada fil-'p",
   nextWeek: "eeee 'fil-'p",
   other: "P"
-}, irt = (e, t, n, r) => art[e], ort = {
+}, rrt = (e, t, n, r) => nrt[e], art = {
   narrow: ["Q", "W"],
   abbreviated: ["QK", "WK"],
   wide: ["qabel Kristu", "wara Kristu"]
-}, srt = {
+}, irt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
   wide: ["1. kwart", "2. kwart", "3. kwart", "4. kwart"]
-}, urt = {
+}, ort = {
   narrow: ["J", "F", "M", "A", "M", "Ġ", "L", "A", "S", "O", "N", "D"],
   abbreviated: [
     "Jan",
@@ -72989,7 +72929,7 @@ const xtt = {
     "Novembru",
     "Diċembru"
   ]
-}, crt = {
+}, srt = {
   narrow: ["Ħ", "T", "T", "E", "Ħ", "Ġ", "S"],
   short: ["Ħa", "Tn", "Tl", "Er", "Ħa", "Ġi", "Si"],
   abbreviated: ["Ħad", "Tne", "Tli", "Erb", "Ħam", "Ġim", "Sib"],
@@ -73002,7 +72942,7 @@ const xtt = {
     "Il-Ġimgħa",
     "Is-Sibt"
   ]
-}, lrt = {
+}, urt = {
   narrow: {
     am: "a",
     pm: "p",
@@ -73033,7 +72973,7 @@ const xtt = {
     evening: "filgħaxija",
     night: "lejl"
   }
-}, drt = {
+}, crt = {
   narrow: {
     am: "a",
     pm: "p",
@@ -73064,48 +73004,48 @@ const xtt = {
     evening: "filgħaxija",
     night: "billejl"
   }
-}, frt = (e, t) => Number(e) + "º", mrt = {
-  ordinalNumber: frt,
+}, lrt = (e, t) => Number(e) + "º", drt = {
+  ordinalNumber: lrt,
   era: A({
-    values: ort,
+    values: art,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: srt,
+    values: irt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: urt,
+    values: ort,
     defaultWidth: "wide"
   }),
   day: A({
-    values: crt,
+    values: srt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: lrt,
+    values: urt,
     defaultWidth: "wide",
-    formattingValues: drt,
+    formattingValues: crt,
     defaultFormattingWidth: "wide"
   })
-}, hrt = /^(\d+)(º)?/i, prt = /\d+/i, grt = {
+}, frt = /^(\d+)(º)?/i, mrt = /\d+/i, hrt = {
   narrow: /^(q|w)/i,
   abbreviated: /^(q\.?\s?k\.?|b\.?\s?c\.?\s?e\.?|w\.?\s?k\.?)/i,
   wide: /^(qabel kristu|before common era|wara kristu|common era)/i
-}, vrt = {
+}, prt = {
   any: [/^(q|b)/i, /^(w|c)/i]
-}, yrt = {
+}, grt = {
   narrow: /^[1234]/i,
   abbreviated: /^k[1234]/i,
   wide: /^[1234](\.)? kwart/i
-}, brt = {
+}, vrt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, wrt = {
+}, yrt = {
   narrow: /^[jfmaglsond]/i,
   abbreviated: /^(jan|fra|mar|apr|mej|ġun|lul|aww|set|ott|nov|diċ)/i,
   wide: /^(jannar|frar|marzu|april|mejju|ġunju|lulju|awwissu|settembru|ottubru|novembru|diċembru)/i
-}, Prt = {
+}, brt = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -73134,12 +73074,12 @@ const xtt = {
     /^n/i,
     /^d/i
   ]
-}, xrt = {
+}, wrt = {
   narrow: /^[ħteġs]/i,
   short: /^(ħa|tn|tl|er|ħa|ġi|si)/i,
   abbreviated: /^(ħad|tne|tli|erb|ħam|ġim|sib)/i,
   wide: /^(il-ħadd|it-tnejn|it-tlieta|l-erbgħa|il-ħamis|il-ġimgħa|is-sibt)/i
-}, Mrt = {
+}, Prt = {
   narrow: [/^ħ/i, /^t/i, /^t/i, /^e/i, /^ħ/i, /^ġ/i, /^s/i],
   any: [
     /^(il-)?ħad/i,
@@ -73150,10 +73090,10 @@ const xtt = {
     /^(il-)?ġi/i,
     /^(is-)?si/i
   ]
-}, krt = {
+}, xrt = {
   narrow: /^(a|p|f'nofsillejl|f'nofsinhar|(ta') (għodwa|wara nofsinhar|filgħaxija|lejl))/i,
   any: /^([ap]\.?\s?m\.?|f'nofsillejl|f'nofsinhar|(ta') (għodwa|wara nofsinhar|filgħaxija|lejl))/i
-}, Crt = {
+}, Mrt = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -73164,55 +73104,55 @@ const xtt = {
     evening: /filgħaxija/i,
     night: /lejl/i
   }
-}, Srt = {
+}, krt = {
   ordinalNumber: Se({
-    matchPattern: hrt,
-    parsePattern: prt,
+    matchPattern: frt,
+    parsePattern: mrt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: grt,
+    matchPatterns: hrt,
     defaultMatchWidth: "wide",
-    parsePatterns: vrt,
+    parsePatterns: prt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: yrt,
+    matchPatterns: grt,
     defaultMatchWidth: "wide",
-    parsePatterns: brt,
+    parsePatterns: vrt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: yrt,
+    defaultMatchWidth: "wide",
+    parsePatterns: brt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: wrt,
     defaultMatchWidth: "wide",
     parsePatterns: Prt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: xrt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Mrt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: krt,
-    defaultMatchWidth: "any",
-    parsePatterns: Crt,
-    defaultParseWidth: "any"
   })
-}, $rt = {
+}, Crt = {
   code: "mt",
-  formatDistance: Jnt,
-  formatLong: rrt,
-  formatRelative: irt,
-  localize: mrt,
-  match: Srt,
+  formatDistance: Qnt,
+  formatLong: trt,
+  formatRelative: rrt,
+  localize: drt,
+  match: krt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, _rt = {
+}, Srt = {
   lessThanXSeconds: {
     one: "mindre enn ett sekund",
     other: "mindre enn {{count}} sekunder"
@@ -73274,54 +73214,54 @@ const xtt = {
     one: "nesten ett år",
     other: "nesten {{count}} år"
   }
-}, Trt = (e, t, n) => {
+}, $rt = (e, t, n) => {
   let r;
-  const a = _rt[e];
+  const a = Srt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "om " + r : r + " siden" : r;
-}, Ert = {
+}, _rt = {
   full: "EEEE d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
   short: "dd.MM.y"
-}, Art = {
+}, Trt = {
   full: "'kl'. HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Ort = {
+}, Ert = {
   full: "{{date}} 'kl.' {{time}}",
   long: "{{date}} 'kl.' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, Drt = {
+}, Art = {
   date: q({
-    formats: Ert,
+    formats: _rt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Art,
+    formats: Trt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Ort,
+    formats: Ert,
     defaultWidth: "full"
   })
-}, Nrt = {
+}, Ort = {
   lastWeek: "'forrige' eeee 'kl.' p",
   yesterday: "'i går kl.' p",
   today: "'i dag kl.' p",
   tomorrow: "'i morgen kl.' p",
   nextWeek: "EEEE 'kl.' p",
   other: "P"
-}, Wrt = (e, t, n, r) => Nrt[e], Rrt = {
+}, Drt = (e, t, n, r) => Ort[e], Nrt = {
   narrow: ["f.Kr.", "e.Kr."],
   abbreviated: ["f.Kr.", "e.Kr."],
   wide: ["før Kristus", "etter Kristus"]
-}, jrt = {
+}, Wrt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
-}, Irt = {
+}, Rrt = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "jan.",
@@ -73351,7 +73291,7 @@ const xtt = {
     "november",
     "desember"
   ]
-}, Lrt = {
+}, jrt = {
   narrow: ["S", "M", "T", "O", "T", "F", "L"],
   short: ["sø", "ma", "ti", "on", "to", "fr", "lø"],
   abbreviated: ["søn", "man", "tir", "ons", "tor", "fre", "lør"],
@@ -73364,7 +73304,7 @@ const xtt = {
     "fredag",
     "lørdag"
   ]
-}, Frt = {
+}, Irt = {
   narrow: {
     am: "a",
     pm: "p",
@@ -73395,46 +73335,46 @@ const xtt = {
     evening: "på kvelden",
     night: "på natten"
   }
-}, zrt = (e, t) => Number(e) + ".", Vrt = {
-  ordinalNumber: zrt,
+}, Lrt = (e, t) => Number(e) + ".", Frt = {
+  ordinalNumber: Lrt,
   era: A({
-    values: Rrt,
+    values: Nrt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: jrt,
+    values: Wrt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Irt,
+    values: Rrt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Lrt,
+    values: jrt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Frt,
+    values: Irt,
     defaultWidth: "wide"
   })
-}, Hrt = /^(\d+)\.?/i, Brt = /\d+/i, qrt = {
+}, zrt = /^(\d+)\.?/i, Vrt = /\d+/i, Hrt = {
   narrow: /^(f\.? ?Kr\.?|fvt\.?|e\.? ?Kr\.?|evt\.?)/i,
   abbreviated: /^(f\.? ?Kr\.?|fvt\.?|e\.? ?Kr\.?|evt\.?)/i,
   wide: /^(før Kristus|før vår tid|etter Kristus|vår tid)/i
-}, Xrt = {
+}, Brt = {
   any: [/^f/i, /^e/i]
-}, Grt = {
+}, qrt = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234](\.)? kvartal/i
-}, Yrt = {
+}, Xrt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Urt = {
+}, Grt = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mars?|apr|mai|juni?|juli?|aug|sep|okt|nov|des)\.?/i,
   wide: /^(januar|februar|mars|april|mai|juni|juli|august|september|oktober|november|desember)/i
-}, Krt = {
+}, Yrt = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -73463,17 +73403,17 @@ const xtt = {
     /^n/i,
     /^d/i
   ]
-}, Qrt = {
+}, Urt = {
   narrow: /^[smtofl]/i,
   short: /^(sø|ma|ti|on|to|fr|lø)/i,
   abbreviated: /^(søn|man|tir|ons|tor|fre|lør)/i,
   wide: /^(søndag|mandag|tirsdag|onsdag|torsdag|fredag|lørdag)/i
-}, Zrt = {
+}, Krt = {
   any: [/^s/i, /^m/i, /^ti/i, /^o/i, /^to/i, /^f/i, /^l/i]
-}, Jrt = {
+}, Qrt = {
   narrow: /^(midnatt|middag|(på) (morgenen|ettermiddagen|kvelden|natten)|[ap])/i,
   any: /^([ap]\.?\s?m\.?|midnatt|middag|(på) (morgenen|ettermiddagen|kvelden|natten))/i
-}, eat = {
+}, Zrt = {
   any: {
     am: /^a(\.?\s?m\.?)?$/i,
     pm: /^p(\.?\s?m\.?)?$/i,
@@ -73484,55 +73424,55 @@ const xtt = {
     evening: /kveld/i,
     night: /natt/i
   }
-}, tat = {
+}, Jrt = {
   ordinalNumber: Se({
-    matchPattern: Hrt,
-    parsePattern: Brt,
+    matchPattern: zrt,
+    parsePattern: Vrt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: qrt,
+    matchPatterns: Hrt,
     defaultMatchWidth: "wide",
-    parsePatterns: Xrt,
+    parsePatterns: Brt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Grt,
+    matchPatterns: qrt,
     defaultMatchWidth: "wide",
-    parsePatterns: Yrt,
+    parsePatterns: Xrt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Grt,
+    defaultMatchWidth: "wide",
+    parsePatterns: Yrt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Urt,
     defaultMatchWidth: "wide",
     parsePatterns: Krt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Qrt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Zrt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Jrt,
-    defaultMatchWidth: "any",
-    parsePatterns: eat,
-    defaultParseWidth: "any"
   })
-}, nat = {
+}, eat = {
   code: "nb",
-  formatDistance: Trt,
-  formatLong: Drt,
-  formatRelative: Wrt,
-  localize: Vrt,
-  match: tat,
+  formatDistance: $rt,
+  formatLong: Art,
+  formatRelative: Drt,
+  localize: Frt,
+  match: Jrt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, rat = {
+}, tat = {
   lessThanXSeconds: {
     one: "minder dan een seconde",
     other: "minder dan {{count}} seconden"
@@ -73594,54 +73534,54 @@ const xtt = {
     one: "bijna 1 jaar",
     other: "bijna {{count}} jaar"
   }
-}, aat = (e, t, n) => {
+}, nat = (e, t, n) => {
   let r;
-  const a = rat[e];
+  const a = tat[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "over " + r : r + " geleden" : r;
-}, iat = {
+}, rat = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "dd-MM-y"
-}, oat = {
+}, aat = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, sat = {
+}, iat = {
   full: "{{date}} 'om' {{time}}",
   long: "{{date}} 'om' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, uat = {
+}, oat = {
   date: q({
-    formats: iat,
+    formats: rat,
     defaultWidth: "full"
   }),
   time: q({
-    formats: oat,
+    formats: aat,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: sat,
+    formats: iat,
     defaultWidth: "full"
   })
-}, cat = {
+}, sat = {
   lastWeek: "'afgelopen' eeee 'om' p",
   yesterday: "'gisteren om' p",
   today: "'vandaag om' p",
   tomorrow: "'morgen om' p",
   nextWeek: "eeee 'om' p",
   other: "P"
-}, lat = (e, t, n, r) => cat[e], dat = {
+}, uat = (e, t, n, r) => sat[e], cat = {
   narrow: ["v.C.", "n.C."],
   abbreviated: ["v.Chr.", "n.Chr."],
   wide: ["voor Christus", "na Christus"]
-}, fat = {
+}, lat = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
   wide: ["1e kwartaal", "2e kwartaal", "3e kwartaal", "4e kwartaal"]
-}, mat = {
+}, dat = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "jan.",
@@ -73671,7 +73611,7 @@ const xtt = {
     "november",
     "december"
   ]
-}, hat = {
+}, fat = {
   narrow: ["Z", "M", "D", "W", "D", "V", "Z"],
   short: ["zo", "ma", "di", "wo", "do", "vr", "za"],
   abbreviated: ["zon", "maa", "din", "woe", "don", "vri", "zat"],
@@ -73684,7 +73624,7 @@ const xtt = {
     "vrijdag",
     "zaterdag"
   ]
-}, pat = {
+}, mat = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -73715,46 +73655,46 @@ const xtt = {
     evening: "'s avonds",
     night: "'s nachts"
   }
-}, gat = (e, t) => Number(e) + "e", vat = {
-  ordinalNumber: gat,
+}, hat = (e, t) => Number(e) + "e", pat = {
+  ordinalNumber: hat,
   era: A({
-    values: dat,
+    values: cat,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: fat,
+    values: lat,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: mat,
+    values: dat,
     defaultWidth: "wide"
   }),
   day: A({
-    values: hat,
+    values: fat,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: pat,
+    values: mat,
     defaultWidth: "wide"
   })
-}, yat = /^(\d+)e?/i, bat = /\d+/i, wat = {
+}, gat = /^(\d+)e?/i, vat = /\d+/i, yat = {
   narrow: /^([vn]\.? ?C\.?)/,
   abbreviated: /^([vn]\. ?Chr\.?)/,
   wide: /^((voor|na) Christus)/
-}, Pat = {
+}, bat = {
   any: [/^v/, /^n/]
-}, xat = {
+}, wat = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
   wide: /^[1234]e kwartaal/i
-}, Mat = {
+}, Pat = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, kat = {
+}, xat = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan.|feb.|mrt.|apr.|mei|jun.|jul.|aug.|sep.|okt.|nov.|dec.)/i,
   wide: /^(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december)/i
-}, Cat = {
+}, Mat = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -73783,17 +73723,17 @@ const xtt = {
     /^nov/i,
     /^dec/i
   ]
-}, Sat = {
+}, kat = {
   narrow: /^[zmdwv]/i,
   short: /^(zo|ma|di|wo|do|vr|za)/i,
   abbreviated: /^(zon|maa|din|woe|don|vri|zat)/i,
   wide: /^(zondag|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag)/i
-}, $at = {
+}, Cat = {
   narrow: [/^z/i, /^m/i, /^d/i, /^w/i, /^d/i, /^v/i, /^z/i],
   any: [/^zo/i, /^ma/i, /^di/i, /^wo/i, /^do/i, /^vr/i, /^za/i]
-}, _at = {
+}, Sat = {
   any: /^(am|pm|middernacht|het middaguur|'s (ochtends|middags|avonds|nachts))/i
-}, Tat = {
+}, $at = {
   any: {
     am: /^am/i,
     pm: /^pm/i,
@@ -73804,55 +73744,55 @@ const xtt = {
     evening: /avond/i,
     night: /nacht/i
   }
-}, Eat = {
+}, _at = {
   ordinalNumber: Se({
-    matchPattern: yat,
-    parsePattern: bat,
+    matchPattern: gat,
+    parsePattern: vat,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: wat,
+    matchPatterns: yat,
     defaultMatchWidth: "wide",
-    parsePatterns: Pat,
+    parsePatterns: bat,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: xat,
+    matchPatterns: wat,
     defaultMatchWidth: "wide",
-    parsePatterns: Mat,
+    parsePatterns: Pat,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: xat,
+    defaultMatchWidth: "wide",
+    parsePatterns: Mat,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: kat,
     defaultMatchWidth: "wide",
     parsePatterns: Cat,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Sat,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: $at,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: _at,
-    defaultMatchWidth: "any",
-    parsePatterns: Tat,
-    defaultParseWidth: "any"
   })
-}, Aat = {
+}, Tat = {
   code: "nl",
-  formatDistance: aat,
-  formatLong: uat,
-  formatRelative: lat,
-  localize: vat,
-  match: Eat,
+  formatDistance: nat,
+  formatLong: oat,
+  formatRelative: uat,
+  localize: pat,
+  match: _at,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, Oat = {
+}, Eat = {
   lessThanXSeconds: {
     one: "minder dan een seconde",
     other: "minder dan {{count}} seconden"
@@ -73914,54 +73854,54 @@ const xtt = {
     one: "bijna 1 jaar",
     other: "bijna {{count}} jaar"
   }
-}, Dat = (e, t, n) => {
+}, Aat = (e, t, n) => {
   let r;
-  const a = Oat[e];
+  const a = Eat[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "over " + r : r + " geleden" : r;
-}, Nat = {
+}, Oat = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "dd.MM.y"
-}, Wat = {
+}, Dat = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Rat = {
+}, Nat = {
   full: "{{date}} 'om' {{time}}",
   long: "{{date}} 'om' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, jat = {
+}, Wat = {
   date: q({
-    formats: Nat,
+    formats: Oat,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Wat,
+    formats: Dat,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Rat,
+    formats: Nat,
     defaultWidth: "full"
   })
-}, Iat = {
+}, Rat = {
   lastWeek: "'vorige' eeee 'om' p",
   yesterday: "'gisteren om' p",
   today: "'vandaag om' p",
   tomorrow: "'morgen om' p",
   nextWeek: "eeee 'om' p",
   other: "P"
-}, Lat = (e, t, n, r) => Iat[e], Fat = {
+}, jat = (e, t, n, r) => Rat[e], Iat = {
   narrow: ["v.C.", "n.C."],
   abbreviated: ["v.Chr.", "n.Chr."],
   wide: ["voor Christus", "na Christus"]
-}, zat = {
+}, Lat = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["K1", "K2", "K3", "K4"],
   wide: ["1e kwartaal", "2e kwartaal", "3e kwartaal", "4e kwartaal"]
-}, Vat = {
+}, Fat = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "jan.",
@@ -73991,7 +73931,7 @@ const xtt = {
     "november",
     "december"
   ]
-}, Hat = {
+}, zat = {
   narrow: ["Z", "M", "D", "W", "D", "V", "Z"],
   short: ["zo", "ma", "di", "wo", "do", "vr", "za"],
   abbreviated: ["zon", "maa", "din", "woe", "don", "vri", "zat"],
@@ -74004,7 +73944,7 @@ const xtt = {
     "vrijdag",
     "zaterdag"
   ]
-}, Bat = {
+}, Vat = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -74035,46 +73975,46 @@ const xtt = {
     evening: "'s avonds",
     night: "'s nachts"
   }
-}, qat = (e, t) => Number(e) + "e", Xat = {
-  ordinalNumber: qat,
+}, Hat = (e, t) => Number(e) + "e", Bat = {
+  ordinalNumber: Hat,
   era: A({
-    values: Fat,
+    values: Iat,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: zat,
+    values: Lat,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Vat,
+    values: Fat,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Hat,
+    values: zat,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Bat,
+    values: Vat,
     defaultWidth: "wide"
   })
-}, Gat = /^(\d+)e?/i, Yat = /\d+/i, Uat = {
+}, qat = /^(\d+)e?/i, Xat = /\d+/i, Gat = {
   narrow: /^([vn]\.? ?C\.?)/,
   abbreviated: /^([vn]\. ?Chr\.?)/,
   wide: /^((voor|na) Christus)/
-}, Kat = {
+}, Yat = {
   any: [/^v/, /^n/]
-}, Qat = {
+}, Uat = {
   narrow: /^[1234]/i,
   abbreviated: /^K[1234]/i,
   wide: /^[1234]e kwartaal/i
-}, Zat = {
+}, Kat = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Jat = {
+}, Qat = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan.|feb.|mrt.|apr.|mei|jun.|jul.|aug.|sep.|okt.|nov.|dec.)/i,
   wide: /^(januari|februari|maart|april|mei|juni|juli|augustus|september|oktober|november|december)/i
-}, eit = {
+}, Zat = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -74103,17 +74043,17 @@ const xtt = {
     /^nov/i,
     /^dec/i
   ]
-}, tit = {
+}, Jat = {
   narrow: /^[zmdwv]/i,
   short: /^(zo|ma|di|wo|do|vr|za)/i,
   abbreviated: /^(zon|maa|din|woe|don|vri|zat)/i,
   wide: /^(zondag|maandag|dinsdag|woensdag|donderdag|vrijdag|zaterdag)/i
-}, nit = {
+}, eit = {
   narrow: [/^z/i, /^m/i, /^d/i, /^w/i, /^d/i, /^v/i, /^z/i],
   any: [/^zo/i, /^ma/i, /^di/i, /^wo/i, /^do/i, /^vr/i, /^za/i]
-}, rit = {
+}, tit = {
   any: /^(am|pm|middernacht|het middaguur|'s (ochtends|middags|avonds|nachts))/i
-}, ait = {
+}, nit = {
   any: {
     am: /^am/i,
     pm: /^pm/i,
@@ -74124,55 +74064,55 @@ const xtt = {
     evening: /avond/i,
     night: /nacht/i
   }
-}, iit = {
+}, rit = {
   ordinalNumber: Se({
-    matchPattern: Gat,
-    parsePattern: Yat,
+    matchPattern: qat,
+    parsePattern: Xat,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Uat,
+    matchPatterns: Gat,
     defaultMatchWidth: "wide",
-    parsePatterns: Kat,
+    parsePatterns: Yat,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Qat,
+    matchPatterns: Uat,
     defaultMatchWidth: "wide",
-    parsePatterns: Zat,
+    parsePatterns: Kat,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Qat,
+    defaultMatchWidth: "wide",
+    parsePatterns: Zat,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Jat,
     defaultMatchWidth: "wide",
     parsePatterns: eit,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: tit,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: nit,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: rit,
-    defaultMatchWidth: "any",
-    parsePatterns: ait,
-    defaultParseWidth: "any"
   })
-}, oit = {
+}, ait = {
   code: "nl-BE",
-  formatDistance: Dat,
-  formatLong: jat,
-  formatRelative: Lat,
-  localize: Xat,
-  match: iit,
+  formatDistance: Aat,
+  formatLong: Wat,
+  formatRelative: jat,
+  localize: Bat,
+  match: rit,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, sit = {
+}, iit = {
   lessThanXSeconds: {
     one: "mindre enn eitt sekund",
     other: "mindre enn {{count}} sekund"
@@ -74234,7 +74174,7 @@ const xtt = {
     one: "nesten eitt år",
     other: "nesten {{count}} år"
   }
-}, uit = [
+}, oit = [
   "null",
   "ein",
   "to",
@@ -74248,57 +74188,57 @@ const xtt = {
   "ti",
   "elleve",
   "tolv"
-], cit = (e, t, n) => {
+], sit = (e, t, n) => {
   let r;
-  const a = sit[e];
+  const a = iit[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace(
     "{{count}}",
-    t < 13 ? uit[t] : String(t)
+    t < 13 ? oit[t] : String(t)
   ), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "om " + r : r + " sidan" : r;
-}, lit = {
+}, uit = {
   full: "EEEE d. MMMM y",
   long: "d. MMMM y",
   medium: "d. MMM y",
   short: "dd.MM.y"
-}, dit = {
+}, cit = {
   full: "'kl'. HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, fit = {
+}, lit = {
   full: "{{date}} 'kl.' {{time}}",
   long: "{{date}} 'kl.' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, mit = {
+}, dit = {
   date: q({
-    formats: lit,
+    formats: uit,
     defaultWidth: "full"
   }),
   time: q({
-    formats: dit,
+    formats: cit,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: fit,
+    formats: lit,
     defaultWidth: "full"
   })
-}, hit = {
+}, fit = {
   lastWeek: "'førre' eeee 'kl.' p",
   yesterday: "'i går kl.' p",
   today: "'i dag kl.' p",
   tomorrow: "'i morgon kl.' p",
   nextWeek: "EEEE 'kl.' p",
   other: "P"
-}, pit = (e, t, n, r) => hit[e], git = {
+}, mit = (e, t, n, r) => fit[e], hit = {
   narrow: ["f.Kr.", "e.Kr."],
   abbreviated: ["f.Kr.", "e.Kr."],
   wide: ["før Kristus", "etter Kristus"]
-}, vit = {
+}, pit = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
-}, yit = {
+}, git = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "jan.",
@@ -74328,7 +74268,7 @@ const xtt = {
     "november",
     "desember"
   ]
-}, bit = {
+}, vit = {
   narrow: ["S", "M", "T", "O", "T", "F", "L"],
   short: ["su", "må", "ty", "on", "to", "fr", "lau"],
   abbreviated: ["sun", "mån", "tys", "ons", "tor", "fre", "laur"],
@@ -74341,7 +74281,7 @@ const xtt = {
     "fredag",
     "laurdag"
   ]
-}, wit = {
+}, yit = {
   narrow: {
     am: "a",
     pm: "p",
@@ -74372,46 +74312,46 @@ const xtt = {
     evening: "på kvelden",
     night: "på natta"
   }
-}, Pit = (e, t) => Number(e) + ".", xit = {
-  ordinalNumber: Pit,
+}, bit = (e, t) => Number(e) + ".", wit = {
+  ordinalNumber: bit,
   era: A({
-    values: git,
+    values: hit,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: vit,
+    values: pit,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: yit,
+    values: git,
     defaultWidth: "wide"
   }),
   day: A({
-    values: bit,
+    values: vit,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: wit,
+    values: yit,
     defaultWidth: "wide"
   })
-}, Mit = /^(\d+)\.?/i, kit = /\d+/i, Cit = {
+}, Pit = /^(\d+)\.?/i, xit = /\d+/i, Mit = {
   narrow: /^(f\.? ?Kr\.?|fvt\.?|e\.? ?Kr\.?|evt\.?)/i,
   abbreviated: /^(f\.? ?Kr\.?|fvt\.?|e\.? ?Kr\.?|evt\.?)/i,
   wide: /^(før Kristus|før vår tid|etter Kristus|vår tid)/i
-}, Sit = {
+}, kit = {
   any: [/^f/i, /^e/i]
-}, $it = {
+}, Cit = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234](\.)? kvartal/i
-}, _it = {
+}, Sit = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Tit = {
+}, $it = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mars?|apr|mai|juni?|juli?|aug|sep|okt|nov|des)\.?/i,
   wide: /^(januar|februar|mars|april|mai|juni|juli|august|september|oktober|november|desember)/i
-}, Eit = {
+}, _it = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -74440,17 +74380,17 @@ const xtt = {
     /^n/i,
     /^d/i
   ]
-}, Ait = {
+}, Tit = {
   narrow: /^[smtofl]/i,
   short: /^(su|må|ty|on|to|fr|la)/i,
   abbreviated: /^(sun|mån|tys|ons|tor|fre|laur)/i,
   wide: /^(sundag|måndag|tysdag|onsdag|torsdag|fredag|laurdag)/i
-}, Oit = {
+}, Eit = {
   any: [/^s/i, /^m/i, /^ty/i, /^o/i, /^to/i, /^f/i, /^l/i]
-}, Dit = {
+}, Ait = {
   narrow: /^(midnatt|middag|(på) (morgonen|ettermiddagen|kvelden|natta)|[ap])/i,
   any: /^([ap]\.?\s?m\.?|midnatt|middag|(på) (morgonen|ettermiddagen|kvelden|natta))/i
-}, Nit = {
+}, Oit = {
   any: {
     am: /^a(\.?\s?m\.?)?$/i,
     pm: /^p(\.?\s?m\.?)?$/i,
@@ -74461,55 +74401,55 @@ const xtt = {
     evening: /kveld/i,
     night: /natt/i
   }
-}, Wit = {
+}, Dit = {
   ordinalNumber: Se({
-    matchPattern: Mit,
-    parsePattern: kit,
+    matchPattern: Pit,
+    parsePattern: xit,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Cit,
+    matchPatterns: Mit,
     defaultMatchWidth: "wide",
-    parsePatterns: Sit,
+    parsePatterns: kit,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: $it,
+    matchPatterns: Cit,
     defaultMatchWidth: "wide",
-    parsePatterns: _it,
+    parsePatterns: Sit,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: $it,
+    defaultMatchWidth: "wide",
+    parsePatterns: _it,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Tit,
     defaultMatchWidth: "wide",
     parsePatterns: Eit,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Ait,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Oit,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Dit,
-    defaultMatchWidth: "any",
-    parsePatterns: Nit,
-    defaultParseWidth: "any"
   })
-}, Rit = {
+}, Nit = {
   code: "nn",
-  formatDistance: cit,
-  formatLong: mit,
-  formatRelative: pit,
-  localize: xit,
-  match: Wit,
+  formatDistance: sit,
+  formatLong: dit,
+  formatRelative: mit,
+  localize: wit,
+  match: Dit,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, jit = {
+}, Wit = {
   lessThanXSeconds: {
     one: "mens d’una segonda",
     other: "mens de {{count}} segondas"
@@ -74571,54 +74511,54 @@ const xtt = {
     one: "gaireben un an",
     other: "gaireben {{count}} ans"
   }
-}, Iit = (e, t, n) => {
+}, Rit = (e, t, n) => {
   let r;
-  const a = jit[e];
+  const a = Wit[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "d’aquí " + r : "fa " + r : r;
-}, Lit = {
+}, jit = {
   full: "EEEE d 'de' MMMM y",
   long: "d 'de' MMMM y",
   medium: "d MMM y",
   short: "dd/MM/y"
-}, Fit = {
+}, Iit = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, zit = {
+}, Lit = {
   full: "{{date}} 'a' {{time}}",
   long: "{{date}} 'a' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Vit = {
+}, Fit = {
   date: q({
-    formats: Lit,
+    formats: jit,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Fit,
+    formats: Iit,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: zit,
+    formats: Lit,
     defaultWidth: "full"
   })
-}, Hit = {
+}, zit = {
   lastWeek: "eeee 'passat a' p",
   yesterday: "'ièr a' p",
   today: "'uèi a' p",
   tomorrow: "'deman a' p",
   nextWeek: "eeee 'a' p",
   other: "P"
-}, Bit = (e, t, n, r) => Hit[e], qit = {
+}, Vit = (e, t, n, r) => zit[e], Hit = {
   narrow: ["ab. J.C.", "apr. J.C."],
   abbreviated: ["ab. J.C.", "apr. J.C."],
   wide: ["abans Jèsus-Crist", "après Jèsus-Crist"]
-}, Xit = {
+}, Bit = {
   narrow: ["T1", "T2", "T3", "T4"],
   abbreviated: ["1èr trim.", "2nd trim.", "3en trim.", "4en trim."],
   wide: ["1èr trimèstre", "2nd trimèstre", "3en trimèstre", "4en trimèstre"]
-}, Git = {
+}, qit = {
   narrow: [
     "GN",
     "FB",
@@ -74661,7 +74601,7 @@ const xtt = {
     "novembre",
     "decembre"
   ]
-}, Yit = {
+}, Xit = {
   narrow: ["dg.", "dl.", "dm.", "dc.", "dj.", "dv.", "ds."],
   short: ["dg.", "dl.", "dm.", "dc.", "dj.", "dv.", "ds."],
   abbreviated: ["dg.", "dl.", "dm.", "dc.", "dj.", "dv.", "ds."],
@@ -74674,7 +74614,7 @@ const xtt = {
     "divendres",
     "dissabte"
   ]
-}, Uit = {
+}, Git = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -74705,7 +74645,7 @@ const xtt = {
     evening: "vèspre",
     night: "nuèch"
   }
-}, Kit = {
+}, Yit = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -74736,7 +74676,7 @@ const xtt = {
     evening: "del ser",
     night: "de la nuèch"
   }
-}, Qit = (e, t) => {
+}, Uit = (e, t) => {
   const n = Number(e), r = t == null ? void 0 : t.unit;
   let a;
   switch (n) {
@@ -74750,48 +74690,48 @@ const xtt = {
       a = "en";
   }
   return (r === "year" || r === "week" || r === "hour" || r === "minute" || r === "second") && (a += "a"), n + a;
-}, Zit = {
-  ordinalNumber: Qit,
+}, Kit = {
+  ordinalNumber: Uit,
   era: A({
-    values: qit,
+    values: Hit,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Xit,
+    values: Bit,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Git,
+    values: qit,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Yit,
+    values: Xit,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Uit,
+    values: Git,
     defaultWidth: "wide",
-    formattingValues: Kit,
+    formattingValues: Yit,
     defaultFormattingWidth: "wide"
   })
-}, Jit = /^(\d+)(èr|nd|en)?[a]?/i, eot = /\d+/i, tot = {
+}, Qit = /^(\d+)(èr|nd|en)?[a]?/i, Zit = /\d+/i, Jit = {
   narrow: /^(ab\.J\.C|apr\.J\.C|apr\.J\.-C)/i,
   abbreviated: /^(ab\.J\.-C|ab\.J-C|apr\.J\.-C|apr\.J-C|ap\.J-C)/i,
   wide: /^(abans Jèsus-Crist|après Jèsus-Crist)/i
-}, not = {
+}, eot = {
   any: [/^ab/i, /^ap/i]
-}, rot = {
+}, tot = {
   narrow: /^T[1234]/i,
   abbreviated: /^[1234](èr|nd|en)? trim\.?/i,
   wide: /^[1234](èr|nd|en)? trimèstre/i
-}, aot = {
+}, not = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, iot = {
+}, rot = {
   narrow: /^(GN|FB|MÇ|AB|MA|JN|JL|AG|ST|OC|NV|DC)/i,
   abbreviated: /^(gen|febr|març|abr|mai|junh|jul|ag|set|oct|nov|dec)\.?/i,
   wide: /^(genièr|febrièr|març|abril|mai|junh|julhet|agost|setembre|octòbre|novembre|decembre)/i
-}, oot = {
+}, aot = {
   any: [
     /^g/i,
     /^f/i,
@@ -74806,12 +74746,12 @@ const xtt = {
     /^n/i,
     /^d/i
   ]
-}, sot = {
+}, iot = {
   narrow: /^d[glmcjvs]\.?/i,
   short: /^d[glmcjvs]\.?/i,
   abbreviated: /^d[glmcjvs]\.?/i,
   wide: /^(dimenge|diluns|dimars|dimècres|dijòus|divendres|dissabte)/i
-}, uot = {
+}, oot = {
   narrow: [/^dg/i, /^dl/i, /^dm/i, /^dc/i, /^dj/i, /^dv/i, /^ds/i],
   short: [/^dg/i, /^dl/i, /^dm/i, /^dc/i, /^dj/i, /^dv/i, /^ds/i],
   abbreviated: [/^dg/i, /^dl/i, /^dm/i, /^dc/i, /^dj/i, /^dv/i, /^ds/i],
@@ -74824,9 +74764,9 @@ const xtt = {
     /^dv|div/i,
     /^ds|dis/i
   ]
-}, cot = {
+}, sot = {
   any: /(^(a\.?m|p\.?m))|(ante meridiem|post meridiem)|((del |de la |de l’)(matin|aprèp-miègjorn|vèspre|ser|nuèch))/i
-}, lot = {
+}, uot = {
   any: {
     am: /(^a)|ante meridiem/i,
     pm: /(^p)|post meridiem/i,
@@ -74837,55 +74777,55 @@ const xtt = {
     evening: /vèspre|ser/i,
     night: /nuèch/i
   }
-}, dot = {
+}, cot = {
   ordinalNumber: Se({
-    matchPattern: Jit,
-    parsePattern: eot,
+    matchPattern: Qit,
+    parsePattern: Zit,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: tot,
+    matchPatterns: Jit,
     defaultMatchWidth: "wide",
-    parsePatterns: not,
+    parsePatterns: eot,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: rot,
+    matchPatterns: tot,
     defaultMatchWidth: "wide",
-    parsePatterns: aot,
+    parsePatterns: not,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: rot,
+    defaultMatchWidth: "wide",
+    parsePatterns: aot,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: iot,
     defaultMatchWidth: "wide",
     parsePatterns: oot,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: sot,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: uot,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: cot,
-    defaultMatchWidth: "any",
-    parsePatterns: lot,
-    defaultParseWidth: "any"
   })
-}, fot = {
+}, lot = {
   code: "oc",
-  formatDistance: Iit,
-  formatLong: Vit,
-  formatRelative: Bit,
-  localize: Zit,
-  match: dot,
+  formatDistance: Rit,
+  formatLong: Fit,
+  formatRelative: Vit,
+  localize: Kit,
+  match: cot,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, mot = {
+}, dot = {
   lessThanXSeconds: {
     one: {
       regular: "mniej niż sekunda",
@@ -74995,7 +74935,7 @@ const xtt = {
     other: "prawie {{count}} lat"
   }
 };
-function hot(e, t) {
+function fot(e, t) {
   if (t === 1)
     return e.one;
   const n = t % 100;
@@ -75005,50 +74945,50 @@ function hot(e, t) {
   return r >= 2 && r <= 4 ? e.twoFour : e.other;
 }
 function gP(e, t, n) {
-  const r = hot(e, t);
+  const r = fot(e, t);
   return (typeof r == "string" ? r : r[n]).replace("{{count}}", String(t));
 }
-const pot = (e, t, n) => {
-  const r = mot[e];
+const mot = (e, t, n) => {
+  const r = dot[e];
   return n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "za " + gP(r, t, "future") : gP(r, t, "past") + " temu" : gP(r, t, "regular");
-}, got = {
+}, hot = {
   full: "EEEE, do MMMM y",
   long: "do MMMM y",
   medium: "do MMM y",
   short: "dd.MM.y"
-}, vot = {
+}, pot = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, yot = {
+}, got = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, bot = {
+}, vot = {
   date: q({
-    formats: got,
+    formats: hot,
     defaultWidth: "full"
   }),
   time: q({
-    formats: vot,
+    formats: pot,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: yot,
+    formats: got,
     defaultWidth: "full"
   })
-}, wot = {
+}, yot = {
   masculine: "ostatni",
   feminine: "ostatnia"
-}, Pot = {
+}, bot = {
   masculine: "ten",
   feminine: "ta"
-}, xot = {
+}, wot = {
   masculine: "następny",
   feminine: "następna"
-}, Mot = {
+}, Pot = {
   0: "feminine",
   1: "masculine",
   2: "masculine",
@@ -75060,35 +75000,35 @@ const pot = (e, t, n) => {
 function jD(e, t, n, r) {
   let a;
   if (bn(t, n, r))
-    a = Pot;
+    a = bot;
   else if (e === "lastWeek")
-    a = wot;
+    a = yot;
   else if (e === "nextWeek")
-    a = xot;
+    a = wot;
   else
     throw new Error(`Cannot determine adjectives for token ${e}`);
-  const i = t.getDay(), o = Mot[i];
+  const i = t.getDay(), o = Pot[i];
   return `'${a[o]}' eeee 'o' p`;
 }
-const kot = {
+const xot = {
   lastWeek: jD,
   yesterday: "'wczoraj o' p",
   today: "'dzisiaj o' p",
   tomorrow: "'jutro o' p",
   nextWeek: jD,
   other: "P"
-}, Cot = (e, t, n, r) => {
-  const a = kot[e];
+}, Mot = (e, t, n, r) => {
+  const a = xot[e];
   return typeof a == "function" ? a(e, t, n, r) : a;
-}, Sot = {
+}, kot = {
   narrow: ["p.n.e.", "n.e."],
   abbreviated: ["p.n.e.", "n.e."],
   wide: ["przed naszą erą", "naszej ery"]
-}, $ot = {
+}, Cot = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["I kw.", "II kw.", "III kw.", "IV kw."],
   wide: ["I kwartał", "II kwartał", "III kwartał", "IV kwartał"]
-}, _ot = {
+}, Sot = {
   narrow: ["S", "L", "M", "K", "M", "C", "L", "S", "W", "P", "L", "G"],
   abbreviated: [
     "sty",
@@ -75118,7 +75058,7 @@ const kot = {
     "listopad",
     "grudzień"
   ]
-}, Tot = {
+}, $ot = {
   narrow: ["s", "l", "m", "k", "m", "c", "l", "s", "w", "p", "l", "g"],
   abbreviated: [
     "sty",
@@ -75148,7 +75088,7 @@ const kot = {
     "listopada",
     "grudnia"
   ]
-}, Eot = {
+}, _ot = {
   narrow: ["N", "P", "W", "Ś", "C", "P", "S"],
   short: ["nie", "pon", "wto", "śro", "czw", "pią", "sob"],
   abbreviated: ["niedz.", "pon.", "wt.", "śr.", "czw.", "pt.", "sob."],
@@ -75161,7 +75101,7 @@ const kot = {
     "piątek",
     "sobota"
   ]
-}, Aot = {
+}, Tot = {
   narrow: ["n", "p", "w", "ś", "c", "p", "s"],
   short: ["nie", "pon", "wto", "śro", "czw", "pią", "sob"],
   abbreviated: ["niedz.", "pon.", "wt.", "śr.", "czw.", "pt.", "sob."],
@@ -75174,7 +75114,7 @@ const kot = {
     "piątek",
     "sobota"
   ]
-}, Oot = {
+}, Eot = {
   narrow: {
     am: "a",
     pm: "p",
@@ -75205,7 +75145,7 @@ const kot = {
     evening: "wieczór",
     night: "noc"
   }
-}, Dot = {
+}, Aot = {
   narrow: {
     am: "a",
     pm: "p",
@@ -75236,53 +75176,53 @@ const kot = {
     evening: "wieczorem",
     night: "w nocy"
   }
-}, Not = (e, t) => String(e), Wot = {
-  ordinalNumber: Not,
+}, Oot = (e, t) => String(e), Dot = {
+  ordinalNumber: Oot,
   era: A({
-    values: Sot,
+    values: kot,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: $ot,
+    values: Cot,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
+    values: Sot,
+    defaultWidth: "wide",
+    formattingValues: $ot,
+    defaultFormattingWidth: "wide"
+  }),
+  day: A({
     values: _ot,
     defaultWidth: "wide",
     formattingValues: Tot,
     defaultFormattingWidth: "wide"
   }),
-  day: A({
+  dayPeriod: A({
     values: Eot,
     defaultWidth: "wide",
     formattingValues: Aot,
     defaultFormattingWidth: "wide"
-  }),
-  dayPeriod: A({
-    values: Oot,
-    defaultWidth: "wide",
-    formattingValues: Dot,
-    defaultFormattingWidth: "wide"
   })
-}, Rot = /^(\d+)?/i, jot = /\d+/i, Iot = {
+}, Not = /^(\d+)?/i, Wot = /\d+/i, Rot = {
   narrow: /^(p\.?\s*n\.?\s*e\.?\s*|n\.?\s*e\.?\s*)/i,
   abbreviated: /^(p\.?\s*n\.?\s*e\.?\s*|n\.?\s*e\.?\s*)/i,
   wide: /^(przed\s*nasz(ą|a)\s*er(ą|a)|naszej\s*ery)/i
-}, Lot = {
+}, jot = {
   any: [/^p/i, /^n/i]
-}, Fot = {
+}, Iot = {
   narrow: /^[1234]/i,
   abbreviated: /^(I|II|III|IV)\s*kw\.?/i,
   wide: /^(I|II|III|IV)\s*kwarta(ł|l)/i
-}, zot = {
+}, Lot = {
   narrow: [/1/i, /2/i, /3/i, /4/i],
   any: [/^I kw/i, /^II kw/i, /^III kw/i, /^IV kw/i]
-}, Vot = {
+}, Fot = {
   narrow: /^[slmkcwpg]/i,
   abbreviated: /^(sty|lut|mar|kwi|maj|cze|lip|sie|wrz|pa(ź|z)|lis|gru)/i,
   wide: /^(stycznia|stycze(ń|n)|lutego|luty|marca|marzec|kwietnia|kwiecie(ń|n)|maja|maj|czerwca|czerwiec|lipca|lipiec|sierpnia|sierpie(ń|n)|wrze(ś|s)nia|wrzesie(ń|n)|pa(ź|z)dziernika|pa(ź|z)dziernik|listopada|listopad|grudnia|grudzie(ń|n))/i
-}, Hot = {
+}, zot = {
   narrow: [
     /^s/i,
     /^l/i,
@@ -75311,19 +75251,19 @@ const kot = {
     /^lis/i,
     /^g/i
   ]
-}, Bot = {
+}, Vot = {
   narrow: /^[npwścs]/i,
   short: /^(nie|pon|wto|(ś|s)ro|czw|pi(ą|a)|sob)/i,
   abbreviated: /^(niedz|pon|wt|(ś|s)r|czw|pt|sob)\.?/i,
   wide: /^(niedziela|poniedzia(ł|l)ek|wtorek|(ś|s)roda|czwartek|pi(ą|a)tek|sobota)/i
-}, qot = {
+}, Hot = {
   narrow: [/^n/i, /^p/i, /^w/i, /^ś/i, /^c/i, /^p/i, /^s/i],
   abbreviated: [/^n/i, /^po/i, /^w/i, /^(ś|s)r/i, /^c/i, /^pt/i, /^so/i],
   any: [/^n/i, /^po/i, /^w/i, /^(ś|s)r/i, /^c/i, /^pi/i, /^so/i]
-}, Xot = {
+}, Bot = {
   narrow: /^(^a$|^p$|pó(ł|l)n\.?|o\s*pó(ł|l)n\.?|po(ł|l)\.?|w\s*po(ł|l)\.?|po\s*po(ł|l)\.?|rano|wiecz\.?|noc|w\s*nocy)/i,
   any: /^(am|pm|pó(ł|l)noc|o\s*pó(ł|l)nocy|po(ł|l)udnie|w\s*po(ł|l)udnie|popo(ł|l)udnie|po\s*po(ł|l)udniu|rano|wieczór|wieczorem|noc|w\s*nocy)/i
-}, Got = {
+}, qot = {
   narrow: {
     am: /^a$/i,
     pm: /^p$/i,
@@ -75344,55 +75284,55 @@ const kot = {
     evening: /wiecz/i,
     night: /noc/i
   }
-}, Yot = {
+}, Xot = {
   ordinalNumber: Se({
-    matchPattern: Rot,
-    parsePattern: jot,
+    matchPattern: Not,
+    parsePattern: Wot,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Iot,
+    matchPatterns: Rot,
     defaultMatchWidth: "wide",
-    parsePatterns: Lot,
+    parsePatterns: jot,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Fot,
+    matchPatterns: Iot,
     defaultMatchWidth: "wide",
-    parsePatterns: zot,
+    parsePatterns: Lot,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Fot,
+    defaultMatchWidth: "wide",
+    parsePatterns: zot,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Vot,
     defaultMatchWidth: "wide",
     parsePatterns: Hot,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Bot,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: qot,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Xot,
-    defaultMatchWidth: "any",
-    parsePatterns: Got,
-    defaultParseWidth: "any"
   })
-}, Uot = {
+}, Got = {
   code: "pl",
-  formatDistance: pot,
-  formatLong: bot,
-  formatRelative: Cot,
-  localize: Wot,
-  match: Yot,
+  formatDistance: mot,
+  formatLong: vot,
+  formatRelative: Mot,
+  localize: Dot,
+  match: Xot,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, Kot = {
+}, Yot = {
   lessThanXSeconds: {
     one: "menos de um segundo",
     other: "menos de {{count}} segundos"
@@ -75454,39 +75394,39 @@ const kot = {
     one: "quase 1 ano",
     other: "quase {{count}} anos"
   }
-}, Qot = (e, t, n) => {
+}, Uot = (e, t, n) => {
   let r;
-  const a = Kot[e];
+  const a = Yot[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "daqui a " + r : "há " + r : r;
-}, Zot = {
+}, Kot = {
   full: "EEEE, d 'de' MMMM 'de' y",
   long: "d 'de' MMMM 'de' y",
   medium: "d 'de' MMM 'de' y",
   short: "dd/MM/y"
-}, Jot = {
+}, Qot = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, est = {
+}, Zot = {
   full: "{{date}} 'às' {{time}}",
   long: "{{date}} 'às' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, tst = {
+}, Jot = {
   date: q({
-    formats: Zot,
+    formats: Kot,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Jot,
+    formats: Qot,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: est,
+    formats: Zot,
     defaultWidth: "full"
   })
-}, nst = {
+}, est = {
   lastWeek: (e) => {
     const t = e.getDay();
     return "'" + (t === 0 || t === 6 ? "último" : "última") + "' eeee 'às' p";
@@ -75496,18 +75436,18 @@ const kot = {
   tomorrow: "'amanhã às' p",
   nextWeek: "eeee 'às' p",
   other: "P"
-}, rst = (e, t, n, r) => {
-  const a = nst[e];
+}, tst = (e, t, n, r) => {
+  const a = est[e];
   return typeof a == "function" ? a(t) : a;
-}, ast = {
+}, nst = {
   narrow: ["aC", "dC"],
   abbreviated: ["a.C.", "d.C."],
   wide: ["antes de Cristo", "depois de Cristo"]
-}, ist = {
+}, rst = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
   wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
-}, ost = {
+}, ast = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
   abbreviated: [
     "jan",
@@ -75537,7 +75477,7 @@ const kot = {
     "novembro",
     "dezembro"
   ]
-}, sst = {
+}, ist = {
   narrow: ["d", "s", "t", "q", "q", "s", "s"],
   short: ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"],
   abbreviated: ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"],
@@ -75550,7 +75490,7 @@ const kot = {
     "sexta-feira",
     "sábado"
   ]
-}, ust = {
+}, ost = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -75581,7 +75521,7 @@ const kot = {
     evening: "noite",
     night: "madrugada"
   }
-}, cst = {
+}, sst = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -75612,52 +75552,52 @@ const kot = {
     evening: "da noite",
     night: "da madrugada"
   }
-}, lst = (e, t) => Number(e) + "º", dst = {
-  ordinalNumber: lst,
+}, ust = (e, t) => Number(e) + "º", cst = {
+  ordinalNumber: ust,
   era: A({
-    values: ast,
+    values: nst,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: ist,
+    values: rst,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: ost,
+    values: ast,
     defaultWidth: "wide"
   }),
   day: A({
-    values: sst,
+    values: ist,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: ust,
+    values: ost,
     defaultWidth: "wide",
-    formattingValues: cst,
+    formattingValues: sst,
     defaultFormattingWidth: "wide"
   })
-}, fst = /^(\d+)(º|ª)?/i, mst = /\d+/i, hst = {
+}, lst = /^(\d+)(º|ª)?/i, dst = /\d+/i, fst = {
   narrow: /^(ac|dc|a|d)/i,
   abbreviated: /^(a\.?\s?c\.?|a\.?\s?e\.?\s?c\.?|d\.?\s?c\.?|e\.?\s?c\.?)/i,
   wide: /^(antes de cristo|antes da era comum|depois de cristo|era comum)/i
-}, pst = {
+}, mst = {
   any: [/^ac/i, /^dc/i],
   wide: [
     /^(antes de cristo|antes da era comum)/i,
     /^(depois de cristo|era comum)/i
   ]
-}, gst = {
+}, hst = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
   wide: /^[1234](º|ª)? trimestre/i
-}, vst = {
+}, pst = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, yst = {
+}, gst = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)/i,
   wide: /^(janeiro|fevereiro|março|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)/i
-}, bst = {
+}, vst = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -75686,18 +75626,18 @@ const kot = {
     /^n/i,
     /^d/i
   ]
-}, wst = {
+}, yst = {
   narrow: /^[dstq]/i,
   short: /^(dom|seg|ter|qua|qui|sex|s[áa]b)/i,
   abbreviated: /^(dom|seg|ter|qua|qui|sex|s[áa]b)/i,
   wide: /^(domingo|segunda-?\s?feira|terça-?\s?feira|quarta-?\s?feira|quinta-?\s?feira|sexta-?\s?feira|s[áa]bado)/i
-}, Pst = {
+}, bst = {
   narrow: [/^d/i, /^s/i, /^t/i, /^q/i, /^q/i, /^s/i, /^s/i],
   any: [/^d/i, /^seg/i, /^t/i, /^qua/i, /^qui/i, /^sex/i, /^s[áa]/i]
-}, xst = {
+}, wst = {
   narrow: /^(a|p|meia-?\s?noite|meio-?\s?dia|(da) (manh[ãa]|tarde|noite|madrugada))/i,
   any: /^([ap]\.?\s?m\.?|meia-?\s?noite|meio-?\s?dia|(da) (manh[ãa]|tarde|noite|madrugada))/i
-}, Mst = {
+}, Pst = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -75708,55 +75648,55 @@ const kot = {
     evening: /noite/i,
     night: /madrugada/i
   }
-}, kst = {
+}, xst = {
   ordinalNumber: Se({
-    matchPattern: fst,
-    parsePattern: mst,
+    matchPattern: lst,
+    parsePattern: dst,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: hst,
+    matchPatterns: fst,
     defaultMatchWidth: "wide",
-    parsePatterns: pst,
+    parsePatterns: mst,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: gst,
+    matchPatterns: hst,
     defaultMatchWidth: "wide",
-    parsePatterns: vst,
+    parsePatterns: pst,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: gst,
+    defaultMatchWidth: "wide",
+    parsePatterns: vst,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: yst,
     defaultMatchWidth: "wide",
     parsePatterns: bst,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: wst,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Pst,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: xst,
-    defaultMatchWidth: "any",
-    parsePatterns: Mst,
-    defaultParseWidth: "any"
   })
-}, Cst = {
+}, Mst = {
   code: "pt",
-  formatDistance: Qot,
-  formatLong: tst,
-  formatRelative: rst,
-  localize: dst,
-  match: kst,
+  formatDistance: Uot,
+  formatLong: Jot,
+  formatRelative: tst,
+  localize: cst,
+  match: xst,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, Sst = {
+}, kst = {
   lessThanXSeconds: {
     one: "menos de um segundo",
     other: "menos de {{count}} segundos"
@@ -75818,39 +75758,39 @@ const kot = {
     one: "quase 1 ano",
     other: "quase {{count}} anos"
   }
-}, $st = (e, t, n) => {
+}, Cst = (e, t, n) => {
   let r;
-  const a = Sst[e];
+  const a = kst[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "em " + r : "há " + r : r;
-}, _st = {
+}, Sst = {
   full: "EEEE, d 'de' MMMM 'de' y",
   long: "d 'de' MMMM 'de' y",
   medium: "d MMM y",
   short: "dd/MM/yyyy"
-}, Tst = {
+}, $st = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Est = {
+}, _st = {
   full: "{{date}} 'às' {{time}}",
   long: "{{date}} 'às' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Ast = {
+}, Tst = {
   date: q({
-    formats: _st,
+    formats: Sst,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Tst,
+    formats: $st,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Est,
+    formats: _st,
     defaultWidth: "full"
   })
-}, Ost = {
+}, Est = {
   lastWeek: (e) => {
     const t = e.getDay();
     return "'" + (t === 0 || t === 6 ? "último" : "última") + "' eeee 'às' p";
@@ -75860,18 +75800,18 @@ const kot = {
   tomorrow: "'amanhã às' p",
   nextWeek: "eeee 'às' p",
   other: "P"
-}, Dst = (e, t, n, r) => {
-  const a = Ost[e];
+}, Ast = (e, t, n, r) => {
+  const a = Est[e];
   return typeof a == "function" ? a(t) : a;
-}, Nst = {
+}, Ost = {
   narrow: ["AC", "DC"],
   abbreviated: ["AC", "DC"],
   wide: ["antes de cristo", "depois de cristo"]
-}, Wst = {
+}, Dst = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
   wide: ["1º trimestre", "2º trimestre", "3º trimestre", "4º trimestre"]
-}, Rst = {
+}, Nst = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
   abbreviated: [
     "jan",
@@ -75901,7 +75841,7 @@ const kot = {
     "novembro",
     "dezembro"
   ]
-}, jst = {
+}, Wst = {
   narrow: ["D", "S", "T", "Q", "Q", "S", "S"],
   short: ["dom", "seg", "ter", "qua", "qui", "sex", "sab"],
   abbreviated: [
@@ -75922,7 +75862,7 @@ const kot = {
     "sexta-feira",
     "sábado"
   ]
-}, Ist = {
+}, Rst = {
   narrow: {
     am: "a",
     pm: "p",
@@ -75953,7 +75893,7 @@ const kot = {
     evening: "tarde",
     night: "noite"
   }
-}, Lst = {
+}, jst = {
   narrow: {
     am: "a",
     pm: "p",
@@ -75984,52 +75924,52 @@ const kot = {
     evening: "da tarde",
     night: "da noite"
   }
-}, Fst = (e, t) => {
+}, Ist = (e, t) => {
   const n = Number(e);
   return (t == null ? void 0 : t.unit) === "week" ? n + "ª" : n + "º";
-}, zst = {
-  ordinalNumber: Fst,
+}, Lst = {
+  ordinalNumber: Ist,
   era: A({
-    values: Nst,
+    values: Ost,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Wst,
+    values: Dst,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Rst,
+    values: Nst,
     defaultWidth: "wide"
   }),
   day: A({
-    values: jst,
+    values: Wst,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Ist,
+    values: Rst,
     defaultWidth: "wide",
-    formattingValues: Lst,
+    formattingValues: jst,
     defaultFormattingWidth: "wide"
   })
-}, Vst = /^(\d+)[ºªo]?/i, Hst = /\d+/i, Bst = {
+}, Fst = /^(\d+)[ºªo]?/i, zst = /\d+/i, Vst = {
   narrow: /^(ac|dc|a|d)/i,
   abbreviated: /^(a\.?\s?c\.?|d\.?\s?c\.?)/i,
   wide: /^(antes de cristo|depois de cristo)/i
-}, qst = {
+}, Hst = {
   any: [/^ac/i, /^dc/i],
   wide: [/^antes de cristo/i, /^depois de cristo/i]
-}, Xst = {
+}, Bst = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
   wide: /^[1234](º)? trimestre/i
-}, Gst = {
+}, qst = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Yst = {
+}, Xst = {
   narrow: /^[jfmajsond]/i,
   abbreviated: /^(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)/i,
   wide: /^(janeiro|fevereiro|março|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)/i
-}, Ust = {
+}, Gst = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -76058,19 +75998,19 @@ const kot = {
     /^nov/i,
     /^dez/i
   ]
-}, Kst = {
+}, Yst = {
   narrow: /^(dom|[23456]ª?|s[aá]b)/i,
   short: /^(dom|[23456]ª?|s[aá]b)/i,
   abbreviated: /^(dom|seg|ter|qua|qui|sex|s[aá]b)/i,
   wide: /^(domingo|(segunda|ter[cç]a|quarta|quinta|sexta)([- ]feira)?|s[aá]bado)/i
-}, Qst = {
+}, Ust = {
   short: [/^d/i, /^2/i, /^3/i, /^4/i, /^5/i, /^6/i, /^s[aá]/i],
   narrow: [/^d/i, /^2/i, /^3/i, /^4/i, /^5/i, /^6/i, /^s[aá]/i],
   any: [/^d/i, /^seg/i, /^t/i, /^qua/i, /^qui/i, /^sex/i, /^s[aá]b/i]
-}, Zst = {
+}, Kst = {
   narrow: /^(a|p|mn|md|(da) (manhã|tarde|noite))/i,
   any: /^([ap]\.?\s?m\.?|meia[-\s]noite|meio[-\s]dia|(da) (manhã|tarde|noite))/i
-}, Jst = {
+}, Qst = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -76081,55 +76021,55 @@ const kot = {
     evening: /tarde/i,
     night: /noite/i
   }
-}, eut = {
+}, Zst = {
   ordinalNumber: Se({
-    matchPattern: Vst,
-    parsePattern: Hst,
+    matchPattern: Fst,
+    parsePattern: zst,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Bst,
+    matchPatterns: Vst,
     defaultMatchWidth: "wide",
-    parsePatterns: qst,
+    parsePatterns: Hst,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Xst,
+    matchPatterns: Bst,
     defaultMatchWidth: "wide",
-    parsePatterns: Gst,
+    parsePatterns: qst,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Xst,
+    defaultMatchWidth: "wide",
+    parsePatterns: Gst,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Yst,
     defaultMatchWidth: "wide",
     parsePatterns: Ust,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Kst,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Qst,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Zst,
-    defaultMatchWidth: "any",
-    parsePatterns: Jst,
-    defaultParseWidth: "any"
   })
-}, tut = {
+}, Jst = {
   code: "pt-BR",
-  formatDistance: $st,
-  formatLong: Ast,
-  formatRelative: Dst,
-  localize: zst,
-  match: eut,
+  formatDistance: Cst,
+  formatLong: Tst,
+  formatRelative: Ast,
+  localize: Lst,
+  match: Zst,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, nut = {
+}, eut = {
   lessThanXSeconds: {
     one: "mai puțin de o secundă",
     other: "mai puțin de {{count}} secunde"
@@ -76191,50 +76131,50 @@ const kot = {
     one: "aproape 1 an",
     other: "aproape {{count}} ani"
   }
-}, rut = (e, t, n) => {
+}, tut = (e, t, n) => {
   let r;
-  const a = nut[e];
+  const a = eut[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "în " + r : r + " în urmă" : r;
-}, aut = {
+}, nut = {
   full: "EEEE, d MMMM yyyy",
   long: "d MMMM yyyy",
   medium: "d MMM yyyy",
   short: "dd.MM.yyyy"
-}, iut = {
+}, rut = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, out = {
+}, aut = {
   full: "{{date}} 'la' {{time}}",
   long: "{{date}} 'la' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, sut = {
+}, iut = {
   date: q({
-    formats: aut,
+    formats: nut,
     defaultWidth: "full"
   }),
   time: q({
-    formats: iut,
+    formats: rut,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: out,
+    formats: aut,
     defaultWidth: "full"
   })
-}, uut = {
+}, out = {
   lastWeek: "eeee 'trecută la' p",
   yesterday: "'ieri la' p",
   today: "'astăzi la' p",
   tomorrow: "'mâine la' p",
   nextWeek: "eeee 'viitoare la' p",
   other: "P"
-}, cut = (e, t, n, r) => uut[e], lut = {
+}, sut = (e, t, n, r) => out[e], uut = {
   narrow: ["Î", "D"],
   abbreviated: ["Î.d.C.", "D.C."],
   wide: ["Înainte de Cristos", "După Cristos"]
-}, dut = {
+}, cut = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["T1", "T2", "T3", "T4"],
   wide: [
@@ -76243,7 +76183,7 @@ const kot = {
     "al treilea trimestru",
     "al patrulea trimestru"
   ]
-}, fut = {
+}, lut = {
   narrow: ["I", "F", "M", "A", "M", "I", "I", "A", "S", "O", "N", "D"],
   abbreviated: [
     "ian",
@@ -76273,12 +76213,12 @@ const kot = {
     "noiembrie",
     "decembrie"
   ]
-}, mut = {
+}, dut = {
   narrow: ["d", "l", "m", "m", "j", "v", "s"],
   short: ["du", "lu", "ma", "mi", "jo", "vi", "sâ"],
   abbreviated: ["dum", "lun", "mar", "mie", "joi", "vin", "sâm"],
   wide: ["duminică", "luni", "marți", "miercuri", "joi", "vineri", "sâmbătă"]
-}, hut = {
+}, fut = {
   narrow: {
     am: "a",
     pm: "p",
@@ -76309,7 +76249,7 @@ const kot = {
     evening: "seară",
     night: "noapte"
   }
-}, put = {
+}, mut = {
   narrow: {
     am: "a",
     pm: "p",
@@ -76340,52 +76280,52 @@ const kot = {
     evening: "seară",
     night: "noapte"
   }
-}, gut = (e, t) => String(e), vut = {
-  ordinalNumber: gut,
+}, hut = (e, t) => String(e), put = {
+  ordinalNumber: hut,
   era: A({
-    values: lut,
+    values: uut,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: dut,
+    values: cut,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: fut,
+    values: lut,
     defaultWidth: "wide"
   }),
   day: A({
-    values: mut,
+    values: dut,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: hut,
+    values: fut,
     defaultWidth: "wide",
-    formattingValues: put,
+    formattingValues: mut,
     defaultFormattingWidth: "wide"
   })
-}, yut = /^(\d+)?/i, but = /\d+/i, wut = {
+}, gut = /^(\d+)?/i, vut = /\d+/i, yut = {
   narrow: /^(Î|D)/i,
   abbreviated: /^(Î\.?\s?d\.?\s?C\.?|Î\.?\s?e\.?\s?n\.?|D\.?\s?C\.?|e\.?\s?n\.?)/i,
   wide: /^(Înainte de Cristos|Înaintea erei noastre|După Cristos|Era noastră)/i
-}, Put = {
+}, but = {
   any: [/^ÎC/i, /^DC/i],
   wide: [
     /^(Înainte de Cristos|Înaintea erei noastre)/i,
     /^(După Cristos|Era noastră)/i
   ]
-}, xut = {
+}, wut = {
   narrow: /^[1234]/i,
   abbreviated: /^T[1234]/i,
   wide: /^trimestrul [1234]/i
-}, Mut = {
+}, Put = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, kut = {
+}, xut = {
   narrow: /^[ifmaasond]/i,
   abbreviated: /^(ian|feb|mar|apr|mai|iun|iul|aug|sep|oct|noi|dec)/i,
   wide: /^(ianuarie|februarie|martie|aprilie|mai|iunie|iulie|august|septembrie|octombrie|noiembrie|decembrie)/i
-}, Cut = {
+}, Mut = {
   narrow: [
     /^i/i,
     /^f/i,
@@ -76414,18 +76354,18 @@ const kot = {
     /^n/i,
     /^d/i
   ]
-}, Sut = {
+}, kut = {
   narrow: /^[dlmjvs]/i,
   short: /^(d|l|ma|mi|j|v|s)/i,
   abbreviated: /^(dum|lun|mar|mie|jo|vi|sâ)/i,
   wide: /^(duminica|luni|marţi|miercuri|joi|vineri|sâmbătă)/i
-}, $ut = {
+}, Cut = {
   narrow: [/^d/i, /^l/i, /^m/i, /^m/i, /^j/i, /^v/i, /^s/i],
   any: [/^d/i, /^l/i, /^ma/i, /^mi/i, /^j/i, /^v/i, /^s/i]
-}, _ut = {
+}, Sut = {
   narrow: /^(a|p|mn|a|(dimineaţa|după-amiaza|seara|noaptea))/i,
   any: /^([ap]\.?\s?m\.?|miezul nopții|amiaza|(dimineaţa|după-amiaza|seara|noaptea))/i
-}, Tut = {
+}, $ut = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -76436,50 +76376,50 @@ const kot = {
     evening: /seara/i,
     night: /noaptea/i
   }
-}, Eut = {
+}, _ut = {
   ordinalNumber: Se({
-    matchPattern: yut,
-    parsePattern: but,
+    matchPattern: gut,
+    parsePattern: vut,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: wut,
+    matchPatterns: yut,
     defaultMatchWidth: "wide",
-    parsePatterns: Put,
+    parsePatterns: but,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: xut,
+    matchPatterns: wut,
     defaultMatchWidth: "wide",
-    parsePatterns: Mut,
+    parsePatterns: Put,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: xut,
+    defaultMatchWidth: "wide",
+    parsePatterns: Mut,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: kut,
     defaultMatchWidth: "wide",
     parsePatterns: Cut,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Sut,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: $ut,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: _ut,
-    defaultMatchWidth: "any",
-    parsePatterns: Tut,
-    defaultParseWidth: "any"
   })
-}, Aut = {
+}, Tut = {
   code: "ro",
-  formatDistance: rut,
-  formatLong: sut,
-  formatRelative: cut,
-  localize: vut,
-  match: Eut,
+  formatDistance: tut,
+  formatLong: iut,
+  formatRelative: sut,
+  localize: put,
+  match: _ut,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
@@ -76494,7 +76434,7 @@ function yd(e, t) {
 function Tr(e) {
   return (t, n) => n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? e.future ? yd(e.future, t) : "через " + yd(e.regular, t) : e.past ? yd(e.past, t) : yd(e.regular, t) + " назад" : yd(e.regular, t);
 }
-const Out = {
+const Eut = {
   lessThanXSeconds: Tr({
     regular: {
       one: "меньше секунды",
@@ -76665,29 +76605,29 @@ const Out = {
       pluralGenitive: "почти через {{count}} лет"
     }
   })
-}, Dut = (e, t, n) => Out[e](t, n), Nut = {
+}, Aut = (e, t, n) => Eut[e](t, n), Out = {
   full: "EEEE, d MMMM y 'г.'",
   long: "d MMMM y 'г.'",
   medium: "d MMM y 'г.'",
   short: "dd.MM.y"
-}, Wut = {
+}, Dut = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, Rut = {
+}, Nut = {
   any: "{{date}}, {{time}}"
-}, jut = {
+}, Wut = {
   date: q({
-    formats: Nut,
+    formats: Out,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Wut,
+    formats: Dut,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Rut,
+    formats: Nut,
     defaultWidth: "any"
   })
 }, N5 = [
@@ -76699,7 +76639,7 @@ const Out = {
   "пятницу",
   "субботу"
 ];
-function Iut(e) {
+function Rut(e) {
   const t = N5[e];
   switch (e) {
     case 0:
@@ -76718,7 +76658,7 @@ function ID(e) {
   const t = N5[e];
   return e === 2 ? "'во " + t + " в' p" : "'в " + t + " в' p";
 }
-function Lut(e) {
+function jut(e) {
   const t = N5[e];
   switch (e) {
     case 0:
@@ -76733,31 +76673,31 @@ function Lut(e) {
       return "'в следующую " + t + " в' p";
   }
 }
-const Fut = {
+const Iut = {
   lastWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? ID(r) : Iut(r);
+    return bn(e, t, n) ? ID(r) : Rut(r);
   },
   yesterday: "'вчера в' p",
   today: "'сегодня в' p",
   tomorrow: "'завтра в' p",
   nextWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? ID(r) : Lut(r);
+    return bn(e, t, n) ? ID(r) : jut(r);
   },
   other: "P"
-}, zut = (e, t, n, r) => {
-  const a = Fut[e];
+}, Lut = (e, t, n, r) => {
+  const a = Iut[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, Vut = {
+}, Fut = {
   narrow: ["до н.э.", "н.э."],
   abbreviated: ["до н. э.", "н. э."],
   wide: ["до нашей эры", "нашей эры"]
-}, Hut = {
+}, zut = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-й кв.", "2-й кв.", "3-й кв.", "4-й кв."],
   wide: ["1-й квартал", "2-й квартал", "3-й квартал", "4-й квартал"]
-}, But = {
+}, Vut = {
   narrow: ["Я", "Ф", "М", "А", "М", "И", "И", "А", "С", "О", "Н", "Д"],
   abbreviated: [
     "янв.",
@@ -76787,7 +76727,7 @@ const Fut = {
     "ноябрь",
     "декабрь"
   ]
-}, qut = {
+}, Hut = {
   narrow: ["Я", "Ф", "М", "А", "М", "И", "И", "А", "С", "О", "Н", "Д"],
   abbreviated: [
     "янв.",
@@ -76817,7 +76757,7 @@ const Fut = {
     "ноября",
     "декабря"
   ]
-}, Xut = {
+}, But = {
   narrow: ["В", "П", "В", "С", "Ч", "П", "С"],
   short: ["вс", "пн", "вт", "ср", "чт", "пт", "сб"],
   abbreviated: ["вск", "пнд", "втр", "срд", "чтв", "птн", "суб"],
@@ -76830,7 +76770,7 @@ const Fut = {
     "пятница",
     "суббота"
   ]
-}, Gut = {
+}, qut = {
   narrow: {
     am: "ДП",
     pm: "ПП",
@@ -76861,7 +76801,7 @@ const Fut = {
     evening: "вечер",
     night: "ночь"
   }
-}, Yut = {
+}, Xut = {
   narrow: {
     am: "ДП",
     pm: "ПП",
@@ -76892,54 +76832,54 @@ const Fut = {
     evening: "вечера",
     night: "ночи"
   }
-}, Uut = (e, t) => {
+}, Gut = (e, t) => {
   const n = Number(e), r = t == null ? void 0 : t.unit;
   let a;
   return r === "date" ? a = "-е" : r === "week" || r === "minute" || r === "second" ? a = "-я" : a = "-й", n + a;
-}, Kut = {
-  ordinalNumber: Uut,
+}, Yut = {
+  ordinalNumber: Gut,
   era: A({
-    values: Vut,
+    values: Fut,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Hut,
+    values: zut,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: But,
+    values: Vut,
     defaultWidth: "wide",
-    formattingValues: qut,
+    formattingValues: Hut,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: Xut,
+    values: But,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Gut,
+    values: qut,
     defaultWidth: "any",
-    formattingValues: Yut,
+    formattingValues: Xut,
     defaultFormattingWidth: "wide"
   })
-}, Qut = /^(\d+)(-?(е|я|й|ое|ье|ая|ья|ый|ой|ий|ый))?/i, Zut = /\d+/i, Jut = {
+}, Uut = /^(\d+)(-?(е|я|й|ое|ье|ая|ья|ый|ой|ий|ый))?/i, Kut = /\d+/i, Qut = {
   narrow: /^((до )?н\.?\s?э\.?)/i,
   abbreviated: /^((до )?н\.?\s?э\.?)/i,
   wide: /^(до нашей эры|нашей эры|наша эра)/i
-}, ect = {
+}, Zut = {
   any: [/^д/i, /^н/i]
-}, tct = {
+}, Jut = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[ыои]?й?)? кв.?/i,
   wide: /^[1234](-?[ыои]?й?)? квартал/i
-}, nct = {
+}, ect = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, rct = {
+}, tct = {
   narrow: /^[яфмаисонд]/i,
   abbreviated: /^(янв|фев|март?|апр|ма[йя]|июн[ья]?|июл[ья]?|авг|сент?|окт|нояб?|дек)\.?/i,
   wide: /^(январ[ья]|феврал[ья]|марта?|апрел[ья]|ма[йя]|июн[ья]|июл[ья]|августа?|сентябр[ья]|октябр[ья]|октябр[ья]|ноябр[ья]|декабр[ья])/i
-}, act = {
+}, nct = {
   narrow: [
     /^я/i,
     /^ф/i,
@@ -76968,19 +76908,19 @@ const Fut = {
     /^н/i,
     /^д/i
   ]
-}, ict = {
+}, rct = {
   narrow: /^[впсч]/i,
   short: /^(вс|во|пн|по|вт|ср|чт|че|пт|пя|сб|су)\.?/i,
   abbreviated: /^(вск|вос|пнд|пон|втр|вто|срд|сре|чтв|чет|птн|пят|суб).?/i,
   wide: /^(воскресень[ея]|понедельника?|вторника?|сред[аы]|четверга?|пятниц[аы]|суббот[аы])/i
-}, oct = {
+}, act = {
   narrow: [/^в/i, /^п/i, /^в/i, /^с/i, /^ч/i, /^п/i, /^с/i],
   any: [/^в[ос]/i, /^п[он]/i, /^в/i, /^ср/i, /^ч/i, /^п[ят]/i, /^с[уб]/i]
-}, sct = {
+}, ict = {
   narrow: /^([дп]п|полн\.?|полд\.?|утр[оа]|день|дня|веч\.?|ноч[ьи])/i,
   abbreviated: /^([дп]п|полн\.?|полд\.?|утр[оа]|день|дня|веч\.?|ноч[ьи])/i,
   wide: /^([дп]п|полночь|полдень|утр[оа]|день|дня|вечера?|ноч[ьи])/i
-}, uct = {
+}, oct = {
   any: {
     am: /^дп/i,
     pm: /^пп/i,
@@ -76991,55 +76931,55 @@ const Fut = {
     evening: /^в/i,
     night: /^н/i
   }
-}, cct = {
+}, sct = {
   ordinalNumber: Se({
-    matchPattern: Qut,
-    parsePattern: Zut,
+    matchPattern: Uut,
+    parsePattern: Kut,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Jut,
+    matchPatterns: Qut,
     defaultMatchWidth: "wide",
-    parsePatterns: ect,
+    parsePatterns: Zut,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: tct,
+    matchPatterns: Jut,
     defaultMatchWidth: "wide",
-    parsePatterns: nct,
+    parsePatterns: ect,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: tct,
+    defaultMatchWidth: "wide",
+    parsePatterns: nct,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: rct,
     defaultMatchWidth: "wide",
     parsePatterns: act,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: ict,
     defaultMatchWidth: "wide",
     parsePatterns: oct,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: sct,
-    defaultMatchWidth: "wide",
-    parsePatterns: uct,
-    defaultParseWidth: "any"
   })
-}, lct = {
+}, uct = {
   code: "ru",
-  formatDistance: Dut,
-  formatLong: jut,
-  formatRelative: zut,
-  localize: Kut,
-  match: cct,
+  formatDistance: Aut,
+  formatLong: Wut,
+  formatRelative: Lut,
+  localize: Yut,
+  match: sct,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, dct = {
+}, cct = {
   lessThanXSeconds: {
     one: "unnit go ovtta sekundda",
     other: "unnit go {{count}} sekundda"
@@ -77101,54 +77041,54 @@ const Fut = {
     one: "measta jagi",
     other: "measta {{count}} jagi"
   }
-}, fct = (e, t, n) => {
+}, lct = (e, t, n) => {
   let r;
-  const a = dct[e];
+  const a = cct[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "geahčen " + r : r + " áigi" : r;
-}, mct = {
+}, dct = {
   full: "EEEE MMMM d. 'b.' y",
   long: "MMMM d. 'b.' y",
   medium: "MMM d. 'b.' y",
   short: "dd.MM.y"
-}, hct = {
+}, fct = {
   full: "'dii.' HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, pct = {
+}, mct = {
   full: "{{date}} 'dii.' {{time}}",
   long: "{{date}} 'dii.' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, gct = {
+}, hct = {
   date: q({
-    formats: mct,
+    formats: dct,
     defaultWidth: "full"
   }),
   time: q({
-    formats: hct,
+    formats: fct,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: pct,
+    formats: mct,
     defaultWidth: "full"
   })
-}, vct = {
+}, pct = {
   lastWeek: "'ovddit' eeee 'dii.' p",
   yesterday: "'ikte dii.' p",
   today: "'odne dii.' p",
   tomorrow: "'ihtin dii.' p",
   nextWeek: "EEEE 'dii.' p",
   other: "P"
-}, yct = (e, t, n, r) => vct[e], bct = {
+}, gct = (e, t, n, r) => pct[e], vct = {
   narrow: ["o.Kr.", "m.Kr."],
   abbreviated: ["o.Kr.", "m.Kr."],
   wide: ["ovdal Kristusa", "maŋŋel Kristusa"]
-}, wct = {
+}, yct = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1. kvartála", "2. kvartála", "3. kvartála", "4. kvartála"]
-}, Pct = {
+}, bct = {
   narrow: ["O", "G", "N", "C", "M", "G", "S", "B", "Č", "G", "S", "J"],
   abbreviated: [
     "ođđa",
@@ -77178,7 +77118,7 @@ const Fut = {
     "skábmamánnu",
     "juovlamánnu"
   ]
-}, xct = {
+}, wct = {
   narrow: ["S", "V", "M", "G", "D", "B", "L"],
   short: ["sotn", "vuos", "maŋ", "gask", "duor", "bear", "láv"],
   abbreviated: ["sotn", "vuos", "maŋ", "gask", "duor", "bear", "láv"],
@@ -77191,7 +77131,7 @@ const Fut = {
     "bearjadat",
     "lávvardat"
   ]
-}, Mct = {
+}, Pct = {
   narrow: {
     am: "a",
     pm: "p",
@@ -77222,46 +77162,46 @@ const Fut = {
     evening: "eahkes",
     night: "ihkku"
   }
-}, kct = (e, t) => Number(e) + ".", Cct = {
-  ordinalNumber: kct,
+}, xct = (e, t) => Number(e) + ".", Mct = {
+  ordinalNumber: xct,
   era: A({
-    values: bct,
+    values: vct,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: wct,
+    values: yct,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Pct,
+    values: bct,
     defaultWidth: "wide"
   }),
   day: A({
-    values: xct,
+    values: wct,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Mct,
+    values: Pct,
     defaultWidth: "wide"
   })
-}, Sct = /^(\d+)\.?/i, $ct = /\d+/i, _ct = {
+}, kct = /^(\d+)\.?/i, Cct = /\d+/i, Sct = {
   narrow: /^(o\.? ?Kr\.?|m\.? ?Kr\.?)/i,
   abbreviated: /^(o\.? ?Kr\.?|m\.? ?Kr\.?)/i,
   wide: /^(ovdal Kristusa|ovdal min áiggi|maŋŋel Kristusa|min áigi)/i
-}, Tct = {
+}, $ct = {
   any: [/^o/i, /^m/i]
-}, Ect = {
+}, _ct = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234](\.)? kvartála/i
-}, Act = {
+}, Tct = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Oct = {
+}, Ect = {
   narrow: /^[ogncmsbčj]/i,
   abbreviated: /^(ođđa|guov|njuk|cuo|mies|geas|suoi|borg|čakč|golg|skáb|juov)\.?/i,
   wide: /^(ođđajagemánnu|guovvamánnu|njukčamánnu|cuoŋománnu|miessemánnu|geassemánnu|suoidnemánnu|borgemánnu|čakčamánnu|golggotmánnu|skábmamánnu|juovlamánnu)/i
-}, Dct = {
+}, Act = {
   narrow: [
     /^o/i,
     /^g/i,
@@ -77290,17 +77230,17 @@ const Fut = {
     /^sk/i,
     /^j/i
   ]
-}, Nct = {
+}, Oct = {
   narrow: /^[svmgdbl]/i,
   short: /^(sotn|vuos|maŋ|gask|duor|bear|láv)/i,
   abbreviated: /^(sotn|vuos|maŋ|gask|duor|bear|láv)/i,
   wide: /^(sotnabeaivi|vuossárga|maŋŋebárga|gaskavahkku|duorastat|bearjadat|lávvardat)/i
-}, Wct = {
+}, Dct = {
   any: [/^s/i, /^v/i, /^m/i, /^g/i, /^d/i, /^b/i, /^l/i]
-}, Rct = {
+}, Nct = {
   narrow: /^(gaskaidja|gaskabeaivvi|(på) (iđđes|maŋŋel gaskabeaivvi|eahkes|ihkku)|[ap])/i,
   any: /^([ap]\.?\s?m\.?|gaskaidja|gaskabeaivvi|(på) (iđđes|maŋŋel gaskabeaivvi|eahkes|ihkku))/i
-}, jct = {
+}, Wct = {
   any: {
     am: /^a(\.?\s?m\.?)?$/i,
     pm: /^p(\.?\s?m\.?)?$/i,
@@ -77311,62 +77251,62 @@ const Fut = {
     evening: /eahkes/i,
     night: /ihkku/i
   }
-}, Ict = {
+}, Rct = {
   ordinalNumber: Se({
-    matchPattern: Sct,
-    parsePattern: $ct,
+    matchPattern: kct,
+    parsePattern: Cct,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: _ct,
+    matchPatterns: Sct,
     defaultMatchWidth: "wide",
-    parsePatterns: Tct,
+    parsePatterns: $ct,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Ect,
+    matchPatterns: _ct,
     defaultMatchWidth: "wide",
-    parsePatterns: Act,
+    parsePatterns: Tct,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Ect,
+    defaultMatchWidth: "wide",
+    parsePatterns: Act,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Oct,
     defaultMatchWidth: "wide",
     parsePatterns: Dct,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Nct,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Wct,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Rct,
-    defaultMatchWidth: "any",
-    parsePatterns: jct,
-    defaultParseWidth: "any"
   })
-}, Lct = {
+}, jct = {
   code: "se",
-  formatDistance: fct,
-  formatLong: gct,
-  formatRelative: yct,
-  localize: Cct,
-  match: Ict,
+  formatDistance: lct,
+  formatLong: hct,
+  formatRelative: gct,
+  localize: Mct,
+  match: Rct,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
 };
-function Fct(e, t) {
+function Ict(e, t) {
   return t === 1 && e.one ? e.one : t >= 2 && t <= 4 && e.twoFour ? e.twoFour : e.other;
 }
 function vP(e, t, n) {
-  return Fct(e, t)[n].replace("{{count}}", String(t));
+  return Ict(e, t)[n].replace("{{count}}", String(t));
 }
-function zct(e) {
+function Lct(e) {
   return ["lessThan", "about", "over", "almost"].filter(
     function(n) {
       return !!e.match(new RegExp("^" + n));
@@ -77381,10 +77321,10 @@ function bP(e) {
   let t = "";
   return e === "lessThan" && (t = "menej než"), e === "over" && (t = "viac než"), t.length > 0 ? t + " " : "";
 }
-function Vct(e) {
+function Fct(e) {
   return e.charAt(0).toLowerCase() + e.slice(1);
 }
-const Hct = {
+const zct = {
   xSeconds: {
     one: {
       present: "sekunda",
@@ -77511,35 +77451,35 @@ const Hct = {
       future: "{{count}} rokov"
     }
   }
-}, Bct = (e, t, n) => {
-  const r = zct(e) || "", a = Vct(e.substring(r.length)), i = Hct[a];
+}, Vct = (e, t, n) => {
+  const r = Lct(e) || "", a = Fct(e.substring(r.length)), i = zct[a];
   return n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? yP(r) + "o " + bP(r) + vP(i, t, "future") : yP(r) + "pred " + bP(r) + vP(i, t, "past") : yP(r) + bP(r) + vP(i, t, "present");
-}, qct = {
+}, Hct = {
   full: "EEEE d. MMMM y",
   long: "d. MMMM y",
   medium: "d. M. y",
   short: "d. M. y"
-}, Xct = {
+}, Bct = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, Gct = {
+}, qct = {
   full: "{{date}}, {{time}}",
   long: "{{date}}, {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}} {{time}}"
-}, Yct = {
+}, Xct = {
   date: q({
-    formats: qct,
+    formats: Hct,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Xct,
+    formats: Bct,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Gct,
+    formats: qct,
     defaultWidth: "full"
   })
 }, W5 = [
@@ -77551,7 +77491,7 @@ const Hct = {
   "piatok",
   "sobotu"
 ];
-function Uct(e) {
+function Gct(e) {
   const t = W5[e];
   switch (e) {
     case 0:
@@ -77568,7 +77508,7 @@ function LD(e) {
   const t = W5[e];
   return e === 4 ? "'vo' eeee 'o' p" : "'v " + t + " o' p";
 }
-function Kct(e) {
+function Yct(e) {
   const t = W5[e];
   switch (e) {
     case 0:
@@ -77581,31 +77521,31 @@ function Kct(e) {
       return "'budúci' eeee 'o' p";
   }
 }
-const Qct = {
+const Uct = {
   lastWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? LD(r) : Uct(r);
+    return bn(e, t, n) ? LD(r) : Gct(r);
   },
   yesterday: "'včera o' p",
   today: "'dnes o' p",
   tomorrow: "'zajtra o' p",
   nextWeek: (e, t, n) => {
     const r = e.getDay();
-    return bn(e, t, n) ? LD(r) : Kct(r);
+    return bn(e, t, n) ? LD(r) : Yct(r);
   },
   other: "P"
-}, Zct = (e, t, n, r) => {
-  const a = Qct[e];
+}, Kct = (e, t, n, r) => {
+  const a = Uct[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, Jct = {
+}, Qct = {
   narrow: ["pred Kr.", "po Kr."],
   abbreviated: ["pred Kr.", "po Kr."],
   wide: ["pred Kristom", "po Kristovi"]
-}, elt = {
+}, Zct = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1. štvrťrok", "2. štvrťrok", "3. štvrťrok", "4. štvrťrok"]
-}, tlt = {
+}, Jct = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
   abbreviated: [
     "jan",
@@ -77635,7 +77575,7 @@ const Qct = {
     "november",
     "december"
   ]
-}, nlt = {
+}, elt = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
   abbreviated: [
     "jan",
@@ -77665,7 +77605,7 @@ const Qct = {
     "novembra",
     "decembra"
   ]
-}, rlt = {
+}, tlt = {
   narrow: ["n", "p", "u", "s", "š", "p", "s"],
   short: ["ne", "po", "ut", "st", "št", "pi", "so"],
   abbreviated: ["ne", "po", "ut", "st", "št", "pi", "so"],
@@ -77678,7 +77618,7 @@ const Qct = {
     "piatok",
     "sobota"
   ]
-}, alt = {
+}, nlt = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -77709,7 +77649,7 @@ const Qct = {
     evening: "večer",
     night: "noc"
   }
-}, ilt = {
+}, rlt = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -77740,50 +77680,50 @@ const Qct = {
     evening: "večer",
     night: "v noci"
   }
-}, olt = (e, t) => Number(e) + ".", slt = {
-  ordinalNumber: olt,
+}, alt = (e, t) => Number(e) + ".", ilt = {
+  ordinalNumber: alt,
   era: A({
-    values: Jct,
+    values: Qct,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: elt,
+    values: Zct,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: tlt,
+    values: Jct,
     defaultWidth: "wide",
-    formattingValues: nlt,
+    formattingValues: elt,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: rlt,
+    values: tlt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: alt,
+    values: nlt,
     defaultWidth: "wide",
-    formattingValues: ilt,
+    formattingValues: rlt,
     defaultFormattingWidth: "wide"
   })
-}, ult = /^(\d+)\.?/i, clt = /\d+/i, llt = {
+}, olt = /^(\d+)\.?/i, slt = /\d+/i, ult = {
   narrow: /^(pred Kr\.|pred n\. l\.|po Kr\.|n\. l\.)/i,
   abbreviated: /^(pred Kr\.|pred n\. l\.|po Kr\.|n\. l\.)/i,
   wide: /^(pred Kristom|pred na[šs][íi]m letopo[čc]tom|po Kristovi|n[áa][šs]ho letopo[čc]tu)/i
-}, dlt = {
+}, clt = {
   any: [/^pr/i, /^(po|n)/i]
-}, flt = {
+}, llt = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234]\. [šs]tvr[ťt]rok/i
-}, mlt = {
+}, dlt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, hlt = {
+}, flt = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mar|apr|m[áa]j|j[úu]n|j[úu]l|aug|sep|okt|nov|dec)/i,
   wide: /^(janu[áa]ra?|febru[áa]ra?|(marec|marca)|apr[íi]la?|m[áa]ja?|j[úu]na?|j[úu]la?|augusta?|(september|septembra)|(okt[óo]ber|okt[óo]bra)|(november|novembra)|(december|decembra))/i
-}, plt = {
+}, mlt = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -77812,19 +77752,19 @@ const Qct = {
     /^n/i,
     /^d/i
   ]
-}, glt = {
+}, hlt = {
   narrow: /^[npusšp]/i,
   short: /^(ne|po|ut|st|št|pi|so)/i,
   abbreviated: /^(ne|po|ut|st|št|pi|so)/i,
   wide: /^(nede[ľl]a|pondelok|utorok|streda|[šs]tvrtok|piatok|sobota])/i
-}, vlt = {
+}, plt = {
   narrow: [/^n/i, /^p/i, /^u/i, /^s/i, /^š/i, /^p/i, /^s/i],
   any: [/^n/i, /^po/i, /^u/i, /^st/i, /^(št|stv)/i, /^pi/i, /^so/i]
-}, ylt = {
+}, glt = {
   narrow: /^(am|pm|(o )?poln\.?|(nap\.?|pol\.?)|r[áa]no|pop\.?|ve[čc]\.?|(v n\.?|noc))/i,
   abbreviated: /^(am|pm|(o )?poln\.?|(napol\.?|pol\.?)|r[áa]no|pop\.?|ve[čc]er|(v )?noci?)/i,
   any: /^(am|pm|(o )?polnoci?|(na)?poludnie|r[áa]no|popoludn(ie|í|i)|ve[čc]er|(v )?noci?)/i
-}, blt = {
+}, vlt = {
   any: {
     am: /^am/i,
     pm: /^pm/i,
@@ -77835,59 +77775,59 @@ const Qct = {
     evening: /^ve[čc]/i,
     night: /^(noc|v n\.)/i
   }
-}, wlt = {
+}, ylt = {
   ordinalNumber: Se({
-    matchPattern: ult,
-    parsePattern: clt,
+    matchPattern: olt,
+    parsePattern: slt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: llt,
+    matchPatterns: ult,
     defaultMatchWidth: "wide",
-    parsePatterns: dlt,
+    parsePatterns: clt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: flt,
+    matchPatterns: llt,
     defaultMatchWidth: "wide",
-    parsePatterns: mlt,
+    parsePatterns: dlt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: flt,
+    defaultMatchWidth: "wide",
+    parsePatterns: mlt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: hlt,
     defaultMatchWidth: "wide",
     parsePatterns: plt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: glt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: vlt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: ylt,
-    defaultMatchWidth: "any",
-    parsePatterns: blt,
-    defaultParseWidth: "any"
   })
-}, Plt = {
+}, blt = {
   code: "sk",
-  formatDistance: Bct,
-  formatLong: Yct,
-  formatRelative: Zct,
-  localize: slt,
-  match: wlt,
+  formatDistance: Vct,
+  formatLong: Xct,
+  formatRelative: Kct,
+  localize: ilt,
+  match: ylt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
 };
-function xlt(e) {
+function wlt(e) {
   return e.one !== void 0;
 }
-const Mlt = {
+const Plt = {
   lessThanXSeconds: {
     present: {
       one: "manj kot {{count}} sekunda",
@@ -78164,7 +78104,7 @@ const Mlt = {
     }
   }
 };
-function klt(e) {
+function xlt(e) {
   switch (e % 100) {
     case 1:
       return "one";
@@ -78177,46 +78117,46 @@ function klt(e) {
       return "other";
   }
 }
-const Clt = (e, t, n) => {
+const Mlt = (e, t, n) => {
   let r = "", a = "present";
   n != null && n.addSuffix && (n.comparison && n.comparison > 0 ? (a = "future", r = "čez ") : (a = "past", r = "pred "));
-  const i = Mlt[e];
+  const i = Plt[e];
   if (typeof i == "string")
     r += i;
   else {
-    const o = klt(t);
-    xlt(i) ? r += i[o].replace("{{count}}", String(t)) : r += i[a][o].replace("{{count}}", String(t));
+    const o = xlt(t);
+    wlt(i) ? r += i[o].replace("{{count}}", String(t)) : r += i[a][o].replace("{{count}}", String(t));
   }
   return r;
-}, Slt = {
+}, klt = {
   full: "EEEE, dd. MMMM y",
   long: "dd. MMMM y",
   medium: "d. MMM y",
   short: "d. MM. yy"
-}, $lt = {
+}, Clt = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, _lt = {
+}, Slt = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, Tlt = {
+}, $lt = {
   date: q({
-    formats: Slt,
+    formats: klt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: $lt,
+    formats: Clt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: _lt,
+    formats: Slt,
     defaultWidth: "full"
   })
-}, Elt = {
+}, _lt = {
   lastWeek: (e) => {
     switch (e.getDay()) {
       case 0:
@@ -78245,18 +78185,18 @@ const Clt = (e, t, n) => {
     }
   },
   other: "P"
-}, Alt = (e, t, n, r) => {
-  const a = Elt[e];
+}, Tlt = (e, t, n, r) => {
+  const a = _lt[e];
   return typeof a == "function" ? a(t) : a;
-}, Olt = {
+}, Elt = {
   narrow: ["pr. n. št.", "po n. št."],
   abbreviated: ["pr. n. št.", "po n. št."],
   wide: ["pred našim štetjem", "po našem štetju"]
-}, Dlt = {
+}, Alt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1. čet.", "2. čet.", "3. čet.", "4. čet."],
   wide: ["1. četrtletje", "2. četrtletje", "3. četrtletje", "4. četrtletje"]
-}, Nlt = {
+}, Olt = {
   narrow: ["j", "f", "m", "a", "m", "j", "j", "a", "s", "o", "n", "d"],
   abbreviated: [
     "jan.",
@@ -78286,7 +78226,7 @@ const Clt = (e, t, n) => {
     "november",
     "december"
   ]
-}, Wlt = {
+}, Dlt = {
   narrow: ["n", "p", "t", "s", "č", "p", "s"],
   short: ["ned.", "pon.", "tor.", "sre.", "čet.", "pet.", "sob."],
   abbreviated: ["ned.", "pon.", "tor.", "sre.", "čet.", "pet.", "sob."],
@@ -78299,7 +78239,7 @@ const Clt = (e, t, n) => {
     "petek",
     "sobota"
   ]
-}, Rlt = {
+}, Nlt = {
   narrow: {
     am: "d",
     pm: "p",
@@ -78330,7 +78270,7 @@ const Clt = (e, t, n) => {
     evening: "večer",
     night: "noč"
   }
-}, jlt = {
+}, Wlt = {
   narrow: {
     am: "d",
     pm: "p",
@@ -78361,47 +78301,47 @@ const Clt = (e, t, n) => {
     evening: "zvečer",
     night: "ponoči"
   }
-}, Ilt = (e, t) => Number(e) + ".", Llt = {
-  ordinalNumber: Ilt,
+}, Rlt = (e, t) => Number(e) + ".", jlt = {
+  ordinalNumber: Rlt,
   era: A({
-    values: Olt,
+    values: Elt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Dlt,
+    values: Alt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Nlt,
+    values: Olt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Wlt,
+    values: Dlt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Rlt,
+    values: Nlt,
     defaultWidth: "wide",
-    formattingValues: jlt,
+    formattingValues: Wlt,
     defaultFormattingWidth: "wide"
   })
-}, Flt = /^(\d+)\./i, zlt = /\d+/i, Vlt = {
+}, Ilt = /^(\d+)\./i, Llt = /\d+/i, Flt = {
   abbreviated: /^(pr\. n\. št\.|po n\. št\.)/i,
   wide: /^(pred Kristusom|pred na[sš]im [sš]tetjem|po Kristusu|po na[sš]em [sš]tetju|na[sš]ega [sš]tetja)/i
-}, Hlt = {
+}, zlt = {
   any: [/^pr/i, /^(po|na[sš]em)/i]
-}, Blt = {
+}, Vlt = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?[čc]et\.?/i,
   wide: /^[1234]\. [čc]etrtletje/i
-}, qlt = {
+}, Hlt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Xlt = {
+}, Blt = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan\.|feb\.|mar\.|apr\.|maj|jun\.|jul\.|avg\.|sep\.|okt\.|nov\.|dec\.)/i,
   wide: /^(januar|februar|marec|april|maj|junij|julij|avgust|september|oktober|november|december)/i
-}, Glt = {
+}, qlt = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -78444,18 +78384,18 @@ const Clt = (e, t, n) => {
     /^n/i,
     /^d/i
   ]
-}, Ylt = {
+}, Xlt = {
   narrow: /^[nptsčc]/i,
   short: /^(ned\.|pon\.|tor\.|sre\.|[cč]et\.|pet\.|sob\.)/i,
   abbreviated: /^(ned\.|pon\.|tor\.|sre\.|[cč]et\.|pet\.|sob\.)/i,
   wide: /^(nedelja|ponedeljek|torek|sreda|[cč]etrtek|petek|sobota)/i
-}, Ult = {
+}, Glt = {
   narrow: [/^n/i, /^p/i, /^t/i, /^s/i, /^[cč]/i, /^p/i, /^s/i],
   any: [/^n/i, /^po/i, /^t/i, /^sr/i, /^[cč]/i, /^pe/i, /^so/i]
-}, Klt = {
+}, Ylt = {
   narrow: /^(d|po?|z?v|n|z?j|24\.00|12\.00)/i,
   any: /^(dop\.|pop\.|o?poln(\.|o[cč]i?)|o?pold(\.|ne)|z?ve[cč](\.|er)|(po)?no[cč]i?|popold(ne|an)|jut(\.|ro)|zjut(\.|raj))/i
-}, Qlt = {
+}, Ult = {
   narrow: {
     am: /^d/i,
     pm: /^p/i,
@@ -78476,55 +78416,55 @@ const Clt = (e, t, n) => {
     evening: /^z?ve/i,
     night: /(po)?no/i
   }
-}, Zlt = {
+}, Klt = {
   ordinalNumber: Se({
-    matchPattern: Flt,
-    parsePattern: zlt,
+    matchPattern: Ilt,
+    parsePattern: Llt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Vlt,
+    matchPatterns: Flt,
     defaultMatchWidth: "wide",
-    parsePatterns: Hlt,
+    parsePatterns: zlt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Blt,
+    matchPatterns: Vlt,
     defaultMatchWidth: "wide",
-    parsePatterns: qlt,
+    parsePatterns: Hlt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
-    matchPatterns: Xlt,
+    matchPatterns: Blt,
     defaultMatchWidth: "wide",
-    parsePatterns: Glt,
+    parsePatterns: qlt,
     defaultParseWidth: "wide"
   }),
   day: D({
-    matchPatterns: Ylt,
+    matchPatterns: Xlt,
     defaultMatchWidth: "wide",
-    parsePatterns: Ult,
+    parsePatterns: Glt,
     defaultParseWidth: "any"
   }),
   dayPeriod: D({
-    matchPatterns: Klt,
+    matchPatterns: Ylt,
     defaultMatchWidth: "any",
-    parsePatterns: Qlt,
+    parsePatterns: Ult,
     defaultParseWidth: "any"
   })
-}, Jlt = {
+}, Qlt = {
   code: "sl",
-  formatDistance: Clt,
-  formatLong: Tlt,
-  formatRelative: Alt,
-  localize: Llt,
-  match: Zlt,
+  formatDistance: Mlt,
+  formatLong: $lt,
+  formatRelative: Tlt,
+  localize: jlt,
+  match: Klt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, edt = {
+}, Zlt = {
   lessThanXSeconds: {
     one: "më pak se një sekondë",
     other: "më pak se {{count}} sekonda"
@@ -78586,54 +78526,54 @@ const Clt = (e, t, n) => {
     one: "pothuajse 1 vit",
     other: "pothuajse {{count}} vite"
   }
-}, tdt = (e, t, n) => {
+}, Jlt = (e, t, n) => {
   let r;
-  const a = edt[e];
+  const a = Zlt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "në " + r : r + " më parë" : r;
-}, ndt = {
+}, edt = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
   short: "MM/dd/yyyy"
-}, rdt = {
+}, tdt = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, adt = {
+}, ndt = {
   full: "{{date}} 'në' {{time}}",
   long: "{{date}} 'në' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, idt = {
+}, rdt = {
   date: q({
-    formats: ndt,
+    formats: edt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: rdt,
+    formats: tdt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: adt,
+    formats: ndt,
     defaultWidth: "full"
   })
-}, odt = {
+}, adt = {
   lastWeek: "'të' eeee 'e shkuar në' p",
   yesterday: "'dje në' p",
   today: "'sot në' p",
   tomorrow: "'nesër në' p",
   nextWeek: "eeee 'at' p",
   other: "P"
-}, sdt = (e, t, n, r) => odt[e], udt = {
+}, idt = (e, t, n, r) => adt[e], odt = {
   narrow: ["P", "M"],
   abbreviated: ["PK", "MK"],
   wide: ["Para Krishtit", "Mbas Krishtit"]
-}, cdt = {
+}, sdt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["4-mujori I", "4-mujori II", "4-mujori III", "4-mujori IV"]
-}, ldt = {
+}, udt = {
   narrow: ["J", "S", "M", "P", "M", "Q", "K", "G", "S", "T", "N", "D"],
   abbreviated: [
     "Jan",
@@ -78663,12 +78603,12 @@ const Clt = (e, t, n) => {
     "Nëntor",
     "Dhjetor"
   ]
-}, ddt = {
+}, cdt = {
   narrow: ["D", "H", "M", "M", "E", "P", "S"],
   short: ["Di", "Hë", "Ma", "Më", "En", "Pr", "Sh"],
   abbreviated: ["Die", "Hën", "Mar", "Mër", "Enj", "Pre", "Sht"],
   wide: ["Dielë", "Hënë", "Martë", "Mërkurë", "Enjte", "Premte", "Shtunë"]
-}, fdt = {
+}, ldt = {
   narrow: {
     am: "p",
     pm: "m",
@@ -78699,7 +78639,7 @@ const Clt = (e, t, n) => {
     evening: "mbrëmje",
     night: "natë"
   }
-}, mdt = {
+}, ddt = {
   narrow: {
     am: "p",
     pm: "m",
@@ -78730,51 +78670,51 @@ const Clt = (e, t, n) => {
     evening: "në mbrëmje",
     night: "në mesnatë"
   }
-}, hdt = (e, t) => {
+}, fdt = (e, t) => {
   const n = Number(e);
   return (t == null ? void 0 : t.unit) === "hour" ? String(n) : n === 1 ? n + "-rë" : n === 4 ? n + "t" : n + "-të";
-}, pdt = {
-  ordinalNumber: hdt,
+}, mdt = {
+  ordinalNumber: fdt,
   era: A({
-    values: udt,
+    values: odt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: cdt,
+    values: sdt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: ldt,
+    values: udt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: ddt,
+    values: cdt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: fdt,
+    values: ldt,
     defaultWidth: "wide",
-    formattingValues: mdt,
+    formattingValues: ddt,
     defaultFormattingWidth: "wide"
   })
-}, gdt = /^(\d+)(-rë|-të|t|)?/i, vdt = /\d+/i, ydt = {
+}, hdt = /^(\d+)(-rë|-të|t|)?/i, pdt = /\d+/i, gdt = {
   narrow: /^(p|m)/i,
   abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
   wide: /^(para krishtit|mbas krishtit)/i
-}, bdt = {
+}, vdt = {
   any: [/^b/i, /^(p|m)/i]
-}, wdt = {
+}, ydt = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234]-mujori (i{1,3}|iv)/i
-}, Pdt = {
+}, bdt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, xdt = {
+}, wdt = {
   narrow: /^[jsmpqkftnd]/i,
   abbreviated: /^(jan|shk|mar|pri|maj|qer|kor|gus|sht|tet|nën|dhj)/i,
   wide: /^(janar|shkurt|mars|prill|maj|qershor|korrik|gusht|shtator|tetor|nëntor|dhjetor)/i
-}, Mdt = {
+}, Pdt = {
   narrow: [
     /^j/i,
     /^s/i,
@@ -78803,18 +78743,18 @@ const Clt = (e, t, n) => {
     /^n/i,
     /^d/i
   ]
-}, kdt = {
+}, xdt = {
   narrow: /^[dhmeps]/i,
   short: /^(di|hë|ma|më|en|pr|sh)/i,
   abbreviated: /^(die|hën|mar|mër|enj|pre|sht)/i,
   wide: /^(dielë|hënë|martë|mërkurë|enjte|premte|shtunë)/i
-}, Cdt = {
+}, Mdt = {
   narrow: [/^d/i, /^h/i, /^m/i, /^m/i, /^e/i, /^p/i, /^s/i],
   any: [/^d/i, /^h/i, /^ma/i, /^më/i, /^e/i, /^p/i, /^s/i]
-}, Sdt = {
+}, kdt = {
   narrow: /^(p|m|me|në (mëngjes|mbasdite|mbrëmje|mesnatë))/i,
   any: /^([pm]\.?\s?d\.?|drek|në (mëngjes|mbasdite|mbrëmje|mesnatë))/i
-}, $dt = {
+}, Cdt = {
   any: {
     am: /^p/i,
     pm: /^m/i,
@@ -78825,55 +78765,55 @@ const Clt = (e, t, n) => {
     evening: /mbrëmje/i,
     night: /natë/i
   }
-}, _dt = {
+}, Sdt = {
   ordinalNumber: Se({
-    matchPattern: gdt,
-    parsePattern: vdt,
+    matchPattern: hdt,
+    parsePattern: pdt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: ydt,
+    matchPatterns: gdt,
     defaultMatchWidth: "wide",
-    parsePatterns: bdt,
+    parsePatterns: vdt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: wdt,
+    matchPatterns: ydt,
     defaultMatchWidth: "wide",
-    parsePatterns: Pdt,
+    parsePatterns: bdt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: wdt,
+    defaultMatchWidth: "wide",
+    parsePatterns: Pdt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: xdt,
     defaultMatchWidth: "wide",
     parsePatterns: Mdt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: kdt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Cdt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Sdt,
-    defaultMatchWidth: "any",
-    parsePatterns: $dt,
-    defaultParseWidth: "any"
   })
-}, Tdt = {
+}, $dt = {
   code: "sq",
-  formatDistance: tdt,
-  formatLong: idt,
-  formatRelative: sdt,
-  localize: pdt,
-  match: _dt,
+  formatDistance: Jlt,
+  formatLong: rdt,
+  formatRelative: idt,
+  localize: mdt,
+  match: Sdt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, Edt = {
+}, _dt = {
   lessThanXSeconds: {
     one: {
       standalone: "мање од 1 секунде",
@@ -79010,40 +78950,40 @@ const Clt = (e, t, n) => {
     dual: "готово {{count}} године",
     other: "готово {{count}} година"
   }
-}, Adt = (e, t, n) => {
+}, Tdt = (e, t, n) => {
   let r;
-  const a = Edt[e];
+  const a = _dt[e];
   return typeof a == "string" ? r = a : t === 1 ? n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r = a.one.withPrepositionIn : r = a.one.withPrepositionAgo : r = a.one.standalone : t % 10 > 1 && t % 10 < 5 && // if last digit is between 2 and 4
   String(t).substr(-2, 1) !== "1" ? r = a.dual.replace("{{count}}", String(t)) : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "за " + r : "пре " + r : r;
-}, Odt = {
+}, Edt = {
   full: "EEEE, d. MMMM yyyy.",
   long: "d. MMMM yyyy.",
   medium: "d. MMM yy.",
   short: "dd. MM. yy."
-}, Ddt = {
+}, Adt = {
   full: "HH:mm:ss (zzzz)",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Ndt = {
+}, Odt = {
   full: "{{date}} 'у' {{time}}",
   long: "{{date}} 'у' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, Wdt = {
+}, Ddt = {
   date: q({
-    formats: Odt,
+    formats: Edt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Ddt,
+    formats: Adt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Ndt,
+    formats: Odt,
     defaultWidth: "full"
   })
-}, Rdt = {
+}, Ndt = {
   lastWeek: (e) => {
     switch (e.getDay()) {
       case 0:
@@ -79072,104 +79012,104 @@ const Clt = (e, t, n) => {
     }
   },
   other: "P"
-}, jdt = (e, t, n, r) => {
-  const a = Rdt[e];
+}, Wdt = (e, t, n, r) => {
+  const a = Ndt[e];
   return typeof a == "function" ? a(t) : a;
-}, Idt = {
+}, Rdt = {
   narrow: ["пр.н.е.", "АД"],
   abbreviated: ["пр. Хр.", "по. Хр."],
   wide: ["Пре Христа", "После Христа"]
-}, Ldt = {
+}, jdt = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. кв.", "2. кв.", "3. кв.", "4. кв."],
   wide: ["1. квартал", "2. квартал", "3. квартал", "4. квартал"]
+}, Idt = {
+  narrow: [
+    "1.",
+    "2.",
+    "3.",
+    "4.",
+    "5.",
+    "6.",
+    "7.",
+    "8.",
+    "9.",
+    "10.",
+    "11.",
+    "12."
+  ],
+  abbreviated: [
+    "јан",
+    "феб",
+    "мар",
+    "апр",
+    "мај",
+    "јун",
+    "јул",
+    "авг",
+    "сеп",
+    "окт",
+    "нов",
+    "дец"
+  ],
+  wide: [
+    "јануар",
+    "фебруар",
+    "март",
+    "април",
+    "мај",
+    "јун",
+    "јул",
+    "август",
+    "септембар",
+    "октобар",
+    "новембар",
+    "децембар"
+  ]
+}, Ldt = {
+  narrow: [
+    "1.",
+    "2.",
+    "3.",
+    "4.",
+    "5.",
+    "6.",
+    "7.",
+    "8.",
+    "9.",
+    "10.",
+    "11.",
+    "12."
+  ],
+  abbreviated: [
+    "јан",
+    "феб",
+    "мар",
+    "апр",
+    "мај",
+    "јун",
+    "јул",
+    "авг",
+    "сеп",
+    "окт",
+    "нов",
+    "дец"
+  ],
+  wide: [
+    "јануар",
+    "фебруар",
+    "март",
+    "април",
+    "мај",
+    "јун",
+    "јул",
+    "август",
+    "септембар",
+    "октобар",
+    "новембар",
+    "децембар"
+  ]
 }, Fdt = {
-  narrow: [
-    "1.",
-    "2.",
-    "3.",
-    "4.",
-    "5.",
-    "6.",
-    "7.",
-    "8.",
-    "9.",
-    "10.",
-    "11.",
-    "12."
-  ],
-  abbreviated: [
-    "јан",
-    "феб",
-    "мар",
-    "апр",
-    "мај",
-    "јун",
-    "јул",
-    "авг",
-    "сеп",
-    "окт",
-    "нов",
-    "дец"
-  ],
-  wide: [
-    "јануар",
-    "фебруар",
-    "март",
-    "април",
-    "мај",
-    "јун",
-    "јул",
-    "август",
-    "септембар",
-    "октобар",
-    "новембар",
-    "децембар"
-  ]
-}, zdt = {
-  narrow: [
-    "1.",
-    "2.",
-    "3.",
-    "4.",
-    "5.",
-    "6.",
-    "7.",
-    "8.",
-    "9.",
-    "10.",
-    "11.",
-    "12."
-  ],
-  abbreviated: [
-    "јан",
-    "феб",
-    "мар",
-    "апр",
-    "мај",
-    "јун",
-    "јул",
-    "авг",
-    "сеп",
-    "окт",
-    "нов",
-    "дец"
-  ],
-  wide: [
-    "јануар",
-    "фебруар",
-    "март",
-    "април",
-    "мај",
-    "јун",
-    "јул",
-    "август",
-    "септембар",
-    "октобар",
-    "новембар",
-    "децембар"
-  ]
-}, Vdt = {
   narrow: ["Н", "П", "У", "С", "Ч", "П", "С"],
   short: ["нед", "пон", "уто", "сре", "чет", "пет", "суб"],
   abbreviated: ["нед", "пон", "уто", "сре", "чет", "пет", "суб"],
@@ -79182,7 +79122,7 @@ const Clt = (e, t, n) => {
     "петак",
     "субота"
   ]
-}, Hdt = {
+}, zdt = {
   narrow: {
     am: "АМ",
     pm: "ПМ",
@@ -79213,7 +79153,7 @@ const Clt = (e, t, n) => {
     evening: "увече",
     night: "ноћу"
   }
-}, Bdt = {
+}, Vdt = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -79244,50 +79184,50 @@ const Clt = (e, t, n) => {
     evening: "увече",
     night: "ноћу"
   }
-}, qdt = (e, t) => Number(e) + ".", Xdt = {
-  ordinalNumber: qdt,
+}, Hdt = (e, t) => Number(e) + ".", Bdt = {
+  ordinalNumber: Hdt,
   era: A({
-    values: Idt,
+    values: Rdt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Ldt,
+    values: jdt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Fdt,
+    values: Idt,
     defaultWidth: "wide",
-    formattingValues: zdt,
+    formattingValues: Ldt,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: Vdt,
+    values: Fdt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Bdt,
+    values: Vdt,
     defaultWidth: "wide",
-    formattingValues: Hdt,
+    formattingValues: zdt,
     defaultFormattingWidth: "wide"
   })
-}, Gdt = /^(\d+)\./i, Ydt = /\d+/i, Udt = {
+}, qdt = /^(\d+)\./i, Xdt = /\d+/i, Gdt = {
   narrow: /^(пр\.н\.е\.|АД)/i,
   abbreviated: /^(пр\.\s?Хр\.|по\.\s?Хр\.)/i,
   wide: /^(Пре Христа|пре нове ере|После Христа|нова ера)/i
-}, Kdt = {
+}, Ydt = {
   any: [/^пр/i, /^(по|нова)/i]
-}, Qdt = {
+}, Udt = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?кв\.?/i,
   wide: /^[1234]\. квартал/i
-}, Zdt = {
+}, Kdt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Jdt = {
+}, Qdt = {
   narrow: /^(10|11|12|[123456789])\./i,
   abbreviated: /^(јан|феб|мар|апр|мај|јун|јул|авг|сеп|окт|нов|дец)/i,
   wide: /^((јануар|јануара)|(фебруар|фебруара)|(март|марта)|(април|априла)|(мја|маја)|(јун|јуна)|(јул|јула)|(август|августа)|(септембар|септембра)|(октобар|октобра)|(новембар|новембра)|(децембар|децембра))/i
-}, eft = {
+}, Zdt = {
   narrow: [
     /^1/i,
     /^2/i,
@@ -79316,17 +79256,17 @@ const Clt = (e, t, n) => {
     /^н/i,
     /^д/i
   ]
-}, tft = {
+}, Jdt = {
   narrow: /^[пусчн]/i,
   short: /^(нед|пон|уто|сре|чет|пет|суб)/i,
   abbreviated: /^(нед|пон|уто|сре|чет|пет|суб)/i,
   wide: /^(недеља|понедељак|уторак|среда|четвртак|петак|субота)/i
-}, nft = {
+}, eft = {
   narrow: [/^п/i, /^у/i, /^с/i, /^ч/i, /^п/i, /^с/i, /^н/i],
   any: [/^нед/i, /^пон/i, /^уто/i, /^сре/i, /^чет/i, /^пет/i, /^суб/i]
-}, rft = {
+}, tft = {
   any: /^(ам|пм|поноћ|(по)?подне|увече|ноћу|после подне|ујутру)/i
-}, aft = {
+}, nft = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -79337,55 +79277,55 @@ const Clt = (e, t, n) => {
     evening: /(увече)/i,
     night: /(ноћу)/i
   }
-}, ift = {
+}, rft = {
   ordinalNumber: Se({
-    matchPattern: Gdt,
-    parsePattern: Ydt,
+    matchPattern: qdt,
+    parsePattern: Xdt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Udt,
+    matchPatterns: Gdt,
     defaultMatchWidth: "wide",
-    parsePatterns: Kdt,
+    parsePatterns: Ydt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Qdt,
+    matchPatterns: Udt,
     defaultMatchWidth: "wide",
-    parsePatterns: Zdt,
+    parsePatterns: Kdt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Qdt,
+    defaultMatchWidth: "wide",
+    parsePatterns: Zdt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Jdt,
     defaultMatchWidth: "wide",
     parsePatterns: eft,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: tft,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: nft,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: rft,
-    defaultMatchWidth: "any",
-    parsePatterns: aft,
-    defaultParseWidth: "any"
   })
-}, oft = {
+}, aft = {
   code: "sr",
-  formatDistance: Adt,
-  formatLong: Wdt,
-  formatRelative: jdt,
-  localize: Xdt,
-  match: ift,
+  formatDistance: Tdt,
+  formatLong: Ddt,
+  formatRelative: Wdt,
+  localize: Bdt,
+  match: rft,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, sft = {
+}, ift = {
   lessThanXSeconds: {
     one: {
       standalone: "manje od 1 sekunde",
@@ -79522,40 +79462,40 @@ const Clt = (e, t, n) => {
     dual: "gotovo {{count}} godine",
     other: "gotovo {{count}} godina"
   }
-}, uft = (e, t, n) => {
+}, oft = (e, t, n) => {
   let r;
-  const a = sft[e];
+  const a = ift[e];
   return typeof a == "string" ? r = a : t === 1 ? n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r = a.one.withPrepositionIn : r = a.one.withPrepositionAgo : r = a.one.standalone : t % 10 > 1 && t % 10 < 5 && // if last digit is between 2 and 4
   String(t).substr(-2, 1) !== "1" ? r = a.dual.replace("{{count}}", String(t)) : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "za " + r : "pre " + r : r;
-}, cft = {
+}, sft = {
   full: "EEEE, d. MMMM yyyy.",
   long: "d. MMMM yyyy.",
   medium: "d. MMM yy.",
   short: "dd. MM. yy."
-}, lft = {
+}, uft = {
   full: "HH:mm:ss (zzzz)",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, dft = {
+}, cft = {
   full: "{{date}} 'u' {{time}}",
   long: "{{date}} 'u' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, fft = {
+}, lft = {
   date: q({
-    formats: cft,
+    formats: sft,
     defaultWidth: "full"
   }),
   time: q({
-    formats: lft,
+    formats: uft,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: dft,
+    formats: cft,
     defaultWidth: "full"
   })
-}, mft = {
+}, dft = {
   lastWeek: (e) => {
     switch (e.getDay()) {
       case 0:
@@ -79584,104 +79524,104 @@ const Clt = (e, t, n) => {
     }
   },
   other: "P"
-}, hft = (e, t, n, r) => {
-  const a = mft[e];
+}, fft = (e, t, n, r) => {
+  const a = dft[e];
   return typeof a == "function" ? a(t) : a;
-}, pft = {
+}, mft = {
   narrow: ["pr.n.e.", "AD"],
   abbreviated: ["pr. Hr.", "po. Hr."],
   wide: ["Pre Hrista", "Posle Hrista"]
-}, gft = {
+}, hft = {
   narrow: ["1.", "2.", "3.", "4."],
   abbreviated: ["1. kv.", "2. kv.", "3. kv.", "4. kv."],
   wide: ["1. kvartal", "2. kvartal", "3. kvartal", "4. kvartal"]
+}, pft = {
+  narrow: [
+    "1.",
+    "2.",
+    "3.",
+    "4.",
+    "5.",
+    "6.",
+    "7.",
+    "8.",
+    "9.",
+    "10.",
+    "11.",
+    "12."
+  ],
+  abbreviated: [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "maj",
+    "jun",
+    "jul",
+    "avg",
+    "sep",
+    "okt",
+    "nov",
+    "dec"
+  ],
+  wide: [
+    "januar",
+    "februar",
+    "mart",
+    "april",
+    "maj",
+    "jun",
+    "jul",
+    "avgust",
+    "septembar",
+    "oktobar",
+    "novembar",
+    "decembar"
+  ]
+}, gft = {
+  narrow: [
+    "1.",
+    "2.",
+    "3.",
+    "4.",
+    "5.",
+    "6.",
+    "7.",
+    "8.",
+    "9.",
+    "10.",
+    "11.",
+    "12."
+  ],
+  abbreviated: [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "maj",
+    "jun",
+    "jul",
+    "avg",
+    "sep",
+    "okt",
+    "nov",
+    "dec"
+  ],
+  wide: [
+    "januar",
+    "februar",
+    "mart",
+    "april",
+    "maj",
+    "jun",
+    "jul",
+    "avgust",
+    "septembar",
+    "oktobar",
+    "novembar",
+    "decembar"
+  ]
 }, vft = {
-  narrow: [
-    "1.",
-    "2.",
-    "3.",
-    "4.",
-    "5.",
-    "6.",
-    "7.",
-    "8.",
-    "9.",
-    "10.",
-    "11.",
-    "12."
-  ],
-  abbreviated: [
-    "jan",
-    "feb",
-    "mar",
-    "apr",
-    "maj",
-    "jun",
-    "jul",
-    "avg",
-    "sep",
-    "okt",
-    "nov",
-    "dec"
-  ],
-  wide: [
-    "januar",
-    "februar",
-    "mart",
-    "april",
-    "maj",
-    "jun",
-    "jul",
-    "avgust",
-    "septembar",
-    "oktobar",
-    "novembar",
-    "decembar"
-  ]
-}, yft = {
-  narrow: [
-    "1.",
-    "2.",
-    "3.",
-    "4.",
-    "5.",
-    "6.",
-    "7.",
-    "8.",
-    "9.",
-    "10.",
-    "11.",
-    "12."
-  ],
-  abbreviated: [
-    "jan",
-    "feb",
-    "mar",
-    "apr",
-    "maj",
-    "jun",
-    "jul",
-    "avg",
-    "sep",
-    "okt",
-    "nov",
-    "dec"
-  ],
-  wide: [
-    "januar",
-    "februar",
-    "mart",
-    "april",
-    "maj",
-    "jun",
-    "jul",
-    "avgust",
-    "septembar",
-    "oktobar",
-    "novembar",
-    "decembar"
-  ]
-}, bft = {
   narrow: ["N", "P", "U", "S", "Č", "P", "S"],
   short: ["ned", "pon", "uto", "sre", "čet", "pet", "sub"],
   abbreviated: ["ned", "pon", "uto", "sre", "čet", "pet", "sub"],
@@ -79694,7 +79634,7 @@ const Clt = (e, t, n) => {
     "petak",
     "subota"
   ]
-}, wft = {
+}, yft = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -79725,7 +79665,7 @@ const Clt = (e, t, n) => {
     evening: "uveče",
     night: "noću"
   }
-}, Pft = {
+}, bft = {
   narrow: {
     am: "AM",
     pm: "PM",
@@ -79756,50 +79696,50 @@ const Clt = (e, t, n) => {
     evening: "uveče",
     night: "noću"
   }
-}, xft = (e, t) => Number(e) + ".", Mft = {
-  ordinalNumber: xft,
+}, wft = (e, t) => Number(e) + ".", Pft = {
+  ordinalNumber: wft,
   era: A({
-    values: pft,
+    values: mft,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: gft,
+    values: hft,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: vft,
+    values: pft,
     defaultWidth: "wide",
-    formattingValues: yft,
+    formattingValues: gft,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: bft,
+    values: vft,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Pft,
+    values: bft,
     defaultWidth: "wide",
-    formattingValues: wft,
+    formattingValues: yft,
     defaultFormattingWidth: "wide"
   })
-}, kft = /^(\d+)\./i, Cft = /\d+/i, Sft = {
+}, xft = /^(\d+)\./i, Mft = /\d+/i, kft = {
   narrow: /^(pr\.n\.e\.|AD)/i,
   abbreviated: /^(pr\.\s?Hr\.|po\.\s?Hr\.)/i,
   wide: /^(Pre Hrista|pre nove ere|Posle Hrista|nova era)/i
-}, $ft = {
+}, Cft = {
   any: [/^pr/i, /^(po|nova)/i]
-}, _ft = {
+}, Sft = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]\.\s?kv\.?/i,
   wide: /^[1234]\. kvartal/i
-}, Tft = {
+}, $ft = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Eft = {
+}, _ft = {
   narrow: /^(10|11|12|[123456789])\./i,
   abbreviated: /^(jan|feb|mar|apr|maj|jun|jul|avg|sep|okt|nov|dec)/i,
   wide: /^((januar|januara)|(februar|februara)|(mart|marta)|(april|aprila)|(maj|maja)|(jun|juna)|(jul|jula)|(avgust|avgusta)|(septembar|septembra)|(oktobar|oktobra)|(novembar|novembra)|(decembar|decembra))/i
-}, Aft = {
+}, Tft = {
   narrow: [
     /^1/i,
     /^2/i,
@@ -79828,17 +79768,17 @@ const Clt = (e, t, n) => {
     /^n/i,
     /^d/i
   ]
-}, Oft = {
+}, Eft = {
   narrow: /^[npusčc]/i,
   short: /^(ned|pon|uto|sre|(čet|cet)|pet|sub)/i,
   abbreviated: /^(ned|pon|uto|sre|(čet|cet)|pet|sub)/i,
   wide: /^(nedelja|ponedeljak|utorak|sreda|(četvrtak|cetvrtak)|petak|subota)/i
-}, Dft = {
+}, Aft = {
   narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
   any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
-}, Nft = {
+}, Oft = {
   any: /^(am|pm|ponoc|ponoć|(po)?podne|uvece|uveče|noću|posle podne|ujutru)/i
-}, Wft = {
+}, Dft = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -79849,55 +79789,55 @@ const Clt = (e, t, n) => {
     evening: /(uvece|uveče)/i,
     night: /(nocu|noću)/i
   }
-}, Rft = {
+}, Nft = {
   ordinalNumber: Se({
-    matchPattern: kft,
-    parsePattern: Cft,
+    matchPattern: xft,
+    parsePattern: Mft,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Sft,
+    matchPatterns: kft,
     defaultMatchWidth: "wide",
-    parsePatterns: $ft,
+    parsePatterns: Cft,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: _ft,
+    matchPatterns: Sft,
     defaultMatchWidth: "wide",
-    parsePatterns: Tft,
+    parsePatterns: $ft,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: _ft,
+    defaultMatchWidth: "wide",
+    parsePatterns: Tft,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Eft,
     defaultMatchWidth: "wide",
     parsePatterns: Aft,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Oft,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Dft,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Nft,
-    defaultMatchWidth: "any",
-    parsePatterns: Wft,
-    defaultParseWidth: "any"
   })
-}, jft = {
+}, Wft = {
   code: "sr-Latn",
-  formatDistance: uft,
-  formatLong: fft,
-  formatRelative: hft,
-  localize: Mft,
-  match: Rft,
+  formatDistance: oft,
+  formatLong: lft,
+  formatRelative: fft,
+  localize: Pft,
+  match: Nft,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, Ift = {
+}, Rft = {
   lessThanXSeconds: {
     one: "mindre än en sekund",
     other: "mindre än {{count}} sekunder"
@@ -79959,7 +79899,7 @@ const Clt = (e, t, n) => {
     one: "nästan ett år",
     other: "nästan {{count}} år"
   }
-}, Lft = [
+}, jft = [
   "noll",
   "en",
   "två",
@@ -79973,57 +79913,57 @@ const Clt = (e, t, n) => {
   "tio",
   "elva",
   "tolv"
-], Fft = (e, t, n) => {
+], Ift = (e, t, n) => {
   let r;
-  const a = Ift[e];
+  const a = Rft[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace(
     "{{count}}",
-    t < 13 ? Lft[t] : String(t)
+    t < 13 ? jft[t] : String(t)
   ), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "om " + r : r + " sedan" : r;
-}, zft = {
+}, Lft = {
   full: "EEEE d MMMM y",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "y-MM-dd"
-}, Vft = {
+}, Fft = {
   full: "'kl'. HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Hft = {
+}, zft = {
   full: "{{date}} 'kl.' {{time}}",
   long: "{{date}} 'kl.' {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, Bft = {
+}, Vft = {
   date: q({
-    formats: zft,
+    formats: Lft,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Vft,
+    formats: Fft,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Hft,
+    formats: zft,
     defaultWidth: "full"
   })
-}, qft = {
+}, Hft = {
   lastWeek: "'i' EEEE's kl.' p",
   yesterday: "'igår kl.' p",
   today: "'idag kl.' p",
   tomorrow: "'imorgon kl.' p",
   nextWeek: "EEEE 'kl.' p",
   other: "P"
-}, Xft = (e, t, n, r) => qft[e], Gft = {
+}, Bft = (e, t, n, r) => Hft[e], qft = {
   narrow: ["f.Kr.", "e.Kr."],
   abbreviated: ["f.Kr.", "e.Kr."],
   wide: ["före Kristus", "efter Kristus"]
-}, Yft = {
+}, Xft = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["1:a kvartalet", "2:a kvartalet", "3:e kvartalet", "4:e kvartalet"]
-}, Uft = {
+}, Gft = {
   narrow: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
   abbreviated: [
     "jan.",
@@ -80053,12 +79993,12 @@ const Clt = (e, t, n) => {
     "november",
     "december"
   ]
-}, Kft = {
+}, Yft = {
   narrow: ["S", "M", "T", "O", "T", "F", "L"],
   short: ["sö", "må", "ti", "on", "to", "fr", "lö"],
   abbreviated: ["sön", "mån", "tis", "ons", "tors", "fre", "lör"],
   wide: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag", "lördag"]
-}, Qft = {
+}, Uft = {
   narrow: {
     am: "fm",
     pm: "em",
@@ -80089,7 +80029,7 @@ const Clt = (e, t, n) => {
     evening: "kväll",
     night: "natt"
   }
-}, Zft = {
+}, Kft = {
   narrow: {
     am: "fm",
     pm: "em",
@@ -80120,7 +80060,7 @@ const Clt = (e, t, n) => {
     evening: "på kvällen",
     night: "på natten"
   }
-}, Jft = (e, t) => {
+}, Qft = (e, t) => {
   const n = Number(e), r = n % 100;
   if (r > 20 || r < 10)
     switch (r % 10) {
@@ -80129,48 +80069,48 @@ const Clt = (e, t, n) => {
         return n + ":a";
     }
   return n + ":e";
-}, emt = {
-  ordinalNumber: Jft,
+}, Zft = {
+  ordinalNumber: Qft,
   era: A({
-    values: Gft,
+    values: qft,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Yft,
+    values: Xft,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Uft,
+    values: Gft,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Kft,
+    values: Yft,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Qft,
+    values: Uft,
     defaultWidth: "wide",
-    formattingValues: Zft,
+    formattingValues: Kft,
     defaultFormattingWidth: "wide"
   })
-}, tmt = /^(\d+)(:a|:e)?/i, nmt = /\d+/i, rmt = {
+}, Jft = /^(\d+)(:a|:e)?/i, emt = /\d+/i, tmt = {
   narrow: /^(f\.? ?Kr\.?|f\.? ?v\.? ?t\.?|e\.? ?Kr\.?|v\.? ?t\.?)/i,
   abbreviated: /^(f\.? ?Kr\.?|f\.? ?v\.? ?t\.?|e\.? ?Kr\.?|v\.? ?t\.?)/i,
   wide: /^(före Kristus|före vår tid|efter Kristus|vår tid)/i
-}, amt = {
+}, nmt = {
   any: [/^f/i, /^[ev]/i]
-}, imt = {
+}, rmt = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234](:a|:e)? kvartalet/i
-}, omt = {
+}, amt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, smt = {
+}, imt = {
   narrow: /^[jfmasond]/i,
   abbreviated: /^(jan|feb|mar[s]?|apr|maj|jun[i]?|jul[i]?|aug|sep|okt|nov|dec)\.?/i,
   wide: /^(januari|februari|mars|april|maj|juni|juli|augusti|september|oktober|november|december)/i
-}, umt = {
+}, omt = {
   narrow: [
     /^j/i,
     /^f/i,
@@ -80199,16 +80139,16 @@ const Clt = (e, t, n) => {
     /^n/i,
     /^d/i
   ]
-}, cmt = {
+}, smt = {
   narrow: /^[smtofl]/i,
   short: /^(sö|må|ti|on|to|fr|lö)/i,
   abbreviated: /^(sön|mån|tis|ons|tors|fre|lör)/i,
   wide: /^(söndag|måndag|tisdag|onsdag|torsdag|fredag|lördag)/i
-}, lmt = {
+}, umt = {
   any: [/^s/i, /^m/i, /^ti/i, /^o/i, /^to/i, /^f/i, /^l/i]
-}, dmt = {
+}, cmt = {
   any: /^([fe]\.?\s?m\.?|midn(att)?|midd(ag)?|(på) (morgonen|eftermiddagen|kvällen|natten))/i
-}, fmt = {
+}, lmt = {
   any: {
     am: /^f/i,
     pm: /^e/i,
@@ -80219,59 +80159,59 @@ const Clt = (e, t, n) => {
     evening: /kväll/i,
     night: /natt/i
   }
-}, mmt = {
+}, dmt = {
   ordinalNumber: Se({
-    matchPattern: tmt,
-    parsePattern: nmt,
+    matchPattern: Jft,
+    parsePattern: emt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: rmt,
+    matchPatterns: tmt,
     defaultMatchWidth: "wide",
-    parsePatterns: amt,
+    parsePatterns: nmt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: imt,
+    matchPatterns: rmt,
     defaultMatchWidth: "wide",
-    parsePatterns: omt,
+    parsePatterns: amt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: imt,
+    defaultMatchWidth: "wide",
+    parsePatterns: omt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: smt,
     defaultMatchWidth: "wide",
     parsePatterns: umt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: cmt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: lmt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: dmt,
-    defaultMatchWidth: "any",
-    parsePatterns: fmt,
-    defaultParseWidth: "any"
   })
-}, hmt = {
+}, fmt = {
   code: "sv",
-  formatDistance: Fft,
-  formatLong: Bft,
-  formatRelative: Xft,
-  localize: emt,
-  match: mmt,
+  formatDistance: Ift,
+  formatLong: Vft,
+  formatRelative: Bft,
+  localize: Zft,
+  match: dmt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
 };
-function pmt(e) {
+function mmt(e) {
   return e.one !== void 0;
 }
-const gmt = {
+const hmt = {
   lessThanXSeconds: {
     one: {
       default: "ஒரு வினாடிக்கு குறைவாக",
@@ -80457,51 +80397,51 @@ const gmt = {
       ago: "கிட்டத்தட்ட {{count}} ஆண்டுகளுக்கு முன்பு"
     }
   }
-}, vmt = (e, t, n) => {
-  const r = n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "in" : "ago" : "default", a = gmt[e];
-  return pmt(a) ? t === 1 ? a.one[r] : a.other[r].replace("{{count}}", String(t)) : a[r];
-}, ymt = {
+}, pmt = (e, t, n) => {
+  const r = n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? "in" : "ago" : "default", a = hmt[e];
+  return mmt(a) ? t === 1 ? a.one[r] : a.other[r].replace("{{count}}", String(t)) : a[r];
+}, gmt = {
   full: "EEEE, d MMMM, y",
   long: "d MMMM, y",
   medium: "d MMM, y",
   short: "d/M/yy"
-}, bmt = {
+}, vmt = {
   full: "a h:mm:ss zzzz",
   long: "a h:mm:ss z",
   medium: "a h:mm:ss",
   short: "a h:mm"
-}, wmt = {
+}, ymt = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Pmt = {
+}, bmt = {
   date: q({
-    formats: ymt,
+    formats: gmt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: bmt,
+    formats: vmt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: wmt,
+    formats: ymt,
     defaultWidth: "full"
   })
-}, xmt = {
+}, wmt = {
   lastWeek: "'கடந்த' eeee p 'மணிக்கு'",
   yesterday: "'நேற்று ' p 'மணிக்கு'",
   today: "'இன்று ' p 'மணிக்கு'",
   tomorrow: "'நாளை ' p 'மணிக்கு'",
   nextWeek: "eeee p 'மணிக்கு'",
   other: "P"
-}, Mmt = (e, t, n, r) => xmt[e], kmt = {
+}, Pmt = (e, t, n, r) => wmt[e], xmt = {
   narrow: ["கி.மு.", "கி.பி."],
   abbreviated: ["கி.மு.", "கி.பி."],
   // CLDR #1624, #1626
   wide: ["கிறிஸ்துவுக்கு முன்", "அன்னோ டோமினி"]
   // CLDR #1620, #1622
-}, Cmt = {
+}, Mmt = {
   // CLDR #1644 - #1647
   narrow: ["1", "2", "3", "4"],
   // CLDR #1636 - #1639
@@ -80513,7 +80453,7 @@ const gmt = {
     "மூன்றாம் காலாண்டு",
     "நான்காம் காலாண்டு"
   ]
-}, Smt = {
+}, kmt = {
   // CLDR #700 - #711
   narrow: ["ஜ", "பி", "மா", "ஏ", "மே", "ஜூ", "ஜூ", "ஆ", "செ", "அ", "ந", "டி"],
   // CLDR #1676 - #1687
@@ -80558,7 +80498,7 @@ const gmt = {
     "டிசம்பர்"
     // December
   ]
-}, $mt = {
+}, Cmt = {
   // CLDR #1766 - #1772
   narrow: ["ஞா", "தி", "செ", "பு", "வி", "வெ", "ச"],
   // CLDR #1752 - #1758
@@ -80582,7 +80522,7 @@ const gmt = {
     "சனி"
     // Saturday
   ]
-}, _mt = {
+}, Smt = {
   narrow: {
     am: "மு.ப",
     pm: "பி.ப",
@@ -80613,7 +80553,7 @@ const gmt = {
     evening: "மாலை",
     night: "இரவு"
   }
-}, Tmt = {
+}, $mt = {
   narrow: {
     am: "மு.ப",
     pm: "பி.ப",
@@ -80644,42 +80584,42 @@ const gmt = {
     evening: "மாலை",
     night: "இரவு"
   }
-}, Emt = (e, t) => String(e), Amt = {
-  ordinalNumber: Emt,
+}, _mt = (e, t) => String(e), Tmt = {
+  ordinalNumber: _mt,
   era: A({
-    values: kmt,
+    values: xmt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Cmt,
+    values: Mmt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Smt,
+    values: kmt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: $mt,
+    values: Cmt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: _mt,
+    values: Smt,
     defaultWidth: "wide",
-    formattingValues: Tmt,
+    formattingValues: $mt,
     defaultFormattingWidth: "wide"
   })
-}, Omt = /^(\d+)(வது)?/i, Dmt = /\d+/i, Nmt = {
+}, Emt = /^(\d+)(வது)?/i, Amt = /\d+/i, Omt = {
   narrow: /^(கி.மு.|கி.பி.)/i,
   abbreviated: /^(கி\.?\s?மு\.?|கி\.?\s?பி\.?)/,
   wide: /^(கிறிஸ்துவுக்கு\sமுன்|அன்னோ\sடோமினி)/i
-}, Wmt = {
+}, Dmt = {
   any: [/கி\.?\s?மு\.?/, /கி\.?\s?பி\.?/]
-}, Rmt = {
+}, Nmt = {
   narrow: /^[1234]/i,
   abbreviated: /^காலா.[1234]/i,
   wide: /^(ஒன்றாம்|இரண்டாம்|மூன்றாம்|நான்காம்) காலாண்டு/i
-}, jmt = {
+}, Wmt = {
   narrow: [/1/i, /2/i, /3/i, /4/i],
   any: [
     /(1|காலா.1|ஒன்றாம்)/i,
@@ -80687,11 +80627,11 @@ const gmt = {
     /(3|காலா.3|மூன்றாம்)/i,
     /(4|காலா.4|நான்காம்)/i
   ]
-}, Imt = {
+}, Rmt = {
   narrow: /^(ஜ|பி|மா|ஏ|மே|ஜூ|ஆ|செ|அ|ந|டி)$/i,
   abbreviated: /^(ஜன.|பிப்.|மார்.|ஏப்.|மே|ஜூன்|ஜூலை|ஆக.|செப்.|அக்.|நவ.|டிச.)/i,
   wide: /^(ஜனவரி|பிப்ரவரி|மார்ச்|ஏப்ரல்|மே|ஜூன்|ஜூலை|ஆகஸ்ட்|செப்டம்பர்|அக்டோபர்|நவம்பர்|டிசம்பர்)/i
-}, Lmt = {
+}, jmt = {
   narrow: [
     /^ஜ$/i,
     /^பி/i,
@@ -80720,18 +80660,18 @@ const gmt = {
     /^ந/i,
     /^டி/i
   ]
-}, Fmt = {
+}, Imt = {
   narrow: /^(ஞா|தி|செ|பு|வி|வெ|ச)/i,
   short: /^(ஞா|தி|செ|பு|வி|வெ|ச)/i,
   abbreviated: /^(ஞாயி.|திங்.|செவ்.|புத.|வியா.|வெள்.|சனி)/i,
   wide: /^(ஞாயிறு|திங்கள்|செவ்வாய்|புதன்|வியாழன்|வெள்ளி|சனி)/i
-}, zmt = {
+}, Lmt = {
   narrow: [/^ஞா/i, /^தி/i, /^செ/i, /^பு/i, /^வி/i, /^வெ/i, /^ச/i],
   any: [/^ஞா/i, /^தி/i, /^செ/i, /^பு/i, /^வி/i, /^வெ/i, /^ச/i]
-}, Vmt = {
+}, Fmt = {
   narrow: /^(மு.ப|பி.ப|நள்|நண்|காலை|மதியம்|மாலை|இரவு)/i,
   any: /^(மு.ப|பி.ப|முற்பகல்|பிற்பகல்|நள்ளிரவு|நண்பகல்|காலை|மதியம்|மாலை|இரவு)/i
-}, Hmt = {
+}, zmt = {
   any: {
     am: /^மு/i,
     pm: /^பி/i,
@@ -80742,50 +80682,50 @@ const gmt = {
     evening: /மாலை/i,
     night: /இரவு/i
   }
-}, Bmt = {
+}, Vmt = {
   ordinalNumber: Se({
-    matchPattern: Omt,
-    parsePattern: Dmt,
+    matchPattern: Emt,
+    parsePattern: Amt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Nmt,
+    matchPatterns: Omt,
     defaultMatchWidth: "wide",
-    parsePatterns: Wmt,
+    parsePatterns: Dmt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Rmt,
+    matchPatterns: Nmt,
     defaultMatchWidth: "wide",
-    parsePatterns: jmt,
+    parsePatterns: Wmt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Rmt,
+    defaultMatchWidth: "wide",
+    parsePatterns: jmt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Imt,
     defaultMatchWidth: "wide",
     parsePatterns: Lmt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Fmt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: zmt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Vmt,
-    defaultMatchWidth: "any",
-    parsePatterns: Hmt,
-    defaultParseWidth: "any"
   })
-}, qmt = {
+}, Hmt = {
   code: "ta",
-  formatDistance: vmt,
-  formatLong: Pmt,
-  formatRelative: Mmt,
-  localize: Amt,
-  match: Bmt,
+  formatDistance: pmt,
+  formatLong: bmt,
+  formatRelative: Pmt,
+  localize: Tmt,
+  match: Vmt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
@@ -80952,39 +80892,39 @@ const gmt = {
       other: "దాదాపు {{count}} సంవత్సరాల"
     }
   }
-}, Xmt = (e, t, n) => {
+}, Bmt = (e, t, n) => {
   let r;
   const a = n != null && n.addSuffix ? FD[e].withPreposition : FD[e].standalone;
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + "లో" : r + " క్రితం" : r;
-}, Gmt = {
+}, qmt = {
   full: "d, MMMM y, EEEE",
   long: "d MMMM, y",
   medium: "d MMM, y",
   short: "dd-MM-yy"
-}, Ymt = {
+}, Xmt = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, Umt = {
+}, Gmt = {
   full: "{{date}} {{time}}'కి'",
   long: "{{date}} {{time}}'కి'",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, Kmt = {
+}, Ymt = {
   date: q({
-    formats: Gmt,
+    formats: qmt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Ymt,
+    formats: Xmt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Umt,
+    formats: Gmt,
     defaultWidth: "full"
   })
-}, Qmt = {
+}, Umt = {
   lastWeek: "'గత' eeee p",
   // CLDR #1384
   yesterday: "'నిన్న' p",
@@ -80996,15 +80936,15 @@ const gmt = {
   nextWeek: "'తదుపరి' eeee p",
   // CLDR #1386
   other: "P"
-}, Zmt = (e, t, n, r) => Qmt[e], Jmt = {
+}, Kmt = (e, t, n, r) => Umt[e], Qmt = {
   narrow: ["క్రీ.పూ.", "క్రీ.శ."],
   abbreviated: ["క్రీ.పూ.", "క్రీ.శ."],
   wide: ["క్రీస్తు పూర్వం", "క్రీస్తుశకం"]
-}, eht = {
+}, Zmt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["త్రై1", "త్రై2", "త్రై3", "త్రై4"],
   wide: ["1వ త్రైమాసికం", "2వ త్రైమాసికం", "3వ త్రైమాసికం", "4వ త్రైమాసికం"]
-}, tht = {
+}, Jmt = {
   narrow: ["జ", "ఫి", "మా", "ఏ", "మే", "జూ", "జు", "ఆ", "సె", "అ", "న", "డి"],
   abbreviated: [
     "జన",
@@ -81034,7 +80974,7 @@ const gmt = {
     "నవంబర్",
     "డిసెంబర్"
   ]
-}, nht = {
+}, eht = {
   narrow: ["ఆ", "సో", "మ", "బు", "గు", "శు", "శ"],
   short: ["ఆది", "సోమ", "మంగళ", "బుధ", "గురు", "శుక్ర", "శని"],
   abbreviated: ["ఆది", "సోమ", "మంగళ", "బుధ", "గురు", "శుక్ర", "శని"],
@@ -81047,7 +80987,7 @@ const gmt = {
     "శుక్రవారం",
     "శనివారం"
   ]
-}, rht = {
+}, tht = {
   narrow: {
     am: "పూర్వాహ్నం",
     pm: "అపరాహ్నం",
@@ -81078,7 +81018,7 @@ const gmt = {
     evening: "సాయంత్రం",
     night: "రాత్రి"
   }
-}, aht = {
+}, nht = {
   narrow: {
     am: "పూర్వాహ్నం",
     pm: "అపరాహ్నం",
@@ -81109,48 +81049,48 @@ const gmt = {
     evening: "సాయంత్రం",
     night: "రాత్రి"
   }
-}, iht = (e, t) => Number(e) + "వ", oht = {
-  ordinalNumber: iht,
+}, rht = (e, t) => Number(e) + "వ", aht = {
+  ordinalNumber: rht,
   era: A({
-    values: Jmt,
+    values: Qmt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: eht,
+    values: Zmt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: tht,
+    values: Jmt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: nht,
+    values: eht,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: rht,
+    values: tht,
     defaultWidth: "wide",
-    formattingValues: aht,
+    formattingValues: nht,
     defaultFormattingWidth: "wide"
   })
-}, sht = /^(\d+)(వ)?/i, uht = /\d+/i, cht = {
+}, iht = /^(\d+)(వ)?/i, oht = /\d+/i, sht = {
   narrow: /^(క్రీ\.పూ\.|క్రీ\.శ\.)/i,
   abbreviated: /^(క్రీ\.?\s?పూ\.?|ప్ర\.?\s?శ\.?\s?పూ\.?|క్రీ\.?\s?శ\.?|సా\.?\s?శ\.?)/i,
   wide: /^(క్రీస్తు పూర్వం|ప్రస్తుత శకానికి పూర్వం|క్రీస్తు శకం|ప్రస్తుత శకం)/i
-}, lht = {
+}, uht = {
   any: [/^(పూ|శ)/i, /^సా/i]
-}, dht = {
+}, cht = {
   narrow: /^[1234]/i,
   abbreviated: /^త్రై[1234]/i,
   wide: /^[1234](వ)? త్రైమాసికం/i
-}, fht = {
+}, lht = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, mht = {
+}, dht = {
   narrow: /^(జూ|జు|జ|ఫి|మా|ఏ|మే|ఆ|సె|అ|న|డి)/i,
   abbreviated: /^(జన|ఫిబ్ర|మార్చి|ఏప్రి|మే|జూన్|జులై|ఆగ|సెప్|అక్టో|నవ|డిసె)/i,
   wide: /^(జనవరి|ఫిబ్రవరి|మార్చి|ఏప్రిల్|మే|జూన్|జులై|ఆగస్టు|సెప్టెంబర్|అక్టోబర్|నవంబర్|డిసెంబర్)/i
-}, hht = {
+}, fht = {
   narrow: [
     /^జ/i,
     /^ఫి/i,
@@ -81179,18 +81119,18 @@ const gmt = {
     /^న/i,
     /^డి/i
   ]
-}, pht = {
+}, mht = {
   narrow: /^(ఆ|సో|మ|బు|గు|శు|శ)/i,
   short: /^(ఆది|సోమ|మం|బుధ|గురు|శుక్ర|శని)/i,
   abbreviated: /^(ఆది|సోమ|మం|బుధ|గురు|శుక్ర|శని)/i,
   wide: /^(ఆదివారం|సోమవారం|మంగళవారం|బుధవారం|గురువారం|శుక్రవారం|శనివారం)/i
-}, ght = {
+}, hht = {
   narrow: [/^ఆ/i, /^సో/i, /^మ/i, /^బు/i, /^గు/i, /^శు/i, /^శ/i],
   any: [/^ఆది/i, /^సోమ/i, /^మం/i, /^బుధ/i, /^గురు/i, /^శుక్ర/i, /^శని/i]
-}, vht = {
+}, pht = {
   narrow: /^(పూర్వాహ్నం|అపరాహ్నం|అర్ధరాత్రి|మిట్టమధ్యాహ్నం|ఉదయం|మధ్యాహ్నం|సాయంత్రం|రాత్రి)/i,
   any: /^(పూర్వాహ్నం|అపరాహ్నం|అర్ధరాత్రి|మిట్టమధ్యాహ్నం|ఉదయం|మధ్యాహ్నం|సాయంత్రం|రాత్రి)/i
-}, yht = {
+}, ght = {
   any: {
     am: /^పూర్వాహ్నం/i,
     pm: /^అపరాహ్నం/i,
@@ -81201,55 +81141,55 @@ const gmt = {
     evening: /సాయంత్రం/i,
     night: /రాత్రి/i
   }
-}, bht = {
+}, vht = {
   ordinalNumber: Se({
-    matchPattern: sht,
-    parsePattern: uht,
+    matchPattern: iht,
+    parsePattern: oht,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: cht,
+    matchPatterns: sht,
     defaultMatchWidth: "wide",
-    parsePatterns: lht,
+    parsePatterns: uht,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: dht,
+    matchPatterns: cht,
     defaultMatchWidth: "wide",
-    parsePatterns: fht,
+    parsePatterns: lht,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: dht,
+    defaultMatchWidth: "wide",
+    parsePatterns: fht,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: mht,
     defaultMatchWidth: "wide",
     parsePatterns: hht,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: pht,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: ght,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: vht,
-    defaultMatchWidth: "any",
-    parsePatterns: yht,
-    defaultParseWidth: "any"
   })
-}, wht = {
+}, yht = {
   code: "te",
-  formatDistance: Xmt,
-  formatLong: Kmt,
-  formatRelative: Zmt,
-  localize: oht,
-  match: bht,
+  formatDistance: Bmt,
+  formatLong: Ymt,
+  formatRelative: Kmt,
+  localize: aht,
+  match: vht,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, Pht = {
+}, bht = {
   lessThanXSeconds: {
     one: "น้อยกว่า 1 วินาที",
     other: "น้อยกว่า {{count}} วินาที"
@@ -81311,59 +81251,59 @@ const gmt = {
     one: "เกือบ 1 ปี",
     other: "เกือบ {{count}} ปี"
   }
-}, xht = (e, t, n) => {
+}, wht = (e, t, n) => {
   let r;
-  const a = Pht[e];
+  const a = bht[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? e === "halfAMinute" ? "ใน" + r : "ใน " + r : r + "ที่ผ่านมา" : r;
-}, Mht = {
+}, Pht = {
   full: "วันEEEEที่ do MMMM y",
   long: "do MMMM y",
   medium: "d MMM y",
   short: "dd/MM/yyyy"
-}, kht = {
+}, xht = {
   full: "H:mm:ss น. zzzz",
   long: "H:mm:ss น. z",
   medium: "H:mm:ss น.",
   short: "H:mm น."
-}, Cht = {
+}, Mht = {
   full: "{{date}} 'เวลา' {{time}}",
   long: "{{date}} 'เวลา' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Sht = {
+}, kht = {
   date: q({
-    formats: Mht,
+    formats: Pht,
     defaultWidth: "full"
   }),
   time: q({
-    formats: kht,
+    formats: xht,
     defaultWidth: "medium"
   }),
   dateTime: q({
-    formats: Cht,
+    formats: Mht,
     defaultWidth: "full"
   })
-}, $ht = {
+}, Cht = {
   lastWeek: "eeee'ที่แล้วเวลา' p",
   yesterday: "'เมื่อวานนี้เวลา' p",
   today: "'วันนี้เวลา' p",
   tomorrow: "'พรุ่งนี้เวลา' p",
   nextWeek: "eeee 'เวลา' p",
   other: "P"
-}, _ht = (e, t, n, r) => $ht[e], Tht = {
+}, Sht = (e, t, n, r) => Cht[e], $ht = {
   narrow: ["B", "คศ"],
   abbreviated: ["BC", "ค.ศ."],
   wide: ["ปีก่อนคริสตกาล", "คริสต์ศักราช"]
-}, Eht = {
+}, _ht = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["ไตรมาสแรก", "ไตรมาสที่สอง", "ไตรมาสที่สาม", "ไตรมาสที่สี่"]
-}, Aht = {
+}, Tht = {
   narrow: ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."],
   short: ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."],
   abbreviated: ["อา.", "จ.", "อ.", "พ.", "พฤ.", "ศ.", "ส."],
   wide: ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"]
-}, Oht = {
+}, Eht = {
   narrow: [
     "ม.ค.",
     "ก.พ.",
@@ -81406,7 +81346,7 @@ const gmt = {
     "พฤศจิกายน",
     "ธันวาคม"
   ]
-}, Dht = {
+}, Aht = {
   narrow: {
     am: "ก่อนเที่ยง",
     pm: "หลังเที่ยง",
@@ -81437,7 +81377,7 @@ const gmt = {
     evening: "เย็น",
     night: "กลางคืน"
   }
-}, Nht = {
+}, Oht = {
   narrow: {
     am: "ก่อนเที่ยง",
     pm: "หลังเที่ยง",
@@ -81468,48 +81408,48 @@ const gmt = {
     evening: "ตอนเย็น",
     night: "ตอนกลางคืน"
   }
-}, Wht = (e, t) => String(e), Rht = {
-  ordinalNumber: Wht,
+}, Dht = (e, t) => String(e), Nht = {
+  ordinalNumber: Dht,
   era: A({
-    values: Tht,
+    values: $ht,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Eht,
+    values: _ht,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Oht,
+    values: Eht,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Aht,
+    values: Tht,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Dht,
+    values: Aht,
     defaultWidth: "wide",
-    formattingValues: Nht,
+    formattingValues: Oht,
     defaultFormattingWidth: "wide"
   })
-}, jht = /^\d+/i, Iht = /\d+/i, Lht = {
+}, Wht = /^\d+/i, Rht = /\d+/i, jht = {
   narrow: /^([bB]|[aA]|คศ)/i,
   abbreviated: /^([bB]\.?\s?[cC]\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?|ค\.?ศ\.?)/i,
   wide: /^(ก่อนคริสตกาล|คริสต์ศักราช|คริสตกาล)/i
-}, Fht = {
+}, Iht = {
   any: [/^[bB]/i, /^(^[aA]|ค\.?ศ\.?|คริสตกาล|คริสต์ศักราช|)/i]
-}, zht = {
+}, Lht = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^ไตรมาส(ที่)? ?[1234]/i
-}, Vht = {
+}, Fht = {
   any: [/(1|แรก|หนึ่ง)/i, /(2|สอง)/i, /(3|สาม)/i, /(4|สี่)/i]
-}, Hht = {
+}, zht = {
   narrow: /^(ม\.?ค\.?|ก\.?พ\.?|มี\.?ค\.?|เม\.?ย\.?|พ\.?ค\.?|มิ\.?ย\.?|ก\.?ค\.?|ส\.?ค\.?|ก\.?ย\.?|ต\.?ค\.?|พ\.?ย\.?|ธ\.?ค\.?)/i,
   abbreviated: /^(ม\.?ค\.?|ก\.?พ\.?|มี\.?ค\.?|เม\.?ย\.?|พ\.?ค\.?|มิ\.?ย\.?|ก\.?ค\.?|ส\.?ค\.?|ก\.?ย\.?|ต\.?ค\.?|พ\.?ย\.?|ธ\.?ค\.?')/i,
   wide: /^(มกราคม|กุมภาพันธ์|มีนาคม|เมษายน|พฤษภาคม|มิถุนายน|กรกฎาคม|สิงหาคม|กันยายน|ตุลาคม|พฤศจิกายน|ธันวาคม)/i
-}, Bht = {
+}, Vht = {
   wide: [
     /^มก/i,
     /^กุม/i,
@@ -81538,17 +81478,17 @@ const gmt = {
     /^พ\.?ย\.?/i,
     /^ธ\.?ค\.?/i
   ]
-}, qht = {
+}, Hht = {
   narrow: /^(อา\.?|จ\.?|อ\.?|พฤ\.?|พ\.?|ศ\.?|ส\.?)/i,
   short: /^(อา\.?|จ\.?|อ\.?|พฤ\.?|พ\.?|ศ\.?|ส\.?)/i,
   abbreviated: /^(อา\.?|จ\.?|อ\.?|พฤ\.?|พ\.?|ศ\.?|ส\.?)/i,
   wide: /^(อาทิตย์|จันทร์|อังคาร|พุธ|พฤหัสบดี|ศุกร์|เสาร์)/i
-}, Xht = {
+}, Bht = {
   wide: [/^อา/i, /^จั/i, /^อั/i, /^พุธ/i, /^พฤ/i, /^ศ/i, /^เส/i],
   any: [/^อา/i, /^จ/i, /^อ/i, /^พ(?!ฤ)/i, /^พฤ/i, /^ศ/i, /^ส/i]
-}, Ght = {
+}, qht = {
   any: /^(ก่อนเที่ยง|หลังเที่ยง|เที่ยงคืน|เที่ยง|(ตอน.*?)?.*(เที่ยง|เช้า|บ่าย|เย็น|กลางคืน))/i
-}, Yht = {
+}, Xht = {
   any: {
     am: /^ก่อนเที่ยง/i,
     pm: /^หลังเที่ยง/i,
@@ -81559,55 +81499,55 @@ const gmt = {
     evening: /เย็น/i,
     night: /กลางคืน/i
   }
-}, Uht = {
+}, Ght = {
   ordinalNumber: Se({
-    matchPattern: jht,
-    parsePattern: Iht,
+    matchPattern: Wht,
+    parsePattern: Rht,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Lht,
+    matchPatterns: jht,
     defaultMatchWidth: "wide",
-    parsePatterns: Fht,
+    parsePatterns: Iht,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: zht,
+    matchPatterns: Lht,
     defaultMatchWidth: "wide",
-    parsePatterns: Vht,
+    parsePatterns: Fht,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: zht,
+    defaultMatchWidth: "wide",
+    parsePatterns: Vht,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Hht,
     defaultMatchWidth: "wide",
     parsePatterns: Bht,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: qht,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Xht,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Ght,
-    defaultMatchWidth: "any",
-    parsePatterns: Yht,
-    defaultParseWidth: "any"
   })
-}, Kht = {
+}, Yht = {
   code: "th",
-  formatDistance: xht,
-  formatLong: Sht,
-  formatRelative: _ht,
-  localize: Rht,
-  match: Uht,
+  formatDistance: wht,
+  formatLong: kht,
+  formatRelative: Sht,
+  localize: Nht,
+  match: Ght,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, Qht = {
+}, Uht = {
   lessThanXSeconds: {
     one: "bir saniyeden az",
     other: "{{count}} saniyeden az"
@@ -81669,54 +81609,54 @@ const gmt = {
     one: "neredeyse 1 yıl",
     other: "neredeyse {{count}} yıl"
   }
-}, Zht = (e, t, n) => {
+}, Kht = (e, t, n) => {
   let r;
-  const a = Qht[e];
+  const a = Uht[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", t.toString()), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + " sonra" : r + " önce" : r;
-}, Jht = {
+}, Qht = {
   full: "d MMMM y EEEE",
   long: "d MMMM y",
   medium: "d MMM y",
   short: "dd.MM.yyyy"
-}, ept = {
+}, Zht = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, tpt = {
+}, Jht = {
   full: "{{date}} 'saat' {{time}}",
   long: "{{date}} 'saat' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, npt = {
+}, ept = {
   date: q({
-    formats: Jht,
+    formats: Qht,
     defaultWidth: "full"
   }),
   time: q({
-    formats: ept,
+    formats: Zht,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: tpt,
+    formats: Jht,
     defaultWidth: "full"
   })
-}, rpt = {
+}, tpt = {
   lastWeek: "'geçen hafta' eeee 'saat' p",
   yesterday: "'dün saat' p",
   today: "'bugün saat' p",
   tomorrow: "'yarın saat' p",
   nextWeek: "eeee 'saat' p",
   other: "P"
-}, apt = (e, t, n, r) => rpt[e], ipt = {
+}, npt = (e, t, n, r) => tpt[e], rpt = {
   narrow: ["MÖ", "MS"],
   abbreviated: ["MÖ", "MS"],
   wide: ["Milattan Önce", "Milattan Sonra"]
-}, opt = {
+}, apt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1Ç", "2Ç", "3Ç", "4Ç"],
   wide: ["İlk çeyrek", "İkinci Çeyrek", "Üçüncü çeyrek", "Son çeyrek"]
-}, spt = {
+}, ipt = {
   narrow: ["O", "Ş", "M", "N", "M", "H", "T", "A", "E", "E", "K", "A"],
   abbreviated: [
     "Oca",
@@ -81746,7 +81686,7 @@ const gmt = {
     "Kasım",
     "Aralık"
   ]
-}, upt = {
+}, opt = {
   narrow: ["P", "P", "S", "Ç", "P", "C", "C"],
   short: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
   abbreviated: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cts"],
@@ -81759,7 +81699,7 @@ const gmt = {
     "Cuma",
     "Cumartesi"
   ]
-}, cpt = {
+}, spt = {
   narrow: {
     am: "öö",
     pm: "ös",
@@ -81790,7 +81730,7 @@ const gmt = {
     evening: "akşam",
     night: "gece"
   }
-}, lpt = {
+}, upt = {
   narrow: {
     am: "öö",
     pm: "ös",
@@ -81821,42 +81761,42 @@ const gmt = {
     evening: "akşamleyin",
     night: "geceleyin"
   }
-}, dpt = (e, t) => Number(e) + ".", fpt = {
-  ordinalNumber: dpt,
+}, cpt = (e, t) => Number(e) + ".", lpt = {
+  ordinalNumber: cpt,
   era: A({
-    values: ipt,
+    values: rpt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: opt,
+    values: apt,
     defaultWidth: "wide",
     argumentCallback: (e) => Number(e) - 1
   }),
   month: A({
-    values: spt,
+    values: ipt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: upt,
+    values: opt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: cpt,
+    values: spt,
     defaultWidth: "wide",
-    formattingValues: lpt,
+    formattingValues: upt,
     defaultFormattingWidth: "wide"
   })
-}, mpt = /^(\d+)(\.)?/i, hpt = /\d+/i, ppt = {
+}, dpt = /^(\d+)(\.)?/i, fpt = /\d+/i, mpt = {
   narrow: /^(mö|ms)/i,
   abbreviated: /^(mö|ms)/i,
   wide: /^(milattan önce|milattan sonra)/i
-}, gpt = {
+}, hpt = {
   any: [/(^mö|^milattan önce)/i, /(^ms|^milattan sonra)/i]
-}, vpt = {
+}, ppt = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]ç/i,
   wide: /^((i|İ)lk|(i|İ)kinci|üçüncü|son) çeyrek/i
-}, ypt = {
+}, gpt = {
   any: [/1/i, /2/i, /3/i, /4/i],
   abbreviated: [/1ç/i, /2ç/i, /3ç/i, /4ç/i],
   wide: [
@@ -81865,11 +81805,11 @@ const gmt = {
     /üçüncü çeyrek/i,
     /son çeyrek/i
   ]
-}, bpt = {
+}, vpt = {
   narrow: /^[oşmnhtaek]/i,
   abbreviated: /^(oca|şub|mar|nis|may|haz|tem|ağu|eyl|eki|kas|ara)/i,
   wide: /^(ocak|şubat|mart|nisan|mayıs|haziran|temmuz|ağustos|eylül|ekim|kasım|aralık)/i
-}, wpt = {
+}, ypt = {
   narrow: [
     /^o/i,
     /^ş/i,
@@ -81898,12 +81838,12 @@ const gmt = {
     /^k/i,
     /^ar/i
   ]
-}, Ppt = {
+}, bpt = {
   narrow: /^[psçc]/i,
   short: /^(pz|pt|sa|ça|pe|cu|ct)/i,
   abbreviated: /^(paz|pzt|sal|çar|per|cum|cts)/i,
   wide: /^(pazar(?!tesi)|pazartesi|salı|çarşamba|perşembe|cuma(?!rtesi)|cumartesi)/i
-}, xpt = {
+}, wpt = {
   narrow: [/^p/i, /^p/i, /^s/i, /^ç/i, /^p/i, /^c/i, /^c/i],
   any: [/^pz/i, /^pt/i, /^sa/i, /^ça/i, /^pe/i, /^cu/i, /^ct/i],
   wide: [
@@ -81915,10 +81855,10 @@ const gmt = {
     /^cuma(?!rtesi)/i,
     /^cumartesi/i
   ]
-}, Mpt = {
+}, Ppt = {
   narrow: /^(öö|ös|gy|ö|sa|ös|ak|ge)/i,
   any: /^(ö\.?\s?[ös]\.?|öğleden sonra|gece yarısı|öğle|(sabah|öğ|akşam|gece)(leyin))/i
-}, kpt = {
+}, xpt = {
   any: {
     am: /^ö\.?ö\.?/i,
     pm: /^ö\.?s\.?/i,
@@ -81929,57 +81869,57 @@ const gmt = {
     evening: /^ak/i,
     night: /^ge/i
   }
-}, Cpt = {
+}, Mpt = {
   ordinalNumber: Se({
-    matchPattern: mpt,
-    parsePattern: hpt,
+    matchPattern: dpt,
+    parsePattern: fpt,
     valueCallback: function(e) {
       return parseInt(e, 10);
     }
   }),
   era: D({
-    matchPatterns: ppt,
+    matchPatterns: mpt,
     defaultMatchWidth: "wide",
-    parsePatterns: gpt,
+    parsePatterns: hpt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: vpt,
+    matchPatterns: ppt,
     defaultMatchWidth: "wide",
-    parsePatterns: ypt,
+    parsePatterns: gpt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: vpt,
+    defaultMatchWidth: "wide",
+    parsePatterns: ypt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: bpt,
     defaultMatchWidth: "wide",
     parsePatterns: wpt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Ppt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: xpt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Mpt,
-    defaultMatchWidth: "any",
-    parsePatterns: kpt,
-    defaultParseWidth: "any"
   })
-}, Spt = {
+}, kpt = {
   code: "tr",
-  formatDistance: Zht,
-  formatLong: npt,
-  formatRelative: apt,
-  localize: fpt,
-  match: Cpt,
+  formatDistance: Kht,
+  formatLong: ept,
+  formatRelative: npt,
+  localize: lpt,
+  match: Mpt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, $pt = {
+}, Cpt = {
   lessThanXSeconds: {
     one: "بىر سىكۇنت ئىچىدە",
     other: "سىكۇنت ئىچىدە {{count}}"
@@ -82041,54 +81981,54 @@ const gmt = {
     one: "ئاساسەن بىر يىل",
     other: "يىل {{count}} ئاساسەن"
   }
-}, _pt = (e, t, n) => {
+}, Spt = (e, t, n) => {
   let r;
-  const a = $pt[e];
+  const a = Cpt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r : r + " بولدى" : r;
-}, Tpt = {
+}, $pt = {
   full: "EEEE, MMMM do, y",
   long: "MMMM do, y",
   medium: "MMM d, y",
   short: "MM/dd/yyyy"
-}, Ept = {
+}, _pt = {
   full: "h:mm:ss a zzzz",
   long: "h:mm:ss a z",
   medium: "h:mm:ss a",
   short: "h:mm a"
-}, Apt = {
+}, Tpt = {
   full: "{{date}} 'دە' {{time}}",
   long: "{{date}} 'دە' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, Opt = {
+}, Ept = {
   date: q({
-    formats: Tpt,
+    formats: $pt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Ept,
+    formats: _pt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Apt,
+    formats: Tpt,
     defaultWidth: "full"
   })
-}, Dpt = {
+}, Apt = {
   lastWeek: "'ئ‍ۆتكەن' eeee 'دە' p",
   yesterday: "'تۈنۈگۈن دە' p",
   today: "'بۈگۈن دە' p",
   tomorrow: "'ئەتە دە' p",
   nextWeek: "eeee 'دە' p",
   other: "P"
-}, Npt = (e, t, n, r) => Dpt[e], Wpt = {
+}, Opt = (e, t, n, r) => Apt[e], Dpt = {
   narrow: ["ب", "ك"],
   abbreviated: ["ب", "ك"],
   wide: ["مىيلادىدىن بۇرۇن", "مىيلادىدىن كىيىن"]
-}, Rpt = {
+}, Npt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1", "2", "3", "4"],
   wide: ["بىرىنجى چارەك", "ئىككىنجى چارەك", "ئۈچىنجى چارەك", "تۆتىنجى چارەك"]
-}, jpt = {
+}, Wpt = {
   narrow: ["ي", "ف", "م", "ا", "م", "ى", "ى", "ا", "س", "ۆ", "ن", "د"],
   abbreviated: [
     "يانۋار",
@@ -82118,7 +82058,7 @@ const gmt = {
     "نويابىر",
     "دىكابىر"
   ]
-}, Ipt = {
+}, Rpt = {
   narrow: ["ي", "د", "س", "چ", "پ", "ج", "ش"],
   short: ["ي", "د", "س", "چ", "پ", "ج", "ش"],
   abbreviated: [
@@ -82139,7 +82079,7 @@ const gmt = {
     "جۈمە",
     "شەنبە"
   ]
-}, Lpt = {
+}, jpt = {
   narrow: {
     am: "ئە",
     pm: "چ",
@@ -82170,7 +82110,7 @@ const gmt = {
     evening: "ئاخشىم",
     night: "كىچە"
   }
-}, Fpt = {
+}, Ipt = {
   narrow: {
     am: "ئە",
     pm: "چ",
@@ -82201,48 +82141,48 @@ const gmt = {
     evening: "ئاخشامدا",
     night: "كىچىدە"
   }
-}, zpt = (e, t) => String(e), Vpt = {
-  ordinalNumber: zpt,
+}, Lpt = (e, t) => String(e), Fpt = {
+  ordinalNumber: Lpt,
   era: A({
-    values: Wpt,
+    values: Dpt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Rpt,
+    values: Npt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: jpt,
+    values: Wpt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Ipt,
+    values: Rpt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Lpt,
+    values: jpt,
     defaultWidth: "wide",
-    formattingValues: Fpt,
+    formattingValues: Ipt,
     defaultFormattingWidth: "wide"
   })
-}, Hpt = /^(\d+)(th|st|nd|rd)?/i, Bpt = /\d+/i, qpt = {
+}, zpt = /^(\d+)(th|st|nd|rd)?/i, Vpt = /\d+/i, Hpt = {
   narrow: /^(ب|ك)/i,
   wide: /^(مىيلادىدىن بۇرۇن|مىيلادىدىن كىيىن)/i
-}, Xpt = {
+}, Bpt = {
   any: [/^بۇرۇن/i, /^كىيىن/i]
-}, Gpt = {
+}, qpt = {
   narrow: /^[1234]/i,
   abbreviated: /^چ[1234]/i,
   wide: /^چارەك [1234]/i
-}, Ypt = {
+}, Xpt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Upt = {
+}, Gpt = {
   // eslint-disable-next-line no-misleading-character-class
   narrow: /^[يفمئامئ‍ئاسۆند]/i,
   abbreviated: /^(يانۋار|فېۋىرال|مارت|ئاپرىل|ماي|ئىيۇن|ئىيول|ئاۋغۇست|سىنتەبىر|ئۆكتەبىر|نويابىر|دىكابىر)/i,
   wide: /^(يانۋار|فېۋىرال|مارت|ئاپرىل|ماي|ئىيۇن|ئىيول|ئاۋغۇست|سىنتەبىر|ئۆكتەبىر|نويابىر|دىكابىر)/i
-}, Kpt = {
+}, Ypt = {
   narrow: [
     /^ي/i,
     /^ف/i,
@@ -82271,18 +82211,18 @@ const gmt = {
     /^نوي/i,
     /^دىك/i
   ]
-}, Qpt = {
+}, Upt = {
   narrow: /^[دسچپجشي]/i,
   short: /^(يە|دۈ|سە|چا|پە|جۈ|شە)/i,
   abbreviated: /^(يە|دۈ|سە|چا|پە|جۈ|شە)/i,
   wide: /^(يەكشەنبە|دۈشەنبە|سەيشەنبە|چارشەنبە|پەيشەنبە|جۈمە|شەنبە)/i
-}, Zpt = {
+}, Kpt = {
   narrow: [/^ي/i, /^د/i, /^س/i, /^چ/i, /^پ/i, /^ج/i, /^ش/i],
   any: [/^ي/i, /^د/i, /^س/i, /^چ/i, /^پ/i, /^ج/i, /^ش/i]
-}, Jpt = {
+}, Qpt = {
   narrow: /^(ئە|چ|ك|چ|(دە|ئەتىگەن) ( ئە‍|چۈشتىن كىيىن|ئاخشىم|كىچە))/i,
   any: /^(ئە|چ|ك|چ|(دە|ئەتىگەن) ( ئە‍|چۈشتىن كىيىن|ئاخشىم|كىچە))/i
-}, egt = {
+}, Zpt = {
   any: {
     am: /^ئە/i,
     pm: /^چ/i,
@@ -82293,50 +82233,50 @@ const gmt = {
     evening: /ئاخشىم/i,
     night: /كىچە/i
   }
-}, tgt = {
+}, Jpt = {
   ordinalNumber: Se({
-    matchPattern: Hpt,
-    parsePattern: Bpt,
+    matchPattern: zpt,
+    parsePattern: Vpt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: qpt,
+    matchPatterns: Hpt,
     defaultMatchWidth: "wide",
-    parsePatterns: Xpt,
+    parsePatterns: Bpt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Gpt,
+    matchPatterns: qpt,
     defaultMatchWidth: "wide",
-    parsePatterns: Ypt,
+    parsePatterns: Xpt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Gpt,
+    defaultMatchWidth: "wide",
+    parsePatterns: Ypt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Upt,
     defaultMatchWidth: "wide",
     parsePatterns: Kpt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Qpt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Zpt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Jpt,
-    defaultMatchWidth: "any",
-    parsePatterns: egt,
-    defaultParseWidth: "any"
   })
-}, ngt = {
+}, egt = {
   code: "ug",
-  formatDistance: _pt,
-  formatLong: Opt,
-  formatRelative: Npt,
-  localize: Vpt,
-  match: tgt,
+  formatDistance: Spt,
+  formatLong: Ept,
+  formatRelative: Opt,
+  localize: Fpt,
+  match: Jpt,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
@@ -82351,7 +82291,7 @@ function bd(e, t) {
 function Er(e) {
   return (t, n) => n && n.addSuffix ? n.comparison && n.comparison > 0 ? e.future ? bd(e.future, t) : "за " + bd(e.regular, t) : e.past ? bd(e.past, t) : bd(e.regular, t) + " тому" : bd(e.regular, t);
 }
-const rgt = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "за півхвилини" : "півхвилини тому" : "півхвилини", agt = {
+const tgt = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "за півхвилини" : "півхвилини тому" : "півхвилини", ngt = {
   lessThanXSeconds: Er({
     regular: {
       one: "менше секунди",
@@ -82383,7 +82323,7 @@ const rgt = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "з�
       pluralGenitive: "за {{count}} секунд"
     }
   }),
-  halfAMinute: rgt,
+  halfAMinute: tgt,
   lessThanXMinutes: Er({
     regular: {
       one: "менше хвилини",
@@ -82522,32 +82462,32 @@ const rgt = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "з�
       pluralGenitive: "майже за {{count}} років"
     }
   })
-}, igt = (e, t, n) => (n = n || {}, agt[e](t, n)), ogt = {
+}, rgt = (e, t, n) => (n = n || {}, ngt[e](t, n)), agt = {
   full: "EEEE, do MMMM y 'р.'",
   long: "do MMMM y 'р.'",
   medium: "d MMM y 'р.'",
   short: "dd.MM.y"
-}, sgt = {
+}, igt = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, ugt = {
+}, ogt = {
   full: "{{date}} 'о' {{time}}",
   long: "{{date}} 'о' {{time}}",
   medium: "{{date}}, {{time}}",
   short: "{{date}}, {{time}}"
-}, cgt = {
+}, sgt = {
   date: q({
-    formats: ogt,
+    formats: agt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: sgt,
+    formats: igt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: ugt,
+    formats: ogt,
     defaultWidth: "full"
   })
 }, R5 = [
@@ -82559,7 +82499,7 @@ const rgt = (e, t) => t && t.addSuffix ? t.comparison && t.comparison > 0 ? "з�
   "п’ятницю",
   "суботу"
 ];
-function lgt(e) {
+function ugt(e) {
   const t = R5[e];
   switch (e) {
     case 0:
@@ -82576,7 +82516,7 @@ function lgt(e) {
 function QB(e) {
   return "'у " + R5[e] + " о' p";
 }
-function dgt(e) {
+function cgt(e) {
   const t = R5[e];
   switch (e) {
     case 0:
@@ -82590,31 +82530,31 @@ function dgt(e) {
       return "'у наступний " + t + " о' p";
   }
 }
-const fgt = (e, t, n) => {
+const lgt = (e, t, n) => {
   const r = Ie(e), a = r.getDay();
-  return bn(r, t, n) ? QB(a) : lgt(a);
-}, mgt = (e, t, n) => {
+  return bn(r, t, n) ? QB(a) : ugt(a);
+}, dgt = (e, t, n) => {
   const r = Ie(e), a = r.getDay();
-  return bn(r, t, n) ? QB(a) : dgt(a);
-}, hgt = {
-  lastWeek: fgt,
+  return bn(r, t, n) ? QB(a) : cgt(a);
+}, fgt = {
+  lastWeek: lgt,
   yesterday: "'вчора о' p",
   today: "'сьогодні о' p",
   tomorrow: "'завтра о' p",
-  nextWeek: mgt,
+  nextWeek: dgt,
   other: "P"
-}, pgt = (e, t, n, r) => {
-  const a = hgt[e];
+}, mgt = (e, t, n, r) => {
+  const a = fgt[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, ggt = {
+}, hgt = {
   narrow: ["до н.е.", "н.е."],
   abbreviated: ["до н. е.", "н. е."],
   wide: ["до нашої ери", "нашої ери"]
-}, vgt = {
+}, pgt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-й кв.", "2-й кв.", "3-й кв.", "4-й кв."],
   wide: ["1-й квартал", "2-й квартал", "3-й квартал", "4-й квартал"]
-}, ygt = {
+}, ggt = {
   // ДСТУ 3582:2013
   narrow: ["С", "Л", "Б", "К", "Т", "Ч", "Л", "С", "В", "Ж", "Л", "Г"],
   abbreviated: [
@@ -82645,7 +82585,7 @@ const fgt = (e, t, n) => {
     "листопад",
     "грудень"
   ]
-}, bgt = {
+}, vgt = {
   narrow: ["С", "Л", "Б", "К", "Т", "Ч", "Л", "С", "В", "Ж", "Л", "Г"],
   abbreviated: [
     "січ.",
@@ -82675,7 +82615,7 @@ const fgt = (e, t, n) => {
     "листопада",
     "грудня"
   ]
-}, wgt = {
+}, ygt = {
   narrow: ["Н", "П", "В", "С", "Ч", "П", "С"],
   short: ["нд", "пн", "вт", "ср", "чт", "пт", "сб"],
   abbreviated: ["нед", "пон", "вів", "сер", "чтв", "птн", "суб"],
@@ -82688,7 +82628,7 @@ const fgt = (e, t, n) => {
     "п’ятниця",
     "субота"
   ]
-}, Pgt = {
+}, bgt = {
   narrow: {
     am: "ДП",
     pm: "ПП",
@@ -82719,7 +82659,7 @@ const fgt = (e, t, n) => {
     evening: "вечір",
     night: "ніч"
   }
-}, xgt = {
+}, wgt = {
   narrow: {
     am: "ДП",
     pm: "ПП",
@@ -82750,54 +82690,54 @@ const fgt = (e, t, n) => {
     evening: "веч.",
     night: "ночі"
   }
-}, Mgt = (e, t) => {
+}, Pgt = (e, t) => {
   const n = String(t == null ? void 0 : t.unit), r = Number(e);
   let a;
   return n === "date" ? r === 3 || r === 23 ? a = "-є" : a = "-е" : n === "minute" || n === "second" || n === "hour" ? a = "-а" : a = "-й", r + a;
-}, kgt = {
-  ordinalNumber: Mgt,
+}, xgt = {
+  ordinalNumber: Pgt,
   era: A({
-    values: ggt,
+    values: hgt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: vgt,
+    values: pgt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: ygt,
+    values: ggt,
     defaultWidth: "wide",
-    formattingValues: bgt,
+    formattingValues: vgt,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: wgt,
+    values: ygt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Pgt,
+    values: bgt,
     defaultWidth: "any",
-    formattingValues: xgt,
+    formattingValues: wgt,
     defaultFormattingWidth: "wide"
   })
-}, Cgt = /^(\d+)(-?(е|й|є|а|я))?/i, Sgt = /\d+/i, $gt = {
+}, Mgt = /^(\d+)(-?(е|й|є|а|я))?/i, kgt = /\d+/i, Cgt = {
   narrow: /^((до )?н\.?\s?е\.?)/i,
   abbreviated: /^((до )?н\.?\s?е\.?)/i,
   wide: /^(до нашої ери|нашої ери|наша ера)/i
-}, _gt = {
+}, Sgt = {
   any: [/^д/i, /^н/i]
-}, Tgt = {
+}, $gt = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234](-?[иі]?й?)? кв.?/i,
   wide: /^[1234](-?[иі]?й?)? квартал/i
-}, Egt = {
+}, _gt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, Agt = {
+}, Tgt = {
   narrow: /^[слбктчвжг]/i,
   abbreviated: /^(січ|лют|бер(ез)?|квіт|трав|черв|лип|серп|вер(ес)?|жовт|лис(топ)?|груд)\.?/i,
   wide: /^(січень|січня|лютий|лютого|березень|березня|квітень|квітня|травень|травня|червня|червень|липень|липня|серпень|серпня|вересень|вересня|жовтень|жовтня|листопад[а]?|грудень|грудня)/i
-}, Ogt = {
+}, Egt = {
   narrow: [
     /^с/i,
     /^л/i,
@@ -82826,19 +82766,19 @@ const fgt = (e, t, n) => {
     /^лис/i,
     /^г/i
   ]
-}, Dgt = {
+}, Agt = {
   narrow: /^[нпвсч]/i,
   short: /^(нд|пн|вт|ср|чт|пт|сб)\.?/i,
   abbreviated: /^(нед|пон|вів|сер|че?тв|птн?|суб)\.?/i,
   wide: /^(неділ[яі]|понеділ[ок][ка]|вівтор[ок][ка]|серед[аи]|четвер(га)?|п\W*?ятниц[яі]|субот[аи])/i
-}, Ngt = {
+}, Ogt = {
   narrow: [/^н/i, /^п/i, /^в/i, /^с/i, /^ч/i, /^п/i, /^с/i],
   any: [/^н/i, /^п[он]/i, /^в/i, /^с[ер]/i, /^ч/i, /^п\W*?[ят]/i, /^с[уб]/i]
-}, Wgt = {
+}, Dgt = {
   narrow: /^([дп]п|півн\.?|пол\.?|ранок|ранку|день|дня|веч\.?|ніч|ночі)/i,
   abbreviated: /^([дп]п|півн\.?|пол\.?|ранок|ранку|день|дня|веч\.?|ніч|ночі)/i,
   wide: /^([дп]п|північ|полудень|ранок|ранку|день|дня|вечір|вечора|ніч|ночі)/i
-}, Rgt = {
+}, Ngt = {
   any: {
     am: /^дп/i,
     pm: /^пп/i,
@@ -82849,55 +82789,55 @@ const fgt = (e, t, n) => {
     evening: /^в/i,
     night: /^н/i
   }
-}, jgt = {
+}, Wgt = {
   ordinalNumber: Se({
-    matchPattern: Cgt,
-    parsePattern: Sgt,
+    matchPattern: Mgt,
+    parsePattern: kgt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: $gt,
+    matchPatterns: Cgt,
     defaultMatchWidth: "wide",
-    parsePatterns: _gt,
+    parsePatterns: Sgt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Tgt,
+    matchPatterns: $gt,
     defaultMatchWidth: "wide",
-    parsePatterns: Egt,
+    parsePatterns: _gt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Tgt,
+    defaultMatchWidth: "wide",
+    parsePatterns: Egt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Agt,
     defaultMatchWidth: "wide",
     parsePatterns: Ogt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Dgt,
     defaultMatchWidth: "wide",
     parsePatterns: Ngt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Wgt,
-    defaultMatchWidth: "wide",
-    parsePatterns: Rgt,
-    defaultParseWidth: "any"
   })
-}, Igt = {
+}, Rgt = {
   code: "uk",
-  formatDistance: igt,
-  formatLong: cgt,
-  formatRelative: pgt,
-  localize: kgt,
-  match: jgt,
+  formatDistance: rgt,
+  formatLong: sgt,
+  formatRelative: mgt,
+  localize: xgt,
+  match: Wgt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, Lgt = {
+}, jgt = {
   lessThanXSeconds: {
     one: "sekunddan kam",
     other: "{{count}} sekunddan kam"
@@ -82959,51 +82899,51 @@ const fgt = (e, t, n) => {
     one: "deyarli 1 yil",
     other: "deyarli {{count}} yil"
   }
-}, Fgt = (e, t, n) => {
+}, Igt = (e, t, n) => {
   let r;
-  const a = Lgt[e];
+  const a = jgt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + " dan keyin" : r + " oldin" : r;
-}, zgt = {
+}, Lgt = {
   full: "EEEE, do MMMM, y",
   long: "do MMMM, y",
   medium: "d MMM, y",
   short: "dd/MM/yyyy"
-}, Vgt = {
+}, Fgt = {
   full: "h:mm:ss zzzz",
   long: "h:mm:ss z",
   medium: "h:mm:ss",
   short: "h:mm"
-}, Hgt = {
+}, zgt = {
   any: "{{date}}, {{time}}"
-}, Bgt = {
+}, Vgt = {
   date: q({
-    formats: zgt,
+    formats: Lgt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Vgt,
+    formats: Fgt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Hgt,
+    formats: zgt,
     defaultWidth: "any"
   })
-}, qgt = {
+}, Hgt = {
   lastWeek: "'oldingi' eeee p 'da'",
   yesterday: "'kecha' p 'da'",
   today: "'bugun' p 'da'",
   tomorrow: "'ertaga' p 'da'",
   nextWeek: "eeee p 'da'",
   other: "P"
-}, Xgt = (e, t, n, r) => qgt[e], Ggt = {
+}, Bgt = (e, t, n, r) => Hgt[e], qgt = {
   narrow: ["M.A", "M."],
   abbreviated: ["M.A", "M."],
   wide: ["Miloddan Avvalgi", "Milodiy"]
-}, Ygt = {
+}, Xgt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["CH.1", "CH.2", "CH.3", "CH.4"],
   wide: ["1-chi chorak", "2-chi chorak", "3-chi chorak", "4-chi chorak"]
-}, Ugt = {
+}, Ggt = {
   narrow: ["Y", "F", "M", "A", "M", "I", "I", "A", "S", "O", "N", "D"],
   abbreviated: [
     "Yan",
@@ -83033,7 +82973,7 @@ const fgt = (e, t, n) => {
     "Noyabr",
     "Dekabr"
   ]
-}, Kgt = {
+}, Ygt = {
   narrow: ["Y", "D", "S", "CH", "P", "J", "SH"],
   short: ["Ya", "Du", "Se", "Cho", "Pa", "Ju", "Sha"],
   abbreviated: ["Yak", "Dush", "Sesh", "Chor", "Pay", "Jum", "Shan"],
@@ -83046,7 +82986,7 @@ const fgt = (e, t, n) => {
     "Juma",
     "Shanba"
   ]
-}, Qgt = {
+}, Ugt = {
   narrow: {
     am: "a",
     pm: "p",
@@ -83077,7 +83017,7 @@ const fgt = (e, t, n) => {
     evening: "kechqurun",
     night: "tun"
   }
-}, Zgt = {
+}, Kgt = {
   narrow: {
     am: "a",
     pm: "p",
@@ -83108,48 +83048,48 @@ const fgt = (e, t, n) => {
     evening: "kechqurun",
     night: "tun"
   }
-}, Jgt = (e, t) => String(e), evt = {
-  ordinalNumber: Jgt,
+}, Qgt = (e, t) => String(e), Zgt = {
+  ordinalNumber: Qgt,
   era: A({
-    values: Ggt,
+    values: qgt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Ygt,
+    values: Xgt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Ugt,
+    values: Ggt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Kgt,
+    values: Ygt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: Qgt,
+    values: Ugt,
     defaultWidth: "wide",
-    formattingValues: Zgt,
+    formattingValues: Kgt,
     defaultFormattingWidth: "wide"
   })
-}, tvt = /^(\d+)(chi)?/i, nvt = /\d+/i, rvt = {
+}, Jgt = /^(\d+)(chi)?/i, evt = /\d+/i, tvt = {
   narrow: /^(m\.a|m\.)/i,
   abbreviated: /^(m\.a\.?\s?m\.?)/i,
   wide: /^(miloddan avval|miloddan keyin)/i
-}, avt = {
+}, nvt = {
   any: [/^b/i, /^(a|c)/i]
-}, ivt = {
+}, rvt = {
   narrow: /^[1234]/i,
   abbreviated: /^q[1234]/i,
   wide: /^[1234](chi)? chorak/i
-}, ovt = {
+}, avt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, svt = {
+}, ivt = {
   narrow: /^[yfmasond]/i,
   abbreviated: /^(yan|fev|mar|apr|may|iyun|iyul|avg|sen|okt|noy|dek)/i,
   wide: /^(yanvar|fevral|mart|aprel|may|iyun|iyul|avgust|sentabr|oktabr|noyabr|dekabr)/i
-}, uvt = {
+}, ovt = {
   narrow: [
     /^y/i,
     /^f/i,
@@ -83178,18 +83118,18 @@ const fgt = (e, t, n) => {
     /^n/i,
     /^d/i
   ]
-}, cvt = {
+}, svt = {
   narrow: /^[ydschj]/i,
   short: /^(ya|du|se|cho|pa|ju|sha)/i,
   abbreviated: /^(yak|dush|sesh|chor|pay|jum|shan)/i,
   wide: /^(yakshanba|dushanba|seshanba|chorshanba|payshanba|juma|shanba)/i
-}, lvt = {
+}, uvt = {
   narrow: [/^y/i, /^d/i, /^s/i, /^ch/i, /^p/i, /^j/i, /^sh/i],
   any: [/^ya/i, /^d/i, /^se/i, /^ch/i, /^p/i, /^j/i, /^sh/i]
-}, dvt = {
+}, cvt = {
   narrow: /^(a|p|y\.t|p| (ertalab|tushdan keyin|kechqurun|tun))/i,
   any: /^([ap]\.?\s?m\.?|yarim tun|peshin| (ertalab|tushdan keyin|kechqurun|tun))/i
-}, fvt = {
+}, lvt = {
   any: {
     am: /^a/i,
     pm: /^p/i,
@@ -83200,55 +83140,55 @@ const fgt = (e, t, n) => {
     evening: /kechqurun/i,
     night: /tun/i
   }
-}, mvt = {
+}, dvt = {
   ordinalNumber: Se({
-    matchPattern: tvt,
-    parsePattern: nvt,
+    matchPattern: Jgt,
+    parsePattern: evt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: rvt,
+    matchPatterns: tvt,
     defaultMatchWidth: "wide",
-    parsePatterns: avt,
+    parsePatterns: nvt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: ivt,
+    matchPatterns: rvt,
     defaultMatchWidth: "wide",
-    parsePatterns: ovt,
+    parsePatterns: avt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: ivt,
+    defaultMatchWidth: "wide",
+    parsePatterns: ovt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: svt,
     defaultMatchWidth: "wide",
     parsePatterns: uvt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: cvt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: lvt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: dvt,
-    defaultMatchWidth: "any",
-    parsePatterns: fvt,
-    defaultParseWidth: "any"
   })
-}, hvt = {
+}, fvt = {
   code: "uz",
-  formatDistance: Fgt,
-  formatLong: Bgt,
-  formatRelative: Xgt,
-  localize: evt,
-  match: mvt,
+  formatDistance: Igt,
+  formatLong: Vgt,
+  formatRelative: Bgt,
+  localize: Zgt,
+  match: dvt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, pvt = {
+}, mvt = {
   lessThanXSeconds: {
     one: "1 сониядан кам",
     other: "{{count}} сониядан кам"
@@ -83310,51 +83250,51 @@ const fgt = (e, t, n) => {
     one: "деярли 1 йил",
     other: "деярли {{count}} йил"
   }
-}, gvt = (e, t, n) => {
+}, hvt = (e, t, n) => {
   let r;
-  const a = pvt[e];
+  const a = mvt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + "дан кейин" : r + " олдин" : r;
-}, vvt = {
+}, pvt = {
   full: "EEEE, do MMMM, y",
   long: "do MMMM, y",
   medium: "d MMM, y",
   short: "dd/MM/yyyy"
-}, yvt = {
+}, gvt = {
   full: "H:mm:ss zzzz",
   long: "H:mm:ss z",
   medium: "H:mm:ss",
   short: "H:mm"
-}, bvt = {
+}, vvt = {
   any: "{{date}}, {{time}}"
-}, wvt = {
+}, yvt = {
   date: q({
-    formats: vvt,
+    formats: pvt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: yvt,
+    formats: gvt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: bvt,
+    formats: vvt,
     defaultWidth: "any"
   })
-}, Pvt = {
+}, bvt = {
   lastWeek: "'ўтган' eeee p 'да'",
   yesterday: "'кеча' p 'да'",
   today: "'бугун' p 'да'",
   tomorrow: "'эртага' p 'да'",
   nextWeek: "eeee p 'да'",
   other: "P"
-}, xvt = (e, t, n, r) => Pvt[e], Mvt = {
+}, wvt = (e, t, n, r) => bvt[e], Pvt = {
   narrow: ["М.А", "М"],
   abbreviated: ["М.А", "М"],
   wide: ["Милоддан Аввалги", "Милодий"]
-}, kvt = {
+}, xvt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["1-чор.", "2-чор.", "3-чор.", "4-чор."],
   wide: ["1-чорак", "2-чорак", "3-чорак", "4-чорак"]
-}, Cvt = {
+}, Mvt = {
   narrow: ["Я", "Ф", "М", "А", "М", "И", "И", "А", "С", "О", "Н", "Д"],
   abbreviated: [
     "янв",
@@ -83384,7 +83324,7 @@ const fgt = (e, t, n) => {
     "ноябр",
     "декабр"
   ]
-}, Svt = {
+}, kvt = {
   narrow: ["Я", "Д", "С", "Ч", "П", "Ж", "Ш"],
   short: ["як", "ду", "се", "чо", "па", "жу", "ша"],
   abbreviated: ["якш", "душ", "сеш", "чор", "пай", "жум", "шан"],
@@ -83397,7 +83337,7 @@ const fgt = (e, t, n) => {
     "жума",
     "шанба"
   ]
-}, $vt = {
+}, Cvt = {
   any: {
     am: "П.О.",
     pm: "П.К.",
@@ -83408,7 +83348,7 @@ const fgt = (e, t, n) => {
     evening: "кечаси",
     night: "тун"
   }
-}, _vt = {
+}, Svt = {
   any: {
     am: "П.О.",
     pm: "П.К.",
@@ -83419,48 +83359,48 @@ const fgt = (e, t, n) => {
     evening: "кечаси",
     night: "тун"
   }
-}, Tvt = (e, t) => String(e), Evt = {
-  ordinalNumber: Tvt,
+}, $vt = (e, t) => String(e), _vt = {
+  ordinalNumber: $vt,
   era: A({
-    values: Mvt,
+    values: Pvt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: kvt,
+    values: xvt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Cvt,
+    values: Mvt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Svt,
+    values: kvt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: $vt,
+    values: Cvt,
     defaultWidth: "any",
-    formattingValues: _vt,
+    formattingValues: Svt,
     defaultFormattingWidth: "any"
   })
-}, Avt = /^(\d+)(чи)?/i, Ovt = /\d+/i, Dvt = {
+}, Tvt = /^(\d+)(чи)?/i, Evt = /\d+/i, Avt = {
   narrow: /^(м\.а|м\.)/i,
   abbreviated: /^(м\.а|м\.)/i,
   wide: /^(милоддан аввал|милоддан кейин)/i
-}, Nvt = {
+}, Ovt = {
   any: [/^м/i, /^а/i]
-}, Wvt = {
+}, Dvt = {
   narrow: /^[1234]/i,
   abbreviated: /^[1234]-чор./i,
   wide: /^[1234]-чорак/i
-}, Rvt = {
+}, Nvt = {
   any: [/1/i, /2/i, /3/i, /4/i]
-}, jvt = {
+}, Wvt = {
   narrow: /^[яфмамииасонд]/i,
   abbreviated: /^(янв|фев|мар|апр|май|июн|июл|авг|сен|окт|ноя|дек)/i,
   wide: /^(январ|феврал|март|апрел|май|июн|июл|август|сентабр|октабр|ноябр|декабр)/i
-}, Ivt = {
+}, Rvt = {
   narrow: [
     /^я/i,
     /^ф/i,
@@ -83489,17 +83429,17 @@ const fgt = (e, t, n) => {
     /^н/i,
     /^д/i
   ]
-}, Lvt = {
+}, jvt = {
   narrow: /^[ядсчпжш]/i,
   short: /^(як|ду|се|чо|па|жу|ша)/i,
   abbreviated: /^(якш|душ|сеш|чор|пай|жум|шан)/i,
   wide: /^(якшанба|душанба|сешанба|чоршанба|пайшанба|жума|шанба)/i
-}, Fvt = {
+}, Ivt = {
   narrow: [/^я/i, /^д/i, /^с/i, /^ч/i, /^п/i, /^ж/i, /^ш/i],
   any: [/^як/i, /^ду/i, /^се/i, /^чор/i, /^пай/i, /^жу/i, /^шан/i]
-}, zvt = {
+}, Lvt = {
   any: /^(п\.о\.|п\.к\.|ярим тун|пешиндан кейин|(эрталаб|пешиндан кейин|кечаси|тун))/i
-}, Vvt = {
+}, Fvt = {
   any: {
     am: /^п\.о\./i,
     pm: /^п\.к\./i,
@@ -83510,55 +83450,55 @@ const fgt = (e, t, n) => {
     evening: /кечаси/i,
     night: /тун/i
   }
-}, Hvt = {
+}, zvt = {
   ordinalNumber: Se({
-    matchPattern: Avt,
-    parsePattern: Ovt,
+    matchPattern: Tvt,
+    parsePattern: Evt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Dvt,
+    matchPatterns: Avt,
     defaultMatchWidth: "wide",
-    parsePatterns: Nvt,
+    parsePatterns: Ovt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Wvt,
+    matchPatterns: Dvt,
     defaultMatchWidth: "wide",
-    parsePatterns: Rvt,
+    parsePatterns: Nvt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Wvt,
+    defaultMatchWidth: "wide",
+    parsePatterns: Rvt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: jvt,
     defaultMatchWidth: "wide",
     parsePatterns: Ivt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Lvt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Fvt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: zvt,
-    defaultMatchWidth: "any",
-    parsePatterns: Vvt,
-    defaultParseWidth: "any"
   })
-}, Bvt = {
+}, Vvt = {
   code: "uz-Cyrl",
-  formatDistance: gvt,
-  formatLong: wvt,
-  formatRelative: xvt,
-  localize: Evt,
-  match: Hvt,
+  formatDistance: hvt,
+  formatLong: yvt,
+  formatRelative: wvt,
+  localize: _vt,
+  match: zvt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, qvt = {
+}, Hvt = {
   lessThanXSeconds: {
     one: "dưới 1 giây",
     other: "dưới {{count}} giây"
@@ -83620,11 +83560,11 @@ const fgt = (e, t, n) => {
     one: "gần 1 năm",
     other: "gần {{count}} năm"
   }
-}, Xvt = (e, t, n) => {
+}, Bvt = (e, t, n) => {
   let r;
-  const a = qvt[e];
+  const a = Hvt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + " nữa" : r + " trước" : r;
-}, Gvt = {
+}, qvt = {
   // thứ Sáu, ngày 25 tháng 08 năm 2017
   full: "EEEE, 'ngày' d MMMM 'năm' y",
   // ngày 25 tháng 08 năm 2017
@@ -83633,52 +83573,52 @@ const fgt = (e, t, n) => {
   medium: "d MMM 'năm' y",
   // 25/08/2017
   short: "dd/MM/y"
-}, Yvt = {
+}, Xvt = {
   full: "HH:mm:ss zzzz",
   long: "HH:mm:ss z",
   medium: "HH:mm:ss",
   short: "HH:mm"
-}, Uvt = {
+}, Gvt = {
   // thứ Sáu, ngày 25 tháng 08 năm 2017 23:25:59
   full: "{{date}} {{time}}",
   // ngày 25 tháng 08 năm 2017 23:25
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, Kvt = {
+}, Yvt = {
   date: q({
-    formats: Gvt,
+    formats: qvt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Yvt,
+    formats: Xvt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Uvt,
+    formats: Gvt,
     defaultWidth: "full"
   })
-}, Qvt = {
+}, Uvt = {
   lastWeek: "eeee 'tuần trước vào lúc' p",
   yesterday: "'hôm qua vào lúc' p",
   today: "'hôm nay vào lúc' p",
   tomorrow: "'ngày mai vào lúc' p",
   nextWeek: "eeee 'tới vào lúc' p",
   other: "P"
-}, Zvt = (e, t, n, r) => Qvt[e], Jvt = {
+}, Kvt = (e, t, n, r) => Uvt[e], Qvt = {
   narrow: ["TCN", "SCN"],
   abbreviated: ["trước CN", "sau CN"],
   wide: ["trước Công Nguyên", "sau Công Nguyên"]
-}, e1t = {
+}, Zvt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   wide: ["Quý 1", "Quý 2", "Quý 3", "Quý 4"]
-}, t1t = {
+}, Jvt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["Q1", "Q2", "Q3", "Q4"],
   // I notice many news outlet use this "quý II/2018"
   wide: ["quý I", "quý II", "quý III", "quý IV"]
-}, n1t = {
+}, e1t = {
   narrow: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
   abbreviated: [
     "Thg 1",
@@ -83708,7 +83648,7 @@ const fgt = (e, t, n) => {
     "Tháng Mười Một",
     "Tháng Mười Hai"
   ]
-}, r1t = {
+}, t1t = {
   narrow: [
     "01",
     "02",
@@ -83751,7 +83691,7 @@ const fgt = (e, t, n) => {
     "tháng 11",
     "tháng 12"
   ]
-}, a1t = {
+}, n1t = {
   narrow: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
   short: ["CN", "Th 2", "Th 3", "Th 4", "Th 5", "Th 6", "Th 7"],
   abbreviated: ["CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7"],
@@ -83764,7 +83704,7 @@ const fgt = (e, t, n) => {
     "Thứ Sáu",
     "Thứ Bảy"
   ]
-}, i1t = {
+}, r1t = {
   // narrow date period is extremely rare in Vietnamese
   // I used abbreviated form for noon, morning and afternoon
   // which are regconizable by Vietnamese, others cannot be any shorter
@@ -83798,7 +83738,7 @@ const fgt = (e, t, n) => {
     evening: "tối",
     night: "đêm"
   }
-}, o1t = {
+}, a1t = {
   narrow: {
     am: "am",
     pm: "pm",
@@ -83829,7 +83769,7 @@ const fgt = (e, t, n) => {
     evening: "vào buổi tối",
     night: "vào ban đêm"
   }
-}, s1t = (e, t) => {
+}, i1t = (e, t) => {
   const n = Number(e), r = t == null ? void 0 : t.unit;
   if (r === "quarter")
     switch (n) {
@@ -83869,48 +83809,48 @@ const fgt = (e, t, n) => {
       return n === 1 ? "đầu tiên" : "thứ " + n;
   }
   return String(n);
-}, u1t = {
-  ordinalNumber: s1t,
+}, o1t = {
+  ordinalNumber: i1t,
   era: A({
-    values: Jvt,
+    values: Qvt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: e1t,
+    values: Zvt,
     defaultWidth: "wide",
-    formattingValues: t1t,
+    formattingValues: Jvt,
     defaultFormattingWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: n1t,
+    values: e1t,
     defaultWidth: "wide",
-    formattingValues: r1t,
+    formattingValues: t1t,
     defaultFormattingWidth: "wide"
   }),
   day: A({
-    values: a1t,
+    values: n1t,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: i1t,
+    values: r1t,
     defaultWidth: "wide",
-    formattingValues: o1t,
+    formattingValues: a1t,
     defaultFormattingWidth: "wide"
   })
-}, c1t = /^(\d+)/i, l1t = /\d+/i, d1t = {
+}, s1t = /^(\d+)/i, u1t = /\d+/i, c1t = {
   narrow: /^(tcn|scn)/i,
   abbreviated: /^(trước CN|sau CN)/i,
   wide: /^(trước Công Nguyên|sau Công Nguyên)/i
-}, f1t = {
+}, l1t = {
   any: [/^t/i, /^s/i]
-}, m1t = {
+}, d1t = {
   narrow: /^([1234]|i{1,3}v?)/i,
   abbreviated: /^q([1234]|i{1,3}v?)/i,
   wide: /^quý ([1234]|i{1,3}v?)/i
-}, h1t = {
+}, f1t = {
   any: [/(1|i)$/i, /(2|ii)$/i, /(3|iii)$/i, /(4|iv)$/i]
-}, p1t = {
+}, m1t = {
   // month number may contain leading 0, 'thg' prefix may have space, underscore or empty before number
   // note the order of '1' since it is a sub-string of '10', so must be lower priority
   narrow: /^(0?[2-9]|10|11|12|0?1)/i,
@@ -83918,7 +83858,7 @@ const fgt = (e, t, n) => {
   abbreviated: /^thg[ _]?(0?[1-9](?!\d)|10|11|12)/i,
   // note the order of 'Mười' since it is sub-string of Mười Một, so must be lower priority
   wide: /^tháng ?(Một|Hai|Ba|Tư|Năm|Sáu|Bảy|Tám|Chín|Mười|Mười ?Một|Mười ?Hai|0?[1-9](?!\d)|10|11|12)/i
-}, g1t = {
+}, h1t = {
   narrow: [
     /0?1$/i,
     /0?2/i,
@@ -83961,21 +83901,21 @@ const fgt = (e, t, n) => {
     /^tháng ?(Mười ?Một|11)/i,
     /^tháng ?(Mười ?Hai|12)/i
   ]
-}, v1t = {
+}, p1t = {
   narrow: /^(CN|T2|T3|T4|T5|T6|T7)/i,
   short: /^(CN|Th ?2|Th ?3|Th ?4|Th ?5|Th ?6|Th ?7)/i,
   abbreviated: /^(CN|Th ?2|Th ?3|Th ?4|Th ?5|Th ?6|Th ?7)/i,
   wide: /^(Chủ ?Nhật|Chúa ?Nhật|thứ ?Hai|thứ ?Ba|thứ ?Tư|thứ ?Năm|thứ ?Sáu|thứ ?Bảy)/i
-}, y1t = {
+}, g1t = {
   narrow: [/CN/i, /2/i, /3/i, /4/i, /5/i, /6/i, /7/i],
   short: [/CN/i, /2/i, /3/i, /4/i, /5/i, /6/i, /7/i],
   abbreviated: [/CN/i, /2/i, /3/i, /4/i, /5/i, /6/i, /7/i],
   wide: [/(Chủ|Chúa) ?Nhật/i, /Hai/i, /Ba/i, /Tư/i, /Năm/i, /Sáu/i, /Bảy/i]
-}, b1t = {
+}, v1t = {
   narrow: /^(a|p|nửa đêm|trưa|(giờ) (sáng|chiều|tối|đêm))/i,
   abbreviated: /^(am|pm|nửa đêm|trưa|(giờ) (sáng|chiều|tối|đêm))/i,
   wide: /^(ch[^i]*|sa|nửa đêm|trưa|(giờ) (sáng|chiều|tối|đêm))/i
-}, w1t = {
+}, y1t = {
   any: {
     am: /^(a|sa)/i,
     pm: /^(p|ch[^i]*)/i,
@@ -83986,55 +83926,55 @@ const fgt = (e, t, n) => {
     evening: /tối/i,
     night: /^đêm/i
   }
-}, P1t = {
+}, b1t = {
   ordinalNumber: Se({
-    matchPattern: c1t,
-    parsePattern: l1t,
+    matchPattern: s1t,
+    parsePattern: u1t,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: d1t,
+    matchPatterns: c1t,
     defaultMatchWidth: "wide",
-    parsePatterns: f1t,
+    parsePatterns: l1t,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: m1t,
+    matchPatterns: d1t,
     defaultMatchWidth: "wide",
-    parsePatterns: h1t,
+    parsePatterns: f1t,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: m1t,
+    defaultMatchWidth: "wide",
+    parsePatterns: h1t,
+    defaultParseWidth: "wide"
+  }),
+  day: D({
     matchPatterns: p1t,
     defaultMatchWidth: "wide",
     parsePatterns: g1t,
     defaultParseWidth: "wide"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: v1t,
     defaultMatchWidth: "wide",
     parsePatterns: y1t,
-    defaultParseWidth: "wide"
-  }),
-  dayPeriod: D({
-    matchPatterns: b1t,
-    defaultMatchWidth: "wide",
-    parsePatterns: w1t,
     defaultParseWidth: "any"
   })
-}, x1t = {
+}, w1t = {
   code: "vi",
-  formatDistance: Xvt,
-  formatLong: Kvt,
-  formatRelative: Zvt,
-  localize: u1t,
-  match: P1t,
+  formatDistance: Bvt,
+  formatLong: Yvt,
+  formatRelative: Kvt,
+  localize: o1t,
+  match: b1t,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 1
   }
-}, M1t = {
+}, P1t = {
   lessThanXSeconds: {
     one: "不到 1 秒",
     other: "不到 {{count}} 秒"
@@ -84096,36 +84036,36 @@ const fgt = (e, t, n) => {
     one: "将近 1 年",
     other: "将近 {{count}} 年"
   }
-}, k1t = (e, t, n) => {
+}, x1t = (e, t, n) => {
   let r;
-  const a = M1t[e];
+  const a = P1t[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + "内" : r + "前" : r;
-}, C1t = {
+}, M1t = {
   full: "y'年'M'月'd'日' EEEE",
   long: "y'年'M'月'd'日'",
   medium: "yyyy-MM-dd",
   short: "yy-MM-dd"
-}, S1t = {
+}, k1t = {
   full: "zzzz a h:mm:ss",
   long: "z a h:mm:ss",
   medium: "a h:mm:ss",
   short: "a h:mm"
-}, $1t = {
+}, C1t = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, _1t = {
+}, S1t = {
   date: q({
-    formats: C1t,
+    formats: M1t,
     defaultWidth: "full"
   }),
   time: q({
-    formats: S1t,
+    formats: k1t,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: $1t,
+    formats: C1t,
     defaultWidth: "full"
   })
 };
@@ -84133,7 +84073,7 @@ function zD(e, t, n) {
   const r = "eeee p";
   return bn(e, t, n) ? r : e.getTime() > t.getTime() ? "'下个'" + r : "'上个'" + r;
 }
-const T1t = {
+const $1t = {
   lastWeek: zD,
   // days before yesterday, maybe in this week or last week
   yesterday: "'昨天' p",
@@ -84142,18 +84082,18 @@ const T1t = {
   nextWeek: zD,
   // days after tomorrow, maybe in this week or next week
   other: "PP p"
-}, E1t = (e, t, n, r) => {
-  const a = T1t[e];
+}, _1t = (e, t, n, r) => {
+  const a = $1t[e];
   return typeof a == "function" ? a(t, n, r) : a;
-}, A1t = {
+}, T1t = {
   narrow: ["前", "公元"],
   abbreviated: ["前", "公元"],
   wide: ["公元前", "公元"]
-}, O1t = {
+}, E1t = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["第一季", "第二季", "第三季", "第四季"],
   wide: ["第一季度", "第二季度", "第三季度", "第四季度"]
-}, D1t = {
+}, A1t = {
   narrow: [
     "一",
     "二",
@@ -84196,12 +84136,12 @@ const T1t = {
     "十一月",
     "十二月"
   ]
-}, N1t = {
+}, O1t = {
   narrow: ["日", "一", "二", "三", "四", "五", "六"],
   short: ["日", "一", "二", "三", "四", "五", "六"],
   abbreviated: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
   wide: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-}, W1t = {
+}, D1t = {
   narrow: {
     am: "上",
     pm: "下",
@@ -84232,7 +84172,7 @@ const T1t = {
     evening: "晚上",
     night: "夜间"
   }
-}, R1t = {
+}, N1t = {
   narrow: {
     am: "上",
     pm: "下",
@@ -84263,7 +84203,7 @@ const T1t = {
     evening: "晚上",
     night: "夜间"
   }
-}, j1t = (e, t) => {
+}, W1t = (e, t) => {
   const n = Number(e);
   switch (t == null ? void 0 : t.unit) {
     case "date":
@@ -84277,48 +84217,48 @@ const T1t = {
     default:
       return "第 " + n.toString();
   }
-}, I1t = {
-  ordinalNumber: j1t,
+}, R1t = {
+  ordinalNumber: W1t,
   era: A({
-    values: A1t,
+    values: T1t,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: O1t,
+    values: E1t,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: D1t,
+    values: A1t,
     defaultWidth: "wide"
   }),
   day: A({
-    values: N1t,
+    values: O1t,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: W1t,
+    values: D1t,
     defaultWidth: "wide",
-    formattingValues: R1t,
+    formattingValues: N1t,
     defaultFormattingWidth: "wide"
   })
-}, L1t = /^(第\s*)?\d+(日|时|分|秒)?/i, F1t = /\d+/i, z1t = {
+}, j1t = /^(第\s*)?\d+(日|时|分|秒)?/i, I1t = /\d+/i, L1t = {
   narrow: /^(前)/i,
   abbreviated: /^(前)/i,
   wide: /^(公元前|公元)/i
-}, V1t = {
+}, F1t = {
   any: [/^(前)/i, /^(公元)/i]
-}, H1t = {
+}, z1t = {
   narrow: /^[1234]/i,
   abbreviated: /^第[一二三四]刻/i,
   wide: /^第[一二三四]刻钟/i
-}, B1t = {
+}, V1t = {
   any: [/(1|一)/i, /(2|二)/i, /(3|三)/i, /(4|四)/i]
-}, q1t = {
+}, H1t = {
   narrow: /^(一|二|三|四|五|六|七|八|九|十[二一])/i,
   abbreviated: /^(一|二|三|四|五|六|七|八|九|十[二一]|\d|1[12])月/i,
   wide: /^(一|二|三|四|五|六|七|八|九|十[二一])月/i
-}, X1t = {
+}, B1t = {
   narrow: [
     /^一/i,
     /^二/i,
@@ -84347,16 +84287,16 @@ const T1t = {
     /^十一|11/i,
     /^十二|12/i
   ]
-}, G1t = {
+}, q1t = {
   narrow: /^[一二三四五六日]/i,
   short: /^[一二三四五六日]/i,
   abbreviated: /^周[一二三四五六日]/i,
   wide: /^星期[一二三四五六日]/i
-}, Y1t = {
+}, X1t = {
   any: [/日/i, /一/i, /二/i, /三/i, /四/i, /五/i, /六/i]
-}, U1t = {
+}, G1t = {
   any: /^(上午?|下午?|午夜|[中正]午|早上?|下午|晚上?|凌晨|)/i
-}, K1t = {
+}, Y1t = {
   any: {
     am: /^上午?/i,
     pm: /^下午?/i,
@@ -84367,55 +84307,55 @@ const T1t = {
     evening: /^晚上?/i,
     night: /^凌晨/i
   }
-}, Q1t = {
+}, U1t = {
   ordinalNumber: Se({
-    matchPattern: L1t,
-    parsePattern: F1t,
+    matchPattern: j1t,
+    parsePattern: I1t,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: z1t,
+    matchPatterns: L1t,
     defaultMatchWidth: "wide",
-    parsePatterns: V1t,
+    parsePatterns: F1t,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: H1t,
+    matchPatterns: z1t,
     defaultMatchWidth: "wide",
-    parsePatterns: B1t,
+    parsePatterns: V1t,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: H1t,
+    defaultMatchWidth: "wide",
+    parsePatterns: B1t,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: q1t,
     defaultMatchWidth: "wide",
     parsePatterns: X1t,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: G1t,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: Y1t,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: U1t,
-    defaultMatchWidth: "any",
-    parsePatterns: K1t,
-    defaultParseWidth: "any"
   })
-}, Z1t = {
+}, K1t = {
   code: "zh-CN",
-  formatDistance: k1t,
-  formatLong: _1t,
-  formatRelative: E1t,
-  localize: I1t,
-  match: Q1t,
+  formatDistance: x1t,
+  formatLong: S1t,
+  formatRelative: _1t,
+  localize: R1t,
+  match: U1t,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, J1t = {
+}, Q1t = {
   lessThanXSeconds: {
     one: "少於 1 秒",
     other: "少於 {{count}} 秒"
@@ -84477,54 +84417,54 @@ const T1t = {
     one: "將近 1 年",
     other: "將近 {{count}} 年"
   }
-}, eyt = (e, t, n) => {
+}, Z1t = (e, t, n) => {
   let r;
-  const a = J1t[e];
+  const a = Q1t[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + "內" : r + "前" : r;
-}, tyt = {
+}, J1t = {
   full: "y'年'M'月'd'日' EEEE",
   long: "y'年'M'月'd'日'",
   medium: "yyyy-MM-dd",
   short: "yy-MM-dd"
-}, nyt = {
+}, eyt = {
   full: "zzzz a h:mm:ss",
   long: "z a h:mm:ss",
   medium: "a h:mm:ss",
   short: "a h:mm"
-}, ryt = {
+}, tyt = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, ayt = {
+}, nyt = {
   date: q({
-    formats: tyt,
+    formats: J1t,
     defaultWidth: "full"
   }),
   time: q({
-    formats: nyt,
+    formats: eyt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: ryt,
+    formats: tyt,
     defaultWidth: "full"
   })
-}, iyt = {
+}, ryt = {
   lastWeek: "'上個'eeee p",
   yesterday: "'昨天' p",
   today: "'今天' p",
   tomorrow: "'明天' p",
   nextWeek: "'下個'eeee p",
   other: "P"
-}, oyt = (e, t, n, r) => iyt[e], syt = {
+}, ayt = (e, t, n, r) => ryt[e], iyt = {
   narrow: ["前", "公元"],
   abbreviated: ["前", "公元"],
   wide: ["公元前", "公元"]
-}, uyt = {
+}, oyt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["第一季", "第二季", "第三季", "第四季"],
   wide: ["第一季度", "第二季度", "第三季度", "第四季度"]
-}, cyt = {
+}, syt = {
   narrow: [
     "一",
     "二",
@@ -84567,12 +84507,12 @@ const T1t = {
     "十一月",
     "十二月"
   ]
-}, lyt = {
+}, uyt = {
   narrow: ["日", "一", "二", "三", "四", "五", "六"],
   short: ["日", "一", "二", "三", "四", "五", "六"],
   abbreviated: ["週日", "週一", "週二", "週三", "週四", "週五", "週六"],
   wide: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-}, dyt = {
+}, cyt = {
   narrow: {
     am: "上",
     pm: "下",
@@ -84603,7 +84543,7 @@ const T1t = {
     evening: "晚上",
     night: "夜晚"
   }
-}, fyt = {
+}, lyt = {
   narrow: {
     am: "上",
     pm: "下",
@@ -84634,7 +84574,7 @@ const T1t = {
     evening: "晚上",
     night: "夜晚"
   }
-}, myt = (e, t) => {
+}, dyt = (e, t) => {
   const n = Number(e);
   switch (t == null ? void 0 : t.unit) {
     case "date":
@@ -84648,48 +84588,48 @@ const T1t = {
     default:
       return "第 " + n;
   }
-}, hyt = {
-  ordinalNumber: myt,
+}, fyt = {
+  ordinalNumber: dyt,
   era: A({
-    values: syt,
+    values: iyt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: uyt,
+    values: oyt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: cyt,
+    values: syt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: lyt,
+    values: uyt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: dyt,
+    values: cyt,
     defaultWidth: "wide",
-    formattingValues: fyt,
+    formattingValues: lyt,
     defaultFormattingWidth: "wide"
   })
-}, pyt = /^(第\s*)?\d+(日|時|分|秒)?/i, gyt = /\d+/i, vyt = {
+}, myt = /^(第\s*)?\d+(日|時|分|秒)?/i, hyt = /\d+/i, pyt = {
   narrow: /^(前)/i,
   abbreviated: /^(前)/i,
   wide: /^(公元前|公元)/i
-}, yyt = {
+}, gyt = {
   any: [/^(前)/i, /^(公元)/i]
-}, byt = {
+}, vyt = {
   narrow: /^[1234]/i,
   abbreviated: /^第[一二三四]季/i,
   wide: /^第[一二三四]季度/i
-}, wyt = {
+}, yyt = {
   any: [/(1|一)/i, /(2|二)/i, /(3|三)/i, /(4|四)/i]
-}, Pyt = {
+}, byt = {
   narrow: /^(一|二|三|四|五|六|七|八|九|十[二一])/i,
   abbreviated: /^(一|二|三|四|五|六|七|八|九|十[二一]|\d|1[12])月/i,
   wide: /^(一|二|三|四|五|六|七|八|九|十[二一])月/i
-}, xyt = {
+}, wyt = {
   narrow: [
     /^一/i,
     /^二/i,
@@ -84718,16 +84658,16 @@ const T1t = {
     /^十一|11/i,
     /^十二|12/i
   ]
-}, Myt = {
+}, Pyt = {
   narrow: /^[一二三四五六日]/i,
   short: /^[一二三四五六日]/i,
   abbreviated: /^週[一二三四五六日]/i,
   wide: /^星期[一二三四五六日]/i
-}, kyt = {
+}, xyt = {
   any: [/日/i, /一/i, /二/i, /三/i, /四/i, /五/i, /六/i]
-}, Cyt = {
+}, Myt = {
   any: /^(上午?|下午?|午夜|[中正]午|早上?|下午|晚上?|凌晨)/i
-}, Syt = {
+}, kyt = {
   any: {
     am: /^上午?/i,
     pm: /^下午?/i,
@@ -84738,55 +84678,55 @@ const T1t = {
     evening: /^晚上?/i,
     night: /^凌晨/i
   }
-}, $yt = {
+}, Cyt = {
   ordinalNumber: Se({
-    matchPattern: pyt,
-    parsePattern: gyt,
+    matchPattern: myt,
+    parsePattern: hyt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: vyt,
+    matchPatterns: pyt,
     defaultMatchWidth: "wide",
-    parsePatterns: yyt,
+    parsePatterns: gyt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: byt,
+    matchPatterns: vyt,
     defaultMatchWidth: "wide",
-    parsePatterns: wyt,
+    parsePatterns: yyt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: byt,
+    defaultMatchWidth: "wide",
+    parsePatterns: wyt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Pyt,
     defaultMatchWidth: "wide",
     parsePatterns: xyt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Myt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: kyt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: Cyt,
-    defaultMatchWidth: "any",
-    parsePatterns: Syt,
-    defaultParseWidth: "any"
   })
-}, _yt = {
+}, Syt = {
   code: "zh-HK",
-  formatDistance: eyt,
-  formatLong: ayt,
-  formatRelative: oyt,
-  localize: hyt,
-  match: $yt,
+  formatDistance: Z1t,
+  formatLong: nyt,
+  formatRelative: ayt,
+  localize: fyt,
+  match: Cyt,
   options: {
     weekStartsOn: 0,
     firstWeekContainsDate: 1
   }
-}, Tyt = {
+}, $yt = {
   lessThanXSeconds: {
     one: "少於 1 秒",
     other: "少於 {{count}} 秒"
@@ -84848,54 +84788,54 @@ const T1t = {
     one: "將近 1 年",
     other: "將近 {{count}} 年"
   }
-}, Eyt = (e, t, n) => {
+}, _yt = (e, t, n) => {
   let r;
-  const a = Tyt[e];
+  const a = $yt[e];
   return typeof a == "string" ? r = a : t === 1 ? r = a.one : r = a.other.replace("{{count}}", String(t)), n != null && n.addSuffix ? n.comparison && n.comparison > 0 ? r + "內" : r + "前" : r;
-}, Ayt = {
+}, Tyt = {
   full: "y'年'M'月'd'日' EEEE",
   long: "y'年'M'月'd'日'",
   medium: "yyyy-MM-dd",
   short: "yy-MM-dd"
-}, Oyt = {
+}, Eyt = {
   full: "zzzz a h:mm:ss",
   long: "z a h:mm:ss",
   medium: "a h:mm:ss",
   short: "a h:mm"
-}, Dyt = {
+}, Ayt = {
   full: "{{date}} {{time}}",
   long: "{{date}} {{time}}",
   medium: "{{date}} {{time}}",
   short: "{{date}} {{time}}"
-}, Nyt = {
+}, Oyt = {
   date: q({
-    formats: Ayt,
+    formats: Tyt,
     defaultWidth: "full"
   }),
   time: q({
-    formats: Oyt,
+    formats: Eyt,
     defaultWidth: "full"
   }),
   dateTime: q({
-    formats: Dyt,
+    formats: Ayt,
     defaultWidth: "full"
   })
-}, Wyt = {
+}, Dyt = {
   lastWeek: "'上個'eeee p",
   yesterday: "'昨天' p",
   today: "'今天' p",
   tomorrow: "'明天' p",
   nextWeek: "'下個'eeee p",
   other: "P"
-}, Ryt = (e, t, n, r) => Wyt[e], jyt = {
+}, Nyt = (e, t, n, r) => Dyt[e], Wyt = {
   narrow: ["前", "公元"],
   abbreviated: ["前", "公元"],
   wide: ["公元前", "公元"]
-}, Iyt = {
+}, Ryt = {
   narrow: ["1", "2", "3", "4"],
   abbreviated: ["第一刻", "第二刻", "第三刻", "第四刻"],
   wide: ["第一刻鐘", "第二刻鐘", "第三刻鐘", "第四刻鐘"]
-}, Lyt = {
+}, jyt = {
   narrow: [
     "一",
     "二",
@@ -84938,12 +84878,12 @@ const T1t = {
     "十一月",
     "十二月"
   ]
-}, Fyt = {
+}, Iyt = {
   narrow: ["日", "一", "二", "三", "四", "五", "六"],
   short: ["日", "一", "二", "三", "四", "五", "六"],
   abbreviated: ["週日", "週一", "週二", "週三", "週四", "週五", "週六"],
   wide: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-}, zyt = {
+}, Lyt = {
   narrow: {
     am: "上",
     pm: "下",
@@ -84974,7 +84914,7 @@ const T1t = {
     evening: "晚上",
     night: "夜間"
   }
-}, Vyt = {
+}, Fyt = {
   narrow: {
     am: "上",
     pm: "下",
@@ -85005,7 +84945,7 @@ const T1t = {
     evening: "晚上",
     night: "夜間"
   }
-}, Hyt = (e, t) => {
+}, zyt = (e, t) => {
   const n = Number(e);
   switch (t == null ? void 0 : t.unit) {
     case "date":
@@ -85019,48 +84959,48 @@ const T1t = {
     default:
       return "第 " + n;
   }
-}, Byt = {
-  ordinalNumber: Hyt,
+}, Vyt = {
+  ordinalNumber: zyt,
   era: A({
-    values: jyt,
+    values: Wyt,
     defaultWidth: "wide"
   }),
   quarter: A({
-    values: Iyt,
+    values: Ryt,
     defaultWidth: "wide",
     argumentCallback: (e) => e - 1
   }),
   month: A({
-    values: Lyt,
+    values: jyt,
     defaultWidth: "wide"
   }),
   day: A({
-    values: Fyt,
+    values: Iyt,
     defaultWidth: "wide"
   }),
   dayPeriod: A({
-    values: zyt,
+    values: Lyt,
     defaultWidth: "wide",
-    formattingValues: Vyt,
+    formattingValues: Fyt,
     defaultFormattingWidth: "wide"
   })
-}, qyt = /^(第\s*)?\d+(日|時|分|秒)?/i, Xyt = /\d+/i, Gyt = {
+}, Hyt = /^(第\s*)?\d+(日|時|分|秒)?/i, Byt = /\d+/i, qyt = {
   narrow: /^(前)/i,
   abbreviated: /^(前)/i,
   wide: /^(公元前|公元)/i
-}, Yyt = {
+}, Xyt = {
   any: [/^(前)/i, /^(公元)/i]
-}, Uyt = {
+}, Gyt = {
   narrow: /^[1234]/i,
   abbreviated: /^第[一二三四]刻/i,
   wide: /^第[一二三四]刻鐘/i
-}, Kyt = {
+}, Yyt = {
   any: [/(1|一)/i, /(2|二)/i, /(3|三)/i, /(4|四)/i]
-}, Qyt = {
+}, Uyt = {
   narrow: /^(一|二|三|四|五|六|七|八|九|十[二一])/i,
   abbreviated: /^(一|二|三|四|五|六|七|八|九|十[二一]|\d|1[12])月/i,
   wide: /^(一|二|三|四|五|六|七|八|九|十[二一])月/i
-}, Zyt = {
+}, Kyt = {
   narrow: [
     /^一/i,
     /^二/i,
@@ -85089,16 +85029,16 @@ const T1t = {
     /^十一|11/i,
     /^十二|12/i
   ]
-}, Jyt = {
+}, Qyt = {
   narrow: /^[一二三四五六日]/i,
   short: /^[一二三四五六日]/i,
   abbreviated: /^週[一二三四五六日]/i,
   wide: /^星期[一二三四五六日]/i
-}, ebt = {
+}, Zyt = {
   any: [/日/i, /一/i, /二/i, /三/i, /四/i, /五/i, /六/i]
-}, tbt = {
+}, Jyt = {
   any: /^(上午?|下午?|午夜|[中正]午|早上?|下午|晚上?|凌晨)/i
-}, nbt = {
+}, ebt = {
   any: {
     am: /^上午?/i,
     pm: /^下午?/i,
@@ -85109,154 +85049,154 @@ const T1t = {
     evening: /^晚上?/i,
     night: /^凌晨/i
   }
-}, rbt = {
+}, tbt = {
   ordinalNumber: Se({
-    matchPattern: qyt,
-    parsePattern: Xyt,
+    matchPattern: Hyt,
+    parsePattern: Byt,
     valueCallback: (e) => parseInt(e, 10)
   }),
   era: D({
-    matchPatterns: Gyt,
+    matchPatterns: qyt,
     defaultMatchWidth: "wide",
-    parsePatterns: Yyt,
+    parsePatterns: Xyt,
     defaultParseWidth: "any"
   }),
   quarter: D({
-    matchPatterns: Uyt,
+    matchPatterns: Gyt,
     defaultMatchWidth: "wide",
-    parsePatterns: Kyt,
+    parsePatterns: Yyt,
     defaultParseWidth: "any",
     valueCallback: (e) => e + 1
   }),
   month: D({
+    matchPatterns: Uyt,
+    defaultMatchWidth: "wide",
+    parsePatterns: Kyt,
+    defaultParseWidth: "any"
+  }),
+  day: D({
     matchPatterns: Qyt,
     defaultMatchWidth: "wide",
     parsePatterns: Zyt,
     defaultParseWidth: "any"
   }),
-  day: D({
+  dayPeriod: D({
     matchPatterns: Jyt,
-    defaultMatchWidth: "wide",
+    defaultMatchWidth: "any",
     parsePatterns: ebt,
     defaultParseWidth: "any"
-  }),
-  dayPeriod: D({
-    matchPatterns: tbt,
-    defaultMatchWidth: "any",
-    parsePatterns: nbt,
-    defaultParseWidth: "any"
   })
-}, abt = {
+}, nbt = {
   code: "zh-TW",
-  formatDistance: Eyt,
-  formatLong: Nyt,
-  formatRelative: Ryt,
-  localize: Byt,
-  match: rbt,
+  formatDistance: _yt,
+  formatLong: Oyt,
+  formatRelative: Nyt,
+  localize: Vyt,
+  match: tbt,
   options: {
     weekStartsOn: 1,
     firstWeekContainsDate: 4
   }
-}, ibt = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+}, rbt = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  af: w8e,
-  ar: K8e,
-  arDZ: STe,
-  arEG: n9e,
-  arMA: O9e,
-  arSA: uEe,
-  arTN: IEe,
-  az: pAe,
-  be: QAe,
-  beTarask: DOe,
-  bg: h7e,
-  bn: X7e,
-  bs: MDe,
-  ca: eNe,
-  ckb: ENe,
-  cs: uWe,
-  cy: IWe,
-  da: hRe,
-  de: LRe,
-  deAT: YRe,
-  el: kje,
-  enAU: Tje,
-  enCA: Rje,
-  enGB: Fje,
-  enIE: zje,
-  enIN: Xje,
-  enNZ: Qje,
+  af: y8e,
+  ar: Y8e,
+  arDZ: kTe,
+  arEG: e9e,
+  arMA: E9e,
+  arSA: oEe,
+  arTN: REe,
+  az: mAe,
+  be: UAe,
+  beTarask: AOe,
+  bg: f7e,
+  bn: B7e,
+  bs: PDe,
+  ca: ZDe,
+  ckb: _Ne,
+  cs: oWe,
+  cy: RWe,
+  da: fRe,
+  de: jRe,
+  deAT: XRe,
+  el: xje,
+  enAU: $je,
+  enCA: Nje,
+  enGB: Ije,
+  enIE: Lje,
+  enIN: Bje,
+  enNZ: Uje,
   enUS: o1,
-  enZA: nIe,
-  eo: AIe,
-  es: uLe,
-  et: WLe,
-  eu: fFe,
-  faIR: VFe,
-  fi: yze,
-  fr: Bze,
-  frCA: Uze,
-  frCH: nVe,
-  fy: AVe,
-  gd: sHe,
-  gl: IHe,
-  gu: hBe,
-  he: qBe,
-  hi: xqe,
-  hr: Jqe,
-  ht: _Xe,
-  hu: sGe,
-  hy: jGe,
-  id: mYe,
-  is: HYe,
-  it: vUe,
-  itCH: xUe,
-  ja: ZUe,
-  jaHira: _Ke,
-  ka: aQe,
-  kk: jQe,
-  km: mZe,
-  kn: HZe,
-  ko: bJe,
-  lb: JJe,
-  lt: Net,
-  lv: mtt,
-  mk: Btt,
-  mn: Pnt,
-  ms: Qnt,
-  mt: $rt,
-  nb: nat,
-  nl: Aat,
-  nlBE: oit,
-  nn: Rit,
-  oc: fot,
-  pl: Uot,
-  pt: Cst,
-  ptBR: tut,
-  ro: Aut,
-  ru: lct,
-  se: Lct,
-  sk: Plt,
-  sl: Jlt,
-  sq: Tdt,
-  sr: oft,
-  srLatn: jft,
-  sv: hmt,
-  ta: qmt,
-  te: wht,
-  th: Kht,
-  tr: Spt,
-  ug: ngt,
-  uk: Igt,
-  uz: hvt,
-  uzCyrl: Bvt,
-  vi: x1t,
-  zhCN: Z1t,
-  zhHK: _yt,
-  zhTW: abt
+  enZA: eIe,
+  eo: TIe,
+  es: oLe,
+  et: DLe,
+  eu: lFe,
+  faIR: FFe,
+  fi: gze,
+  fr: Vze,
+  frCA: Gze,
+  frCH: eVe,
+  fy: TVe,
+  gd: iHe,
+  gl: RHe,
+  gu: fBe,
+  he: HBe,
+  hi: wqe,
+  hr: Qqe,
+  ht: SXe,
+  hu: iGe,
+  hy: WGe,
+  id: dYe,
+  is: zYe,
+  it: pUe,
+  itCH: wUe,
+  ja: KUe,
+  jaHira: SKe,
+  ka: nQe,
+  kk: WQe,
+  km: dZe,
+  kn: zZe,
+  ko: vJe,
+  lb: QJe,
+  lt: Oet,
+  lv: dtt,
+  mk: Vtt,
+  mn: bnt,
+  ms: Unt,
+  mt: Crt,
+  nb: eat,
+  nl: Tat,
+  nlBE: ait,
+  nn: Nit,
+  oc: lot,
+  pl: Got,
+  pt: Mst,
+  ptBR: Jst,
+  ro: Tut,
+  ru: uct,
+  se: jct,
+  sk: blt,
+  sl: Qlt,
+  sq: $dt,
+  sr: aft,
+  srLatn: Wft,
+  sv: fmt,
+  ta: Hmt,
+  te: yht,
+  th: Yht,
+  tr: kpt,
+  ug: egt,
+  uk: Rgt,
+  uz: fvt,
+  uzCyrl: Vvt,
+  vi: w1t,
+  zhCN: K1t,
+  zhHK: Syt,
+  zhTW: nbt
 }, Symbol.toStringTag, { value: "Module" })), Bf = "→", UM = (e) => {
   const t = e.split("-")[0];
-  return ibt[t];
+  return rbt[t];
 }, j5 = (e) => {
   if (e instanceof Date)
     return { from: e };
@@ -85308,9 +85248,9 @@ const is = (e, t) => !t || Rr(e, t) || dB(e, t), os = (e, t) => !t || Ia(e, t) |
 }) => {
   const n = [];
   return e && n.push({ before: e }), t && n.push({ after: t }), n;
-}, obt = {
+}, abt = {
   locale: "en"
-}, JB = Wt(obt);
+}, JB = Wt(abt);
 function S2t({
   children: e,
   l10n: t
@@ -85332,7 +85272,7 @@ var Ye = function() {
     return t;
   }, Ye.apply(this, arguments);
 };
-function sbt(e, t) {
+function ibt(e, t) {
   var n = {};
   for (var r in e) Object.prototype.hasOwnProperty.call(e, r) && t.indexOf(r) < 0 && (n[r] = e[r]);
   if (e != null && typeof Object.getOwnPropertySymbols == "function")
@@ -85354,7 +85294,7 @@ function km(e) {
 function c1(e) {
   return e.mode === "single";
 }
-var ubt = {
+var obt = {
   root: "rdp",
   multiple_months: "rdp-multiple_months",
   with_weeknumber: "rdp-with_weeknumber",
@@ -85397,63 +85337,63 @@ var ubt = {
   day_range_end: "rdp-day_range_end",
   day_range_middle: "rdp-day_range_middle"
 };
-function cbt(e, t) {
+function sbt(e, t) {
   return bs(e, "LLLL y", t);
 }
-function lbt(e, t) {
+function ubt(e, t) {
   return bs(e, "d", t);
 }
-function dbt(e, t) {
+function cbt(e, t) {
   return bs(e, "LLLL", t);
 }
-function fbt(e) {
+function lbt(e) {
   return "".concat(e);
 }
-function mbt(e, t) {
+function dbt(e, t) {
   return bs(e, "cccccc", t);
 }
-function hbt(e, t) {
+function fbt(e, t) {
   return bs(e, "yyyy", t);
 }
-var pbt = /* @__PURE__ */ Object.freeze({
+var mbt = /* @__PURE__ */ Object.freeze({
   __proto__: null,
-  formatCaption: cbt,
-  formatDay: lbt,
-  formatMonthCaption: dbt,
-  formatWeekNumber: fbt,
-  formatWeekdayName: mbt,
-  formatYearCaption: hbt
-}), gbt = function(e, t, n) {
+  formatCaption: sbt,
+  formatDay: ubt,
+  formatMonthCaption: cbt,
+  formatWeekNumber: lbt,
+  formatWeekdayName: dbt,
+  formatYearCaption: fbt
+}), hbt = function(e, t, n) {
   return bs(e, "do MMMM (EEEE)", n);
-}, vbt = function() {
+}, pbt = function() {
   return "Month: ";
-}, ybt = function() {
+}, gbt = function() {
   return "Go to next month";
-}, bbt = function() {
+}, vbt = function() {
   return "Go to previous month";
-}, wbt = function(e, t) {
+}, ybt = function(e, t) {
   return bs(e, "cccc", t);
-}, Pbt = function(e) {
+}, bbt = function(e) {
   return "Week n. ".concat(e);
-}, xbt = function() {
+}, wbt = function() {
   return "Year: ";
-}, Mbt = /* @__PURE__ */ Object.freeze({
+}, Pbt = /* @__PURE__ */ Object.freeze({
   __proto__: null,
-  labelDay: gbt,
-  labelMonthDropdown: vbt,
-  labelNext: ybt,
-  labelPrevious: bbt,
-  labelWeekNumber: Pbt,
-  labelWeekday: wbt,
-  labelYearDropdown: xbt
+  labelDay: hbt,
+  labelMonthDropdown: pbt,
+  labelNext: gbt,
+  labelPrevious: vbt,
+  labelWeekNumber: bbt,
+  labelWeekday: ybt,
+  labelYearDropdown: wbt
 });
-function kbt() {
-  var e = "buttons", t = ubt, n = o1, r = {}, a = {}, i = 1, o = {}, s = /* @__PURE__ */ new Date();
+function xbt() {
+  var e = "buttons", t = obt, n = o1, r = {}, a = {}, i = 1, o = {}, s = /* @__PURE__ */ new Date();
   return {
     captionLayout: e,
     classNames: t,
-    formatters: pbt,
-    labels: Mbt,
+    formatters: mbt,
+    labels: Pbt,
     locale: n,
     modifiersClassNames: r,
     modifiers: a,
@@ -85463,7 +85403,7 @@ function kbt() {
     mode: "default"
   };
 }
-function Cbt(e) {
+function Mbt(e) {
   var t = e.fromYear, n = e.toYear, r = e.fromMonth, a = e.toMonth, i = e.fromDate, o = e.toDate;
   return r ? i = Lt(r) : t && (i = new Date(t, 0, 1)), a ? o = Jr(a) : n && (o = new Date(n, 11, 31)), {
     fromDate: i ? vi(i) : void 0,
@@ -85471,8 +85411,8 @@ function Cbt(e) {
   };
 }
 var nq = Wt(void 0);
-function Sbt(e) {
-  var t, n = e.initialProps, r = kbt(), a = Cbt(n), i = a.fromDate, o = a.toDate, s = (t = n.captionLayout) !== null && t !== void 0 ? t : r.captionLayout;
+function kbt(e) {
+  var t, n = e.initialProps, r = xbt(), a = Mbt(n), i = a.fromDate, o = a.toDate, s = (t = n.captionLayout) !== null && t !== void 0 ? t : r.captionLayout;
   s !== "buttons" && (!i || !o) && (s = "buttons");
   var u;
   (c1(n) || Mm(n) || km(n)) && (u = n.onSelect);
@@ -85489,14 +85429,14 @@ function rq(e) {
   var t = Yt(), n = t.locale, r = t.classNames, a = t.styles, i = t.formatters.formatCaption;
   return b("div", { className: r.caption_label, style: a.caption_label, "aria-live": "polite", role: "presentation", id: e.id, children: i(e.displayMonth, { locale: n }) });
 }
-function $bt(e) {
+function Cbt(e) {
   return b("svg", Ye({ width: "8px", height: "8px", viewBox: "0 0 120 120", "data-testid": "iconDropdown" }, e, { children: b("path", { d: "M4.22182541,48.2218254 C8.44222828,44.0014225 15.2388494,43.9273804 19.5496459,47.9996989 L19.7781746,48.2218254 L60,88.443 L100.221825,48.2218254 C104.442228,44.0014225 111.238849,43.9273804 115.549646,47.9996989 L115.778175,48.2218254 C119.998577,52.4422283 120.07262,59.2388494 116.000301,63.5496459 L115.778175,63.7781746 L67.7781746,111.778175 C63.5577717,115.998577 56.7611506,116.07262 52.4503541,112.000301 L52.2218254,111.778175 L4.22182541,63.7781746 C-0.0739418023,59.4824074 -0.0739418023,52.5175926 4.22182541,48.2218254 Z", fill: "currentColor", fillRule: "nonzero" }) }));
 }
 function aq(e) {
-  var t, n, r = e.onChange, a = e.value, i = e.children, o = e.caption, s = e.className, u = e.style, c = Yt(), d = (n = (t = c.components) === null || t === void 0 ? void 0 : t.IconDropdown) !== null && n !== void 0 ? n : $bt;
+  var t, n, r = e.onChange, a = e.value, i = e.children, o = e.caption, s = e.className, u = e.style, c = Yt(), d = (n = (t = c.components) === null || t === void 0 ? void 0 : t.IconDropdown) !== null && n !== void 0 ? n : Cbt;
   return te("div", { className: s, style: u, children: [b("span", { className: c.classNames.vhidden, children: e["aria-label"] }), b("select", { name: e.name, "aria-label": e["aria-label"], className: c.classNames.dropdown, style: c.styles.dropdown, value: a, onChange: r, children: i }), te("div", { className: c.classNames.caption_label, style: c.styles.caption_label, "aria-hidden": "true", children: [o, b(d, { className: c.classNames.dropdown_icon, style: c.styles.dropdown_icon })] })] });
 }
-function _bt(e) {
+function Sbt(e) {
   var t, n = Yt(), r = n.fromDate, a = n.toDate, i = n.styles, o = n.locale, s = n.formatters.formatMonthCaption, u = n.classNames, c = n.components, d = n.labels.labelMonthDropdown;
   if (!r)
     return b(Pt, {});
@@ -85517,7 +85457,7 @@ function _bt(e) {
     return b("option", { value: y.getMonth(), children: s(y, { locale: o }) }, y.getMonth());
   }) });
 }
-function Tbt(e) {
+function $bt(e) {
   var t, n = e.displayMonth, r = Yt(), a = r.fromDate, i = r.toDate, o = r.locale, s = r.styles, u = r.classNames, c = r.components, d = r.formatters.formatYearCaption, f = r.labels.labelYearDropdown, h = [];
   if (!a)
     return b(Pt, {});
@@ -85533,11 +85473,11 @@ function Tbt(e) {
     return b("option", { value: M.getFullYear(), children: d(M, { locale: o }) }, M.getFullYear());
   }) });
 }
-function Ebt(e, t) {
+function _bt(e, t) {
   var n = We(e), r = n[0], a = n[1], i = t === void 0 ? r : t;
   return [i, a];
 }
-function Abt(e) {
+function Tbt(e) {
   var t = e.month, n = e.defaultMonth, r = e.today, a = t || n || r || /* @__PURE__ */ new Date(), i = e.toDate, o = e.fromDate, s = e.numberOfMonths, u = s === void 0 ? 1 : s;
   if (i && Lf(i, a) < 0) {
     var c = -1 * (u - 1);
@@ -85545,8 +85485,8 @@ function Abt(e) {
   }
   return o && Lf(a, o) < 0 && (a = o), Lt(a);
 }
-function Obt() {
-  var e = Yt(), t = Abt(e), n = Ebt(t, e.month), r = n[0], a = n[1], i = function(o) {
+function Ebt() {
+  var e = Yt(), t = Tbt(e), n = _bt(t, e.month), r = n[0], a = n[1], i = function(o) {
     var s;
     if (!e.disableNavigation) {
       var u = Lt(o);
@@ -85555,14 +85495,14 @@ function Obt() {
   };
   return [r, i];
 }
-function Dbt(e, t) {
+function Abt(e, t) {
   for (var n = t.reverseMonths, r = t.numberOfMonths, a = Lt(e), i = Lt(vn(a, r)), o = Lf(i, a), s = [], u = 0; u < o; u++) {
     var c = vn(a, u);
     s.push(c);
   }
   return n && (s = s.reverse()), s;
 }
-function Nbt(e, t) {
+function Obt(e, t) {
   if (!t.disableNavigation) {
     var n = t.toDate, r = t.pagedNavigation, a = t.numberOfMonths, i = a === void 0 ? 1 : a, o = r ? i : 1, s = Lt(e);
     if (!n)
@@ -85572,7 +85512,7 @@ function Nbt(e, t) {
       return vn(s, o);
   }
 }
-function Wbt(e, t) {
+function Dbt(e, t) {
   if (!t.disableNavigation) {
     var n = t.fromDate, r = t.pagedNavigation, a = t.numberOfMonths, i = a === void 0 ? 1 : a, o = r ? i : 1, s = Lt(e);
     if (!n)
@@ -85583,8 +85523,8 @@ function Wbt(e, t) {
   }
 }
 var iq = Wt(void 0);
-function Rbt(e) {
-  var t = Yt(), n = Obt(), r = n[0], a = n[1], i = Dbt(r, t), o = Nbt(r, t), s = Wbt(r, t), u = function(f) {
+function Nbt(e) {
+  var t = Yt(), n = Ebt(), r = n[0], a = n[1], i = Abt(r, t), o = Obt(r, t), s = Dbt(r, t), u = function(f) {
     return i.some(function(h) {
       return s1(f, h);
     });
@@ -85611,12 +85551,12 @@ function BD(e) {
   var t, n = Yt(), r = n.classNames, a = n.styles, i = n.components, o = Cm().goToMonth, s = function(d) {
     o(vn(d, e.displayIndex ? -e.displayIndex : 0));
   }, u = (t = i == null ? void 0 : i.CaptionLabel) !== null && t !== void 0 ? t : rq, c = b(u, { id: e.id, displayMonth: e.displayMonth });
-  return te("div", { className: r.caption_dropdowns, style: a.caption_dropdowns, children: [b("div", { className: r.vhidden, children: c }), b(_bt, { onChange: s, displayMonth: e.displayMonth }), b(Tbt, { onChange: s, displayMonth: e.displayMonth })] });
+  return te("div", { className: r.caption_dropdowns, style: a.caption_dropdowns, children: [b("div", { className: r.vhidden, children: c }), b(Sbt, { onChange: s, displayMonth: e.displayMonth }), b($bt, { onChange: s, displayMonth: e.displayMonth })] });
 }
-function jbt(e) {
+function Wbt(e) {
   return b("svg", Ye({ width: "16px", height: "16px", viewBox: "0 0 120 120" }, e, { children: b("path", { d: "M69.490332,3.34314575 C72.6145263,0.218951416 77.6798462,0.218951416 80.8040405,3.34314575 C83.8617626,6.40086786 83.9268205,11.3179931 80.9992143,14.4548388 L80.8040405,14.6568542 L35.461,60 L80.8040405,105.343146 C83.8617626,108.400868 83.9268205,113.317993 80.9992143,116.454839 L80.8040405,116.656854 C77.7463184,119.714576 72.8291931,119.779634 69.6923475,116.852028 L69.490332,116.656854 L18.490332,65.6568542 C15.4326099,62.5991321 15.367552,57.6820069 18.2951583,54.5451612 L18.490332,54.3431458 L69.490332,3.34314575 Z", fill: "currentColor", fillRule: "nonzero" }) }));
 }
-function Ibt(e) {
+function Rbt(e) {
   return b("svg", Ye({ width: "16px", height: "16px", viewBox: "0 0 120 120" }, e, { children: b("path", { d: "M49.8040405,3.34314575 C46.6798462,0.218951416 41.6145263,0.218951416 38.490332,3.34314575 C35.4326099,6.40086786 35.367552,11.3179931 38.2951583,14.4548388 L38.490332,14.6568542 L83.8333725,60 L38.490332,105.343146 C35.4326099,108.400868 35.367552,113.317993 38.2951583,116.454839 L38.490332,116.656854 C41.5480541,119.714576 46.4651794,119.779634 49.602025,116.852028 L49.8040405,116.656854 L100.804041,65.6568542 C103.861763,62.5991321 103.926821,57.6820069 100.999214,54.5451612 L100.804041,54.3431458 L49.8040405,3.34314575 Z", fill: "currentColor" }) }));
 }
 var Fg = Me(function(e, t) {
@@ -85625,7 +85565,7 @@ var Fg = Me(function(e, t) {
   var o = i.join(" "), s = Ye(Ye({}, a.button_reset), a.button);
   return e.style && Object.assign(s, e.style), b("button", Ye({}, e, { ref: t, type: "button", className: o, style: s }));
 });
-function Lbt(e) {
+function jbt(e) {
   var t, n, r = Yt(), a = r.dir, i = r.locale, o = r.classNames, s = r.styles, u = r.labels, c = u.labelPrevious, d = u.labelNext, f = r.components;
   if (!e.nextMonth && !e.previousMonth)
     return b(Pt, {});
@@ -85635,7 +85575,7 @@ function Lbt(e) {
   ].join(" "), g = d(e.nextMonth, { locale: i }), v = [
     o.nav_button,
     o.nav_button_next
-  ].join(" "), y = (t = f == null ? void 0 : f.IconRight) !== null && t !== void 0 ? t : Ibt, P = (n = f == null ? void 0 : f.IconLeft) !== null && n !== void 0 ? n : jbt;
+  ].join(" "), y = (t = f == null ? void 0 : f.IconRight) !== null && t !== void 0 ? t : Rbt, P = (n = f == null ? void 0 : f.IconLeft) !== null && n !== void 0 ? n : Wbt;
   return te("div", { className: o.nav, style: s.nav, children: [!e.hidePrevious && b(Fg, { name: "previous-month", "aria-label": h, className: p, style: s.nav_button_previous, disabled: !e.previousMonth, onClick: e.onPreviousClick, children: a === "rtl" ? b(y, { className: o.nav_icon, style: s.nav_icon }) : b(P, { className: o.nav_icon, style: s.nav_icon }) }), !e.hideNext && b(Fg, { name: "next-month", "aria-label": g, className: v, style: s.nav_button_next, disabled: !e.nextMonth, onClick: e.onNextClick, children: a === "rtl" ? b(P, { className: o.nav_icon, style: s.nav_icon }) : b(y, { className: o.nav_icon, style: s.nav_icon }) })] });
 }
 function qD(e) {
@@ -85646,39 +85586,39 @@ function qD(e) {
   }, p = function() {
     a && i(a);
   };
-  return b(Lbt, { displayMonth: e.displayMonth, hideNext: d, hidePrevious: f, nextMonth: a, previousMonth: r, onPreviousClick: h, onNextClick: p });
+  return b(jbt, { displayMonth: e.displayMonth, hideNext: d, hidePrevious: f, nextMonth: a, previousMonth: r, onPreviousClick: h, onNextClick: p });
 }
-function Fbt(e) {
+function Ibt(e) {
   var t, n = Yt(), r = n.classNames, a = n.disableNavigation, i = n.styles, o = n.captionLayout, s = n.components, u = (t = s == null ? void 0 : s.CaptionLabel) !== null && t !== void 0 ? t : rq, c;
   return a ? c = b(u, { id: e.id, displayMonth: e.displayMonth }) : o === "dropdown" ? c = b(BD, { displayMonth: e.displayMonth, id: e.id }) : o === "dropdown-buttons" ? c = te(Pt, { children: [b(BD, { displayMonth: e.displayMonth, displayIndex: e.displayIndex, id: e.id }), b(qD, { displayMonth: e.displayMonth, displayIndex: e.displayIndex, id: e.id })] }) : c = te(Pt, { children: [b(u, { id: e.id, displayMonth: e.displayMonth, displayIndex: e.displayIndex }), b(qD, { displayMonth: e.displayMonth, id: e.id })] }), b("div", { className: r.caption, style: i.caption, children: c });
 }
-function zbt(e) {
+function Lbt(e) {
   var t = Yt(), n = t.footer, r = t.styles, a = t.classNames.tfoot;
   return n ? b("tfoot", { className: a, style: r.tfoot, children: b("tr", { children: b("td", { colSpan: 8, children: n }) }) }) : b(Pt, {});
 }
-function Vbt(e, t, n) {
+function Fbt(e, t, n) {
   for (var r = n ? Ha(/* @__PURE__ */ new Date()) : ur(/* @__PURE__ */ new Date(), { locale: e, weekStartsOn: t }), a = [], i = 0; i < 7; i++) {
     var o = Jt(r, i);
     a.push(o);
   }
   return a;
 }
-function Hbt() {
-  var e = Yt(), t = e.classNames, n = e.styles, r = e.showWeekNumber, a = e.locale, i = e.weekStartsOn, o = e.ISOWeek, s = e.formatters.formatWeekdayName, u = e.labels.labelWeekday, c = Vbt(a, i, o);
+function zbt() {
+  var e = Yt(), t = e.classNames, n = e.styles, r = e.showWeekNumber, a = e.locale, i = e.weekStartsOn, o = e.ISOWeek, s = e.formatters.formatWeekdayName, u = e.labels.labelWeekday, c = Fbt(a, i, o);
   return te("tr", { style: n.head_row, className: t.head_row, children: [r && b("td", { style: n.head_cell, className: t.head_cell }), c.map(function(d, f) {
     return b("th", { scope: "col", className: t.head_cell, style: n.head_cell, "aria-label": u(d, { locale: a }), children: s(d, { locale: a }) }, f);
   })] });
 }
-function Bbt() {
-  var e, t = Yt(), n = t.classNames, r = t.styles, a = t.components, i = (e = a == null ? void 0 : a.HeadRow) !== null && e !== void 0 ? e : Hbt;
+function Vbt() {
+  var e, t = Yt(), n = t.classNames, r = t.styles, a = t.components, i = (e = a == null ? void 0 : a.HeadRow) !== null && e !== void 0 ? e : zbt;
   return b("thead", { style: r.head, className: n.head, children: b(i, {}) });
 }
-function qbt(e) {
+function Hbt(e) {
   var t = Yt(), n = t.locale, r = t.formatters.formatDay;
   return b(Pt, { children: r(e.date, { locale: n }) });
 }
 var I5 = Wt(void 0);
-function Xbt(e) {
+function Bbt(e) {
   if (!Mm(e.initialProps)) {
     var t = {
       selected: void 0,
@@ -85688,9 +85628,9 @@ function Xbt(e) {
     };
     return b(I5.Provider, { value: t, children: e.children });
   }
-  return b(Gbt, { initialProps: e.initialProps, children: e.children });
+  return b(qbt, { initialProps: e.initialProps, children: e.children });
 }
-function Gbt(e) {
+function qbt(e) {
   var t = e.initialProps, n = e.children, r = t.selected, a = t.min, i = t.max, o = function(c, d, f) {
     var h, p;
     (h = t.onDayClick) === null || h === void 0 || h.call(t, c, d, f);
@@ -85731,12 +85671,12 @@ function L5() {
     throw new Error("useSelectMultiple must be used within a SelectMultipleProvider");
   return e;
 }
-function Ybt(e, t) {
+function Xbt(e, t) {
   var n = t || {}, r = n.from, a = n.to;
   return r && a ? Zr(a, e) && Zr(r, e) ? void 0 : Zr(a, e) ? { from: a, to: void 0 } : Zr(r, e) ? void 0 : Ia(r, e) ? { from: e, to: a } : { from: r, to: e } : a ? Ia(e, a) ? { from: a, to: e } : { from: e, to: a } : r ? Rr(e, r) ? { from: e, to: r } : { from: r, to: e } : { from: e, to: void 0 };
 }
 var F5 = Wt(void 0);
-function Ubt(e) {
+function Gbt(e) {
   if (!km(e.initialProps)) {
     var t = {
       selected: void 0,
@@ -85749,13 +85689,13 @@ function Ubt(e) {
     };
     return b(F5.Provider, { value: t, children: e.children });
   }
-  return b(Kbt, { initialProps: e.initialProps, children: e.children });
+  return b(Ybt, { initialProps: e.initialProps, children: e.children });
 }
-function Kbt(e) {
+function Ybt(e) {
   var t = e.initialProps, n = e.children, r = t.selected, a = r || {}, i = a.from, o = a.to, s = t.min, u = t.max, c = function(p, g, v) {
     var y, P;
     (y = t.onDayClick) === null || y === void 0 || y.call(t, p, g, v);
-    var M = Ybt(p, r);
+    var M = Xbt(p, r);
     (P = t.onSelect) === null || P === void 0 || P.call(t, M, p, g, v);
   }, d = {
     range_start: [],
@@ -85807,7 +85747,7 @@ function z5() {
 function gp(e) {
   return Array.isArray(e) ? tq([], e) : e !== void 0 ? [e] : [];
 }
-function Qbt(e) {
+function Ubt(e) {
   var t = {};
   return Object.entries(e).forEach(function(n) {
     var r = n[0], a = n[1];
@@ -85818,14 +85758,14 @@ var yi;
 (function(e) {
   e.Outside = "outside", e.Disabled = "disabled", e.Selected = "selected", e.Hidden = "hidden", e.Today = "today", e.RangeStart = "range_start", e.RangeEnd = "range_end", e.RangeMiddle = "range_middle";
 })(yi || (yi = {}));
-var Zbt = yi.Selected, eo = yi.Disabled, Jbt = yi.Hidden, e0t = yi.Today, wP = yi.RangeEnd, PP = yi.RangeMiddle, xP = yi.RangeStart, t0t = yi.Outside;
-function n0t(e, t, n) {
-  var r, a = (r = {}, r[Zbt] = gp(e.selected), r[eo] = gp(e.disabled), r[Jbt] = gp(e.hidden), r[e0t] = [e.today], r[wP] = [], r[PP] = [], r[xP] = [], r[t0t] = [], r);
+var Kbt = yi.Selected, eo = yi.Disabled, Qbt = yi.Hidden, Zbt = yi.Today, wP = yi.RangeEnd, PP = yi.RangeMiddle, xP = yi.RangeStart, Jbt = yi.Outside;
+function e0t(e, t, n) {
+  var r, a = (r = {}, r[Kbt] = gp(e.selected), r[eo] = gp(e.disabled), r[Qbt] = gp(e.hidden), r[Zbt] = [e.today], r[wP] = [], r[PP] = [], r[xP] = [], r[Jbt] = [], r);
   return e.fromDate && a[eo].push({ before: e.fromDate }), e.toDate && a[eo].push({ after: e.toDate }), Mm(e) ? a[eo] = a[eo].concat(t.modifiers[eo]) : km(e) && (a[eo] = a[eo].concat(n.modifiers[eo]), a[xP] = n.modifiers[xP], a[PP] = n.modifiers[PP], a[wP] = n.modifiers[wP]), a;
 }
 var oq = Wt(void 0);
-function r0t(e) {
-  var t = Yt(), n = L5(), r = z5(), a = n0t(t, n, r), i = Qbt(t.modifiers), o = Ye(Ye({}, a), i);
+function t0t(e) {
+  var t = Yt(), n = L5(), r = z5(), a = e0t(t, n, r), i = Ubt(t.modifiers), o = Ye(Ye({}, a), i);
   return b(oq.Provider, { value: o, children: e.children });
 }
 function sq() {
@@ -85834,22 +85774,22 @@ function sq() {
     throw new Error("useModifiers must be used within a ModifiersProvider");
   return e;
 }
-function a0t(e) {
+function n0t(e) {
   return !!(e && typeof e == "object" && "before" in e && "after" in e);
 }
-function i0t(e) {
+function r0t(e) {
   return !!(e && typeof e == "object" && "from" in e);
 }
-function o0t(e) {
+function a0t(e) {
   return !!(e && typeof e == "object" && "after" in e);
 }
-function s0t(e) {
+function i0t(e) {
   return !!(e && typeof e == "object" && "before" in e);
 }
-function u0t(e) {
+function o0t(e) {
   return !!(e && typeof e == "object" && "dayOfWeek" in e);
 }
-function c0t(e, t) {
+function s0t(e, t) {
   var n, r = t.from, a = t.to;
   if (r && a) {
     var i = ci(a, r) < 0;
@@ -85859,41 +85799,41 @@ function c0t(e, t) {
   }
   return a ? Zr(a, e) : r ? Zr(r, e) : !1;
 }
-function l0t(e) {
+function u0t(e) {
   return o5(e);
 }
-function d0t(e) {
+function c0t(e) {
   return Array.isArray(e) && e.every(o5);
 }
-function f0t(e, t) {
+function l0t(e, t) {
   return t.some(function(n) {
     if (typeof n == "boolean")
       return n;
-    if (l0t(n))
-      return Zr(e, n);
-    if (d0t(n))
-      return n.includes(e);
-    if (i0t(n))
-      return c0t(e, n);
     if (u0t(n))
+      return Zr(e, n);
+    if (c0t(n))
+      return n.includes(e);
+    if (r0t(n))
+      return s0t(e, n);
+    if (o0t(n))
       return n.dayOfWeek.includes(e.getDay());
-    if (a0t(n)) {
+    if (n0t(n)) {
       var r = ci(n.before, e), a = ci(n.after, e), i = r > 0, o = a < 0, s = Ia(n.before, n.after);
       return s ? o && i : i || o;
     }
-    return o0t(n) ? ci(e, n.after) > 0 : s0t(n) ? ci(n.before, e) > 0 : typeof n == "function" ? n(e) : !1;
+    return a0t(n) ? ci(e, n.after) > 0 : i0t(n) ? ci(n.before, e) > 0 : typeof n == "function" ? n(e) : !1;
   });
 }
 function V5(e, t, n) {
   var r = Object.keys(t).reduce(function(i, o) {
     var s = t[o];
-    return f0t(e, s) && i.push(o), i;
+    return l0t(e, s) && i.push(o), i;
   }, []), a = {};
   return r.forEach(function(i) {
     return a[i] = !0;
   }), n && !s1(e, n) && (a.outside = !0), a;
 }
-function m0t(e, t) {
+function d0t(e, t) {
   for (var n = Lt(e[0]), r = Jr(e[e.length - 1]), a, i, o = n; o <= r; ) {
     var s = V5(o, t), u = !s.disabled && !s.hidden;
     if (!u) {
@@ -85906,7 +85846,7 @@ function m0t(e, t) {
   }
   return i || a;
 }
-var h0t = 365;
+var f0t = 365;
 function uq(e, t) {
   var n = t.moveBy, r = t.direction, a = t.context, i = t.modifiers, o = t.retry, s = o === void 0 ? { count: 0, lastFocused: e } : o, u = a.weekStartsOn, c = a.fromDate, d = a.toDate, f = a.locale, h = {
     day: Jt,
@@ -85920,13 +85860,13 @@ function uq(e, t) {
       return a.ISOWeek ? bm(y) : Ff(y, { locale: f, weekStartsOn: u });
     }
   }, p = h[n](e, r === "after" ? 1 : -1);
-  r === "before" && c ? p = kSe([c, p]) : r === "after" && d && (p = CSe([d, p]));
+  r === "before" && c ? p = xSe([c, p]) : r === "after" && d && (p = MSe([d, p]));
   var g = !0;
   if (i) {
     var v = V5(p, i);
     g = !v.disabled && !v.hidden;
   }
-  return g ? p : s.count > h0t ? s.lastFocused : uq(p, {
+  return g ? p : s.count > f0t ? s.lastFocused : uq(p, {
     moveBy: n,
     direction: r,
     context: a,
@@ -85935,8 +85875,8 @@ function uq(e, t) {
   });
 }
 var cq = Wt(void 0);
-function p0t(e) {
-  var t = Cm(), n = sq(), r = We(), a = r[0], i = r[1], o = We(), s = o[0], u = o[1], c = m0t(t.displayMonths, n), d = a ?? (s && t.isDateDisplayed(s)) ? s : c, f = function() {
+function m0t(e) {
+  var t = Cm(), n = sq(), r = We(), a = r[0], i = r[1], o = We(), s = o[0], u = o[1], c = d0t(t.displayMonths, n), d = a ?? (s && t.isDateDisplayed(s)) ? s : c, f = function() {
     u(a), i(void 0);
   }, h = function(y) {
     i(y);
@@ -85994,21 +85934,21 @@ function H5() {
     throw new Error("useFocusContext must be used within a FocusProvider");
   return e;
 }
-function g0t(e, t) {
+function h0t(e, t) {
   var n = sq(), r = V5(e, n, t);
   return r;
 }
 var B5 = Wt(void 0);
-function v0t(e) {
+function p0t(e) {
   if (!c1(e.initialProps)) {
     var t = {
       selected: void 0
     };
     return b(B5.Provider, { value: t, children: e.children });
   }
-  return b(y0t, { initialProps: e.initialProps, children: e.children });
+  return b(g0t, { initialProps: e.initialProps, children: e.children });
 }
-function y0t(e) {
+function g0t(e) {
   var t = e.initialProps, n = e.children, r = function(i, o, s) {
     var u, c, d;
     if ((u = t.onDayClick) === null || u === void 0 || u.call(t, i, o, s), o.selected && !t.required) {
@@ -86028,7 +85968,7 @@ function lq() {
     throw new Error("useSelectSingle must be used within a SelectSingleProvider");
   return e;
 }
-function b0t(e, t) {
+function v0t(e, t) {
   var n = Yt(), r = lq(), a = L5(), i = z5(), o = H5(), s = o.focusDayAfter, u = o.focusDayBefore, c = o.focusWeekAfter, d = o.focusWeekBefore, f = o.blur, h = o.focus, p = o.focusMonthBefore, g = o.focusMonthAfter, v = o.focusYearBefore, y = o.focusYearAfter, P = o.focusStartOfWeek, M = o.focusEndOfWeek, k = function(X) {
     var Y, ee, R, W;
     c1(n) ? (Y = r.onDayClick) === null || Y === void 0 || Y.call(r, e, t, X) : Mm(n) ? (ee = a.onDayClick) === null || ee === void 0 || ee.call(a, e, t, X) : km(n) ? (R = i.onDayClick) === null || R === void 0 || R.call(i, e, t, X) : (W = n.onDayClick) === null || W === void 0 || W.call(n, e, t, X);
@@ -86111,34 +86051,34 @@ function b0t(e, t) {
   };
   return K;
 }
-function w0t() {
+function y0t() {
   var e = Yt(), t = lq(), n = L5(), r = z5(), a = c1(e) ? t.selected : Mm(e) ? n.selected : km(e) ? r.selected : void 0;
   return a;
 }
-function P0t(e) {
+function b0t(e) {
   return Object.values(yi).includes(e);
 }
-function x0t(e, t) {
+function w0t(e, t) {
   var n = [e.classNames.day];
   return Object.keys(t).forEach(function(r) {
     var a = e.modifiersClassNames[r];
     if (a)
       n.push(a);
-    else if (P0t(r)) {
+    else if (b0t(r)) {
       var i = e.classNames["day_".concat(r)];
       i && n.push(i);
     }
   }), n;
 }
-function M0t(e, t) {
+function P0t(e, t) {
   var n = Ye({}, e.styles.day);
   return Object.keys(t).forEach(function(r) {
     var a;
     n = Ye(Ye({}, n), (a = e.modifiersStyles) === null || a === void 0 ? void 0 : a[r]);
   }), n;
 }
-function k0t(e, t, n) {
-  var r, a, i, o = Yt(), s = H5(), u = g0t(e, t), c = b0t(e, u), d = w0t(), f = !!(o.onDayClick || o.mode !== "default");
+function x0t(e, t, n) {
+  var r, a, i, o = Yt(), s = H5(), u = h0t(e, t), c = v0t(e, u), d = y0t(), f = !!(o.onDayClick || o.mode !== "default");
   Je(function() {
     var S;
     u.outside || s.focusedDay && f && Zr(s.focusedDay, e) && ((S = n.current) === null || S === void 0 || S.focus());
@@ -86149,7 +86089,7 @@ function k0t(e, t, n) {
     f,
     u.outside
   ]);
-  var h = x0t(o, u).join(" "), p = M0t(o, u), g = !!(u.outside && !o.showOutsideDays || u.hidden), v = (i = (a = o.components) === null || a === void 0 ? void 0 : a.DayContent) !== null && i !== void 0 ? i : qbt, y = b(v, { date: e, displayMonth: t, activeModifiers: u }), P = {
+  var h = w0t(o, u).join(" "), p = P0t(o, u), g = !!(u.outside && !o.showOutsideDays || u.hidden), v = (i = (a = o.components) === null || a === void 0 ? void 0 : a.DayContent) !== null && i !== void 0 ? i : Hbt, y = b(v, { date: e, displayMonth: t, activeModifiers: u }), P = {
     style: p,
     className: h,
     children: y,
@@ -86164,11 +86104,11 @@ function k0t(e, t, n) {
   };
   return x;
 }
-function C0t(e) {
-  var t = bt(null), n = k0t(e.date, e.displayMonth, t);
+function M0t(e) {
+  var t = bt(null), n = x0t(e.date, e.displayMonth, t);
   return n.isHidden ? b("div", { role: "gridcell" }) : n.isButton ? b(Fg, Ye({ name: "day", ref: t }, n.buttonProps)) : b("div", Ye({}, n.divProps));
 }
-function S0t(e) {
+function k0t(e) {
   var t = e.number, n = e.dates, r = Yt(), a = r.onWeekNumberClick, i = r.styles, o = r.classNames, s = r.locale, u = r.labels.labelWeekNumber, c = r.formatters.formatWeekNumber, d = c(Number(t), { locale: s });
   if (!a)
     return b("span", { className: o.weeknumber, style: i.weeknumber, children: d });
@@ -86177,10 +86117,10 @@ function S0t(e) {
   };
   return b(Fg, { name: "week-number", "aria-label": f, className: o.weeknumber, style: i.weeknumber, onClick: h, children: d });
 }
-function $0t(e) {
-  var t, n, r = Yt(), a = r.styles, i = r.classNames, o = r.showWeekNumber, s = r.components, u = (t = s == null ? void 0 : s.Day) !== null && t !== void 0 ? t : C0t, c = (n = s == null ? void 0 : s.WeekNumber) !== null && n !== void 0 ? n : S0t, d;
+function C0t(e) {
+  var t, n, r = Yt(), a = r.styles, i = r.classNames, o = r.showWeekNumber, s = r.components, u = (t = s == null ? void 0 : s.Day) !== null && t !== void 0 ? t : M0t, c = (n = s == null ? void 0 : s.WeekNumber) !== null && n !== void 0 ? n : k0t, d;
   return o && (d = b("td", { className: i.cell, style: a.cell, children: b(c, { number: e.weekNumber, dates: e.dates }) })), te("tr", { className: i.row, style: a.row, children: [d, e.dates.map(function(f) {
-    return b("td", { className: i.cell, style: a.cell, role: "presentation", children: b(u, { displayMonth: e.displayMonth, date: f }) }, y$e(f));
+    return b("td", { className: i.cell, style: a.cell, role: "presentation", children: b(u, { displayMonth: e.displayMonth, date: f }) }, g$e(f));
   })] });
 }
 function XD(e, t, n) {
@@ -86197,10 +86137,10 @@ function XD(e, t, n) {
   }, []);
   return u;
 }
-function _0t(e, t) {
+function S0t(e, t) {
   var n = XD(Lt(e), Jr(e), t);
   if (t != null && t.useFixedWeeks) {
-    var r = w$e(e, t);
+    var r = y$e(e, t);
     if (r < 6) {
       var a = n[n.length - 1], i = a.dates[a.dates.length - 1], o = IM(i, 6 - r), s = XD(IM(i, 1), o, t);
       n.push.apply(n, s);
@@ -86208,44 +86148,44 @@ function _0t(e, t) {
   }
   return n;
 }
-function T0t(e) {
-  var t, n, r, a = Yt(), i = a.locale, o = a.classNames, s = a.styles, u = a.hideHead, c = a.fixedWeeks, d = a.components, f = a.weekStartsOn, h = a.firstWeekContainsDate, p = a.ISOWeek, g = _0t(e.displayMonth, {
+function $0t(e) {
+  var t, n, r, a = Yt(), i = a.locale, o = a.classNames, s = a.styles, u = a.hideHead, c = a.fixedWeeks, d = a.components, f = a.weekStartsOn, h = a.firstWeekContainsDate, p = a.ISOWeek, g = S0t(e.displayMonth, {
     useFixedWeeks: !!c,
     ISOWeek: p,
     locale: i,
     weekStartsOn: f,
     firstWeekContainsDate: h
-  }), v = (t = d == null ? void 0 : d.Head) !== null && t !== void 0 ? t : Bbt, y = (n = d == null ? void 0 : d.Row) !== null && n !== void 0 ? n : $0t, P = (r = d == null ? void 0 : d.Footer) !== null && r !== void 0 ? r : zbt;
+  }), v = (t = d == null ? void 0 : d.Head) !== null && t !== void 0 ? t : Vbt, y = (n = d == null ? void 0 : d.Row) !== null && n !== void 0 ? n : C0t, P = (r = d == null ? void 0 : d.Footer) !== null && r !== void 0 ? r : Lbt;
   return te("table", { id: e.id, className: o.table, style: s.table, role: "grid", "aria-labelledby": e["aria-labelledby"], children: [!u && b(v, {}), b("tbody", { className: o.tbody, style: s.tbody, children: g.map(function(M) {
     return b(y, { displayMonth: e.displayMonth, dates: M.dates, weekNumber: M.weekNumber }, M.weekNumber);
   }) }), b(P, { displayMonth: e.displayMonth })] });
 }
-function E0t() {
+function _0t() {
   return !!(typeof window < "u" && window.document && window.document.createElement);
 }
-var A0t = E0t() ? hu : Je, MP = !1, O0t = 0;
+var T0t = _0t() ? hu : Je, MP = !1, E0t = 0;
 function GD() {
-  return "react-day-picker-".concat(++O0t);
+  return "react-day-picker-".concat(++E0t);
 }
-function D0t(e) {
+function A0t(e) {
   var t, n = e ?? (MP ? GD() : null), r = We(n), a = r[0], i = r[1];
-  return A0t(function() {
+  return T0t(function() {
     a === null && i(GD());
   }, []), Je(function() {
     MP === !1 && (MP = !0);
   }, []), (t = e ?? a) !== null && t !== void 0 ? t : void 0;
 }
-function N0t(e) {
-  var t, n, r = Yt(), a = r.dir, i = r.classNames, o = r.styles, s = r.components, u = Cm().displayMonths, c = D0t(r.id ? "".concat(r.id, "-").concat(e.displayIndex) : void 0), d = r.id ? "".concat(r.id, "-grid-").concat(e.displayIndex) : void 0, f = [i.month], h = o.month, p = e.displayIndex === 0, g = e.displayIndex === u.length - 1, v = !p && !g;
+function O0t(e) {
+  var t, n, r = Yt(), a = r.dir, i = r.classNames, o = r.styles, s = r.components, u = Cm().displayMonths, c = A0t(r.id ? "".concat(r.id, "-").concat(e.displayIndex) : void 0), d = r.id ? "".concat(r.id, "-grid-").concat(e.displayIndex) : void 0, f = [i.month], h = o.month, p = e.displayIndex === 0, g = e.displayIndex === u.length - 1, v = !p && !g;
   a === "rtl" && (t = [p, g], g = t[0], p = t[1]), p && (f.push(i.caption_start), h = Ye(Ye({}, h), o.caption_start)), g && (f.push(i.caption_end), h = Ye(Ye({}, h), o.caption_end)), v && (f.push(i.caption_between), h = Ye(Ye({}, h), o.caption_between));
-  var y = (n = s == null ? void 0 : s.Caption) !== null && n !== void 0 ? n : Fbt;
-  return te("div", { className: f.join(" "), style: h, children: [b(y, { id: c, displayMonth: e.displayMonth, displayIndex: e.displayIndex }), b(T0t, { id: d, "aria-labelledby": c, displayMonth: e.displayMonth })] }, e.displayIndex);
+  var y = (n = s == null ? void 0 : s.Caption) !== null && n !== void 0 ? n : Ibt;
+  return te("div", { className: f.join(" "), style: h, children: [b(y, { id: c, displayMonth: e.displayMonth, displayIndex: e.displayIndex }), b($0t, { id: d, "aria-labelledby": c, displayMonth: e.displayMonth })] }, e.displayIndex);
 }
-function W0t(e) {
+function D0t(e) {
   var t = Yt(), n = t.classNames, r = t.styles;
   return b("div", { className: n.months, style: r.months, children: e.children });
 }
-function R0t(e) {
+function N0t(e) {
   var t, n, r = e.initialProps, a = Yt(), i = H5(), o = Cm(), s = We(!1), u = s[0], c = s[1];
   Je(function() {
     a.initialFocus && i.focusTarget && (u || (i.focus(i.focusTarget), c(!0)));
@@ -86263,17 +86203,17 @@ function R0t(e) {
   }).reduce(function(g, v) {
     var y;
     return Ye(Ye({}, g), (y = {}, y[v] = r[v], y));
-  }, {}), p = (n = (t = r.components) === null || t === void 0 ? void 0 : t.Months) !== null && n !== void 0 ? n : W0t;
+  }, {}), p = (n = (t = r.components) === null || t === void 0 ? void 0 : t.Months) !== null && n !== void 0 ? n : D0t;
   return b("div", Ye({ className: d.join(" "), style: f, dir: a.dir, id: a.id, nonce: r.nonce, title: r.title, lang: r.lang }, h, { children: b(p, { children: o.displayMonths.map(function(g, v) {
-    return b(N0t, { displayIndex: v, displayMonth: g }, v);
+    return b(O0t, { displayIndex: v, displayMonth: g }, v);
   }) }) }));
 }
-function j0t(e) {
-  var t = e.children, n = sbt(e, ["children"]);
-  return b(Sbt, { initialProps: n, children: b(Rbt, { children: b(v0t, { initialProps: n, children: b(Xbt, { initialProps: n, children: b(Ubt, { initialProps: n, children: b(r0t, { children: b(p0t, { children: t }) }) }) }) }) }) });
+function W0t(e) {
+  var t = e.children, n = ibt(e, ["children"]);
+  return b(kbt, { initialProps: n, children: b(Nbt, { children: b(p0t, { initialProps: n, children: b(Bbt, { initialProps: n, children: b(Gbt, { initialProps: n, children: b(t0t, { children: b(m0t, { children: t }) }) }) }) }) }) });
 }
-function I0t(e) {
-  return b(j0t, Ye({}, e, { children: b(R0t, { initialProps: e }) }));
+function R0t(e) {
+  return b(W0t, Ye({}, e, { children: b(N0t, { initialProps: e }) }));
 }
 function zg({
   className: e,
@@ -86282,7 +86222,7 @@ function zg({
   ...r
 }) {
   return /* @__PURE__ */ b(
-    I0t,
+    R0t,
     {
       showOutsideDays: n,
       className: e,
@@ -86325,7 +86265,7 @@ function zg({
         ...t
       },
       components: {
-        IconLeft: () => /* @__PURE__ */ b(F5e, { className: "h-4 w-4" }),
+        IconLeft: () => /* @__PURE__ */ b(I5e, { className: "h-4 w-4" }),
         IconRight: () => /* @__PURE__ */ b(tH, { className: "h-4 w-4" })
       },
       ...r
@@ -86333,7 +86273,7 @@ function zg({
   );
 }
 zg.displayName = "Calendar";
-function L0t({
+function j0t({
   mode: e,
   selected: t,
   onSelect: n,
@@ -86460,7 +86400,7 @@ const kP = (e, t) => ({
   render: (e) => {
     const t = Ju(e.minDate), n = Ju(e.maxDate);
     return /* @__PURE__ */ b(
-      L0t,
+      j0t,
       {
         mode: e.mode,
         selected: e.selected,
@@ -86476,7 +86416,7 @@ const kP = (e, t) => ({
 }, Qu = (e) => e < 6 ? 1 : 2, ap = (e, t) => {
   const n = e === 1 ? 0 : 6, r = e === 1 ? 5 : 11, a = Lt(new Date(t, n, 1)), i = Jr(new Date(t, r + 1, 0));
   return { from: a, to: i };
-}, F0t = ({
+}, I0t = ({
   mode: e,
   selected: t,
   onSelect: n,
@@ -86636,7 +86576,7 @@ function ec(e) {
     (t) => nD(t) < 6 ? Jr(Vd(t, 5)) : Xo(t)
   );
 }
-const z0t = {
+const L0t = {
   calendarView: "halfyear",
   add: CP,
   getPrevNext: (e, t) => {
@@ -86681,7 +86621,7 @@ const z0t = {
   render: (e) => {
     const t = ec(e.minDate), n = ec(e.maxDate);
     return /* @__PURE__ */ b(
-      F0t,
+      I0t,
       {
         mode: e.mode,
         year: e.viewDate.getFullYear(),
@@ -86694,7 +86634,7 @@ const z0t = {
     );
   }
 };
-function V0t({
+function F0t({
   mode: e,
   selected: t,
   onSelect: n,
@@ -86830,7 +86770,7 @@ function wd(e) {
 const SP = (e, t) => ({
   from: Lt(vn(e.from, t)),
   to: Jr(vn(e.to, t))
-}), H0t = {
+}), z0t = {
   calendarView: "month",
   add: SP,
   getPrevNext: (e, t) => {
@@ -86862,7 +86802,7 @@ const SP = (e, t) => ({
   navigate: (e, t) => vn(e, t),
   navigateUIView: (e, t) => as(e, t),
   label: (e) => /* @__PURE__ */ b(
-    R_e,
+    N_e,
     {
       format: {
         useGrouping: !1,
@@ -86878,7 +86818,7 @@ const SP = (e, t) => ({
   render: (e) => {
     const t = wd(e.minDate), n = wd(e.maxDate);
     return /* @__PURE__ */ b(
-      V0t,
+      F0t,
       {
         mode: e.mode,
         year: e.viewDate.getFullYear(),
@@ -86890,10 +86830,10 @@ const SP = (e, t) => ({
       }
     );
   }
-}, Zu = (e) => Math.floor(e / 3) + 1, B0t = (e) => e >= 1 && e <= 4 ? [0, 1, 2].map((t) => t + (e - 1) * 3) : [], ip = (e, t) => {
-  const n = B0t(e), r = n[0], a = n[n.length - 1], i = new Date(t, r, 1), o = new Date(t, a + 1, 0);
+}, Zu = (e) => Math.floor(e / 3) + 1, V0t = (e) => e >= 1 && e <= 4 ? [0, 1, 2].map((t) => t + (e - 1) * 3) : [], ip = (e, t) => {
+  const n = V0t(e), r = n[0], a = n[n.length - 1], i = new Date(t, r, 1), o = new Date(t, a + 1, 0);
   return { from: i, to: o };
-}, q0t = ({
+}, H0t = ({
   mode: e,
   selected: t,
   onSelect: n,
@@ -87035,7 +86975,7 @@ function Pd(e) {
 const $P = (e, t) => ({
   from: mc(vn(e.from, t * 3)),
   to: s5(vn(e.to, t * 3))
-}), X0t = {
+}), B0t = {
   calendarView: "quarter",
   add: $P,
   getPrevNext: (e, t) => {
@@ -87074,7 +87014,7 @@ const $P = (e, t) => ({
   render: (e) => {
     const t = Pd(e.minDate), n = Pd(e.maxDate);
     return /* @__PURE__ */ b(
-      q0t,
+      H0t,
       {
         mode: e.mode,
         year: e.viewDate.getFullYear(),
@@ -87089,7 +87029,7 @@ const $P = (e, t) => ({
 }, _P = (e, t) => ({
   from: vi(Jt(e.from, t)),
   to: ym(Jt(e.to, t))
-}), G0t = {
+}), q0t = {
   calendarMode: "range",
   ...KM,
   add: _P,
@@ -87100,7 +87040,7 @@ const $P = (e, t) => ({
         prev: !1,
         next: !1
       };
-    const { from: r, to: a } = n, i = _Se(a, r) + 1, { from: o, to: s } = _P({ from: r, to: a }, -i), { from: u, to: c } = _P({ from: r, to: a }, i), d = t.min && vi(t.min), f = t.max && ym(t.max);
+    const { from: r, to: a } = n, i = SSe(a, r) + 1, { from: o, to: s } = _P({ from: r, to: a }, -i), { from: u, to: c } = _P({ from: r, to: a }, i), d = t.min && vi(t.min), f = t.max && ym(t.max);
     return {
       prev: os(o, d) ? { from: o, to: s } : !1,
       next: is(c, f) ? { from: u, to: c } : !1
@@ -87109,7 +87049,7 @@ const $P = (e, t) => ({
   calendarView: "day",
   render: (e) => KM.render({ ...e, mode: "range" })
 };
-function Y0t({
+function X0t({
   selected: e,
   onSelect: t,
   month: n,
@@ -87177,7 +87117,7 @@ function xd(e) {
 const TP = (e, t) => ({
   from: Ha(Jt(e.from, t * 7)),
   to: bm(Jt(e.to, t * 7))
-}), U0t = {
+}), G0t = {
   calendarView: "week",
   add: TP,
   getPrevNext: (e, t) => {
@@ -87216,7 +87156,7 @@ const TP = (e, t) => ({
   render: (e) => {
     const t = xd(e.minDate), n = xd(e.maxDate);
     return /* @__PURE__ */ b(
-      Y0t,
+      X0t,
       {
         selected: e.selected,
         onSelect: e.onSelect,
@@ -87229,7 +87169,7 @@ const TP = (e, t) => ({
     );
   }
 };
-function K0t({
+function Y0t({
   mode: e,
   selected: t,
   onSelect: n,
@@ -87355,7 +87295,7 @@ function Md(e) {
 const EP = (e, t) => ({
   from: Da(as(e.from, t)),
   to: Xo(as(e.to, t))
-}), Q0t = {
+}), U0t = {
   calendarView: "year",
   add: EP,
   getPrevNext: (e, t) => {
@@ -87394,7 +87334,7 @@ const EP = (e, t) => ({
   render: (e) => {
     const t = Md(e.minDate), n = Md(e.maxDate);
     return /* @__PURE__ */ b(
-      K0t,
+      Y0t,
       {
         mode: e.mode,
         decade: e.viewDate.getFullYear(),
@@ -87408,13 +87348,13 @@ const EP = (e, t) => ({
   }
 }, q5 = {
   day: KM,
-  week: U0t,
-  month: H0t,
-  quarter: X0t,
-  halfyear: z0t,
-  year: Q0t,
-  range: G0t
-}, Z0t = (e) => {
+  week: G0t,
+  month: z0t,
+  quarter: B0t,
+  halfyear: L0t,
+  year: U0t,
+  range: q0t
+}, K0t = (e) => {
   const t = q5[e];
   if (!t)
     throw new Error(
@@ -87430,7 +87370,7 @@ const EP = (e, t) => ({
     throw new Error(`Granularity definition ${e} not found`);
   return t;
 };
-function J0t({
+function Q0t({
   mode: e = "single",
   view: t = "month",
   onSelect: n,
@@ -87573,7 +87513,7 @@ function J0t({
     }) })
   ] });
 }
-const ewt = Me(
+const Z0t = Me(
   function({ bare: t = !1, ...n }, r) {
     return /* @__PURE__ */ b(
       "div",
@@ -87588,7 +87528,7 @@ const ewt = Me(
       }
     );
   }
-), twt = ({ text: e, isCompleted: t }) => /* @__PURE__ */ te("div", { className: "flex flex-row items-center gap-2", children: [
+), J0t = ({ text: e, isCompleted: t }) => /* @__PURE__ */ te("div", { className: "flex flex-row items-center gap-2", children: [
   /* @__PURE__ */ b(
     kt,
     {
@@ -87604,17 +87544,17 @@ const ewt = Me(
       children: e
     }
   )
-] }), nwt = ({ title: e, items: t }) => /* @__PURE__ */ te("div", { className: "px-4 pb-2", children: [
+] }), ewt = ({ title: e, items: t }) => /* @__PURE__ */ te("div", { className: "px-4 pb-2", children: [
   /* @__PURE__ */ b("div", { className: "mb-2 text-sm text-f1-foreground-secondary", children: e }),
   /* @__PURE__ */ b("div", { className: "flex flex-col gap-2", children: t.map((n) => /* @__PURE__ */ b(
-    twt,
+    J0t,
     {
       text: n.text,
       isCompleted: n.isCompleted ?? !1
     },
     n.text
   )) })
-] }), rwt = ({
+] }), twt = ({
   onClose: e,
   success: t,
   successButtonOnClick: n,
@@ -87681,7 +87621,7 @@ const ewt = Me(
                   className: `flex flex-col items-start gap-4 px-4 ${n ? "pt-5" : "py-5"}`,
                   children: [
                     /* @__PURE__ */ b(
-                      g_e,
+                      h_e,
                       {
                         type: n ? "positive" : "critical",
                         size: "lg",
@@ -87696,11 +87636,11 @@ const ewt = Me(
                 }
               ),
               n ? /* @__PURE__ */ te(Pt, { children: [
-                /* @__PURE__ */ b(ewt, {}),
-                /* @__PURE__ */ b(nwt, { title: i.title, items: i.items })
+                /* @__PURE__ */ b(Z0t, {}),
+                /* @__PURE__ */ b(ewt, { title: i.title, items: i.items })
               ] }) : null,
               /* @__PURE__ */ b(
-                rwt,
+                twt,
                 {
                   onClose: f,
                   success: n,
@@ -87781,12 +87721,12 @@ function KD(e, t) {
   };
 }
 const mu = (e) => {
-  const t = fwt[e];
+  const t = lwt[e];
   if (!t)
     throw new Error(`Filter type ${e.toString()} not found`);
   return t;
 };
-function awt({
+function nwt({
   value: e,
   onChange: t,
   schema: n
@@ -87800,7 +87740,7 @@ function awt({
   };
   return /* @__PURE__ */ te(Pt, { children: [
     /* @__PURE__ */ b("div", { className: "space-y-4 overflow-x-hidden p-3", children: /* @__PURE__ */ b(
-      J0t,
+      Q0t,
       {
         defaultSelected: e || r.defaultSelected,
         onSelect: (i) => t(i ?? void 0),
@@ -87821,19 +87761,19 @@ function awt({
     ) })
   ] });
 }
-const iwt = (e, t) => !e || "from" in e && !e.from && t.schema.options.mode === "single" || "from" in e && !e.from && !e.to && t.schema.options.mode === "range", QD = {
+const rwt = (e, t) => !e || "from" in e && !e.from && t.schema.options.mode === "single" || "from" in e && !e.from && !e.to && t.schema.options.mode === "range", QD = {
   mode: "single",
   view: "day"
-}, owt = {
+}, awt = {
   emptyValue: void 0,
   render: (e) => {
     const t = KD(e.schema.options, QD);
-    return /* @__PURE__ */ b(awt, { ...e, schema: { ...e.schema, options: t } });
+    return /* @__PURE__ */ b(nwt, { ...e, schema: { ...e.schema, options: t } });
   },
-  isEmpty: iwt,
+  isEmpty: rwt,
   chipLabel: (e, t) => {
     const n = KD(t.schema.options, QD);
-    return Z0t(n.view).toString(e);
+    return K0t(n.view).toString(e);
   },
   formHeight: 520
 }, vp = /* @__PURE__ */ new Map();
@@ -87846,7 +87786,7 @@ async function mq(e, t, n = !1) {
   const a = await (typeof t == "function" ? t : () => t)();
   return vp.set(e, a), a;
 }
-function swt(e) {
+function iwt(e) {
   const t = fq(e), [n, r] = We([]), [a, i] = We(!1), [o, s] = We(null), u = qn(
     async (c = !1) => {
       c && vp.delete(t);
@@ -87879,12 +87819,12 @@ function swt(e) {
     loadOptions: u
   };
 }
-function uwt({
+function owt({
   schema: e,
   value: t,
   onChange: n
 }) {
-  const r = ji(), [a, i] = We(""), { options: o, isLoading: s, error: u, loadOptions: c } = swt({
+  const r = ji(), [a, i] = We(""), { options: o, isLoading: s, error: u, loadOptions: c } = iwt({
     ...e,
     type: "in"
   });
@@ -87996,10 +87936,10 @@ function uwt({
     }
   );
 }
-const cwt = {
+const swt = {
   emptyValue: [],
   isEmpty: (e) => (e || []).length === 0,
-  render: (e) => /* @__PURE__ */ b(uwt, { ...e }),
+  render: (e) => /* @__PURE__ */ b(owt, { ...e }),
   chipLabel: async (e, { schema: t }) => {
     const n = fq(t), r = await mq(
       n,
@@ -88012,7 +87952,7 @@ const cwt = {
     return o > 0 ? `${i} +${o}` : `${i}`;
   }
 };
-function lwt({
+function uwt({
   schema: e,
   value: t,
   onChange: n
@@ -88028,16 +87968,76 @@ function lwt({
     }
   ) });
 }
-const dwt = {
+const cwt = {
   emptyValue: "",
-  render: (e) => /* @__PURE__ */ b(lwt, { ...e }),
+  render: (e) => /* @__PURE__ */ b(uwt, { ...e }),
   isEmpty: (e) => (e ?? "").trim() === "",
   chipLabel: (e) => e
-}, fwt = {
-  in: cwt,
-  search: dwt,
-  date: owt
-};
+}, lwt = {
+  in: swt,
+  search: cwt,
+  date: awt
+}, dwt = Gt({
+  base: "flex items-center gap-1 rounded-full border border-solid border-f1-border px-2 py-0.5 font-medium",
+  variants: {
+    variant: {
+      default: "",
+      selected: "border-f1-border-selected bg-f1-background-selected-secondary text-f1-foreground-selected"
+    }
+  },
+  defaultVariants: {
+    variant: "default"
+  }
+}), fwt = ({
+  label: e,
+  variant: t,
+  onClick: n,
+  onClose: r,
+  avatar: a,
+  icon: i
+}) => /* @__PURE__ */ te(
+  "div",
+  {
+    className: ue(
+      dwt({ variant: t }),
+      r && "pr-1.5",
+      a && "pl-0.5",
+      a && (a == null ? void 0 : a.type) !== "person" && "rounded-sm",
+      i && !a && "pl-1.5",
+      n && "cursor-pointer",
+      n && vr()
+    ),
+    onClick: n,
+    onKeyDown: (o) => {
+      (o.key === "Enter" || o.key === " ") && (n == null || n());
+    },
+    tabIndex: n ? 0 : void 0,
+    children: [
+      a && /* @__PURE__ */ b(yo, { avatar: a, size: "xsmall" }),
+      /* @__PURE__ */ te("div", { className: "flex items-center gap-0.5", children: [
+        i && /* @__PURE__ */ b(kt, { icon: i, size: "sm", className: "text-f1-icon" }),
+        e
+      ] }),
+      r && /* @__PURE__ */ b(
+        "button",
+        {
+          type: "button",
+          onClick: (o) => {
+            o.stopPropagation(), r();
+          },
+          className: ue(
+            "-m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full [&_svg]:text-f1-icon-secondary [&_svg]:transition-colors [&_svg]:hover:text-f1-icon [&_svg]:focus:text-f1-icon",
+            t === "selected" && "[&_svg]:text-f1-icon-selected [&_svg]:hover:text-f1-icon-selected-hover [&_svg]:focus:text-f1-icon-selected-hover",
+            vr()
+          ),
+          tabIndex: 0,
+          "aria-label": "Close",
+          children: /* @__PURE__ */ b(kt, { icon: gN, size: "sm" })
+        }
+      )
+    ]
+  }
+);
 function mwt({
   filter: e,
   value: t,
@@ -88062,7 +88062,7 @@ function mwt({
       exit: { opacity: 0, scale: 0.8 },
       transition: { type: "spring", duration: 0.2 },
       children: a ? /* @__PURE__ */ b(Ar, { className: "h-5 w-[100px]" }) : /* @__PURE__ */ b(
-        _5e,
+        fwt,
         {
           variant: "selected",
           label: s,
@@ -88516,7 +88516,7 @@ const QM = ({ item: e }) => /* @__PURE__ */ te(Pt, { children: [
     return u;
   }, r);
   return /* @__PURE__ */ b(
-    pSe,
+    mSe,
     {
       ...a,
       open: t,
@@ -88894,7 +88894,7 @@ export {
   yv as aC,
   Phe as aD,
   JV as aE,
-  g_e as aF,
+  h_e as aF,
   yo as aG,
   rV as aH,
   HF as aI,
@@ -88943,44 +88943,44 @@ export {
   Ghe as ay,
   Ke as az,
   fi as b,
-  zt as b$,
+  o1 as b$,
   Mwt as b0,
   T2t as b1,
   q5 as b2,
   Bf as b3,
-  Z0t as b4,
+  K0t as b4,
   $2t as b5,
-  J0t as b6,
+  Q0t as b6,
   Zc as b7,
   ji as b8,
   vr as b9,
-  yF as bA,
-  gn as bB,
-  kk as bC,
-  Mk as bD,
-  Yv as bE,
-  cu as bF,
-  Xv as bG,
-  cm as bH,
-  ok as bI,
-  g4e as bJ,
-  sk as bK,
-  QV as bL,
-  kJ as bM,
-  n1 as bN,
-  tH as bO,
-  cV as bP,
-  pSe as bQ,
-  gN as bR,
-  Pu as bS,
-  Hv as bT,
-  zwt as bU,
-  Rf as bV,
-  rH as bW,
-  J5e as bX,
-  Z5e as bY,
-  i3 as bZ,
-  Ie as b_,
+  kk as bA,
+  Mk as bB,
+  Yv as bC,
+  cu as bD,
+  Xv as bE,
+  cm as bF,
+  ok as bG,
+  g4e as bH,
+  sk as bI,
+  QV as bJ,
+  kJ as bK,
+  n1 as bL,
+  tH as bM,
+  cV as bN,
+  mSe as bO,
+  gN as bP,
+  Pu as bQ,
+  Hv as bR,
+  zwt as bS,
+  Rf as bT,
+  rH as bU,
+  Q5e as bV,
+  K5e as bW,
+  i3 as bX,
+  Ie as bY,
+  zt as bZ,
+  ku as b_,
   HV as ba,
   XV as bb,
   La as bc,
@@ -88993,107 +88993,105 @@ export {
   bl as bj,
   q4 as bk,
   Ev as bl,
-  _5e as bm,
-  Kv as bn,
-  Ml as bo,
-  Tk as bp,
-  wu as bq,
-  ik as br,
-  Uo as bs,
-  ZV as bt,
-  wt as bu,
-  Rv as bv,
-  Te as bw,
-  Va as bx,
-  dm as by,
-  Tke as bz,
+  Ml as bm,
+  Tk as bn,
+  wu as bo,
+  ik as bp,
+  Uo as bq,
+  ZV as br,
+  wt as bs,
+  Rv as bt,
+  Te as bu,
+  Va as bv,
+  dm as bw,
+  Tke as bx,
+  yF as by,
+  gn as bz,
   ga as c,
-  lV as c$,
-  ku as c0,
-  o1 as c1,
-  tl as c2,
-  P2t as c3,
-  w2t as c4,
-  b2t as c5,
-  bSe as c6,
-  Zr as c7,
-  lP as c8,
-  vn as c9,
-  LV as cA,
-  Uk as cB,
-  FV as cC,
-  LL as cD,
-  YPe as cE,
-  nr as cF,
-  Xf as cG,
-  OZ as cH,
-  sSe as cI,
-  uSe as cJ,
-  y2t as cK,
-  nB as cL,
-  UH as cM,
-  EF as cN,
-  rB as cO,
-  aB as cP,
-  hN as cQ,
-  P5e as cR,
-  Kk as cS,
-  BJ as cT,
-  mN as cU,
-  OJ as cV,
-  dB as cW,
-  os as cX,
-  is as cY,
-  Hwt as cZ,
-  hJ as c_,
-  as as ca,
-  _Se as cb,
-  bs as cc,
-  _F as cd,
-  Ar as ce,
-  Vwt as cf,
-  nj as cg,
-  o4 as ch,
-  ZMe as ci,
-  W_ as cj,
-  qf as ck,
-  au as cl,
-  R_e as cm,
-  b2e as cn,
-  r3 as co,
-  i2t as cp,
-  a3 as cq,
-  Vg as cr,
-  yN as cs,
-  IJ as ct,
-  Gae as cu,
-  M2t as cv,
-  AZ as cw,
-  FJ as cx,
-  vN as cy,
-  ZW as cz,
+  sa as c$,
+  tl as c0,
+  P2t as c1,
+  w2t as c2,
+  b2t as c3,
+  vSe as c4,
+  Zr as c5,
+  lP as c6,
+  vn as c7,
+  as as c8,
+  SSe as c9,
+  FV as cA,
+  LL as cB,
+  YPe as cC,
+  nr as cD,
+  Xf as cE,
+  OZ as cF,
+  iSe as cG,
+  oSe as cH,
+  y2t as cI,
+  nB as cJ,
+  UH as cK,
+  EF as cL,
+  rB as cM,
+  aB as cN,
+  hN as cO,
+  P5e as cP,
+  Kk as cQ,
+  BJ as cR,
+  mN as cS,
+  OJ as cT,
+  dB as cU,
+  os as cV,
+  is as cW,
+  Hwt as cX,
+  hJ as cY,
+  lV as cZ,
+  bxe as c_,
+  bs as ca,
+  _F as cb,
+  Ar as cc,
+  Vwt as cd,
+  nj as ce,
+  o4 as cf,
+  ZMe as cg,
+  W_ as ch,
+  qf as ci,
+  au as cj,
+  N_e as ck,
+  b2e as cl,
+  r3 as cm,
+  i2t as cn,
+  a3 as co,
+  Vg as cp,
+  yN as cq,
+  IJ as cr,
+  Gae as cs,
+  M2t as ct,
+  AZ as cu,
+  FJ as cv,
+  vN as cw,
+  ZW as cx,
+  LV as cy,
+  Uk as cz,
   Kwt as d,
-  bxe as d0,
-  sa as d1,
-  dk as d2,
-  fk as d3,
-  BV as d4,
-  c4e as d5,
-  l4e as d6,
-  d4e as d7,
-  yz as d8,
-  VJ as d9,
-  u2t as da,
-  mk as db,
-  Cxe as dc,
-  n2t as dd,
-  ewt as de,
-  Kwe as df,
-  xo as dg,
-  ov as dh,
-  EJ as di,
-  e2t as dj,
-  kl as dk,
+  dk as d0,
+  fk as d1,
+  BV as d2,
+  c4e as d3,
+  l4e as d4,
+  d4e as d5,
+  yz as d6,
+  VJ as d7,
+  u2t as d8,
+  mk as d9,
+  Cxe as da,
+  n2t as db,
+  Z0t as dc,
+  Kwe as dd,
+  xo as de,
+  ov as df,
+  EJ as dg,
+  e2t as dh,
+  kl as di,
   Qwt as e,
   wl as f,
   Zwt as g,
@@ -89108,7 +89106,7 @@ export {
   Sn as p,
   lk as q,
   hk as r,
-  vSe as s,
+  pSe as s,
   pk as t,
   _2t as u,
   S5e as v,
