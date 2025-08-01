@@ -1,6 +1,6 @@
 import { ButtonInternal } from "@/components/Actions/Button/internal"
+import { IconType } from "@/components/Utilities/Icon"
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
-import { IconType } from "@/factorial-one"
 import CrossIcon from "@/icons/app/Cross"
 import { Dialog, DialogContent, DialogTitle } from "@/ui/dialog"
 import { ScrollArea, ScrollBar } from "@/ui/scrollarea"

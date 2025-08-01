@@ -1,13 +1,12 @@
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import {
   ErrorMessageProps,
   NextStepsProps,
   SuccessMessageProps,
   UpsellRequestResponseDialog,
 } from "@/components/UpsellingKit/UpsellRequestResponseDialog"
-import { ButtonProps } from "@/factorial-one"
+import UpsellIcon from "@/icons/app/Upsell"
 import { useState } from "react"
-import { Button } from "../../../components/Actions/Button"
-import UpsellIcon from "../../../icons/app/Upsell"
 
 export interface LoadingStateProps {
   label: string

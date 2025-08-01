@@ -1,8 +1,7 @@
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { useTextFormatEnforcer } from "@/lib/text"
+import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
-import { IconType } from "../../../../components/Utilities/Icon"
-import { Icon } from "../../../../factorial-one.ts"
-import { useTextFormatEnforcer } from "../../../../lib/text"
-import { cn } from "../../../../lib/utils"
 import { BaseTag } from "../BaseTag"
 
 export type RawTagProps = {

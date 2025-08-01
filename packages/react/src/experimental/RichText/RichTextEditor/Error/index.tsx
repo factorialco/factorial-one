@@ -1,5 +1,6 @@
 import { Button } from "@/components/Actions/Button"
-import { AlertAvatar, errorConfig } from "@/experimental/exports"
+import { AlertAvatar } from "@/experimental/Information/Avatars/AlertAvatar"
+import { errorConfig } from "@/experimental/RichText/RichTextEditor/utils/types"
 import { Editor } from "@tiptap/react"
 
 interface ErrorProps {

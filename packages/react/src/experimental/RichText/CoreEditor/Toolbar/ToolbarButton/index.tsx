@@ -1,5 +1,5 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { Shortcut } from "@/experimental/exports"
+import { Shortcut } from "@/experimental/Information/Shortcut"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
@@ -45,6 +45,7 @@ export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
           }
         }}
         className={cn(
+          active ? "text-f1-icon-selected" : "text-f1-foreground",
           "flex items-center gap-1 border border-solid font-medium leading-tight shadow-none transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100 [&>button]:m-[-1px] [&>button]:aspect-square [&>button]:px-0",
           active
             ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
@@ -55,10 +56,7 @@ export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         aria-label={label}
         {...props}
       >
-        <Icon
-          icon={icon}
-          className={active ? "text-f1-icon-selected" : "text-f1-foreground"}
-        />
+        <Icon icon={icon} />
         {showLabel && (
           <span
             className={cn(

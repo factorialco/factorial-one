@@ -1,5 +1,89 @@
 # Changelog
 
+## [1.146.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.146.0...factorial-one-react-v1.146.1) (2025-08-01)
+
+
+### Bug Fixes
+
+* **DataCollection:** empty state types not recognized ([#2322](https://github.com/factorialco/factorial-one/issues/2322)) ([d6a2ba4](https://github.com/factorialco/factorial-one/commit/d6a2ba41901ec3d61693b5f4030a8a96436b5ee4))
+
+## [1.146.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.2...factorial-one-react-v1.146.0) (2025-08-01)
+
+
+### Features
+
+* **Card:** add skeleton ([#2352](https://github.com/factorialco/factorial-one/issues/2352)) ([bbe3aba](https://github.com/factorialco/factorial-one/commit/bbe3abaa4752ad3edaf879f43ce08e0716a321d2))
+
+## [1.145.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.1...factorial-one-react-v1.145.2) (2025-07-31)
+
+
+### Bug Fixes
+
+* export f0card ([#2345](https://github.com/factorialco/factorial-one/issues/2345)) ([dfadd0d](https://github.com/factorialco/factorial-one/commit/dfadd0d1bdb510d242747c28224a33bcaad90aec))
+
+## [1.145.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.0...factorial-one-react-v1.145.1) (2025-07-31)
+
+
+### Bug Fixes
+
+* **Card:** avoid multiple actions rendering ([#2349](https://github.com/factorialco/factorial-one/issues/2349)) ([9caa59e](https://github.com/factorialco/factorial-one/commit/9caa59e34d9cc235c781a981c4cb683146959b8a))
+
+## [1.145.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.144.1...factorial-one-react-v1.145.0) (2025-07-31)
+
+
+### Features
+
+* **Card:** set compact header ([#2346](https://github.com/factorialco/factorial-one/issues/2346)) ([baced08](https://github.com/factorialco/factorial-one/commit/baced083955e754da595eb824e94912223ea1a46))
+
+## [1.144.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.144.0...factorial-one-react-v1.144.1) (2025-07-31)
+
+
+### Bug Fixes
+
+* module-avatar invalid module does not fail, just warn ([#2343](https://github.com/factorialco/factorial-one/issues/2343)) ([da31d27](https://github.com/factorialco/factorial-one/commit/da31d270f027fb86baaf14cafc2c875184ea4a07))
+
+## [1.144.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.143.0...factorial-one-react-v1.144.0) (2025-07-31)
+
+
+### Features
+
+* **Card:** internal card with private props ([#2336](https://github.com/factorialco/factorial-one/issues/2336)) ([365e76d](https://github.com/factorialco/factorial-one/commit/365e76d9a6c7f751a8f13a886a684f178fac19bd))
+
+## [1.143.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.142.0...factorial-one-react-v1.143.0) (2025-07-31)
+
+
+### Features
+
+* create AiChat component ([#2259](https://github.com/factorialco/factorial-one/issues/2259)) ([58a1f36](https://github.com/factorialco/factorial-one/commit/58a1f362f73b97090367037ab37eaac7afd6ec2f))
+
+## [1.142.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.141.1...factorial-one-react-v1.142.0) (2025-07-30)
+
+
+### Features
+
+* **RichTextEditor:** add title input and toolbar ([#2333](https://github.com/factorialco/factorial-one/issues/2333)) ([bce76d8](https://github.com/factorialco/factorial-one/commit/bce76d8b45c44db6de8c14af09636a7205e7a7d1))
+
+## [1.141.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.141.0...factorial-one-react-v1.141.1) (2025-07-30)
+
+
+### Bug Fixes
+
+* **Card:** options dropdown not visible ([#2329](https://github.com/factorialco/factorial-one/issues/2329)) ([11706fa](https://github.com/factorialco/factorial-one/commit/11706fad37a26620a18b05d91c742a411750353c))
+
+## [1.141.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.140.0...factorial-one-react-v1.141.0) (2025-07-30)
+
+
+### Features
+
+* **Card:** responsive design ([#2315](https://github.com/factorialco/factorial-one/issues/2315)) ([87c546e](https://github.com/factorialco/factorial-one/commit/87c546e106d2535484a3406f076190c2a04875bb))
+
+## [1.140.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.139.0...factorial-one-react-v1.140.0) (2025-07-29)
+
+
+### Features
+
+* add raw type to TagList ([#2321](https://github.com/factorialco/factorial-one/issues/2321)) ([c9e99b3](https://github.com/factorialco/factorial-one/commit/c9e99b3e5bae4d1e973d12b166bb57674cc9f87d))
+
 ## [1.139.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.138.0...factorial-one-react-v1.139.0) (2025-07-29)
 
 

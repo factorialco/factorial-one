@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.139.0",
+  "version": "1.146.1",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -45,8 +45,11 @@
     "vitest:ci": "pnpm run vitest --reporter=dot"
   },
   "peerDependencies": {
+    "@copilotkit/react-core": "^1.9.3",
+    "@copilotkit/react-ui": "^1.9.3",
+    "@copilotkit/runtime": "^1.9.3",
     "@hookform/resolvers": "^3.9.0",
-    "@number-flow/react": "^0.3.0",
+    "@number-flow/react": "^0.5.10",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -158,6 +161,7 @@
     "@rollup/rollup-linux-x64-gnu": "^4.34"
   },
   "dependencies": {
+    "@copilotkit/runtime-client-gql": "^1.9.2",
     "@factorialco/factorial-one-core": "workspace:*",
     "@radix-ui/react-hover-card": "^1.1.6",
     "@radix-ui/react-switch": "^1.2.2",

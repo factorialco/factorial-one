@@ -57,9 +57,8 @@ export function CardOptions({
   return (
     <div
       className={cn(
-        "flex flex-row gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100 [&>div]:z-[1]",
-        isOpen && "opacity-100",
-        selected && "opacity-100",
+        "flex flex-row gap-1 opacity-100 transition-opacity delay-150 duration-150 focus-within:delay-0 group-hover:delay-0 sm:opacity-0 focus-within:sm:opacity-100 group-hover:sm:opacity-100 [&>div]:z-[1]",
+        (isOpen || selected) && "delay-0 sm:opacity-100",
         overlay &&
           "absolute right-2 top-2 rounded-sm bg-f1-background/60 p-1 shadow-md backdrop-blur-sm"
       )}

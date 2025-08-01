@@ -1,16 +1,15 @@
 import { Icon } from "@/components/Utilities/Icon"
-import {
-  EditorBubbleMenu,
-  ToolbarLabels,
-} from "@/experimental/RichText/CoreEditor"
+import { Toolbar, ToolbarLabels } from "@/experimental/RichText/CoreEditor"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
 import { Handle, Plus } from "@/icons/app"
+import { Button } from "@/ui/button"
 import DragHandle from "@tiptap/extension-drag-handle-react"
 import { Node } from "@tiptap/pm/model"
 import { Editor, EditorContent, JSONContent, useEditor } from "@tiptap/react"
 import {
   forwardRef,
   useCallback,
+  useEffect,
   useId,
   useImperativeHandle,
   useMemo,
@@ -31,10 +30,10 @@ import { createBasicTextEditorExtensions } from "./extensions"
 interface BasicTextEditorProps {
   onChange: (value: { json: JSONContent | null; html: string | null }) => void
   placeholder: string
-  initialEditorState?: { content: JSONContent | string }
+  initialEditorState?: { content: JSONContent | string; title?: string }
   readonly?: boolean
   aiBlockConfig?: AIBlockConfig
-
+  onTitleChange?: (title: string) => void
   labels: {
     toolbarLabels: ToolbarLabels
     slashCommandGroupLabels?: SlashCommandGroupLabels
@@ -42,6 +41,7 @@ interface BasicTextEditorProps {
     moodTrackerLabels?: MoodTrackerLabels
     liveCompanionLabels?: LiveCompanionLabels
     transcriptLabels?: TranscriptLabels
+    titlePlaceholder?: string
   }
 }
 
@@ -64,6 +64,7 @@ const BasicTextEditorComponent = forwardRef<
     readonly = false,
     labels,
     aiBlockConfig,
+    onTitleChange,
   },
   ref
 ) {
@@ -81,6 +82,13 @@ const BasicTextEditorComponent = forwardRef<
   const editorId = useId()
 
   const [initialContent] = useState(() => initialEditorState?.content || "")
+  const [title, setTitle] = useState(initialEditorState?.title || "")
+
+  useEffect(() => {
+    if (onTitleChange) {
+      onTitleChange(title)
+    }
+  }, [title, onTitleChange])
 
   const editor = useEditor({
     extensions: createBasicTextEditorExtensions(
@@ -206,51 +214,68 @@ const BasicTextEditorComponent = forwardRef<
 
   return (
     <div
-      className="basic-text-editor-container relative w-full"
+      className="relative flex h-full w-full flex-col"
       ref={containerRef}
       id={editorId}
     >
-      <DragHandle
-        editor={editor}
-        tippyOptions={tippyOptions}
-        onNodeChange={handleNodeChange}
+      <div className="border-0 border-b border-solid border-f1-border-secondary px-6 py-3">
+        <Toolbar
+          labels={toolbarLabels}
+          editor={editor}
+          disableButtons={false}
+          darkMode
+          showEmojiPicker={false}
+          plainHtmlMode={false}
+        />
+      </div>
+
+      <div
+        className="basic-text-editor-container scrollbar-macos h-full overflow-y-auto pt-6"
+        onClick={() => editor.commands.focus()}
       >
-        <div className="flex flex-row">
-          <div
-            className="flex h-5 w-4 cursor-pointer items-center justify-center rounded-2xs hover:bg-f1-background-hover"
-            onClick={handlePlusClick}
-          >
-            <Icon
-              icon={Plus}
+        {onTitleChange && (
+          <div className="flex flex-col px-16">
+            <input
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder={labels.titlePlaceholder || ""}
+              className="text-3xl font-semibold text-f1-foreground placeholder-f1-foreground-tertiary"
+            />
+          </div>
+        )}
+        <DragHandle
+          editor={editor}
+          tippyOptions={tippyOptions}
+          onNodeChange={handleNodeChange}
+        >
+          <div className="flex flex-row">
+            <Button
+              round
+              variant="ghost"
               size="sm"
               className="text-f1-foreground-tertiary"
-            />
-          </div>
-
-          <div
-            data-drag-handle
-            draggable
-            className="flex h-5 w-5 cursor-grab items-center justify-center rounded-2xs hover:bg-f1-background-hover"
-          >
-            <Icon
-              icon={Handle}
-              size="xs"
+              onClick={handlePlusClick}
+            >
+              <Icon icon={Plus} size="sm" />
+            </Button>
+            <Button
+              round
+              variant="ghost"
+              size="sm"
               className="text-f1-foreground-tertiary"
-            />
+              data-drag-handle
+              draggable
+            >
+              <Icon icon={Handle} size="xs" />
+            </Button>
           </div>
-        </div>
-      </DragHandle>
+        </DragHandle>
 
-      <EditorContent editor={editor} className="[&>div]:w-full [&>div]:pl-10" />
-
-      <EditorBubbleMenu
-        editor={editor}
-        toolbarLabels={toolbarLabels}
-        disableButtons={false}
-        isToolbarOpen={false}
-        isFullscreen={false}
-        editorId={editorId}
-      />
+        <EditorContent
+          editor={editor}
+          className="[&>div]:w-full [&>div]:px-16"
+        />
+      </div>
     </div>
   )
 })
