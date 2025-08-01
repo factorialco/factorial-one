@@ -35,4 +35,5 @@ export interface TOCProps {
   items: TOCItem[]
   className?: string
   activeItem?: string
+  collapsible?: boolean
 }

@@ -21,20 +21,24 @@ export function Item({ item, counter, isActive }: TOCItemProps) {
     <div
       className={cn(
         focusRing("focus:border-f1-border-focus"),
-        "flex h-[36px] items-center gap-1 rounded-[10px] border border-solid border-transparent px-2 text-sm transition-colors",
+        "flex h-[36px] min-w-0 items-center gap-1 rounded-[10px] border border-solid border-transparent px-2 text-sm transition-colors",
         isActive && "bg-f1-background-selected",
         onClick && !disabled && "cursor-pointer hover:bg-f1-background-hover",
         disabled && "cursor-not-allowed opacity-30"
       )}
       onClick={disabled ? undefined : () => onClick?.(item.id)}
     >
-      {icon && <Icon icon={icon} size="sm" />}
-      <span className="flex-1 truncate text-[14px]" title={label}>
+      {icon && <Icon icon={icon} size="sm" className="flex-shrink-0" />}
+      <span className="min-w-0 flex-1 truncate text-[14px]" title={label}>
         {label}
       </span>
-      {counter && <Counter value={counter} />}
+      {counter && (
+        <div className="flex-shrink-0">
+          <Counter value={counter} />
+        </div>
+      )}
       {otherActions && otherActions.length > 0 && (
-        <div onClick={(e) => e.stopPropagation()}>
+        <div onClick={(e) => e.stopPropagation()} className="flex-shrink-0">
           <Dropdown
             items={otherActions.map((action): DropdownItem => {
               if ("type" in action && action.type === "separator") {

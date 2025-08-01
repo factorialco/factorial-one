@@ -32,9 +32,8 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
   {
     id: "section-1",
     label: "Section header",
+    onClick: setActiveItem,
     icon: Placeholder,
-    otherActions: mockOtherActions,
-
     children: [
       {
         id: "item-1-1",
@@ -75,6 +74,8 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
     id: "section-2",
     label: "Label",
     icon: Placeholder,
+    onClick: setActiveItem,
+
     children: [
       {
         id: "item-2-1",
@@ -92,6 +93,11 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
             id: "item-2-2-1",
             label: "Option",
             disabled: true,
+            onClick: setActiveItem,
+          },
+          {
+            id: "item-2-2-2",
+            label: "Option",
             onClick: setActiveItem,
           },
         ],
@@ -166,13 +172,13 @@ const meta: Meta<typeof TableOfContent> = {
   },
   decorators: [
     (Story) => (
-      <div className="h-[400px] w-fit border border-solid border-f1-border">
+      <div className="h-96 w-fit border border-solid border-f1-border">
         <Story />
       </div>
     ),
   ],
   render: (args) => {
-    const [activeItem, setActiveItem] = useState("item-1-1")
+    const [activeItem, setActiveItem] = useState("item-2-2-2")
 
     return (
       <TableOfContent
@@ -192,3 +198,9 @@ export default meta
 type Story = StoryObj<typeof TableOfContent>
 
 export const Default: Story = {}
+
+export const Collapsible: Story = {
+  args: {
+    collapsible: true,
+  },
+}
