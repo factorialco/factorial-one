@@ -1613,6 +1613,8 @@ declare interface ErrorMessageProps {
  */
 export declare type ExtractPropertyKeys<RecordType> = keyof RecordType;
 
+export declare function F0TableOfContent({ title, items, className, activeItem, collapsible, }: TOCProps): JSX_2.Element;
+
 export declare const F1SearchBox: ForwardRefExoticComponent<    {
 value?: string;
 threshold?: number;
@@ -2120,7 +2122,7 @@ declare type Items = typeof Item_2 | typeof PersonItem | typeof CompanyItem | ty
 
 declare type Items_2 = SelectItemObject<string>[];
 
-export declare function ItemSectionHeader({ item, children, isActive, }: TOCItemSectionHeaderProps): JSX_2.Element;
+export declare function ItemSectionHeader({ item, children, isActive, collapsible, isExpanded, onToggleExpanded, }: TOCItemSectionHeaderProps): JSX_2.Element;
 
 export declare type lastIntentType = {
     selectedIntent?: string;
@@ -3888,8 +3890,6 @@ declare interface TableHeadProps {
     align?: "left" | "right";
 }
 
-export declare function TableOfContent({ title, items, className, activeItem, }: TOCProps): JSX_2.Element;
-
 declare type TableVisualizationOptions<R extends RecordType, _Filters extends FiltersDefinition, Sortings extends SortingsDefinition, Summaries extends SummariesDefinition> = {
     columns: ReadonlyArray<TableColumnDefinition<R, Sortings, Summaries>>;
     frozenColumns?: 0 | 1 | 2;
@@ -4035,6 +4035,9 @@ declare interface TOCItemSectionHeaderProps {
     item: TOCItem;
     children?: ReactNode;
     isActive?: boolean;
+    collapsible?: boolean;
+    isExpanded?: boolean;
+    onToggleExpanded?: (id: string) => void;
 }
 
 export declare interface TOCProps {
@@ -4042,6 +4045,7 @@ export declare interface TOCProps {
     items: TOCItem[];
     className?: string;
     activeItem?: string;
+    collapsible?: boolean;
 }
 
 declare type toggleActionType = {
@@ -4460,8 +4464,8 @@ declare global {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        aiBlock: {
-            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
     }
 }
@@ -4469,8 +4473,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        liveCompanion: {
-            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        aiBlock: {
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
         };
     }
 }
