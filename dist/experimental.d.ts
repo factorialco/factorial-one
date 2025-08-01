@@ -1,13 +1,10 @@
 import { AlertAvatarProps as AlertAvatarProps_2 } from '../exports';
-import { AlertTagCellValue } from '../../OneDataCollection/visualizations/property/types/alertTag';
-import { AlertTagCellValue as AlertTagCellValue_2 } from './types/alertTag.tsx';
-import { AmountCellValue } from '../../OneDataCollection/visualizations/property/types/amount';
-import { AmountCellValue as AmountCellValue_2 } from './types/amount.tsx';
+import { AlertTagCellValue } from './types/alertTag.tsx';
+import { AmountCellValue } from './types/amount.tsx';
 import { AnchorHTMLAttributes } from 'react';
 import { AreaChartWidgetProps } from './AreaChartWidget';
 import { AriaAttributes } from 'react';
-import { AvatarListCellValue } from '../../OneDataCollection/visualizations/property/types/avatarList';
-import { AvatarListCellValue as AvatarListCellValue_2 } from './types/avatarList.tsx';
+import { AvatarListCellValue } from './types/avatarList.tsx';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { AvatarProps } from '@radix-ui/react-avatar';
 import { BarChartProps } from '../../../components/Charts/BarChart';
@@ -15,18 +12,17 @@ import { baseColors } from '@factorialco/factorial-one-core';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
 import { color as color_2 } from '../../../../ui/avatar';
-import { CompanyCellValue } from '../../OneDataCollection/visualizations/property/types/company';
-import { CompanyCellValue as CompanyCellValue_2 } from './types/company.tsx';
+import { CompanyCellValue } from './types/company.tsx';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
-import { DateCellValue } from '../../OneDataCollection/visualizations/property/types/date';
-import { DateCellValue as DateCellValue_2 } from './types/date.tsx';
+import { CopilotKit } from '@copilotkit/react-core';
+import { CopilotPopup } from '@copilotkit/react-ui';
+import { DateCellValue } from './types/date.tsx';
 import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
 import { Dispatch } from 'react';
-import { DotTagCellValue } from '../../OneDataCollection/visualizations/property/types/dotTag';
-import { DotTagCellValue as DotTagCellValue_2 } from './types/dotTag.tsx';
+import { DotTagCellValue } from './types/dotTag.tsx';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Editor } from '@tiptap/react';
 import { FC } from 'react';
@@ -37,22 +33,19 @@ import { ForwardRefExoticComponent } from 'react';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
 import { IconCellValue } from './types/icon.tsx';
-import { IconType as IconType_3 } from '../../factorial-one';
+import { IconType as IconType_2 } from '../../factorial-one';
 import { InFilterOptions } from './InFilter/types';
 import { JSONContent } from '@tiptap/react';
 import { JSONContent as JSONContent_2 } from '@tiptap/core';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
-import { NumberCellValue } from '../../OneDataCollection/visualizations/property/types/number';
-import { NumberCellValue as NumberCellValue_2 } from './types/number.tsx';
+import { NumberCellValue } from './types/number.tsx';
 import { Observable } from 'zen-observable-ts';
 import { Path } from 'react-hook-form';
-import { PersonCellValue } from '../../OneDataCollection/visualizations/property/types/person';
-import { PersonCellValue as PersonCellValue_2 } from './types/person.tsx';
+import { PersonCellValue } from './types/person.tsx';
 import { PieChartProps } from '../../../components/Charts/PieChart';
 import { PopoverProps } from '@radix-ui/react-popover';
-import { PropertyRendererMetadata } from '../../OneDataCollection/visualizations/property/types';
-import { PropertyRendererMetadata as PropertyRendererMetadata_2 } from './types.ts';
+import { PropertyRendererMetadata } from './types.ts';
 import { PropsWithChildren } from 'react';
 import * as React_2 from 'react';
 import { ReactElement } from 'react';
@@ -61,17 +54,12 @@ import * as RechartsPrimitive from 'recharts';
 import { RefAttributes } from 'react';
 import { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { sizes as sizes_2 } from '../../../../ui/avatar';
-import { StatusCellValue } from '../../OneDataCollection/visualizations/property/types/status';
-import { StatusCellValue as StatusCellValue_2 } from './types/status.tsx';
+import { StatusCellValue } from './types/status.tsx';
 import { SVGProps } from 'react';
-import { TagCellValue } from '../../OneDataCollection/visualizations/property/types/tag';
-import { TagCellValue as TagCellValue_2 } from './types/tag.tsx';
-import { TagListCellValue } from '../../OneDataCollection/visualizations/property/types/tagList';
-import { TagListCellValue as TagListCellValue_2 } from './types/tagList.tsx';
-import { TeamCellValue } from '../../OneDataCollection/visualizations/property/types/team';
-import { TeamCellValue as TeamCellValue_2 } from './types/team.tsx';
-import { TextCellValue } from '../../OneDataCollection/visualizations/property/types/text';
-import { TextCellValue as TextCellValue_2 } from './types/text.tsx';
+import { TagCellValue } from './types/tag.tsx';
+import { TagListCellValue } from './types/tagList.tsx';
+import { TeamCellValue } from './types/team.tsx';
+import { TextCellValue } from './types/text.tsx';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { type as type_2 } from '../../../../ui/avatar';
 import { useForm } from 'react-hook-form';
@@ -211,6 +199,21 @@ declare type AIButton = {
     label: string;
     icon: IconType;
 };
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+export declare const AiChat: (props: AiChatProps) => JSX_2.Element;
+
+export declare const AiChatCmp: (props: AiChatProps) => JSX_2.Element;
+
+export declare type AiChatProps = ComponentProps<typeof CopilotPopup>;
+
+export declare const AiChatProvider: (props: AiChatProviderProps) => JSX_2.Element;
+
+export declare const AiChatProviderCmp: (props: AiChatProviderProps) => JSX_2.Element;
+
+export declare type AiChatProviderProps = Omit<ComponentProps<typeof CopilotKit>, "window">;
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "warning" | "positive" | "destructive" | undefined;
@@ -546,9 +549,11 @@ export declare interface BasicTextEditorProps {
     placeholder: string;
     initialEditorState?: {
         content: JSONContent | string;
+        title?: string;
     };
     readonly?: boolean;
     aiBlockConfig?: AIBlockConfig;
+    onTitleChange?: (title: string) => void;
     labels: {
         toolbarLabels: ToolbarLabels;
         slashCommandGroupLabels?: SlashCommandGroupLabels;
@@ -556,6 +561,7 @@ export declare interface BasicTextEditorProps {
         moodTrackerLabels?: MoodTrackerLabels;
         liveCompanionLabels?: LiveCompanionLabels;
         transcriptLabels?: TranscriptLabels;
+        titlePlaceholder?: string;
     };
 }
 
@@ -640,7 +646,7 @@ export declare type BulkAction = string;
  */
 export declare type BulkActionDefinition = {
     label: string;
-    icon?: IconType_2;
+    icon?: IconType;
     id: string;
     keepSelection?: boolean;
 };
@@ -768,65 +774,7 @@ export declare type CalendarMode = "single" | "range";
 
 export declare type CalendarView = "day" | "month" | "year" | "week" | "quarter" | "halfyear";
 
-declare type CardAvatarType = AvatarVariant | {
-    type: "emoji";
-    emoji: string;
-} | {
-    type: "file";
-    file: File;
-};
-
-declare type CardMetadata = {
-    icon: IconType;
-    property: CardMetadataProperty;
-};
-
-/**
- * Card metadata property renderers.
- * Each metadata item consists of an icon and a property with its data.
- */
-declare type CardMetadataProperty = {
-    [K in CardPropertyType]: {
-        type: K;
-        value: Parameters<(typeof propertyRenderers)[K]>[0];
-    };
-}[CardPropertyType];
-
-declare interface CardPrimaryAction {
-    label: string;
-    icon?: IconType;
-    onClick: () => void;
-}
-
 declare type CardPropertyDefinition<T> = PropertyDefinition_2<T>;
-
-declare const cardPropertyRenderers: {
-    readonly text: (args: TextCellValue) => default_2.JSX.Element;
-    readonly number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => default_2.JSX.Element;
-    readonly date: (args: DateCellValue) => default_2.JSX.Element;
-    readonly amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => default_2.JSX.Element;
-    readonly person: (args: PersonCellValue) => default_2.JSX.Element;
-    readonly company: (args: CompanyCellValue) => default_2.JSX.Element;
-    readonly team: (args: TeamCellValue) => default_2.JSX.Element;
-    readonly status: (args: StatusCellValue) => default_2.JSX.Element;
-    readonly tag: (args: TagCellValue) => default_2.JSX.Element;
-    readonly avatarList: (args: AvatarListCellValue) => default_2.JSX.Element;
-    readonly tagList: (args: TagListCellValue) => default_2.JSX.Element;
-    readonly alertTag: (args: AlertTagCellValue) => default_2.JSX.Element;
-    readonly dotTag: (args: DotTagCellValue) => default_2.JSX.Element;
-};
-
-declare type CardPropertyType = keyof typeof cardPropertyRenderers;
-
-declare interface CardSecondaryAction {
-    label: string;
-    icon?: IconType;
-    onClick: () => void;
-}
-
-declare interface CardSecondaryLink extends Pick<LinkProps_2, "href" | "target" | "disabled"> {
-    label: string;
-}
 
 declare type CardVisualizationOptions<T, _Filters extends FiltersDefinition, _Sortings extends SortingsDefinition> = {
     cardProperties: ReadonlyArray<CardPropertyDefinition<T>>;
@@ -1440,7 +1388,7 @@ primary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
 disabled?: boolean | undefined | undefined;
-icon?: IconType_3 | undefined;
+icon?: IconType_2 | undefined;
 } & {
 variant?: "default" | "critical" | "neutral";
 };
@@ -1448,7 +1396,7 @@ secondary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
 disabled?: boolean | undefined | undefined;
-icon?: IconType_3 | undefined;
+icon?: IconType_2 | undefined;
 };
 };
 open?: boolean;
@@ -2010,10 +1958,6 @@ declare type IconType = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefA
     animate?: "normal" | "animate";
 }>;
 
-declare type IconType_2 = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement> & {
-    animate?: "normal" | "animate";
-}>;
-
 declare const Indicator: ForwardRefExoticComponent<IndicatorProps & RefAttributes<HTMLDivElement>>;
 
 declare type IndicatorProps = {
@@ -2176,21 +2120,6 @@ declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
     disabled?: boolean;
 };
-
-declare interface LinkProps_2 extends LinkProps, VariantProps<typeof linkVariants>, DataAttributes {
-    stopPropagation?: boolean;
-}
-
-declare const linkVariants: (props?: ({
-    variant?: "link" | "unstyled" | undefined;
-    disabled?: boolean | undefined;
-} & ({
-    class?: ClassValue;
-    className?: never;
-} | {
-    class?: never;
-    className?: ClassValue;
-})) | undefined) => string;
 
 declare type ListPropertyDefinition<R, Sortings extends SortingsDefinition> = WithOptionalSorting_2<R, Sortings> & PropertyDefinition_2<R>;
 
@@ -2583,71 +2512,6 @@ export declare interface OneCalendarProps {
     showInput?: boolean;
     minDate?: Date;
     maxDate?: Date;
-}
-
-export declare function OneCard({ compact, avatar, image, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, onClick, }: OneCardProps): JSX_2.Element;
-
-declare interface OneCardProps {
-    /**
-     * Whether the card has a compact layout
-     */
-    compact?: boolean;
-    /**
-     * The avatar to display in the card
-     */
-    avatar?: CardAvatarType;
-    /**
-     * Whether the card has an image
-     */
-    image?: string;
-    /**
-     * The title of the card
-     */
-    title?: string;
-    /**
-     * The description of the card
-     */
-    description?: string;
-    /**
-     * Metadata items to display in the card
-     */
-    metadata?: CardMetadata[];
-    /**
-     * The children to display in the card
-     */
-    children?: ReactNode;
-    /**
-     * The link to navigate to when the card is clicked
-     */
-    link?: string;
-    /**
-     * The primary action that displays a primary button in the card footer
-     */
-    primaryAction?: CardPrimaryAction;
-    /**
-     * The secondary actions - either an array of button actions or a single link
-     */
-    secondaryActions?: CardSecondaryAction[] | CardSecondaryLink;
-    /**
-     * Actions to display in the dropdown menu inside the card content
-     */
-    otherActions?: DropdownItem[];
-    /**
-     * Whether the card is selectable
-     */
-    selectable?: boolean;
-    /**
-     * Whether the card is selected
-     */
-    selected?: boolean;
-    /**
-     * The callback to handle the selection of the card
-     */
-    onSelect?: (selected: boolean) => void;
-    /**
-     * The callback to handle the click of the card
-     */
-    onClick?: () => void;
 }
 
 /**
@@ -3225,19 +3089,19 @@ declare type PropertyDefinition_2<T> = {
  * @returns The rendered property value
  */
 declare const propertyRenderers: {
-    readonly text: (args: TextCellValue_2) => JSX_2.Element;
-    readonly number: (args: NumberCellValue_2, meta: PropertyRendererMetadata_2<never>) => JSX_2.Element;
-    readonly date: (args: DateCellValue_2) => JSX_2.Element;
-    readonly amount: (args: AmountCellValue_2, meta: PropertyRendererMetadata_2<never>) => JSX_2.Element;
-    readonly avatarList: (args: AvatarListCellValue_2) => JSX_2.Element;
-    readonly status: (args: StatusCellValue_2) => JSX_2.Element;
-    readonly alertTag: (args: AlertTagCellValue_2) => JSX_2.Element;
-    readonly person: (args: PersonCellValue_2) => JSX_2.Element;
-    readonly company: (args: CompanyCellValue_2) => JSX_2.Element;
-    readonly team: (args: TeamCellValue_2) => JSX_2.Element;
-    readonly tag: (args: TagCellValue_2) => JSX_2.Element;
-    readonly dotTag: (args: DotTagCellValue_2) => JSX_2.Element;
-    readonly tagList: (args: TagListCellValue_2) => JSX_2.Element;
+    readonly text: (args: TextCellValue) => JSX_2.Element;
+    readonly number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
+    readonly date: (args: DateCellValue) => JSX_2.Element;
+    readonly amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
+    readonly avatarList: (args: AvatarListCellValue) => JSX_2.Element;
+    readonly status: (args: StatusCellValue) => JSX_2.Element;
+    readonly alertTag: (args: AlertTagCellValue) => JSX_2.Element;
+    readonly person: (args: PersonCellValue) => JSX_2.Element;
+    readonly company: (args: CompanyCellValue) => JSX_2.Element;
+    readonly team: (args: TeamCellValue) => JSX_2.Element;
+    readonly tag: (args: TagCellValue) => JSX_2.Element;
+    readonly dotTag: (args: DotTagCellValue) => JSX_2.Element;
+    readonly tagList: (args: TagListCellValue) => JSX_2.Element;
     readonly icon: (args: IconCellValue) => JSX_2.Element;
 };
 
@@ -3386,7 +3250,7 @@ declare type Props_4 = {
 
 declare type Props_5 = {
     emoji: string;
-    size?: "sm" | "md" | "lg";
+    size?: "small" | "medium" | "large";
 };
 
 declare type Props_6 = {
