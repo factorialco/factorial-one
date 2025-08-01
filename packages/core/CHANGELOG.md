@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.21.0...factorial-one-core-v1.22.0) (2025-07-31)
+
+
+### Features
+
+* create AiChat component ([#2259](https://github.com/factorialco/factorial-one/issues/2259)) ([58a1f36](https://github.com/factorialco/factorial-one/commit/58a1f362f73b97090367037ab37eaac7afd6ec2f))
+
 ## [1.21.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.20.2...factorial-one-core-v1.21.0) (2025-07-29)
 
 

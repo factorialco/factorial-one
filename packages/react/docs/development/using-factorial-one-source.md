@@ -1,10 +1,9 @@
-# Using factorial one "source"
+# Using F0 "source"
 
 ## Motivation
 
 For development scenarios is necessary to be agile and be able to apply changes
-in factorial one and check how then integrates in the consumer (ex. factorial's
-monorepo)
+in F0 and check how then integrates in the consumer (ex. factorial's monorepo)
 
 In this scenario the regular release process (build, publish, update
 dependency's version on the consumer and update) is very slow and doesn't

@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.146.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.2...factorial-one-react-v1.146.0) (2025-08-01)
+
+
+### Features
+
+* **Card:** add skeleton ([#2352](https://github.com/factorialco/factorial-one/issues/2352)) ([bbe3aba](https://github.com/factorialco/factorial-one/commit/bbe3abaa4752ad3edaf879f43ce08e0716a321d2))
+
+## [1.145.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.1...factorial-one-react-v1.145.2) (2025-07-31)
+
+
+### Bug Fixes
+
+* export f0card ([#2345](https://github.com/factorialco/factorial-one/issues/2345)) ([dfadd0d](https://github.com/factorialco/factorial-one/commit/dfadd0d1bdb510d242747c28224a33bcaad90aec))
+
+## [1.145.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.145.0...factorial-one-react-v1.145.1) (2025-07-31)
+
+
+### Bug Fixes
+
+* **Card:** avoid multiple actions rendering ([#2349](https://github.com/factorialco/factorial-one/issues/2349)) ([9caa59e](https://github.com/factorialco/factorial-one/commit/9caa59e34d9cc235c781a981c4cb683146959b8a))
+
+## [1.145.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.144.1...factorial-one-react-v1.145.0) (2025-07-31)
+
+
+### Features
+
+* **Card:** set compact header ([#2346](https://github.com/factorialco/factorial-one/issues/2346)) ([baced08](https://github.com/factorialco/factorial-one/commit/baced083955e754da595eb824e94912223ea1a46))
+
+## [1.144.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.144.0...factorial-one-react-v1.144.1) (2025-07-31)
+
+
+### Bug Fixes
+
+* module-avatar invalid module does not fail, just warn ([#2343](https://github.com/factorialco/factorial-one/issues/2343)) ([da31d27](https://github.com/factorialco/factorial-one/commit/da31d270f027fb86baaf14cafc2c875184ea4a07))
+
+## [1.144.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.143.0...factorial-one-react-v1.144.0) (2025-07-31)
+
+
+### Features
+
+* **Card:** internal card with private props ([#2336](https://github.com/factorialco/factorial-one/issues/2336)) ([365e76d](https://github.com/factorialco/factorial-one/commit/365e76d9a6c7f751a8f13a886a684f178fac19bd))
+
+## [1.143.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.142.0...factorial-one-react-v1.143.0) (2025-07-31)
+
+
+### Features
+
+* create AiChat component ([#2259](https://github.com/factorialco/factorial-one/issues/2259)) ([58a1f36](https://github.com/factorialco/factorial-one/commit/58a1f362f73b97090367037ab37eaac7afd6ec2f))
+
 ## [1.142.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.141.1...factorial-one-react-v1.142.0) (2025-07-30)
 
 

@@ -1,7 +1,7 @@
 import { zeroRender as render, screen, userEvent } from "@/testing/test-utils"
 import "@testing-library/jest-dom/vitest"
 import { describe, expect, it, vi } from "vitest"
-import { F0Card } from "../Card"
+import { F0Card } from "../F0Card"
 import type { CardSecondaryLink } from "../components/CardActions"
 
 describe("F0Card Component", () => {
@@ -121,7 +121,7 @@ describe("F0Card Component", () => {
     const card = screen.getByTestId("card")
     expect(card).toBeInTheDocument()
 
-    const primaryButton = screen.getByTestId("primary-button-web")
+    const primaryButton = screen.getByTestId("primary-button")
     expect(primaryButton).toBeInTheDocument()
 
     await user.click(primaryButton)
@@ -146,7 +146,7 @@ describe("F0Card Component", () => {
     const card = screen.getByTestId("card")
     expect(card).toBeInTheDocument()
 
-    const primaryButton = screen.getByTestId("primary-button-mobile")
+    const primaryButton = screen.getByTestId("primary-button")
     expect(primaryButton).toBeInTheDocument()
 
     await user.click(primaryButton)
@@ -166,7 +166,7 @@ describe("F0Card Component", () => {
     const card = screen.getByTestId("card")
     expect(card).toBeInTheDocument()
 
-    const linkElement = screen.getByTestId("secondary-link-web")
+    const linkElement = screen.getByTestId("secondary-link")
     expect(linkElement).toBeInTheDocument()
     expect(linkElement).toHaveAttribute("href", "/test-page")
     expect(linkElement).toHaveAttribute("target", "_blank")

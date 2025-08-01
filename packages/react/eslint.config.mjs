@@ -160,7 +160,12 @@ export default [
   },
   // Restrict barrel imports for exports.ts and factorial-one.ts files (allow exports.ts imports)
   {
-    files: ["**/exports.ts", "**/factorial-one.ts"],
+    files: [
+      "**/exports.ts",
+      "**/exports.tsx",
+      "**/factorial-one.ts",
+      "**/experimental.ts",
+    ],
     ignores: [],
     rules: {
       "no-restricted-imports": [

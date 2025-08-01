@@ -3,12 +3,9 @@ import React, { useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { Delete, Ellipsis, Pencil } from "../../icons/app"
 import { Checkbox } from "../Forms/Fields/Checkbox"
-import { PersonAvatar } from "../Information/Avatars/exports"
-import {
-  RawTag,
-  StatusTag,
-  type StatusVariant,
-} from "../Information/Tags/exports"
+import { PersonAvatar } from "../Information/Avatars/PersonAvatar"
+import { RawTag } from "../Information/Tags/RawTag"
+import { StatusTag, type StatusVariant } from "../Information/Tags/StatusTag"
 import { Dropdown } from "../Navigation/Dropdown"
 import { OnePagination } from "../OnePagination"
 import {

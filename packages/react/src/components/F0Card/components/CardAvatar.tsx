@@ -28,14 +28,22 @@ interface CardAvatarProps {
   compact?: boolean
 }
 
-const AvatarRender = ({ avatar }: { avatar: CardAvatarType }) => {
+const AvatarRender = ({
+  avatar,
+  compact = false,
+}: {
+  avatar: CardAvatarType
+  compact?: boolean
+}) => {
   if (avatar.type === "emoji") {
-    return <EmojiAvatar emoji={avatar.emoji} size="lg" />
+    return (
+      <EmojiAvatar emoji={avatar.emoji} size={compact ? "small" : "large"} />
+    )
   }
   if (avatar.type === "file") {
-    return <FileAvatar file={avatar.file} size="large" />
+    return <FileAvatar file={avatar.file} size={compact ? "small" : "large"} />
   }
-  return <Avatar avatar={avatar} size="large" />
+  return <Avatar avatar={avatar} size={compact ? "small" : "large"} />
 }
 
 export function CardAvatar({
@@ -57,7 +65,7 @@ export function CardAvatar({
       )}
       data-testid="card-avatar"
     >
-      <AvatarRender avatar={avatar} />
+      <AvatarRender avatar={avatar} compact={compact} />
     </div>
   )
 }

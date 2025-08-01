@@ -13,7 +13,7 @@ import image from "@storybook-static/avatars/person04.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
-import { F0Card } from "../Card"
+import { F0Card } from "../F0Card"
 
 const SlotComponent = () => {
   return (
@@ -237,5 +237,23 @@ export const Compact: Story = {
   args: {
     ...WithActions.args,
     compact: true,
+  },
+}
+
+export const Skeleton: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  render: () => {
+    return <F0Card.Skeleton />
+  },
+}
+
+export const SkeletonCompact: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  render: () => {
+    return <F0Card.Skeleton compact />
   },
 }

@@ -1,4 +1,3 @@
-<link rel="icon" href="/logo.svg" type="image/svg+xml" />
 <style>
   .sidebar-container .sidebar-item {
     border-radius: 8px;
@@ -144,6 +143,15 @@
   body.dark div[role="combobox"] code {
     background: #202c42;
     color: #647084;
+  }
+
+  /* Logo switching based on theme */
+  .sidebar-header a[title="F0 Design System"] img {
+    content: url("./f0-light.svg");
+  }
+
+  body.dark .sidebar-header a[title="F0 Design System"] img {
+    content: url("./f0-dark.svg");
   }
 </style>
 
