@@ -1,7 +1,9 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental"
+import { ChevronDown, ChevronRight, Handle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
-import { AnimatePresence, motion } from "motion/react"
+import { Button } from "@/ui/button"
+import { AnimatePresence, DragControls, motion } from "motion/react"
 import { useState } from "react"
 import { TOCItem } from "../types"
 import { ItemDropDown } from "./ItemDropDown"
@@ -10,9 +12,23 @@ interface TOCItemProps {
   item: TOCItem
   counter?: number
   isActive?: boolean
+  sortable: boolean
+  collapsible?: boolean
+  isExpanded?: boolean
+  onToggleExpanded?: (id: string) => void
+  dragControls?: DragControls
 }
 
-export function Item({ item, counter, isActive }: TOCItemProps) {
+export function Item({
+  item,
+  counter,
+  isActive,
+  collapsible = false,
+  isExpanded = false,
+  onToggleExpanded = () => {},
+  sortable,
+  dragControls,
+}: TOCItemProps) {
   const { label, onClick, icon, disabled, otherActions } = item
   const [open, setOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
@@ -24,48 +40,106 @@ export function Item({ item, counter, isActive }: TOCItemProps) {
     otherActions.length > 0 &&
     (counter ? isHovered || open : true)
 
-  return (
-    <div
-      className={cn(
-        focusRing("focus:border-f1-border-focus"),
-        "flex h-[36px] min-w-0 items-center gap-1 rounded-[10px] border border-solid border-transparent px-2 text-sm transition-colors",
-        isActive && "bg-f1-background-selected",
-        onClick && !disabled && "cursor-pointer hover:bg-f1-background-hover",
-        disabled && "cursor-not-allowed opacity-30"
-      )}
-      onClick={disabled ? undefined : () => onClick?.(item.id)}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {icon && <Icon icon={icon} size="sm" className="flex-shrink-0" />}
-      <span className="min-w-0 flex-1 truncate text-[14px]" title={label}>
-        {label}
-      </span>
+  const showHandleIcon = sortable && isHovered
 
+  return (
+    <div className="flex w-full min-w-0 items-center">
+      {collapsible && (
+        <Button
+          round
+          size="sm"
+          variant="ghost"
+          onClick={(e) => {
+            e.stopPropagation()
+            onToggleExpanded?.(item.id)
+          }}
+          aria-label={isExpanded ? "Collapse section" : "Expand section"}
+        >
+          <Icon
+            icon={isExpanded ? ChevronDown : ChevronRight}
+            size="sm"
+            className="text-f1-foreground-tertiary"
+          />
+        </Button>
+      )}
       <div
-        onClick={(e) => e.stopPropagation()}
-        className="relative flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center"
+        className={cn(
+          focusRing("focus:border-f1-border-focus"),
+          "relative flex h-[36px] min-w-0 flex-grow items-center gap-1 rounded-[10px] border border-solid border-transparent px-1.5 text-sm transition-colors",
+          isActive && "bg-f1-background-selected",
+          onClick && !disabled && "cursor-pointer hover:bg-f1-background-hover",
+          disabled && "cursor-not-allowed opacity-30"
+        )}
+        onClick={disabled ? undefined : () => onClick?.(item.id)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
-        <AnimatePresence mode="wait">
-          {counter && !shouldShowDropdown ? (
-            <motion.div
-              key="counter"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{
-                duration: 0.15,
-                ease: [0.25, 0.1, 0.25, 1],
-              }}
-              className="flex items-center justify-center"
-            >
-              <Counter value={counter} />
-            </motion.div>
-          ) : (
-            otherActions &&
-            otherActions.length > 0 && (
+        <div className="absolute left-1.5 top-1/2 -translate-y-1/2">
+          <AnimatePresence mode="wait">
+            {showHandleIcon ? (
               <motion.div
-                key="dropdown"
+                key="handle"
+                initial={{ opacity: 0, scale: 0.8, x: 0 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.8, x: 0 }}
+                transition={{
+                  duration: 0.15,
+                  ease: [0.25, 0.1, 0.25, 1],
+                }}
+                className="flex flex-shrink-0 items-center justify-center"
+              >
+                <Button
+                  round
+                  size="sm"
+                  variant="ghost"
+                  className="flex-shrink-0 cursor-grab active:cursor-grabbing"
+                  onPointerDown={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    dragControls?.start(e)
+                  }}
+                  aria-label="Drag to reorder"
+                >
+                  <Icon icon={Handle} size="xs" />
+                </Button>
+              </motion.div>
+            ) : (
+              icon && (
+                <motion.div
+                  key="icon"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{
+                    duration: 0.15,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }}
+                  className="flex flex-shrink-0 items-center justify-center p-0.5"
+                >
+                  <Icon icon={icon} size="md" />
+                </motion.div>
+              )
+            )}
+          </AnimatePresence>
+        </div>
+        <span
+          className={cn(
+            "min-w-0 flex-1 truncate text-[14px] transition-all",
+            showHandleIcon || icon ? "pl-7" : "pl-0"
+          )}
+          title={label}
+        >
+          {label}
+        </span>
+
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="relative flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center"
+        >
+          <AnimatePresence mode="wait">
+            {counter && !shouldShowDropdown ? (
+              <motion.div
+                key="counter"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
@@ -75,16 +149,33 @@ export function Item({ item, counter, isActive }: TOCItemProps) {
                 }}
                 className="flex items-center justify-center"
               >
-                <ItemDropDown
-                  otherActions={otherActions}
-                  open={open}
-                  setOpen={setOpen}
-                  disabled={disabled}
-                />
+                <Counter value={counter} />
               </motion.div>
-            )
-          )}
-        </AnimatePresence>
+            ) : (
+              otherActions &&
+              otherActions.length > 0 && (
+                <motion.div
+                  key="dropdown"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{
+                    duration: 0.15,
+                    ease: [0.25, 0.1, 0.25, 1],
+                  }}
+                  className="flex items-center justify-center"
+                >
+                  <ItemDropDown
+                    otherActions={otherActions}
+                    open={open}
+                    setOpen={setOpen}
+                    disabled={disabled}
+                  />
+                </motion.div>
+              )
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   )

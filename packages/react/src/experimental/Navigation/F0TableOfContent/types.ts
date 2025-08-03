@@ -30,10 +30,17 @@ export type TOCItemAction =
       type: "separator"
     }
 
+type IdStructure = {
+  id: string
+  children?: IdStructure[]
+}
+
 export interface TOCProps {
   title: string
   items: TOCItem[]
   className?: string
   activeItem?: string
   collapsible?: boolean
+  sortable?: boolean
+  onReorder?: (reorderedIds: IdStructure[]) => void
 }

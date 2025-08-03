@@ -23,133 +23,58 @@ const mockOtherActions: TOCItemAction[] = [
 
 const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
   {
-    id: "section-0",
-    label: "Item with actions",
+    id: "simple-item",
+    label: "Simple Item",
     onClick: setActiveItem,
     icon: Placeholder,
+  },
+  {
+    id: "item-with-actions",
+    label: "Item with Actions",
+    onClick: setActiveItem,
+    icon: Placeholder,
+
     otherActions: mockOtherActions,
   },
   {
     id: "section-1",
-    label: "Section header",
+    label: "Section with Children",
     onClick: setActiveItem,
     icon: Placeholder,
     otherActions: mockOtherActions,
-
     children: [
       {
-        id: "item-1-1",
-        label: "Section item",
+        id: "child-1",
+        label: "Child Item 1",
         onClick: setActiveItem,
         icon: Placeholder,
         otherActions: mockOtherActions,
       },
       {
-        id: "item-1-2",
-        label: "Section item",
-        onClick: setActiveItem,
-        icon: Placeholder,
-        otherActions: mockOtherActions,
-      },
-      {
-        id: "item-1-3",
-        label: "Section item",
+        id: "child-2",
+        label: "Child Item 2",
         onClick: setActiveItem,
         otherActions: mockOtherActions,
       },
       {
-        id: "item-1-4",
-        label: "Section item",
+        id: "nested-section",
+        label: "Nested Section",
         onClick: setActiveItem,
-        otherActions: mockOtherActions,
-      },
-      {
-        id: "item-1-5",
-        label: "Section item",
-        onClick: setActiveItem,
-        otherActions: mockOtherActions,
-      },
-      {
-        id: "item-1-6",
-        label: "Section item",
-        onClick: setActiveItem,
-        otherActions: mockOtherActions,
-      },
-    ],
-  },
-  {
-    id: "section-2",
-    label: "No actions",
-    icon: Placeholder,
-    onClick: setActiveItem,
-
-    children: [
-      {
-        id: "item-2-1",
-        label: "Label",
-        onClick: setActiveItem,
-        icon: Placeholder,
-        otherActions: mockOtherActions,
-      },
-      {
-        id: "section-2-2",
-        label: "Label",
-        onClick: setActiveItem,
-        otherActions: mockOtherActions,
-
         children: [
           {
-            id: "item-2-2-1",
-            label: "Option",
+            id: "nested-child-1",
+            label: "Nested Child 1",
             onClick: setActiveItem,
-            otherActions: mockOtherActions,
           },
           {
-            id: "item-2-2-2",
-            label: "Option",
+            id: "deep-section",
+            label: "Deep Section (Level 3)",
             onClick: setActiveItem,
-            otherActions: mockOtherActions,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "item-3",
-    label: "Label",
-    onClick: setActiveItem,
-    otherActions: mockOtherActions,
-  },
-  {
-    id: "deep-nesting-example",
-    label: "4-Level Deep Example",
-    icon: Placeholder,
-    onClick: setActiveItem,
-    otherActions: mockOtherActions,
-
-    children: [
-      {
-        id: "level-2",
-        label: "Level 2 Item",
-        onClick: setActiveItem,
-        otherActions: mockOtherActions,
-
-        children: [
-          {
-            id: "level-3",
-            label: "Level 3 Item",
-            onClick: setActiveItem,
-            otherActions: mockOtherActions,
-
             children: [
               {
-                id: "level-4",
-                label: "Level 4 Item (Max Depth)",
+                id: "deepest-item",
+                label: "Deepest Item (Level 4)",
                 onClick: setActiveItem,
-                otherActions: mockOtherActions,
-
-                // TypeScript error if you try to add children here:
-                // in level 4, you can't add children
               },
             ],
           },
@@ -162,21 +87,32 @@ const mockTOCData = (setActiveItem: (id: string) => void): TOCItem[] => [
 const meta: Meta<typeof F0TableOfContent> = {
   title: "Navigation/F0TableOfContent",
   component: F0TableOfContent,
-  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component:
+          "A hierarchical table of contents component with support for up to 4 levels of nesting, collapsible sections, and drag & drop reordering.",
+      },
+    },
   },
   argTypes: {
     title: {
       control: "text",
       description: "The title displayed at the top of the table of contents",
-      required: true,
     },
     items: {
-      control: "object",
-      description:
-        "Array of TOCItem objects that define the navigation structure. TOCItem properties: id (string), label (string), onClick (function), icon (IconType), disabled (boolean), children (TOCItem[]), otherActions (TOCItemAction[]). Items with children become section headers. **Strictly limited to 4 levels maximum** - TypeScript will prevent deeper nesting.",
-      required: true,
+      control: false,
+      description: `Array of TOC items with hierarchical structure. Each item can have:
+        - id: Unique identifier
+        - label: Display text
+        - icon: Optional icon component
+        - disabled: Whether the item is disabled
+        - onClick: Callback when item is clicked
+        - otherActions: Array of dropdown actions
+        - children: Nested items (max 4 levels deep)
+        
+        The component automatically determines item types based on presence of children.`,
     },
     activeItem: {
       control: "text",
@@ -188,38 +124,75 @@ const meta: Meta<typeof F0TableOfContent> = {
       description:
         "Additional CSS classes to apply to the table of contents container",
     },
+    collapsible: {
+      control: "boolean",
+      description:
+        "Enable collapsible sections. When enabled, sections can be expanded/collapsed, and the path to the active item is automatically expanded.",
+    },
+    sortable: {
+      control: "boolean",
+      description:
+        "Enable drag and drop reordering of items. When reordered, onReorder callback is called with hierarchical structure containing only IDs.",
+    },
+    onReorder: {
+      action: "reordered",
+      description:
+        "Callback fired when items are reordered via drag and drop. Receives hierarchical structure with only IDs: [{ id: string, children?: { id: string }[] }]",
+    },
   },
   decorators: [
     (Story) => (
-      <div className="h-[600px] w-fit border border-solid border-f1-border">
+      <div className="h-[360px] w-fit border border-solid border-f1-border">
         <Story />
       </div>
     ),
   ],
   render: (args) => {
-    const [activeItem, setActiveItem] = useState("item-2-2-2")
+    const [activeItem, setActiveItem] = useState("nested-child-1")
 
     return (
       <F0TableOfContent
         {...args}
-        items={mockTOCData((id) => setActiveItem(id))}
+        items={mockTOCData(setActiveItem)}
         activeItem={activeItem}
+        onReorder={(order) => {
+          console.log("Items reordered:", order)
+        }}
       />
     )
   },
   args: {
-    title: "Example title",
+    title: "Table of Contents",
   },
 }
 
 export default meta
-
-type Story = StoryObj<typeof F0TableOfContent>
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 
 export const Collapsible: Story = {
   args: {
     collapsible: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Shows collapsible functionality.",
+      },
+    },
+  },
+}
+
+export const Sortable: Story = {
+  args: {
+    sortable: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Shows drag & drop reordering",
+      },
+    },
   },
 }
