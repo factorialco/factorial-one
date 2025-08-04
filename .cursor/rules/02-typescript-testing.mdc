@@ -1,15 +1,19 @@
 ---
 description: TypeScript Usage and Testing Standards
-globs: 
-alwaysApply: false
----
----
-description: "Factorial One DS - TypeScript Usage and Testing Standards"
-globs: "packages/react/**/*.ts,packages/react/**/*.tsx"
+globs:
 alwaysApply: false
 ---
 
+---
+
+description: "Factorial One DS - TypeScript Usage and Testing Standards"
+globs: "packages/react/**/\*.ts,packages/react/**/\*.tsx"
+alwaysApply: false
+
+---
+
 # TypeScript Usage
+
 - Use **strict** TypeScript configuration.
 - Prefer **interfaces** over types for public APIs.
 - Use discriminated unions for complex state.
@@ -17,13 +21,15 @@ alwaysApply: false
 - Implement proper generic constraints.
 
 # Testing Standards
+
 - Write **Vitest** unit tests for utilities and hooks and components.
 - Create **Storybook stories** for visual testing.
 - Include **accessibility tests** using axe-playwright.
 - Test component variants and edge cases.
 - Avoid excessive mocking; test behavior, not internals.
 - Always run tests to confirm changes.
-- Do not import `@testing-library/jest-dom` 
+- <IMPORTANT> When you are using `@testing-library/react` don't use `render`, use `zeroRender` from `@/testing/test-utils.tsx` instead as this provides mocks for the context providers.</IMPORTANT>
+- Do not import `@testing-library/jest-dom`
 - Import vitest methods like: describe, it, expect, etc. explicitily
 - name test files with `.test.tsx` or `.test.ts`, never with `.specs.ts`
 
@@ -83,11 +89,11 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
 })
 ```
 
-~~~mdx
+````mdx
 // packages/react/src/components/Utilities/Icon/index.mdx
 import { Meta, Canvas, Controls } from "@storybook/blocks"
 import LinkTo from "@storybook/addon-links/react"
-import * as IconStories from "./index.stories"
+import \* as IconStories from "./index.stories"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 <Meta title="Icon" />
@@ -137,7 +143,7 @@ for icons.
 ```jsx
 <Icon icon={Archive} className="text-f1-icon-secondary" />
 ```
-~~~
+````
 
 ```tsx
 // packages/react/src/components/Utilities/Icon/index.stories.tsx
@@ -233,4 +239,3 @@ export const Animated: Story = {
   },
 }
 ```
-
