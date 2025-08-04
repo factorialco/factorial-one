@@ -215,7 +215,7 @@ function TOCContent({
       ref={containerRef}
     >
       <div className="flex-shrink-0 pb-2 pl-6 pr-4 pt-5">
-        <h2 className="truncate text-lg font-medium text-f1-foreground-secondary">
+        <h2 className="truncate text-[14px] font-medium text-f1-foreground-secondary">
           {title}
         </h2>
       </div>

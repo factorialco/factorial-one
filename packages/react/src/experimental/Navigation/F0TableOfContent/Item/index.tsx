@@ -55,12 +55,9 @@ export function Item({
             onToggleExpanded?.(item.id)
           }}
           aria-label={isExpanded ? "Collapse section" : "Expand section"}
+          className="text-f1-icon"
         >
-          <Icon
-            icon={isExpanded ? ChevronDown : ChevronRight}
-            size="sm"
-            className="text-f1-foreground-tertiary"
-          />
+          <Icon icon={isExpanded ? ChevronDown : ChevronRight} size="sm" />
         </Button>
       )}
       <div
@@ -93,7 +90,7 @@ export function Item({
                   round
                   size="sm"
                   variant="ghost"
-                  className="flex-shrink-0 cursor-grab active:cursor-grabbing"
+                  className="flex-shrink-0 cursor-grab text-f1-icon active:cursor-grabbing"
                   onPointerDown={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
@@ -115,7 +112,7 @@ export function Item({
                     duration: 0.15,
                     ease: [0.25, 0.1, 0.25, 1],
                   }}
-                  className="flex flex-shrink-0 items-center justify-center p-0.5"
+                  className="flex flex-shrink-0 items-center justify-center p-0.5 text-f1-icon"
                 >
                   <Icon icon={icon} size="md" />
                 </motion.div>
@@ -125,7 +122,7 @@ export function Item({
         </div>
         <span
           className={cn(
-            "min-w-0 flex-1 truncate text-[14px] transition-all",
+            "min-w-0 flex-1 truncate text-[14px] font-medium text-f1-foreground transition-all",
             showHandleIcon || icon ? "pl-7" : "pl-0"
           )}
           title={label}
