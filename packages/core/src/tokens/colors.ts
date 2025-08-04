@@ -192,14 +192,10 @@ export const f1Colors = {
     bold: "hsl(var(--neutral-100))",
     promote: {
       DEFAULT: "hsl(var(--promote-50) / 0.4)",
-      alpha30: "hsl(var(--promote-50) / 0.3)",
     },
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.4)",
       bold: "hsl(var(--selected-50))",
-    },
-    accent: {
-      alpha20: "hsl(var(--accent-50) / 0.2)",
     },
     critical: {
       DEFAULT: "hsl(var(--critical-50) / 0.1)",

@@ -20,8 +20,8 @@ interface Props {
 export type ChatWidgetEmptyStateProps = Props
 
 const ROOT_CLASSNAMES: Record<Type, string> = {
-  "line-chart": "border-f1-border-accent-alpha20",
-  "bar-chart": "border-f1-border-promote-alpha30",
+  "line-chart": "border-f1-border",
+  "bar-chart": "border-f1-border-promote",
 }
 
 const CONTENT_CLASSNAMES: Record<Type, string> = {
