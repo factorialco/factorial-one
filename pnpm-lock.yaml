@@ -82,8 +82,8 @@ importers:
         specifier: ^1.9.3
         version: 1.9.3(@ag-ui/client@0.0.35)(@ag-ui/core@0.0.35)(@ag-ui/encoder@0.0.35)(@ag-ui/proto@0.0.35)(@aws-crypto/sha256-js@5.2.0)(@aws-sdk/client-bedrock-agent-runtime@3.844.0)(@aws-sdk/client-bedrock-runtime@3.844.0)(@aws-sdk/client-kendra@3.844.0)(@aws-sdk/credential-provider-node@3.844.0)(@browserbasehq/sdk@2.6.0)(@browserbasehq/stagehand@1.14.0(@playwright/test@1.52.0)(deepmerge@4.3.1)(dotenv@16.4.7)(openai@4.104.0(ws@8.18.1)(zod@3.25.76))(zod@3.24.1))(@ibm-cloud/watsonx-ai@1.6.8)(@smithy/util-utf8@2.3.0)(axios@1.8.4)(fast-xml-parser@5.2.5)(google-auth-library@8.9.0)(ibm-cloud-sdk-core@5.4.0)(ignore@5.3.2)(jsdom@26.0.0)(jsonwebtoken@9.0.2)(lodash@4.17.21)(playwright@1.52.0)(react@18.3.1)(weaviate-client@3.6.2)(ws@8.18.1)
       '@copilotkit/runtime-client-gql':
-        specifier: ^1.9.2
-        version: 1.9.2(graphql@16.11.0)(react@18.3.1)
+        specifier: ^1.9.3
+        version: 1.9.3(graphql@16.11.0)(react@18.3.1)
       '@factorialco/factorial-one-core':
         specifier: workspace:*
         version: link:../core
@@ -497,9 +497,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.10
         version: 0.6.11(prettier-plugin-organize-imports@4.1.0(prettier@3.5.2)(typescript@5.7.3))(prettier@3.5.2)
-      react-syntax-highlighter:
-        specifier: ^15.6.1
-        version: 15.6.1(react@18.3.1)
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
@@ -2041,11 +2038,6 @@ packages:
     peerDependencies:
       react: ^18 || ^19 || ^19.0.0-rc
 
-  '@copilotkit/runtime-client-gql@1.9.2':
-    resolution: {integrity: sha512-A+pR9h0RwKXgRn74Ht43rjfg0EYLpoN4htEstQfTsA/RWdvP49JAVulfXiV4XFwIkvFHCG7ZU2GFotIAyCOEJQ==}
-    peerDependencies:
-      react: ^18 || ^19 || ^19.0.0-rc
-
   '@copilotkit/runtime-client-gql@1.9.3':
     resolution: {integrity: sha512-LXWYqSZN+BBMGU0qdCrVcViB+J3VwKIHUi9Ft0VLY+/j1icvgpCIuKWemtTQ92978E1y87s1bRPW0OuSdOHYhw==}
     peerDependencies:
@@ -2058,9 +2050,6 @@ packages:
       '@ag-ui/core': '>=0.0.34'
       '@ag-ui/encoder': '>=0.0.34'
       '@ag-ui/proto': '>=0.0.34'
-
-  '@copilotkit/shared@1.9.2':
-    resolution: {integrity: sha512-4jjOwXlo92VC07YzjUubDIeiZyWwzgFW/huyUoWqDKpSfGIfV80J8It2BxBx17/4URehsMveJCs/ucL0fENgog==}
 
   '@copilotkit/shared@1.9.3':
     resolution: {integrity: sha512-6VpgvrBL1HKLV2RJ+n2l+eDyPKBUzIN+CJA8N6B0vioyUqZa3VWTRsGAKoTE9Mb112xJ/fKczN68Zo0oNNSWFw==}
@@ -2473,7 +2462,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {node: '>=0.10.0'}
+    engines: {'0': node >=0.10.0}
 
   '@expo/cli@0.22.24':
     resolution: {integrity: sha512-lhdenxBC8/x/vL39j79eXE09mOaqNNLmiSDdY/PblnI+UNzGgsQ48hBTYa/MQhd0ioXXVKurZL2941dLKwcxJw==}
@@ -15008,17 +14997,6 @@ snapshots:
       - react-dom
       - supports-color
 
-  '@copilotkit/runtime-client-gql@1.9.2(graphql@16.11.0)(react@18.3.1)':
-    dependencies:
-      '@copilotkit/shared': 1.9.2
-      '@urql/core': 5.1.1(graphql@16.11.0)
-      react: 18.3.1
-      untruncate-json: 0.0.1
-      urql: 4.2.2(@urql/core@5.1.1(graphql@16.11.0))(react@18.3.1)
-    transitivePeerDependencies:
-      - encoding
-      - graphql
-
   '@copilotkit/runtime-client-gql@1.9.3(graphql@16.11.0)(react@18.3.1)':
     dependencies:
       '@copilotkit/shared': 1.9.3
@@ -15214,17 +15192,6 @@ snapshots:
       - word-extractor
       - ws
       - youtubei.js
-
-  '@copilotkit/shared@1.9.2':
-    dependencies:
-      '@segment/analytics-node': 2.3.0
-      chalk: 4.1.2
-      graphql: 16.11.0
-      uuid: 10.0.0
-      zod: 3.24.1
-      zod-to-json-schema: 3.24.6(zod@3.24.1)
-    transitivePeerDependencies:
-      - encoding
 
   '@copilotkit/shared@1.9.3':
     dependencies:
