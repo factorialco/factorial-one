@@ -40,7 +40,8 @@ export function Item({
     otherActions.length > 0 &&
     (counter ? isHovered || open : true)
 
-  const showHandleIcon = sortable && isHovered
+  // Show handle icon on hover or when dropdown is open
+  const showHandleIcon = sortable && (isHovered || open)
 
   return (
     <div className="flex w-full min-w-0 items-center">
@@ -132,30 +133,15 @@ export function Item({
           {label}
         </span>
 
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="relative flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center"
-        >
-          <AnimatePresence mode="wait">
-            {counter && !shouldShowDropdown ? (
-              <motion.div
-                key="counter"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{
-                  duration: 0.15,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
-                className="flex items-center justify-center"
-              >
-                <Counter value={counter} />
-              </motion.div>
-            ) : (
-              otherActions &&
-              otherActions.length > 0 && (
+        {(counter || (otherActions && otherActions.length > 0)) && (
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center"
+          >
+            <AnimatePresence mode="wait">
+              {counter && !shouldShowDropdown ? (
                 <motion.div
-                  key="dropdown"
+                  key="counter"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
@@ -165,17 +151,34 @@ export function Item({
                   }}
                   className="flex items-center justify-center"
                 >
-                  <ItemDropDown
-                    otherActions={otherActions}
-                    open={open}
-                    setOpen={setOpen}
-                    disabled={disabled}
-                  />
+                  <Counter value={counter} />
                 </motion.div>
-              )
-            )}
-          </AnimatePresence>
-        </div>
+              ) : (
+                otherActions &&
+                otherActions.length > 0 && (
+                  <motion.div
+                    key="dropdown"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{
+                      duration: 0.15,
+                      ease: [0.25, 0.1, 0.25, 1],
+                    }}
+                    className="flex items-center justify-center"
+                  >
+                    <ItemDropDown
+                      otherActions={otherActions}
+                      open={open}
+                      setOpen={setOpen}
+                      disabled={disabled}
+                    />
+                  </motion.div>
+                )
+              )}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
     </div>
   )
