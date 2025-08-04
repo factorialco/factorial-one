@@ -26,7 +26,7 @@ export function ItemSectionHeader({
   dragControls,
 }: TOCItemSectionHeaderProps) {
   return (
-    <div className="min-w-0">
+    <>
       <Item
         item={item}
         counter={item.children?.length ?? 0}
@@ -74,6 +74,6 @@ export function ItemSectionHeader({
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   )
 }
