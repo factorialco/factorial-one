@@ -28,17 +28,7 @@ export function ItemSectionHeader({
   return (
     <div className="min-w-0">
       <Item
-        item={{
-          ...item,
-          onClick: item.onClick
-            ? () => {
-                item.onClick?.(item.id)
-                if (collapsible && !isExpanded) {
-                  onToggleExpanded?.(item.id)
-                }
-              }
-            : undefined,
-        }}
+        item={item}
         counter={item.children?.length ?? 0}
         isActive={isActive}
         collapsible={collapsible}
