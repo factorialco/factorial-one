@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.147.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.146.1...factorial-one-react-v1.147.0) (2025-08-04)
+
+
+### Features
+
+* export F0Checkbox component ([#2332](https://github.com/factorialco/factorial-one/issues/2332)) ([e78b12c](https://github.com/factorialco/factorial-one/commit/e78b12c3adb0538956c51d5d231323b7c54de5bd))
+
 ## [1.146.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.146.0...factorial-one-react-v1.146.1) (2025-08-01)
 
 
