@@ -30,7 +30,7 @@ export type TOCItemAction =
       type: "separator"
     }
 
-type IdStructure = {
+export type IdStructure = {
   id: string
   children?: IdStructure[]
 }

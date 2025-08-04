@@ -1,9 +1,16 @@
+import { OneEllipsis } from "@/components/OneEllipsis/OneEllipsis"
 import { Icon } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental"
 import { ChevronDown, ChevronRight, Handle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import { Button } from "@/ui/button"
-import { AnimatePresence, DragControls, motion } from "motion/react"
+import {
+  AnimatePresence,
+  DragControls,
+  motion,
+  Reorder,
+  useDragControls,
+} from "motion/react"
 import { useState } from "react"
 import { TOCItem } from "../types"
 import { ItemDropDown } from "./ItemDropDown"
@@ -17,6 +24,7 @@ interface TOCItemProps {
   isExpanded?: boolean
   onToggleExpanded?: (id: string) => void
   dragControls?: DragControls
+  children?: React.ReactNode
 }
 
 export function Item({
@@ -27,8 +35,10 @@ export function Item({
   isExpanded = false,
   onToggleExpanded = () => {},
   sortable,
-  dragControls,
+  children,
 }: TOCItemProps) {
+  const dragControls = useDragControls()
+
   const { label, onClick, icon, disabled, otherActions } = item
   const [open, setOpen] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
@@ -43,7 +53,7 @@ export function Item({
   // Show handle icon on hover or when dropdown is open
   const showHandleIcon = sortable && (isHovered || open)
 
-  return (
+  const content = (
     <div className="flex w-full min-w-0 items-center">
       {collapsible && (
         <Button
@@ -72,63 +82,65 @@ export function Item({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="absolute left-1.5 top-1/2 -translate-y-1/2">
-          <AnimatePresence mode="wait">
-            {showHandleIcon ? (
-              <motion.div
-                key="handle"
-                initial={{ opacity: 0, scale: 0.8, x: 0 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.8, x: 0 }}
-                transition={{
-                  duration: 0.15,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
-                className="flex flex-shrink-0 items-center justify-center"
-              >
-                <Button
-                  round
-                  size="sm"
-                  variant="ghost"
-                  className="flex-shrink-0 cursor-grab text-f1-icon active:cursor-grabbing"
-                  onPointerDown={(e) => {
-                    e.preventDefault()
-                    e.stopPropagation()
-                    dragControls?.start(e)
-                  }}
-                  aria-label="Drag to reorder"
-                >
-                  <Icon icon={Handle} size="xs" />
-                </Button>
-              </motion.div>
-            ) : (
-              icon && (
+        {(sortable || icon) && (
+          <div className="absolute left-1.5 top-1/2 -translate-y-1/2">
+            <AnimatePresence mode="wait">
+              {showHandleIcon ? (
                 <motion.div
-                  key="icon"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
+                  key="handle"
+                  initial={{ opacity: 0, scale: 0.8, x: 0 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.8, x: 0 }}
                   transition={{
                     duration: 0.15,
                     ease: [0.25, 0.1, 0.25, 1],
                   }}
-                  className="flex flex-shrink-0 items-center justify-center p-0.5 text-f1-icon"
+                  className="flex flex-shrink-0 items-center justify-center"
                 >
-                  <Icon icon={icon} size="md" />
+                  <Button
+                    round
+                    size="sm"
+                    variant="ghost"
+                    className="flex-shrink-0 cursor-grab text-f1-icon active:cursor-grabbing"
+                    onPointerDown={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      dragControls?.start(e)
+                    }}
+                    aria-label="Drag to reorder"
+                  >
+                    <Icon icon={Handle} size="xs" />
+                  </Button>
                 </motion.div>
-              )
-            )}
-          </AnimatePresence>
-        </div>
-        <span
+              ) : (
+                icon && (
+                  <motion.div
+                    key="icon"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{
+                      duration: 0.15,
+                      ease: [0.25, 0.1, 0.25, 1],
+                    }}
+                    className="flex flex-shrink-0 items-center justify-center p-0.5 text-f1-icon"
+                  >
+                    <Icon icon={icon} size="md" />
+                  </motion.div>
+                )
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+        <OneEllipsis
+          lines={1}
           className={cn(
-            "min-w-0 flex-1 truncate text-[14px] font-medium text-f1-foreground transition-all",
+            "flex-grow text-[14px] font-medium text-f1-foreground transition-all",
             showHandleIcon || icon ? "pl-7" : "pl-0"
           )}
-          title={label}
         >
           {label}
-        </span>
+        </OneEllipsis>
 
         {(counter || (otherActions && otherActions.length > 0)) && (
           <div
@@ -177,6 +189,30 @@ export function Item({
           </div>
         )}
       </div>
+      {children}
     </div>
   )
+
+  if (sortable) {
+    return (
+      <Reorder.Item
+        key={item.id}
+        value={item}
+        className="list-none"
+        dragControls={dragControls}
+        dragListener={false}
+        whileDrag={{
+          scale: 1.02,
+          opacity: 0.9,
+          zIndex: 50,
+          cursor: "grabbing",
+        }}
+        transition={{ type: "spring", bounce: 0.2, duration: 0.3 }}
+      >
+        {content}
+      </Reorder.Item>
+    )
+  }
+
+  return content
 }
