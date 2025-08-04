@@ -11,7 +11,6 @@ import {
   YAxis,
   YAxisProps,
 } from "recharts"
-import { prepareData } from "../utils/bar"
 import { autoColor } from "../utils/colors"
 import {
   cartesianGridProps,
@@ -20,6 +19,7 @@ import {
   yAxisProps as yAxisConfigureProps,
 } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
+import { prepareData } from "../utils/muncher"
 import { ChartConfig, ChartPropsBase } from "../utils/types"
 
 const getMaxValueByKey = (
