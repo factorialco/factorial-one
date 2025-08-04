@@ -66,7 +66,7 @@ export function ItemSectionHeader({
             <div
               className={cn(
                 "min-w-0 border-0 border-l border-solid border-f1-border-secondary",
-                collapsible ? "ml-[12px] pl-5" : "ml-3.5 pl-4"
+                collapsible ? "ml-3 pl-5" : "ml-[18px] pl-4"
               )}
             >
               {children}
