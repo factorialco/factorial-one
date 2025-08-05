@@ -124,9 +124,9 @@
     --accent-60: theme("colors.radical.50");
     --accent-70: theme("colors.radical.50");
 
-    --warning-50: theme("colors.orange.50");
+    --warning-50: theme("colors.orange.70");
     --warning-60: theme("colors.orange.60");
-    --warning-70: theme("colors.orange.70");
+    --warning-70: theme("colors.orange.50");
 
     --selected-50: theme("colors.viridian.50");
     --selected-60: theme("colors.viridian.60");

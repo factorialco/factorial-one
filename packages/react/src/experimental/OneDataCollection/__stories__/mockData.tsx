@@ -687,10 +687,12 @@ export const ExampleComponent = ({
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
-  ) => {
-    primary: BulkActionDefinition[]
-    secondary?: BulkActionDefinition[]
-  }
+  ) =>
+    | {
+        primary?: BulkActionDefinition[]
+        secondary?: BulkActionDefinition[]
+      }
+    | { warningMessage: string }
   onSelectItems?: OnSelectItemsCallback<MockUser, FiltersType>
   onBulkAction?: OnBulkActionCallback<MockUser, FiltersType>
   navigationFilters?: NavigationFiltersDefinition
