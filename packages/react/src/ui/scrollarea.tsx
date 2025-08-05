@@ -52,7 +52,7 @@ const ScrollBar = React.forwardRef<
     {...props}
   >
     {showBar && (
-      <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-f1-background-bold opacity-30 transition-opacity group-hover/scrollbar:opacity-50" />
+      <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-f1-background-inverse opacity-30 transition-opacity group-hover/scrollbar:opacity-50" />
     )}
   </ScrollAreaPrimitive.ScrollAreaScrollbar>
 ))

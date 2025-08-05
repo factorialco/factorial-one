@@ -49,7 +49,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
       ref={formRef}
       className={cn(
         "relative isolate m-2 flex flex-col gap-3 rounded-xl border border-solid border-f1-border",
-        "has-[textarea:focus]:shadow has-[textarea:focus]:outline-none has-[textarea:focus]:ring-1 has-[textarea:focus]:ring-f1-ring has-[textarea:focus]:ring-offset-0"
+        "has-[textarea:focus]:shadow has-[textarea:focus]:outline-none has-[textarea:focus]:ring-1 has-[textarea:focus]:ring-f1-special-ring has-[textarea:focus]:ring-offset-0"
       )}
       onSubmit={handleSubmit}
     >
@@ -68,7 +68,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
               className={cn(
-                "pointer-events-none absolute inset-x-0 z-10 h-3 rounded-t-xl after:absolute after:inset-x-0 after:h-px after:bg-f1-background-bold after:opacity-[0.04] after:content-['']",
+                "pointer-events-none absolute inset-x-0 z-10 h-3 rounded-t-xl after:absolute after:inset-x-0 after:h-px after:bg-f1-background-inverse after:opacity-[0.04] after:content-['']",
                 "-top-px bg-gradient-to-b from-f1-background-selected to-transparent after:-top-px"
               )}
             />
