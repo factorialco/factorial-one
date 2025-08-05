@@ -86,7 +86,7 @@ export type DataSourceDefinition<
     selectedItems: Parameters<OnBulkActionCallback<Record, Filters>>[1]
   ) =>
     | {
-        primary: BulkActionDefinition[]
+        primary?: BulkActionDefinition[]
         secondary?: BulkActionDefinition[]
       }
     | { warningMessage: string }

@@ -29,7 +29,7 @@ interface OneActionBarProps {
   /**
    * The primary action
    */
-  primaryActions: ActionType[]
+  primaryActions?: ActionType[]
 
   /**
    * The secondary actions
@@ -64,7 +64,7 @@ const Alert = ({ message }: { message: string }) => {
 
 export const OneActionBar = ({
   isOpen,
-  primaryActions,
+  primaryActions = [],
   secondaryActions = [],
   selectedNumber = undefined,
   onUnselect,
