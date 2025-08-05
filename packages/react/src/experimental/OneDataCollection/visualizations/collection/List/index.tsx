@@ -203,7 +203,7 @@ export const ListCollection = <
                 >
                   <GroupHeader
                     key={`group-header-${group.key}`}
-                    className="cursor-pointer select-none rounded-md px-6 py-3 transition-colors hover:bg-f1-background-hover"
+                    className="cursor-pointer select-none rounded-md px-3.5 py-3 transition-colors hover:bg-f1-background-hover"
                     selectable={!!source.selectable}
                     select={
                       groupAllSelectedStatus[group.key]?.checked
