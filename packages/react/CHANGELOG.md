@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.147.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.1...factorial-one-react-v1.147.2) (2025-08-05)
+
+
+### Bug Fixes
+
+* **upsell-kit:** allow portals to ensure overlay ([#2360](https://github.com/factorialco/factorial-one/issues/2360)) ([20e1048](https://github.com/factorialco/factorial-one/commit/20e1048158248254785e7a11c61285a3b5014231))
+
 ## [1.147.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.0...factorial-one-react-v1.147.1) (2025-08-05)
 
 
