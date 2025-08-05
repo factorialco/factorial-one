@@ -4,8 +4,8 @@ import { Button } from "@/ui/button"
 import { forwardRef } from "react"
 
 interface F0ButtonToggleProps {
-  onClick?: () => void
   selected?: boolean
+  onSelectedChange?: (selected: boolean) => void
   label: string
   disabled?: boolean
   icon: IconType
@@ -18,7 +18,7 @@ export const F0ButtonToggle = forwardRef<
 >(
   (
     {
-      onClick = () => {},
+      onSelectedChange = () => {},
       selected = false,
       label,
       disabled = false,
@@ -37,7 +37,7 @@ export const F0ButtonToggle = forwardRef<
         onClick={(e) => {
           e.preventDefault()
           if (!disabled) {
-            onClick()
+            onSelectedChange(!selected)
           }
         }}
         className={cn(

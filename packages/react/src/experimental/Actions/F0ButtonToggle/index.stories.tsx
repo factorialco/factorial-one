@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { expect, within } from "storybook/test"
+import { useState } from "react"
 import { Placeholder } from "../../../icons/app"
 import { F0ButtonToggle } from "./index"
 
@@ -11,8 +11,8 @@ const meta = {
   },
   tags: ["autodocs", "experimental"],
   args: {
-    onClick: () => {
-      console.log("Button toggle clicked")
+    onSelectedChange: (selected) => {
+      console.log("Button toggle clicked", selected)
     },
     label: "Toggle me",
     size: "md",
@@ -44,9 +44,9 @@ const meta = {
       description:
         "The button is inactive and does not respond to user interaction.",
     },
-    onClick: {
-      action: "clicked",
-      description: "Callback fired when the button is clicked.",
+    onSelectedChange: {
+      action: "selected",
+      description: "Callback fired when the button is selected.",
     },
   },
 } satisfies Meta<typeof F0ButtonToggle>
@@ -56,22 +56,36 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    selected: false,
     label: "Default Toggle",
     icon: Placeholder,
   },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
+  render: (args) => {
+    const [selected, setSelected] = useState(false)
 
-    const button = canvas.getByRole("button")
-    await expect(button.dataset.test).toBe("data")
+    return (
+      <F0ButtonToggle
+        {...args}
+        selected={selected}
+        onSelectedChange={setSelected}
+      />
+    )
   },
 }
 
 export const Selected: Story = {
   args: {
-    selected: true,
     label: "Selected Toggle",
     icon: Placeholder,
+  },
+  render: (args) => {
+    const [selected, setSelected] = useState(true)
+
+    return (
+      <F0ButtonToggle
+        {...args}
+        selected={selected}
+        onSelectedChange={setSelected}
+      />
+    )
   },
 }
