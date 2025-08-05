@@ -689,7 +689,7 @@ export const ExampleComponent = ({
     selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
   ) =>
     | {
-        primary: BulkActionDefinition[]
+        primary?: BulkActionDefinition[]
         secondary?: BulkActionDefinition[]
       }
     | { warningMessage: string }

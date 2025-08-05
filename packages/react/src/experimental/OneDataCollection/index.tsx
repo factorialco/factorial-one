@@ -360,7 +360,7 @@ const OneDataCollectionComp = <
    */
   const [bulkActions, setBulkActions] = useState<
     | {
-        primary: BulkActionDefinition[]
+        primary?: BulkActionDefinition[]
         secondary?: BulkActionDefinition[]
       }
     | { warningMessage: string }
