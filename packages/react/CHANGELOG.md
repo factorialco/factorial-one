@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.147.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.0...factorial-one-react-v1.147.1) (2025-08-05)
+
+
+### Bug Fixes
+
+* **DetailsList:** copy action animation ([#2363](https://github.com/factorialco/factorial-one/issues/2363)) ([a33cbc8](https://github.com/factorialco/factorial-one/commit/a33cbc8f6cc0215feed0758e69cb97c8ea6613b2))
+
 ## [1.147.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.146.1...factorial-one-react-v1.147.0) (2025-08-04)
 
 
