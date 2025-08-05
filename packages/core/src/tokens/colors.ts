@@ -230,8 +230,8 @@ export const f1Colors = {
     positive: "hsl(var(--positive-50))",
     promote: "hsl(var(--promote-50))",
     selected: {
-      DEFAULT: "hsl(var(--selected-50))",
-      hover: "hsl(var(--selected-60))",
+      DEFAULT: "hsl(var(--selected-60))",
+      hover: "hsl(var(--selected-70))",
     },
     mood: {
       "super-negative": "hsl(var(--mood-super-negative))",
