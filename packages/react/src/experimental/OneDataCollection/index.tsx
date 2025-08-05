@@ -363,6 +363,7 @@ const OneDataCollectionComp = <
         primary: BulkActionDefinition[]
         secondary?: BulkActionDefinition[]
       }
+    | { warningMessage: string }
     | undefined
   >(undefined)
 
@@ -413,10 +414,16 @@ const OneDataCollectionComp = <
       },
     })
 
-    setBulkActions({
-      primary: (bulkActions?.primary || []).map(mapBulkActions),
-      secondary: (bulkActions?.secondary || []).map(mapBulkActions),
-    })
+    if (bulkActions) {
+      if ("primary" in bulkActions) {
+        setBulkActions({
+          primary: (bulkActions?.primary || []).map(mapBulkActions),
+          secondary: (bulkActions?.secondary || []).map(mapBulkActions),
+        })
+      } else if ("warningMessage" in bulkActions) {
+        setBulkActions({ warningMessage: bulkActions.warningMessage })
+      }
+    }
   }
 
   const elementsRightActions = useMemo(() => {
@@ -597,12 +604,21 @@ const OneDataCollectionComp = <
         </div>
       ) : (
         <>
-          {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
+          {bulkActions && (
             <OneActionBar
               isOpen={showActionBar}
               selectedNumber={selectedItemsCount}
-              primaryActions={bulkActions.primary}
-              secondaryActions={bulkActions?.secondary}
+              primaryActions={
+                "primary" in bulkActions ? bulkActions?.primary : []
+              }
+              secondaryActions={
+                "secondary" in bulkActions ? bulkActions?.secondary : []
+              }
+              warningMessage={
+                "warningMessage" in bulkActions
+                  ? bulkActions.warningMessage
+                  : undefined
+              }
               onUnselect={() => clearSelectedItemsFunc?.()}
             />
           )}

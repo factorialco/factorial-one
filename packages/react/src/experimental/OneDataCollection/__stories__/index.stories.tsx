@@ -587,7 +587,13 @@ export const WithSelectableAndBulkActions: Story = {
   render: () => (
     <ExampleComponent
       selectable={(item) => item.id}
-      bulkActions={({ allSelected }) => {
+      bulkActions={({ allSelected, selectedCount }) => {
+        if (selectedCount === 2) {
+          return {
+            warningMessage: "Selected items have different action options",
+          }
+        }
+
         return {
           primary: [
             {
