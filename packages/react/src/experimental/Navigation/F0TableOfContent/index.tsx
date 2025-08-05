@@ -39,7 +39,7 @@ function renderTOCItem(
       sortable={sortable}
     >
       {item.children &&
-        (collapsible ? isExpanded : true) &&
+        (Component === ItemSectionHeader || isExpanded) &&
         (sortable ? (
           <Reorder.Group
             as="div"
