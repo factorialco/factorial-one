@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.147.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.5...factorial-one-react-v1.147.6) (2025-08-05)
+
+
+### Bug Fixes
+
+* **Colors:** Color tokens audit ([#2366](https://github.com/factorialco/factorial-one/issues/2366)) ([74c90df](https://github.com/factorialco/factorial-one/commit/74c90df7d88cb776b313a3766fb0553b5ba48a79))
+
 ## [1.147.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.4...factorial-one-react-v1.147.5) (2025-08-05)
 
 

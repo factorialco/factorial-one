@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.22.1...factorial-one-core-v1.22.2) (2025-08-05)
+
+
+### Bug Fixes
+
+* **Colors:** Color tokens audit ([#2366](https://github.com/factorialco/factorial-one/issues/2366)) ([74c90df](https://github.com/factorialco/factorial-one/commit/74c90df7d88cb776b313a3766fb0553b5ba48a79))
+
 ## [1.22.1](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.22.0...factorial-one-core-v1.22.1) (2025-08-05)
 
 
