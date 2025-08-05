@@ -158,7 +158,7 @@ function TOCContent({
       aria-label={title}
       ref={containerRef}
     >
-      <div className="flex-shrink-0 pb-2 pl-6 pr-4 pt-5">
+      <div className="flex-shrink-0 pb-2 pl-5 pr-4 pt-5">
         <OneEllipsis
           lines={1}
           tag="h2"
