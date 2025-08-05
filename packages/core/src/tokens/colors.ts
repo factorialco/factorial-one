@@ -108,9 +108,6 @@ export const baseColors = {
     60: "258 56% 56%",
     70: "258 43% 46%",
   },
-  special: {
-    highlight: "348 80% 50%",
-  },
 } as const
 
 export type BaseColor = keyof typeof baseColors
@@ -243,9 +240,9 @@ export const f1Colors = {
   },
   special: {
     ring: "hsl(var(--ring))",
+    page: "hsl(var(--page))",
+    highlight: "hsl(var(--accent-50))",
   },
-  page: "hsl(var(--page))",
-  "special-highlight": "hsl(var(--special-highlight))",
 } as const
 
 export type F1Color = keyof typeof f1Colors

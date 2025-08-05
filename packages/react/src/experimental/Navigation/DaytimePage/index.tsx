@@ -51,7 +51,7 @@ export function DaytimePage({
     <div
       className={`relative flex w-full flex-col overflow-hidden ${
         embedded ? "" : "xs:rounded-xl"
-      } bg-f1-page shadow`}
+      } bg-f1-special-page shadow`}
     >
       <div className={daytimePageVariants({ period })} />
       {header && (

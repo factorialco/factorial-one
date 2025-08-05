@@ -51,8 +51,6 @@
     --selected-60: theme("colors.viridian.60");
     --selected-70: theme("colors.viridian.70");
 
-    --special-highlight: theme("colors.special.highlight");
-
     --critical-50: theme("colors.red.50");
     --critical-60: theme("colors.red.60");
     --critical-70: theme("colors.red.70");
@@ -70,7 +68,6 @@
     --promote-70: theme("colors.yellow.70");
 
     --ring: var(--selected-50);
-    --link: 184, 92%, 28%;
     --page: var(--white-100);
     --shadow: theme("colors.grey.100");
 
@@ -132,8 +129,6 @@
     --selected-60: theme("colors.viridian.60");
     --selected-70: theme("colors.viridian.50");
 
-    --special-highlight: theme("colors.special.highlight");
-
     --critical-50: theme("colors.red.60");
     --critical-60: theme("colors.red.60");
     --critical-70: theme("colors.red.50");
@@ -151,7 +146,6 @@
     --promote-70: theme("colors.yellow.50");
 
     --ring: var(--selected-50);
-    --link: 184, 40%, 55%;
     --page: theme("colors.white.3");
     --shadow: theme("colors.grey.100");
 
