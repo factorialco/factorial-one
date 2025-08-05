@@ -241,8 +241,9 @@ export const f1Colors = {
       "super-positive": "hsl(var(--mood-super-positive))",
     },
   },
-  ring: "hsl(var(--ring))",
-  link: "hsl(var(--link))",
+  special: {
+    ring: "hsl(var(--ring))",
+  },
   page: "hsl(var(--page))",
   "special-highlight": "hsl(var(--special-highlight))",
 } as const
