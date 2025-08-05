@@ -4,7 +4,7 @@ import { Placeholder } from "../../../icons/app"
 import { F0ButtonToggle } from "./index"
 
 const meta = {
-  title: "Experimental/Actions/F0ButtonToggle",
+  title: "Actions/ButtonToggle",
   component: F0ButtonToggle,
   parameters: {
     layout: "centered",

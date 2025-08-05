@@ -42,13 +42,13 @@ export const F0ButtonToggle = forwardRef<
         }}
         className={cn(
           selected &&
-            "hover:text-f1-selected-hover bg-f1-background-selected text-f1-icon-selected"
+            "bg-f1-background-selected text-f1-icon-selected hover:bg-f1-background-selected-hover hover:text-f1-icon-selected-hover"
         )}
         disabled={disabled}
         aria-label={label}
         {...props}
       >
-        <Icon icon={icon} />
+        <Icon icon={icon} size={size} />
       </Button>
     )
   }
