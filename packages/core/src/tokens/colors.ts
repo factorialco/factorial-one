@@ -128,7 +128,7 @@ export const f1Colors = {
     accent: "hsl(var(--accent-70))",
     critical: "hsl(var(--critical-70))",
     info: "hsl(var(--info-70))",
-    warning: "hsl(var(--warning-50))",
+    warning: "hsl(var(--warning-70))",
     positive: "hsl(var(--positive-70))",
     selected: "hsl(var(--selected-70))",
   },
