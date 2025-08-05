@@ -2,7 +2,7 @@ import { OneEllipsis } from "@/components/OneEllipsis/OneEllipsis"
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/ui/scrollarea"
 import { LayoutGroup, Reorder } from "motion/react"
-import React, { useCallback, useRef, useState } from "react"
+import { ReactElement, useCallback, useRef, useState } from "react"
 import { DragProvider } from "./DragContext"
 import { Item } from "./Item"
 import { ItemSectionHeader } from "./ItemSectionHeader"
@@ -17,7 +17,7 @@ function renderTOCItem(
   expandedItems?: Set<string>,
   onToggleExpanded?: (id: string) => void,
   onUpdateItem?: (itemId: string, updatedItem: TOCItem) => void
-): React.ReactElement {
+): ReactElement {
   const Component = item.children ? ItemSectionHeader : Item
   const isExpanded = expandedItems?.has(item.id) ?? true
 

@@ -11,7 +11,7 @@ import {
   Reorder,
   useDragControls,
 } from "motion/react"
-import { useState } from "react"
+import { ReactNode, useState } from "react"
 import { TOCItem } from "../types"
 import { ItemDropDown } from "./ItemDropDown"
 
@@ -24,7 +24,7 @@ interface TOCItemProps {
   isExpanded?: boolean
   onToggleExpanded?: (id: string) => void
   dragControls?: DragControls
-  children?: React.ReactNode
+  children?: ReactNode
 }
 
 export function Item({

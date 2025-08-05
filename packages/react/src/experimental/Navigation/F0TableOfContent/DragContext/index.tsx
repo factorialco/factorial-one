@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, ReactNode, useContext, useState } from "react"
 
 interface DragContextType {
   isDragging: boolean
@@ -9,7 +9,7 @@ interface DragContextType {
 
 const DragContext = createContext<DragContextType | undefined>(undefined)
 
-export function DragProvider({ children }: { children: React.ReactNode }) {
+export function DragProvider({ children }: { children: ReactNode }) {
   const [isDragging, setIsDragging] = useState(false)
   const [draggedItemId, setDraggedItemId] = useState<string | null>(null)
   return (
