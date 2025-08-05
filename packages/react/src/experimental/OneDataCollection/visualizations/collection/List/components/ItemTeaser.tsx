@@ -14,7 +14,7 @@ export const ItemTeaser = ({ title, avatar, description }: ItemTeaserProps) => {
   return (
     <article className="flex w-[calc(100%-72px)] min-w-40 flex-col items-start gap-3 md:w-full md:flex-row md:items-center md:gap-2">
       {avatar && <Avatar avatar={avatar} size="medium" />}
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col gap-0.5">
         <header>
           <h3>
             <OneEllipsis className="text-base font-medium text-f1-foreground">
