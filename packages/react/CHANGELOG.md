@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.147.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.2...factorial-one-react-v1.147.3) (2025-08-05)
+
+
+### Bug Fixes
+
+* set correct GroupHeader padding for list view ([#2369](https://github.com/factorialco/factorial-one/issues/2369)) ([da30ec1](https://github.com/factorialco/factorial-one/commit/da30ec12634fbff1efa6cc7a71a559ba525b1d9f))
+
 ## [1.147.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.1...factorial-one-react-v1.147.2) (2025-08-05)
 
 
