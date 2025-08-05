@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.147.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.4...factorial-one-react-v1.147.5) (2025-08-05)
+
+
+### Bug Fixes
+
+* get rid of wrong selected count on data collection ([#2371](https://github.com/factorialco/factorial-one/issues/2371)) ([2ecbbf1](https://github.com/factorialco/factorial-one/commit/2ecbbf1af9254763650a4f8dac3c15089a2859a7))
+
 ## [1.147.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.3...factorial-one-react-v1.147.4) (2025-08-05)
 
 
