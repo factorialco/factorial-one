@@ -68,7 +68,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
               className={cn(
-                "pointer-events-none absolute inset-x-0 z-10 h-3 rounded-t-xl after:absolute after:inset-x-0 after:h-px after:bg-f1-background-bold after:opacity-[0.04] after:content-['']",
+                "pointer-events-none absolute inset-x-0 z-10 h-3 rounded-t-xl after:absolute after:inset-x-0 after:h-px after:bg-f1-background-inverse after:opacity-[0.04] after:content-['']",
                 "-top-px bg-gradient-to-b from-f1-background-selected to-transparent after:-top-px"
               )}
             />
