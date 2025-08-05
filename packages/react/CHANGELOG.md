@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.147.7](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.6...factorial-one-react-v1.147.7) (2025-08-05)
+
+
+### Bug Fixes
+
+* set correct side spacing on listview when initial loading ([#2376](https://github.com/factorialco/factorial-one/issues/2376)) ([d5c8dde](https://github.com/factorialco/factorial-one/commit/d5c8dde9816117b8f0f578a45aae883b1bb2b704))
+
 ## [1.147.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.5...factorial-one-react-v1.147.6) (2025-08-05)
 
 
