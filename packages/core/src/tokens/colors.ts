@@ -146,7 +146,7 @@ export const f1Colors = {
     },
     bold: "hsl(var(--neutral-90))",
     accent: {
-      DEFAULT: "hsl(var(--accent-50) / 0.1)",
+      DEFAULT: "hsl(var(--accent-50) / 0.05)",
       bold: {
         DEFAULT: "hsl(var(--accent-50))",
         hover: "hsl(var(--accent-60))",
@@ -175,6 +175,7 @@ export const f1Colors = {
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.1)",
       secondary: "hsl(var(--selected-50) / 0.05)",
+      hover: "hsl(var(--selected-50) / 0.2)",
       bold: {
         DEFAULT: "hsl(var(--selected-60))",
         hover: "hsl(var(--selected-70))",
