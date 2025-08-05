@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.147.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.3...factorial-one-react-v1.147.4) (2025-08-05)
+
+
+### Bug Fixes
+
+* add support to show warning message for bulk actions in data collection ([#2368](https://github.com/factorialco/factorial-one/issues/2368)) ([2c1b3ee](https://github.com/factorialco/factorial-one/commit/2c1b3eedf9ddac270428e4d0a537cb377213be2e))
+
 ## [1.147.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.2...factorial-one-react-v1.147.3) (2025-08-05)
 
 
