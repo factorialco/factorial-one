@@ -42,6 +42,7 @@ function renderTOCItem(
         (collapsible ? isExpanded : true) &&
         (sortable ? (
           <Reorder.Group
+            as="div"
             values={item.children}
             onReorder={handleChildrenReorder}
             axis="y"
@@ -116,7 +117,6 @@ function TOCContent({
   const handleSort = useCallback(
     (newOrder: TOCItem[]) => {
       setSortableItems(newOrder)
-      // Notify parent immediately when top-level items are reordered
       if (onReorder) {
         onReorder(convertToIds(newOrder))
       }
@@ -171,6 +171,7 @@ function TOCContent({
         <div className="px-3 pb-2">
           {sortable ? (
             <Reorder.Group
+              as="div"
               values={sortableItems}
               onReorder={handleSort}
               axis="y"

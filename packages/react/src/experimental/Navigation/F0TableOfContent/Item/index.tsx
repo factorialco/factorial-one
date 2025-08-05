@@ -196,9 +196,9 @@ export function Item({
   if (sortable) {
     return (
       <Reorder.Item
+        as="div"
         key={item.id}
         value={item}
-        className="list-none"
         dragControls={dragControls}
         dragListener={false}
         whileDrag={{
