@@ -135,7 +135,7 @@ export const ListCollection = <
 
   if (isInitialLoading) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden rounded-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary">
+      <div className="mx-4 my-2 flex min-h-0 flex-1 flex-col gap-4 overflow-hidden rounded-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary">
         {Array.from({ length: 10 }).map((_, index) => (
           <div
             key={index}
