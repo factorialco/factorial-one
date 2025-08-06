@@ -46,6 +46,7 @@ export const F0ButtonToggle = forwardRef<
         )}
         disabled={disabled}
         aria-label={label}
+        aria-pressed={selected}
         {...props}
       >
         <Icon icon={icon} size={size} />
