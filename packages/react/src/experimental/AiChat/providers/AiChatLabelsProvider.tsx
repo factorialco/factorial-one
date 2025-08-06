@@ -6,7 +6,6 @@ const AiChatLabelsContext = createContext<AiChatLabels | null>(null)
 
 export interface AiChatLabels {
   greeting?: string
-  initial?: string
 }
 
 export const AiChatLabelsProvider: FC<PropsWithChildren<AiChatLabels>> = ({

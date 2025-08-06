@@ -7,6 +7,8 @@ import {
   TextMessage,
 } from "@copilotkit/runtime-client-gql"
 import { useEffect, useMemo, useRef } from "react"
+import OneIcon from "../OneIcon"
+import { useAiChatLabels } from "../providers/AiChatLabelsProvider"
 
 export const MessagesContainer = ({
   messages,
@@ -26,13 +28,12 @@ export const MessagesContainer = ({
   markdownTagRenderers,
 }: MessagesProps) => {
   const context = useChatContext()
+  const { greeting } = useAiChatLabels()
   const initialMessages = useMemo(
     () => makeInitialMessages(context.labels.initial),
     [context.labels.initial]
   )
-
-  messages = [...initialMessages, ...messages]
-
+  const showWelcomeBlock = greeting || initialMessages.length > 0
   const actionResults: Record<string, string> = {}
 
   for (let i = 0; i < messages.length; i++) {
@@ -61,6 +62,30 @@ export const MessagesContainer = ({
       ref={messagesContainerRef}
     >
       <div className="flex flex-col">
+        {showWelcomeBlock && (
+          <div className="flex flex-col px-2">
+            <OneIcon className="my-4 h-10 w-10 cursor-pointer rounded-xl" />
+            {greeting && (
+              <p className="text-lg font-medium text-f1-foreground-secondary">
+                {greeting}
+              </p>
+            )}
+            {initialMessages.map((message) => {
+              if (!message.isTextMessage()) {
+                return null
+              }
+
+              return (
+                <p
+                  className="text-2xl font-semibold text-f1-foreground"
+                  key={message.id}
+                >
+                  {message.content}
+                </p>
+              )
+            })}
+          </div>
+        )}
         {messages.map((message, index) => {
           const isCurrentMessage = index === messages.length - 1
 
