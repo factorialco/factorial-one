@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.148.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.7...factorial-one-react-v1.148.0) (2025-08-06)
+
+
+### Features
+
+* show ratios in vertical bar chart ([#2320](https://github.com/factorialco/factorial-one/issues/2320)) ([bb04862](https://github.com/factorialco/factorial-one/commit/bb04862e12469c5caee89884ee9bdf8626846c9b))
+
 ## [1.147.7](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.6...factorial-one-react-v1.147.7) (2025-08-05)
 
 
