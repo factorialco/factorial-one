@@ -155,15 +155,19 @@ export const ListCollection = <
     })
   }
 
+  const showFullscreenLoading =
+    isInitialLoading ||
+    (isLoading && source.dataAdapter.paginationType === "pages")
+
   return (
     <div className="flex max-h-full min-h-0 flex-1 flex-col gap-4 px-4 py-2">
       <div
         className={cn(
           "flex min-h-0 flex-1 flex-col gap-2",
-          isInitialLoading && "select-none opacity-50 transition-opacity"
+          showFullscreenLoading && "select-none opacity-50 transition-opacity"
         )}
-        aria-live={isInitialLoading ? "polite" : undefined}
-        aria-busy={isInitialLoading ? "true" : undefined}
+        aria-live={showFullscreenLoading ? "polite" : undefined}
+        aria-busy={showFullscreenLoading ? "true" : undefined}
       >
         <div className="min-h-0 flex-1 overflow-auto">
           <AnimatePresence>
