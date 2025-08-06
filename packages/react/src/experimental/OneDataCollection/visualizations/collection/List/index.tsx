@@ -16,7 +16,6 @@ import { SummariesDefinition } from "../../../summary"
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { isInfiniteScrollPagination, useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
-import { InitialLoadingSkeleton } from "./components/InitialLoadingSkeleton"
 import { ListGroup } from "./components/ListGroup"
 import { ListSkeleton } from "./components/ListSkeleton"
 import { ListVisualizationOptions } from "./types"
@@ -135,7 +134,14 @@ export const ListCollection = <
   )
 
   if (isInitialLoading) {
-    return <InitialLoadingSkeleton count={10} />
+    return (
+      <ListSkeleton
+        source={source}
+        fields={fields}
+        count={10}
+        isInitialLoading
+      />
+    )
   }
 
   // Enforce that sorting is only used when sortings are defined

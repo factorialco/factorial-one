@@ -28,6 +28,7 @@ type ListSkeletonProps<
   >
   fields: ReadonlyArray<ListPropertyDefinition<R, Sortings>>
   count?: number
+  isInitialLoading?: boolean
   className?: string
 }
 
@@ -46,6 +47,7 @@ export const ListSkeleton = <
   source,
   fields,
   count = 5,
+  isInitialLoading,
   className,
 }: ListSkeletonProps<
   Record,
@@ -59,7 +61,8 @@ export const ListSkeleton = <
   return (
     <div
       className={cn(
-        "flex flex-col overflow-hidden rounded-b-xl border border-t-0 border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary",
+        "flex flex-col overflow-hidden rounded-b-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary",
+        isInitialLoading ? "rounded-t-xl" : "border-t-0",
         className
       )}
     >
