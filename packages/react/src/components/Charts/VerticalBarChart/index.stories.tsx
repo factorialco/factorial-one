@@ -18,6 +18,13 @@ const meta: Meta<typeof VerticalBarChart<typeof dataConfig>> = {
       </div>
     ),
   ],
+  argTypes: {
+    showRatio: {
+      control: {
+        type: "boolean",
+      },
+    },
+  },
   args: {
     dataConfig,
     data: [
@@ -28,9 +35,7 @@ const meta: Meta<typeof VerticalBarChart<typeof dataConfig>> = {
       { label: "Recruitment Efficiency", values: { value: 100 } },
     ],
     yAxis: {
-      width: 80,
-      tickFormatter: (value: string) =>
-        `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + "€"}`,
+      width: 100,
     },
   },
 }
@@ -60,5 +65,25 @@ export const MultipleValues: Meta<
       { label: "April", values: { mobile: 1500, desktop: 8000 } },
       { label: "May", values: { mobile: 2000, desktop: 6000 } },
     ],
+    xAxis: {
+      hide: false,
+      tickFormatter: (value: string) =>
+        `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + "€"}`,
+    },
+    valueFormatter: (value: string | number | undefined) =>
+      `${Number.isNaN(Number(value)) ? value : (Number(value) / 100).toFixed(2) + "€"}`,
+  },
+}
+
+export const WithRatios: Meta<typeof VerticalBarChart<typeof dataConfig>> = {
+  args: {
+    dataConfig: dataConfig,
+    data: [
+      { label: "Yes", values: { value: 140 } },
+      { label: "No", values: { value: 60 } },
+    ],
+    label: true,
+    showRatio: true,
+    valueFormatter: (value: string | number | undefined) => `${value} pers.`,
   },
 }
