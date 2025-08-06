@@ -435,6 +435,7 @@ const OneDataCollectionComp = <
   }, [search, isLoading, visualizations])
 
   const [totalItems, setTotalItems] = useState<undefined | number>(undefined)
+  const [isInitialLoading, setIsInitialLoading] = useState(false)
 
   const { emptyState, setEmptyStateType } = useEmptyState(emptyStates, {
     retry: () => {
@@ -462,11 +463,10 @@ const OneDataCollectionComp = <
   const onLoadData = ({
     totalItems,
     filters,
-    isInitialLoading,
+    isInitialLoading: isInitialLoadingFromCallback,
     search,
   }: Parameters<OnLoadDataCallback<Record, Filters>>[0]) => {
-    if (isInitialLoading) return
-
+    setIsInitialLoading(isInitialLoadingFromCallback)
     setTotalItems(totalItems)
     setEmptyStateType(getEmptyStateType(totalItems, filters, search))
   }
@@ -500,10 +500,10 @@ const OneDataCollectionComp = <
         navigationFilters) && (
         <div className="border-f1-border-primary flex gap-4 px-6">
           <div className="flex flex-1 flex-shrink gap-4 text-lg font-semibold">
-            {isLoading &&
+            {isInitialLoading &&
               totalItems !== undefined &&
               totalItemSummary(totalItems) && <Skeleton className="h-5 w-24" />}
-            {!isLoading && totalItems !== undefined && (
+            {!isInitialLoading && totalItems !== undefined && (
               <div className="flex h-5 items-center">
                 {totalItemSummary(totalItems)}
               </div>
