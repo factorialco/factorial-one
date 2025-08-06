@@ -62,7 +62,7 @@ export const ListSkeleton = <
     <div
       className={cn(
         "flex flex-col overflow-hidden rounded-b-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary",
-        isInitialLoading ? "rounded-t-xl" : "border-t-0",
+        isInitialLoading ? "mx-4 mt-2 rounded-t-xl" : "border-t-0",
         className
       )}
     >
