@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.151.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.1...factorial-one-react-v1.151.2) (2025-08-07)
+
+
+### Bug Fixes
+
+* hide unneeded separator between filters and presets ([#2389](https://github.com/factorialco/factorial-one/issues/2389)) ([db35488](https://github.com/factorialco/factorial-one/commit/db3548834b574d27d7f86d6e2ea19774eaa9559e))
+
 ## [1.151.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.0...factorial-one-react-v1.151.1) (2025-08-07)
 
 
