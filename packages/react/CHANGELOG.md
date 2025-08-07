@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.149.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.148.0...factorial-one-react-v1.149.0) (2025-08-07)
+
+
+### Features
+
+* **ChipList:** add chip list component ([#2356](https://github.com/factorialco/factorial-one/issues/2356)) ([dc792e9](https://github.com/factorialco/factorial-one/commit/dc792e92aafb4fa8332ca2ad1f771bd7ea8f327f))
+
 ## [1.148.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.7...factorial-one-react-v1.148.0) (2025-08-06)
 
 
