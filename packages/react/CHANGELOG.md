@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.152.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.0...factorial-one-react-v1.152.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* **aiChat:** render subComponents when passed ([#2394](https://github.com/factorialco/factorial-one/issues/2394)) ([e2e444c](https://github.com/factorialco/factorial-one/commit/e2e444cd1a612a33cad845b3f1f35810955b2ebf))
+
 ## [1.152.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.3...factorial-one-react-v1.152.0) (2025-08-07)
 
 
