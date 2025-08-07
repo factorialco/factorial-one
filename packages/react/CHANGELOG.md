@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.151.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.0...factorial-one-react-v1.151.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* not hiding filters when no filters to show in data collection ([#2387](https://github.com/factorialco/factorial-one/issues/2387)) ([a1a5f30](https://github.com/factorialco/factorial-one/commit/a1a5f304eec9f151e14a70f45052f12fd5a923ca))
+
 ## [1.151.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.150.1...factorial-one-react-v1.151.0) (2025-08-07)
 
 
