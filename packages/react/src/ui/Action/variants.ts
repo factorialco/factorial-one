@@ -61,6 +61,12 @@ export const actionVariants = cva({
         baseLink,
         "bg-f1-background-accent !px-1.5 font-medium text-f1-foreground-accent"
       ),
+      selected: cn(
+        baseButton,
+        "bg-f1-background-selected text-f1-icon-selected shadow-none hover:bg-f1-background-selected-hover hover:text-f1-icon-selected-hover hover:shadow-[0_2px_6px_-1px_rgba(13,22,37,.04),inset_0_-2px_4px_rgba(13,22,37,.04)]",
+        "active:bg-f1-background-selected-hover active:shadow-[inset_0_2px_4px_0_rgba(13,22,37,.1)]",
+        "data-[pressed=true]:bg-f1-background-selected-hover data-[pressed=true]:shadow-[inset_0_2px_4px_0_rgba(13,22,37,.1)]"
+      ),
     },
     pressed: {
       true: "[&_.main]:translate-y-px",

@@ -31,7 +31,12 @@ export const F0ButtonToggle = forwardRef<
     ref
   ) => {
     const toggleButtonClasses = cva({
-      base: "aspect-square px-0 data-[state=on]:bg-f1-background-selected data-[state=on]:text-f1-icon-selected hover:data-[state=on]:bg-f1-background-selected-hover hover:data-[state=on]:text-f1-icon-selected-hover",
+      base: cn(
+        "aspect-square px-0",
+        focusRing(),
+        buttonSizeVariants({ size }),
+        actionVariants({ variant: selected ? "selected" : "ghost" })
+      ),
       variants: {
         size: {
           sm: "h-6",
@@ -48,12 +53,7 @@ export const F0ButtonToggle = forwardRef<
         onPressedChange={onSelectedChange}
         disabled={disabled}
         aria-label={label}
-        className={cn(
-          focusRing(),
-          actionVariants({ variant: "ghost" }),
-          toggleButtonClasses({ size }),
-          buttonSizeVariants({ size })
-        )}
+        className={toggleButtonClasses({ size })}
         {...props}
       >
         <Icon icon={icon} size={size} />
