@@ -47,7 +47,7 @@ const findNextMultiple = (n: number): number => {
 
 const CardGrid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {children}
     </div>
   )
@@ -359,7 +359,7 @@ export const CardCollection = <
                       onSelectChange={(checked) =>
                         handleSelectGroupChange(group, checked)
                       }
-                      className="px-6 pb-2 pt-4"
+                      className="px-4 pb-2 pt-4"
                     />
                     <AnimatePresence>
                       {(!collapsible || openGroups[group.key]) && (
