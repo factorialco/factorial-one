@@ -563,7 +563,7 @@ const OneDataCollectionComp = <
             sortings={sortings}
             currentSortings={currentSortings}
             onSortingsChange={setCurrentSortings}
-          ></Settings>
+          />
           {hasCollectionsActions && (
             <>
               {elementsRightActions && (
