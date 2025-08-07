@@ -1,3 +1,6 @@
+import avatar01 from "@storybook-static/avatars/person01.jpg"
+import avatar02 from "@storybook-static/avatars/person02.jpg"
+import avatar03 from "@storybook-static/avatars/person03.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { F0ChipList } from "./index"
 
@@ -13,8 +16,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const mockAvatarUrl = "https://i.pravatar.cc/150"
-
 export const Default: Story = {
   args: {
     layout: "compact",
@@ -26,7 +27,7 @@ export const Default: Story = {
           type: "person",
           firstName: "John",
           lastName: "Doe",
-          src: `${mockAvatarUrl}?img=1`,
+          src: avatar01,
         },
       },
       {
@@ -35,7 +36,7 @@ export const Default: Story = {
           type: "person",
           firstName: "John",
           lastName: "Doe",
-          src: `${mockAvatarUrl}?img=2`,
+          src: avatar02,
         },
       },
       {
@@ -44,7 +45,7 @@ export const Default: Story = {
           type: "person",
           firstName: "John",
           lastName: "Doe",
-          src: `${mockAvatarUrl}?img=3`,
+          src: avatar03,
         },
       },
     ],
