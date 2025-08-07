@@ -32,7 +32,18 @@ import {
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker"
-import { Ai, Delete, Download, Pencil, Star, Upload } from "../../../icons/app"
+import {
+  Ai,
+  Building,
+  CheckCircle,
+  Delete,
+  Download,
+  Envelope,
+  Pencil,
+  Person,
+  Star,
+  Upload,
+} from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
@@ -371,9 +382,16 @@ export const getMockVisualizations = (options?: {
     type: "card",
     options: {
       title: (item) => item.name,
+      description: (item) => item.role,
+      avatar: (item) => ({
+        type: "person",
+        firstName: item.name.split(" ")[0],
+        lastName: item.name.split(" ")[1],
+      }),
       cardProperties: [
         {
           label: "Email",
+          icon: Envelope,
           render: (item) => item.email,
         },
         {
@@ -382,7 +400,48 @@ export const getMockVisualizations = (options?: {
         },
         {
           label: "Department",
+          icon: Building,
           render: (item) => item.department,
+        },
+        {
+          label: "Teammates",
+          icon: Person,
+          render: (item) => ({
+            type: "avatarList",
+            value: {
+              avatarList: [
+                {
+                  type: "person",
+                  firstName: item.name,
+                  lastName: "Doe",
+                  src: "/avatars/person01.jpg",
+                },
+                {
+                  type: "person",
+                  firstName: "Dani",
+                  lastName: "Moreno",
+                  src: "/avatars/person04.jpg",
+                },
+                {
+                  type: "person",
+                  firstName: "Sergio",
+                  lastName: "Carracedo",
+                  src: "/avatars/person05.jpg",
+                },
+              ],
+            },
+          }),
+        },
+        {
+          label: "Status",
+          icon: CheckCircle,
+          render: (item) => ({
+            type: "status",
+            value: {
+              status: item.status === "active" ? "positive" : "critical",
+              label: item.status.charAt(0).toUpperCase() + item.status.slice(1),
+            },
+          }),
         },
       ],
     },
