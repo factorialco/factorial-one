@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.151.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.150.1...factorial-one-react-v1.151.0) (2025-08-07)
+
+
+### Features
+
+* **F0TableOfContent:** add Table of Contents component with stories and types ([#2357](https://github.com/factorialco/factorial-one/issues/2357)) ([929c60e](https://github.com/factorialco/factorial-one/commit/929c60e7eccfbdd6a905b83727c57236a33243b9))
+
 ## [1.150.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.150.0...factorial-one-react-v1.150.1) (2025-08-07)
 
 
