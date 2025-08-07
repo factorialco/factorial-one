@@ -154,7 +154,8 @@ const FiltersControls = () => {
     : undefined
 
   return (
-    shownFilters && (
+    shownFilters &&
+    Object.keys(shownFilters).length > 0 && (
       <FiltersControlsComponent
         filters={shownFilters}
         value={value}
