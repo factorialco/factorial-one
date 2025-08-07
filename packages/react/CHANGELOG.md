@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.150.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.149.0...factorial-one-react-v1.150.0) (2025-08-07)
+
+
+### Features
+
+* **ModuleAvatar:** add new icon for my_surveys module ([#2381](https://github.com/factorialco/factorial-one/issues/2381)) ([134a01f](https://github.com/factorialco/factorial-one/commit/134a01fd30b063f11e56c8fdbd17a72d64d5752e))
+
 ## [1.149.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.148.0...factorial-one-react-v1.149.0) (2025-08-07)
 
 
