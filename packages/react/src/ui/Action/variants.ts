@@ -115,6 +115,7 @@ export const iconVariants = cva({
       outlinePromote: "",
       link: "",
       mention: "",
+      selected: "",
     },
     mode: {
       default: "",
