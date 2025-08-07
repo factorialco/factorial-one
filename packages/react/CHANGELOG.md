@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.151.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.0...factorial-one-react-v1.151.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* not hiding filters when no filters to show in data collection ([#2387](https://github.com/factorialco/factorial-one/issues/2387)) ([a1a5f30](https://github.com/factorialco/factorial-one/commit/a1a5f304eec9f151e14a70f45052f12fd5a923ca))
+
+## [1.151.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.150.1...factorial-one-react-v1.151.0) (2025-08-07)
+
+
+### Features
+
+* **F0TableOfContent:** add Table of Contents component with stories and types ([#2357](https://github.com/factorialco/factorial-one/issues/2357)) ([929c60e](https://github.com/factorialco/factorial-one/commit/929c60e7eccfbdd6a905b83727c57236a33243b9))
+
+## [1.150.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.150.0...factorial-one-react-v1.150.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* add icons to modal buttons ([5eab15a](https://github.com/factorialco/factorial-one/commit/5eab15a1f110ffe508b551e1695cf69115c0f5d7))
+
 ## [1.150.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.149.0...factorial-one-react-v1.150.0) (2025-08-07)
 
 
