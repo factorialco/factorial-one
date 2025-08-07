@@ -147,10 +147,16 @@ const FiltersControls = () => {
     presets,
   } = useContext(FiltersContext)
 
+  const shownFilters = filters
+    ? Object.fromEntries(
+        Object.entries(filters).filter(([_, filter]) => !filter.hideSelector)
+      )
+    : undefined
+
   return (
-    filters && (
+    shownFilters && (
       <FiltersControlsComponent
-        filters={filters}
+        filters={shownFilters}
         value={value}
         onChange={setFiltersValue}
         onOpenChange={setIsFiltersOpen}
