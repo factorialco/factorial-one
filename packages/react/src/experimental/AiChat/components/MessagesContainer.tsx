@@ -7,7 +7,7 @@ import {
   Role,
   TextMessage,
 } from "@copilotkit/runtime-client-gql"
-import { motion } from "motion/react"
+import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useMemo, useRef } from "react"
 import OneIcon from "../OneIcon"
 import { useAiChatLabels } from "../providers/AiChatLabelsProvider"
@@ -71,30 +71,37 @@ export const MessagesContainer = ({
       ref={messagesContainerRef}
     >
       <motion.div className="flex flex-col gap-2" layout="position">
-        {showWelcomeBlock && (
-          <div className="flex flex-col px-2">
-            <OneIcon className="my-4 h-10 w-10 cursor-pointer rounded-xl" />
-            {greeting && (
-              <p className="text-lg font-medium text-f1-foreground-secondary">
-                {greeting}
-              </p>
-            )}
-            {initialMessages.map((message) => {
-              if (!message.isTextMessage()) {
-                return null
-              }
-
-              return (
-                <p
-                  className="text-2xl font-semibold text-f1-foreground"
-                  key={message.id}
-                >
-                  {message.content}
+        <AnimatePresence>
+          {showWelcomeBlock && (
+            <motion.div
+              className="flex flex-col px-2"
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <OneIcon className="my-4 h-10 w-10 cursor-pointer rounded-xl" />
+              {greeting && (
+                <p className="text-lg font-medium text-f1-foreground-secondary">
+                  {greeting}
                 </p>
-              )
-            })}
-          </div>
-        )}
+              )}
+              {initialMessages.map((message) => {
+                if (!message.isTextMessage()) {
+                  return null
+                }
+
+                return (
+                  <p
+                    className="text-2xl font-semibold text-f1-foreground"
+                    key={message.id}
+                  >
+                    {message.content}
+                  </p>
+                )
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
         {messages.map((message, index) => {
           const isCurrentMessage = index === messages.length - 1
 
