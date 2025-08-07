@@ -1,6 +1,8 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { cn } from "@/lib/utils"
-import { Button } from "@/ui/button"
+import { cn, focusRing } from "@/lib/utils"
+import { actionVariants, buttonSizeVariants } from "@/ui/Action/variants"
+import * as TogglePrimitive from "@radix-ui/react-toggle"
+import { cva } from "cva"
 import { forwardRef } from "react"
 
 interface F0ButtonToggleProps {
@@ -28,29 +30,43 @@ export const F0ButtonToggle = forwardRef<
     },
     ref
   ) => {
+    const sizeClasses = cva({
+      base: "aspect-square px-0",
+      variants: {
+        size: {
+          sm: "h-6",
+          md: "h-8",
+        },
+      },
+    })
+
+    const toggleButtonVariants = cva({
+      variants: {
+        variant: {
+          default:
+            "data-[state=on]:bg-f1-background-selected data-[state=on]:text-f1-icon-selected hover:data-[state=on]:bg-f1-background-selected-hover hover:data-[state=on]:text-f1-icon-selected-hover",
+        },
+      },
+    })
+
     return (
-      <Button
+      <TogglePrimitive.Root
         ref={ref}
-        variant="ghost"
-        size={size}
-        round
-        onClick={(e) => {
-          e.preventDefault()
-          if (!disabled) {
-            onSelectedChange(!selected)
-          }
-        }}
-        className={cn(
-          selected &&
-            "bg-f1-background-selected text-f1-icon-selected hover:bg-f1-background-selected-hover hover:text-f1-icon-selected-hover"
-        )}
+        pressed={selected}
+        onPressedChange={onSelectedChange}
         disabled={disabled}
         aria-label={label}
-        aria-pressed={selected}
+        className={cn(
+          focusRing(),
+          actionVariants({ variant: "ghost" }),
+          sizeClasses({ size }),
+          buttonSizeVariants({ size }),
+          toggleButtonVariants({ variant: "default" })
+        )}
         {...props}
       >
         <Icon icon={icon} size={size} />
-      </Button>
+      </TogglePrimitive.Root>
     )
   }
 )

@@ -71,21 +71,3 @@ export const Default: Story = {
     )
   },
 }
-
-export const Selected: Story = {
-  args: {
-    label: "Selected Toggle",
-    icon: Placeholder,
-  },
-  render: (args) => {
-    const [selected, setSelected] = useState(true)
-
-    return (
-      <F0ButtonToggle
-        {...args}
-        selected={selected}
-        onSelectedChange={setSelected}
-      />
-    )
-  },
-}
