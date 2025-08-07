@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.152.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.3...factorial-one-react-v1.152.0) (2025-08-07)
+
+
+### Features
+
+* add F0ButtonToggle component  ([#2373](https://github.com/factorialco/factorial-one/issues/2373)) ([6ef65ae](https://github.com/factorialco/factorial-one/commit/6ef65ae943ce0b0e2a4abdb7ed79ce70b46f0870))
+
 ## [1.151.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.2...factorial-one-react-v1.151.3) (2025-08-07)
 
 
