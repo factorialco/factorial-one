@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.151.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.2...factorial-one-react-v1.151.3) (2025-08-07)
+
+
+### Bug Fixes
+
+* resource header metadata icon color ([#2391](https://github.com/factorialco/factorial-one/issues/2391)) ([baf3998](https://github.com/factorialco/factorial-one/commit/baf3998c8972f45225aba31bdb631c4c4151251f))
+
 ## [1.151.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.1...factorial-one-react-v1.151.2) (2025-08-07)
 
 
