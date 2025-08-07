@@ -33,7 +33,7 @@ describe("I18nProvider", () => {
         other: "Otras acciones",
         thumbsUp: "Like",
         thumbsDown: "Dislike",
-        toggle: "Cambiar",
+        toggle: "Alternar",
       },
     }
 
