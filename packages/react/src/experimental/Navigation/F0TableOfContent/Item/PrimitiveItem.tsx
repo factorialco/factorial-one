@@ -44,12 +44,11 @@ export function PrimitiveItem({
   const translations = useI18n()
   const { label, onClick, icon, disabled, otherActions } = item
 
-  // Logic: show dropdown on hover only if counter exists, always visible if no counter
+  // Logic: Show counter by default (if exists), show dropdown on hover (if actions exist)
   // Keep dropdown visible while it's open to prevent flickering
-  const shouldShowDropdown =
-    otherActions &&
-    otherActions.length > 0 &&
-    (counter ? isHovered || open : true)
+  const hasOtherActions = otherActions && otherActions.length > 0
+  const shouldShowDropdown = hasOtherActions && (isHovered || open)
+  const shouldShowCounter = counter && !shouldShowDropdown
 
   // Show handle icon on hover or when dropdown is open
   const showHandleIcon = sortable && (isHovered || open)
@@ -143,31 +142,24 @@ export function PrimitiveItem({
           {label}
         </OneEllipsis>
 
-        {(counter || (otherActions && otherActions.length > 0)) && (
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="relative flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center"
-          >
-            <AnimatePresence mode="wait">
-              {counter && !shouldShowDropdown ? (
-                <motion.div
-                  key="counter"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{
-                    duration: 0.15,
-                    ease: [0.25, 0.1, 0.25, 1],
-                  }}
-                  className="flex items-center justify-center"
-                >
-                  <Counter value={counter} />
-                </motion.div>
-              ) : (
-                otherActions &&
-                otherActions.length > 0 && (
+        <AnimatePresence>
+          {(shouldShowCounter || shouldShowDropdown) && (
+            <motion.div
+              key="actions-container"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{
+                duration: 0.15,
+                ease: [0.25, 0.1, 0.25, 1],
+              }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative flex h-[24px] w-[24px] flex-shrink-0 items-center justify-center"
+            >
+              <AnimatePresence mode="wait">
+                {shouldShowCounter ? (
                   <motion.div
-                    key="dropdown"
+                    key="counter"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
@@ -177,18 +169,34 @@ export function PrimitiveItem({
                     }}
                     className="flex items-center justify-center"
                   >
-                    <ItemDropDown
-                      otherActions={otherActions}
-                      open={open}
-                      setOpen={setOpen}
-                      disabled={disabled}
-                    />
+                    <Counter value={counter} />
                   </motion.div>
-                )
-              )}
-            </AnimatePresence>
-          </div>
-        )}
+                ) : (
+                  shouldShowDropdown && (
+                    <motion.div
+                      key="dropdown"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{
+                        duration: 0.15,
+                        ease: [0.25, 0.1, 0.25, 1],
+                      }}
+                      className="flex items-center justify-center"
+                    >
+                      <ItemDropDown
+                        otherActions={otherActions}
+                        open={open}
+                        setOpen={setOpen}
+                        disabled={disabled}
+                      />
+                    </motion.div>
+                  )
+                )}
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
       {children}
     </div>
