@@ -1,3 +1,4 @@
+import { Download, Upsell } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { BaseBanner } from "./index"
 
@@ -84,5 +85,27 @@ export const Loading: Story = {
     mediaUrl:
       "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     isLoading: true,
+  },
+}
+
+export const WithIcons: Story = {
+  args: {
+    title: "Premium features available",
+    subtitle: "Upgrade your experience with our premium features and tools",
+    mediaUrl:
+      "https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    primaryAction: {
+      label: "Upgrade Now",
+      onClick: () => alert("Upgrade clicked"),
+      variant: "outline",
+      icon: Upsell,
+    },
+    secondaryAction: {
+      label: "Download Guide",
+      onClick: () => alert("Download clicked"),
+      variant: "outline",
+      icon: Download,
+    },
+    onClose: () => alert("Banner closed"),
   },
 }
