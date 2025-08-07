@@ -11,7 +11,7 @@ interface F0ButtonToggleProps {
   label: string
   disabled?: boolean
   icon: IconType
-  size?: "sm" | "md"
+  size?: "sm" | "md" | "lg"
 }
 
 export const F0ButtonToggle = forwardRef<
@@ -30,21 +30,13 @@ export const F0ButtonToggle = forwardRef<
     },
     ref
   ) => {
-    const sizeClasses = cva({
-      base: "aspect-square px-0",
+    const toggleButtonClasses = cva({
+      base: "aspect-square px-0 data-[state=on]:bg-f1-background-selected data-[state=on]:text-f1-icon-selected hover:data-[state=on]:bg-f1-background-selected-hover hover:data-[state=on]:text-f1-icon-selected-hover",
       variants: {
         size: {
           sm: "h-6",
           md: "h-8",
-        },
-      },
-    })
-
-    const toggleButtonVariants = cva({
-      variants: {
-        variant: {
-          default:
-            "data-[state=on]:bg-f1-background-selected data-[state=on]:text-f1-icon-selected hover:data-[state=on]:bg-f1-background-selected-hover hover:data-[state=on]:text-f1-icon-selected-hover",
+          lg: "h-10",
         },
       },
     })
@@ -59,9 +51,8 @@ export const F0ButtonToggle = forwardRef<
         className={cn(
           focusRing(),
           actionVariants({ variant: "ghost" }),
-          sizeClasses({ size }),
-          buttonSizeVariants({ size }),
-          toggleButtonVariants({ variant: "default" })
+          toggleButtonClasses({ size }),
+          buttonSizeVariants({ size })
         )}
         {...props}
       >

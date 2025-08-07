@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
-import { Placeholder } from "../../../icons/app"
+import { Microphone, MicrophoneNegative, Placeholder } from "../../../icons/app"
 import { F0ButtonToggle } from "./index"
 
 const meta = {
@@ -16,7 +16,6 @@ const meta = {
     },
     label: "Toggle me",
     size: "md",
-    icon: Placeholder,
     selected: false,
     disabled: false,
   },
@@ -27,7 +26,7 @@ const meta = {
     },
     size: {
       control: "select",
-      options: ["sm", "md"],
+      options: ["sm", "md", "lg"],
       description:
         "Sets the button size. 'md' for desktop, 'sm' for compact/secondary actions.",
     },
@@ -65,6 +64,7 @@ export const Default: Story = {
     return (
       <F0ButtonToggle
         {...args}
+        icon={selected ? Microphone : MicrophoneNegative}
         selected={selected}
         onSelectedChange={setSelected}
       />
