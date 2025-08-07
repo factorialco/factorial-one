@@ -430,13 +430,8 @@ const OneDataCollectionComp = <
   const [isInitialLoading, setIsInitialLoading] = useState(false)
 
   const elementsRightActions = useMemo(
-    () =>
-      [
-        search?.enabled,
-        visualizations && visualizations.length > 1,
-        secondaryActionsItems.length,
-      ].some(Boolean),
-    [search, visualizations, secondaryActionsItems.length]
+    () => [search?.enabled, visualizations.length > 1].some(Boolean),
+    [search, visualizations]
   )
 
   const { emptyState, setEmptyStateType } = useEmptyState(emptyStates, {
