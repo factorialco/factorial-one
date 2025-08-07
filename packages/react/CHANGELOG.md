@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.150.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.150.0...factorial-one-react-v1.150.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* add icons to modal buttons ([5eab15a](https://github.com/factorialco/factorial-one/commit/5eab15a1f110ffe508b551e1695cf69115c0f5d7))
+
 ## [1.150.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.149.0...factorial-one-react-v1.150.0) (2025-08-07)
 
 
