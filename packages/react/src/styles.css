@@ -6,6 +6,12 @@
   --ds-sidebar-width: 240px;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
 div[role="dialog"] {
   overflow-wrap: anywhere;
 }

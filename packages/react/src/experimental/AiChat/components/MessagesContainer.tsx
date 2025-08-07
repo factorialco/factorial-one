@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import { useLangGraphInterruptRender } from "@copilotkit/react-core"
 import { useChatContext, type MessagesProps } from "@copilotkit/react-ui"
 import {
@@ -6,7 +7,11 @@ import {
   Role,
   TextMessage,
 } from "@copilotkit/runtime-client-gql"
+import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useMemo, useRef } from "react"
+import OneIcon from "../OneIcon"
+import { useAiChatLabels } from "../providers/AiChatLabelsProvider"
+import { useChatWindowContext } from "./ChatWindow"
 
 export const MessagesContainer = ({
   messages,
@@ -26,13 +31,14 @@ export const MessagesContainer = ({
   markdownTagRenderers,
 }: MessagesProps) => {
   const context = useChatContext()
+  const { greeting } = useAiChatLabels()
+  const { reachedMaxHeight } = useChatWindowContext()
   const initialMessages = useMemo(
     () => makeInitialMessages(context.labels.initial),
     [context.labels.initial]
   )
-
-  messages = [...initialMessages, ...messages]
-
+  const showWelcomeBlock =
+    messages.length == 0 && (greeting || initialMessages.length > 0)
   const actionResults: Record<string, string> = {}
 
   for (let i = 0; i < messages.length; i++) {
@@ -56,11 +62,46 @@ export const MessagesContainer = ({
   const interrupt = useLangGraphInterruptRender()
 
   return (
-    <div
-      className="isolate flex-1 overflow-y-scroll px-4"
+    <motion.div
+      layout
+      className={cn(
+        "scrollbar-macos isolate flex-1 px-4",
+        reachedMaxHeight ? "overflow-y-scroll" : "overflow-y-hidden"
+      )}
       ref={messagesContainerRef}
     >
-      <div className="flex flex-col">
+      <motion.div className="flex flex-col gap-2" layout="position">
+        <AnimatePresence>
+          {showWelcomeBlock && (
+            <motion.div
+              className="flex flex-col px-2"
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <OneIcon className="my-4 h-10 w-10 cursor-pointer rounded-xl" />
+              {greeting && (
+                <p className="text-lg font-medium text-f1-foreground-secondary">
+                  {greeting}
+                </p>
+              )}
+              {initialMessages.map((message) => {
+                if (!message.isTextMessage()) {
+                  return null
+                }
+
+                return (
+                  <p
+                    className="text-2xl font-semibold text-f1-foreground"
+                    key={message.id}
+                  >
+                    {message.content}
+                  </p>
+                )
+              })}
+            </motion.div>
+          )}
+        </AnimatePresence>
         {messages.map((message, index) => {
           const isCurrentMessage = index === messages.length - 1
 
@@ -137,11 +178,11 @@ export const MessagesContainer = ({
           }
         })}
         {interrupt}
-      </div>
+      </motion.div>
       <footer className="copilotKitMessagesFooter" ref={messagesEndRef}>
         {children}
       </footer>
-    </div>
+    </motion.div>
   )
 }
 
