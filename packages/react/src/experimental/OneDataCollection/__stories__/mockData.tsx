@@ -46,6 +46,13 @@ export const DEPARTMENTS_MOCK = [
   "Marketing",
 ] as const
 
+export const MANAGERS_MOCK = [
+  "Eliseo Juan",
+  "Arnau Smith",
+  "Daniel Johnson",
+  "Lilian Williams",
+] as const
+
 // Example filter definition
 export const filters = {
   search: {
@@ -126,6 +133,7 @@ export type MockUser = {
   email: string
   role: string
   department: (typeof DEPARTMENTS_MOCK)[number]
+  manager: (typeof MANAGERS_MOCK)[number]
   status: string
   isStarred: boolean
   salary: number | undefined
@@ -236,6 +244,7 @@ export const generateMockUsers = (count: number): MockUser[] => {
       role: ROLES_MOCK[index % ROLES_MOCK.length],
       department,
       status: STATUS_MOCK[index % STATUS_MOCK.length],
+      manager: MANAGERS_MOCK[index % MANAGERS_MOCK.length],
       isStarred: index % 3 === 0,
       href: `/users/user-${index + 1}`,
       salary: SALARY_MOCK[index % SALARY_MOCK.length],

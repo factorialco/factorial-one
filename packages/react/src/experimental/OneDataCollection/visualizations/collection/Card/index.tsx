@@ -1,4 +1,7 @@
 import { F0Card } from "@/components/F0Card"
+import { cardPropertyRenderers } from "@/components/F0Card/components/CardMetadata"
+import { CardMetadataProperty } from "@/components/F0Card/types"
+import { IconType } from "@/components/Utilities/Icon"
 import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
@@ -7,6 +10,7 @@ import {
   useGroups,
 } from "@/experimental/OneDataCollection/useGroups"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
+import { Placeholder } from "@/icons/app"
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
@@ -14,7 +18,7 @@ import { useEffect, useMemo } from "react"
 import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
 import { PagesPagination } from "../../../components/PagesPagination"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { PropertyDefinition, renderProperty } from "../../../property-render"
+import { PropertyDefinition } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
 import { SummariesDefinition } from "../../../summary"
 import {
@@ -25,7 +29,9 @@ import {
 } from "../../../types"
 import { useData } from "../../../useData"
 
-export type CardPropertyDefinition<T> = PropertyDefinition<T>
+export type CardPropertyDefinition<T> = PropertyDefinition<T> & {
+  icon?: IconType
+}
 
 export type CardVisualizationOptions<
   T,
@@ -133,13 +139,6 @@ const GroupCards = <
   NavigationFilters,
   Grouping
 >) => {
-  const renderValue = (
-    item: Record,
-    property: CardPropertyDefinition<Record>
-  ) => {
-    return renderProperty(item, property, "card")
-  }
-
   return (
     <CardGrid>
       {items.map((item, index) => {
@@ -196,18 +195,43 @@ const GroupCards = <
               otherActions={otherActions}
               onClick={itemOnClick}
               link={itemHref}
-            >
-              <div className="flex flex-col gap-2">
-                {cardProperties.map((property) => (
-                  <div key={String(property.label)}>
-                    <div className="text-muted-foreground text-sm font-medium">
-                      {property.label}
-                    </div>
-                    <div className="text-sm">{renderValue(item, property)}</div>
-                  </div>
-                ))}
-              </div>
-            </F0Card>
+              metadata={cardProperties
+                .map((property: CardPropertyDefinition<Record>) => {
+                  const renderResult = property.render(item)
+
+                  // Skip if render result is undefined
+                  if (renderResult === undefined) {
+                    return null
+                  }
+
+                  // Convert primitive values to proper card property format
+                  let cardProperty: CardMetadataProperty
+                  if (typeof renderResult === "string") {
+                    cardProperty = {
+                      type: "text" as const,
+                      value: renderResult,
+                    }
+                  } else if (typeof renderResult === "number") {
+                    cardProperty = {
+                      type: "number" as const,
+                      value: renderResult,
+                    }
+                  } else {
+                    // Check if renderResult is a valid CardMetadataProperty type
+                    if (renderResult.type in cardPropertyRenderers) {
+                      cardProperty = renderResult as CardMetadataProperty
+                    } else {
+                      return null
+                    }
+                  }
+
+                  return {
+                    icon: property.icon ?? Placeholder,
+                    property: cardProperty,
+                  }
+                })
+                .filter((metadata) => metadata !== null)}
+            ></F0Card>
           </motion.div>
         )
       })}

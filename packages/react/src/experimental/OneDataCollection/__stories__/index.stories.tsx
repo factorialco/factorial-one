@@ -3,10 +3,13 @@ import {
   Add,
   Ai,
   ArrowRight,
+  Briefcase,
+  Building,
   Delete,
   Download,
   Envelope,
   Pencil,
+  Person,
   Placeholder,
   Share,
   Star,
@@ -341,15 +344,29 @@ export const WithLinkedItems: Story = {
                 cardProperties: [
                   {
                     label: "Email",
+                    icon: Envelope,
                     render: (item) => item.email,
                   },
                   {
                     label: "Role",
+                    icon: Briefcase,
                     render: (item) => item.role,
                   },
                   {
                     label: "Department",
+                    icon: Building,
                     render: (item) => item.department,
+                  },
+                  {
+                    label: "Manager",
+                    icon: Person,
+                    render: (item) => ({
+                      type: "person",
+                      value: {
+                        firstName: item.manager.split(" ")[0],
+                        lastName: item.manager.split(" ")[1],
+                      },
+                    }),
                   },
                 ],
               },
