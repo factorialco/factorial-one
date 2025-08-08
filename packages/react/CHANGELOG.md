@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.152.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.1...factorial-one-react-v1.152.2) (2025-08-08)
+
+
+### Bug Fixes
+
+* **aiChat:** vertical scroll resize observer trigger ([#2400](https://github.com/factorialco/factorial-one/issues/2400)) ([49e0a67](https://github.com/factorialco/factorial-one/commit/49e0a6761440287f357608e71d2c530b77f0b81a))
+
 ## [1.152.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.0...factorial-one-react-v1.152.1) (2025-08-07)
 
 
