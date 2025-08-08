@@ -1,6 +1,6 @@
 import { F0Card } from "@/components/F0Card"
 import { cardPropertyRenderers } from "@/components/F0Card/components/CardMetadata"
-import { CardMetadataProperty } from "@/components/F0Card/types"
+import { CardMetadata, CardMetadataProperty } from "@/components/F0Card/types"
 import { IconType } from "@/components/Utilities/Icon"
 import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
@@ -139,6 +139,55 @@ const GroupCards = <
   NavigationFilters,
   Grouping
 >) => {
+  function getMetadata(
+    item: Record,
+    properties: ReadonlyArray<CardPropertyDefinition<Record>>
+  ): Array<CardMetadata> {
+    return properties
+      .map((property) => {
+        const result = property.render(item)
+        if (result === undefined) return null
+
+        const cardProperty = convertToCardMetadataProperty(result)
+        if (!cardProperty) return null
+
+        return {
+          icon: property.icon ?? Placeholder,
+          property: cardProperty,
+        }
+      })
+      .filter((item): item is CardMetadata => item !== null)
+  }
+
+  function convertToCardMetadataProperty(
+    value: unknown
+  ): CardMetadataProperty | null {
+    if (typeof value === "string") {
+      return { type: "text", value }
+    }
+
+    if (typeof value === "number") {
+      return { type: "number", value }
+    }
+
+    if (isCardMetadataProperty(value)) {
+      return value
+    }
+
+    return null
+  }
+
+  function isCardMetadataProperty(
+    value: unknown
+  ): value is CardMetadataProperty {
+    if (typeof value !== "object" || value === null || !("type" in value)) {
+      return false
+    }
+
+    const typeValue = (value as { [key: string]: unknown }).type
+    return typeof typeValue === "string" && typeValue in cardPropertyRenderers
+  }
+
   return (
     <CardGrid>
       {items.map((item, index) => {
@@ -169,6 +218,8 @@ const GroupCards = <
 
         const selectable = !!source.selectable && id !== undefined
 
+        const metadata = getMetadata(item, cardProperties)
+
         return (
           <motion.div
             key={index}
@@ -195,42 +246,7 @@ const GroupCards = <
               otherActions={otherActions}
               onClick={itemOnClick}
               link={itemHref}
-              metadata={cardProperties
-                .map((property: CardPropertyDefinition<Record>) => {
-                  const renderResult = property.render(item)
-
-                  // Skip if render result is undefined
-                  if (renderResult === undefined) {
-                    return null
-                  }
-
-                  // Convert primitive values to proper card property format
-                  let cardProperty: CardMetadataProperty
-                  if (typeof renderResult === "string") {
-                    cardProperty = {
-                      type: "text" as const,
-                      value: renderResult,
-                    }
-                  } else if (typeof renderResult === "number") {
-                    cardProperty = {
-                      type: "number" as const,
-                      value: renderResult,
-                    }
-                  } else {
-                    // Check if renderResult is a valid CardMetadataProperty type
-                    if (renderResult.type in cardPropertyRenderers) {
-                      cardProperty = renderResult as CardMetadataProperty
-                    } else {
-                      return null
-                    }
-                  }
-
-                  return {
-                    icon: property.icon ?? Placeholder,
-                    property: cardProperty,
-                  }
-                })
-                .filter((metadata) => metadata !== null)}
+              metadata={metadata}
             ></F0Card>
           </motion.div>
         )
