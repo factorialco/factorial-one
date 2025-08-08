@@ -1,4 +1,7 @@
 import { F0Card } from "@/components/F0Card"
+import { cardPropertyRenderers } from "@/components/F0Card/components/CardMetadata"
+import { CardMetadata, CardMetadataProperty } from "@/components/F0Card/types"
+import { IconType } from "@/components/Utilities/Icon"
 import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
@@ -7,6 +10,7 @@ import {
   useGroups,
 } from "@/experimental/OneDataCollection/useGroups"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
+import { Placeholder } from "@/icons/app"
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
@@ -14,7 +18,7 @@ import { useEffect, useMemo } from "react"
 import type { FiltersDefinition } from "../../../../../components/OneFilterPicker/types"
 import { PagesPagination } from "../../../components/PagesPagination"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { PropertyDefinition, renderProperty } from "../../../property-render"
+import { PropertyDefinition } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
 import { SummariesDefinition } from "../../../summary"
 import {
@@ -25,7 +29,9 @@ import {
 } from "../../../types"
 import { useData } from "../../../useData"
 
-export type CardPropertyDefinition<T> = PropertyDefinition<T>
+export type CardPropertyDefinition<T> = PropertyDefinition<T> & {
+  icon?: IconType
+}
 
 export type CardVisualizationOptions<
   T,
@@ -133,11 +139,53 @@ const GroupCards = <
   NavigationFilters,
   Grouping
 >) => {
-  const renderValue = (
+  function getMetadata(
     item: Record,
-    property: CardPropertyDefinition<Record>
-  ) => {
-    return renderProperty(item, property, "card")
+    properties: ReadonlyArray<CardPropertyDefinition<Record>>
+  ): Array<CardMetadata> {
+    return properties
+      .map((property) => {
+        const result = property.render(item)
+        if (result === undefined) return null
+
+        const cardProperty = convertToCardMetadataProperty(result)
+        if (!cardProperty) return null
+
+        return {
+          icon: property.icon ?? Placeholder,
+          property: cardProperty,
+        }
+      })
+      .filter((item): item is CardMetadata => item !== null)
+  }
+
+  function convertToCardMetadataProperty(
+    value: unknown
+  ): CardMetadataProperty | null {
+    if (typeof value === "string") {
+      return { type: "text", value }
+    }
+
+    if (typeof value === "number") {
+      return { type: "number", value }
+    }
+
+    if (isCardMetadataProperty(value)) {
+      return value
+    }
+
+    return null
+  }
+
+  function isCardMetadataProperty(
+    value: unknown
+  ): value is CardMetadataProperty {
+    if (typeof value !== "object" || value === null || !("type" in value)) {
+      return false
+    }
+
+    const typeValue = (value as { [key: string]: unknown }).type
+    return typeof typeValue === "string" && typeValue in cardPropertyRenderers
   }
 
   return (
@@ -170,6 +218,8 @@ const GroupCards = <
 
         const selectable = !!source.selectable && id !== undefined
 
+        const metadata = getMetadata(item, cardProperties)
+
         return (
           <motion.div
             key={index}
@@ -196,18 +246,8 @@ const GroupCards = <
               otherActions={otherActions}
               onClick={itemOnClick}
               link={itemHref}
-            >
-              <div className="flex flex-col gap-2">
-                {cardProperties.map((property) => (
-                  <div key={String(property.label)}>
-                    <div className="text-muted-foreground text-sm font-medium">
-                      {property.label}
-                    </div>
-                    <div className="text-sm">{renderValue(item, property)}</div>
-                  </div>
-                ))}
-              </div>
-            </F0Card>
+              metadata={metadata}
+            ></F0Card>
           </motion.div>
         )
       })}

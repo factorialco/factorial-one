@@ -32,7 +32,19 @@ import {
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker"
-import { Ai, Delete, Download, Pencil, Star, Upload } from "../../../icons/app"
+import {
+  Ai,
+  Briefcase,
+  Building,
+  CheckCircle,
+  Delete,
+  Download,
+  Envelope,
+  Pencil,
+  Person,
+  Star,
+  Upload,
+} from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
@@ -44,6 +56,13 @@ export const DEPARTMENTS_MOCK = [
   "Product",
   "Design",
   "Marketing",
+] as const
+
+export const MANAGERS_MOCK = [
+  "Eliseo Juan",
+  "Arnau Smith",
+  "Daniel Johnson",
+  "Lilian Williams",
 ] as const
 
 // Example filter definition
@@ -126,6 +145,7 @@ export type MockUser = {
   email: string
   role: string
   department: (typeof DEPARTMENTS_MOCK)[number]
+  manager: (typeof MANAGERS_MOCK)[number]
   status: string
   isStarred: boolean
   salary: number | undefined
@@ -236,6 +256,7 @@ export const generateMockUsers = (count: number): MockUser[] => {
       role: ROLES_MOCK[index % ROLES_MOCK.length],
       department,
       status: STATUS_MOCK[index % STATUS_MOCK.length],
+      manager: MANAGERS_MOCK[index % MANAGERS_MOCK.length],
       isStarred: index % 3 === 0,
       href: `/users/user-${index + 1}`,
       salary: SALARY_MOCK[index % SALARY_MOCK.length],
@@ -362,18 +383,67 @@ export const getMockVisualizations = (options?: {
     type: "card",
     options: {
       title: (item) => item.name,
+      description: (item) => item.role,
+      avatar: (item) => ({
+        type: "person",
+        firstName: item.name.split(" ")[0],
+        lastName: item.name.split(" ")[1],
+      }),
       cardProperties: [
         {
           label: "Email",
+          icon: Envelope,
           render: (item) => item.email,
         },
         {
           label: "Role",
+          icon: Briefcase,
           render: (item) => item.role,
         },
         {
           label: "Department",
+          icon: Building,
           render: (item) => item.department,
+        },
+        {
+          label: "Teammates",
+          icon: Person,
+          render: (item) => ({
+            type: "avatarList",
+            value: {
+              avatarList: [
+                {
+                  type: "person",
+                  firstName: item.name,
+                  lastName: "Doe",
+                  src: "/avatars/person01.jpg",
+                },
+                {
+                  type: "person",
+                  firstName: "Dani",
+                  lastName: "Moreno",
+                  src: "/avatars/person04.jpg",
+                },
+                {
+                  type: "person",
+                  firstName: "Sergio",
+                  lastName: "Carracedo",
+                  src: "/avatars/person05.jpg",
+                },
+              ],
+            },
+          }),
+        },
+        {
+          label: "Status",
+          icon: CheckCircle,
+          render: (item) => ({
+            type: "status",
+            value: {
+              status: item.status === "active" ? "positive" : "critical",
+              label: item.status.charAt(0).toUpperCase() + item.status.slice(1),
+            },
+          }),
         },
       ],
     },
