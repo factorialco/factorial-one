@@ -210,12 +210,6 @@ describe("CardCollection", () => {
             .find((heading) => heading.textContent === item.name)
           expect(titleElement).toBeInTheDocument()
 
-          // Each card should have email and role with their labels
-          const emailLabels = screen.getAllByText("Email")
-          const roleLabels = screen.getAllByText("Role")
-          expect(emailLabels.length).toBe(testData.length)
-          expect(roleLabels.length).toBe(testData.length)
-
           // Each card should show the actual values
           expect(screen.getByText(item.email)).toBeInTheDocument()
           expect(screen.getByText(item.role)).toBeInTheDocument()

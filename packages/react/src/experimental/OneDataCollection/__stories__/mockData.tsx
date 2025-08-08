@@ -34,6 +34,7 @@ import {
 } from "@/components/OneFilterPicker"
 import {
   Ai,
+  Briefcase,
   Building,
   CheckCircle,
   Delete,
@@ -396,6 +397,7 @@ export const getMockVisualizations = (options?: {
         },
         {
           label: "Role",
+          icon: Briefcase,
           render: (item) => item.role,
         },
         {
