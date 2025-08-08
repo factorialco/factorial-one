@@ -33,7 +33,7 @@ import { ForwardRefExoticComponent } from 'react';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
 import { IconCellValue } from './types/icon.tsx';
-import { IconType as IconType_2 } from '../../factorial-one';
+import { IconType as IconType_3 } from '../../factorial-one';
 import { InFilterOptions } from './InFilter/types';
 import { JSONContent } from '@tiptap/react';
 import { JSONContent as JSONContent_2 } from '@tiptap/core';
@@ -210,9 +210,15 @@ declare type AIButton = {
 /**
  * @experimental This is an experimental component use it at your own risk
  */
-export declare const AiChat: (props: AiChatProps) => JSX_2.Element;
+export declare const AiChat: ({ labels, ...props }: AiChatProps) => JSX_2.Element;
 
-export declare type AiChatProps = ComponentProps<typeof CopilotPopup>;
+declare interface AiChatLabels {
+    greeting?: string;
+}
+
+export declare type AiChatProps = Omit<CopilotPopupProps, "labels"> & {
+    labels?: ComponentProps<typeof CopilotPopup>["labels"] & AiChatLabels;
+};
 
 export declare const AiChatProvider: (props: AiChatProviderProps) => JSX_2.Element;
 
@@ -382,6 +388,7 @@ export declare type BannerAction = {
     label: string;
     onClick: () => void;
     variant?: "default" | "outline" | "ghost";
+    icon?: IconType;
 };
 
 export declare const BarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
@@ -469,6 +476,10 @@ declare type BaseFilterDefinition<T extends FilterTypeKey> = {
     label: string;
     /** The type of filter */
     type: T;
+    /**
+     * Whether to hide the selector for this filter
+     */
+    hideSelector?: boolean;
 };
 
 declare function BaseHeader({ title, avatar, description, primaryAction, secondaryActions, otherActions, status, metadata, }: BaseHeaderProps_2): JSX_2.Element;
@@ -533,6 +544,15 @@ export declare const BaseTabs: React.FC<TabsProps>;
 declare type BaseTag<T extends {
     type: string;
 }> = T & WithTooltipDescription;
+
+declare interface BaseTOCItem {
+    id: string;
+    label: string;
+    onClick?: (id: string) => void;
+    icon?: IconType_2;
+    disabled?: boolean;
+    otherActions?: TOCItemAction[];
+}
 
 export declare const BasicTextEditor: ForwardRefExoticComponent<BasicTextEditorProps & RefAttributes<BasicTextEditorHandle>>;
 
@@ -1104,6 +1124,8 @@ declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "dot-tag";
 });
 
+declare type CopilotPopupProps = ComponentProps<typeof CopilotPopup>;
+
 declare type CopyActionType = {
     type: "copy";
     text?: string;
@@ -1405,7 +1427,7 @@ primary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
 disabled?: boolean | undefined | undefined;
-icon?: IconType_2 | undefined;
+icon?: IconType_3 | undefined;
 } & {
 variant?: "default" | "critical" | "neutral";
 };
@@ -1413,7 +1435,7 @@ secondary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
 disabled?: boolean | undefined | undefined;
-icon?: IconType_2 | undefined;
+icon?: IconType_3 | undefined;
 };
 };
 open?: boolean;
@@ -1620,6 +1642,8 @@ declare interface ErrorMessageProps {
  * @template RecordType - The type containing the properties to extract
  */
 export declare type ExtractPropertyKeys<RecordType> = keyof RecordType;
+
+export declare function F0TableOfContent(props: TOCProps): JSX_2.Element;
 
 export declare const F1SearchBox: ForwardRefExoticComponent<    {
 value?: string;
@@ -1893,6 +1917,7 @@ export declare type GranularityDefinitionSimple = Pick<GranularityDefinition, "t
 export declare type GroupingDefinition<R extends RecordType> = {
     /** Whether grouping is mandatory or the user can chose not to group */
     mandatory?: boolean;
+    hideSelector?: boolean;
     groupBy: {
         [K in RecordPaths<R>]?: {
             /** The label for the grouping */
@@ -1984,6 +2009,15 @@ declare const iconSizes: {
 declare type IconType = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement> & {
     animate?: "normal" | "animate";
 }>;
+
+declare type IconType_2 = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement> & {
+    animate?: "normal" | "animate";
+}>;
+
+declare type IdStructure = {
+    id: string;
+    children?: IdStructure[];
+};
 
 declare const Indicator: ForwardRefExoticComponent<IndicatorProps & RefAttributes<HTMLDivElement>>;
 
@@ -2112,7 +2146,9 @@ export declare type InputProps<T extends string> = Pick<ComponentProps<typeof In
     type?: Exclude<HTMLInputTypeAttribute, "number">;
 };
 
-declare const Item: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
+export declare function Item({ item, counter, isActive, collapsible, isExpanded, onToggleExpanded, sortable, children, }: TOCItemProps): JSX_2.Element;
+
+declare const Item_2: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
 
 export declare type ItemActionsDefinition<T extends RecordType> = (item: T) => ActionDefinition[] | undefined;
 
@@ -2128,9 +2164,11 @@ declare type ItemProps = {
     action?: ActionType;
 };
 
-declare type Items = typeof Item | typeof PersonItem | typeof CompanyItem | typeof TeamItem;
+declare type Items = typeof Item_2 | typeof PersonItem | typeof CompanyItem | typeof TeamItem;
 
 declare type Items_2 = SelectItemObject<string>[];
+
+export declare function ItemSectionHeader({ item, children, isActive, collapsible, isExpanded, onToggleExpanded, sortable, }: TOCItemSectionHeaderProps): JSX_2.Element;
 
 export declare type lastIntentType = {
     selectedIntent?: string;
@@ -2361,6 +2399,7 @@ export declare const modules: {
     readonly employees: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly engagement: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly engagement_insights: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly my_surveys: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly "finance-accounting": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly "finance-sales": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly "finance-spending": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
@@ -2488,6 +2527,8 @@ declare type NavigationProps = {
 };
 
 export declare type NewColor = Extract<BaseColor, "viridian" | "malibu" | "yellow" | "purple" | "lilac" | "barbie" | "smoke" | "army" | "flubber" | "indigo" | "camel">;
+
+declare type NextDepth<T> = T extends 1 ? 2 : T extends 2 ? 3 : T extends 3 ? 4 : never;
 
 declare interface NextStepsProps {
     title: string;
@@ -4019,6 +4060,49 @@ declare const THEMES: {
     readonly dark: ".dark";
 };
 
+export declare type TOCItem<Depth extends 1 | 2 | 3 | 4 = 1> = BaseTOCItem & {
+    children?: NextDepth<Depth> extends never ? never : TOCItem<NextDepth<Depth>>[];
+};
+
+export declare type TOCItemAction = {
+    label: string;
+    onClick: () => void;
+    icon?: IconType_2;
+} | {
+    type: "separator";
+};
+
+declare interface TOCItemProps {
+    item: TOCItem;
+    counter?: number;
+    isActive?: boolean;
+    sortable: boolean;
+    collapsible?: boolean;
+    isExpanded?: boolean;
+    onToggleExpanded?: (id: string) => void;
+    children?: ReactNode;
+}
+
+declare interface TOCItemSectionHeaderProps {
+    item: TOCItem;
+    children?: ReactNode;
+    isActive?: boolean;
+    collapsible?: boolean;
+    isExpanded?: boolean;
+    onToggleExpanded?: (id: string) => void;
+    sortable: boolean;
+}
+
+export declare interface TOCProps {
+    title: string;
+    items: TOCItem[];
+    className?: string;
+    activeItem?: string;
+    collapsible?: boolean;
+    sortable?: boolean;
+    onReorder?: (reorderedIds: IdStructure[]) => void;
+}
+
 declare type toggleActionType = {
     label: string;
     checked: boolean;
@@ -4460,15 +4544,15 @@ declare module "@tiptap/core" {
 }
 
 
+declare namespace Calendar {
+    var displayName: string;
+}
+
+
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
-}
-
-
-declare namespace Calendar {
-    var displayName: string;
 }

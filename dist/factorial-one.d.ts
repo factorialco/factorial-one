@@ -133,6 +133,7 @@ declare type BannerAction = {
     label: string;
     onClick: () => void;
     variant?: "default" | "outline" | "ghost";
+    icon?: IconType;
 };
 
 export declare const BarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig> & {
@@ -193,6 +194,10 @@ declare type BaseFilterDefinition<T extends FilterTypeKey> = {
     label: string;
     /** The type of filter */
     type: T;
+    /**
+     * Whether to hide the selector for this filter
+     */
+    hideSelector?: boolean;
 };
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
@@ -553,6 +558,7 @@ export declare const defaultTranslations: {
         readonly thumbsUp: "Like";
         readonly thumbsDown: "Dislike";
         readonly other: "Other actions";
+        readonly toggle: "Toggle";
     };
     readonly status: {
         readonly selected: {
@@ -994,6 +1000,7 @@ declare const modules: {
     readonly employees: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly engagement: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly engagement_insights: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly my_surveys: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly "finance-accounting": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly "finance-sales": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly "finance-spending": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
@@ -1208,6 +1215,7 @@ declare type PromoteAction = {
     closeLabel: UpsellingButtonProps["closeLabel"];
     showIcon?: boolean;
     showConfirmation?: boolean;
+    icon?: IconType;
 };
 
 /**
@@ -1472,15 +1480,15 @@ declare module "@tiptap/core" {
 }
 
 
+declare namespace Calendar {
+    var displayName: string;
+}
+
+
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
-}
-
-
-declare namespace Calendar {
-    var displayName: string;
 }

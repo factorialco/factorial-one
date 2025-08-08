@@ -1,5 +1,5 @@
-import { C as p, L as ie, c as de, P as V, a as b, f as ce, b as ue, A as fe, B as he, d as pe, e as me, g as ve, V as ge, h as q, i as xe, j as be, M as U, I as H, F as Ce, D as ye, k as we, l as Ne, m as Le, n as W, S as Pe, o as Se, p as w, U as Y, q as Me, r as ke, s as E, t as Re, u as G, v as De, w as Be, x as Te, y as $e, z as Ie, E as Fe, G as Oe, H as Ee, J as _e, X as je, K as ze, N as Ve, O as qe, Q as Ue } from "./F0Card-B-vebrmK.js";
-import { _ as Ea, R as _a, a4 as ja, T as za, W as Va, Y as qa, Z as Ua, a1 as Ha, $ as Wa, a5 as Ya, a6 as Ga, a0 as Xa, a3 as Ja, a2 as Qa } from "./F0Card-B-vebrmK.js";
+import { C as p, L as ie, c as de, P as V, a as b, f as ce, b as ue, A as fe, B as he, d as pe, e as me, g as ve, V as ge, h as q, i as xe, j as be, M as U, I as H, F as Ce, D as ye, k as we, l as Ne, m as Le, n as W, S as Pe, o as Se, p as w, U as Y, q as Me, r as ke, s as E, t as Re, u as G, v as De, w as Be, x as Te, y as $e, z as Ie, E as Fe, G as Oe, H as Ee, J as _e, X as je, K as ze, N as Ve, O as qe, Q as Ue } from "./F0Card-Bk-A4_We.js";
+import { _ as Ea, R as _a, a4 as ja, T as za, W as Va, Y as qa, Z as Ua, a1 as Ha, $ as Wa, a5 as Ya, a6 as Ga, a0 as Xa, a3 as Ja, a2 as Qa } from "./F0Card-Bk-A4_We.js";
 import { jsx as e, jsxs as c, Fragment as $ } from "react/jsx-runtime";
 import * as I from "react";
 import He, { forwardRef as B, useRef as X, useImperativeHandle as We, Children as Ye, useState as g, useEffect as J, createContext as Ge } from "react";
@@ -41,7 +41,8 @@ const xa = {
     moveDown: "Move down",
     thumbsUp: "Like",
     thumbsDown: "Dislike",
-    other: "Other actions"
+    other: "Other actions",
+    toggle: "Toggle"
   },
   status: {
     selected: {
@@ -711,7 +712,8 @@ const ua = B(
         onClick: o.onClick,
         label: o.label,
         variant: o.variant || "default",
-        size: "md"
+        size: "md",
+        icon: o.icon
       }
     ), n = (r == null ? void 0 : r.variant) !== "promote" ? r : void 0, i = (s == null ? void 0 : s.variant) !== "promote" ? s : void 0;
     return /* @__PURE__ */ c(
