@@ -1,5 +1,68 @@
 # Changelog
 
+## [1.152.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.0...factorial-one-react-v1.152.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* **aiChat:** render subComponents when passed ([#2394](https://github.com/factorialco/factorial-one/issues/2394)) ([e2e444c](https://github.com/factorialco/factorial-one/commit/e2e444cd1a612a33cad845b3f1f35810955b2ebf))
+
+## [1.152.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.3...factorial-one-react-v1.152.0) (2025-08-07)
+
+
+### Features
+
+* add F0ButtonToggle component  ([#2373](https://github.com/factorialco/factorial-one/issues/2373)) ([6ef65ae](https://github.com/factorialco/factorial-one/commit/6ef65ae943ce0b0e2a4abdb7ed79ce70b46f0870))
+
+## [1.151.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.2...factorial-one-react-v1.151.3) (2025-08-07)
+
+
+### Bug Fixes
+
+* resource header metadata icon color ([#2391](https://github.com/factorialco/factorial-one/issues/2391)) ([baf3998](https://github.com/factorialco/factorial-one/commit/baf3998c8972f45225aba31bdb631c4c4151251f))
+
+## [1.151.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.1...factorial-one-react-v1.151.2) (2025-08-07)
+
+
+### Bug Fixes
+
+* hide unneeded separator between filters and presets ([#2389](https://github.com/factorialco/factorial-one/issues/2389)) ([db35488](https://github.com/factorialco/factorial-one/commit/db3548834b574d27d7f86d6e2ea19774eaa9559e))
+
+## [1.151.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.0...factorial-one-react-v1.151.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* not hiding filters when no filters to show in data collection ([#2387](https://github.com/factorialco/factorial-one/issues/2387)) ([a1a5f30](https://github.com/factorialco/factorial-one/commit/a1a5f304eec9f151e14a70f45052f12fd5a923ca))
+
+## [1.151.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.150.1...factorial-one-react-v1.151.0) (2025-08-07)
+
+
+### Features
+
+* **F0TableOfContent:** add Table of Contents component with stories and types ([#2357](https://github.com/factorialco/factorial-one/issues/2357)) ([929c60e](https://github.com/factorialco/factorial-one/commit/929c60e7eccfbdd6a905b83727c57236a33243b9))
+
+## [1.150.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.150.0...factorial-one-react-v1.150.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* add icons to modal buttons ([5eab15a](https://github.com/factorialco/factorial-one/commit/5eab15a1f110ffe508b551e1695cf69115c0f5d7))
+
+## [1.150.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.149.0...factorial-one-react-v1.150.0) (2025-08-07)
+
+
+### Features
+
+* **ModuleAvatar:** add new icon for my_surveys module ([#2381](https://github.com/factorialco/factorial-one/issues/2381)) ([134a01f](https://github.com/factorialco/factorial-one/commit/134a01fd30b063f11e56c8fdbd17a72d64d5752e))
+
+## [1.149.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.148.0...factorial-one-react-v1.149.0) (2025-08-07)
+
+
+### Features
+
+* **ChipList:** add chip list component ([#2356](https://github.com/factorialco/factorial-one/issues/2356)) ([dc792e9](https://github.com/factorialco/factorial-one/commit/dc792e92aafb4fa8332ca2ad1f771bd7ea8f327f))
+
 ## [1.148.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.147.7...factorial-one-react-v1.148.0) (2025-08-06)
 
 

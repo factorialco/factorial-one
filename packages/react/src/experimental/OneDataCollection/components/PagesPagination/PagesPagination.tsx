@@ -18,7 +18,7 @@ export const PagesPagination = ({
     isPageBasedPagination(paginationInfo) && (
       <div
         className={cn(
-          "flex w-full items-center justify-between px-6",
+          "flex w-full items-center justify-between px-4",
           className
         )}
       >

@@ -1,10 +1,4 @@
 ---
-description: TypeScript Usage and Testing Standards
-globs:
-alwaysApply: false
----
-
----
 
 description: "Factorial One DS - TypeScript Usage and Testing Standards"
 globs: "packages/react/**/\*.ts,packages/react/**/\*.tsx"

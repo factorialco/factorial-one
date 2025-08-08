@@ -21,6 +21,7 @@ export const modules = {
   employees: ModuleIcons.Organization,
   engagement: ModuleIcons.Engagement,
   engagement_insights: ModuleIcons.Engagement,
+  my_surveys: ModuleIcons.Engagement,
   "finance-accounting": ModuleIcons.Finance,
   "finance-sales": ModuleIcons.Sales,
   "finance-spending": ModuleIcons.Spending,

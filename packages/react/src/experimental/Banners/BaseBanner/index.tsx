@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
 import CrossIcon from "@/icons/app/Cross"
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
@@ -8,6 +9,7 @@ export type BannerAction = {
   label: string
   onClick: () => void
   variant?: "default" | "outline" | "ghost"
+  icon?: IconType
 }
 
 export type BaseBannerProps = {
@@ -92,6 +94,7 @@ const BaseBannerComponent = forwardRef<HTMLDivElement, BaseBannerProps>(
                 label={primaryAction.label}
                 variant={primaryAction.variant || "default"}
                 size="md"
+                icon={primaryAction.icon}
               />
             )}
             {secondaryAction && (
@@ -100,6 +103,7 @@ const BaseBannerComponent = forwardRef<HTMLDivElement, BaseBannerProps>(
                 label={secondaryAction.label}
                 variant={secondaryAction.variant || "outline"}
                 size="md"
+                icon={secondaryAction.icon}
               />
             )}
             {children}

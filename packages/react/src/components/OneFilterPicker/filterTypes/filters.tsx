@@ -45,6 +45,10 @@ export type BaseFilterDefinition<T extends FilterTypeKey> = {
   label: string
   /** The type of filter */
   type: T
+  /**
+   * Whether to hide the selector for this filter
+   */
+  hideSelector?: boolean
 }
 
 /**

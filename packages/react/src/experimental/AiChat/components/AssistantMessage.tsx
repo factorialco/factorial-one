@@ -22,6 +22,7 @@ export const AssistantMessage = ({
   onCopy,
   onThumbsDown,
   onThumbsUp,
+  subComponent,
 }: AssistantMessageProps) => {
   const translations = useI18n()
   const containerRef = useRef<HTMLDivElement>(null)
@@ -47,12 +48,16 @@ export const AssistantMessage = ({
 
   return (
     <div
-      className="relative isolate flex min-h-[20px] w-fit max-w-[330px] flex-col items-start justify-center last:mb-8"
+      className="relative isolate flex w-fit max-w-[330px] flex-col items-start justify-center last:mb-8"
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {isLoading && <Spinner size="small" className="text-f1-foreground" />}
+      {isLoading && (
+        <div className="min-h-[20px]">
+          <Spinner size="small" className="text-f1-foreground" />
+        </div>
+      )}
       {message && (
         <>
           <div className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1">
@@ -125,6 +130,7 @@ export const AssistantMessage = ({
           </div>
         </>
       )}
+      {!!subComponent && <div>{subComponent}</div>}
     </div>
   )
 }

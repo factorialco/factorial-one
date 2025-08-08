@@ -426,16 +426,13 @@ const OneDataCollectionComp = <
     }
   }
 
-  const elementsRightActions = useMemo(() => {
-    return [
-      isLoading,
-      search?.enabled,
-      visualizations && visualizations.length > 1,
-    ].some(Boolean)
-  }, [search, isLoading, visualizations])
-
   const [totalItems, setTotalItems] = useState<undefined | number>(undefined)
   const [isInitialLoading, setIsInitialLoading] = useState(false)
+
+  const elementsRightActions = useMemo(
+    () => [search?.enabled, visualizations.length > 1].some(Boolean),
+    [search, visualizations]
+  )
 
   const { emptyState, setEmptyStateType } = useEmptyState(emptyStates, {
     retry: () => {
@@ -498,7 +495,7 @@ const OneDataCollectionComp = <
     >
       {((totalItems !== undefined && totalItemSummary(totalItems)) ||
         navigationFilters) && (
-        <div className="border-f1-border-primary flex gap-4 px-6">
+        <div className="border-f1-border-primary flex gap-4 px-4">
           <div className="flex flex-1 flex-shrink gap-4 text-lg font-semibold">
             {isInitialLoading &&
               totalItems !== undefined &&
@@ -528,7 +525,7 @@ const OneDataCollectionComp = <
         </div>
       )}
       <div
-        className={cn("flex flex-col gap-4 px-6", fullHeight && "max-h-full")}
+        className={cn("flex flex-col gap-4 px-4", fullHeight && "max-h-full")}
       >
         <OneFilterPicker
           filters={filters}
@@ -561,7 +558,7 @@ const OneDataCollectionComp = <
             sortings={sortings}
             currentSortings={currentSortings}
             onSortingsChange={setCurrentSortings}
-          ></Settings>
+          />
           {hasCollectionsActions && (
             <>
               {elementsRightActions && (
