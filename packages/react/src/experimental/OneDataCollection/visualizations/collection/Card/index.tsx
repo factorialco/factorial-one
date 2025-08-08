@@ -1,8 +1,8 @@
 import { F0Card } from "@/components/F0Card"
+import { CardAvatarVariant } from "@/components/F0Card/components/CardAvatar"
 import { cardPropertyRenderers } from "@/components/F0Card/components/CardMetadata"
 import { CardMetadataProperty } from "@/components/F0Card/types"
 import { IconType } from "@/components/Utilities/Icon"
-import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
@@ -41,7 +41,9 @@ export type CardVisualizationOptions<
   cardProperties: ReadonlyArray<CardPropertyDefinition<T>>
   title: (record: T) => string
   description?: (record: T) => string
-  avatar?: (record: T) => AvatarVariant
+  avatar?: (record: T) => CardAvatarVariant
+  image?: (record: T) => string
+  compact?: boolean
 }
 
 // Find the next number that is divisible by 2, 3, and 4
@@ -110,7 +112,9 @@ type GroupCardsProps<
   cardProperties: ReadonlyArray<CardPropertyDefinition<Record>>
   title: (record: Record) => string
   description?: (record: Record) => string
-  avatar?: (record: Record) => AvatarVariant
+  avatar?: (record: Record) => CardAvatarVariant
+  image?: (record: Record) => string
+  compact?: boolean
 }
 
 const GroupCards = <
@@ -130,6 +134,8 @@ const GroupCards = <
   title,
   description,
   avatar,
+  image,
+  compact,
 }: GroupCardsProps<
   Record,
   Filters,
@@ -188,6 +194,7 @@ const GroupCards = <
               selectable={selectable}
               description={description ? description(item) : undefined}
               avatar={avatar ? avatar(item) : undefined}
+              image={image ? image(item) : undefined}
               selected={selectable && selectedItems.has(id)}
               onSelect={(selected) => handleSelectItemChange(item, selected)}
               secondaryActions={secondaryActions}
@@ -195,6 +202,7 @@ const GroupCards = <
               otherActions={otherActions}
               onClick={itemOnClick}
               link={itemHref}
+              compact={compact ? compact : false}
               metadata={cardProperties
                 .map((property: CardPropertyDefinition<Record>) => {
                   const renderResult = property.render(item)
@@ -252,6 +260,8 @@ export const CardCollection = <
   title,
   description,
   avatar,
+  image,
+  compact,
   source,
   onSelectItems,
   onLoadData,
@@ -397,6 +407,8 @@ export const CardCollection = <
                           cardProperties={cardProperties}
                           description={description}
                           avatar={avatar}
+                          image={image}
+                          compact={compact}
                         />
                       )}
                     </AnimatePresence>
@@ -414,6 +426,8 @@ export const CardCollection = <
                 cardProperties={cardProperties}
                 description={description}
                 avatar={avatar}
+                image={image}
+                compact={compact}
               />
             )}
           </>
