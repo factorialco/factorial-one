@@ -16,7 +16,7 @@ export const useChatWindowContext = () => useContext(ChatWindowContext)
 // also hardcoded in Tailwind classes in DialogPrimitive.Content
 const MIN_HEIGHT = 416
 const MAX_HEIGHT = 680
-const FULL_HEIGHT_MARGIN = 16
+const FULL_HEIGHT_MARGIN = 20
 
 export const ChatWindow = ({ children, ...rest }: WindowProps) => {
   const { setOpen, open } = useChatContext()
@@ -24,6 +24,8 @@ export const ChatWindow = ({ children, ...rest }: WindowProps) => {
   const [windowHeight, setWindowHeight] = useState(MIN_HEIGHT)
 
   useEffect(() => {
+    if (!open) return
+
     const measureHeight = () => {
       if (windowRef.current) {
         const height = windowRef.current.offsetHeight
@@ -31,17 +33,33 @@ export const ChatWindow = ({ children, ...rest }: WindowProps) => {
       }
     }
 
-    if (open) {
-      const browserResizeObserver = new ResizeObserver(measureHeight)
-      const resizeObserver = new ResizeObserver(measureHeight)
+    let resizeObserver: ResizeObserver | null = null
+    let browserResizeObserver: ResizeObserver | null = null
+    let animationFrameId: number | null = null
 
-      if (windowRef.current) {
+    const setupObservers = () => {
+      if (windowRef.current && open) {
+        resizeObserver = new ResizeObserver(measureHeight)
+        browserResizeObserver = new ResizeObserver(measureHeight)
+
         resizeObserver.observe(windowRef.current)
         browserResizeObserver.observe(document.documentElement)
-      }
 
-      return () => {
+        // Initial measurement
+        measureHeight()
+      }
+    }
+
+    animationFrameId = requestAnimationFrame(setupObservers)
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId)
+      }
+      if (resizeObserver) {
         resizeObserver.disconnect()
+      }
+      if (browserResizeObserver) {
         browserResizeObserver.disconnect()
       }
     }

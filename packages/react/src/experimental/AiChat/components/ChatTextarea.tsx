@@ -56,7 +56,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
       <div className="grid grid-cols-1 grid-rows-1">
         <div
           aria-hidden={true}
-          className="pointer-events-none invisible col-start-1 row-start-1 mx-3 mb-0 mt-2 max-h-36 whitespace-pre-wrap"
+          className="pointer-events-none invisible col-start-1 row-start-1 mx-3 mb-0 mt-3 max-h-36 whitespace-pre-wrap"
         >
           {inputValue.endsWith("\n") ? inputValue + "_" : inputValue}
         </div>
@@ -88,7 +88,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
             "col-start-1 row-start-1",
             "mx-3 mb-0 max-h-36 flex-1 resize-none overflow-y-scroll outline-none transition-all",
             "bg-f1-background text-f1-foreground placeholder:text-f1-foreground-secondary",
-            !hasScrollbar && "mt-2"
+            !hasScrollbar && "mt-3"
           )}
         />
       </div>
