@@ -12,6 +12,7 @@ import {
   useId,
   useState,
 } from "react"
+import { AppendTag } from "./AppendTag"
 import { InputMessages } from "./components/InputMessages"
 import { Label } from "./components/Label"
 export const INPUTFIELD_SIZES = ["sm", "md"] as const
@@ -131,6 +132,7 @@ export type InputFieldProps<T> = {
   maxLength?: number
   hideMaxLength?: boolean
   append?: React.ReactNode
+  appendTag?: string
   lengthProvider?: (value: T | undefined) => number
   loading?: boolean
 }
@@ -166,6 +168,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       onClickContent,
       name,
       role,
+      appendTag,
       "aria-controls": ariaControls,
       "aria-expanded": ariaExpanded,
       ...props
@@ -372,6 +375,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
           {append && (
             <div className={cn("flex gap-2", inputElementVariants({ size }))}>
               {append}
+              {appendTag && <AppendTag text={appendTag} />}
             </div>
           )}
         </div>

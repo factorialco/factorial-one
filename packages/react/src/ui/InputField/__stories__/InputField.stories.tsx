@@ -95,6 +95,10 @@ const meta = {
     hideMaxLength: {
       description: "Whether to hide the max length indicator",
     },
+    appendTag: {
+      description: "Text to display in the append tag",
+      control: "text",
+    },
   },
   tags: ["autodocs", "internal"],
 } satisfies Meta<typeof InputField>
@@ -252,5 +256,13 @@ export const WithAppend: Story = {
         Tag
       </div>
     ),
+  },
+}
+
+export const WithAppendTag: Story = {
+  args: {
+    ...Default.args,
+    clearable: true,
+    appendTag: "Label",
   },
 }
