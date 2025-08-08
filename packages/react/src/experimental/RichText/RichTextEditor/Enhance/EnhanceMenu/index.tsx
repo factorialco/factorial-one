@@ -129,8 +129,9 @@ const AIEnhanceMenu = ({
         ref={menuRef}
         className="flex max-h-60 w-80 flex-col overflow-hidden rounded-lg border border-solid border-f1-border bg-f1-background drop-shadow-sm"
       >
-        <div className="flex w-full flex-row items-center p-2">
+        <div className="w-full p-2">
           <Input
+            className="w-full"
             icon={Ai}
             label={inputPlaceholder}
             hideLabel

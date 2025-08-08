@@ -223,9 +223,6 @@ const BasicTextEditorComponent = forwardRef<
           labels={toolbarLabels}
           editor={editor}
           disableButtons={false}
-          darkMode
-          showEmojiPicker={false}
-          plainHtmlMode={false}
         />
       </div>
 

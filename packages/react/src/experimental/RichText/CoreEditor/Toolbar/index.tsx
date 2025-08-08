@@ -1,5 +1,8 @@
 import { Button } from "@/components/Actions/Button"
+import { ButtonInternal } from "@/components/Actions/Button/internal"
+import { F0ButtonToggle } from "@/experimental/Actions/F0ButtonToggle"
 import { Picker } from "@/experimental/Information/Reactions/Picker"
+import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import {
   AlignTextCenter,
   AlignTextJustify,
@@ -27,9 +30,7 @@ import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
 import React from "react"
 import { LinkPopup } from "./LinkPopup"
-import { ToolbarButton } from "./ToolbarButton"
 import { ToolbarDivider } from "./ToolbarDivider"
-import { ToolbarDropdown } from "./ToolbarDropdown"
 import { ButtonConfig, ToolbarProps } from "./types"
 import { getTextAlignIcon, getTextAlignLabel } from "./utils"
 
@@ -48,9 +49,9 @@ export const Toolbar = ({
   onClose,
   animationComplete = true,
   labels,
-  darkMode = false,
   showEmojiPicker = true,
   plainHtmlMode = false,
+  showMoreOptions = true,
 }: ToolbarProps) => {
   // Format buttons configuration
   const formatButtons: ButtonConfig[] = [
@@ -131,6 +132,17 @@ export const Toolbar = ({
         shortcut: ["cmd", "3"],
       },
     },
+    {
+      key: "highlight",
+      icon: Pencil,
+      active: (editor: Editor) => editor.isActive("highlight"),
+      onClick: (editor: Editor) =>
+        editor.chain().focus().toggleHighlight().run(),
+      tooltip: {
+        label: `==${labels.highlight}==`,
+        shortcut: ["cmd", "alt", "h"],
+      },
+    },
   ]
 
   // List buttons configuration
@@ -168,17 +180,6 @@ export const Toolbar = ({
               shortcut: ["cmd", "alt", "t"],
             },
           },
-          {
-            key: "highlight",
-            icon: Pencil,
-            active: (editor: Editor) => editor.isActive("highlight"),
-            onClick: (editor: Editor) =>
-              editor.chain().focus().toggleHighlight().run(),
-            tooltip: {
-              label: `==${labels.highlight}==`,
-              shortcut: ["cmd", "alt", "h"],
-            },
-          },
         ]
       : []),
   ]
@@ -187,14 +188,13 @@ export const Toolbar = ({
   const renderButtons = (configs: ButtonConfig[]) => (
     <div className="flex flex-row items-center gap-0.5">
       {configs.map((config) => (
-        <ToolbarButton
+        <F0ButtonToggle
           key={config.key}
-          active={config.active(editor)}
+          selected={config.active(editor)}
           label={labels[config.key as keyof typeof labels]}
           icon={config.icon}
           disabled={disableButtons}
-          onClick={() => config.onClick(editor)}
-          tooltip={config.tooltip}
+          onSelectedChange={() => config.onClick(editor)}
         />
       ))}
     </div>
@@ -205,76 +205,78 @@ export const Toolbar = ({
 
   const moreOptionsGroup = (
     <div className="flex flex-row items-center gap-0.5">
-      <ToolbarDropdown
-        darkMode={darkMode}
+      <Dropdown
         items={[
           {
             label: labels.left,
             icon: AlignTextLeft,
             onClick: () => editor.chain().focus().setTextAlign("left").run(),
-            isActive:
-              editor.isActive({ textAlign: "left" }) ||
-              (!editor.isActive({ textAlign: "justify" }) &&
-                !editor.isActive({ textAlign: "center" }) &&
-                !editor.isActive({ textAlign: "right" })),
           },
           {
             label: labels.center,
             icon: AlignTextCenter,
             onClick: () => editor.chain().focus().setTextAlign("center").run(),
-            isActive: editor.isActive({ textAlign: "center" }),
           },
           {
             label: labels.right,
             icon: AlignTextRight,
             onClick: () => editor.chain().focus().setTextAlign("right").run(),
-            isActive: editor.isActive({ textAlign: "right" }),
           },
           {
             label: labels.justify,
             icon: AlignTextJustify,
             onClick: () => editor.chain().focus().setTextAlign("justify").run(),
-            isActive: editor.isActive({ textAlign: "justify" }),
           },
         ]}
-        disabled={disableButtons}
-        activator={{
-          label: getTextAlignLabel(editor),
-          icon: getTextAlignIcon(editor),
-        }}
-      />
+      >
+        <ButtonInternal
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+          }}
+          label={getTextAlignLabel(editor)}
+          icon={getTextAlignIcon(editor)}
+          variant="ghost"
+          size="md"
+          hideLabel
+          disabled={disableButtons}
+        />
+      </Dropdown>
+
       <ToolbarDivider hidden={!isFullscreen} />
 
       {renderButtons(listButtons)}
 
-      <ToolbarDropdown
-        darkMode={darkMode}
+      <Dropdown
         items={[
           {
             icon: Code,
             label: labels.codeBlock,
             onClick: () => editor.chain().focus().toggleCodeBlock().run(),
-            isActive: editor.isActive("codeBlock"),
           },
           {
             icon: Minus,
             label: labels.divider,
             onClick: () => editor.chain().focus().setHorizontalRule().run(),
-            isActive: editor.isActive("horizontalRule"),
           },
           {
             icon: Quote,
             label: labels.quote,
             onClick: () => editor.chain().focus().toggleBlockquote().run(),
-            isActive: editor.isActive("blockquote"),
           },
         ]}
-        disabled={disableButtons}
-        activator={{
-          label: labels.moreOptions,
-          icon: Ellipsis,
-        }}
-      />
+      >
+        <div>
+          <ButtonInternal
+            label={labels.moreOptions}
+            icon={Ellipsis}
+            variant="ghost"
+            size="md"
+            hideLabel
+            disabled={disableButtons}
+          />
+        </div>
+      </Dropdown>
     </div>
   )
 
@@ -301,7 +303,7 @@ export const Toolbar = ({
     showEmojiPicker && emojiGroup,
     formattingGroup,
     textSizeGroup,
-    moreOptionsGroup,
+    showMoreOptions && moreOptionsGroup,
   ])
 
   return (
@@ -338,7 +340,5 @@ export const Toolbar = ({
 
 // Export all toolbar components
 export { LinkPopup } from "./LinkPopup"
-export { ToolbarButton } from "./ToolbarButton"
 export { ToolbarDivider } from "./ToolbarDivider"
-export { ToolbarDropdown } from "./ToolbarDropdown"
 export type { ButtonConfig, ToolbarLabels, ToolbarProps } from "./types"

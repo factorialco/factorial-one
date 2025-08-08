@@ -74,7 +74,7 @@ export interface ToolbarProps {
   onClose?: () => void
   animationComplete?: boolean
   labels: ToolbarLabels
-  darkMode?: boolean
   showEmojiPicker?: boolean
   plainHtmlMode?: boolean
+  showMoreOptions?: boolean
 }
