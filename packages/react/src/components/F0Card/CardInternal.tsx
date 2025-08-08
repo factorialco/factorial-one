@@ -17,7 +17,7 @@ import {
   type CardSecondaryAction,
   type CardSecondaryLink,
 } from "./components/CardActions"
-import { CardAvatar, type CardAvatarType } from "./components/CardAvatar"
+import { CardAvatar, type CardAvatarVariant } from "./components/CardAvatar"
 import { CardMetadata } from "./components/CardMetadata"
 import { CardOptions } from "./components/CardOptions"
 import { type CardMetadata as CardMetadataType } from "./types"
@@ -31,7 +31,7 @@ export interface CardInternalProps {
   /**
    * The avatar to display in the card
    */
-  avatar?: CardAvatarType
+  avatar?: CardAvatarVariant
 
   /**
    * Whether the card has an image

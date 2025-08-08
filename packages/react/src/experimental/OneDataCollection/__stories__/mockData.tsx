@@ -142,6 +142,7 @@ export type MockUser = {
   index: number
   id: string
   name: string
+  image: (typeof IMAGE_MOCK)[number]
   email: string
   role: string
   department: (typeof DEPARTMENTS_MOCK)[number]
@@ -205,6 +206,17 @@ export const SURNAMES_MOCK = [
   "Robinson",
 ]
 
+export const IMAGE_MOCK = [
+  "/avatars/person01.jpg",
+  "/avatars/person02.jpg",
+  "/avatars/person03.jpg",
+  "/avatars/person04.jpg",
+  "/avatars/person05.jpg",
+  "/avatars/person06.jpg",
+  "/avatars/person07.jpg",
+  "/avatars/person08.jpg",
+]
+
 export const ROLES_MOCK = [
   "Senior Engineer",
   "Product Manager",
@@ -253,6 +265,7 @@ export const generateMockUsers = (count: number): MockUser[] => {
       id: `user-${index + 1}`,
       name,
       email,
+      image: IMAGE_MOCK[index % IMAGE_MOCK.length],
       role: ROLES_MOCK[index % ROLES_MOCK.length],
       department,
       status: STATUS_MOCK[index % STATUS_MOCK.length],
@@ -389,6 +402,7 @@ export const getMockVisualizations = (options?: {
         firstName: item.name.split(" ")[0],
         lastName: item.name.split(" ")[1],
       }),
+      image: (item) => item.image,
       cardProperties: [
         {
           label: "Email",

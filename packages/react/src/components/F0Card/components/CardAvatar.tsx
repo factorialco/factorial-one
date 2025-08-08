@@ -6,7 +6,7 @@ import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
 import { FileAvatar } from "@/experimental/Information/Avatars/FileAvatar"
 import { cn } from "@/lib/utils"
 
-type CardAvatarType =
+type CardAvatarVariant =
   | AvatarVariant
   | { type: "emoji"; emoji: string }
   | { type: "file"; file: File }
@@ -15,7 +15,7 @@ interface CardAvatarProps {
   /**
    * The avatar to display
    */
-  avatar: CardAvatarType
+  avatar: CardAvatarVariant
 
   /**
    * Whether the avatar is displayed with an overlay
@@ -32,7 +32,7 @@ const AvatarRender = ({
   avatar,
   compact = false,
 }: {
-  avatar: CardAvatarType
+  avatar: CardAvatarVariant
   compact?: boolean
 }) => {
   if (avatar.type === "emoji") {
@@ -70,4 +70,4 @@ export function CardAvatar({
   )
 }
 
-export type { CardAvatarType }
+export type { CardAvatarVariant }
