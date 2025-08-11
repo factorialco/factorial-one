@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.153.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.2...factorial-one-react-v1.153.0) (2025-08-11)
+
+
+### Features
+
+* add IT Management module ([#2393](https://github.com/factorialco/factorial-one/issues/2393)) ([16f1f32](https://github.com/factorialco/factorial-one/commit/16f1f32e2e8ff987e77cf2e29eb52b31d5783404))
+
 ## [1.152.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.1...factorial-one-react-v1.152.2) (2025-08-08)
 
 
