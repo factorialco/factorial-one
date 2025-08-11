@@ -32,7 +32,7 @@ export const Variants: Story = {
   },
   render: () => (
     <div className="flex flex-col gap-2">
-      <F0Text variant="heading-large">Large Heading Text</F0Text>
+      <F0Text variant="heading">Heading Text</F0Text>
       <F0Text variant="description">
         This is a description text. Lorem ipsum dolor sit amet, consectetur
         adipiscing elit.

@@ -3,6 +3,9 @@ import { TextInternal, TextInternalProps } from "./TextInternal"
 
 const privateProps = ["className"] as const
 const _privateVariants = [
+  "selected",
+  "heading-large",
+  "label-input",
   "warning",
   "critical",
   "positive",
