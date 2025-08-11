@@ -4,11 +4,6 @@ import { F0Text } from "../index"
 const meta = {
   component: F0Text,
   title: "Text",
-  parameters: {
-    docs: {
-      story: { inline: true },
-    },
-  },
   tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
@@ -75,26 +70,30 @@ export const LabelInput: Story = {
   },
 }
 
-export const WithCustomTagName: Story = {
-  args: {
-    variant: "heading",
-    tagName: "h3",
-    children: "Heading rendered as h3 element",
-  },
-}
-
-export const WithTitle: Story = {
-  args: {
-    variant: "body",
-    title: "This is a tooltip that appears on hover",
-    children: "Text with title attribute (hover to see tooltip)",
-  },
-}
-
 export const LongText: Story = {
   args: {
     variant: "body",
     children:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
   },
+}
+
+export const TextAlignment: Story = {
+  args: {
+    variant: "body",
+    children: "This text demonstrates different alignment options.",
+  },
+  render: (args) => (
+    <div className="w-full space-y-4">
+      <F0Text {...args} align="left">
+        Left aligned text (default)
+      </F0Text>
+      <F0Text {...args} align="center">
+        Center aligned text
+      </F0Text>
+      <F0Text {...args} align="right">
+        Right aligned text
+      </F0Text>
+    </div>
+  ),
 }

@@ -1,12 +1,29 @@
-import { experimentalComponent } from "@/lib/experimental"
 import { forwardRef } from "react"
 import { TextInternal, TextInternalProps } from "./TextInternal"
 
 const privateProps = ["className"] as const
+const _privateVariants = [
+  "warning",
+  "critical",
+  "positive",
+  "info",
+  "warning-strong",
+  "critical-strong",
+  "positive-strong",
+  "info-strong",
+] as const
 
-export type F0TextProps = Omit<TextInternalProps, (typeof privateProps)[number]>
+export type F0TextProps = Omit<
+  TextInternalProps,
+  (typeof privateProps)[number]
+> & {
+  variant: Exclude<
+    TextInternalProps["variant"],
+    (typeof _privateVariants)[number]
+  >
+}
 
-const _F0Text = forwardRef<HTMLElement, F0TextProps>((props) => {
+export const F0Text = forwardRef<HTMLElement, F0TextProps>((props) => {
   const publicProps = privateProps.reduce((acc, key) => {
     const { [key]: _, ...rest } = acc
     return rest
@@ -15,9 +32,4 @@ const _F0Text = forwardRef<HTMLElement, F0TextProps>((props) => {
   return <TextInternal {...publicProps} />
 })
 
-_F0Text.displayName = "F0Text"
-
-/**
- * @experimental This is an experimental component use it at your own risk
- */
-export const F0Text = experimentalComponent<typeof _F0Text>("F0Text", _F0Text)
+F0Text.displayName = "F0Text"
