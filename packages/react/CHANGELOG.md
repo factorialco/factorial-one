@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.154.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.153.0...factorial-one-react-v1.154.0) (2025-08-11)
+
+
+### Features
+
+* support, new avatar variants, image and compact for DataCollection Cards ([9800f5f](https://github.com/factorialco/factorial-one/commit/9800f5fdde3f6c4c4bced27d782cc702c5646f3b))
+
 ## [1.153.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.2...factorial-one-react-v1.153.0) (2025-08-11)
 
 
