@@ -8,7 +8,7 @@ const meta = {
   decorators: [
     (Story) => (
       <div className="flex w-full items-center justify-center p-4">
-        <div className="w-full max-w-2xl space-y-4">
+        <div className="w-full max-w-96">
           <Story />
         </div>
       </div>
@@ -22,78 +22,67 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     variant: "body",
-    children: "This is the default body text variant.",
+    children: "This is a text wrapped in the Text component.",
   },
 }
 
-export const HeadingLarge: Story = {
+export const Variants: Story = {
   args: {
-    variant: "heading-large",
-    children: "Large Heading Text",
+    children: "",
   },
-}
-
-export const Heading: Story = {
-  args: {
-    variant: "heading",
-    children: "Regular Heading Text",
-  },
-}
-
-export const Body: Story = {
-  args: {
-    variant: "body",
-    children:
-      "This is body text used for main content and paragraphs. It provides good readability for longer passages of text.",
-  },
-}
-
-export const Description: Story = {
-  args: {
-    variant: "description",
-    children:
-      "This is description text, typically used for secondary information with muted styling.",
-  },
-}
-
-export const Label: Story = {
-  args: {
-    variant: "label",
-    children: "Label Text",
-  },
-}
-
-export const LabelInput: Story = {
-  args: {
-    variant: "label-input",
-    children: "Input Label",
-  },
-}
-
-export const LongText: Story = {
-  args: {
-    variant: "body",
-    children:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-  },
+  render: () => (
+    <div className="flex flex-col gap-2">
+      <F0Text variant="heading-large">Large Heading Text</F0Text>
+      <F0Text variant="description">
+        This is a description text. Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit.
+      </F0Text>
+      <F0Text>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+      </F0Text>
+      <F0Text variant="small">This is a small text.</F0Text>
+    </div>
+  ),
 }
 
 export const TextAlignment: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   args: {
     variant: "body",
-    children: "This text demonstrates different alignment options.",
+    children: "Text alignment",
   },
   render: (args) => (
-    <div className="w-full space-y-4">
-      <F0Text {...args} align="left">
-        Left aligned text (default)
-      </F0Text>
-      <F0Text {...args} align="center">
-        Center aligned text
-      </F0Text>
-      <F0Text {...args} align="right">
-        Right aligned text
-      </F0Text>
+    <div className="flex flex-col gap-2">
+      <F0Text {...args} align="left" />
+      <F0Text {...args} align="center" />
+      <F0Text {...args} align="right" />
     </div>
   ),
+}
+
+export const TextEllipsis: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    variant: "body",
+    children:
+      "This is a very long text that will be truncated with ellipsis when it exceeds the container width and demonstrates the ellipsis functionality.",
+    ellipsis: true,
+  },
+  decorators: [
+    (Story) => (
+      <div className="max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
 }

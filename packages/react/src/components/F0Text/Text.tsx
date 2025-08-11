@@ -17,7 +17,7 @@ export type F0TextProps = Omit<
   TextInternalProps,
   (typeof privateProps)[number]
 > & {
-  variant: Exclude<
+  variant?: Exclude<
     TextInternalProps["variant"],
     (typeof _privateVariants)[number]
   >
