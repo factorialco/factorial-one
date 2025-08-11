@@ -82,7 +82,7 @@ jobs:
           # 4️⃣  Send
           curl -X POST -H "Content-Type: application/json" \
               --data @/tmp/payload.json \
-              "${{ secrets.SLACK_WEBHOOK_URL }}"
+              "${{ secrets.SLACK_WEBHOOK_ZERO_UPDATER }}"
 
   publish-react-native:
     name: "[📱 REACT NATIVE] Publish to npm"
@@ -150,7 +150,7 @@ jobs:
           # 4️⃣  Send
           curl -X POST -H "Content-Type: application/json" \
               --data @/tmp/payload.json \
-              "${{ secrets.SLACK_WEBHOOK_URL }}"
+              "${{ secrets.SLACK_WEBHOOK_ZERO_UPDATER }}"
 
   publish-core:
     name: "[🎯 CORE] Publish to npm"
@@ -218,4 +218,4 @@ jobs:
           # 4️⃣  Send
           curl -X POST -H "Content-Type: application/json" \
               --data @/tmp/payload.json \
-              "${{ secrets.SLACK_WEBHOOK_URL }}"
+              "${{ secrets.SLACK_WEBHOOK_ZERO_UPDATER }}"
