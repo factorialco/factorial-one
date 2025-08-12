@@ -93,6 +93,7 @@ export const ModuleAvatar = ({ size = "md", ...props }: ModuleAvatarProps) => {
           fill={`url(#${gradientId})`}
           stroke="white"
           strokeWidth={10}
+          transform="scale(0.95) translate(2.5 2.5)"
         />
       </Svg>
       <View className={iconContainerVariants({ size })}>
