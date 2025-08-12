@@ -66,3 +66,13 @@ export const WithBadge: Story = {
     size: "medium",
   },
 };
+
+export const WithBadgeModuleAvatar: Story = {
+  args: {
+    badge: {
+      type: "module",
+      module: "benefits",
+    },
+    size: "medium",
+  },
+};
