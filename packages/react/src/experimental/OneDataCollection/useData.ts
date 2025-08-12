@@ -602,7 +602,7 @@ export function useData<
 
   // In loadMore function
   const loadMore = useCallback(() => {
-    if (!paginationInfo || isLoading) return
+    if (!paginationInfo || isLoading || isLoadingMoreRef.current) return
 
     if (!isInfiniteScrollPagination(paginationInfo)) {
       console.warn(
@@ -615,9 +615,10 @@ export function useData<
       // Extract the cursor from paginationInfo
       const currentCursor = paginationInfo.cursor
 
+      // Immediately set the ref to prevent concurrent calls
+      isLoadingMoreRef.current = true
       setIsLoadingMore(true)
       setIsLoading(true)
-      isLoadingMoreRef.current = true
 
       // Use named parameters
       fetchDataAndUpdate({
