@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.17.1...factorial-one-react-native-v0.18.0) (2025-08-12)
+
+
+### Features
+
+* add stroke to moduleAvatar for budge ([#2410](https://github.com/factorialco/factorial-one/issues/2410)) ([464527c](https://github.com/factorialco/factorial-one/commit/464527ca0460e77f5f48d92a68da0302711d7c7d))
+
 ## [0.17.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.17.0...factorial-one-react-native-v0.17.1) (2025-07-17)
 
 
