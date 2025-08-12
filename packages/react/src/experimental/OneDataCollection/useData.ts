@@ -644,6 +644,7 @@ export function useData<
       // Explicitly pass 0 as the initial position for infinite scroll
       const initialPosition =
         dataAdapter.paginationType === "infinite-scroll" ? 0 : 1
+      isLoadingMoreRef.current = true
       fetchDataAndUpdate({
         filters: mergedFilters,
         currentPage: initialPosition,
