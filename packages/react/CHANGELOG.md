@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.154.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.153.0...factorial-one-react-v1.154.0) (2025-08-11)
+
+
+### Features
+
+* support, new avatar variants, image and compact for DataCollection Cards ([9800f5f](https://github.com/factorialco/factorial-one/commit/9800f5fdde3f6c4c4bced27d782cc702c5646f3b))
+
+## [1.153.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.2...factorial-one-react-v1.153.0) (2025-08-11)
+
+
+### Features
+
+* add IT Management module ([#2393](https://github.com/factorialco/factorial-one/issues/2393)) ([16f1f32](https://github.com/factorialco/factorial-one/commit/16f1f32e2e8ff987e77cf2e29eb52b31d5783404))
+
+## [1.152.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.1...factorial-one-react-v1.152.2) (2025-08-08)
+
+
+### Bug Fixes
+
+* **aiChat:** vertical scroll resize observer trigger ([#2400](https://github.com/factorialco/factorial-one/issues/2400)) ([49e0a67](https://github.com/factorialco/factorial-one/commit/49e0a6761440287f357608e71d2c530b77f0b81a))
+
+## [1.152.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.152.0...factorial-one-react-v1.152.1) (2025-08-07)
+
+
+### Bug Fixes
+
+* **aiChat:** render subComponents when passed ([#2394](https://github.com/factorialco/factorial-one/issues/2394)) ([e2e444c](https://github.com/factorialco/factorial-one/commit/e2e444cd1a612a33cad845b3f1f35810955b2ebf))
+
+## [1.152.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.3...factorial-one-react-v1.152.0) (2025-08-07)
+
+
+### Features
+
+* add F0ButtonToggle component  ([#2373](https://github.com/factorialco/factorial-one/issues/2373)) ([6ef65ae](https://github.com/factorialco/factorial-one/commit/6ef65ae943ce0b0e2a4abdb7ed79ce70b46f0870))
+
+## [1.151.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.2...factorial-one-react-v1.151.3) (2025-08-07)
+
+
+### Bug Fixes
+
+* resource header metadata icon color ([#2391](https://github.com/factorialco/factorial-one/issues/2391)) ([baf3998](https://github.com/factorialco/factorial-one/commit/baf3998c8972f45225aba31bdb631c4c4151251f))
+
+## [1.151.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.1...factorial-one-react-v1.151.2) (2025-08-07)
+
+
+### Bug Fixes
+
+* hide unneeded separator between filters and presets ([#2389](https://github.com/factorialco/factorial-one/issues/2389)) ([db35488](https://github.com/factorialco/factorial-one/commit/db3548834b574d27d7f86d6e2ea19774eaa9559e))
+
 ## [1.151.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.151.0...factorial-one-react-v1.151.1) (2025-08-07)
 
 

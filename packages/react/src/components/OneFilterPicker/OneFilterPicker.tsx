@@ -153,9 +153,10 @@ const FiltersControls = () => {
       )
     : undefined
 
+  if (!shownFilters || Object.keys(shownFilters).length === 0) return null
+
   return (
-    shownFilters &&
-    Object.keys(shownFilters).length > 0 && (
+    <>
       <FiltersControlsComponent
         filters={shownFilters}
         value={value}
@@ -164,7 +165,12 @@ const FiltersControls = () => {
         isOpen={isFiltersOpen}
         hideLabel={!!presets}
       />
-    )
+      {!!presets?.length && (
+        <div className="flex items-center">
+          <div className="mx-2 h-4 w-px bg-f1-background-secondary-hover" />
+        </div>
+      )}
+    </>
   )
 }
 FiltersControls.displayName = "OneFilterPicker.Controls"

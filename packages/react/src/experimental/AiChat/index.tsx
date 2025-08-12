@@ -13,27 +13,39 @@ import {
   MessagesContainer,
   UserMessage,
 } from "./components"
+import {
+  AiChatLabelsProvider,
+  type AiChatLabels,
+} from "./providers/AiChatLabelsProvider"
 
 type AiChatProviderProps = ComponentProps<typeof CopilotKit>
 
 const AiChatProviderCmp = (props: AiChatProviderProps) => {
   return <CopilotKit {...props} />
 }
+type CopilotPopupProps = ComponentProps<typeof CopilotPopup>
 
-type AiChatProps = ComponentProps<typeof CopilotPopup>
+type AiChatProps = Omit<CopilotPopupProps, "labels"> & {
+  labels?: ComponentProps<typeof CopilotPopup>["labels"] & AiChatLabels
+}
 
-const AiChatCmp = (props: AiChatProps) => {
+const AiChatCmp = ({ labels, ...props }: AiChatProps) => {
+  const { greeting, ...copilotLabels } = labels || {}
+
   return (
-    <CopilotPopup
-      Window={ChatWindow}
-      Header={ChatHeader}
-      Messages={MessagesContainer}
-      Button={ChatButton}
-      Input={ChatTextarea}
-      UserMessage={UserMessage}
-      AssistantMessage={AssistantMessage}
-      {...props}
-    />
+    <AiChatLabelsProvider greeting={greeting}>
+      <CopilotPopup
+        Window={ChatWindow}
+        Header={ChatHeader}
+        Messages={MessagesContainer}
+        Button={ChatButton}
+        Input={ChatTextarea}
+        UserMessage={UserMessage}
+        AssistantMessage={AssistantMessage}
+        {...props}
+        labels={copilotLabels}
+      />
+    </AiChatLabelsProvider>
   )
 }
 

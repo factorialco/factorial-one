@@ -3,7 +3,7 @@ import { propertyRenderers } from "@/experimental/OneDataCollection/visualizatio
 import React from "react"
 import { CardMetadata as CardMetadataType } from "../types"
 
-const cardPropertyRenderers = {
+export const cardPropertyRenderers = {
   text: propertyRenderers.text,
   number: propertyRenderers.number,
   date: propertyRenderers.date,
