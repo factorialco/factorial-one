@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.18.0...factorial-one-react-native-v0.18.1) (2025-08-13)
+
+
+### Bug Fixes
+
+* size ([#2414](https://github.com/factorialco/factorial-one/issues/2414)) ([4c1f145](https://github.com/factorialco/factorial-one/commit/4c1f14515830bcbf7c2d88aa057213909163c49c))
+
 ## [0.18.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.17.1...factorial-one-react-native-v0.18.0) (2025-08-12)
 
 
