@@ -8,7 +8,7 @@ const moduleAvatarVariants = cva({
   base: "relative flex shrink-0 items-center justify-center",
   variants: {
     size: {
-      sm: "h-5 w-5",
+      sm: "h-4 w-4",
       md: "h-6 w-6",
       lg: "h-8 w-8",
       xl: "h-10 w-10",
@@ -23,7 +23,7 @@ const iconContainerVariants = cva({
   base: "absolute inset-0 items-center justify-center z-10",
   variants: {
     size: {
-      sm: "h-5 w-5",
+      sm: "h-4 w-4",
       md: "h-6 w-6",
       lg: "h-8 w-8",
       xl: "h-10 w-10",
