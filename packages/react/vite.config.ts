@@ -84,7 +84,7 @@ export default defineConfig({
     lib: {
       entry: {
         ["factorial-one"]: resolve(__dirname, "src/factorial-one.ts"),
-        ["experimental"]: resolve(__dirname, "src/experimental/exports.ts"),
+        ["experimental"]: resolve(__dirname, "src/experimental.ts"),
       },
       fileName: (_, entryName) => {
         return `${entryName}.js`
@@ -94,7 +94,7 @@ export default defineConfig({
     outDir: "dist",
     copyPublicDir: false,
     rollupOptions: {
-      external: ["react/jsx-runtime", "react", "react-dom"],
+      external: ["react/jsx-runtime", "react", "react-dom", /@copilotkit\/.*/],
       maxParallelFileOps: 100, // Workaround to fix rebuild https://github.com/vitejs/vite/issues/19410#issuecomment-2661835482
       output: {
         globals: {

@@ -55,6 +55,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       lengthProvider,
       onClickContent,
       hideLabel,
+      name,
       ...props
     },
     ref
@@ -84,6 +85,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         hideLabel={hideLabel}
         onChange={onChange}
         onClickContent={onClickContent}
+        name={name}
       >
         <input
           type={type}

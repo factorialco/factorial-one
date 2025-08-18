@@ -39,7 +39,7 @@ export const BasePostEvent = ({
       <CalendarEvent
         title={title}
         description={description}
-        color={f1Colors["special-highlight"]}
+        color={f1Colors.special.highlight}
         isPending={false}
         toDate={date}
         noBackground

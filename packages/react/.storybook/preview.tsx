@@ -99,7 +99,7 @@ const preview: Preview = {
       default: "content",
       values: [
         { name: "content", value: "hsl(var(--neutral-0))" },
-        { name: "page", value: "hsl(var(--page-background))" },
+        { name: "page", value: "hsl(var(--page))" },
       ],
     },
     viewport: {

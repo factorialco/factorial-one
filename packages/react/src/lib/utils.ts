@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function focusRing(extraClasses?: string) {
   return cn(
-    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1",
+    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-special-ring focus-visible:ring-offset-1",
     extraClasses
   )
 }

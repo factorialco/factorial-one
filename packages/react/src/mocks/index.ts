@@ -193,3 +193,22 @@ export const EDUCATION_MOCK = ["Ph.D.", "Master's", "Bachelor's", "Associate's"]
 export const getMockValue = <T>(mock: readonly T[], index: number): T => {
   return mock[index % mock.length]
 }
+
+export const IMAGE_MOCK = [
+  "/avatars/person01.jpg",
+  "/avatars/person02.jpg",
+  "/avatars/person03.jpg",
+  "/avatars/person04.jpg",
+  "/avatars/person05.jpg",
+  "/avatars/person06.jpg",
+  "/avatars/person07.jpg",
+  "/avatars/person08.jpg",
+]
+
+export const MANAGERS_MOCK = [
+  "John Doe",
+  "Jane Smith",
+  "Michael Brown",
+  "Emily Johnson",
+  "David Lee",
+]

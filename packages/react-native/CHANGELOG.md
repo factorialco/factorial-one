@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.18.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.18.0...factorial-one-react-native-v0.18.1) (2025-08-13)
+
+
+### Bug Fixes
+
+* size ([#2414](https://github.com/factorialco/factorial-one/issues/2414)) ([4c1f145](https://github.com/factorialco/factorial-one/commit/4c1f14515830bcbf7c2d88aa057213909163c49c))
+
+## [0.18.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.17.1...factorial-one-react-native-v0.18.0) (2025-08-12)
+
+
+### Features
+
+* add stroke to moduleAvatar for budge ([#2410](https://github.com/factorialco/factorial-one/issues/2410)) ([464527c](https://github.com/factorialco/factorial-one/commit/464527ca0460e77f5f48d92a68da0302711d7c7d))
+
+## [0.17.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.17.0...factorial-one-react-native-v0.17.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* change type ([#2264](https://github.com/factorialco/factorial-one/issues/2264)) ([2b5b3eb](https://github.com/factorialco/factorial-one/commit/2b5b3eb5c7800058602cceb7a2cfb2b36a1cc1af))
+
 ## [0.17.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.16.0...factorial-one-react-native-v0.17.0) (2025-06-25)
 
 

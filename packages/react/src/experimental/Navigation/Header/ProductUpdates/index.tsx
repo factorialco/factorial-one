@@ -125,6 +125,7 @@ const ProductUpdates = ({
           hideLabel
           round
           label={label}
+          pressed={open}
           append={
             hasUnread && (
               <UnreadDot className="absolute -right-0.5 -top-[1px]" />

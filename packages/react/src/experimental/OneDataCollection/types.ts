@@ -3,7 +3,7 @@ import type {
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker/types"
-import { IconType } from "@/factorial-one"
+import { IconType } from "@/components/Utilities/Icon"
 import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
@@ -88,10 +88,12 @@ export type DataSourceDefinition<
   /** Bulk actions that can be performed on the collection */
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<Record, Filters>>[1]
-  ) => {
-    primary: BulkActionDefinition[]
-    secondary?: BulkActionDefinition[]
-  }
+  ) =>
+    | {
+        primary?: BulkActionDefinition[]
+        secondary?: BulkActionDefinition[]
+      }
+    | { warningMessage: string }
   totalItemSummary?: (totalItems: number) => string
   /** Grouping configuration */
   grouping?: Grouping

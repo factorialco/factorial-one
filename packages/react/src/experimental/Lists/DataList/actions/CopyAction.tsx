@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from "motion/react"
 import { ReactNode, useEffect, useState } from "react"
 import { Icon } from "../../../../components/Utilities/Icon"
 import { CheckCircle, LayersFront } from "../../../../icons/app"
@@ -44,27 +45,53 @@ export const CopyAction = ({ text, children }: CopyActionProps) => {
       onClick={copyHandler}
     >
       {children}
-      <div className="grid">
-        <Icon
-          icon={LayersFront}
-          size="md"
-          aria-hidden={true}
-          className={cn(
-            "col-start-1 col-end-2 row-start-1 row-end-2",
-            "opacity-0 transition-opacity duration-300",
-            !copied && "group-hover:opacity-100 group-focus-visible:opacity-100"
+      <div className="relative h-5 w-5">
+        <AnimatePresence mode="wait">
+          {!copied && (
+            <motion.div
+              key="copy-icon"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.1 }}
+              className="absolute inset-0"
+            >
+              <Icon
+                icon={LayersFront}
+                size="md"
+                aria-hidden={true}
+                color="default"
+                className={cn(
+                  "opacity-0 transition-opacity duration-300",
+                  !copied &&
+                    "group-hover:opacity-100 group-focus-visible:opacity-100"
+                )}
+              />
+            </motion.div>
           )}
-        />
-        <Icon
-          icon={CheckCircle}
-          size="md"
-          aria-hidden={true}
-          className={cn(
-            "col-start-1 col-end-2 row-start-1 row-end-2", // place to the same cell
-            "text-f1-icon-positive opacity-0 transition-opacity duration-300",
-            copied && "group-hover:opacity-100 group-focus-visible:opacity-100"
+          {copied && (
+            <motion.div
+              key="check-icon"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.1 }}
+              className="absolute inset-0"
+            >
+              <Icon
+                icon={CheckCircle}
+                size="md"
+                aria-hidden={true}
+                color="positive"
+                className={cn(
+                  "text-f1-icon-positive opacity-0 transition-opacity duration-300",
+                  copied &&
+                    "group-hover:opacity-100 group-focus-visible:opacity-100"
+                )}
+              />
+            </motion.div>
           )}
-        />
+        </AnimatePresence>
       </div>
     </button>
   )

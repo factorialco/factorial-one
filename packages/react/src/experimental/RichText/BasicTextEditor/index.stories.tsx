@@ -83,19 +83,6 @@ const initialContent = {
   type: "doc",
   content: [
     {
-      type: "heading",
-      attrs: {
-        textAlign: null,
-        level: 1,
-      },
-      content: [
-        {
-          type: "text",
-          text: "Titulo de la meeting ",
-        },
-      ],
-    },
-    {
       type: "moodTracker",
       attrs: {
         data: {
@@ -234,6 +221,10 @@ export const Default: Story = {
       moodTrackerLabels: defaultMoodTrackerLabels,
       liveCompanionLabels: defaultLiveCompanionLabels,
       transcriptLabels: defaultTranscriptLabels,
+      titlePlaceholder: "Enter a title for the meeting",
+    },
+    onTitleChange: (title) => {
+      console.log("Title changed:", title)
     },
     onChange: (value) => {
       console.log("Content changed:", value)
@@ -241,6 +232,7 @@ export const Default: Story = {
 
     initialEditorState: {
       content: initialContent,
+      title: "Meeting title",
     },
 
     aiBlockConfig: {

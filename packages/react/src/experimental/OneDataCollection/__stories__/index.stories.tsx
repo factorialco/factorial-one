@@ -3,10 +3,14 @@ import {
   Add,
   Ai,
   ArrowRight,
+  Briefcase,
+  Building,
+  CheckCircle,
   Delete,
   Download,
   Envelope,
   Pencil,
+  Person,
   Placeholder,
   Share,
   Star,
@@ -345,15 +349,29 @@ export const WithLinkedItems: Story = {
                 cardProperties: [
                   {
                     label: "Email",
+                    icon: Envelope,
                     render: (item) => item.email,
                   },
                   {
                     label: "Role",
+                    icon: Briefcase,
                     render: (item) => item.role,
                   },
                   {
                     label: "Department",
+                    icon: Building,
                     render: (item) => item.department,
+                  },
+                  {
+                    label: "Manager",
+                    icon: Person,
+                    render: (item) => ({
+                      type: "person",
+                      value: {
+                        firstName: item.manager.split(" ")[0],
+                        lastName: item.manager.split(" ")[1],
+                      },
+                    }),
                   },
                 ],
               },
@@ -367,6 +385,10 @@ export const WithLinkedItems: Story = {
 
 export const BasicCardView: Story = {
   render: () => {
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
+
     const dataSource = useDataSource({
       filters,
       sortings,
@@ -404,24 +426,7 @@ export const BasicCardView: Story = {
     return (
       <OneDataCollection
         source={dataSource}
-        visualizations={[
-          {
-            type: "card",
-            options: {
-              description: (item) => item.email,
-              avatar: (item) => ({
-                type: "person",
-                firstName: item.name.split(" ")[0],
-                lastName: item.name.split(" ")[1],
-              }),
-              cardProperties: [
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
-        ]}
+        visualizations={[mockVisualizations.card]}
       />
     )
   },
@@ -569,7 +574,56 @@ export const CustomCardProperties: Story = {
           {
             type: "card",
             options: {
-              cardProperties: [{ label: "Role", render: (item) => item.role }],
+              cardProperties: [
+                {
+                  label: "Role",
+                  icon: Briefcase,
+                  render: (item) => item.role,
+                },
+                {
+                  label: "Teammates",
+                  icon: Person,
+                  render: (item) => ({
+                    type: "avatarList",
+                    value: {
+                      avatarList: [
+                        {
+                          type: "person",
+                          firstName: item.name,
+                          lastName: "Doe",
+                          src: "/avatars/person01.jpg",
+                        },
+                        {
+                          type: "person",
+                          firstName: "Dani",
+                          lastName: "Moreno",
+                          src: "/avatars/person04.jpg",
+                        },
+                        {
+                          type: "person",
+                          firstName: "Sergio",
+                          lastName: "Carracedo",
+                          src: "/avatars/person05.jpg",
+                        },
+                      ],
+                    },
+                  }),
+                },
+                {
+                  label: "Status",
+                  icon: CheckCircle,
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label:
+                        item.status.charAt(0).toUpperCase() +
+                        item.status.slice(1),
+                    },
+                  }),
+                },
+              ],
               title: (item) => item.name,
             },
           },
@@ -588,7 +642,13 @@ export const WithSelectableAndBulkActions: Story = {
   render: () => (
     <ExampleComponent
       selectable={(item) => item.id}
-      bulkActions={({ allSelected }) => {
+      bulkActions={({ allSelected, selectedCount }) => {
+        if (selectedCount === 2) {
+          return {
+            warningMessage: "Selected items have different action options",
+          }
+        }
+
         return {
           primary: [
             {
@@ -730,6 +790,10 @@ export const WithCustomJsonView: Story = {
     type MockUser = (typeof mockUsers)[number]
     type MockActions = ItemActionsDefinition<MockUser>
 
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
+
     const dataSource = useDataSource<
       MockUser,
       typeof filters,
@@ -757,57 +821,9 @@ export const WithCustomJsonView: Story = {
             icon: Ai,
             component: ({ source }) => <JsonVisualization source={source} />,
           },
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => ({
-                    type: "person",
-                    value: {
-                      firstName: item.name.split(" ")[0],
-                      lastName: item.name.split(" ")[1],
-                    },
-                  }),
-                  sorting: "name",
-                },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                {
-                  label: "Name",
-                  render: (item) => ({
-                    type: "person",
-                    value: {
-                      firstName: item.name.split(" ")[0],
-                      lastName: item.name.split(" ")[1],
-                    },
-                  }),
-                },
-                {
-                  label: "Email",
-                  render: (item) => ({
-                    type: "tag",
-                    value: {
-                      label: item.email,
-                      icon: Envelope,
-                    },
-                  }),
-                },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
+          mockVisualizations.table,
+          mockVisualizations.card,
+          mockVisualizations.list,
         ]}
       />
     )
@@ -870,6 +886,10 @@ export const WithTableVisualization: Story = {
 // Example usage with card visualization
 export const WithCardVisualization: Story = {
   render: () => {
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
+
     const source = useDataSource({
       filters,
       presets: filterPresets,
@@ -884,19 +904,7 @@ export const WithCardVisualization: Story = {
     return (
       <OneDataCollection
         source={source}
-        visualizations={[
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
-        ]}
+        visualizations={[mockVisualizations.card]}
       />
     )
   },
@@ -980,6 +988,10 @@ export const WithInfiniteScrollPagination: Story = {
     // Create a fixed set of paginated users so we're not regenerating them on every render
     const paginatedMockUsers = generateMockUsers(50)
 
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
+
     const source = useDataSource({
       filters,
       presets: filterPresets,
@@ -1015,44 +1027,9 @@ export const WithInfiniteScrollPagination: Story = {
             console.log(`Bulk action: ${action}`, "->", selectedItems)
           }}
           visualizations={[
-            {
-              type: "table",
-              options: {
-                columns: [
-                  {
-                    label: "Name",
-                    render: (item) => item.name,
-                    sorting: "name",
-                  },
-                  {
-                    label: "Email",
-                    render: (item) => item.email,
-                    sorting: "email",
-                  },
-                  {
-                    label: "Role",
-                    render: (item) => item.role,
-                    sorting: "role",
-                  },
-                  {
-                    label: "Department",
-                    render: (item) => item.department,
-                    sorting: "department",
-                  },
-                ],
-              },
-            },
-            {
-              type: "card",
-              options: {
-                cardProperties: [
-                  { label: "Email", render: (item) => item.email },
-                  { label: "Role", render: (item) => item.role },
-                  { label: "Department", render: (item) => item.department },
-                ],
-                title: (item) => item.name,
-              },
-            },
+            mockVisualizations.table,
+            mockVisualizations.card,
+            mockVisualizations.list,
           ]}
         />
       </div>
@@ -1380,9 +1357,64 @@ export const WithSyncSearch: Story = {
             options: {
               title: (item) => item.name,
               cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
+                {
+                  label: "Email",
+                  icon: Envelope,
+                  render: (item) => item.email,
+                },
+                {
+                  label: "Role",
+                  icon: Briefcase,
+                  render: (item) => item.role,
+                },
+                {
+                  label: "Department",
+                  icon: Building,
+                  render: (item) => item.department,
+                },
+                {
+                  label: "Teammates",
+                  icon: Person,
+                  render: (item) => ({
+                    type: "avatarList",
+                    value: {
+                      avatarList: [
+                        {
+                          type: "person",
+                          firstName: item.name,
+                          lastName: "Doe",
+                          src: "/avatars/person01.jpg",
+                        },
+                        {
+                          type: "person",
+                          firstName: "Dani",
+                          lastName: "Moreno",
+                          src: "/avatars/person04.jpg",
+                        },
+                        {
+                          type: "person",
+                          firstName: "Sergio",
+                          lastName: "Carracedo",
+                          src: "/avatars/person05.jpg",
+                        },
+                      ],
+                    },
+                  }),
+                },
+                {
+                  label: "Status",
+                  icon: CheckCircle,
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label:
+                        item.status.charAt(0).toUpperCase() +
+                        item.status.slice(1),
+                    },
+                  }),
+                },
               ],
             },
           },
@@ -1395,6 +1427,10 @@ export const WithSyncSearch: Story = {
 // Example with async search functionality
 export const WithAsyncSearch: Story = {
   render: () => {
+    const mockVisualizations = getMockVisualizations({
+      frozenColumns: 0,
+    })
+
     type MockUser = (typeof mockUsers)[number]
     type MockActions = ItemActionsDefinition<MockUser>
 
@@ -1504,47 +1540,9 @@ export const WithAsyncSearch: Story = {
       <OneDataCollection
         source={source}
         visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item: MockUser) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item: MockUser) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item: MockUser) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item: MockUser) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              title: (item: MockUser) => item.name,
-              cardProperties: [
-                { label: "Email", render: (item: MockUser) => item.email },
-                { label: "Role", render: (item: MockUser) => item.role },
-                {
-                  label: "Department",
-                  render: (item: MockUser) => item.department,
-                },
-              ],
-            },
-          },
+          mockVisualizations.table,
+          mockVisualizations.card,
+          mockVisualizations.list,
         ]}
       />
     )
@@ -1693,7 +1691,17 @@ export const TableColumnProperties: Story = {
                 },
                 {
                   label: "Languages",
-                  render: (item) => item.languages,
+                  render: (item) => ({
+                    type: "tagList",
+                    value: {
+                      type: "raw",
+                      tags: item.languages.split(",").map((language) => ({
+                        text: language,
+                        description: language,
+                      })),
+                      max: 2,
+                    },
+                  }),
                   sorting: "languages",
                   width: 360, // Wider column for longer text
                 },

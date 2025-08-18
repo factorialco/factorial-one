@@ -1,19 +1,11 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
-import {
-  ColorExtension,
-  CustomTaskExtension,
-  HighlightExtension,
-  LinkExtension,
-  PersistSelection,
-  StarterKitExtension,
-  TaskListExtension,
-  TextAlignExtension,
-  TextStyleExtension,
-  TypographyExtension,
-  UnderlineExtension,
-} from "@/experimental/RichText/CoreEditor"
+import { LiveCompanionLabels } from "@/experimental/RichText/CoreEditor/Extensions/LiveCompanion"
+import { MoodTrackerLabels } from "@/experimental/RichText/CoreEditor/Extensions/MoodTracker"
+import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
+import { TranscriptLabels } from "@/experimental/RichText/CoreEditor/Extensions/Transcript"
+import { ToolbarLabels } from "@/experimental/RichText/CoreEditor/Toolbar/types"
 import { Ai, ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { JSONContent, Node } from "@tiptap/core"
@@ -28,6 +20,7 @@ import {
 } from "@tiptap/react"
 import { AnimatePresence, motion } from "motion/react"
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { createAIBlockEditorExtensions } from "./extensions"
 
 export type AIButton = {
   type: string
@@ -45,10 +38,19 @@ export interface AIBlockLabels {
 }
 
 export interface AIBlockConfig {
-  buttons: AIButton[]
+  buttons?: AIButton[]
   onClick: (type: string) => Promise<JSONContent | null>
   title: string
+}
+
+export interface AIBlockConfigWithLabels extends AIBlockConfig {
   labels?: AIBlockLabels
+  toolbarLabels: ToolbarLabels
+  slashCommandGroupLabels?: SlashCommandGroupLabels
+  moodTrackerLabels?: MoodTrackerLabels
+  liveCompanionLabels?: LiveCompanionLabels
+  transcriptLabels?: TranscriptLabels
+  placeholder?: string
 }
 
 interface AIBlockData {
@@ -61,7 +63,10 @@ interface AIBlockData {
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     aiBlock: {
-      insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType
+      insertAIBlock: (
+        data: AIBlockData,
+        config: AIBlockConfigWithLabels
+      ) => ReturnType
     }
   }
 }
@@ -86,24 +91,19 @@ const useContentEditor = (
   data: AIBlockData | undefined,
   isLoading: boolean,
   blockId: string,
-  updateAttributes: (attrs: { data: AIBlockData }) => void
+  updateAttributes: (attrs: { data: AIBlockData }) => void,
+  config: AIBlockConfigWithLabels
 ): Editor | null => {
-  const extensions = useMemo(
-    () => [
-      StarterKitExtension,
-      UnderlineExtension,
-      TextStyleExtension,
-      ColorExtension,
-      TypographyExtension,
-      TaskListExtension,
-      CustomTaskExtension,
-      HighlightExtension,
-      TextAlignExtension,
-      LinkExtension,
-      PersistSelection,
-    ],
-    []
-  )
+  const extensions = useMemo(() => {
+    return createAIBlockEditorExtensions(
+      config.placeholder || "",
+      config.toolbarLabels,
+      config.slashCommandGroupLabels,
+      config.moodTrackerLabels,
+      config.liveCompanionLabels,
+      config.transcriptLabels
+    )
+  }, [config])
 
   // Add a debounce ref to prevent frequent updates
   const updateTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -238,7 +238,7 @@ const useDisplayInfo = (
 
     // Only fall back to searching in config if no saved data exists
     if (selectedAction) {
-      const selectedButton = config.buttons.find(
+      const selectedButton = config.buttons?.find(
         (button: AIButton) => button.type === selectedAction
       )
 
@@ -279,10 +279,7 @@ const AIBlockHeader: React.FC<AIBlockHeaderProps> = ({
     className="flex flex-row items-center justify-between gap-2"
     layout
   >
-    <div
-      className={`flex flex-row items-center gap-2 ${canCollapse ? "cursor-pointer" : ""}`}
-      onClick={canCollapse ? onToggleCollapse : undefined}
-    >
+    <div className="flex flex-row items-center gap-2">
       <motion.span
         className="flex items-center text-lg"
         animate={{
@@ -340,7 +337,7 @@ const AIButtonsSection: React.FC<AIButtonsSectionProps> = ({
         exit={{ opacity: 0, height: 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        {config.buttons.map((button: AIButton, index: number) => (
+        {config.buttons?.map((button: AIButton, index: number) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, x: -20 }}
@@ -433,8 +430,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 }) => {
   const data = node.attrs.data as AIBlockData
   const config =
-    (extension.options.currentConfig as AIBlockConfig) ||
-    (node.attrs.config as AIBlockConfig)
+    (extension.options.currentConfig as AIBlockConfigWithLabels) ||
+    (node.attrs.config as AIBlockConfigWithLabels)
 
   const blockId = useRef(Math.random().toString(36).substr(2, 9)).current
   const { isLoading, setIsLoading, isCollapsed, setIsCollapsed } =
@@ -448,7 +445,8 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
     data,
     isLoading,
     blockId,
-    updateAttributes
+    updateAttributes,
+    config
   )
 
   // Ensure selectedTitle and selectedEmoji are persisted for copy/paste
@@ -476,7 +474,7 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
 
   const handleClick = useCallback(
     async (type: string) => {
-      const selectedButton = config.buttons.find(
+      const selectedButton = config.buttons?.find(
         (button: AIButton) => button.type === type
       )
 
@@ -576,6 +574,9 @@ export const AIBlockView: React.FC<NodeViewProps> = ({
   const shouldShowButtons = !isLoading && !hasSelectedAction && !hasContent
 
   if (!data || !config) return null
+
+  // Don't render the block if there are no buttons available
+  if (!config.buttons || config.buttons.length === 0) return null
 
   return (
     <NodeViewWrapper contentEditable={false}>

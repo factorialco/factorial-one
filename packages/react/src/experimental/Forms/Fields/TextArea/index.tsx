@@ -18,6 +18,9 @@ export type TextareaProps = Pick<
   | "hideLabel"
   | "maxLength"
   | "clearable"
+  | "onBlur"
+  | "onFocus"
+  | "name"
 >
 
 const Textarea: React.FC<TextareaProps> = Component(

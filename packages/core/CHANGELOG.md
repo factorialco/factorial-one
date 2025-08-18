@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.23.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.22.2...factorial-one-core-v1.23.0) (2025-08-11)
+
+
+### Features
+
+* add IT Management module ([#2393](https://github.com/factorialco/factorial-one/issues/2393)) ([16f1f32](https://github.com/factorialco/factorial-one/commit/16f1f32e2e8ff987e77cf2e29eb52b31d5783404))
+
+## [1.22.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.22.1...factorial-one-core-v1.22.2) (2025-08-05)
+
+
+### Bug Fixes
+
+* **Colors:** Color tokens audit ([#2366](https://github.com/factorialco/factorial-one/issues/2366)) ([74c90df](https://github.com/factorialco/factorial-one/commit/74c90df7d88cb776b313a3766fb0553b5ba48a79))
+
+## [1.22.1](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.22.0...factorial-one-core-v1.22.1) (2025-08-05)
+
+
+### Bug Fixes
+
+* add support to show warning message for bulk actions in data collection ([#2368](https://github.com/factorialco/factorial-one/issues/2368)) ([2c1b3ee](https://github.com/factorialco/factorial-one/commit/2c1b3eedf9ddac270428e4d0a537cb377213be2e))
+
+## [1.22.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.21.0...factorial-one-core-v1.22.0) (2025-07-31)
+
+
+### Features
+
+* create AiChat component ([#2259](https://github.com/factorialco/factorial-one/issues/2259)) ([58a1f36](https://github.com/factorialco/factorial-one/commit/58a1f362f73b97090367037ab37eaac7afd6ec2f))
+
+## [1.21.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.20.2...factorial-one-core-v1.21.0) (2025-07-29)
+
+
+### Features
+
+* **Icons:** thumbs up and down icons ([#2317](https://github.com/factorialco/factorial-one/issues/2317)) ([6b6cc1f](https://github.com/factorialco/factorial-one/commit/6b6cc1f8d7c3ef2ac3253020dc75a69b439a9c79))
+
+## [1.20.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.20.1...factorial-one-core-v1.20.2) (2025-07-22)
+
+
+### Bug Fixes
+
+* pulse avatar icon color ([#2282](https://github.com/factorialco/factorial-one/issues/2282)) ([5fdd117](https://github.com/factorialco/factorial-one/commit/5fdd117b2b2c22eb9b2e148a1101c46e3d8208f8))
+
+## [1.20.1](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.20.0...factorial-one-core-v1.20.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* input type extends string ([#2265](https://github.com/factorialco/factorial-one/issues/2265)) ([ff995c6](https://github.com/factorialco/factorial-one/commit/ff995c6f847c5fa172874fdcffb72e697353a5e8))
+
 ## [1.20.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.19.0...factorial-one-core-v1.20.0) (2025-07-10)
 
 

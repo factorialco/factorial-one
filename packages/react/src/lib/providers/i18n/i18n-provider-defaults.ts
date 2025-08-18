@@ -23,6 +23,7 @@ export const defaultTranslations = {
     save: "Save",
     cancel: "Cancel",
     copy: "Copy",
+    close: "Close",
     showAll: "Show all",
     showLess: "Show less",
     skipToContent: "Skip to content",
@@ -33,6 +34,10 @@ export const defaultTranslations = {
     more: "More",
     moveUp: "Move up",
     moveDown: "Move down",
+    thumbsUp: "Like",
+    thumbsDown: "Dislike",
+    other: "Other actions",
+    toggle: "Toggle",
   },
   status: {
     selected: {
@@ -169,6 +174,10 @@ export const defaultTranslations = {
     remove: "Remove favorite",
   },
   notifications: "Notifications",
+  ai: {
+    openChat: "Open Chat",
+    description: "Chat with AI",
+  },
 } as const
 
 type TranslationShape<T> = {
