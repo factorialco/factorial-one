@@ -10,7 +10,7 @@ import {
   RecordType,
   SortingsDefinition,
 } from "@/hooks/datasource"
-import { DataCollectionSource } from "./exports"
+import { DataCollectionSource } from "./hooks/useDataCollectionSource/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SummariesDefinition } from "./summary"

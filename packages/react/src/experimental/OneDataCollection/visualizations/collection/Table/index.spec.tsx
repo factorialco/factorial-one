@@ -1,6 +1,7 @@
-import { DataCollectionSource } from "@/experimental/OneDataCollection/exports"
 import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData/useDataCollectionData"
+import { DataCollectionSource } from "@/experimental/OneDataCollection/hooks/useDataCollectionSource/types"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import type { GroupingDefinition, SortingsDefinition } from "@/hooks/datasource"
 import {
   BaseFetchOptions,
   FiltersDefinition,
@@ -23,8 +24,14 @@ import {
 } from "../../../../../lib/providers/i18n"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SummariesDefinition } from "../../../summary"
-import type { GroupingDefinition, SortingsDefinition } from "../../../types"
+import { TextCell } from "../../property/types/text"
 import { TableCollection } from "./index"
+
+vi.mock("../../property", () => ({
+  propertyRenderers: {
+    text: TextCell,
+  },
+}))
 
 type TestFilters = FiltersDefinition
 type TestNavigationFilters = NavigationFiltersDefinition
