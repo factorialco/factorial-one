@@ -1,4 +1,4 @@
-import { Button } from "@/factorial-one"
+import { Button } from "@/components/Actions/Button"
 import { Plus } from "@/icons/app"
 import { cn } from "../../../../lib/utils"
 import { focusNextFocusable, focusPreviousFocusable } from "../ListItem"

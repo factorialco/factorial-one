@@ -1,7 +1,6 @@
-import { Icon } from "../../../../../../components/Utilities/Icon"
-import { IconType } from "../../../../../../factorial-one.ts"
-import { DropdownDefault } from "../../../../../../icons/app"
-import { cn } from "../../../../../../lib/utils"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { DropdownDefault } from "@/icons/app"
+import { cn } from "@/lib/utils"
 
 function Selector({
   text,

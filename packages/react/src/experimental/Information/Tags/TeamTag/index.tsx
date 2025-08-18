@@ -1,5 +1,5 @@
 import { forwardRef } from "react"
-import { ImageTag } from "../ImageTag"
+import { AvatarTag } from "../AvatarTag"
 
 type Props = {
   teamName: string
@@ -10,9 +10,13 @@ type Props = {
 export const TeamTag = forwardRef<HTMLDivElement, Props>(
   ({ teamName, teamImageUrl, onClick }, ref) => {
     return (
-      <ImageTag
+      <AvatarTag
         ref={ref}
-        imageUrl={teamImageUrl}
+        avatar={{
+          type: "team",
+          name: teamName,
+          src: teamImageUrl,
+        }}
         text={teamName}
         onClick={onClick}
       />

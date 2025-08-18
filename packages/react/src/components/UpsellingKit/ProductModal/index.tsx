@@ -100,6 +100,7 @@ export function ProductModal({
         onClose={handleClose}
         title={modalTitle}
         icon={modalIcon}
+        portalContainer={portalContainer}
       >
         <div className="pb-4 pl-4">
           <ProductBlankslate

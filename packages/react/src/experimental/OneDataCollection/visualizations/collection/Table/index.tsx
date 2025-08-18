@@ -1,4 +1,4 @@
-import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { F0Checkbox } from "@/components/F0Checkbox"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
@@ -294,7 +294,7 @@ export const TableCollection = <
                 align="right"
               >
                 <div className="flex w-full items-center justify-end">
-                  <Checkbox
+                  <F0Checkbox
                     checked={allSelectedStatus.checked}
                     indeterminate={allSelectedStatus.indeterminate}
                     onCheckedChange={handleSelectAll}
