@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { OneEllipsis } from "@/components/OneEllipsis"
-import { Badge } from "@/experimental/exports"
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { Badge } from "@/experimental/Information/Badge"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { Bell as BellIcon, Circle as CircleIcon } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"

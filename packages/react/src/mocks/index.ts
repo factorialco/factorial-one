@@ -203,6 +203,8 @@ export type MockUser = {
   department: (typeof DEPARTMENTS_MOCK)[number]
   status: string
   isStarred: boolean
+  manager: string
+  image: string
   salary: number | undefined
   joinedAt: Date
   canBeSelected: boolean
@@ -227,6 +229,8 @@ export const generateMockUsers = (count: number): MockUser[] => {
       department,
       status: getMockValue(STATUS_MOCK, index),
       isStarred: index % 3 === 0,
+      manager: getMockValue(MANAGERS_MOCK, index),
+      image: getMockValue(IMAGE_MOCK, index),
       href: `/users/user-${index + 1}`,
       salary: getMockValue(SALARY_MOCK, index),
       joinedAt: getMockValue(START_DATE_MOCK, index),
@@ -239,3 +243,21 @@ export const generateMockUsers = (count: number): MockUser[] => {
     }
   })
 }
+export const IMAGE_MOCK = [
+  "/avatars/person01.jpg",
+  "/avatars/person02.jpg",
+  "/avatars/person03.jpg",
+  "/avatars/person04.jpg",
+  "/avatars/person05.jpg",
+  "/avatars/person06.jpg",
+  "/avatars/person07.jpg",
+  "/avatars/person08.jpg",
+]
+
+export const MANAGERS_MOCK = [
+  "John Doe",
+  "Jane Smith",
+  "Michael Brown",
+  "Emily Johnson",
+  "David Lee",
+]

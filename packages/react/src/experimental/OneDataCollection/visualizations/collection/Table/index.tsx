@@ -1,4 +1,4 @@
-import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { F0Checkbox } from "@/components/F0Checkbox"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import { PagesPagination } from "@/experimental/OneDataCollection/components/PagesPagination"
 import {
@@ -289,7 +289,7 @@ export const TableCollection = <
   const checkColumnWidth = source.selectable ? 52 : 0
 
   return (
-    <div className="flex h-full flex-col gap-4">
+    <div className="flex h-full min-h-0 flex-col gap-4">
       <OneTable loading={isLoading}>
         <TableHeader sticky={true}>
           <TableRow>
@@ -300,7 +300,7 @@ export const TableCollection = <
                 align="right"
               >
                 <div className="flex w-full items-center justify-end">
-                  <Checkbox
+                  <F0Checkbox
                     checked={allSelectedStatus.checked}
                     indeterminate={allSelectedStatus.indeterminate}
                     onCheckedChange={handleSelectAll}
@@ -374,7 +374,7 @@ export const TableCollection = <
                       }
                     >
                       <GroupHeader
-                        className="px-4"
+                        className="px-3"
                         selectable={!!source.selectable}
                         select={statusToChecked(
                           groupAllSelectedStatus[group.key]

@@ -15,7 +15,7 @@ const ScrollShadow = ({ position }: { position: "top" | "bottom" }) => (
     exit={{ opacity: 0 }}
     transition={{ duration: 0.2, ease: "easeOut" }}
     className={cn(
-      "pointer-events-none absolute inset-x-0 z-10 h-3 after:absolute after:inset-x-0 after:h-px after:bg-f1-background-bold after:opacity-[0.04] after:content-['']",
+      "pointer-events-none absolute inset-x-0 z-10 h-3 after:absolute after:inset-x-0 after:h-px after:bg-f1-background-inverse after:opacity-[0.04] after:content-['']",
       position === "top"
         ? [
             "top-0",

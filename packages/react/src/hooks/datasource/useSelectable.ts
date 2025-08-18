@@ -366,10 +366,6 @@ export function useSelectable<
 
   useEffect(() => {
     // Notify the parent component about the selected items
-    const totalItems = paginationInfo?.total ?? (data.records?.length || 0)
-
-    const selectedItemsCount = totalItems - unselectedCount
-
     onSelectItems?.(
       {
         allSelected:
@@ -386,7 +382,7 @@ export function useSelectable<
           ])
         ),
         filters: source.currentFilters || {},
-        selectedCount: selectedItemsCount,
+        selectedCount,
       },
       clearSelectedItems
     )

@@ -12,11 +12,19 @@ type RichTextDisplayHandle = HTMLDivElement
 
 const RichTextDisplay = forwardRef<RichTextDisplayHandle, RichTextDisplayProps>(
   function RichTextDisplay({ content, className, ...props }, ref) {
+    const isHtml = /<[^>]*>/.test(content)
+
     return (
       <div
         ref={ref}
-        className={cn("rich-text-display-container", className)}
-        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
+        className={cn(
+          "rich-text-display-container",
+          !isHtml && "whitespace-pre-wrap",
+          className
+        )}
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(content),
+        }}
         {...props}
       />
     )

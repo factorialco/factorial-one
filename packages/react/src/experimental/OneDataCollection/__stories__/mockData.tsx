@@ -12,7 +12,10 @@ import {
   OnSelectItemsCallback,
   PaginatedResponse,
   PaginationType,
+  PrimaryActionsDefinition,
   RecordType,
+  SecondaryActionsDefinition,
+  SecondaryActionsItemDefinition,
   SelectedItemsState,
   SortingsStateMultiple,
   useDataCollectionSource,
@@ -30,8 +33,20 @@ import {
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker"
+import {
+  Ai,
+  Briefcase,
+  Building,
+  CheckCircle,
+  Delete,
+  Download,
+  Envelope,
+  Pencil,
+  Person,
+  Star,
+  Upload,
+} from "@/icons/app"
 import { DEPARTMENTS_MOCK } from "@/mocks"
-import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
@@ -194,18 +209,68 @@ export const getMockVisualizations = (options?: {
     type: "card",
     options: {
       title: (item) => item.name,
+      description: (item) => item.role,
+      avatar: (item) => ({
+        type: "person",
+        firstName: item.name.split(" ")[0],
+        lastName: item.name.split(" ")[1],
+      }),
+      image: (item) => item.image,
       cardProperties: [
         {
           label: "Email",
+          icon: Envelope,
           render: (item) => item.email,
         },
         {
           label: "Role",
+          icon: Briefcase,
           render: (item) => item.role,
         },
         {
           label: "Department",
+          icon: Building,
           render: (item) => item.department,
+        },
+        {
+          label: "Teammates",
+          icon: Person,
+          render: (item) => ({
+            type: "avatarList",
+            value: {
+              avatarList: [
+                {
+                  type: "person",
+                  firstName: item.name,
+                  lastName: "Doe",
+                  src: "/avatars/person01.jpg",
+                },
+                {
+                  type: "person",
+                  firstName: "Dani",
+                  lastName: "Moreno",
+                  src: "/avatars/person04.jpg",
+                },
+                {
+                  type: "person",
+                  firstName: "Sergio",
+                  lastName: "Carracedo",
+                  src: "/avatars/person05.jpg",
+                },
+              ],
+            },
+          }),
+        },
+        {
+          label: "Status",
+          icon: CheckCircle,
+          render: (item) => ({
+            type: "status",
+            value: {
+              status: item.status === "active" ? "positive" : "critical",
+              label: item.status.charAt(0).toUpperCase() + item.status.slice(1),
+            },
+          }),
         },
       ],
     },
@@ -507,6 +572,8 @@ export const ExampleComponent = ({
   visualizations,
   fullHeight,
   dataAdapter,
+  primaryActions,
+  secondaryActions,
 }: {
   useObservable?: boolean
   usePresets?: boolean
@@ -532,10 +599,12 @@ export const ExampleComponent = ({
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
-  ) => {
-    primary: BulkActionDefinition[]
-    secondary?: BulkActionDefinition[]
-  }
+  ) =>
+    | {
+        primary?: BulkActionDefinition[]
+        secondary?: BulkActionDefinition[]
+      }
+    | { warningMessage: string }
   onSelectItems?: OnSelectItemsCallback<MockUser, FiltersType>
   onBulkAction?: OnBulkActionCallback<MockUser, FiltersType>
   navigationFilters?: NavigationFiltersDefinition
@@ -543,6 +612,8 @@ export const ExampleComponent = ({
   grouping?: GroupingDefinition<MockUser> | undefined
   currentGrouping?: GroupingState<MockUser, GroupingDefinition<MockUser>>
   paginationType?: PaginationType
+  primaryActions?: PrimaryActionsDefinition
+  secondaryActions?: SecondaryActionsDefinition
 }) => {
   const mockVisualizations = getMockVisualizations({
     frozenColumns,
@@ -555,6 +626,8 @@ export const ExampleComponent = ({
     sortings,
     grouping,
     currentGrouping: currentGrouping,
+    primaryActions,
+    secondaryActions,
     itemActions: (item) => [
       {
         label: "Edit",
@@ -1006,4 +1079,32 @@ export function createDataAdapter<
   }
 
   return adapter
+}
+
+// Example of a comprehensive actions definition with various types of actions
+export const buildSecondaryActions = (): SecondaryActionsItemDefinition[] => {
+  return [
+    // Action with description
+    {
+      label: "Edit",
+      icon: Pencil,
+      onClick: () => console.log(`Another user action`),
+      description: "User actions",
+    },
+
+    // Separator between action groups
+    { type: "separator" },
+    {
+      label: "Export",
+      icon: Upload,
+      onClick: () => console.log(`Downloading users`),
+      description: "Download users",
+    },
+    {
+      label: "Import",
+      icon: Download,
+      onClick: () => console.log(`Importing users`),
+      description: "Import users",
+    },
+  ]
 }

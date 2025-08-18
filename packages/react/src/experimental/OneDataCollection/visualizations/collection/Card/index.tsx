@@ -1,5 +1,8 @@
-import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
-import { OneCard } from "@/experimental/OneCard"
+import { F0Card } from "@/components/F0Card"
+import { CardAvatarVariant } from "@/components/F0Card/components/CardAvatar"
+import { cardPropertyRenderers } from "@/components/F0Card/components/CardMetadata"
+import { CardMetadata, CardMetadataProperty } from "@/components/F0Card/types"
+import { IconType } from "@/components/Utilities/Icon"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData"
 import { DataCollectionSource } from "@/experimental/OneDataCollection/hooks/useDataCollectionSource"
@@ -7,6 +10,7 @@ import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/na
 import { GroupingDefinition, RecordType } from "@/hooks/datasource"
 import { getAnimationVariants, useGroups } from "@/hooks/datasource/useGroups"
 import { useSelectable } from "@/hooks/datasource/useSelectable"
+import { Placeholder } from "@/icons/app"
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "motion/react"
@@ -15,11 +19,13 @@ import type { FiltersDefinition } from "../../../../../components/OneFilterPicke
 import { SortingsDefinition } from "../../../../../hooks/datasource/types/sortings.typings"
 import { PagesPagination } from "../../../components/PagesPagination"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { PropertyDefinition, renderProperty } from "../../../property-render"
+import { PropertyDefinition } from "../../../property-render"
 import { SummariesDefinition } from "../../../summary"
 import { CollectionProps } from "../../../types"
 
-export type CardPropertyDefinition<T> = PropertyDefinition<T>
+export type CardPropertyDefinition<T> = PropertyDefinition<T> & {
+  icon?: IconType
+}
 
 export type CardVisualizationOptions<
   T,
@@ -29,7 +35,9 @@ export type CardVisualizationOptions<
   cardProperties: ReadonlyArray<CardPropertyDefinition<T>>
   title: (record: T) => string
   description?: (record: T) => string
-  avatar?: (record: T) => AvatarVariant
+  avatar?: (record: T) => CardAvatarVariant
+  image?: (record: T) => string
+  compact?: boolean
 }
 
 // Find the next number that is divisible by 2, 3, and 4
@@ -41,7 +49,7 @@ const findNextMultiple = (n: number): number => {
 
 const CardGrid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {children}
     </div>
   )
@@ -98,7 +106,9 @@ type GroupCardsProps<
   cardProperties: ReadonlyArray<CardPropertyDefinition<Record>>
   title: (record: Record) => string
   description?: (record: Record) => string
-  avatar?: (record: Record) => AvatarVariant
+  avatar?: (record: Record) => CardAvatarVariant
+  image?: (record: Record) => string
+  compact?: boolean
 }
 
 const GroupCards = <
@@ -118,6 +128,8 @@ const GroupCards = <
   title,
   description,
   avatar,
+  image,
+  compact,
 }: GroupCardsProps<
   Record,
   Filters,
@@ -127,11 +139,53 @@ const GroupCards = <
   NavigationFilters,
   Grouping
 >) => {
-  const renderValue = (
+  function getMetadata(
     item: Record,
-    property: CardPropertyDefinition<Record>
-  ) => {
-    return renderProperty(item, property, "card")
+    properties: ReadonlyArray<CardPropertyDefinition<Record>>
+  ): Array<CardMetadata> {
+    return properties
+      .map((property) => {
+        const result = property.render(item)
+        if (result === undefined) return null
+
+        const cardProperty = convertToCardMetadataProperty(result)
+        if (!cardProperty) return null
+
+        return {
+          icon: property.icon ?? Placeholder,
+          property: cardProperty,
+        }
+      })
+      .filter((item): item is CardMetadata => item !== null)
+  }
+
+  function convertToCardMetadataProperty(
+    value: unknown
+  ): CardMetadataProperty | null {
+    if (typeof value === "string") {
+      return { type: "text", value }
+    }
+
+    if (typeof value === "number") {
+      return { type: "number", value }
+    }
+
+    if (isCardMetadataProperty(value)) {
+      return value
+    }
+
+    return null
+  }
+
+  function isCardMetadataProperty(
+    value: unknown
+  ): value is CardMetadataProperty {
+    if (typeof value !== "object" || value === null || !("type" in value)) {
+      return false
+    }
+
+    const typeValue = (value as { [key: string]: unknown }).type
+    return typeof typeValue === "string" && typeValue in cardPropertyRenderers
   }
 
   return (
@@ -164,6 +218,8 @@ const GroupCards = <
 
         const selectable = !!source.selectable && id !== undefined
 
+        const metadata = getMetadata(item, cardProperties)
+
         return (
           <motion.div
             key={index}
@@ -177,12 +233,13 @@ const GroupCards = <
               duration: 0.3,
             })}
           >
-            <OneCard
+            <F0Card
               key={index}
               title={title(item)}
               selectable={selectable}
               description={description ? description(item) : undefined}
               avatar={avatar ? avatar(item) : undefined}
+              image={image ? image(item) : undefined}
               selected={selectable && selectedItems.has(id)}
               onSelect={(selected) => handleSelectItemChange(item, selected)}
               secondaryActions={secondaryActions}
@@ -190,18 +247,9 @@ const GroupCards = <
               otherActions={otherActions}
               onClick={itemOnClick}
               link={itemHref}
-            >
-              <div className="flex flex-col gap-2">
-                {cardProperties.map((property) => (
-                  <div key={String(property.label)}>
-                    <div className="text-muted-foreground text-sm font-medium">
-                      {property.label}
-                    </div>
-                    <div className="text-sm">{renderValue(item, property)}</div>
-                  </div>
-                ))}
-              </div>
-            </OneCard>
+              compact={compact ? compact : false}
+              metadata={metadata}
+            />
           </motion.div>
         )
       })}
@@ -222,6 +270,8 @@ export const CardCollection = <
   title,
   description,
   avatar,
+  image,
+  compact,
   source,
   onSelectItems,
   onLoadData,
@@ -354,7 +404,7 @@ export const CardCollection = <
                       onSelectChange={(checked) =>
                         handleSelectGroupChange(group, checked)
                       }
-                      className="px-6 pb-2 pt-4"
+                      className="px-4 pb-2 pt-4"
                     />
                     <AnimatePresence>
                       {(!collapsible || openGroups[group.key]) && (
@@ -368,6 +418,8 @@ export const CardCollection = <
                           cardProperties={cardProperties}
                           description={description}
                           avatar={avatar}
+                          image={image}
+                          compact={compact}
                         />
                       )}
                     </AnimatePresence>
@@ -385,6 +437,8 @@ export const CardCollection = <
                 cardProperties={cardProperties}
                 description={description}
                 avatar={avatar}
+                image={image}
+                compact={compact}
               />
             )}
           </>

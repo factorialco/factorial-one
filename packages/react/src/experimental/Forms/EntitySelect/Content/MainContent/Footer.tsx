@@ -1,5 +1,5 @@
+import { Button } from "@/components/Actions/Button"
 import { OneDropdownButton } from "@/components/Actions/OneDropdownButton"
-import { Button } from "@/factorial-one"
 import { Action } from "../../../Fields/Select/SelectBottomActions"
 
 interface Props {

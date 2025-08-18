@@ -1,3 +1,4 @@
+import { Settings } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { TagList } from "./index"
 
@@ -129,6 +130,20 @@ const balanceTags = [
   },
 ]
 
+// Sample balance tags
+const rawTags = [
+  {
+    icon: Settings,
+    text: "Settings",
+  },
+  {
+    text: "Profile",
+  },
+  {
+    text: "Notifications",
+  },
+]
+
 /**
  * The TagList component displays a collection of tags of a single type.
  *
@@ -205,6 +220,13 @@ export const BalanceTags: Story = {
   args: {
     type: "balance",
     tags: balanceTags,
+  },
+}
+
+export const RawTags: Story = {
+  args: {
+    type: "raw",
+    tags: rawTags,
   },
 }
 

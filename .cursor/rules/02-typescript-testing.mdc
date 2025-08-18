@@ -1,15 +1,7 @@
 ---
-description: TypeScript Usage and Testing Standards
-globs:
-alwaysApply: false
----
-
----
-
-description: "Factorial One DS - TypeScript Usage and Testing Standards"
+description: "F0 - TypeScript Usage and Testing Standards"
 globs: "packages/react/**/\*.ts,packages/react/**/\*.tsx"
 alwaysApply: false
-
 ---
 
 # TypeScript Usage
@@ -29,6 +21,10 @@ alwaysApply: false
 - Test component variants and edge cases.
 - Avoid excessive mocking; test behavior, not internals.
 - Always run tests to confirm changes.
+  <<<<<<< HEAD
+  =======
+- <IMPORTANT> When you are using `@testing-library/react` don't use `render`, use `zeroRender` from `@/testing/test-utils.tsx` instead as this provides mocks for the context providers.</IMPORTANT>
+  > > > > > > > feat/selelect-use-datasource
 - Do not import `@testing-library/jest-dom`
 - Import vitest methods like: describe, it, expect, etc. explicitily
 - name test files with `.test.tsx` or `.test.ts`, never with `.specs.ts`

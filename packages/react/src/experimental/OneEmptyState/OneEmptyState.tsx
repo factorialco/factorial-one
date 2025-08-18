@@ -13,7 +13,7 @@ export function OneEmptyState({
 }: Types.OneEmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-5 p-8">
-      {variant === "default" && <EmojiAvatar emoji={emoji!} size="lg" />}
+      {variant === "default" && <EmojiAvatar emoji={emoji!} size="large" />}
       {variant !== "default" && <AlertAvatar type={variant} size="lg" />}
       <div className="flex flex-col items-center justify-center gap-0.5">
         <p className="text-center text-lg font-medium text-f1-foreground">

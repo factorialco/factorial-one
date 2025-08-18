@@ -8,12 +8,12 @@ const meta: Meta<typeof EmojiAvatar> = {
   argTypes: {
     size: {
       control: "select",
-      options: ["sm", "md", "lg"],
+      options: ["small", "medium", "large"],
     },
   },
   args: {
     emoji: "🍑",
-    size: "md",
+    size: "medium",
   },
   parameters: {
     a11y: {

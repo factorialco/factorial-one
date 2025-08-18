@@ -5,7 +5,7 @@ import { cn, focusRing } from "../lib/utils"
 
 const badgeVariants = cva({
   base: cn(
-    "focus:ring-ring text inline-flex items-center rounded-full border border-solid px-2.5 py-0.5 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2",
+    "text inline-flex items-center rounded-full border border-solid px-2.5 py-0.5 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-f1-special-ring focus:ring-offset-2",
     focusRing()
   ),
   variants: {

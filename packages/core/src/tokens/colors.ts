@@ -108,10 +108,9 @@ export const baseColors = {
     60: "258 56% 56%",
     70: "258 43% 46%",
   },
-  special: {
-    highlight: "348 80% 50%",
-  },
-}
+} as const
+
+export type BaseColor = keyof typeof baseColors
 
 export const f1Colors = {
   foreground: {
@@ -144,17 +143,15 @@ export const f1Colors = {
     },
     bold: "hsl(var(--neutral-90))",
     accent: {
-      DEFAULT: "hsl(var(--accent-50) / 0.1)",
+      DEFAULT: "hsl(var(--accent-50) / 0.05)",
       bold: {
         DEFAULT: "hsl(var(--accent-50))",
         hover: "hsl(var(--accent-60))",
       },
-      alpha5: "hsl(var(--accent-50) / 0.05)",
     },
     promote: {
       DEFAULT: "hsl(var(--promote-50) / 0.3)",
       hover: "hsl(var(--promote-50) / 0.4)",
-      alpha5: "hsl(var(--promote-50) / 0.05)",
     },
     critical: {
       DEFAULT: "hsl(var(--critical-50) / 0.1)",
@@ -175,6 +172,7 @@ export const f1Colors = {
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.1)",
       secondary: "hsl(var(--selected-50) / 0.05)",
+      hover: "hsl(var(--selected-50) / 0.2)",
       bold: {
         DEFAULT: "hsl(var(--selected-60))",
         hover: "hsl(var(--selected-70))",
@@ -192,22 +190,27 @@ export const f1Colors = {
     bold: "hsl(var(--neutral-100))",
     promote: {
       DEFAULT: "hsl(var(--promote-50) / 0.4)",
-      alpha30: "hsl(var(--promote-50) / 0.3)",
     },
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.4)",
       bold: "hsl(var(--selected-50))",
     },
-    accent: {
-      alpha20: "hsl(var(--accent-50) / 0.2)",
-    },
     critical: {
       DEFAULT: "hsl(var(--critical-50) / 0.1)",
       bold: "hsl(var(--critical-50))",
     },
-    warning: "hsl(var(--warning-50) / 0.1)",
-    info: "hsl(var(--info-50) / 0.1)",
-    positive: "hsl(var(--positive-50) / 0.1)",
+    warning: {
+      DEFAULT: "hsl(var(--warning-50) / 0.1)",
+      bold: "hsl(var(--warning-50))",
+    },
+    info: {
+      DEFAULT: "hsl(var(--info-50) / 0.1)",
+      bold: "hsl(var(--info-50))",
+    },
+    positive: {
+      DEFAULT: "hsl(var(--positive-50) / 0.1)",
+      bold: "hsl(var(--positive-50))",
+    },
   },
   icon: {
     DEFAULT: "hsl(var(--neutral-solid-50))",
@@ -224,12 +227,22 @@ export const f1Colors = {
     positive: "hsl(var(--positive-50))",
     promote: "hsl(var(--promote-50))",
     selected: {
-      DEFAULT: "hsl(var(--selected-50))",
-      hover: "hsl(var(--selected-60))",
+      DEFAULT: "hsl(var(--selected-60))",
+      hover: "hsl(var(--selected-70))",
+    },
+    mood: {
+      "super-negative": "hsl(var(--mood-super-negative))",
+      negative: "hsl(var(--mood-negative))",
+      neutral: "hsl(var(--mood-neutral))",
+      positive: "hsl(var(--mood-positive))",
+      "super-positive": "hsl(var(--mood-super-positive))",
     },
   },
-  ring: "hsl(var(--ring))",
-  link: "hsl(var(--link))",
-  page: "hsl(var(--page))",
-  "special-highlight": "hsl(var(--special-highlight))",
-}
+  special: {
+    ring: "hsl(var(--ring))",
+    page: "hsl(var(--page))",
+    highlight: "hsl(var(--accent-50))",
+  },
+} as const
+
+export type F1Color = keyof typeof f1Colors
