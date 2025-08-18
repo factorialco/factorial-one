@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.156.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.155.0...factorial-one-react-v1.156.0) (2025-08-18)
+
+
+### Features
+
+* file and folder cell types ([#2313](https://github.com/factorialco/factorial-one/issues/2313)) ([5fe083f](https://github.com/factorialco/factorial-one/commit/5fe083f58b8cde747ec22d167fb1ef6714d588e6))
+
 ## [1.155.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.154.0...factorial-one-react-v1.155.0) (2025-08-12)
 
 
