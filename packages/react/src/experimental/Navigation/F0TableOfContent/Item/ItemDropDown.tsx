@@ -1,6 +1,6 @@
-import { Button } from "../../../../components/Actions/Button"
-import { Ellipsis } from "../../../../icons/app"
-import { Dropdown, DropdownItem } from "../../../Navigation/Dropdown"
+import { Button } from "@/components/Actions/Button"
+import { Ellipsis } from "@/icons/app"
+import { Dropdown, DropdownItem } from "../../Dropdown"
 
 interface ItemDropDownProps {
   otherActions: DropdownItem[]
