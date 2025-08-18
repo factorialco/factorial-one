@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react"
-import { StatusTag } from "../../experimental/Information/Tags/exports"
+import { StatusTag } from "../../experimental/Information/Tags/StatusTag"
 
 interface DoDontsProps {
   do: {
