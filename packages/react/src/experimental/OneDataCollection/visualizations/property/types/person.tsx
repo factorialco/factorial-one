@@ -18,15 +18,15 @@ export const PersonCell = (args: PersonCellValue) => (
     <Avatar
       avatar={{
         type: "person",
-        firstName: args.firstName,
-        lastName: args.lastName,
+        firstName: args.firstName.toString(),
+        lastName: args.lastName.toString(),
         src: args.src,
         badge: args.badge,
       }}
       size="xsmall"
     />
     <span className="text-f1-foreground">
-      {args.firstName} {args.lastName}
+      {args.firstName.toString()} {args.lastName.toString()}
     </span>
   </div>
 )

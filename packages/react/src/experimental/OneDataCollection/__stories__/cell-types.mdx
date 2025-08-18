@@ -106,6 +106,8 @@ render: (item) => ({
 
 Renders a number (right align on table visualizacion)
 
+> For money use the `amount` type instead
+
 #### Value type
 
 ```
@@ -114,6 +116,9 @@ type value = number | undefined
 type value = {
     number: number | undefined
     placeholder?: string
+    units?: string
+    unitsPosition?: 'left' | 'right' // default is right
+    decimalPlaces?: number | undefined // if undefined, the number will be rendered as is, if defined, the number will be rendered with the number of decimal places
 }
 ```
 
@@ -141,6 +146,41 @@ render: (item) => ({
     type: 'number'
     value: {
       number: 1234
+    }
+})
+`,
+  }}
+/>
+
+#### With decimal places
+
+<Canvas
+  of={CellTypesDataCollectionStories.NumberValueInputAsObjectWithDecimals}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'number'
+    value: {
+      number: 1234.56789
+      decimalPlaces: 2
+    }
+})
+`,
+  }}
+/>
+
+#### With units
+
+<Canvas
+  of={CellTypesDataCollectionStories.NumberValueInputAsObjectWithUnits}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'number'
+    value: {
+      number: 1234
+      units: 'km/h',
+      decimalPlaces: 2,
     }
 })
 `,
@@ -234,8 +274,15 @@ Renders a monetary number (right align on table visualizacion)
 type value = number | undefined
 // or
 type value = {
-    amount: Date | undefined
+    amount: number | undefined
     placeholder?: string
+    currency?: CurrencyDef
+}
+
+type CurrencyDef = {
+  symbol: string
+  symbolPosition?: "left" | "right"
+  decimalPlaces: number
 }
 ```
 
@@ -266,6 +313,32 @@ render: (item) => ({
 `,
   }}
 />
+
+#### AmountWithCurrency
+
+<Canvas
+
+of={CellTypesDataCollectionStories.AmountWithCurrency} source={{
+    code: `
+render: (item) => ({
+    type: 'amount'
+    value: { amount: 1234.56789, currency: { symbol: '$', symbolPosition: 'left', decimalPlaces: 2 } },
+  }
+})
+`,
+  }} />
+
+  <Canvas
+
+of={CellTypesDataCollectionStories.AmountWithCurrencyEuro} source={{
+    code: `
+render: (item) => ({
+    type: 'amount'
+    value: { amount: 1234.56789, currency: { symbol: 'EUR', decimalPlaces: 2 } },
+  }
+})
+`,
+  }} />
 
 #### With placeholder
 
@@ -601,6 +674,70 @@ render: (item) => ({
         icon: Placeholder,
         label: 'Icon'
     }
+})
+`,
+  }}
+/>
+
+### file
+
+Renders a file avatar (for file type) and file name
+
+#### Value type
+
+```
+type FileDef = {
+  name: string; // file name
+  type: string; // mime type
+}
+
+type value = { file: File } | { file: FileDef }
+```
+
+<Canvas
+  of={CellTypesDataCollectionStories.FileType}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'file',
+    value: {
+        file: new File(['file'], 'file.pdf', { type: 'application/pdf' })
+        // or 
+        file: {
+            name: 'file.pdf',
+            type: 'application/pdf',
+            size: 1000
+        }
+    }
+})
+`,
+  }}
+/>
+
+### folder
+
+Renders a folder with a name
+
+#### Value type
+
+```
+type value = { name: string }
+```
+
+<Canvas
+  of={CellTypesDataCollectionStories.FolderType}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'file',
+    // With File
+    value: new File(['file'], 'file.pdf', { type: 'application/pdf' })
+    // or with FileDef
+    value: {
+      name: 'file.pdf',
+      type: 'application/pdf',
+    } 
+  }
 })
 `,
   }}

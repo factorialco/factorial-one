@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { F0Checkbox } from "../../components/F0Checkbox"
 import { Delete, Ellipsis, Pencil } from "../../icons/app"
-import { PersonAvatar } from "../Information/Avatars/exports"
+import { PersonAvatar } from "../Information/Avatars/PersonAvatar"
 import {
   RawTag,
   StatusTag,

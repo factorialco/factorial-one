@@ -17,6 +17,8 @@ export const cardPropertyRenderers = {
   tagList: propertyRenderers.tagList,
   alertTag: propertyRenderers.alertTag,
   dotTag: propertyRenderers.dotTag,
+  file: propertyRenderers.file,
+  folder: propertyRenderers.folder,
 } as const
 
 export type CardPropertyType = keyof typeof cardPropertyRenderers
