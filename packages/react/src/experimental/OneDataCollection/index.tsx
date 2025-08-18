@@ -360,9 +360,10 @@ const OneDataCollectionComp = <
    */
   const [bulkActions, setBulkActions] = useState<
     | {
-        primary: BulkActionDefinition[]
+        primary?: BulkActionDefinition[]
         secondary?: BulkActionDefinition[]
       }
+    | { warningMessage: string }
     | undefined
   >(undefined)
 
@@ -413,21 +414,25 @@ const OneDataCollectionComp = <
       },
     })
 
-    setBulkActions({
-      primary: (bulkActions?.primary || []).map(mapBulkActions),
-      secondary: (bulkActions?.secondary || []).map(mapBulkActions),
-    })
+    if (bulkActions) {
+      if ("primary" in bulkActions) {
+        setBulkActions({
+          primary: (bulkActions?.primary || []).map(mapBulkActions),
+          secondary: (bulkActions?.secondary || []).map(mapBulkActions),
+        })
+      } else if ("warningMessage" in bulkActions) {
+        setBulkActions({ warningMessage: bulkActions.warningMessage })
+      }
+    }
   }
 
-  const elementsRightActions = useMemo(() => {
-    return [
-      isLoading,
-      search?.enabled,
-      visualizations && visualizations.length > 1,
-    ].some(Boolean)
-  }, [search, isLoading, visualizations])
-
   const [totalItems, setTotalItems] = useState<undefined | number>(undefined)
+  const [isInitialLoading, setIsInitialLoading] = useState(false)
+
+  const elementsRightActions = useMemo(
+    () => [search?.enabled, visualizations.length > 1].some(Boolean),
+    [search, visualizations]
+  )
 
   const { emptyState, setEmptyStateType } = useEmptyState(emptyStates, {
     retry: () => {
@@ -455,11 +460,10 @@ const OneDataCollectionComp = <
   const onLoadData = ({
     totalItems,
     filters,
-    isInitialLoading,
+    isInitialLoading: isInitialLoadingFromCallback,
     search,
   }: Parameters<OnLoadDataCallback<Record, Filters>>[0]) => {
-    if (isInitialLoading) return
-
+    setIsInitialLoading(isInitialLoadingFromCallback)
     setTotalItems(totalItems)
     setEmptyStateType(getEmptyStateType(totalItems, filters, search))
   }
@@ -491,12 +495,12 @@ const OneDataCollectionComp = <
     >
       {((totalItems !== undefined && totalItemSummary(totalItems)) ||
         navigationFilters) && (
-        <div className="border-f1-border-primary flex gap-4 px-6">
+        <div className="border-f1-border-primary flex gap-4 px-4">
           <div className="flex flex-1 flex-shrink gap-4 text-lg font-semibold">
-            {isLoading &&
+            {isInitialLoading &&
               totalItems !== undefined &&
               totalItemSummary(totalItems) && <Skeleton className="h-5 w-24" />}
-            {!isLoading && totalItems !== undefined && (
+            {!isInitialLoading && totalItems !== undefined && (
               <div className="flex h-5 items-center">
                 {totalItemSummary(totalItems)}
               </div>
@@ -521,7 +525,7 @@ const OneDataCollectionComp = <
         </div>
       )}
       <div
-        className={cn("flex flex-col gap-4 px-6", fullHeight && "max-h-full")}
+        className={cn("flex flex-col gap-4 px-4", fullHeight && "max-h-full")}
       >
         <OneFilterPicker
           filters={filters}
@@ -554,7 +558,7 @@ const OneDataCollectionComp = <
             sortings={sortings}
             currentSortings={currentSortings}
             onSortingsChange={setCurrentSortings}
-          ></Settings>
+          />
           {hasCollectionsActions && (
             <>
               {elementsRightActions && (
@@ -597,12 +601,21 @@ const OneDataCollectionComp = <
         </div>
       ) : (
         <>
-          {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
+          {bulkActions && (
             <OneActionBar
               isOpen={showActionBar}
               selectedNumber={selectedItemsCount}
-              primaryActions={bulkActions.primary}
-              secondaryActions={bulkActions?.secondary}
+              primaryActions={
+                "primary" in bulkActions ? bulkActions?.primary : []
+              }
+              secondaryActions={
+                "secondary" in bulkActions ? bulkActions?.secondary : []
+              }
+              warningMessage={
+                "warningMessage" in bulkActions
+                  ? bulkActions.warningMessage
+                  : undefined
+              }
               onUnselect={() => clearSelectedItemsFunc?.()}
             />
           )}

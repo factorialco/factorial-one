@@ -3,9 +3,10 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Button } from "@/components/Actions/Button"
 import { UseFormReturn } from "react-hook-form"
 import { number, z } from "zod"
+import { F0Checkbox } from "../../../components/F0Checkbox"
+import { Button } from "../../../factorial-one"
 import { Textarea } from "../../../ui/textarea"
 import { AutoGrid } from "../../Utilities/Layout/AutoGrid"
-import { Checkbox } from "../Fields/Checkbox"
 import { Input } from "../Fields/Input"
 import { NumberInput } from "../Fields/NumberInput"
 import { Select } from "../Fields/Select"
@@ -190,7 +191,7 @@ export const Default: Story = {
           name="acceptedTerms"
         >
           {(field) => (
-            <Checkbox
+            <F0Checkbox
               {...field}
               onCheckedChange={field.onChange}
               value={String(field.value)}
@@ -358,7 +359,7 @@ export const MultipleTypeSchema: Story = {
               name="eating"
             >
               {(field) => (
-                <Checkbox
+                <F0Checkbox
                   {...field}
                   onCheckedChange={field.onChange}
                   value={String(field.value)}
@@ -374,7 +375,7 @@ export const MultipleTypeSchema: Story = {
               name="swimming"
             >
               {(field) => (
-                <Checkbox
+                <F0Checkbox
                   {...field}
                   onCheckedChange={field.onChange}
                   value={String(field.value)}
@@ -414,7 +415,7 @@ export const MultipleTypeSchema: Story = {
               name="eating"
             >
               {(field) => (
-                <Checkbox
+                <F0Checkbox
                   {...field}
                   onCheckedChange={field.onChange}
                   value={String(field.value)}
@@ -430,7 +431,7 @@ export const MultipleTypeSchema: Story = {
               name="running"
             >
               {(field) => (
-                <Checkbox
+                <F0Checkbox
                   {...field}
                   onCheckedChange={field.onChange}
                   value={String(field.value)}

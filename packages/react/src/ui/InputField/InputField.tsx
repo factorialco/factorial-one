@@ -284,7 +284,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
             "focus-within:outline-none focus-within:ring-1 focus-within:ring-offset-1",
             error
               ? "focus-within:ring-f1-critical border-f1-border-critical-bold"
-              : "focus-within:ring-f1-ring",
+              : "focus-within:ring-f1-special-ring",
             readonly && "border-f1-border-secondary bg-f1-background-secondary",
             disabled && "cursor-not-allowed",
             inputFieldVariants({ size, canGrow })

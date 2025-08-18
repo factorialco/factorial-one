@@ -149,7 +149,7 @@ const CardLink = React.forwardRef<
         "group inline-flex aspect-square h-6 items-center justify-center gap-1", //layout
         "rounded-sm border border-solid border-f1-border bg-f1-background-inverse-secondary", //appearance
         "whitespace-nowrap px-0 text-base font-medium text-f1-foreground", //typography
-        "cursor-pointer transition-colors hover:border-f1-border-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1", //interaction
+        "cursor-pointer transition-colors hover:border-f1-border-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-special-ring focus-visible:ring-offset-1", //interaction
         className
       )}
       role="button"

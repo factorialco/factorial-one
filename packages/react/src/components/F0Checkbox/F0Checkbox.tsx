@@ -1,3 +1,4 @@
+import { experimentalComponent } from "@/lib/experimental"
 import { Checkbox as CheckboxRoot } from "@/ui/checkbox"
 
 interface CheckboxProps extends DataAttributes {
@@ -63,7 +64,7 @@ interface CheckboxProps extends DataAttributes {
   name?: string
 }
 
-export function Checkbox({
+function _F0Checkbox({
   title,
   onCheckedChange,
   id,
@@ -94,3 +95,11 @@ export function Checkbox({
     />
   )
 }
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+export const F0Checkbox = experimentalComponent<typeof _F0Checkbox>(
+  "F0Checkbox",
+  _F0Checkbox
+)

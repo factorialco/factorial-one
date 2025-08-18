@@ -42,7 +42,7 @@ export function OmniButton({ label, options, hasNewUpdate }: OmniButtonProps) {
       <Dropdown items={formatDropdownItems(options)}>
         <button
           className={cn(
-            "relative flex h-6 w-6 items-center justify-center rounded-full bg-f1-background-bold text-f1-foreground-inverse shadow-md transition-all",
+            "relative flex h-6 w-6 items-center justify-center rounded-full bg-f1-background-inverse text-f1-foreground-inverse shadow-md transition-all",
             focusRing()
           )}
           aria-label={label}

@@ -2,7 +2,7 @@ import { CopilotKit } from "@copilotkit/react-core"
 import { CopilotPopup } from "@copilotkit/react-ui"
 
 import { experimentalComponent } from "@/lib/experimental"
-import type { ComponentProps } from "react"
+import { type ComponentProps } from "react"
 
 import {
   AssistantMessage,
@@ -13,30 +13,39 @@ import {
   MessagesContainer,
   UserMessage,
 } from "./components"
+import {
+  AiChatLabelsProvider,
+  type AiChatLabels,
+} from "./providers/AiChatLabelsProvider"
 
-export type AiChatProps = ComponentProps<typeof CopilotPopup>
+type AiChatProviderProps = ComponentProps<typeof CopilotKit>
 
-export type AiChatProviderProps = Omit<
-  ComponentProps<typeof CopilotKit>,
-  "window"
->
-
-export const AiChatProviderCmp = (props: AiChatProviderProps) => {
+const AiChatProviderCmp = (props: AiChatProviderProps) => {
   return <CopilotKit {...props} />
 }
+type CopilotPopupProps = ComponentProps<typeof CopilotPopup>
 
-export const AiChatCmp = (props: AiChatProps) => {
+type AiChatProps = Omit<CopilotPopupProps, "labels"> & {
+  labels?: ComponentProps<typeof CopilotPopup>["labels"] & AiChatLabels
+}
+
+const AiChatCmp = ({ labels, ...props }: AiChatProps) => {
+  const { greeting, ...copilotLabels } = labels || {}
+
   return (
-    <CopilotPopup
-      Window={ChatWindow}
-      Header={ChatHeader}
-      Messages={MessagesContainer}
-      Button={ChatButton}
-      Input={ChatTextarea}
-      UserMessage={UserMessage}
-      AssistantMessage={AssistantMessage}
-      {...props}
-    />
+    <AiChatLabelsProvider greeting={greeting}>
+      <CopilotPopup
+        Window={ChatWindow}
+        Header={ChatHeader}
+        Messages={MessagesContainer}
+        Button={ChatButton}
+        Input={ChatTextarea}
+        UserMessage={UserMessage}
+        AssistantMessage={AssistantMessage}
+        {...props}
+        labels={copilotLabels}
+      />
+    </AiChatLabelsProvider>
   )
 }
 
@@ -50,4 +59,4 @@ const AiChatProvider = experimentalComponent(
   AiChatProviderCmp
 )
 
-export { AiChat, AiChatProvider }
+export { AiChat, AiChatProvider, type AiChatProps, type AiChatProviderProps }

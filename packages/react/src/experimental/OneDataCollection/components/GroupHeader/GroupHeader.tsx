@@ -1,5 +1,5 @@
+import { F0Checkbox } from "@/components/F0Checkbox"
 import { Await } from "@/components/Utilities/Await"
-import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { Counter } from "@/experimental/Information/Counter"
 import { cn } from "@/lib/utils"
 import { ChevronToggle } from "@/ui/ChevronToggle/ChevronToggle"
@@ -46,7 +46,7 @@ export const GroupHeader = ({
       onClick={handleOpenChange}
     >
       {selectable && (
-        <Checkbox
+        <F0Checkbox
           checked={!!select}
           indeterminate={select === "indeterminate"}
           title="Select all"

@@ -105,6 +105,28 @@ export const ListVisualizationWithInfiniteScrollPagination: Story = {
           data: generateMockUsers(100),
           paginationType: "infinite-scroll",
         })}
+        totalItemSummary={(totalItems) => `Total items: ${totalItems}`}
+        fullHeight
+      />
+    )
+  },
+}
+
+export const ListVisualizationWithRegularPagination: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  render: () => {
+    const mockVisualizations = getMockVisualizations()
+    return (
+      <ExampleComponent
+        visualizations={[mockVisualizations.list]}
+        dataAdapter={createDataAdapter({
+          data: generateMockUsers(100),
+          paginationType: "pages",
+        })}
+        totalItemSummary={(totalItems) => `Total items: ${totalItems}`}
+        fullHeight
       />
     )
   },

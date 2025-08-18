@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
 import {
   BaseBanner,
   type BannerAction,
@@ -20,6 +21,7 @@ type PromoteAction = {
   closeLabel: UpsellingButtonProps["closeLabel"]
   showIcon?: boolean
   showConfirmation?: boolean
+  icon?: IconType
 }
 
 type UpsellingBannerProps = Omit<
@@ -61,6 +63,7 @@ export const UpsellingBanner = forwardRef<HTMLDivElement, UpsellingBannerProps>(
           label={action.label}
           variant={action.variant || "default"}
           size="md"
+          icon={action.icon}
         />
       )
     }

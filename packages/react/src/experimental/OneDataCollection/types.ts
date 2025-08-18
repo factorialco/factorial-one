@@ -84,10 +84,12 @@ export type DataSourceDefinition<
   /** Bulk actions that can be performed on the collection */
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<Record, Filters>>[1]
-  ) => {
-    primary: BulkActionDefinition[]
-    secondary?: BulkActionDefinition[]
-  }
+  ) =>
+    | {
+        primary?: BulkActionDefinition[]
+        secondary?: BulkActionDefinition[]
+      }
+    | { warningMessage: string }
   totalItemSummary?: (totalItems: number) => string
   /** Grouping configuration */
   grouping?: Grouping
