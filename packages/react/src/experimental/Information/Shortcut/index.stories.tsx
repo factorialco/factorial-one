@@ -43,7 +43,7 @@ export const InverseVariant: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="bg-f1-background-bold p-4">
+      <div className="bg-f1-background-inverse p-4">
         <Story />
       </div>
     ),

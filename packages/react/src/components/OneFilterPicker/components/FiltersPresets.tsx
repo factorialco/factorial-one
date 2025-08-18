@@ -63,17 +63,12 @@ export const FiltersPresets = <Filters extends FiltersDefinition>({
   return (
     presets &&
     presets.length > 0 && (
-      <>
-        <div className="flex items-center">
-          <div className="mx-2 h-4 w-px bg-f1-background-secondary-hover" />
-        </div>
-        <OverflowList
-          items={presets}
-          renderListItem={renderListPresetItem}
-          renderDropdownItem={renderDropdownPresetItem}
-          className="min-w-0 flex-1"
-        />
-      </>
+      <OverflowList
+        items={presets}
+        renderListItem={renderListPresetItem}
+        renderDropdownItem={renderDropdownPresetItem}
+        className="min-w-0 flex-1"
+      />
     )
   )
 }

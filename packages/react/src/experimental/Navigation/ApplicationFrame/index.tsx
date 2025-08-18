@@ -63,9 +63,12 @@ function ApplicationFrameContent({
             <AnimatePresence>
               {sidebarState === "unlocked" && (
                 <motion.nav
-                  className={cn("fixed inset-0 z-[5] bg-f1-background-bold", {
-                    hidden: !isSmallScreen,
-                  })}
+                  className={cn(
+                    "fixed inset-0 z-[5] bg-f1-background-inverse",
+                    {
+                      hidden: !isSmallScreen,
+                    }
+                  )}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 0.1 }}
                   exit={{ opacity: 0 }}

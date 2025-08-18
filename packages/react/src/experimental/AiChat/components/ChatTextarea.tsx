@@ -49,14 +49,14 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
       ref={formRef}
       className={cn(
         "relative isolate m-2 flex flex-col gap-3 rounded-xl border border-solid border-f1-border",
-        "has-[textarea:focus]:shadow has-[textarea:focus]:outline-none has-[textarea:focus]:ring-1 has-[textarea:focus]:ring-f1-ring has-[textarea:focus]:ring-offset-0"
+        "has-[textarea:focus]:shadow has-[textarea:focus]:outline-none has-[textarea:focus]:ring-1 has-[textarea:focus]:ring-f1-special-ring has-[textarea:focus]:ring-offset-0"
       )}
       onSubmit={handleSubmit}
     >
       <div className="grid grid-cols-1 grid-rows-1">
         <div
           aria-hidden={true}
-          className="pointer-events-none invisible col-start-1 row-start-1 mx-3 mb-0 mt-2 max-h-36 whitespace-pre-wrap"
+          className="pointer-events-none invisible col-start-1 row-start-1 mx-3 mb-0 mt-3 max-h-36 whitespace-pre-wrap"
         >
           {inputValue.endsWith("\n") ? inputValue + "_" : inputValue}
         </div>
@@ -68,7 +68,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
               className={cn(
-                "pointer-events-none absolute inset-x-0 z-10 h-3 rounded-t-xl after:absolute after:inset-x-0 after:h-px after:bg-f1-background-bold after:opacity-[0.04] after:content-['']",
+                "pointer-events-none absolute inset-x-0 z-10 h-3 rounded-t-xl after:absolute after:inset-x-0 after:h-px after:bg-f1-background-inverse after:opacity-[0.04] after:content-['']",
                 "-top-px bg-gradient-to-b from-f1-background-selected to-transparent after:-top-px"
               )}
             />
@@ -88,7 +88,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
             "col-start-1 row-start-1",
             "mx-3 mb-0 max-h-36 flex-1 resize-none overflow-y-scroll outline-none transition-all",
             "bg-f1-background text-f1-foreground placeholder:text-f1-foreground-secondary",
-            !hasScrollbar && "mt-2"
+            !hasScrollbar && "mt-3"
           )}
         />
       </div>
