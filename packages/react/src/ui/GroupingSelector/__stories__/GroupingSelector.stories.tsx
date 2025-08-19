@@ -19,16 +19,11 @@ const mockGroupingDefinition: GroupingDefinition<MockRecord> = {
   groupBy: {
     department: {
       name: "Department",
-      accessor: (record: MockRecord) => record.department,
+      label: (groupId) => groupId,
     },
     status: {
       name: "Status",
-      accessor: (record: MockRecord) => record.status,
-    },
-    startYear: {
-      name: "Start Year",
-      accessor: (record: MockRecord) =>
-        record.startDate.getFullYear().toString(),
+      label: (groupId) => groupId,
     },
   },
 }
@@ -38,11 +33,11 @@ const mandatoryGroupingDefinition: GroupingDefinition<MockRecord> = {
   groupBy: {
     department: {
       name: "Department",
-      accessor: (record: MockRecord) => record.department,
+      label: (groupId) => groupId,
     },
     status: {
       name: "Status",
-      accessor: (record: MockRecord) => record.status,
+      label: (groupId) => groupId,
     },
   },
 }
@@ -62,10 +57,10 @@ const ExampleComponent = ({
 
   return (
     <div className="border-gray-200 w-80 rounded-lg border">
-      <GroupingSelector
+      <GroupingSelector<MockRecord, GroupingDefinition<MockRecord>>
         grouping={grouping}
         currentGrouping={currentGrouping}
-        onGroupingChange={setCurrentGrouping}
+        onGroupingChange={(value) => setCurrentGrouping(value)}
         hideLabel={hideLabel}
         hideDirection={hideDirection}
       />
@@ -197,7 +192,7 @@ export const SingleGroupingOption: Story = {
       groupBy: {
         department: {
           name: "Department",
-          accessor: (record: MockRecord) => record.department,
+          label: (groupId) => groupId,
         },
       },
     },
