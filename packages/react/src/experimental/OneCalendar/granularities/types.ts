@@ -60,6 +60,7 @@ export interface GranularityDefinition {
     date: DateRange,
     options: DateNavigationOptions
   ): PrevNextDateNavigation
+  toFormattedString: (date: Date | DateRange | undefined | null) => string
 }
 
 export type GranularityDefinitionSimple = Pick<
