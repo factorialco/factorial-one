@@ -4752,13 +4752,9 @@ function Vf(t, { filters: e, onError: n } = {}) {
     () => ({ ...r, ...e }),
     [r, e]
   ), D = N8(a), R = he(void 0);
-  se(
-    () => {
-      R.current = o != null && o.enabled ? o != null && o.sync ? a : D : void 0;
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
-    [a, D, o == null ? void 0 : o.enabled, o == null ? void 0 : o.sync]
-  );
+  se(() => {
+    R.current = o != null && o.enabled ? o != null && o.sync ? a : D : void 0;
+  }, [a, D, o == null ? void 0 : o.enabled, o == null ? void 0 : o.sync]);
   const [j, J] = $(void 0), X = (te, _e, V) => {
     {
       const ne = new Map(
