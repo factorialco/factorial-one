@@ -1,5 +1,5 @@
-import { ah as Ob, ai as Ab, aj as eg, ak as _a, al as o_, am as a_, an as l_, ao as Ic, ap as d_, aq as f_, ar as c_, as as X, at as Lb, au as u_, av as hs, aw as Ho, ax as ql, ay as h_, az as Za, aA as p_, aB as Rc, aC as m_, aD as g_, aE as Xa, aF as y_, aG as v_, aH as b_, aI as tg, aJ as k_, aK as ng, aL as w_, aM as Db, aN as Ib, aO as x_, a as N, p as te, L as ls, aP as Ve, aQ as qs, R as Rb, aR as rt, aS as Pb, l as Ul, aT as Fb, m as ii, n as ai, aU as Fe, aV as C1, aW as __, aX as C_, aY as S_, a9 as bf, I as oe, aZ as Bb, f as N_, a_ as M_, a$ as E_, b0 as T_, b as ig, b1 as O_, b2 as A_, b3 as Gt, W as Kl, a8 as rg, b4 as ue, b5 as Us, P as Ue, b6 as $b, b7 as S1, b8 as er, b9 as L_, c as kf, ba as Ks, bb as N1, bc as Bt, bd as D_, be as $e, bf as Tn, bg as I_, bh as zb, bi as R_, bj as Pi, bk as P_, bl as F_, bm as B_, bn as $_, bo as z_, bp as jb, bq as j_, br as sg, bs as V_, ad as Gs, S as Js, F as M1, bt as Gl, bu as H_, a2 as W_, a4 as Vb, $ as Hb, a5 as wf, bv as Wb, bw as Ca, bx as tr, by as Ys, bz as q_, bA as E1, bB as Wn, bC as xf, bD as Wo, bE as U_, bF as qb, bG as K_, w as _f, x as Cf, z as Sf, bH as T1, C as pn, bI as Ub, bJ as G_, bK as J_, j as In, s as Y_, bL as Kb, bM as ds, bN as Z_, bO as X_, bP as Q_, bQ as og, bR as ag, bS as lg, bT as dg, bU as fg, bV as Gb, bW as xl, bX as e9, bY as t9, bZ as n9, b_ as xs, b$ as mt, c0 as qu, c1 as i9, c2 as r9, c3 as s9, c4 as o9, ae as Nf, c5 as ln, M as O1, ag as a9, c6 as Nn, af as l9, c7 as Jb, c8 as sn, c9 as Yb, ca as dr, cb as d9, cc as Wt, cd as Jl, ce as Zb, cf as f9, cg as A1, ch as L1, ci as qo, cj as D1, ck as I1, cl as Uu, cm as Xb, cn as Qb, co as c9, cp as u9, cq as ek, cr as h9, cs as tk, ct as p9, cu as m9, cv as g9, D as nk, k as ik, cw as cg, cx as y9, cy as Sa, cz as v9, cA as Mf, y as b9, o as k9, cB as w9, cC as x9, cD as _9, cE as C9, cF as S9, cG as N9, cH as M9, cI as E9, i as T9, Z as O9, cJ as Ef, cK as ug, O as rk, cL as Na, cM as _s, cN as sk, cO as ok, cP as A9, cQ as Zs, cR as R1, cS as ak, u as L9, cT as dt, cU as hg, cV as D9, cW as I9, cX as R9, cY as P9, cZ as F9, a0 as B9, a7 as P1, q as Tf, c_ as Of, c$ as Af, r as Lf, a6 as lk, T as $9, d0 as z9, a1 as Yl, d1 as j9, Y as V9, d2 as H9, d3 as Ma, d4 as F1, d5 as B1, d6 as Ea, d7 as dk, d8 as W9, d9 as fk, da as q9, aa as ck, db as uk, dc as hk, dd as U9, de as K9, df as G9, t as J9, A as Y9, B as Z9, e as X9, g as Q9, V as e8, d as t8, dg as n8, dh as i8, di as r8, dj as pk, dk as s8 } from "./F0Card-DOkYQ5yK.js";
-import { dm as NG, v as MG, dn as EG, dq as TG, dr as OG, ds as AG, dp as LG, du as DG, dl as IG, dt as RG } from "./F0Card-DOkYQ5yK.js";
+import { ah as Ob, ai as Ab, aj as eg, ak as _a, al as o_, am as a_, an as l_, ao as Ic, ap as d_, aq as f_, ar as c_, as as X, at as Lb, au as u_, av as hs, aw as Ho, ax as ql, ay as h_, az as Za, aA as p_, aB as Rc, aC as m_, aD as g_, aE as Xa, aF as y_, aG as v_, aH as b_, aI as tg, aJ as k_, aK as ng, aL as w_, aM as Db, aN as Ib, aO as x_, a as N, p as te, L as ls, aP as Ve, aQ as qs, R as Rb, aR as rt, aS as Pb, l as Ul, aT as Fb, m as ii, n as ai, aU as Fe, aV as C1, aW as __, aX as C_, aY as S_, a9 as bf, I as oe, aZ as Bb, f as N_, a_ as M_, a$ as E_, b0 as T_, b as ig, b1 as O_, b2 as A_, b3 as Gt, W as Kl, a8 as rg, b4 as ue, b5 as Us, P as Ue, b6 as $b, b7 as S1, b8 as er, b9 as L_, c as kf, ba as Ks, bb as N1, bc as Bt, bd as D_, be as $e, bf as Tn, bg as I_, bh as zb, bi as R_, bj as Pi, bk as P_, bl as F_, bm as B_, bn as $_, bo as z_, bp as jb, bq as j_, br as sg, bs as V_, ad as Gs, S as Js, F as M1, bt as Gl, bu as H_, a2 as W_, a4 as Vb, $ as Hb, a5 as wf, bv as Wb, bw as Ca, bx as tr, by as Ys, bz as q_, bA as E1, bB as Wn, bC as xf, bD as Wo, bE as U_, bF as qb, bG as K_, w as _f, x as Cf, z as Sf, bH as T1, C as pn, bI as Ub, bJ as G_, bK as J_, j as In, s as Y_, bL as Kb, bM as ds, bN as Z_, bO as X_, bP as Q_, bQ as og, bR as ag, bS as lg, bT as dg, bU as fg, bV as Gb, bW as xl, bX as e9, bY as t9, bZ as n9, b_ as xs, b$ as mt, c0 as qu, c1 as i9, c2 as r9, c3 as s9, c4 as o9, ae as Nf, c5 as ln, M as O1, ag as a9, c6 as Nn, af as l9, c7 as Jb, c8 as sn, c9 as Yb, ca as dr, cb as d9, cc as Wt, cd as Jl, ce as Zb, cf as f9, cg as A1, ch as L1, ci as qo, cj as D1, ck as I1, cl as Uu, cm as Xb, cn as Qb, co as c9, cp as u9, cq as ek, cr as h9, cs as tk, ct as p9, cu as m9, cv as g9, D as nk, k as ik, cw as cg, cx as y9, cy as Sa, cz as v9, cA as Mf, y as b9, o as k9, cB as w9, cC as x9, cD as _9, cE as C9, cF as S9, cG as N9, cH as M9, cI as E9, i as T9, Z as O9, cJ as Ef, cK as ug, O as rk, cL as Na, cM as _s, cN as sk, cO as ok, cP as A9, cQ as Zs, cR as R1, cS as ak, u as L9, cT as dt, cU as hg, cV as D9, cW as I9, cX as R9, cY as P9, cZ as F9, a0 as B9, a7 as P1, q as Tf, c_ as Of, c$ as Af, r as Lf, a6 as lk, T as $9, d0 as z9, a1 as Yl, d1 as j9, Y as V9, d2 as H9, d3 as Ma, d4 as F1, d5 as B1, d6 as Ea, d7 as dk, d8 as W9, d9 as fk, da as q9, aa as ck, db as uk, dc as hk, dd as U9, de as K9, df as G9, t as J9, A as Y9, B as Z9, e as X9, g as Q9, V as e8, d as t8, dg as n8, dh as i8, di as r8, dj as pk, dk as s8 } from "./F0Card-pwmWLi5Q.js";
+import { dm as NG, v as MG, dn as EG, dq as TG, dr as OG, ds as AG, dp as LG, du as DG, dl as IG, dt as RG } from "./F0Card-pwmWLi5Q.js";
 import { jsxs as b, jsx as f, Fragment as we } from "react/jsx-runtime";
 import { useLangGraphInterruptRender as o8, CopilotKit as a8 } from "@copilotkit/react-core";
 import { Markdown as l8, useChatContext as Df, CopilotPopup as d8 } from "@copilotkit/react-ui";
@@ -5247,36 +5247,38 @@ const lN = ({ actions: t }) => t ? /* @__PURE__ */ f("div", { className: "flex w
 )) }) : null, $c = "__no-grouping__", E2 = ({
   grouping: t,
   currentGrouping: e,
-  onGroupingChange: n
+  onGroupingChange: n,
+  hideLabel: i = !1
 }) => {
-  const i = Ve();
+  const r = Ve();
   if (!t || t.mandatory && Object.entries(t.groupBy).length < 2)
     return null;
-  const r = [
+  const s = [
     ...t.mandatory ? [] : [
       {
-        label: i.collections.grouping.noGrouping,
+        label: r.collections.grouping.noGrouping,
         value: $c
       }
     ],
     ...Object.entries(t.groupBy || {}).filter(
-      (s) => !!s[1]
-    ).map(([s, o]) => ({
-      label: o.name,
-      value: s
+      (o) => !!o[1]
+    ).map(([o, a]) => ({
+      label: a.name,
+      value: o
     }))
   ];
-  return /* @__PURE__ */ f("div", { className: "flex flex-col gap-0 py-3", children: /* @__PURE__ */ b("div", { className: "flex items-end gap-2 px-3", children: [
+  return /* @__PURE__ */ f("div", { className: "flex flex-col gap-0", children: /* @__PURE__ */ b("div", { className: "flex items-center gap-2 px-3", children: [
     /* @__PURE__ */ f("div", { className: "shrink grow [&_button]:h-8 [&_button]:rounded", children: /* @__PURE__ */ f(
       nr,
       {
-        label: i.collections.grouping.groupBy,
+        label: r.collections.grouping.groupBy,
         labelIcon: V1,
-        options: r,
+        options: s,
+        hideLabel: i,
         value: (e == null ? void 0 : e.field.toString()) ?? $c,
-        onChange: (s) => n == null ? void 0 : n(
-          s !== $c ? {
-            field: s,
+        onChange: (o) => n == null ? void 0 : n(
+          o !== $c ? {
+            field: o,
             order: (e == null ? void 0 : e.order) ?? "asc"
           } : void 0
         )
@@ -5286,7 +5288,7 @@ const lN = ({ actions: t }) => t ? /* @__PURE__ */ f("div", { className: "flex w
       te,
       {
         hideLabel: !0,
-        label: i.collections.grouping.toggleDirection,
+        label: r.collections.grouping.toggleDirection,
         variant: "outline",
         icon: (e == null ? void 0 : e.order) === "asc" ? C1 : Gl,
         onClick: () => n == null ? void 0 : n({
@@ -5324,6 +5326,7 @@ const lN = ({ actions: t }) => t ? /* @__PURE__ */ f("div", { className: "flex w
   /* @__PURE__ */ f(
     E2,
     {
+      hideLabel: !0,
       grouping: a,
       currentGrouping: l,
       onGroupingChange: d

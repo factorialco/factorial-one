@@ -42404,13 +42404,9 @@ function oPt(e, {
     A.current = $;
   }, [$]);
   const [V, R] = $e(void 0), [I, z] = $e(!1), F = dt(!1), q = Ot(() => ({ ...s, ...t }), [s, t]), U = XZ(d), X = dt(void 0);
-  Ve(
-    () => {
-      X.current = c != null && c.enabled ? c != null && c.sync ? d : U : void 0;
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
-    [d, U, c == null ? void 0 : c.enabled, c == null ? void 0 : c.sync]
-  );
+  Ve(() => {
+    X.current = c != null && c.enabled ? c != null && c.sync ? d : U : void 0;
+  }, [d, U, c == null ? void 0 : c.enabled, c == null ? void 0 : c.sync]);
   const G = (re, he, ce) => {
     {
       const de = new Map(

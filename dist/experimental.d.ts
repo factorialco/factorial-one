@@ -631,7 +631,7 @@ declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     type: "select";
     searchbox?: boolean;
     externalSearch?: boolean;
-    onChange: BreadcrumbSelectProps<string>["onChange"];
+    onChange: BreadcrumbSelectProps<string, RecordType>["onChange"];
     value?: string;
     defaultItem?: SelectItemObject<string, RecordType>;
 } & ({
