@@ -12,6 +12,7 @@ import {
   PresetsDefinition,
 } from "@/components/OneFilterPicker"
 import {
+  BulkActionsDefinition,
   DataCollectionBaseFetchOptions,
   DataCollectionDataAdapter,
   useDataCollectionSource,
@@ -55,7 +56,7 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "../navigationFilters/types"
-import { BulkActionDefinition, OnBulkActionCallback } from "../types"
+import { OnBulkActionCallback } from "../types"
 import { Visualization, VisualizationType } from "../visualizations/collection"
 
 // Example filter definition
@@ -602,14 +603,7 @@ export const ExampleComponent = ({
   >
   defaultSelectedItems?: SelectedItemsState
   selectable?: (item: MockUser) => string | number | undefined
-  bulkActions?: (
-    selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
-  ) =>
-    | {
-        primary?: BulkActionDefinition[]
-        secondary?: BulkActionDefinition[]
-      }
-    | { warningMessage: string }
+  bulkActions?: BulkActionsDefinition<MockUser, FiltersType>
   onSelectItems?: OnSelectItemsCallback<MockUser, FiltersType>
   onBulkAction?: OnBulkActionCallback<MockUser, FiltersType>
   navigationFilters?: NavigationFiltersDefinition

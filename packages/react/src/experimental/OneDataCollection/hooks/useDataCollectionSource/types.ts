@@ -24,6 +24,18 @@ import {
 import { SummariesDefinition } from "../../summary"
 import { BulkActionDefinition, OnBulkActionCallback } from "../../types"
 
+export type BulkActionsDefinition<
+  R extends RecordType,
+  Filters extends FiltersDefinition,
+> = (selectedItems: Parameters<OnBulkActionCallback<R, Filters>>[1]) =>
+  | {
+      primary: BulkActionDefinition[]
+      secondary?: BulkActionDefinition[]
+    }
+  | {
+      warningMessage: string
+    }
+
 /**
  * Extended base fetch options for data collection
  */
@@ -110,12 +122,7 @@ export type DataCollectionSourceDefinition<
   // /** Datacolllction data adapter */
   dataAdapter: DataCollectionDataAdapter<R, Filters, NavigationFilters>
   /** Bulk actions that can be performed on the collection */
-  bulkActions?: (
-    selectedItems: Parameters<OnBulkActionCallback<R, Filters>>[1]
-  ) => {
-    primary: BulkActionDefinition[]
-    secondary?: BulkActionDefinition[]
-  }
+  bulkActions?: BulkActionsDefinition<R, Filters>
   totalItemSummary?: (totalItems: number) => string
 }
 
