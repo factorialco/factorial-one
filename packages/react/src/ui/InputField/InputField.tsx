@@ -91,6 +91,31 @@ const inputFieldWrapperVariants = cva({
   },
 })
 
+const inputFieldStatusVariants = cva({
+  base: "",
+  variants: {
+    status: {
+      default: "focus-within:ring-f1-special-ring",
+      warning: "focus-within:ring-f1-warning border-f1-border-warning-bold",
+      info: "focus-within:ring-f1-info border-f1-border-info-bold",
+      error: "focus-within:ring-f1-critical border-f1-border-critical-bold",
+    },
+  },
+})
+
+export const inputFieldStatus = ["default", "warning", "info", "error"] as const
+export type InputFieldStatusType = (typeof inputFieldStatus)[number]
+
+export type InputFieldStatus =
+  | {
+      type: Exclude<InputFieldStatusType, "error">
+      message: string
+    }
+  | {
+      type: "error"
+      message?: string
+    }
+
 export type InputFieldProps<T> = {
   label: string
   placeholder?: string
@@ -104,7 +129,11 @@ export type InputFieldProps<T> = {
   value?: T | undefined
   onChange?: (value: T) => void
   size?: InputFieldSize
-  error?: string | string[] | boolean
+  /* @deprecated Use state (with type error)instead */
+  error?: string | boolean
+  status?: InputFieldStatus
+  /* shortcut for status with type default */
+  hint?: string
   disabled?: boolean
   className?: string
   required?: boolean
@@ -149,6 +178,8 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       className,
       required,
       error,
+      status,
+      hint,
       size = "sm",
       icon,
       canGrow = false,
@@ -180,6 +211,22 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
     const noEdit = disabled || readonly
 
     const [localValue, setLocalValue] = useState(value)
+
+    // For legacy reasons, error is a shortcut for status with type error
+    if (hint) {
+      status = {
+        type: "default",
+        message: hint,
+      }
+    }
+
+    // Error overrides hint
+    if (error) {
+      status = {
+        type: "error",
+        message: typeof error === "string" ? error : undefined,
+      }
+    }
 
     if (!label) {
       console.error(
@@ -279,15 +326,12 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
         <div
           className={cn(
             "flex w-full gap-2 transition-all",
-            "border-[f1-border-secondary bg-f1-background] border-[1px] border-solid",
             "border-[1px] border-solid border-f1-border-secondary bg-f1-background",
             !noEdit && "hover:border-f1-border-hover",
             "group focus-within:border-f1-border-hover focus-within:ring-1 focus-within:ring-f1-border-hover",
             "active-within:border-f1-border active-within:ring-1 active-within:ring-f1-border-hover",
             "focus-within:outline-none focus-within:ring-1 focus-within:ring-offset-1",
-            error
-              ? "focus-within:ring-f1-critical border-f1-border-critical-bold"
-              : "focus-within:ring-f1-special-ring",
+            inputFieldStatusVariants({ status: status?.type ?? "default" }),
             readonly && "border-f1-border-secondary bg-f1-background-secondary",
             disabled && "cursor-not-allowed",
             inputFieldVariants({ size, canGrow })
@@ -299,7 +343,8 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               <Icon
                 onClick={handleClickContent}
                 icon={icon}
-                className="text-f1-icon-default h-5 w-5 shrink-0 pt-[2px]"
+                color="default"
+                className="h-5 w-5 shrink-0 pt-[2px]"
               />
             </div>
           )}
@@ -379,7 +424,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
             </div>
           )}
         </div>
-        <InputMessages error={error} />
+        <InputMessages status={status} />
       </div>
     )
   }

@@ -219,12 +219,36 @@ export const ErrorMessage: Story = {
   },
 }
 
-export const ErrorMessageArray: Story = {
+export const InfoMessage: Story = {
   args: {
     ...Default.args,
     icon: Search,
     clearable: true,
-    error: ["This is the error message", "This is the error message 2"],
+    status: {
+      type: "info",
+      message: "This is the info message",
+    },
+  },
+}
+
+export const WarningMessage: Story = {
+  args: {
+    ...Default.args,
+    icon: Search,
+    clearable: true,
+    status: {
+      type: "warning",
+      message: "This is the warning message",
+    },
+  },
+}
+
+export const HintMessage: Story = {
+  args: {
+    ...Default.args,
+    icon: Search,
+    clearable: true,
+    hint: "This is the hint message",
   },
 }
 
