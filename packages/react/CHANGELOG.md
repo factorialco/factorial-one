@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.157.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.156.0...factorial-one-react-v1.157.0) (2025-08-19)
+
+
+### Features
+
+* **DropdownButton:** use internal Action component as base ([#2412](https://github.com/factorialco/factorial-one/issues/2412)) ([c930e53](https://github.com/factorialco/factorial-one/commit/c930e53395573959b45e65815b1c0745be64a4d2))
+
 ## [1.156.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.155.0...factorial-one-react-v1.156.0) (2025-08-18)
 
 
