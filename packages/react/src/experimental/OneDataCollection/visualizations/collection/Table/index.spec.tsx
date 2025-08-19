@@ -26,7 +26,14 @@ import type {
   PaginationType,
 } from "../../../types"
 import { useData } from "../../../useData"
+import { TextCell } from "../../property/types/text"
 import { TableCollection } from "./index"
+
+vi.mock("../../property", () => ({
+  propertyRenderers: {
+    text: TextCell,
+  },
+}))
 
 type TestFilters = FiltersDefinition
 type TestNavigationFilters = NavigationFiltersDefinition
