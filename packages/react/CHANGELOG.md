@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.157.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.157.0...factorial-one-react-v1.157.1) (2025-08-19)
+
+
+### Bug Fixes
+
+* **DataCollection:** let users define avatar type in `AvatarList` cell type ([#2411](https://github.com/factorialco/factorial-one/issues/2411)) ([3480303](https://github.com/factorialco/factorial-one/commit/3480303d816e94fe6dbf6ee2a6c457c2242e89ea))
+
 ## [1.157.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.156.0...factorial-one-react-v1.157.0) (2025-08-19)
 
 
