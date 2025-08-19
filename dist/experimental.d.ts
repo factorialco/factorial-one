@@ -16,6 +16,8 @@ import { CompanyCellValue } from './types/company.tsx';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
+import { CopilotKit } from '@copilotkit/react-core';
+import { CopilotPopup } from '@copilotkit/react-ui';
 import { DateCellValue } from './types/date.tsx';
 import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
@@ -26,6 +28,8 @@ import { Editor } from '@tiptap/react';
 import { FC } from 'react';
 import { FieldPath } from 'react-hook-form';
 import { FieldValues } from 'react-hook-form';
+import { FileCellValue } from './types/file.tsx';
+import { FolderCellValue } from './types/folder.tsx';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
 import { HTMLAttributes } from 'react';
@@ -90,6 +94,13 @@ export declare type ActionDefinition = DropdownItemSeparator | (Omit<DropdownIte
     enabled?: boolean;
     type?: "primary" | "secondary" | "other";
 });
+
+export declare const ActionItem: ({ title, status }: ActionItemProps) => JSX_2.Element;
+
+export declare interface ActionItemProps {
+    title: string;
+    status: "inProgress" | "executing" | "completed";
+}
 
 declare type ActionProps = {
     /**
@@ -178,10 +189,9 @@ declare type ActivityItemProps = {
 };
 
 declare interface AIBlockConfig {
-    buttons: AIButton[];
+    buttons?: AIButton[];
     onClick: (type: string) => Promise<JSONContent_2 | null>;
     title: string;
-    labels?: AIBlockLabels;
 }
 
 declare interface AIBlockLabels {
@@ -198,6 +208,23 @@ declare type AIButton = {
     label: string;
     icon: IconType;
 };
+
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+export declare const AiChat: ({ labels, ...props }: AiChatProps) => JSX_2.Element;
+
+declare interface AiChatLabels {
+    greeting?: string;
+}
+
+export declare type AiChatProps = Omit<CopilotPopupProps, "labels"> & {
+    labels?: ComponentProps<typeof CopilotPopup>["labels"] & AiChatLabels;
+};
+
+export declare const AiChatProvider: (props: AiChatProviderProps) => JSX_2.Element;
+
+export declare type AiChatProviderProps = ComponentProps<typeof CopilotKit>;
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "warning" | "positive" | "destructive" | undefined;
@@ -325,11 +352,7 @@ export declare const AvatarList: {
     displayName: string;
 };
 
-declare type AvatarListMetadata = BaseMetadata & {
-    type: "avatarList";
-    avatars: AvatarVariant[];
-    max?: number;
-};
+export declare type AvatarListSize = Extract<(typeof sizes)[number], "xsmall" | "small" | "medium">;
 
 declare type AvatarType = AvatarVariant["type"];
 
@@ -367,6 +390,7 @@ export declare type BannerAction = {
     label: string;
     onClick: () => void;
     variant?: "default" | "outline" | "ghost";
+    icon?: IconType;
 };
 
 export declare const BarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
@@ -413,6 +437,8 @@ export declare type BaseBannerProps = {
 
 export declare const BaseCelebration: ({ link, firstName, lastName, src, onClick, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element;
 
+declare type BaseColor = keyof typeof baseColors;
+
 export declare const BaseCommunityPost: ({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noReactionsButton, noVideoPreload, }: CommunityPostProps) => JSX_2.Element;
 
 /**
@@ -451,6 +477,10 @@ declare type BaseFilterDefinition<T extends FilterTypeKey> = {
     label: string;
     /** The type of filter */
     type: T;
+    /**
+     * Whether to hide the selector for this filter
+     */
+    hideSelector?: boolean;
 };
 
 declare function BaseHeader({ title, avatar, description, primaryAction, secondaryActions, otherActions, status, metadata, }: BaseHeaderProps_2): JSX_2.Element;
@@ -478,10 +508,6 @@ declare interface BaseHeaderProps_2 {
     };
     metadata?: MetadataProps["items"];
 }
-
-declare type BaseMetadata = {
-    icon: IconType;
-};
 
 /**
  * Represents a base structure for paginated API responses, providing
@@ -517,6 +543,15 @@ declare type BaseTag<T extends {
     type: string;
 }> = T & WithTooltipDescription;
 
+declare interface BaseTOCItem {
+    id: string;
+    label: string;
+    onClick?: (id: string) => void;
+    icon?: IconType;
+    disabled?: boolean;
+    otherActions?: TOCItemAction[];
+}
+
 export declare const BasicTextEditor: ForwardRefExoticComponent<BasicTextEditorProps & RefAttributes<BasicTextEditorHandle>>;
 
 export declare type BasicTextEditorHandle = {
@@ -535,9 +570,11 @@ export declare interface BasicTextEditorProps {
     placeholder: string;
     initialEditorState?: {
         content: JSONContent | string;
+        title?: string;
     };
     readonly?: boolean;
     aiBlockConfig?: AIBlockConfig;
+    onTitleChange?: (title: string) => void;
     labels: {
         toolbarLabels: ToolbarLabels;
         slashCommandGroupLabels?: SlashCommandGroupLabels;
@@ -545,6 +582,7 @@ export declare interface BasicTextEditorProps {
         moodTrackerLabels?: MoodTrackerLabels;
         liveCompanionLabels?: LiveCompanionLabels;
         transcriptLabels?: TranscriptLabels;
+        titlePlaceholder?: string;
     };
 }
 
@@ -637,6 +675,13 @@ export declare type BulkActionDefinition = {
     keepSelection?: boolean;
 };
 
+export declare type BulkActionsDefinition<R extends RecordType, Filters extends FiltersDefinition> = (selectedItems: Parameters<OnBulkActionCallback<R, Filters>>[1]) => {
+    primary: BulkActionDefinition[];
+    secondary?: BulkActionDefinition[];
+} | {
+    warningMessage: string;
+};
+
 declare const Button: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
 export declare interface ButtonConfig {
@@ -715,7 +760,7 @@ declare type ButtonVariant = (typeof variants_2)[number];
 declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
     pressed?: boolean | undefined;
-    variant?: "critical" | "promote" | "default" | "outline" | "neutral" | "ghost" | "outlinePromote" | undefined;
+    variant?: "default" | "critical" | "promote" | "neutral" | "outline" | "ghost" | "outlinePromote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
 } & ({
     class?: ClassValue;
@@ -760,19 +805,25 @@ export declare type CalendarMode = "single" | "range";
 
 export declare type CalendarView = "day" | "month" | "year" | "week" | "quarter" | "halfyear";
 
-declare type CardAvatar = AvatarVariant | {
+declare type CardAvatarVariant = AvatarVariant | {
     type: "emoji";
     emoji: string;
-    size?: "sm" | "md" | "lg";
+} | {
+    type: "file";
+    file: File;
 };
 
-declare type CardPropertyDefinition<T> = PropertyDefinition_2<T>;
+declare type CardPropertyDefinition<T> = PropertyDefinition_2<T> & {
+    icon?: IconType;
+};
 
 declare type CardVisualizationOptions<T, _Filters extends FiltersDefinition, _Sortings extends SortingsDefinition> = {
     cardProperties: ReadonlyArray<CardPropertyDefinition<T>>;
     title: (record: T) => string;
     description?: (record: T) => string;
-    avatar?: (record: T) => AvatarVariant;
+    avatar?: (record: T) => CardAvatarVariant;
+    image?: (record: T) => string;
+    compact?: boolean;
 };
 
 export declare const Carousel: ({ children, columns, showArrows, showDots, autoplay, delay, showPeek, doubleColumns, }: CarouselProps) => default_2.JSX.Element;
@@ -1029,12 +1080,6 @@ declare type CompanyItemProps = {
     action?: ActionType;
 };
 
-declare type CompanyMetadata = BaseMetadata & {
-    type: "company";
-    name: string;
-    src?: string;
-};
-
 export declare function CompanySelector({ companies, selected, onChange, isLoading, withNotification, additionalOptions, }: CompanySelectorProps): JSX_2.Element;
 
 export declare type CompanySelectorProps = {
@@ -1078,6 +1123,8 @@ declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "dot-tag";
 });
 
+declare type CopilotPopupProps = ComponentProps<typeof CopilotPopup>;
+
 declare type CopyActionType = {
     type: "copy";
     text?: string;
@@ -1092,7 +1139,7 @@ declare type CounterProps = {
 
 declare const counterVariants: (props?: ({
     size?: "md" | "sm" | undefined;
-    type?: "bold" | "selected" | "default" | undefined;
+    type?: "bold" | "default" | "selected" | undefined;
 } & ({
     class?: ClassValue;
     className?: never;
@@ -1193,10 +1240,7 @@ export declare type DataCollectionSourceDefinition<R extends RecordType = Record
     };
     dataAdapter: DataCollectionDataAdapter<R, Filters, NavigationFilters>;
     /** Bulk actions that can be performed on the collection */
-    bulkActions?: (selectedItems: Parameters<OnBulkActionCallback<R, Filters>>[1]) => {
-        primary: BulkActionDefinition[];
-        secondary?: BulkActionDefinition[];
-    };
+    bulkActions?: BulkActionsDefinition<R, Filters>;
     totalItemSummary?: (totalItems: number) => string;
 };
 
@@ -1415,7 +1459,7 @@ onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Pr
 disabled?: boolean | undefined | undefined;
 icon?: IconType_2 | undefined;
 } & {
-variant?: "critical" | "default" | "neutral";
+variant?: "default" | "critical" | "neutral";
 };
 secondary: {
 label: string;
@@ -1504,7 +1548,7 @@ declare type EmptyState = {
     actions?: ActionProps[];
 };
 
-declare const emptyStatesTypes: string[];
+declare const emptyStatesTypes: readonly ["no-data", "no-results", "error"];
 
 declare type EmptyStateType = (typeof emptyStatesTypes)[number];
 
@@ -1629,12 +1673,14 @@ declare interface ErrorMessageProps {
  */
 export declare type ExtractPropertyKeys<RecordType> = keyof RecordType;
 
+export declare function F0TableOfContent(props: TOCProps): JSX_2.Element;
+
 export declare const F1SearchBox: ForwardRefExoticComponent<    {
 value?: string;
 threshold?: number;
 debounceTime?: number;
 autoFocus?: boolean;
-} & Pick<InputFieldProps<string>, "onChange" | "onFocus" | "onBlur" | "disabled" | "size" | "loading" | "placeholder" | "clearable"> & RefAttributes<HTMLInputElement>>;
+} & Pick<InputFieldProps<string>, "onChange" | "name" | "onFocus" | "onBlur" | "disabled" | "size" | "loading" | "placeholder" | "clearable"> & RefAttributes<HTMLInputElement>>;
 
 declare type FavoriteMenuItem = ({
     type: "icon";
@@ -1668,13 +1714,26 @@ export declare type FileAction = {
     critical?: boolean;
 };
 
-export declare const FileAvatar: ForwardRefExoticComponent<Omit<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
-size?: sizes_2[number];
+export declare const FileAvatar: ForwardRefExoticComponent<Omit<Omit<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
+size?: (typeof sizes)[number];
 type?: type_2[number];
 color?: color_2[number];
-} & RefAttributes<HTMLSpanElement>, "ref"> & {
-file: File;
+} & RefAttributes<HTMLSpanElement>, "ref">, "type"> & {
+file: FileDef;
+size?: FileAvatarSize;
 } & RefAttributes<HTMLSpanElement>>;
+
+export declare type FileAvatarProps = Omit<React.ComponentPropsWithoutRef<typeof Avatar_2>, "type"> & {
+    file: FileDef;
+    size?: FileAvatarSize;
+};
+
+declare type FileAvatarSize = Extract<(typeof sizes)[number], "small" | "medium" | "large">;
+
+export declare type FileDef = {
+    name: string;
+    type: string;
+};
 
 export declare const FileItem: ForwardRefExoticComponent<FileItemProps & RefAttributes<HTMLDivElement>>;
 
@@ -1892,6 +1951,7 @@ export declare type GranularityDefinitionSimple = Pick<GranularityDefinition, "t
 export declare type GroupingDefinition<R extends RecordType> = {
     /** Whether grouping is mandatory or the user can chose not to group */
     mandatory?: boolean;
+    hideSelector?: boolean;
     groupBy: {
         [K in RecordPaths<R>]?: {
             /** The label for the grouping */
@@ -1956,6 +2016,16 @@ declare type HighlightBannerProps = {
     onClick?: () => void;
 };
 
+export declare const HILActionConfirmation: ({ text, confirmationText, onConfirm, cancelText, onCancel, }: HILActionConfirmationProps) => JSX_2.Element;
+
+export declare type HILActionConfirmationProps = {
+    text?: string;
+    confirmationText: string;
+    onConfirm: () => void;
+    cancelText: string;
+    onCancel: () => void;
+};
+
 declare type HTMLString = string;
 
 export declare const IconAvatar: {
@@ -1973,6 +2043,11 @@ declare const iconSizes: {
 declare type IconType = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement> & {
     animate?: "normal" | "animate";
 }>;
+
+declare type IdStructure = {
+    id: string;
+    children?: IdStructure[];
+};
 
 declare const Indicator: ForwardRefExoticComponent<IndicatorProps & RefAttributes<HTMLDivElement>>;
 
@@ -2046,7 +2121,7 @@ export declare type InfiniteScrollPaginatedResponse<TRecord> = BasePaginatedResp
     hasMore: boolean;
 };
 
-export declare const Input: React.FC<InputProps<string | number>>;
+export declare const Input: <T extends string = string>(props: InputProps<T>) => JSX_2.Element;
 
 declare const Input_2: React_2.ForwardRefExoticComponent<Omit<React_2.InputHTMLAttributes<HTMLInputElement>, "onChange" | "size"> & Pick<InputFieldProps<string>, "label" | "onChange" | "role" | "disabled" | "size" | "icon" | "loading" | "hideLabel" | "append" | "maxLength" | "required" | "error" | "labelIcon" | "onClickContent" | "clearable" | "isEmpty" | "emptyValue" | "hideMaxLength" | "lengthProvider"> & React_2.RefAttributes<HTMLInputElement>>;
 
@@ -2058,6 +2133,7 @@ declare type InputFieldProps<T> = {
     labelIcon?: IconType;
     hideLabel?: boolean;
     hidePlaceholder?: boolean;
+    name?: string;
     onClickPlaceholder?: () => void;
     onClickChildren?: () => void;
     onClickContent?: () => void;
@@ -2096,11 +2172,13 @@ declare type InputFieldProps<T> = {
 
 declare type InputFieldSize = (typeof INPUTFIELD_SIZES)[number];
 
-export declare type InputProps<T extends string | number> = Pick<ComponentProps<typeof Input_2>, "ref"> & Pick<InputFieldProps<T>, "disabled" | "size" | "onChange" | "value" | "placeholder" | "clearable" | "maxLength" | "label" | "labelIcon" | "icon" | "error" | "hideLabel"> & {
+export declare type InputProps<T extends string> = Pick<ComponentProps<typeof Input_2>, "ref"> & Pick<InputFieldProps<T>, "disabled" | "size" | "onChange" | "value" | "placeholder" | "clearable" | "maxLength" | "label" | "labelIcon" | "icon" | "error" | "hideLabel" | "name"> & {
     type?: Exclude<HTMLInputTypeAttribute, "number">;
 };
 
-declare const Item: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
+export declare function Item({ item, counter, isActive, collapsible, isExpanded, onToggleExpanded, sortable, children, }: TOCItemProps): JSX_2.Element;
+
+declare const Item_2: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
 
 export declare type ItemActionsDefinition<T extends RecordType> = (item: T) => ActionDefinition[] | undefined;
 
@@ -2116,7 +2194,9 @@ declare type ItemProps = {
     action?: ActionType;
 };
 
-declare type Items = typeof Item | typeof PersonItem | typeof CompanyItem | typeof TeamItem;
+declare type Items = typeof Item_2 | typeof PersonItem | typeof CompanyItem | typeof TeamItem;
+
+export declare function ItemSectionHeader({ item, children, isActive, collapsible, isExpanded, onToggleExpanded, sortable, }: TOCItemSectionHeaderProps): JSX_2.Element;
 
 export declare type lastIntentType = {
     selectedIntent?: string;
@@ -2216,8 +2296,6 @@ export declare interface Message {
     dateTime: string;
 }
 
-declare type Metadata = SimpleMetadata | AvatarListMetadata | StatusMetadata | UserMetadata | CompanyMetadata | TeamMetadata | TagMetadata;
-
 declare type MetadataAction = {
     icon: IconType;
     label: string;
@@ -2297,7 +2375,7 @@ declare interface MetadataProps {
 
 export declare const MobileDropdown: ({ items, children }: DropdownProps) => JSX_2.Element;
 
-declare type ModalPosition = "center" | "left" | "right";
+declare type ModalPosition = "center" | "left" | "right" | "fullscreen";
 
 /**
  * Module avatar
@@ -2349,6 +2427,7 @@ export declare const modules: {
     readonly employees: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly engagement: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly engagement_insights: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly my_surveys: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly "finance-accounting": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly "finance-sales": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly "finance-spending": ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
@@ -2357,6 +2436,7 @@ export declare const modules: {
     readonly goals: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly home: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly hub: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly it_management: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly kudos: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly meetings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly my_benefits: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
@@ -2371,12 +2451,14 @@ export declare const modules: {
     readonly pages: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly payroll_bundle: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly performance_v2: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly performance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly playground: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly processes: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly profile: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly project_management: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly reports: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly settings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly personal_settings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly shift_management: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly shifts: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
     readonly social: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
@@ -2473,7 +2555,9 @@ declare type NavigationProps = {
     };
 };
 
-export declare type NewColor = Extract<keyof typeof baseColors, "viridian" | "malibu" | "yellow" | "purple" | "lilac" | "barbie" | "smoke" | "army" | "flubber" | "indigo" | "camel">;
+export declare type NewColor = Extract<BaseColor, "viridian" | "malibu" | "yellow" | "purple" | "lilac" | "barbie" | "smoke" | "army" | "flubber" | "indigo" | "camel">;
+
+declare type NextDepth<T> = T extends 1 ? 2 : T extends 2 ? 3 : T extends 3 ? 4 : never;
 
 declare interface NextStepsProps {
     title: string;
@@ -2525,73 +2609,6 @@ export declare interface OneCalendarProps {
     showInput?: boolean;
     minDate?: Date;
     maxDate?: Date;
-}
-
-export declare function OneCard({ avatar, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, onClick, }: OneCardProps): JSX_2.Element;
-
-declare interface OneCardProps {
-    /**
-     * The avatar to display in the card
-     */
-    avatar?: CardAvatar;
-    /**
-     * The title of the card
-     */
-    title?: string;
-    /**
-     * The description of the card
-     */
-    description?: string;
-    /**
-     * Metadata items to display in the card
-     */
-    metadata?: Metadata[];
-    /**
-     * The children to display in the card
-     */
-    children?: ReactNode;
-    /**
-     * The link to navigate to when the card is clicked
-     */
-    link?: string;
-    /**
-     * The primary action that displays a primary button in the card footer
-     */
-    primaryAction?: {
-        label: string;
-        icon?: IconType;
-        onClick: () => void;
-    };
-    /**
-     * The secondary actions that display a secondary button in the card footer
-     * The first secondary action will display its label, while the rest will display
-     * just the icon
-     */
-    secondaryActions?: {
-        label: string;
-        icon?: IconType;
-        onClick: () => void;
-    }[];
-    /**
-     * Actions to display in the dropdown menu inside the card content
-     */
-    otherActions?: DropdownItem[];
-    /**
-     * Whether the card is selectable
-     */
-    selectable?: boolean;
-    /**
-     * Whether the card is selected
-     */
-    selected?: boolean;
-    /**
-     * The callback to handle the selection of the card
-     */
-    onSelect?: (selected: boolean) => void;
-    /**
-     * The callback to handle the click of the card
-     */
-    onClick?: () => void;
 }
 
 /**
@@ -3182,6 +3199,8 @@ declare const propertyRenderers: {
     readonly dotTag: (args: DotTagCellValue) => JSX_2.Element;
     readonly tagList: (args: TagListCellValue) => JSX_2.Element;
     readonly icon: (args: IconCellValue) => JSX_2.Element;
+    readonly file: (args: FileCellValue) => JSX_2.Element;
+    readonly folder: (args: FolderCellValue) => JSX_2.Element;
 };
 
 declare type Props = {
@@ -3298,7 +3317,7 @@ declare type Props_20<Id extends string | number = string | number> = {
 
 declare type Props_3 = {
     avatars: AvatarVariant[];
-    size?: (typeof sizes)[number];
+    size?: AvatarListSize;
     type?: AvatarType;
     /**
      * Whether to hide tooltips in each avatar.
@@ -3329,7 +3348,7 @@ declare type Props_4 = {
 
 declare type Props_5 = {
     emoji: string;
-    size?: "sm" | "md" | "lg";
+    size?: "small" | "medium" | "large";
 };
 
 declare type Props_6 = {
@@ -3627,7 +3646,7 @@ export declare type SelectProps<T extends string, R extends RecordType = RecordT
     source?: never;
     mapOptions?: never;
     options: SelectItemProps<T, R>[];
-}) & Pick<InputFieldProps<T>, "loading" | "hideLabel" | "clearable" | "labelIcon" | "size" | "label" | "error" | "icon" | "placeholder" | "disabled">;
+}) & Pick<InputFieldProps<T>, "loading" | "hideLabel" | "clearable" | "labelIcon" | "size" | "label" | "error" | "icon" | "placeholder" | "disabled" | "name">;
 
 declare type ShadAvatarProps = ComponentProps<typeof Avatar_2>;
 
@@ -3638,7 +3657,7 @@ declare interface ShortcutProps extends VariantProps<typeof shortcutVariants> {
 }
 
 declare const shortcutVariants: (props?: ({
-    variant?: "inverse" | "default" | undefined;
+    variant?: "default" | "inverse" | undefined;
 } & ({
     class?: ClassValue;
     className?: never;
@@ -3683,12 +3702,7 @@ declare interface SidebarProps {
 
 declare type SidebarState = "locked" | "unlocked" | "hidden";
 
-declare type SimpleMetadata = BaseMetadata & {
-    type: "text";
-    title: string;
-};
-
-declare const sizes: readonly ["xsmall", "small", "medium", "large", "xlarge"];
+declare const sizes: readonly ["xsmall", "small", "medium", "large", "xlarge", "xxlarge"];
 
 declare const sizes_3: readonly ["sm", "md", "lg"];
 
@@ -3811,12 +3825,6 @@ className?: ClassValue;
 declare type Status = "positive" | "neutral" | "negative";
 
 declare type Status_2 = "waiting" | "pending" | "approved" | "rejected";
-
-declare type StatusMetadata = BaseMetadata & {
-    type: "status";
-    status: StatusVariant;
-    label: string;
-};
 
 export declare const StatusTag: ForwardRefExoticComponent<StatusTagProps & RefAttributes<HTMLDivElement>>;
 
@@ -4016,12 +4024,6 @@ export declare const TagList: {
     displayName: string;
 };
 
-declare type TagMetadata = BaseMetadata & {
-    type: "tag";
-    label: string;
-    tagIcon?: IconType;
-};
-
 export declare type TagType = keyof TagTypeMapping;
 
 declare type TagTypeMapping = {
@@ -4032,6 +4034,7 @@ declare type TagTypeMapping = {
     alert: TagDataType<"alert">;
     status: TagDataType<"status">;
     balance: TagDataType<"balance">;
+    raw: TagDataType<"raw">;
 };
 
 declare type TagVariant = BaseTag<{
@@ -4048,7 +4051,9 @@ declare type TagVariant = BaseTag<{
     type: "status";
 } & StatusTagProps> | BaseTag<{
     type: "balance";
-} & BalanceTagProps>;
+} & BalanceTagProps> | BaseTag<{
+    type: "raw";
+} & RawTagProps>;
 
 declare interface Task {
     id: number | string;
@@ -4091,28 +4096,65 @@ declare type TeamItemProps = {
     action?: ActionType;
 };
 
-declare type TeamMetadata = BaseMetadata & {
-    type: "team";
-    name: string;
-    src?: string;
-};
-
 export declare const TeamTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
 
 declare type TeamTagProps = ComponentProps<typeof TeamTag>;
 
 export declare const Textarea: React.FC<TextareaProps>;
 
-declare const Textarea_2: React_2.ForwardRefExoticComponent<React_2.TextareaHTMLAttributes<HTMLTextAreaElement> & {
+declare const Textarea_2: React_2.ForwardRefExoticComponent<Omit<React_2.TextareaHTMLAttributes<HTMLTextAreaElement>, "value" | "onChange" | "onFocus" | "onBlur"> & {
     value?: string;
-} & Pick<InputFieldProps<string>, "label" | "onChange" | "onFocus" | "onBlur" | "icon" | "hideLabel" | "maxLength" | "placeholder" | "error" | "labelIcon" | "clearable" | "onClear"> & React_2.RefAttributes<HTMLTextAreaElement>>;
+} & Pick<InputFieldProps<string>, "label" | "value" | "onChange" | "onFocus" | "onBlur" | "icon" | "hideLabel" | "maxLength" | "placeholder" | "error" | "labelIcon" | "clearable" | "onClear"> & React_2.RefAttributes<HTMLTextAreaElement>>;
 
-export declare type TextareaProps = Pick<ComponentProps<typeof Textarea_2>, "disabled" | "onChange" | "value" | "placeholder" | "rows" | "cols" | "label" | "labelIcon" | "icon" | "error" | "hideLabel" | "maxLength" | "clearable">;
+export declare type TextareaProps = Pick<ComponentProps<typeof Textarea_2>, "disabled" | "onChange" | "value" | "placeholder" | "rows" | "cols" | "label" | "labelIcon" | "icon" | "error" | "hideLabel" | "maxLength" | "clearable" | "onBlur" | "onFocus" | "name">;
 
 declare const THEMES: {
     readonly light: "";
     readonly dark: ".dark";
 };
+
+export declare type TOCItem<Depth extends 1 | 2 | 3 | 4 = 1> = BaseTOCItem & {
+    children?: NextDepth<Depth> extends never ? never : TOCItem<NextDepth<Depth>>[];
+};
+
+export declare type TOCItemAction = {
+    label: string;
+    onClick: () => void;
+    icon?: IconType;
+} | {
+    type: "separator";
+};
+
+declare interface TOCItemProps {
+    item: TOCItem;
+    counter?: number;
+    isActive?: boolean;
+    sortable: boolean;
+    collapsible?: boolean;
+    isExpanded?: boolean;
+    onToggleExpanded?: (id: string) => void;
+    children?: ReactNode;
+}
+
+declare interface TOCItemSectionHeaderProps {
+    item: TOCItem;
+    children?: ReactNode;
+    isActive?: boolean;
+    collapsible?: boolean;
+    isExpanded?: boolean;
+    onToggleExpanded?: (id: string) => void;
+    sortable: boolean;
+}
+
+export declare interface TOCProps {
+    title: string;
+    items: TOCItem[];
+    className?: string;
+    activeItem?: string;
+    collapsible?: boolean;
+    sortable?: boolean;
+    onReorder?: (reorderedIds: IdStructure[]) => void;
+}
 
 declare type toggleActionType = {
     label: string;
@@ -4270,13 +4312,6 @@ export declare interface User {
 declare interface User_2 {
     name: string;
 }
-
-declare type UserMetadata = BaseMetadata & {
-    type: "user";
-    firstName: string;
-    lastName: string;
-    src?: string;
-};
 
 export declare function useSidebar(): FrameContextType;
 
@@ -4504,7 +4539,7 @@ declare global {
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         aiBlock: {
-            insertAIBlock: (data: AIBlockData, config: AIBlockConfig) => ReturnType;
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
         };
     }
 }
