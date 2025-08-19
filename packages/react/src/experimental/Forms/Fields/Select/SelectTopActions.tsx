@@ -48,6 +48,7 @@ export const SelectTopActions = <R extends RecordType = RecordType>({
         onFocus={onFocus}
       />
       <GroupingSelector
+        hideLabel={true}
         grouping={grouping}
         currentGrouping={currentGrouping}
         onGroupingChange={onGroupingChange}

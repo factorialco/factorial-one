@@ -1,4 +1,5 @@
 import { Icon } from "@/components/Utilities/Icon"
+
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import {
@@ -292,6 +293,7 @@ const SelectComponent = forwardRef(function Select<
 
   useEffect(() => {
     const foundOption = findOption(localValue)
+
     if (foundOption) {
       onChangeSelectedOption?.(foundOption)
       setSelectedOption(foundOption)

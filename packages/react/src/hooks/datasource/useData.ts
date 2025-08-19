@@ -288,17 +288,13 @@ export function useData<
   // and we need to use the latest value in the callback functions
   // like loadMore, setPage, etc.
   const searchValue = useRef<string | undefined>(undefined)
-  useEffect(
-    () => {
-      searchValue.current = !search?.enabled
-        ? undefined
-        : search?.sync
-          ? currentSearch
-          : deferredSearch
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
-    [currentSearch, deferredSearch, search?.enabled, search?.sync]
-  )
+  useEffect(() => {
+    searchValue.current = !search?.enabled
+      ? undefined
+      : search?.sync
+        ? currentSearch
+        : deferredSearch
+  }, [currentSearch, deferredSearch, search?.enabled, search?.sync])
 
   /**
    * Merges 2 arrays of items using the idProvider to update the existing items

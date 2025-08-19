@@ -1,13 +1,13 @@
-import { RecordType } from "@/hooks/datasource"
-import { motion } from "motion/react"
-import { useState } from "react"
-import { Icon } from "../../../../../../components/Utilities/Icon"
-import { ChevronDown } from "../../../../../../icons/app"
+import { Icon } from "@/components/Utilities/Icon"
 import {
   Select,
   SelectItemObject,
   SelectProps,
-} from "../../../../../Forms/Fields/Select"
+} from "@/experimental/Forms/Fields/Select"
+import { RecordType } from "@/hooks/datasource"
+import { ChevronDown } from "@/icons/app"
+import { motion } from "motion/react"
+import { useState } from "react"
 
 export type BreadcrumbSelectProps<
   T extends string,
