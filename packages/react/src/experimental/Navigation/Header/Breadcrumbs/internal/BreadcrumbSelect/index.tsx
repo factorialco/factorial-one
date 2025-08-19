@@ -1,21 +1,23 @@
-import { motion } from "motion/react"
-import { useState } from "react"
-import { Icon } from "../../../../../../components/Utilities/Icon"
-import { ChevronDown } from "../../../../../../icons/app"
+import { Icon } from "@/components/Utilities/Icon"
 import {
   Select,
   SelectItemObject,
   SelectProps,
-} from "../../../../../Forms/Fields/Select"
+} from "@/experimental/Forms/Fields/Select"
+import { RecordType } from "@/experimental/OneDataCollection/types"
+import { ChevronDown } from "@/icons/app"
+import { motion } from "motion/react"
+import { useState } from "react"
 
-export type BreadcrumbSelectProps<T extends string, R = unknown> = SelectProps<
-  T,
-  R
->
+export type BreadcrumbSelectProps<
+  T extends string,
+  R extends RecordType = RecordType,
+> = SelectProps<T, R>
 
-export function BreadcrumbSelect<T extends string, R = unknown>({
-  ...props
-}: BreadcrumbSelectProps<T, R>) {
+export function BreadcrumbSelect<
+  T extends string,
+  R extends RecordType = RecordType,
+>({ ...props }: BreadcrumbSelectProps<T, R>) {
   const [localOpen, setLocalOpen] = useState(props.open)
 
   const onOpenChangeLocal = (open: boolean) => {

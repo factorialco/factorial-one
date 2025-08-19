@@ -12,6 +12,7 @@ type GroupingSelectorProps<
   grouping?: Grouping
   currentGrouping?: GroupingState<R, Grouping>
   onGroupingChange?: (groupingState: GroupingState<R, Grouping>) => void
+  hideLabel?: boolean
 }
 
 const EmptyGroupingValue = "__no-grouping__"
@@ -23,6 +24,7 @@ export const GroupingSelector = <
   grouping,
   currentGrouping,
   onGroupingChange,
+  hideLabel = false,
 }: GroupingSelectorProps<R, Grouping>) => {
   const i18n = useI18n()
   if (
@@ -57,13 +59,14 @@ export const GroupingSelector = <
   ]
 
   return (
-    <div className="flex flex-col gap-0 py-3">
-      <div className="flex items-end gap-2 px-3">
+    <div className="flex flex-col gap-0">
+      <div className="flex items-center gap-2 px-3">
         <div className="shrink grow [&_button]:h-8 [&_button]:rounded">
           <Select
             label={i18n.collections.grouping.groupBy}
             labelIcon={Placeholder}
             options={groupingOptions}
+            hideLabel={hideLabel}
             value={currentGrouping?.field.toString() ?? EmptyGroupingValue}
             onChange={(value: string) =>
               onGroupingChange?.(

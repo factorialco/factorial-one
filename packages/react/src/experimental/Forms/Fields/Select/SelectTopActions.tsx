@@ -6,7 +6,10 @@ import { GroupingSelector } from "@/experimental/OneDataCollection/Settings/comp
 import { RecordType } from "@/experimental/OneDataCollection/types"
 import { F1SearchBox } from "../F1SearchBox"
 
-interface SelectTopActionsProps {
+type SelectTopActionsProps<
+  R extends RecordType,
+  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
+> = {
   showSearchBox?: boolean
   searchBoxPlaceholder?: string
   onSearchChange: (value: string) => void
@@ -14,14 +17,12 @@ interface SelectTopActionsProps {
   searchInputRef: React.RefObject<HTMLInputElement>
   onFocus?: () => void
   onBlur?: () => void
-  grouping?: GroupingDefinition<RecordType>
-  currentGrouping?: GroupingState<RecordType, GroupingDefinition<RecordType>>
-  onGroupingChange?: (
-    grouping: GroupingState<RecordType, GroupingDefinition<RecordType>>
-  ) => void
+  grouping?: Grouping
+  currentGrouping?: GroupingState<R, Grouping>
+  onGroupingChange?: (grouping: GroupingState<R, Grouping>) => void
 }
 
-export const SelectTopActions = ({
+export const SelectTopActions = <R extends RecordType>({
   showSearchBox,
   searchBoxPlaceholder,
   onSearchChange,
@@ -32,7 +33,7 @@ export const SelectTopActions = ({
   grouping,
   currentGrouping,
   onGroupingChange,
-}: SelectTopActionsProps) => {
+}: SelectTopActionsProps<R>) => {
   if (!showSearchBox) return null
   return (
     <div className="flex gap-2 px-2 pt-2">
@@ -47,6 +48,7 @@ export const SelectTopActions = ({
         onFocus={onFocus}
       />
       <GroupingSelector
+        hideLabel={true}
         grouping={grouping}
         currentGrouping={currentGrouping}
         onGroupingChange={onGroupingChange}

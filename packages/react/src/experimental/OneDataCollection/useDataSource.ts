@@ -1,13 +1,12 @@
+import { FiltersDefinition, FiltersState } from "@/components/OneFilterPicker"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
+import { ItemActionsDefinition } from "./item-actions"
+import { navigationFilterTypes } from "./navigationFilters"
 import {
-  FiltersDefinition,
-  FiltersState,
-  ItemActionsDefinition,
   NavigationFiltersDefinition,
   NavigationFiltersState,
-} from "./exports"
-import { navigationFilterTypes } from "./navigationFilters"
+} from "./navigationFilters/types"
 import {
   CollectionSearchOptions,
   DataSource,
@@ -109,14 +108,13 @@ export const createDataSourceDefinition = <
  * - presets: Available filter presets
  */
 export const useDataSource = <
-  R extends RecordType = RecordType,
-  FiltersSchema extends FiltersDefinition = FiltersDefinition,
-  Sortings extends SortingsDefinition = SortingsDefinition,
-  Summaries extends SummariesDefinition = SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<R> = ItemActionsDefinition<R>,
-  NavigationFilters extends
-    NavigationFiltersDefinition = NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
+  R extends RecordType,
+  FiltersSchema extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
+  ItemActions extends ItemActionsDefinition<R>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<R>,
 >(
   {
     currentFilters: initialCurrentFilters = {},

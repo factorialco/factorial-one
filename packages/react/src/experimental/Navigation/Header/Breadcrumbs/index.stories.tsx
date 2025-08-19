@@ -1,11 +1,8 @@
-import {
-  FiltersDefinition,
-  NavigationFiltersDefinition,
-  PaginatedFetchOptions,
-  SelectItemProps,
-} from "@/experimental/exports"
-import { IconType } from "@/factorial-one"
-import { Recruitment } from "@/icons/modules"
+import { FiltersDefinition } from "@/components/OneFilterPicker"
+import { IconType } from "@/components/Utilities/Icon"
+import { SelectItemProps } from "@/experimental/Forms/Fields/Select/types"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import { PaginatedFetchOptions } from "@/experimental/OneDataCollection/types"
 import {
   FIRST_NAMES_MOCK,
   getMockValue,
@@ -171,7 +168,7 @@ export const WithSelectBreadcrumbWithDatasource: Story = {
             id: "recruitment",
             label: "Recruitment",
             href: "/recruitment",
-            icon: Recruitment,
+            module: "ats",
           },
           {
             id: "offers",

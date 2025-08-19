@@ -9,7 +9,6 @@ import {
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker"
-import { OneDataCollection, useDataSource } from ".."
 import {
   Ai,
   Briefcase,
@@ -34,6 +33,7 @@ import {
   STATUS_MOCK,
   SURNAMES_MOCK,
 } from "@/mocks"
+import { OneDataCollection, useDataSource } from ".."
 import {
   PrimaryActionsDefinition,
   SecondaryActionsDefinition,

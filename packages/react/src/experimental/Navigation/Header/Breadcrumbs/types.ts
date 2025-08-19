@@ -1,7 +1,4 @@
-import {
-  FiltersDefinition,
-  ItemActionsDefinition,
-} from "@/experimental/exports"
+import { FiltersDefinition } from "@/components/OneFilterPicker"
 import {
   SelectItemObject,
   SelectItemProps,
@@ -9,6 +6,7 @@ import {
 import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { DropdownItemObject } from "@/experimental/Navigation/Dropdown"
 import { NavigationItem } from "@/experimental/Navigation/utils"
+import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   DataSourceDefinition,
@@ -37,9 +35,9 @@ type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   type: "select"
   searchbox?: boolean
   externalSearch?: boolean
-  onChange: BreadcrumbSelectProps<string>["onChange"]
+  onChange: BreadcrumbSelectProps<string, RecordType>["onChange"]
   value?: string
-  defaultItem?: SelectItemObject<string>
+  defaultItem?: SelectItemObject<string, RecordType>
 } & (
     | {
         source: DataSourceDefinition<
@@ -57,7 +55,7 @@ type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     | {
         source?: never
         mapOptions?: never
-        options: SelectItemProps<string>[]
+        options: SelectItemProps<string, RecordType>[]
       }
   )
 
