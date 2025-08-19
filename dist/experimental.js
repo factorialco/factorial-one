@@ -6709,36 +6709,38 @@ const XN = (t) => "date" in t, QN = {
 )) }) : null, Gc = "__no-grouping__", Z2 = ({
   grouping: t,
   currentGrouping: e,
-  onGroupingChange: n
+  onGroupingChange: n,
+  hideLabel: i = !1
 }) => {
-  const i = Ve();
+  const r = Ve();
   if (!t || t.mandatory && Object.entries(t.groupBy).length < 2)
     return null;
-  const r = [
+  const s = [
     ...t.mandatory ? [] : [
       {
-        label: i.collections.grouping.noGrouping,
+        label: r.collections.grouping.noGrouping,
         value: Gc
       }
     ],
     ...Object.entries(t.groupBy || {}).filter(
-      (s) => !!s[1]
-    ).map(([s, o]) => ({
-      label: o.name,
-      value: s
+      (o) => !!o[1]
+    ).map(([o, a]) => ({
+      label: a.name,
+      value: o
     }))
   ];
-  return /* @__PURE__ */ f("div", { className: "flex flex-col gap-0 py-3", children: /* @__PURE__ */ b("div", { className: "flex items-end gap-2 px-3", children: [
+  return /* @__PURE__ */ f("div", { className: "flex flex-col gap-0", children: /* @__PURE__ */ b("div", { className: "flex items-center gap-2 px-3", children: [
     /* @__PURE__ */ f("div", { className: "shrink grow [&_button]:h-8 [&_button]:rounded", children: /* @__PURE__ */ f(
       nr,
       {
-        label: i.collections.grouping.groupBy,
+        label: r.collections.grouping.groupBy,
         labelIcon: Z1,
-        options: r,
+        options: s,
+        hideLabel: i,
         value: (e == null ? void 0 : e.field.toString()) ?? Gc,
-        onChange: (s) => n == null ? void 0 : n(
-          s !== Gc ? {
-            field: s,
+        onChange: (o) => n == null ? void 0 : n(
+          o !== Gc ? {
+            field: o,
             order: (e == null ? void 0 : e.order) ?? "asc"
           } : void 0
         )
@@ -6748,7 +6750,7 @@ const XN = (t) => "date" in t, QN = {
       oe,
       {
         hideLabel: !0,
-        label: i.collections.grouping.toggleDirection,
+        label: r.collections.grouping.toggleDirection,
         variant: "outline",
         icon: (e == null ? void 0 : e.order) === "asc" ? D1 : Ql,
         onClick: () => n == null ? void 0 : n({
@@ -6786,6 +6788,7 @@ const XN = (t) => "date" in t, QN = {
   /* @__PURE__ */ f(
     Z2,
     {
+      hideLabel: !0,
       grouping: a,
       currentGrouping: l,
       onGroupingChange: d
