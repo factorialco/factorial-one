@@ -60,8 +60,8 @@ export const weekGranularity: GranularityDefinition = {
   toRangeString: (date) => formatDateRange(date, "'W'I yyyy"),
   toRange: (date) => toWeekGranularityDateRange(date),
   toString: (date) => formatDateToString(date, "'W'I yyyy"),
-  toFormattedString: (date) => {
-    return formatDateToString(date, "'Week of' MMM d")
+  toFormattedString: (str, date) => {
+    return formatDateToString(date, `'${str}' MMM d`)
   },
   fromString: (dateStr) => {
     const dateRangeString = toDateRangeString(dateStr)

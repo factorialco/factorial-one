@@ -155,8 +155,14 @@ export function OneCalendar({
     const range = toDateRange(selected)
     if (granularity.calendarView === "week") {
       setInputValue({
-        from: granularity.toFormattedString(range?.from),
-        to: granularity.toFormattedString(range?.to),
+        from: granularity.toFormattedString(
+          i18n.date.granularities.week.range,
+          range?.from
+        ),
+        to: granularity.toFormattedString(
+          i18n.date.granularities.week.range,
+          range?.to
+        ),
       })
     } else {
       const { from, to } = granularity.toRangeString(
