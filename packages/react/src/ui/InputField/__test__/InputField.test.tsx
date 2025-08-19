@@ -1,5 +1,6 @@
+import { zeroRender as render } from "@/testing/test-utils"
 import "@testing-library/jest-dom/vitest"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import React from "react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { Archive } from "../../../icons/app"

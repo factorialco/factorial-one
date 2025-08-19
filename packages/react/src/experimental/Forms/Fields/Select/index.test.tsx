@@ -5,7 +5,6 @@ import { fireEvent, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Search } from "../../../../icons/app"
-import { render, TestI18nProvider } from "../../../../test-utils"
 import { Select } from "./index"
 import type { SelectItemProps } from "./types"
 
