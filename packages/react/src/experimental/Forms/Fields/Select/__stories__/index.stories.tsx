@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
-import { Select, SelectProps } from "../index"
+import { Select, SelectItemObject, SelectProps } from "../index"
 
 import { IconType } from "@/components/Utilities/Icon"
 import { createDataSourceDefinition } from "@/hooks/datasource"
@@ -20,9 +20,20 @@ const SelectWithHooks = (props: SelectProps<string>) => {
   const [localValue, setLocalValue] = useState(props.value)
   const [, setSearchValue] = useState("")
   // Sets a click handler to change the label's value
-  const handleOnChange = (value: string, item?: unknown) => {
+  const handleOnChange = (
+    value: string,
+    item?: unknown,
+    option?: SelectItemObject<string>
+  ) => {
     setLocalValue(value)
-    console.log("selected value:", value, "- selected item:", item)
+    console.log(
+      "selected value:",
+      value,
+      "- original item:",
+      item,
+      "- selection option:",
+      option
+    )
   }
 
   const handleOnSearchChange = (value: string) => {

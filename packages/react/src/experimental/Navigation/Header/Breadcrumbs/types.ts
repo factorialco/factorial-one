@@ -1,4 +1,4 @@
-import { FiltersDefinition } from "@/experimental/exports"
+import { FiltersDefinition } from "@/components/OneFilterPicker"
 import {
   SelectItemObject,
   SelectItemProps,
@@ -32,7 +32,7 @@ type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   type: "select"
   searchbox?: boolean
   externalSearch?: boolean
-  onChange: BreadcrumbSelectProps<string>["onChange"]
+  onChange: BreadcrumbSelectProps<string, RecordType>["onChange"]
   value?: string
   defaultItem?: SelectItemObject<string, RecordType>
 } & (

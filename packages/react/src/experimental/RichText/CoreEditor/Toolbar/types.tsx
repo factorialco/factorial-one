@@ -1,5 +1,5 @@
 import { IconType } from "@/components/Utilities/Icon"
-import { Shortcut } from "@/experimental/exports"
+import { Shortcut } from "@/experimental/Information/Shortcut"
 import { Editor } from "@tiptap/react"
 import { ComponentProps } from "react"
 

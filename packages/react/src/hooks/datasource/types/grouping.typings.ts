@@ -13,6 +13,7 @@ import { SortOrder } from "./sortings.typings"
 export type GroupingDefinition<R extends RecordType> = {
   /** Whether grouping is mandatory or the user can chose not to group */
   mandatory?: boolean
+  hideSelector?: boolean
   groupBy: {
     [K in RecordPaths<R>]?: {
       /** The label for the grouping */

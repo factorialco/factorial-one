@@ -1,7 +1,7 @@
 import { RefObject } from "react"
 import { cn } from "../../../../../lib/utils"
 import { getAvatarColor } from "../../../Avatars/BaseAvatar/utils"
-import { PersonAvatar } from "../../../Avatars/exports"
+import { PersonAvatar } from "../../../Avatars/PersonAvatar"
 import { Picker } from "../../../Reactions/Picker"
 import { BACKGROUND_COLORS } from "../types"
 
@@ -59,7 +59,7 @@ export function CelebrationAvatar({
               src={src}
               firstName={firstName}
               lastName={lastName}
-              size="xlarge"
+              size="xxlarge"
             />
           </div>
           {canReact && (

@@ -1,10 +1,11 @@
+import { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import {
-  FiltersDefinition,
   GroupingDefinition,
   RecordType,
   SortingsDefinition,
 } from "@/hooks/datasource"
-import { DataCollectionSource } from "../../../../exports"
+import { cn } from "@/lib/utils"
+import { DataCollectionSource } from "../../../../hooks/useDataCollectionSource"
 import { ItemActionsDefinition } from "../../../../item-actions"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { SummariesDefinition } from "../../../../summary"
@@ -34,6 +35,7 @@ type ListGroupProps<
   handleSelectItemChange: (item: R, checked: boolean) => void
   fields: ReadonlyArray<ListPropertyDefinition<R, Sortings>>
   itemDefinition: (record: R) => ItemDefinition
+  isLoadingMore: boolean
 }
 
 /**
@@ -54,6 +56,7 @@ export const ListGroup = <
   handleSelectItemChange,
   fields,
   itemDefinition,
+  isLoadingMore,
 }: ListGroupProps<
   Record,
   Filters,
@@ -64,7 +67,12 @@ export const ListGroup = <
   Grouping
 >) => {
   return (
-    <div className="flex flex-col overflow-hidden rounded-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary">
+    <div
+      className={cn(
+        "flex flex-col overflow-hidden rounded-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary",
+        isLoadingMore && "rounded-b-none"
+      )}
+    >
       {items.map((item, index) => (
         <Row
           key={`row-${index}`}

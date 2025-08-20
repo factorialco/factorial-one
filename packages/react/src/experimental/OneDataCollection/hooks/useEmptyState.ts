@@ -9,7 +9,7 @@ export type EmptyState = {
   actions?: ActionProps[]
 }
 
-export const emptyStatesTypes = ["no-data", "no-results", "error"]
+export const emptyStatesTypes = ["no-data", "no-results", "error"] as const
 export type EmptyStateType = (typeof emptyStatesTypes)[number]
 
 export type CustomEmptyStates = Partial<

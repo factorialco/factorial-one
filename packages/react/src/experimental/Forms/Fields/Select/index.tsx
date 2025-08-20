@@ -1,7 +1,8 @@
 import { OneEllipsis } from "@/components/OneEllipsis"
 import { Icon } from "@/components/Utilities/Icon"
-import { TagList } from "@/experimental/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { TagList } from "@/experimental/Information/Tags/TagList"
+
 import {
   BaseFetchOptions,
   BaseResponse,
@@ -123,6 +124,7 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = (
     | "disabled"
     | "minWidth"
     | "maxWidth"
+    | "name"
   >
 
 const SelectItem = <T extends string, R>({
@@ -198,7 +200,7 @@ const SelectComponent = forwardRef(function Select<
   {
     placeholder,
     onChange,
-    onChangeSelectedOptions,
+    onChangeSelectedOption,
     value,
     options = [],
     mapOptions,
@@ -223,6 +225,7 @@ const SelectComponent = forwardRef(function Select<
     loading,
     multiple,
     defaultItem,
+    name,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -420,24 +423,20 @@ const SelectComponent = forwardRef(function Select<
     [data.records, optionMapper]
   )
 
-  // TODO????
-  // // Select options if select values changes
-  // const valueString = JSON.stringify(value)
-  // useEffect(
-  //   () => {
-  //     const foundOptions = findOptions(value)
+  useEffect(() => {
+    const foundOption = findOption(localValue)
 
-  //     if (multiple) {
-  //       onChangeSelectedOptions?.(foundOptions)
-  //       setSelectedOptions(foundOptions)
-  //     } else {
-  //       onChangeSelectedOptions?.(foundOptions[0])
-  //       setSelectedOptions(foundOptions[0])
-  //     }
-  //   },
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the value
-  //   [optionMapper, findOptions, onChangeSelectedOptions, valueString, multiple]
-  // )
+    if (foundOption) {
+      onChangeSelectedOption?.(foundOption)
+      setSelectedOption(foundOption)
+    }
+  }, [
+    data.records,
+    localValue,
+    optionMapper,
+    findOption,
+    onChangeSelectedOption,
+  ])
 
   useEffect(() => {
     if (open) {
@@ -591,25 +590,39 @@ const SelectComponent = forwardRef(function Select<
               clearable={clearable}
               size={size}
               loading={isInitialLoading || loading}
+              name={name}
               onClickContent={() => {
                 handleChangeOpenLocal(!openLocal)
               }}
               append={
                 <div
                   className={cn(
-                    "rounded-2xs bg-f1-background-secondary p-0.5 transition-transform duration-200",
-                    openLocal && "rotate-180",
+                    "rounded-2xs bg-f1-background-secondary p-0.5",
+                    "flex items-center justify-center",
                     !disabled && "cursor-pointer"
                   )}
                 >
-                  <Icon
-                    onClick={() => {
-                      if (disabled) return
-                      handleChangeOpenLocal(!openLocal)
-                    }}
-                    icon={ChevronDown}
-                    size="sm"
-                  />
+                  <div
+                    className={cn(
+                      "origin-center transition-transform duration-200",
+                      "flex items-center justify-center",
+                      openLocal && "rotate-180"
+                    )}
+                  >
+                    <Icon
+                      onClick={() => {
+                        if (disabled) return
+                        handleChangeOpenLocal(!openLocal)
+                      }}
+                      icon={ChevronDown}
+                      size="sm"
+                      className={cn(
+                        "rounded-2xs bg-f1-background-secondary p-0.5 transition-transform duration-200",
+                        openLocal && "rotate-180",
+                        !disabled && "cursor-pointer"
+                      )}
+                    />
+                  </div>
                 </div>
               }
             >

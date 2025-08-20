@@ -1,15 +1,13 @@
+import { FiltersState } from "@/components/OneFilterPicker/types"
+import { useDataCollectionSource } from "@/experimental/OneDataCollection/hooks/useDataCollectionSource"
+import { DataCollectionDataAdapter } from "@/experimental/OneDataCollection/hooks/useDataCollectionSource/types"
 import { BaseResponse } from "@/hooks/datasource/types"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { Observable } from "zen-observable-ts"
-import {
-  DataCollectionDataAdapter,
-  FiltersState,
-  NavigationFiltersDefinition,
-  OneDataCollection,
-  useDataCollectionSource,
-} from "../exports"
 import { CustomEmptyStates } from "../hooks/useEmptyState"
+import { OneDataCollection } from "../index"
+import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import {
   createPromiseDataFetch,
   filters,
@@ -107,7 +105,7 @@ export const CustomMessagesAndActions: Story = {
       fetchData: createPromiseDataFetch(),
     }
 
-    const emptyStates = {
+    const emptyStates: CustomEmptyStates = {
       "no-data": {
         description: "This is a no data custom message",
         emoji: "🤷",

@@ -82,7 +82,9 @@ export const Settings = <
     : 0
 
   const shouldShowSettings =
-    (visualizations && visualizations.length > 1) || groupByOptions > 0
+    (visualizations && visualizations.length > 1) ||
+    (groupByOptions > 0 && !grouping?.hideSelector) ||
+    (sortings && Object.keys(sortings).length > 0)
 
   const [open, setOpen] = useState(false)
 
@@ -100,6 +102,8 @@ export const Settings = <
   const hasVisualizations = visualizations && visualizations.length > 1
   const hasGrouping = grouping && groupByOptions > 0
   const hasSortings = sortings && Object.keys(sortings).length > 0
+
+  if (!shouldShowSettings) return null
 
   return (
     shouldShowSettings && (

@@ -1,18 +1,18 @@
+import { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
-import { Ai, Download, Pencil, Upload } from "@/icons/app"
+import { SortingsDefinition } from "@/hooks/datasource/types/sortings.typings"
+import { Ai } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
-import { FiltersDefinition } from "../../../components/OneFilterPicker/types"
-import { SortingsDefinition } from "../../../hooks/datasource/types/sortings.typings"
-import { SecondaryActionsItemDefinition } from "../actions"
 import {
   DataCollectionSource,
-  OneDataCollection,
   useDataCollectionSource,
-} from "../exports"
+} from "../hooks/useDataCollectionSource"
+import { OneDataCollection } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import { GroupingDefinition } from "../types"
 import { Visualization } from "../visualizations/collection/types"
+import { buildSecondaryActions } from "./mockData"
 
 const meta = {
   title: "Data Collection/Collection Actions",
@@ -84,34 +84,6 @@ const mockUsers = [
     },
   },
 ]
-
-// Example of a comprehensive actions definition with various types of actions
-const buildSecondaryActions = (): SecondaryActionsItemDefinition[] => {
-  return [
-    // Action with description
-    {
-      label: "Edit",
-      icon: Pencil,
-      onClick: () => console.log(`Another user action`),
-      description: "User actions",
-    },
-
-    // Separator between action groups
-    { type: "separator" },
-    {
-      label: "Export",
-      icon: Upload,
-      onClick: () => console.log(`Downloading users`),
-      description: "Download users",
-    },
-    {
-      label: "Import",
-      icon: Download,
-      onClick: () => console.log(`Importing users`),
-      description: "Import users",
-    },
-  ]
-}
 
 function BaseStory<
   Filters extends FiltersDefinition,

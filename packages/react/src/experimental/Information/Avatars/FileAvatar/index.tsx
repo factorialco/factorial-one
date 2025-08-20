@@ -1,10 +1,20 @@
 import { cn } from "@/lib/utils"
-import { Avatar, AvatarFallback } from "@/ui/avatar"
+import { Avatar, AvatarFallback, sizes } from "@/ui/avatar"
 import { ElementRef, forwardRef } from "react"
+import { FileDef } from "./types"
 import { getFileTypeInfo } from "./utils"
 
-type FileAvatarProps = React.ComponentPropsWithoutRef<typeof Avatar> & {
-  file: File
+type FileAvatarSize = Extract<
+  (typeof sizes)[number],
+  "small" | "medium" | "large"
+>
+
+export type FileAvatarProps = Omit<
+  React.ComponentPropsWithoutRef<typeof Avatar>,
+  "type"
+> & {
+  file: FileDef
+  size?: FileAvatarSize
 }
 
 const FileAvatar = forwardRef<ElementRef<typeof Avatar>, FileAvatarProps>(
@@ -26,4 +36,4 @@ const FileAvatar = forwardRef<ElementRef<typeof Avatar>, FileAvatarProps>(
 )
 FileAvatar.displayName = "FileAvatar"
 
-export { FileAvatar }
+export { FileAvatar, type FileDef }

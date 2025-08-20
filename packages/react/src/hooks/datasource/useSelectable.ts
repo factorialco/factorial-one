@@ -4,7 +4,6 @@ import {
   DataSourceDefinition,
   GroupingDefinition,
   OnSelectItemsCallback,
-  OnSelectItemsCallbackStatus,
   PaginationInfo,
   RecordType,
   SelectedItemsState,
@@ -19,13 +18,7 @@ export type AllSelectionStatus = {
   unselectedCount: number
 }
 
-type UseSelectable<R extends RecordType, Filters extends FiltersDefinition> = {
-  /*
-   * A map of selected items in the current data
-   * It is used to display the selected items in the UI
-   * It is updated when the data changes
-   */
-  selectedItemsInData: Map<number | string, R>
+type UseSelectable<R extends RecordType> = {
   isAllSelected: boolean
   selectedItems: Map<number | string, R>
   selectedGroups: Map<string, GroupRecord<R>>
@@ -35,11 +28,6 @@ type UseSelectable<R extends RecordType, Filters extends FiltersDefinition> = {
   handleSelectGroupChange: (group: GroupRecord<R>, checked: boolean) => void
   groupAllSelectedStatus: Record<string, AllSelectionStatus>
   allSelectedStatus: AllSelectionStatus
-  /**
-   * The selected status
-   * It is used to notify the parent component about the selected items
-   */
-  selectedStatus: OnSelectItemsCallbackStatus<R, Filters>
 }
 
 export function useSelectable<
@@ -52,33 +40,29 @@ export function useSelectable<
   paginationInfo: PaginationInfo | null,
   source: DataSourceDefinition<R, Filters, Sortings, Grouping>,
   onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
-  defaultSelectedItems?: SelectedItemsState | undefined,
-  options?: {
-    singleSelect?: boolean
-  }
-): UseSelectable<R, Filters> {
+  defaultSelectedItems?: SelectedItemsState | undefined
+): UseSelectable<R> {
+  const isGrouped = data.type === "grouped"
+  const isPaginated = paginationInfo !== null
+  /**
+   * Items state and list of selected and unselected items
+   */
   // itemsState is the state of the selected items
   type ItemState = {
     item: WithGroupId<R>
     groupId?: unknown
     checked: boolean
   }
-
-  const isGrouped = data.type === "grouped"
-  const isPaginated = paginationInfo !== null
+  const [itemsState, setItemsState] = useState<Map<number | string, ItemState>>(
+    new Map()
+  )
 
   /**
    * Set the default selected items and groups
    */
-  const [isDefaultSelectedItemsSet, setIsDefaultSelectedItemsSet] =
-    useState(false)
   useEffect(() => {
-    if (!defaultSelectedItems || isDefaultSelectedItemsSet) {
+    if (!defaultSelectedItems) {
       return
-    }
-
-    if (defaultSelectedItems.allSelected) {
-      handleSelectAll(true, true)
     }
 
     if (isGrouped) {
@@ -102,14 +86,6 @@ export function useSelectable<
   }, [JSON.stringify(defaultSelectedItems), data.records])
 
   /**
-   * Items state is a list of selected and unselected items (the list the user interacted with)
-   */
-
-  const [itemsState, setItemsState] = useState<Map<number | string, ItemState>>(
-    new Map()
-  )
-
-  /*
    * Get the list of selected and unselected items from the itemsState for performance reasons
    */
   const [selectedItems, unselectedItems] = useMemo(() => {
@@ -126,7 +102,7 @@ export function useSelectable<
   }, [itemsState])
 
   /**
-   * Groups state is a list of selected and unselected groups (the list the user interacted with)
+   * Groups state and list of selected and unselected groups
    */
   const [groupsState, setGroupsState] = useState<
     Map<string, { group: GroupRecord<R>; checked: boolean }>
@@ -151,10 +127,9 @@ export function useSelectable<
    */
   const handleSelectGroupChange = (
     group: GroupRecord<R> | GroupRecord<R>[],
-    checked: boolean,
-    onlyIfNotStateDefined: boolean = false
+    checked: boolean
   ) => {
-    if (!isGrouped || options?.singleSelect) {
+    if (!isGrouped) {
       return
     }
 
@@ -171,7 +146,7 @@ export function useSelectable<
         )
         .map((item) => item.item),
     ]
-    handleSelectItemChange(groupItems, checked, onlyIfNotStateDefined)
+    handleSelectItemChange(groupItems, checked)
 
     setGroupsState((current) => {
       const newState = new Map(current)
@@ -254,6 +229,7 @@ export function useSelectable<
     }
 
     getGroupAllSelectedStatus()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGrouped, isGrouped && data.groups, groupsState, itemsState])
 
@@ -279,16 +255,9 @@ export function useSelectable<
     item: R | readonly R[],
     checked: boolean,
     // Only applies the checked state if the item has no state set yet
-    onlyIfNotStateDefined: boolean = false
+    onlyIfNotSelected: boolean = false
   ) => {
-    if (options?.singleSelect) {
-      clearSelected()
-    }
-
     const items = Array.isArray(item) ? item : [item]
-    const itemsStateNew = options?.singleSelect
-      ? new Map()
-      : new Map(itemsState)
 
     let updated = 0
     for (const item of items) {
@@ -296,45 +265,32 @@ export function useSelectable<
       if (id === undefined) {
         return
       }
+
       // If the item is already selected, we don't need to update the state if onlyIfNotSelected is true
-      if (onlyIfNotStateDefined && itemsStateNew.has(id)) {
+      if (onlyIfNotSelected && itemsState.has(id)) {
         return
       }
 
       updated++
-      // If the select is single, we dont allow to toggle the value, so is always checked
-      itemsStateNew.set(id, {
-        item,
-        checked: options?.singleSelect ? true : checked,
-      })
+      itemsState.set(id, { item, checked })
     }
 
     if (updated > 0) {
-      setItemsState(itemsStateNew)
+      setItemsState((current) => new Map(current))
     }
   }
 
-  const handleSelectAll = (
-    checked: boolean,
-    onlyIfNotStateDefined: boolean = false
-  ) => {
-    if (options?.singleSelect) {
-      return
-    }
-
+  const handleSelectAll = (checked: boolean) => {
     setAllSelectedCheck(checked)
-
     if (isGrouped) {
       handleSelectGroupChange(
         Array.from(groupsState.values()).map(({ group }) => group),
-        checked,
-        onlyIfNotStateDefined
+        checked
       )
     } else {
       handleSelectItemChange(
         Array.from(itemsState.values()).map(({ item }) => item),
-        checked,
-        onlyIfNotStateDefined
+        checked
       )
     }
   }
@@ -394,12 +350,10 @@ export function useSelectable<
     // eslint-disable-next-line react-hooks/exhaustive-deps -- handleItemStateChange is a stable function
   }, [data, isAllSelected, isGrouped])
 
-  /**
-   * Controls the allSelectedCheck state
-   * If all items are selected, we need to set the allSelectedCheck state to true
-   * If there are no selected items, we need to set the allSelectedCheck state to false
-   * If some items are selected, we need to keep the state as is to know if we will need to check the next page items
-   */
+  // Control the allSelectedCheck state
+  // If all items are selected, we need to set the allSelectedCheck state to true
+  // If there are no selected items, we need to set the allSelectedCheck state to false
+  // If some items are selected, we need to keep the state as is to know if we will need to check the next page items
   useEffect(() => {
     if (areAllKnownItemsSelected) {
       setAllSelectedCheck(true)
@@ -410,20 +364,10 @@ export function useSelectable<
     }
   }, [areAllKnownItemsSelected, selectedCount])
 
-  /**
-   * Gets the selected status
-   * @description It is used to notify the parent component about the selected items
-   */
-  const selectedStatus: OnSelectItemsCallbackStatus<R, Filters> =
-    useMemo(() => {
-      // Notify the parent component about the selected items
-      const totalItems = paginationInfo?.total ?? (data.records?.length || 0)
-
-      const selectedItemsCount = allSelectedCheck
-        ? totalItems - unselectedCount
-        : selectedCount
-
-      return {
+  useEffect(() => {
+    // Notify the parent component about the selected items
+    onSelectItems?.(
+      {
         allSelected:
           unselectedCount === 0
             ? allSelectedCheck
@@ -438,71 +382,21 @@ export function useSelectable<
           ])
         ),
         filters: source.currentFilters || {},
-        selectedCount: selectedItemsCount,
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps  --  We intentionally omit clearSelectedItems, onSelectItems, selectedCount, source.currentFilters, and unselectedCount
-    }, [
-      allSelectedCheck,
-      itemsState,
-      groupsState,
-      groupAllSelectedStatus,
-      paginationInfo?.total,
-      data.records?.length,
-    ])
-
-  /**
-   * Notify the parent component about the selected items
-   * @description It is used to notify the parent component about the selected items
-   */
-  useEffect(() => {
-    // Notify the parent component about the selected items
-    onSelectItems?.(selectedStatus, clearSelectedItems)
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- onSelectItems is not stable and causes a loop
-  }, [selectedStatus, clearSelectedItems])
-
-  /**
-   * Creates a map of selected items in the current data chunk
-   * @description It is used to know which items should set as checked in the UI
-   */
-  const selectedItemsInData = useMemo(
-    () => {
-      const res = new Map()
-
-      for (const group of data.groups) {
-        for (const record of group.records) {
-          const id = source.selectable && source.selectable(record)
-          if (id === undefined) {
-            continue
-          }
-          // If it is specitely unselected, we don't add
-          if (unselectedItems.has(id)) {
-            continue
-          }
-          if (
-            allSelectedCheck ||
-            groupAllSelectedStatus[group.key]?.checked ||
-            selectedItems.has(id)
-          ) {
-            res.set(id, record)
-          }
-        }
-      }
-      return res
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only need source.selectable
-    [
-      selectedItems,
-      unselectedItems,
-      allSelectedCheck,
-      groupAllSelectedStatus,
-      data.groups,
-      source.selectable,
-    ]
-  )
+        selectedCount,
+      },
+      clearSelectedItems
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps  --  We intentionally omit clearSelectedItems, onSelectItems, selectedCount, source.currentFilters, and unselectedCount
+  }, [
+    allSelectedCheck,
+    itemsState,
+    groupsState,
+    groupAllSelectedStatus,
+    paginationInfo?.total,
+    data.records?.length,
+  ])
 
   return {
-    selectedStatus,
-    selectedItemsInData,
     selectedItems,
     selectedGroups,
     allSelectedStatus: {

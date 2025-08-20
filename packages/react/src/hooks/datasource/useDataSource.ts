@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import {
@@ -100,9 +101,28 @@ export function useDataSource<
   }: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<R, FiltersSchema, Sortings, Grouping> {
-  const [currentFilters, setCurrentFilters] = useState<
+  const [currentFilters, _setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
+
+  const setCurrentFilters: Dispatch<
+    SetStateAction<FiltersState<FiltersSchema>>
+  > = (value) => {
+    if (typeof value === "function") {
+      _setCurrentFilters((prev) => {
+        const next = (
+          value as (
+            prevState: FiltersState<FiltersSchema>
+          ) => FiltersState<FiltersSchema>
+        )(prev)
+        return JSON.stringify(next) === JSON.stringify(prev) ? prev : next
+      })
+    } else {
+      _setCurrentFilters((prev) =>
+        JSON.stringify(value) === JSON.stringify(prev) ? prev : value
+      )
+    }
+  }
 
   const [currentSortings, setCurrentSortings] =
     useState<SortingsState<Sortings> | null>(defaultSorting || null)

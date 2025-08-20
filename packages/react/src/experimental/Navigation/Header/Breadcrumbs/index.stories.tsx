@@ -1,9 +1,7 @@
-import {
-  FiltersDefinition,
-  PaginatedFetchOptions,
-  SelectItemProps,
-} from "@/experimental/exports"
-import { IconType } from "@/factorial-one"
+import { FiltersDefinition } from "@/components/OneFilterPicker"
+import { IconType } from "@/components/Utilities/Icon"
+import { SelectItemProps } from "@/experimental/Forms/Fields/Select/types"
+import { PaginatedFetchOptions } from "@/hooks/datasource"
 import {
   FIRST_NAMES_MOCK,
   getMockValue,

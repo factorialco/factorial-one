@@ -2,7 +2,7 @@ import { TabsProps } from "@/experimental/Navigation/Tabs"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent } from "@/ui/dialog"
 import { Drawer, DrawerContent, DrawerOverlay } from "@/ui/drawer"
-import React, { ComponentProps, useEffect, useState } from "react"
+import React, { ComponentProps, useEffect, useMemo, useState } from "react"
 import { OneModalContent } from "./OneModalContent/OneModalContent"
 import { OneModalHeader } from "./OneModalHeader/OneModalHeader"
 import { OneModalProvider } from "./OneModalProvider"
@@ -56,6 +56,28 @@ export const OneModal: React.FC<OneModalProps> = ({
 
   const isSmallScreen = useIsSmallScreen()
 
+  const isSidePosition = position === "left" || position === "right"
+
+  const contentClassName = useMemo(() => {
+    if (isSmallScreen && asBottomSheetInMobile) {
+      return "max-h-[95vh] bg-f1-background"
+    }
+
+    if (isSidePosition) {
+      return cn(
+        "w-full overflow-x-hidden flex flex-col absolute top-3 bottom-3 translate-y-0 translate-x-0 max-w-[539px] rounded-md border border-solid border-f1-border-secondary",
+        position === "left" && "left-3",
+        position === "right" && "left-auto right-3"
+      )
+    }
+
+    if (position === "fullscreen") {
+      return "w-[calc(100%-48px)] h-[calc(100%-48px)] overflow-x-hidden"
+    }
+
+    return "flex flex-col max-h-[620px] max-w-[680px] overflow-hidden"
+  }, [position, isSmallScreen, asBottomSheetInMobile, isSidePosition])
+
   if (isSmallScreen && asBottomSheetInMobile) {
     return (
       <OneModalProvider
@@ -66,30 +88,19 @@ export const OneModal: React.FC<OneModalProps> = ({
       >
         <Drawer open={open} onOpenChange={handleOpenChange}>
           <DrawerOverlay className="bg-f1-background-overlay" />
-          <DrawerContent className="max-h-[95vh] bg-f1-background">
-            {children}
-          </DrawerContent>
+          <DrawerContent className={contentClassName}>{children}</DrawerContent>
         </Drawer>
       </OneModalProvider>
     )
   }
 
-  let contentClassName =
-    "flex flex-col max-h-[620px] max-w-[680px] overflow-hidden"
-
-  const isSidePosition = position === "left" || position === "right"
-
-  if (isSidePosition) {
-    contentClassName = cn(
-      "w-full overflow-x-hidden flex flex-col absolute top-3 bottom-3 translate-y-0 translate-x-0 max-w-[539px] rounded-md border border-solid border-f1-border-secondary",
-      position === "left" && "left-3",
-      position === "right" && "left-auto right-3"
-    )
-  }
-
   return (
     <OneModalProvider isOpen={open} onClose={handleClose} position={position}>
-      <Dialog open={open} onOpenChange={onClose} modal={position === "center"}>
+      <Dialog
+        open={open}
+        onOpenChange={onClose}
+        modal={position === "center" || position === "fullscreen"}
+      >
         <DialogContent
           withTraslateAnimation={!isSidePosition}
           className={contentClassName}

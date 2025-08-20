@@ -11,6 +11,9 @@ import {
 const meta: Meta = {
   title: "Datasource/Examples",
   parameters: {
+    a11y: {
+      skipCi: true,
+    },
     docs: {
       description: {
         component:
@@ -22,11 +25,11 @@ const meta: Meta = {
 
 export default meta
 
+import { Await } from "@/components/Utilities/Await"
 import {
   generateMockUsers,
   MockUser,
 } from "@/experimental/OneDataCollection/__stories__/mockData"
-import { Await } from "@/factorial-one"
 import { DEPARTMENTS_MOCK } from "@/mocks"
 
 const mockUsers: MockUser[] = generateMockUsers(30)

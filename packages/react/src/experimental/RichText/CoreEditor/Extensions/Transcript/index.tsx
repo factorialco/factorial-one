@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { PersonAvatar } from "@/experimental/exports"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { Node } from "@tiptap/core"
@@ -117,10 +117,7 @@ export const TranscriptView: React.FC<NodeViewProps> = ({
           className="flex flex-row items-center justify-between gap-2"
           layout
         >
-          <div
-            className="flex cursor-pointer flex-row items-center gap-2"
-            onClick={handleToggleCollapse}
-          >
+          <div className="flex flex-row items-center gap-2">
             <div className="flex flex-col gap-1">
               <div className="flex flex-row items-center gap-3">
                 <p className="text-f1-text-primary text-lg font-semibold">
@@ -193,25 +190,7 @@ export const TranscriptView: React.FC<NodeViewProps> = ({
                   {data.messages.map((message, index) => {
                     const user = getUserById(message.userId)
                     return (
-                      <motion.div
-                        key={index}
-                        initial={{
-                          opacity: 0,
-                          y: -10,
-                          scale: 0.95,
-                        }}
-                        animate={{
-                          opacity: 1,
-                          y: 0,
-                          scale: 1,
-                        }}
-                        transition={{
-                          delay: index * 0.05,
-                          duration: 0.2,
-                          ease: "easeOut",
-                        }}
-                        className="flex flex-row gap-3"
-                      >
+                      <div key={index} className="flex flex-row gap-3">
                         {user?.imageUrl && (
                           <PersonAvatar
                             size="xsmall"
@@ -233,7 +212,7 @@ export const TranscriptView: React.FC<NodeViewProps> = ({
                             {message.text}
                           </p>
                         </div>
-                      </motion.div>
+                      </div>
                     )
                   })}
                 </div>

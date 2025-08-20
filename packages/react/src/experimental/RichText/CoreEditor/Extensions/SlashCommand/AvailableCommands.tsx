@@ -54,7 +54,7 @@ const getGroupedCommands = (
   aiBlockConfig?: AIBlockConfig
 ): CommandGroup[] => [
   // Only include AI Block group if config is provided
-  ...(aiBlockConfig
+  ...(aiBlockConfig?.buttons && aiBlockConfig.buttons.length > 0
     ? [
         {
           title: aiBlockConfig.title,

@@ -5,6 +5,8 @@ import { AvatarListCell } from "./types/avatarList.tsx"
 import { CompanyCell } from "./types/company.tsx"
 import { DateCell } from "./types/date.tsx"
 import { DotTagCell } from "./types/dotTag.tsx"
+import { FileCell } from "./types/file.tsx"
+import { FolderCell } from "./types/folder.tsx"
 import { IconCell } from "./types/icon.tsx"
 import { NumberCell } from "./types/number.tsx"
 import { PersonCell } from "./types/person.tsx"
@@ -35,6 +37,8 @@ export const propertyRenderers = {
   dotTag: DotTagCell,
   tagList: TagListCell,
   icon: IconCell,
+  file: FileCell,
+  folder: FolderCell,
 } as const satisfies Record<string, PropertyRenderer<never>>
 
 /**

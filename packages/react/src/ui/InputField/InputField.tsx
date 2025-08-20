@@ -96,6 +96,7 @@ export type InputFieldProps<T> = {
   labelIcon?: IconType
   hideLabel?: boolean
   hidePlaceholder?: boolean
+  name?: string
   onClickPlaceholder?: () => void
   onClickChildren?: () => void
   onClickContent?: () => void
@@ -165,6 +166,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       onClickPlaceholder,
       onClickChildren,
       onClickContent,
+      name,
       role,
       "aria-controls": ariaControls,
       "aria-expanded": ariaExpanded,
@@ -287,7 +289,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
             "focus-within:outline-none focus-within:ring-1 focus-within:ring-offset-1",
             error
               ? "focus-within:ring-f1-critical border-f1-border-critical-bold"
-              : "focus-within:ring-f1-ring",
+              : "focus-within:ring-f1-special-ring",
             readonly && "border-f1-border-secondary bg-f1-background-secondary",
             disabled && "cursor-not-allowed",
             inputFieldVariants({ size, canGrow })
@@ -322,6 +324,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 "aria-label": label || placeholder,
                 "aria-busy": loading,
                 "aria-disabled": noEdit,
+                name,
                 className: cn(
                   "h-full w-full shrink flex-1 min-w-0",
                   "[&::-webkit-search-cancel-button]:hidden",

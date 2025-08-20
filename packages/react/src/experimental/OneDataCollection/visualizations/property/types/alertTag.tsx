@@ -2,7 +2,7 @@
  * Alert tag cell type for displaying alert indicators with labels.
  * Used for showing alerts on items in data collections.
  */
-import { AlertTag } from "@/experimental/Information/Tags/exports"
+import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
 import { ComponentProps } from "react"
 
 interface AlertTagValue {

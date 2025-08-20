@@ -18,6 +18,7 @@ type F1SearchBoxProps = {
   | "onBlur"
   | "onFocus"
   | "onChange"
+  | "name"
 >
 
 const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
@@ -73,6 +74,7 @@ const F1SearchBox = forwardRef<HTMLInputElement, F1SearchBoxProps>(
         clearable={clearable}
         onBlur={onBlur}
         onFocus={onFocus}
+        name={props.name}
       />
     )
   }

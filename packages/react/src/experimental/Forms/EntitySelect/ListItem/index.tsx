@@ -6,8 +6,8 @@ import { Icon } from "../../../../components/Utilities/Icon"
 import { CheckCircle } from "../../../../icons/app"
 import LogoAvatar from "../../../../icons/app/LogoAvatar"
 import { cn } from "../../../../lib/utils"
-import { Counter } from "../../../exports"
 import { PersonAvatar } from "../../../Information/Avatars/PersonAvatar"
+import { Counter } from "../../../Information/Counter"
 import { HighlightText } from "../HighLightText"
 import { EntitySelectEntity } from "../types"
 
@@ -142,13 +142,9 @@ export const ListItemSingleContent = ({
           onClick={handleLabelClick}
           onKeyDown={handleKeyDown}
           className={cn(
-            "pointer-events-none ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
+            "pointer-events-none ml-auto",
             singleSelector ? "opacity-0" : ""
           )}
-          style={{
-            backgroundColor: selected ? "hsl(var(--selected-50))" : undefined,
-            borderColor: selected ? "hsl(var(--selected-50))" : undefined,
-          }}
         />
 
         {singleSelector && selected && (
@@ -300,20 +296,7 @@ const EntitySelectListItem = ({
               setPressingLabel(false)
             }}
             data-avatarname-navigator-element="true"
-            className={cn(
-              "ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
-              singleSelector ? "opacity-0" : ""
-            )}
-            style={{
-              backgroundColor: selected
-                ? "hsl(var(--selected-50))"
-                : "hsl(var(--background))",
-              color:
-                !selected && partialSelected
-                  ? "hsl(var(--selected-50))"
-                  : undefined,
-              borderColor: checked ? "hsl(var(--selected-50))" : undefined,
-            }}
+            className={cn("ml-auto", singleSelector ? "opacity-0" : "")}
           />
         </label>
       </div>
