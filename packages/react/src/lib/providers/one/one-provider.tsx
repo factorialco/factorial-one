@@ -16,6 +16,8 @@ import { LinkContextValue, LinkProvider } from "../../linkHandler"
 import { PrivacyModeProvider } from "../../privacyMode"
 import { cn } from "../../utils"
 import { XRayProvider } from "../../xray"
+import { TrackingProvider } from "../tracking/tracking-provider"
+import { TrackingFunction } from "../tracking/types"
 
 interface LayoutProps {
   fullScreen?: boolean
@@ -74,6 +76,7 @@ export const FactorialOneProvider: React.FC<{
   image?: ImageContextValue
   layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">
   i18n: Omit<I18nProviderProps, "children">
+  trackingFunction?: TrackingFunction
   l10n: Omit<L10nProviderProps, "children">
   isDev?: boolean
   showExperimentalWarnings?: boolean
@@ -84,6 +87,7 @@ export const FactorialOneProvider: React.FC<{
   privacyModeInitiallyEnabled,
   image,
   i18n,
+  trackingFunction,
   l10n,
   isDev = false,
   showExperimentalWarnings = false,
@@ -96,17 +100,19 @@ export const FactorialOneProvider: React.FC<{
       >
         <L10nProvider {...l10n}>
           <I18nProvider {...i18n}>
-            <LinkProvider {...link}>
-              <LayoutProvider {...layout}>
-                <XRayProvider>
-                  <PrivacyModeProvider
-                    initiallyEnabled={privacyModeInitiallyEnabled}
-                  >
-                    <ImageProvider {...image}>{children}</ImageProvider>
-                  </PrivacyModeProvider>
-                </XRayProvider>
-              </LayoutProvider>
-            </LinkProvider>
+            <TrackingProvider trackingFunction={trackingFunction}>
+              <LinkProvider {...link}>
+                <LayoutProvider {...layout}>
+                  <XRayProvider>
+                    <PrivacyModeProvider
+                      initiallyEnabled={privacyModeInitiallyEnabled}
+                    >
+                      <ImageProvider {...image}>{children}</ImageProvider>
+                    </PrivacyModeProvider>
+                  </XRayProvider>
+                </LayoutProvider>
+              </LinkProvider>
+            </TrackingProvider>
           </I18nProvider>
         </L10nProvider>
       </UserPlatformProvider>

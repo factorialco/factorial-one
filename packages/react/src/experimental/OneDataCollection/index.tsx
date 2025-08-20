@@ -280,6 +280,7 @@ const OneDataCollectionComp = <
   emptyStates?: CustomEmptyStates
   onTotalItemsChange?: (totalItems: number) => void
   fullHeight?: boolean
+  trackingIdentifier?: string
 }): JSX.Element => {
   const {
     // Filters
