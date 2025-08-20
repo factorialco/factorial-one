@@ -9,9 +9,10 @@ type GroupingSelectorProps<
   R extends RecordType,
   Grouping extends GroupingDefinition<R>,
 > = {
-  grouping: Grouping
-  currentGrouping: GroupingState<R, Grouping> | undefined
-  onGroupingChange: (groupingState: GroupingState<R, Grouping>) => void
+  grouping?: Grouping
+  currentGrouping?: GroupingState<R, Grouping>
+  onGroupingChange?: (groupingState: GroupingState<R, Grouping>) => void
+  hideLabel?: boolean
 }
 
 const EmptyGroupingValue = "__no-grouping__"
@@ -23,8 +24,16 @@ export const GroupingSelector = <
   grouping,
   currentGrouping,
   onGroupingChange,
+  hideLabel = false,
 }: GroupingSelectorProps<R, Grouping>) => {
   const i18n = useI18n()
+  if (
+    !grouping ||
+    (!!grouping.mandatory && Object.entries(grouping.groupBy).length < 2)
+  ) {
+    return null
+  }
+
   const groupingOptions = [
     ...(!grouping.mandatory
       ? [
@@ -50,16 +59,17 @@ export const GroupingSelector = <
   ]
 
   return (
-    <div className="flex flex-col gap-0 py-3">
-      <div className="flex items-end gap-2 px-3">
+    <div className="flex flex-col gap-0">
+      <div className="flex items-center gap-2 px-3">
         <div className="shrink grow [&_button]:h-8 [&_button]:rounded">
           <Select
             label={i18n.collections.grouping.groupBy}
             labelIcon={Placeholder}
             options={groupingOptions}
+            hideLabel={hideLabel}
             value={currentGrouping?.field.toString() ?? EmptyGroupingValue}
             onChange={(value: string) =>
-              onGroupingChange(
+              onGroupingChange?.(
                 value !== EmptyGroupingValue
                   ? {
                       field: value as keyof Grouping["groupBy"],
@@ -78,7 +88,7 @@ export const GroupingSelector = <
               variant="outline"
               icon={currentGrouping?.order === "asc" ? ArrowUp : ArrowDown}
               onClick={() =>
-                onGroupingChange({
+                onGroupingChange?.({
                   field: currentGrouping.field,
                   order: currentGrouping.order === "asc" ? "desc" : "asc",
                 })

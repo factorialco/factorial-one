@@ -17,6 +17,19 @@ import {
   Target,
   Upload,
 } from "@/icons/app"
+import {
+  CERTIFICATIONS_MOCK,
+  DEPARTMENTS_MOCK,
+  DOT_TAG_COLORS_MOCK,
+  EDUCATION_MOCK,
+  getMockValue,
+  LANGUAGES_MOCK,
+  PERFORMANCE_LITERAL_MOCK,
+  PROJECTS_MOCK,
+  START_DATE_MOCK,
+  TEAMS_MOCK,
+  YEARS_OF_EXPERIENCIE_MOCK,
+} from "@/mocks"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { GroupingDefinition } from "../grouping"
 import { OneDataCollection, useDataSource } from "../index"
@@ -26,8 +39,6 @@ import { useData } from "../useData"
 import {
   createDataAdapter,
   createPromiseDataFetch,
-  DEPARTMENTS_MOCK,
-  DOT_TAG_COLORS_MOCK,
   ExampleComponent,
   filterPresets,
   filters,
@@ -36,11 +47,7 @@ import {
   getMockVisualizations,
   MockUser,
   mockUsers,
-  PERFORMANCE_SCORE_MOCK,
-  PROJECTS_MOCK,
   sortings,
-  START_DATE_MOCK,
-  YEARS_OF_EXPERIENCIE_MOCK,
 } from "./mockData"
 
 const meta = {
@@ -109,15 +116,12 @@ export const BasicTableView: Story = {
         enabled: true,
       },
       dataAdapter: {
-        fetchData: ({ filters, sortings }) => {
-          console.log("fetchData", filters, sortings)
-
+        fetchData: ({ filters, sortings, search }) => {
           filters.department?.map((department) => {
             console.log("department", department)
           })
-          return createPromiseDataFetch()({ filters, sortings })
+          return createPromiseDataFetch()({ filters, sortings, search })
         },
-        //createPromiseDataFetch(),
       },
       itemActions: (item) => [
         {
@@ -493,10 +497,7 @@ export const RendererTypes: Story = {
                     type: "dotTag",
                     value: {
                       label: item.email,
-                      color:
-                        DOT_TAG_COLORS_MOCK[
-                          item.index % DOT_TAG_COLORS_MOCK.length
-                        ],
+                      color: getMockValue(DOT_TAG_COLORS_MOCK, item.index),
                     },
                   }),
                   sorting: "email",
@@ -1209,7 +1210,7 @@ export const WithSyncSearch: Story = {
         name: "John Doe",
         email: "john@example.com",
         role: "Senior Engineer",
-        department: DEPARTMENTS_MOCK[0],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 0),
         status: "active",
         isStarred: true,
       },
@@ -1218,7 +1219,7 @@ export const WithSyncSearch: Story = {
         name: "Jane Smith",
         email: "jane@example.com",
         role: "Product Manager",
-        department: DEPARTMENTS_MOCK[1],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 1),
         status: "active",
         isStarred: false,
       },
@@ -1227,7 +1228,7 @@ export const WithSyncSearch: Story = {
         name: "Alice Johnson",
         email: "alice@example.com",
         role: "UX Designer",
-        department: DEPARTMENTS_MOCK[2],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 2),
         status: "active",
         isStarred: false,
       },
@@ -1236,7 +1237,7 @@ export const WithSyncSearch: Story = {
         name: "Bob Brown",
         email: "bob@example.com",
         role: "Developer",
-        department: DEPARTMENTS_MOCK[0],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 0),
         status: "inactive",
         isStarred: true,
       },
@@ -1245,7 +1246,7 @@ export const WithSyncSearch: Story = {
         name: "Emma Wilson",
         email: "emma@example.com",
         role: "Marketing Lead",
-        department: DEPARTMENTS_MOCK[3],
+        department: getMockValue(DEPARTMENTS_MOCK as unknown as string[], 3),
         status: "active",
         isStarred: false,
       },
@@ -1552,70 +1553,31 @@ export const WithAsyncSearch: Story = {
 export const TableColumnProperties: Story = {
   render: () => {
     // Generate more mock users for this example to better demonstrate scrolling with sticky columns
-    const extendedMockUsers = Array(50)
-      .fill(null)
-      .map((_, index) => ({
-        id: `user-ex-${index}`,
-        name: `User ${index + 1}`,
-        email: `user${index + 1}@example.com`,
-        role:
-          index % 3 === 0
-            ? "Engineer"
-            : index % 3 === 1
-              ? "Designer"
-              : "Manager",
-        department: DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length],
-        status: index % 4 === 0 ? "inactive" : "active",
-        isStarred: index % 5 === 0,
-        salary: 50000 + index * 1000,
-        location:
-          index % 3 === 0 ? "Remote" : index % 3 === 1 ? "Office" : "Hybrid",
-        startDate: START_DATE_MOCK[index % START_DATE_MOCK.length]
-          .toISOString()
-          .split("T")[0],
-        performance:
-          index % 5 === 0
-            ? "Exceptional"
-            : index % 5 === 1
-              ? "Above Average"
-              : index % 5 === 2
-                ? "Average"
-                : index % 5 === 3
-                  ? "Below Average"
-                  : "Needs Improvement",
-        yearsExperience:
-          YEARS_OF_EXPERIENCIE_MOCK[index % YEARS_OF_EXPERIENCIE_MOCK.length],
-        team: ["Alpha", "Beta", "Gamma", "Delta", "Epsilon"][index % 5],
-        certifications:
-          index % 3 === 0
-            ? "AWS, Google Cloud"
-            : index % 3 === 1
-              ? "Azure, MongoDB"
-              : "Kubernetes, Docker",
-        education:
-          index % 4 === 0
-            ? "Ph.D."
-            : index % 4 === 1
-              ? "Master's"
-              : index % 4 === 2
-                ? "Bachelor's"
-                : "Associate's",
-        languages:
-          index % 3 === 0
-            ? "English, Spanish"
-            : index % 3 === 1
-              ? "English, French, German"
-              : "English, Mandarin",
-        projects: PROJECTS_MOCK[index % PROJECTS_MOCK.length],
-        performanceScore:
-          PERFORMANCE_SCORE_MOCK[index % PERFORMANCE_SCORE_MOCK.length],
-        lastReview: new Date(2023, index % 12, 1 + (index % 28))
-          .toISOString()
-          .split("T")[0],
-        nextReview: new Date(2024, index % 12, 1 + (index % 28))
-          .toISOString()
-          .split("T")[0],
-      }))
+    const extendedMockUsers = generateMockUsers(50).map((mockUser, index) => ({
+      ...mockUser,
+      status: index % 4 === 0 ? "inactive" : "active",
+      isStarred: index % 5 === 0,
+      salary: 50000 + index * 1000,
+      location:
+        index % 3 === 0 ? "Remote" : index % 3 === 1 ? "Office" : "Hybrid",
+      startDate: getMockValue(START_DATE_MOCK, index)
+        .toISOString()
+        .split("T")[0],
+      performance: getMockValue(PERFORMANCE_LITERAL_MOCK, index),
+      yearsExperience: getMockValue(YEARS_OF_EXPERIENCIE_MOCK, index),
+      team: getMockValue(TEAMS_MOCK, index),
+      certifications: getMockValue(CERTIFICATIONS_MOCK, index),
+      education: getMockValue(EDUCATION_MOCK, index),
+      languages: getMockValue(LANGUAGES_MOCK, index),
+      projects: getMockValue(PROJECTS_MOCK, index),
+      performanceScore: getMockValue(PERFORMANCE_LITERAL_MOCK, index),
+      lastReview: new Date(2023, index % 12, 1 + (index % 28))
+        .toISOString()
+        .split("T")[0],
+      nextReview: new Date(2024, index % 12, 1 + (index % 28))
+        .toISOString()
+        .split("T")[0],
+    }))
 
     // Define extended sortings for the example
     const extendedSortings = {
@@ -1639,7 +1601,11 @@ export const TableColumnProperties: Story = {
     } as const
 
     // Create a custom data adapter for the extended data structure
-    const dataAdapter = createDataAdapter({
+    const dataAdapter = createDataAdapter<
+      (typeof extendedMockUsers)[number],
+      typeof filters,
+      NavigationFiltersDefinition
+    >({
       data: extendedMockUsers,
       delay: 300,
     })
