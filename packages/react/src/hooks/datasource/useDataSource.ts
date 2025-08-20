@@ -1,24 +1,19 @@
-import { FiltersDefinition, FiltersState } from "@/components/OneFilterPicker"
+import type { Dispatch, SetStateAction } from "react"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
-import { ItemActionsDefinition } from "./item-actions"
-import { navigationFilterTypes } from "./navigationFilters"
 import {
-  NavigationFiltersDefinition,
-  NavigationFiltersState,
-} from "./navigationFilters/types"
-import {
-  CollectionSearchOptions,
   DataSource,
   DataSourceDefinition,
+  FiltersDefinition,
+  FiltersState,
   GroupingDefinition,
   GroupingState,
   PaginationType,
   RecordType,
   SortingsDefinition,
   SortingsState,
-  SummariesDefinition,
 } from "./types"
+import { SearchOptions } from "./types/search.typings"
 
 /**
  * Get the pagination type of a data adapter
@@ -46,30 +41,10 @@ export const createDataSourceDefinition = <
   R extends RecordType = RecordType,
   FiltersSchema extends FiltersDefinition = FiltersDefinition,
   Sortings extends SortingsDefinition = SortingsDefinition,
-  Summaries extends SummariesDefinition = SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<R> = ItemActionsDefinition<R>,
-  NavigationFilters extends
-    NavigationFiltersDefinition = NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 >(
-  definition: DataSourceDefinition<
-    R,
-    FiltersSchema,
-    Sortings,
-    Summaries,
-    ItemActions,
-    NavigationFilters,
-    Grouping
-  >
-): DataSourceDefinition<
-  R,
-  FiltersSchema,
-  Sortings,
-  Summaries,
-  ItemActions,
-  NavigationFilters,
-  Grouping
-> => {
+  definition: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>
+): DataSourceDefinition<R, FiltersSchema, Sortings, Grouping> => {
   return definition
 }
 
@@ -107,68 +82,47 @@ export const createDataSourceDefinition = <
  * - actions: Available actions for the collection
  * - presets: Available filter presets
  */
-export const useDataSource = <
-  R extends RecordType,
-  FiltersSchema extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<R>,
-  NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<R>,
+
+export function useDataSource<
+  R extends RecordType = RecordType,
+  FiltersSchema extends FiltersDefinition = FiltersDefinition,
+  Sortings extends SortingsDefinition = SortingsDefinition,
+  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
     currentGrouping: initialCurrentGrouping,
     filters,
-    navigationFilters,
     search,
     defaultSorting,
-    summaries,
     dataAdapter,
     grouping,
     ...rest
-  }: DataSourceDefinition<
-    R,
-    FiltersSchema,
-    Sortings,
-    Summaries,
-    ItemActions,
-    NavigationFilters,
-    Grouping
-  >,
+  }: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>,
   deps: ReadonlyArray<unknown> = []
-): DataSource<
-  R,
-  FiltersSchema,
-  Sortings,
-  Summaries,
-  ItemActions,
-  NavigationFilters,
-  Grouping
-> => {
-  const [currentFilters, setCurrentFilters] = useState<
+): DataSource<R, FiltersSchema, Sortings, Grouping> {
+  const [currentFilters, _setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
 
-  const [currentNavigationFilters, setCurrentNavigationFilters] = useState<
-    NavigationFiltersState<NavigationFilters>
-  >(() => {
-    if (!navigationFilters) {
-      return {} as NavigationFiltersState<NavigationFilters>
-    }
-
-    return Object.fromEntries(
-      Object.entries(navigationFilters).map(([key, filter]) => {
-        const filterType = navigationFilterTypes[filter.type]
-        return [
-          key,
-          filterType.valueConverter
-            ? filterType.valueConverter(filter.defaultValue, filter)
-            : filter.defaultValue,
-        ]
+  const setCurrentFilters: Dispatch<
+    SetStateAction<FiltersState<FiltersSchema>>
+  > = (value) => {
+    if (typeof value === "function") {
+      _setCurrentFilters((prev) => {
+        const next = (
+          value as (
+            prevState: FiltersState<FiltersSchema>
+          ) => FiltersState<FiltersSchema>
+        )(prev)
+        return JSON.stringify(next) === JSON.stringify(prev) ? prev : next
       })
-    ) as NavigationFiltersState<NavigationFilters>
-  })
+    } else {
+      _setCurrentFilters((prev) =>
+        JSON.stringify(value) === JSON.stringify(prev) ? prev : value
+      )
+    }
+  }
 
   const [currentSortings, setCurrentSortings] =
     useState<SortingsState<Sortings> | null>(defaultSorting || null)
@@ -177,7 +131,7 @@ export const useDataSource = <
     enabled: false,
     sync: false,
     ...search,
-  } satisfies CollectionSearchOptions
+  } satisfies SearchOptions
 
   const [currentSearch, setCurrentSearch] = useState<string | undefined>()
 
@@ -192,9 +146,6 @@ export const useDataSource = <
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedSummaries = useMemo(() => summaries, deps)
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -221,22 +172,29 @@ export const useDataSource = <
 
   return {
     ...rest,
+    // Filters
     filters: memoizedFilters,
     currentFilters,
     setCurrentFilters,
+
+    // Sortings
     currentSortings,
     setCurrentSortings,
-    summaries: memoizedSummaries,
+
+    // Search
     search,
     currentSearch,
     setCurrentSearch,
     debouncedCurrentSearch,
+
+    // Loading
     isLoading,
     setIsLoading,
+
+    // Data adapter
     dataAdapter: memoizedDataAdapter,
-    navigationFilters,
-    currentNavigationFilters,
-    setCurrentNavigationFilters,
+
+    // Grouping
     setCurrentGrouping,
     currentGrouping,
     grouping,

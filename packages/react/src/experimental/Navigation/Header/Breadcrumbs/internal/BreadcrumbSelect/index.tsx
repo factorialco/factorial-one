@@ -4,7 +4,7 @@ import {
   SelectItemObject,
   SelectProps,
 } from "@/experimental/Forms/Fields/Select"
-import { RecordType } from "@/experimental/OneDataCollection/types"
+import { RecordType } from "@/hooks/datasource"
 import { ChevronDown } from "@/icons/app"
 import { motion } from "motion/react"
 import { useState } from "react"

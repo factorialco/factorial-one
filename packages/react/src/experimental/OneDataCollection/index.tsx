@@ -14,40 +14,42 @@ import type {
   FiltersDefinition,
   FiltersState,
 } from "../../components/OneFilterPicker/types"
+import { SortingsDefinition } from "../../hooks/datasource/types/sortings.typings"
+import { DataError } from "../../hooks/datasource/useData"
 import { OneActionBar } from "../OneActionBar"
 import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
+import { CustomEmptyStates, useEmptyState } from "./hooks/useEmptyState"
 import { ItemActionsDefinition } from "./item-actions"
 import { navigationFilterTypes } from "./navigationFilters"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { Search } from "./search"
 import { Settings } from "./Settings"
-import { SortingsDefinition } from "./sortings"
 import { SummariesDefinition } from "./summary"
 import type {
   BulkActionDefinition,
-  DataSource,
-  GroupingDefinition,
   OnBulkActionCallback,
   OnLoadDataCallback,
-  OnSelectItemsCallback,
-  RecordType,
 } from "./types"
-import { DataError } from "./useData"
-import { CustomEmptyStates, useEmptyState } from "./useEmptyState"
+export * from "./navigationFilters/types"
 
 import type { Visualization } from "./visualizations/collection"
 import { VisualizationRenderer } from "./visualizations/collection"
 
 const MotionIcon = motion.create(Icon)
 
-export { useDataSource } from "./useDataSource"
+import {
+  GroupingDefinition,
+  OnSelectItemsCallback,
+  RecordType,
+} from "@/hooks/datasource"
+import { DataCollectionSource } from "./hooks/useDataCollectionSource"
 
 /**
  * A component that renders a collection of data with filtering and visualization capabilities.
- * It consumes a data source (created by useDataSource) and displays it through one or more visualizations.
+ * It consumes a data source (created by useDataCollectionSource) and displays it through one or more visualizations.
  *
- * DataCollection is separated from useDataSource to:
+ * DataCollection is separated from useDataCollectionSource to:
  * 1. Support the composition pattern - data sources can be created and managed independently
  * 2. Allow a single data source to be visualized in multiple ways simultaneously
  * 3. Enable reuse of the same data source in different parts of the application
@@ -66,13 +68,13 @@ export { useDataSource } from "./useDataSource"
  * - The selected visualization of the data
  */
 const OneDataCollectionComp = <
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
+  Grouping extends GroupingDefinition<R>,
 >({
   source,
   visualizations,
@@ -81,8 +83,8 @@ const OneDataCollectionComp = <
   emptyStates,
   fullHeight,
 }: {
-  source: DataSource<
-    Record,
+  source: DataCollectionSource<
+    R,
     Filters,
     Sortings,
     Summaries,
@@ -92,7 +94,7 @@ const OneDataCollectionComp = <
   >
   visualizations: ReadonlyArray<
     Visualization<
-      Record,
+      R,
       Filters,
       Sortings,
       Summaries,
@@ -101,8 +103,8 @@ const OneDataCollectionComp = <
       Grouping
     >
   >
-  onSelectItems?: OnSelectItemsCallback<Record, Filters>
-  onBulkAction?: OnBulkActionCallback<Record, Filters>
+  onSelectItems?: OnSelectItemsCallback<R, Filters>
+  onBulkAction?: OnBulkActionCallback<R, Filters>
   emptyStates?: CustomEmptyStates
   onTotalItemsChange?: (totalItems: number) => void
   fullHeight?: boolean
@@ -199,7 +201,7 @@ const OneDataCollectionComp = <
 
   const i18n = useI18n()
 
-  const onSelectItemsLocal: OnSelectItemsCallback<Record, Filters> = (
+  const onSelectItemsLocal: OnSelectItemsCallback<R, Filters> = (
     selectedItems,
     clearSelectedItems
   ): void => {
@@ -288,7 +290,9 @@ const OneDataCollectionComp = <
     filters,
     isInitialLoading: isInitialLoadingFromCallback,
     search,
-  }: Parameters<OnLoadDataCallback<Record, Filters>>[0]) => {
+  }: Parameters<OnLoadDataCallback<R, Filters>>[0]) => {
+    if (isInitialLoading) return
+
     setIsInitialLoading(isInitialLoadingFromCallback)
     setTotalItems(totalItems)
     setEmptyStateType(getEmptyStateType(totalItems, filters, search))

@@ -1,31 +1,26 @@
+import { OneEllipsis } from "@/components/OneEllipsis"
 import { Icon } from "@/components/Utilities/Icon"
 
-import {
-  FiltersDefinition,
-  ItemActionsDefinition,
-  NavigationFiltersDefinition,
-} from "@/experimental"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
-import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import {
   BaseFetchOptions,
   BaseResponse,
   DataSourceDefinition,
+  FiltersDefinition,
+  getDataSourcePaginationType,
   GroupingDefinition,
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
   SortingsDefinition,
-  SummariesDefinition,
-} from "@/experimental/OneDataCollection/types"
-import { useData, WithGroupId } from "@/experimental/OneDataCollection/useData"
-import {
-  getDataSourcePaginationType,
+  useData,
   useDataSource,
-} from "@/experimental/OneDataCollection/useDataSource"
-import { useGroups } from "@/experimental/OneDataCollection/useGroups"
+  useGroups,
+  WithGroupId,
+} from "@/hooks/datasource"
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
+import { GroupHeader } from "@/ui/GroupHeader"
 import { InputField, InputFieldProps } from "@/ui/InputField"
 import {
   SelectContent,
@@ -47,7 +42,6 @@ import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
 import { SelectTopActions } from "./SelectTopActions"
 import type { SelectItemObject, SelectItemProps } from "./types"
-
 export * from "./types"
 
 /**
@@ -58,7 +52,11 @@ export * from "./types"
  *
  */
 export type SelectProps<T extends string, R extends RecordType = RecordType> = {
-  onChange: (value: T, origialItem?: R, option?: SelectItemObject<T, R>) => void
+  onChange: (
+    value: T,
+    originalItem?: R,
+    option?: SelectItemObject<T, R>
+  ) => void
   onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
@@ -79,9 +77,6 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = {
         R,
         FiltersDefinition,
         SortingsDefinition,
-        SummariesDefinition,
-        ItemActionsDefinition<R>,
-        NavigationFiltersDefinition,
         GroupingDefinition<R>
       >
       mapOptions: (item: R) => SelectItemProps<T, R>
@@ -106,6 +101,8 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = {
     | "placeholder"
     | "disabled"
     | "name"
+    | "minWidth"
+    | "maxWidth"
   >
 
 const SelectItem = <T extends string, R>({
@@ -145,13 +142,13 @@ const SelectValue = forwardRef<
   { item: SelectItemObject<string> }
 >(function SelectValue({ item }, ref) {
   return (
-    <div className="flex items-center gap-1.5" ref={ref}>
+    <div className="flex min-w-[20px] shrink items-center gap-1.5" ref={ref}>
       {item.icon && (
         <div className="h-5 shrink-0 text-f1-icon">
           <Icon icon={item.icon} />
         </div>
       )}
-      {item.label}
+      <OneEllipsis className="min-w-0 shrink">{item.label}</OneEllipsis>
     </div>
   )
 })
@@ -214,18 +211,13 @@ const SelectComponent = forwardRef(function Select<
     return {
       ...source,
       dataAdapter: source
-        ? (source.dataAdapter as PaginatedDataAdapter<
-            R,
-            FiltersDefinition,
-            NavigationFiltersDefinition
-          >)
+        ? (source.dataAdapter as PaginatedDataAdapter<R, FiltersDefinition>)
         : {
             fetchData: ({
               search,
-            }: BaseFetchOptions<
-              FiltersDefinition,
-              NavigationFiltersDefinition
-            >): PromiseOrObservable<BaseResponse<R>> => {
+            }: BaseFetchOptions<FiltersDefinition>): PromiseOrObservable<
+              BaseResponse<R>
+            > => {
               return {
                 records: options.filter(
                   (option) =>
@@ -252,6 +244,9 @@ const SelectComponent = forwardRef(function Select<
     [options]
   )
 
+  /**
+   * Maps an item to a SelectItemProps<T, R>
+   */
   const optionMapper = useCallback(
     (item: R): SelectItemProps<T, R> => {
       if (source) {
@@ -267,7 +262,7 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const { data, isInitialLoading, loadMore, isLoadingMore } =
-    useData(localSource)
+    useData<R>(localSource)
 
   const { currentSearch, setCurrentSearch } = localSource
 
@@ -347,7 +342,7 @@ const SelectComponent = forwardRef(function Select<
     }, 0)
   }
 
-  // const collapsible = localSource.grouping?.collapsible
+  //const collapsible = localSource.grouping?.collapsible
   const defaultOpenGroups = localSource.grouping?.defaultOpenGroups
   const { openGroups, setGroupOpen } = useGroups(
     data?.type === "grouped" ? data.groups : [],
@@ -391,6 +386,7 @@ const SelectComponent = forwardRef(function Select<
               onOpenChange={(open) => setGroupOpen(group.key, open)}
               open={openGroups[group.key]}
               // showOpenChange={collapsible}
+              className="px-4 py-2"
             />
           ),
         })
@@ -484,7 +480,7 @@ const SelectComponent = forwardRef(function Select<
               }
             >
               <button
-                className="flex w-full items-center justify-between"
+                className="flex w-full max-w-full items-center justify-between"
                 aria-label={label || placeholder}
               >
                 {selectedOption && <SelectValue item={selectedOption} />}

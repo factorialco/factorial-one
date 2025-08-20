@@ -1,15 +1,15 @@
 import {
   GroupingDefinition,
   GroupingState,
-} from "@/experimental/OneDataCollection/grouping"
-import { GroupingSelector } from "@/experimental/OneDataCollection/Settings/components/GroupingSelector"
-import { RecordType } from "@/experimental/OneDataCollection/types"
+  RecordType,
+} from "@/hooks/datasource"
+import { GroupingSelector } from "@/ui/GroupingSelector"
 import { F1SearchBox } from "../F1SearchBox"
 
-type SelectTopActionsProps<
-  R extends RecordType,
+interface SelectTopActionsProps<
+  R extends RecordType = RecordType,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
-> = {
+> {
   showSearchBox?: boolean
   searchBoxPlaceholder?: string
   onSearchChange: (value: string) => void
@@ -22,7 +22,7 @@ type SelectTopActionsProps<
   onGroupingChange?: (grouping: GroupingState<R, Grouping>) => void
 }
 
-export const SelectTopActions = <R extends RecordType>({
+export const SelectTopActions = <R extends RecordType = RecordType>({
   showSearchBox,
   searchBoxPlaceholder,
   onSearchChange,
@@ -37,22 +37,27 @@ export const SelectTopActions = <R extends RecordType>({
   if (!showSearchBox) return null
   return (
     <div className="flex gap-2 px-2 pt-2">
-      <F1SearchBox
-        placeholder={searchBoxPlaceholder}
-        onChange={onSearchChange}
-        clearable
-        value={searchValue}
-        key="search-input"
-        ref={searchInputRef}
-        onBlur={onBlur}
-        onFocus={onFocus}
-      />
-      <GroupingSelector
-        hideLabel={true}
-        grouping={grouping}
-        currentGrouping={currentGrouping}
-        onGroupingChange={onGroupingChange}
-      />
+      <div className="w-30">
+        <F1SearchBox
+          placeholder={searchBoxPlaceholder}
+          onChange={onSearchChange}
+          clearable
+          value={searchValue}
+          key="search-input"
+          ref={searchInputRef}
+          onBlur={onBlur}
+          onFocus={onFocus}
+        />
+      </div>
+      <div className="w-20 flex-1">
+        <GroupingSelector
+          hideLabel
+          hideDirection
+          grouping={grouping}
+          currentGrouping={currentGrouping}
+          onGroupingChange={onGroupingChange}
+        />
+      </div>
     </div>
   )
 }
