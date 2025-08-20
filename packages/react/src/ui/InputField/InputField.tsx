@@ -92,13 +92,16 @@ const inputFieldWrapperVariants = cva({
 })
 
 const inputFieldStatusVariants = cva({
-  base: "",
+  base: "focus-within:ring-2 focus-within:ring-offset-0 active:transition-none",
   variants: {
     status: {
-      default: "focus-within:ring-f1-special-ring",
-      warning: "focus-within:ring-f1-warning border-f1-border-warning-bold",
-      info: "focus-within:ring-f1-info border-f1-border-info-bold",
-      error: "focus-within:ring-f1-critical border-f1-border-critical-bold",
+      default:
+        "focus-within:border-f1-border-selected-bold focus-within:ring-f1-background-selected hover:border-f1-border-selected-bold",
+      warning:
+        "focus-within:border-f1-border-warning-bold focus-within:ring-f1-border-warning hover:border-f1-border-warning-bold",
+      info: "focus-within:border-f1-border-info-bold focus-within:ring-f1-border-info hover:border-f1-border-info-bold",
+      error:
+        "focus-within:border-f1-border-critical-bold focus-within:ring-f1-border-critical hover:border-f1-border-critical-bold",
     },
   },
 })
