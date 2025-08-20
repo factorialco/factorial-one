@@ -40,6 +40,7 @@ export function useSelectable<
   paginationInfo: PaginationInfo | null,
   source: DataSourceDefinition<R, Filters, Sortings, Grouping>,
   onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
+  singleSelection: boolean = false,
   defaultSelectedItems?: SelectedItemsState | undefined
 ): UseSelectable<R> {
   const isGrouped = data.type === "grouped"
@@ -88,7 +89,14 @@ export function useSelectable<
   /**
    * Get the list of selected and unselected items from the itemsState for performance reasons
    */
-  const [selectedItems, unselectedItems] = useMemo(() => {
+  const [selectedItems, setSelectedItems] = useState<Map<number | string, R>>(
+    new Map()
+  )
+  const [unselectedItems, setUnselectedItems] = useState<
+    Map<number | string, R>
+  >(new Map())
+
+  useEffect(() => {
     const selected = new Map()
     const unselected = new Map()
     for (const [id, value] of itemsState.entries()) {
@@ -98,7 +106,8 @@ export function useSelectable<
         unselected.set(id, value.item)
       }
     }
-    return [selected, unselected]
+    setSelectedItems(selected)
+    setUnselectedItems(unselected)
   }, [itemsState])
 
   /**
@@ -129,7 +138,7 @@ export function useSelectable<
     group: GroupRecord<R> | GroupRecord<R>[],
     checked: boolean
   ) => {
-    if (!isGrouped) {
+    if (!isGrouped || singleSelection) {
       return
     }
 
@@ -266,6 +275,11 @@ export function useSelectable<
         return
       }
 
+      if (singleSelection) {
+        setItemsState(new Map([[id, { item, checked }]]))
+        return
+      }
+
       // If the item is already selected, we don't need to update the state if onlyIfNotSelected is true
       if (onlyIfNotSelected && itemsState.has(id)) {
         return
@@ -281,6 +295,10 @@ export function useSelectable<
   }
 
   const handleSelectAll = (checked: boolean) => {
+    if (singleSelection) {
+      return
+    }
+
     setAllSelectedCheck(checked)
     if (isGrouped) {
       handleSelectGroupChange(
@@ -363,6 +381,26 @@ export function useSelectable<
       setAllSelectedCheck(false)
     }
   }, [areAllKnownItemsSelected, selectedCount])
+
+  const getMaterializedSelectedItems = useCallback((): R[] => {
+    if (isPaginated) {
+      throw new Error(
+        "Cannot get materialized selected items for paginated data"
+      )
+    }
+    return materializeSelectedItems(data, {
+      allSelected: unselectedCount === 0 ? allSelectedCheck : false,
+      itemsStatus: itemsState,
+      groupsStatus: groupsState,
+    })
+  }, [
+    isPaginated,
+    data,
+    itemsState,
+    groupsState,
+    allSelectedCheck,
+    unselectedCount,
+  ])
 
   useEffect(() => {
     // Notify the parent component about the selected items

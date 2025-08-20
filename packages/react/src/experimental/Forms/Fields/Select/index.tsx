@@ -1,21 +1,16 @@
-import { OneEllipsis } from "@/components/OneEllipsis"
 import { Icon } from "@/components/Utilities/Icon"
-import { RawTag } from "@/experimental/Information/Tags/RawTag"
-import { TagList } from "@/experimental/Information/Tags/TagList"
+import { SelectItem } from "./components/SelectItem"
+import { SelectValue } from "./components/SelectedValue"
 
 import {
   BaseFetchOptions,
   BaseResponse,
-  DataSourceDefinition,
   FiltersDefinition,
   getDataSourcePaginationType,
-  GroupingDefinition,
   OnSelectItemsCallbackStatus,
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
-  SelectedItemsState,
-  SortingsDefinition,
   useData,
   useDataSource,
   useGroups,
@@ -25,10 +20,9 @@ import {
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { GroupHeader } from "@/ui/GroupHeader"
-import { InputField, InputFieldProps } from "@/ui/InputField"
+import { InputField } from "@/ui/InputField"
 import {
   SelectContent,
-  SelectItem as SelectItemPrimitive,
   Select as SelectPrimitive,
   SelectSeparator,
   SelectTrigger,
@@ -42,156 +36,10 @@ import {
   useRef,
   useState,
 } from "react"
-import { Avatar } from "../../../Information/Avatars/Avatar"
-import { Action, SelectBottomActions } from "./SelectBottomActions"
+import { SelectBottomActions } from "./SelectBottomActions"
 import { SelectTopActions } from "./SelectTopActions"
-import type { SelectItemObject, SelectItemProps } from "./types"
+import type { SelectItemObject, SelectItemProps, SelectProps } from "./types"
 export * from "./types"
-
-/**
- * Select component for choosing from a list of options.
- *
- * @template T - The type of the emitted  value
- * @template R - The type of the record/item data (used with data source)
- *
- */
-export type SelectProps<T extends string, R extends RecordType = RecordType> = (
-  | {
-      multiple: true
-      onChange: {
-        (
-          value: T[],
-          originalItem?: R[],
-          option?: SelectItemObject<T, R>[]
-        ): void
-        (state: OnSelectItemsCallbackStatus<R, FiltersDefinition>): void
-      }
-      onChangeSelectedOption?: (options: SelectItemObject<T, R>[]) => void
-      value?: T[] | SelectedItemsState<T>
-      defaultItem?: SelectItemObject<T, R>[]
-    }
-  | {
-      multiple?: false | never
-      onChange: (
-        value: T,
-        originalItem?: R,
-        option?: SelectItemObject<T, R>
-      ) => void
-      onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
-      value?: T
-      defaultItem?: SelectItemObject<T, R>
-    }
-) & {
-  children?: React.ReactNode
-  open?: boolean
-  showSearchBox?: boolean
-  searchBoxPlaceholder?: string
-  onSearchChange?: (value: string) => void
-  searchValue?: string
-  onOpenChange?: (open: boolean) => void
-  searchEmptyMessage?: string
-  className?: string
-  selectContentClassName?: string
-  actions?: Action[]
-} & (
-    | {
-        source: DataSourceDefinition<
-          R,
-          FiltersDefinition,
-          SortingsDefinition,
-          GroupingDefinition<R>
-        >
-        mapOptions: (item: R) => SelectItemProps<T, R>
-        options?: never
-      }
-    | {
-        source?: never
-        mapOptions?: never
-        options: SelectItemProps<T, R>[]
-      }
-  ) &
-  Pick<
-    InputFieldProps<T>,
-    | "loading"
-    | "hideLabel"
-    | "clearable"
-    | "labelIcon"
-    | "size"
-    | "label"
-    | "error"
-    | "icon"
-    | "placeholder"
-    | "disabled"
-    | "minWidth"
-    | "maxWidth"
-    | "name"
-  >
-
-const SelectItem = <T extends string, R>({
-  item,
-}: {
-  item: SelectItemObject<T, R>
-}) => {
-  return (
-    <SelectItemPrimitive value={item.value}>
-      <div className="flex w-full items-start gap-1.5">
-        {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
-        {item.icon && (
-          <div className="text-f1-icon">
-            <Icon icon={item.icon} />
-          </div>
-        )}
-        <div className="flex flex-1 flex-col">
-          <span className="line-clamp-2 font-medium">{item.label}</span>
-          {item.description && (
-            <div className="line-clamp-2 text-f1-foreground-secondary">
-              {item.description}
-            </div>
-          )}
-        </div>
-        {item.tag && (
-          <div className="self-center">
-            <RawTag text={item.tag} />
-          </div>
-        )}
-      </div>
-    </SelectItemPrimitive>
-  )
-}
-
-const SelectValue = forwardRef<
-  HTMLDivElement,
-  {
-    item: SelectItemObject<string> | SelectItemObject<string>[]
-  }
->(function SelectValue({ item }, ref) {
-  if (Array.isArray(item)) {
-    return (
-      <div className="h-full w-full border-2 border-solid border-[#f00]">
-        <TagList
-          layout="fill"
-          type="dot"
-          tags={item.map((i) => ({
-            text: i.label,
-            type: "icon",
-            icon: i.icon,
-          }))}
-        />
-      </div>
-    )
-  }
-
-  return (
-    <div className="flex min-w-[20px] shrink items-center gap-1.5" ref={ref}>
-      {item.icon && (
-        <div className="h-5 shrink-0 text-f1-icon">
-          <Icon icon={item.icon} />
-        </div>
-      )}
-      <OneEllipsis className="min-w-0 shrink">{item.label}</OneEllipsis>
-    </div>
-  )
-})
 
 const SelectComponent = forwardRef(function Select<
   T extends string,
@@ -223,23 +71,29 @@ const SelectComponent = forwardRef(function Select<
     labelIcon,
     clearable,
     loading,
+    name,
     multiple,
     defaultItem,
-    name,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
-  type ValueType = typeof multiple extends true ? string[] : string
   const searchInputRef = useRef<HTMLInputElement>(null)
 
   const [openLocal, setOpenLocal] = useState(open)
 
-  const defaultValue = useMemo(() => {
-    return multiple
-      ? defaultItem?.map((item) => item.value) || []
+  const [localValue, setLocalValue] = useState<
+    (typeof multiple extends true ? T[] : T) | undefined
+  >(undefined)
+
+  useEffect(() => {
+    const defaultValue = multiple
+      ? (defaultItem || []).map((item) => item.value)
       : defaultItem?.value
-  }, [defaultItem, multiple])
+
+    console.log("defaultValue", defaultValue)
+    setLocalValue(value || defaultValue || undefined)
+  }, [defaultItem, value, multiple])
 
   const dataSource = useMemo(() => {
     if (
@@ -255,7 +109,6 @@ const SelectComponent = forwardRef(function Select<
 
     return {
       ...source,
-      idProvider: (item: R) => item.value as string,
       dataAdapter: source
         ? (source.dataAdapter as PaginatedDataAdapter<R, FiltersDefinition>)
         : {
@@ -280,7 +133,8 @@ const SelectComponent = forwardRef(function Select<
   const localSource = useDataSource(
     {
       ...dataSource,
-      selectable: (item) => item.value as string,
+      // Set the items id to the value of the item
+      selectable: (item) => String(item.value),
       search: showSearchBox
         ? {
             enabled: showSearchBox,
@@ -308,28 +162,56 @@ const SelectComponent = forwardRef(function Select<
     [mapOptions, source]
   )
 
-  /**
-   * Handles the data fetch form source and pagination if needed
-   */
   const { data, isInitialLoading, loadMore, isLoadingMore, paginationInfo } =
     useData<R>(localSource)
 
-  /**
-   * Gets the search status and handler from the local source
-   */
   const { currentSearch, setCurrentSearch } = localSource
+
+  const [selectedItems, setSelectedItems] = useState<
+    | (typeof multiple extends true
+        ? SelectItemObject<T, R>[]
+        : SelectItemObject<T, R>)
+    | undefined
+  >(undefined)
 
   /**
    * Handles the selection of items and groups
    * We use the more complex case (chunked data) internally, but for the single selection we will return just the selected item outside the component
    */
-  const { selectedItemsInData, handleSelectItemChange } = useSelectable(
-    data,
-    paginationInfo,
-    localSource,
-    (status) => {
+
+  const statusCallback = useCallback(
+    (status: OnSelectItemsCallbackStatus<R, FiltersDefinition>) => {
       const notPaginated =
         getDataSourcePaginationType(localSource.dataAdapter) === "no-pagination"
+
+      if (notPaginated) {
+        const selectedItems = status.itemsStatus
+          .filter((item) => item.checked)
+          .map((item) => item.item)
+
+        const selectedItemsValues = selectedItems.map((item) => item.value as T)
+
+        if (multiple) {
+          setSelectedItems(selectedItems)
+          setPrimitiveValue(selectedItemsValues)
+          onChange?.(
+            selectedItemsValues,
+            selectedItems,
+            findOptions(selectedItemsValues)
+          )
+        } else {
+          setSelectedItems(selectedItems[0])
+          setPrimitiveValue(selectedItemsValues[0])
+          onChange?.(
+            selectedItemsValues[0],
+            selectedItems[0],
+            findOptions(selectedItemsValues)[0]
+          )
+        }
+      }
+      // If not paginated we convert the select status to an array of items
+      return
+
       if (notPaginated || !multiple) {
         // Aa no pagination we return the real selected data not the definition of the selection
         const items = status.itemsStatus
@@ -342,54 +224,34 @@ const SelectComponent = forwardRef(function Select<
 
         const values = items.map((item) => item.value as T)
 
-        if (multiple) {
-          onChange?.(
-            values,
-            items.map((item) => item.item),
-            findOptions(values)
-          )
-          setSelectedOptions(findOptions(values))
-        } else {
-          const value = values[0]
-          const item = items[0]?.item
-          const option = findOptions(value)?.[0]
-          onChange?.(value, item, option)
-          setSelectedOptions(option)
-        }
+        // if (multiple) {
+        //   onChange?.(
+        //     values,
+        //     items.map((item) => item.item),
+        //     findOptions(values)
+        //   )
+        //   setSelectedOptions(findOptions(values))
+        // } else {
+        //   const value = values[0]
+        //   const item = items[0]?.item
+        //   const option = findOptions(value)?.[0]
+        //   onChange?.(value, item, option)
+        //   setSelectedOptions(option)
+        // }
       } else {
         onChange?.(status)
       }
     },
-    {},
-    {
-      singleSelect: !multiple,
-    }
-    // {
-    //   items: [
-    //     ...(multiple ? (defaultItem ?? []) : [defaultItem])
-    //       .filter((item) => item !== undefined)
-    //       .map((item) => ({
-    //         id: item.value,
-    //         checked: true,
-    //       })),
-    //     // ...(multiple ? (value ?? []) : [value])
-    //     //   .filter((item) => item !== undefined)
-    //     //   .map((item) => ({
-    //     //     id: item.value,
-    //     //     checked: true,
-    //     //   })),
-    //   ],
-    // }
+    [multiple, onChange, localSource.dataAdapter]
   )
 
-  /**
-   * The selected option(s)
-   * It is used to display the selected option(s) in the input field
-   * As the data is chunked, no all the items are loaded, so we need to find the options in the data records
-   */
-  const [selectedOption, setSelectedOptions] = useState<
-    SelectItemObject<T, R> | SelectItemObject<T, R>[] | undefined
-  >(undefined)
+  const { handleSelectItemChange, handleSelectAll } = useSelectable(
+    data,
+    paginationInfo,
+    localSource,
+    statusCallback,
+    !multiple
+  )
 
   /**
    * Finds an option in the data records by value and returns the mapped option
@@ -424,21 +286,6 @@ const SelectComponent = forwardRef(function Select<
   )
 
   useEffect(() => {
-    const foundOption = findOption(localValue)
-
-    if (foundOption) {
-      onChangeSelectedOption?.(foundOption)
-      setSelectedOption(foundOption)
-    }
-  }, [
-    data.records,
-    localValue,
-    optionMapper,
-    findOption,
-    onChangeSelectedOption,
-  ])
-
-  useEffect(() => {
     if (open) {
       searchInputRef.current?.focus()
     }
@@ -451,6 +298,22 @@ const SelectComponent = forwardRef(function Select<
     },
     [setCurrentSearch, onSearchChange]
   )
+
+  const handleLocalValueChange = (changedValue: string | undefined) => {
+    // Resets the search value when the option is selected
+    setCurrentSearch(undefined)
+    setLocalValue(changedValue as T)
+    const foundOptions = findOptions(changedValue)
+
+    if (!changedValue) {
+      onChange?.(undefined, undefined, undefined)
+      return
+    }
+
+    if (foundOptions) {
+      onChange?.(foundOptions.value, foundOptions.item, foundOptions)
+    }
+  }
 
   /**
    * When an option is checked or unchecked, we need to update the selected items status
@@ -465,6 +328,11 @@ const SelectComponent = forwardRef(function Select<
       })
     }
   }
+
+  /**
+   * Handles the change of the open state
+   * @param open
+   */
   const handleChangeOpenLocal = (open: boolean) => {
     onOpenChange?.(open)
     setOpenLocal(open)
@@ -538,35 +406,21 @@ const SelectComponent = forwardRef(function Select<
     }, 0)
   }, [data])
 
-  const primitiveValue = useMemo(
-    () => {
-      const selectedItemsArray = Array.from(selectedItemsInData.values()).map(
-        (item) => item.value as string
-      )
-
-      return multiple ? selectedItemsArray : selectedItemsArray[0] || undefined
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the selectedItemsInData
-    [JSON.stringify(selectedItemsInData), multiple]
-  )
-
-  const handlers = {
-    onItemCheckChange: handleItemCheckChange,
-    onValueChange: () => {},
-  }
+  const [primitiveValue, setPrimitiveValue] = useState<
+    (typeof multiple extends true ? T[] : T) | undefined
+  >(undefined)
 
   return (
     <>
       <SelectPrimitive
+        onValueChange={handleLocalValueChange}
         value={primitiveValue}
         disabled={disabled}
         open={openLocal}
         multiple={multiple}
         onOpenChange={handleChangeOpenLocal}
-        defaultValue={defaultValue}
         {...props}
-        // Handlers should be after the props to override the default handlers
-        {...handlers}
+        onItemCheckChange={handleItemCheckChange}
       >
         <SelectTrigger ref={ref} asChild>
           {children ? (
@@ -583,8 +437,11 @@ const SelectComponent = forwardRef(function Select<
               icon={icon}
               labelIcon={labelIcon}
               hideLabel={hideLabel}
-              emptyValue={undefined}
-              value={value as ValueType}
+              value={localValue as string}
+              isEmpty={(value) =>
+                (Array.isArray(value) && value.length === 0) || !value
+              }
+              onChange={(value) => handleLocalValueChange(value)}
               placeholder={placeholder || ""}
               disabled={disabled}
               clearable={clearable}
@@ -630,7 +487,7 @@ const SelectComponent = forwardRef(function Select<
                 className="flex w-full max-w-full items-center justify-between"
                 aria-label={label || placeholder}
               >
-                <>{selectedOption && <SelectValue item={selectedOption} />}</>
+                {selectedItems && <SelectValue selection={selectedItems} />}
               </button>
             </InputField>
           )}
@@ -640,7 +497,30 @@ const SelectComponent = forwardRef(function Select<
             items={items}
             className={selectContentClassName}
             emptyMessage={searchEmptyMessage}
-            bottom={<SelectBottomActions actions={actions} />}
+            bottom={
+              <>
+                <SelectBottomActions actions={actions} />
+                <div className="flex items-center justify-between">
+                  <div className="text-f1-foreground-secondary">
+                    {selectedItems?.length || 0} selected
+                    <button
+                      onClick={() => {
+                        handleSelectAll(false)
+                      }}
+                    >
+                      Clear
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleSelectAll(true)
+                      }}
+                    >
+                      Select all
+                    </button>
+                  </div>
+                </div>
+              </>
+            }
             top={
               <SelectTopActions
                 searchInputRef={searchInputRef}

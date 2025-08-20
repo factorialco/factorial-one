@@ -289,6 +289,62 @@ export const WithDataSourceNotPaginatedMultiple: Story = {
   },
 }
 
+export const WithDataSourceNotPaginatedMultipleGrouping: Story = {
+  args: {
+    placeholder: "Select a value",
+    multiple: true,
+    showSearchBox: true,
+    onChange: fn(),
+    value: "option-2",
+
+    source: createDataSourceDefinition<MockItem>({
+      grouping: {
+        mandatory: false,
+        collapsible: true,
+        groupBy: {
+          role: {
+            name: "Role",
+            label: (groupId) => `${groupId}`,
+            itemCount: (groupId) =>
+              mockItems.filter((item) => item.role === groupId).length,
+          },
+          department: {
+            name: "Department",
+            label: (groupId) => `${groupId}`,
+            itemCount: (groupId) =>
+              mockItems.filter((item) => item.department === groupId).length,
+          },
+        },
+      },
+      dataAdapter: {
+        fetchData: (options) => {
+          const { search } = options
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const results = mockItems.filter(
+                (item) =>
+                  !search ||
+                  item.label.toLowerCase().includes(search.toLowerCase())
+              )
+
+              const res = {
+                records: results,
+              }
+              resolve(res)
+            }, 100)
+          })
+        },
+      },
+    }),
+    mapOptions: (item: (typeof mockItems)[number]) => ({
+      value: item.value,
+      label: item.label,
+      icon: item.icon,
+      description: item.description,
+    }),
+  },
+}
+
 export const WithDataSourcePaginated: Story = {
   args: {
     clearable: true,
@@ -344,7 +400,7 @@ export const WithDataSourcePaginated: Story = {
   },
 }
 
-export const WithDataSourceGrouping: Story = {
+export const WithDataSourceGroupingPaginated: Story = {
   args: {
     placeholder: "Select a value",
     showSearchBox: true,

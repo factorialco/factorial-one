@@ -49,6 +49,7 @@ const Select = <T extends string = string>(props: SelectProps) => {
 
   useEffect(
     () => {
+      console.log("useEffect", props.value)
       setLocalValue(toArray(props.value))
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the value
