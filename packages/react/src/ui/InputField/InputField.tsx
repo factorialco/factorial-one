@@ -12,6 +12,7 @@ import {
   useId,
   useState,
 } from "react"
+import { AppendTag } from "./AppendTag"
 import { InputMessages } from "./components/InputMessages"
 import { Label } from "./components/Label"
 export const INPUTFIELD_SIZES = ["sm", "md"] as const
@@ -454,9 +455,10 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                     )}
                   </AnimatePresence>
                 )}
-                {append && (
+                {(append || appendTag) && (
                   <div className="mt-px flex h-fit items-center pr-px">
                     {append}
+                    {appendTag && <AppendTag text={appendTag} />}
                   </div>
                 )}
               </div>
