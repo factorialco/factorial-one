@@ -2168,6 +2168,8 @@ declare type InputFieldProps<T> = {
     append?: React.ReactNode;
     lengthProvider?: (value: T | undefined) => number;
     loading?: boolean;
+    minWidth?: string;
+    maxWidth?: string;
 };
 
 declare type InputFieldSize = (typeof INPUTFIELD_SIZES)[number];
@@ -3646,7 +3648,7 @@ export declare type SelectProps<T extends string, R extends RecordType = RecordT
     source?: never;
     mapOptions?: never;
     options: SelectItemProps<T, R>[];
-}) & Pick<InputFieldProps<T>, "loading" | "hideLabel" | "clearable" | "labelIcon" | "size" | "label" | "error" | "icon" | "placeholder" | "disabled" | "name">;
+}) & Pick<InputFieldProps<T>, "loading" | "hideLabel" | "clearable" | "labelIcon" | "size" | "label" | "error" | "icon" | "placeholder" | "disabled" | "name" | "minWidth" | "maxWidth">;
 
 declare type ShadAvatarProps = ComponentProps<typeof Avatar_2>;
 
