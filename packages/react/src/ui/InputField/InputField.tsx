@@ -3,7 +3,7 @@ import { Spinner } from "@/experimental/Information/Spinner"
 import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils.ts"
 import { cva } from "cva"
-import { AnimatePresence } from "motion/react"
+import { AnimatePresence, motion } from "motion/react"
 import {
   AriaAttributes,
   cloneElement,
@@ -12,7 +12,6 @@ import {
   useId,
   useState,
 } from "react"
-import { AppendTag } from "./AppendTag"
 import { InputMessages } from "./components/InputMessages"
 import { Label } from "./components/Label"
 export const INPUTFIELD_SIZES = ["sm", "md"] as const
@@ -49,8 +48,8 @@ const inputFieldVariants = cva({
       false: "flex-none",
     },
     size: {
-      sm: "rounded-[10px] pl-2 pr-1",
-      md: "rounded-[12px] pl-3 pr-2",
+      sm: "rounded-[10px]",
+      md: "rounded-[12px]",
     },
   },
   compoundVariants: [
@@ -92,18 +91,44 @@ const inputFieldWrapperVariants = cva({
 })
 
 const inputFieldStatusVariants = cva({
-  base: "focus-within:ring-2 focus-within:ring-offset-0 active:transition-none",
+  base: "focus-within:ring-2 focus-within:ring-offset-0 focus-within:transition-none active:transition-none",
   variants: {
     status: {
       default:
-        "focus-within:border-f1-border-selected-bold focus-within:ring-f1-background-selected hover:border-f1-border-selected-bold",
+        "focus-within:border-f1-border-selected-bold focus-within:ring-f1-background-selected",
       warning:
-        "focus-within:border-f1-border-warning-bold focus-within:ring-f1-border-warning hover:border-f1-border-warning-bold",
-      info: "focus-within:border-f1-border-info-bold focus-within:ring-f1-border-info hover:border-f1-border-info-bold",
+        "border-f1-border-warning-bold focus-within:border-f1-border-warning-bold focus-within:ring-f1-border-warning",
+      info: "border-f1-border-info-bold focus-within:border-f1-border-info-bold focus-within:ring-f1-border-info",
       error:
-        "focus-within:border-f1-border-critical-bold focus-within:ring-f1-border-critical hover:border-f1-border-critical-bold",
+        "border-f1-border-critical-bold focus-within:border-f1-border-critical-bold focus-within:ring-f1-border-critical",
+    },
+    disabled: {
+      true: "",
+      false: "",
     },
   },
+  compoundVariants: [
+    {
+      disabled: false,
+      status: "default",
+      class: "hover:border-f1-border-selected-bold",
+    },
+    {
+      disabled: false,
+      status: "warning",
+      class: "hover:border-f1-border-warning-bold",
+    },
+    {
+      disabled: false,
+      status: "info",
+      class: "hover:border-f1-border-info-bold",
+    },
+    {
+      disabled: false,
+      status: "error",
+      class: "hover:border-f1-border-critical-bold",
+    },
+  ],
 })
 
 export const inputFieldStatus = ["default", "warning", "info", "error"] as const
@@ -328,33 +353,40 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
         )}
         <div
           className={cn(
-            "flex w-full gap-2 transition-all",
+            "relative h-fit transition-all",
             "border-[1px] border-solid border-f1-border-secondary bg-f1-background",
-            !noEdit && "hover:border-f1-border-hover",
+            !noEdit && !disabled && "hover:border-f1-border-hover",
             "group focus-within:border-f1-border-hover focus-within:ring-1 focus-within:ring-f1-border-hover",
             "active-within:border-f1-border active-within:ring-1 active-within:ring-f1-border-hover",
             "focus-within:outline-none focus-within:ring-1 focus-within:ring-offset-1",
-            inputFieldStatusVariants({ status: status?.type ?? "default" }),
+            inputFieldStatusVariants({
+              status: status?.type ?? "default",
+              disabled: disabled || readonly,
+            }),
             readonly && "border-f1-border-secondary bg-f1-background-secondary",
             disabled && "cursor-not-allowed",
             inputFieldVariants({ size, canGrow })
           )}
           data-testid="input-field-wrapper"
         >
-          {icon && (
-            <div className={cn(inputElementVariants({ size }))}>
-              <Icon
-                onClick={handleClickContent}
-                icon={icon}
-                color="default"
-                className="h-5 w-5 shrink-0 pt-[2px]"
-              />
-            </div>
-          )}
           <div
-            className="relative flex w-full min-w-0 flex-1 gap-2"
+            className="relative flex h-full w-full min-w-0 flex-1"
             onClick={handleClickContent}
           >
+            {icon && (
+              <div
+                className={cn(
+                  "pointer-events-none absolute left-2 top-1.5 my-auto h-5 w-5 shrink-0",
+                  size === "md" && "left-3 top-2.5"
+                )}
+              >
+                <Icon
+                  onClick={handleClickContent}
+                  icon={icon}
+                  color="default"
+                />
+              </div>
+            )}
             <div onClick={handleClickChildren} className="w-full">
               {cloneElement(children as React.ReactElement, {
                 onChange: handleChange,
@@ -372,8 +404,11 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 "aria-disabled": noEdit,
                 name,
                 className: cn(
-                  "h-full w-full shrink flex-1 min-w-0",
+                  "h-full w-full min-w-0 px-3",
                   "[&::-webkit-search-cancel-button]:hidden",
+                  (icon || loading) && "pl-8",
+                  (icon || loading) && size === "md" && "pl-9",
+                  disabled && "cursor-not-allowed",
                   (children as React.ReactElement).props.className,
                   inputElementVariants({ size })
                 ),
@@ -382,7 +417,9 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
             {!noEdit && (
               <div
                 className={cn(
-                  "pointer-events-none absolute bottom-0 left-0 top-[1px] z-10 flex flex-1 justify-start text-f1-foreground-secondary transition-opacity",
+                  "pointer-events-none absolute bottom-0 left-0 top-[1px] z-10 flex flex-1 justify-start px-3 text-f1-foreground-secondary transition-opacity",
+                  (icon || loading) && "pl-8",
+                  (icon || loading) && size === "md" && "pl-9",
                   inputElementVariants({ size }),
                   placeholder && !hidePlaceholder && isEmpty(localValue)
                     ? "opacity-1"
@@ -394,6 +431,36 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 {placeholder}
               </div>
             )}
+            {(clearable || append) && (
+              <div
+                className={cn(
+                  "flex h-fit items-center gap-1.5 pr-0.5 pt-0.5",
+                  size === "md" && "pr-1.5 pt-1.5"
+                )}
+              >
+                {clearable && !noEdit && (
+                  <AnimatePresence initial={!isEmpty(localValue)}>
+                    {!isEmpty(localValue) && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="mr-px mt-px flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center"
+                        onClick={handleClear}
+                      >
+                        <Icon icon={CrossedCircle} color="bold" size="md" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                )}
+                {append && (
+                  <div className="mt-px flex h-fit items-center pr-px">
+                    {append}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           {loading && (
             <div
@@ -403,27 +470,6 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               )}
             >
               <Spinner size="small" className="mt-[3px]" />
-            </div>
-          )}
-          {clearable && !noEdit && (
-            <div
-              className={cn("h-5 w-5 shrink-0", inputElementVariants({ size }))}
-            >
-              <AnimatePresence initial={!isEmpty(localValue)}>
-                {!isEmpty(localValue) && (
-                  <Icon
-                    className="mt-[1px] h-5 w-5 cursor-pointer text-f1-icon-secondary hover:text-f1-icon"
-                    onClick={handleClear}
-                    icon={CrossedCircle}
-                  />
-                )}
-              </AnimatePresence>
-            </div>
-          )}
-          {append && (
-            <div className={cn("flex gap-2", inputElementVariants({ size }))}>
-              {append}
-              {appendTag && <AppendTag text={appendTag} />}
             </div>
           )}
         </div>

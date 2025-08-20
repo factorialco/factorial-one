@@ -276,7 +276,7 @@ export const WithAppend: Story = {
     ...Default.args,
     clearable: true,
     append: (
-      <div className="rounded-full bg-f1-background-secondary px-2 py-1 text-f1-foreground-secondary">
+      <div className="rounded-sm bg-f1-background-secondary px-2 py-0.5 text-f1-foreground-secondary">
         Tag
       </div>
     ),
