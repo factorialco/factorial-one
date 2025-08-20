@@ -432,7 +432,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 {placeholder}
               </div>
             )}
-            {(clearable || append) && (
+            {(clearable || append || appendTag || loading) && (
               <div
                 className={cn(
                   "flex h-fit items-center gap-1.5 pr-0.5 pt-0.5",
@@ -461,19 +461,20 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                     {appendTag && <AppendTag text={appendTag} />}
                   </div>
                 )}
+
+                {loading && (
+                  <div
+                    className={cn(
+                      "pointer-events-none flex justify-start",
+                      inputElementVariants({ size })
+                    )}
+                  >
+                    <Spinner size="small" className="mt-[1px]" />
+                  </div>
+                )}
               </div>
             )}
           </div>
-          {loading && (
-            <div
-              className={cn(
-                "pointer-events-none flex justify-start",
-                inputElementVariants({ size })
-              )}
-            >
-              <Spinner size="small" className="mt-[3px]" />
-            </div>
-          )}
         </div>
         <InputMessages status={status} />
       </div>
