@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.158.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.157.1...factorial-one-react-v1.158.0) (2025-08-20)
+
+
+### Features
+
+* tokens for spacing between elements ([#2423](https://github.com/factorialco/factorial-one/issues/2423)) ([8b6162e](https://github.com/factorialco/factorial-one/commit/8b6162e09973eb0bafbffd5632ca02620c5a465a))
+
 ## [1.157.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.157.0...factorial-one-react-v1.157.1) (2025-08-19)
 
 
