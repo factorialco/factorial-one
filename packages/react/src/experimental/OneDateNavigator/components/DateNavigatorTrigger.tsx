@@ -65,7 +65,7 @@ const DateNavigatorTrigger = forwardRef<
         )
       }
       return granularity.toString(value.value) ?? i18n.date.selectDate
-    }, [value, i18n.date.selectDate])
+    }, [value, i18n.date.selectDate, i18n.date.granularities.week.range])
 
     const handleNavigation = (date: DateRange | false) => {
       if (!date) {

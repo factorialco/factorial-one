@@ -173,7 +173,7 @@ export function OneCalendar({
         to: to || "",
       })
     }
-  }, [granularity, selected])
+  }, [granularity, selected, i18n.date.granularities.week.range])
 
   const handleInputNavigate = (input: "from" | "to", direction: -1 | 1) => {
     const currentDate = inputValue[input]
