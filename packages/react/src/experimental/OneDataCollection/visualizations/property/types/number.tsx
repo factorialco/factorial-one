@@ -58,5 +58,5 @@ export const NumberCell = (
 }
 
 const Units = ({ units }: { units: string }) => {
-  return <span>{units}</span>
+  return <span>{units.toString()}</span>
 }
