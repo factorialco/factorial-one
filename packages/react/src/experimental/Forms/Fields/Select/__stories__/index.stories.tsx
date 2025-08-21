@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
-import { Select, SelectProps } from "./index"
+import { Select, SelectProps } from "../index"
 
 import { IconType } from "@/components/Utilities/Icon"
 import { Appearance, Circle, Desktop, Plus } from "@/icons/app"
+import { inputFieldStatus } from "@/ui/InputField"
 import { useState } from "react"
 
 // Wraps the Select component with a hook to show the selected value
@@ -118,7 +119,19 @@ const meta: Meta = {
       description: "Icon to display next to the label",
     },
     error: {
-      description: "Error message to display below the select",
+      description:
+        "Error message to display below the select, This is a shortcut for status.type = 'error'",
+    },
+    status: {
+      description:
+        "Status of the select and a message to display below the select",
+      control: "select",
+      options: inputFieldStatus,
+      defaultValue: "default",
+    },
+    hint: {
+      description:
+        "Hint to display below the select, This is a shortcut for status.type = 'default'. Error status overwrites hint",
     },
     children: {
       description:
@@ -282,7 +295,43 @@ export const WithError: Story = {
   },
 }
 
-export const WithClearable: Story = {
+export const WithWarning: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    status: {
+      type: "warning",
+      message: "Warning message",
+    },
+  },
+}
+
+export const WithInfo: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    status: {
+      type: "info",
+      message: "Info message",
+    },
+  },
+}
+
+export const WithHint: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    hint: "Hint message",
+  },
+}
+
+export const Clearable: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },
   },

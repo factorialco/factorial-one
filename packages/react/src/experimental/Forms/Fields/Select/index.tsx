@@ -54,9 +54,11 @@ export type SelectProps<T, R = any> = {
   | "labelIcon"
   | "size"
   | "label"
-  | "error"
   | "icon"
   | "placeholder"
+  | "error"
+  | "status"
+  | "hint"
 >
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
@@ -123,12 +125,14 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
     selectContentClassName,
     actions,
     label,
-    error,
     icon,
     labelIcon,
     clearable,
     loading,
     name,
+    error,
+    status,
+    hint,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -240,6 +244,8 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
           <InputField
             label={label}
             error={error}
+            status={status}
+            hint={hint}
             icon={icon}
             labelIcon={labelIcon}
             hideLabel={hideLabel}
