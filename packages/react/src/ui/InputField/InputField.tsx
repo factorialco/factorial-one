@@ -407,8 +407,8 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 className: cn(
                   "h-full w-full min-w-0 px-3",
                   "[&::-webkit-search-cancel-button]:hidden",
-                  (icon || loading) && "pl-8",
-                  (icon || loading) && size === "md" && "pl-9",
+                  icon && "pl-8",
+                  icon && size === "md" && "pl-9",
                   disabled && "cursor-not-allowed",
                   (children as React.ReactElement).props.className,
                   inputElementVariants({ size })
@@ -419,8 +419,8 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
               <div
                 className={cn(
                   "pointer-events-none absolute bottom-0 left-0 top-[1px] z-10 flex flex-1 justify-start px-3 text-f1-foreground-secondary transition-opacity",
-                  (icon || loading) && "pl-8",
-                  (icon || loading) && size === "md" && "pl-9",
+                  icon && "pl-8",
+                  icon && size === "md" && "pl-9",
                   inputElementVariants({ size }),
                   placeholder && !hidePlaceholder && isEmpty(localValue)
                     ? "opacity-1"
@@ -465,7 +465,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                 {loading && (
                   <div
                     className={cn(
-                      "pointer-events-none flex justify-start",
+                      "pointer-events-none flex h-6 w-6 items-center justify-center",
                       inputElementVariants({ size })
                     )}
                   >
