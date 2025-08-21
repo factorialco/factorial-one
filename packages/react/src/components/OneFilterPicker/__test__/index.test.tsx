@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event"
 import React from "react"
 import { describe, expect, it, vi } from "vitest"
 import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
+import { TrackingProvider } from "../../../lib/providers/tracking"
 import { OneFilterPicker } from "../index"
 import type { FiltersDefinition } from "../types"
 
@@ -26,7 +27,9 @@ const definition = {
 } as const satisfies FiltersDefinition
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
+  <TrackingProvider trackingFunction={vi.fn()}>
+    <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
+  </TrackingProvider>
 )
 
 describe("Filters", () => {
