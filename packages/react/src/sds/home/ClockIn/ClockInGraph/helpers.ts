@@ -1,4 +1,4 @@
-import { formatTime24Hours } from "../../../../../lib/date"
+import { formatTime24Hours } from "../../../../lib/date"
 import { getNormalizedRemainingMinutes } from "../ClockInControls/helpers"
 import { CLOCK_IN_COLORS, ClockInGraphProps } from "./index"
 

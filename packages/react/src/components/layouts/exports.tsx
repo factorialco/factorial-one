@@ -1,5 +1,4 @@
 import { Component } from "@/lib/component"
-import { HomeLayout as HomeLayoutComponent } from "./HomeLayout"
 import {
   TwoColumnLayout as TwoColumnLayoutComponent,
   TwoColumnLayoutProps,
@@ -26,12 +25,4 @@ export const TwoColumnLayout = Component(
     type: "layout",
   },
   TwoColumnLayoutComponent
-)
-
-export const HomeLayout = Component(
-  {
-    name: "HomeLayout",
-    type: "layout",
-  },
-  HomeLayoutComponent
 )

@@ -1,13 +1,13 @@
 import { PulseAvatar } from "@/experimental/Information/Avatars/PulseAvatar"
-import { cva, type VariantProps } from "cva"
-import { ComponentProps } from "react"
+import { cva } from "cva"
 import { Button } from "../../../components/Actions/Button"
+import { PersonAvatar } from "../../../experimental/Information/Avatars/PersonAvatar"
+import { useSidebar } from "../../../experimental/Navigation/ApplicationFrame/FrameProvider"
 import Menu from "../../../icons/app/Menu"
 import { cn } from "../../../lib/utils"
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import { useSidebar } from "../ApplicationFrame/FrameProvider"
+import type { DaytimePageProps } from "./types"
 
-const daytimePageVariants = cva({
+export const daytimePageVariants = cva({
   base: "pointer-events-none absolute inset-0 h-screen max-h-[1000px] opacity-[0.08]",
   variants: {
     period: {
@@ -23,21 +23,6 @@ const daytimePageVariants = cva({
     period: "morning",
   },
 })
-
-export interface DaytimePageProps
-  extends VariantProps<typeof daytimePageVariants> {
-  children?: React.ReactNode
-  header?: {
-    title: string
-    description?: string
-    employeeFirstName: string
-    employeeLastName: string
-    employeeAvatar?: string
-    pulse?: ComponentProps<typeof PulseAvatar>["pulse"]
-    onPulseClick?: ComponentProps<typeof PulseAvatar>["onPulseClick"]
-  }
-  embedded?: boolean
-}
 
 export function DaytimePage({
   children,
