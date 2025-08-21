@@ -47,9 +47,12 @@ const Select = <T extends string = string>(props: SelectProps) => {
 
   const [localValue, setLocalValue] = useState(toArray(props.value))
 
+  /**
+   * We need to update the local value when the value prop changes
+   * Internally we use always an array of values, so we need to convert the value to an array
+   */
   useEffect(
     () => {
-      console.log("useEffect", props.value)
       setLocalValue(toArray(props.value))
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the value
@@ -76,7 +79,6 @@ const Select = <T extends string = string>(props: SelectProps) => {
 
   const handleValueChange = (value: Value) => {
     setLocalValue(toArray(value))
-
     if (props.multiple) {
       props.onValueChange?.(toArray(value) as T[])
     } else {

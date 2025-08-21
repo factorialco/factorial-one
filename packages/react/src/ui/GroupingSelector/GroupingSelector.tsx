@@ -5,7 +5,11 @@ import {
   SortOrder,
 } from "@/hooks/datasource"
 import { useI18n } from "@/lib/providers/i18n"
-import { SelectWithDirection } from "../SelectWithDirection"
+import { useMemo } from "react"
+import {
+  SelectWithDirection,
+  SelectWithDirectionValue,
+} from "../SelectWithDirection"
 
 type GroupingSelectorProps<
   R extends RecordType,
@@ -33,6 +37,19 @@ export const GroupingSelector = <
   hideDirection,
 }: GroupingSelectorProps<R, Grouping>) => {
   const i18n = useI18n()
+
+  const localValue = useMemo(() => {
+    return currentGrouping
+      ? {
+          selected: currentGrouping.field?.toString(),
+          direction: currentGrouping.order,
+        }
+      : {
+          selected: EmptyGroupingValue,
+          direction: "asc" as const,
+        }
+  }, [currentGrouping])
+
   if (
     !grouping ||
     (!!grouping.mandatory && Object.entries(grouping.groupBy).length < 2)
@@ -64,33 +81,30 @@ export const GroupingSelector = <
       })),
   ]
 
+  const handleChange = (value: SelectWithDirectionValue | undefined) => {
+    console.log("value", value)
+    if (!value) {
+      return
+    }
+
+    return (
+      onGroupingChange &&
+      onGroupingChange(
+        value?.selected === EmptyGroupingValue
+          ? undefined
+          : {
+              field: value?.selected as keyof Grouping["groupBy"],
+              order: value?.direction as SortOrder,
+            }
+      )
+    )
+  }
+
   return (
     <SelectWithDirection
       options={groupingOptions}
-      value={
-        currentGrouping
-          ? {
-              selected: currentGrouping.field?.toString(),
-              direction: currentGrouping.order,
-            }
-          : {
-              selected: EmptyGroupingValue,
-              direction: "asc",
-            }
-      }
-      onChange={
-        onGroupingChange
-          ? (value) =>
-              onGroupingChange(
-                value?.selected === EmptyGroupingValue
-                  ? undefined
-                  : {
-                      field: value?.selected as keyof Grouping["groupBy"],
-                      order: value?.direction as SortOrder,
-                    }
-              )
-          : undefined
-      }
+      value={localValue}
+      onChange={handleChange}
       label={i18n.collections.grouping.groupBy}
       className={className}
       hideDirection={hideDirection}

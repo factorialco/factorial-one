@@ -41,10 +41,41 @@ export function useSelectable<
   source: DataSourceDefinition<R, Filters, Sortings, Grouping>,
   onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
   singleSelection: boolean = false,
-  defaultSelectedItems?: SelectedItemsState | undefined
+  defaultSelected?: (string | number)[] | SelectedItemsState | undefined
 ): UseSelectable<R> {
   const isGrouped = data.type === "grouped"
   const isPaginated = paginationInfo !== null
+
+  const [defaultSelectedItems, setDefaultSelectedItems] = useState<
+    SelectedItemsState | undefined
+  >()
+
+  /**
+   * Set the default selected items and groups
+   * If the default selected is an array of ids, we need to convert them to the items state, but this only works for the non-paginated data
+   */
+  useEffect(() => {
+    if (Array.isArray(defaultSelected)) {
+      if (isPaginated) {
+        throw new Error(
+          "Cannot set default selected items by value for paginated data"
+        )
+      }
+
+      setDefaultSelectedItems({
+        items: defaultSelected.map((id) => ({
+          id: String(id),
+          item: data.records.find((record) => record.id === id),
+          checked: true,
+        })),
+        groups: [],
+        allSelected: false,
+      })
+    } else {
+      setDefaultSelectedItems(defaultSelected)
+    }
+  }, [JSON.stringify(defaultSelected), isPaginated, data.records])
+
   /**
    * Items state and list of selected and unselected items
    */

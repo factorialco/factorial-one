@@ -82,17 +82,16 @@ const SelectComponent = forwardRef(function Select<
 
   const [openLocal, setOpenLocal] = useState(open)
 
-  const [localValue, setLocalValue] = useState<
-    (typeof multiple extends true ? T[] : T) | undefined
-  >(undefined)
+  const [localValue, setLocalValue] = useState<T[] | undefined>(undefined)
 
   useEffect(() => {
     const defaultValue = multiple
       ? (defaultItem || []).map((item) => item.value)
-      : defaultItem?.value
+      : [defaultItem?.value]
 
-    console.log("defaultValue", defaultValue)
-    setLocalValue(value || defaultValue || undefined)
+    const localValue = value || defaultValue || []
+
+    setLocalValue(Array.isArray(localValue) ? localValue : [localValue])
   }, [defaultItem, value, multiple])
 
   const dataSource = useMemo(() => {
@@ -200,6 +199,11 @@ const SelectComponent = forwardRef(function Select<
             findOptions(selectedItemsValues)
           )
         } else {
+          console.log(
+            "selectedItems **************",
+            selectedItems[0],
+            selectedItemsValues[0]
+          )
           setSelectedItems(selectedItems[0])
           setPrimitiveValue(selectedItemsValues[0])
           onChange?.(
@@ -250,7 +254,8 @@ const SelectComponent = forwardRef(function Select<
     paginationInfo,
     localSource,
     statusCallback,
-    !multiple
+    !multiple,
+    localValue
   )
 
   /**
@@ -303,16 +308,16 @@ const SelectComponent = forwardRef(function Select<
     // Resets the search value when the option is selected
     setCurrentSearch(undefined)
     setLocalValue(changedValue as T)
-    const foundOptions = findOptions(changedValue)
+    // const foundOptions = findOptions(changedValue)
 
-    if (!changedValue) {
-      onChange?.(undefined, undefined, undefined)
-      return
-    }
+    // if (!changedValue) {
+    //   onChange?.(undefined, undefined, undefined)
+    //   return
+    // }
 
-    if (foundOptions) {
-      onChange?.(foundOptions.value, foundOptions.item, foundOptions)
-    }
+    // if (foundOptions) {
+    //   onChange?.(foundOptions.value, foundOptions.item, foundOptions)
+    // }
   }
 
   /**
@@ -500,25 +505,27 @@ const SelectComponent = forwardRef(function Select<
             bottom={
               <>
                 <SelectBottomActions actions={actions} />
-                <div className="flex items-center justify-between">
-                  <div className="text-f1-foreground-secondary">
-                    {selectedItems?.length || 0} selected
-                    <button
-                      onClick={() => {
-                        handleSelectAll(false)
-                      }}
-                    >
-                      Clear
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleSelectAll(true)
-                      }}
-                    >
-                      Select all
-                    </button>
+                {multiple && (
+                  <div className="flex items-center justify-between">
+                    <div className="text-f1-foreground-secondary">
+                      {selectedItems?.length || 0} selected
+                      <button
+                        onClick={() => {
+                          handleSelectAll(false)
+                        }}
+                      >
+                        Clear
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleSelectAll(true)
+                        }}
+                      >
+                        Select all
+                      </button>
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             }
             top={

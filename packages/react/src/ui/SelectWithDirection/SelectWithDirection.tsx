@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUp, Placeholder } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { InputFieldProps } from "../InputField"
 
-type SelectWithDirectionValue = {
+export type SelectWithDirectionValue = {
   selected: string
   direction: "asc" | "desc"
 }
@@ -29,6 +29,28 @@ export const SelectWithDirection = ({
   options,
   value,
 }: SelectWithDirectionProps) => {
+  const handleChangeField = (value: string) => {
+    onChange?.(
+      value !== EmptyValue
+        ? {
+            selected: value,
+            direction: "asc",
+          }
+        : undefined
+    )
+  }
+
+  const toggleDirection = () => {
+    if (!value) {
+      return
+    }
+
+    onChange?.({
+      selected: value.selected,
+      direction: value.direction === "asc" ? "desc" : ("asc" as const),
+    })
+  }
+
   return (
     <div className={cn("flex max-w-full flex-col gap-0", className)}>
       <div className="flex items-end gap-2">
@@ -39,16 +61,7 @@ export const SelectWithDirection = ({
             labelIcon={Placeholder}
             options={options}
             value={value?.selected ?? EmptyValue}
-            onChange={(value: string) => {
-              onChange?.(
-                value !== EmptyValue
-                  ? {
-                      selected: value,
-                      direction: "asc",
-                    }
-                  : undefined
-              )
-            }}
+            onChange={handleChangeField}
           />
         </div>
         {value?.selected && !hideDirection && value.selected !== EmptyValue && (
@@ -58,12 +71,7 @@ export const SelectWithDirection = ({
               label={label}
               variant="outline"
               icon={value?.direction === "asc" ? ArrowUp : ArrowDown}
-              onClick={() =>
-                onChange?.({
-                  selected: value.selected,
-                  direction: value.direction === "asc" ? "desc" : "asc",
-                })
-              }
+              onClick={toggleDirection}
             />
           </div>
         )}

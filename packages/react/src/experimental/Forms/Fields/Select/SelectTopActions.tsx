@@ -35,30 +35,36 @@ export const SelectTopActions = <R extends RecordType = RecordType>({
   currentGrouping,
   onGroupingChange,
 }: SelectTopActionsProps<R>) => {
-  if (!showSearchBox) return null
+  const showTopActions = showSearchBox || grouping
   return (
-    <div className="flex gap-2 px-2 pt-2">
-      <div className="w-30">
-        <F1SearchBox
-          placeholder={searchBoxPlaceholder}
-          onChange={onSearchChange}
-          clearable
-          value={searchValue}
-          key="search-input"
-          ref={searchInputRef}
-          onBlur={onBlur}
-          onFocus={onFocus}
-        />
+    showTopActions && (
+      <div className="flex gap-2 px-2 pt-2">
+        {showTopActions && (
+          <div className="w-30">
+            <F1SearchBox
+              placeholder={searchBoxPlaceholder}
+              onChange={onSearchChange}
+              clearable
+              value={searchValue}
+              key="search-input"
+              ref={searchInputRef}
+              onBlur={onBlur}
+              onFocus={onFocus}
+            />
+          </div>
+        )}
+        {grouping && (
+          <div className="w-20 flex-1">
+            <GroupingSelector
+              hideLabel
+              hideDirection
+              grouping={grouping}
+              currentGrouping={currentGrouping}
+              onGroupingChange={onGroupingChange}
+            />
+          </div>
+        )}
       </div>
-      <div className="w-20 flex-1">
-        <GroupingSelector
-          hideLabel
-          hideDirection
-          grouping={grouping}
-          currentGrouping={currentGrouping}
-          onGroupingChange={onGroupingChange}
-        />
-      </div>
-    </div>
+    )
   )
 }
