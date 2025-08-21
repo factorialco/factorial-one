@@ -1,9 +1,9 @@
-import { C as m, L as de, c as ce, P as V, a as b, f as ue, b as fe, A as he, B as me, d as pe, e as ve, g as ge, V as xe, h as q, i as be, j as Ce, M as U, I as H, F as ye, D as we, k as Ne, l as Pe, m as Le, n as W, S as Se, o as Me, p as w, U as Y, q as ke, r as Re, s as E, t as De, u as G, v as Be, w as Te, x as $e, y as Ie, z as Fe, E as Oe, G as Ee, H as _e, J as je, X as ze, K as Ve, N as qe, O as Ue, Q as He } from "./F0Card-BWcBkL7j.js";
-import { _ as za, R as Va, a4 as qa, T as Ua, W as Ha, Y as Wa, Z as Ya, a1 as Ga, $ as Xa, a5 as Ja, a6 as Qa, a0 as Ka, a3 as Za, a2 as Aa } from "./F0Card-BWcBkL7j.js";
+import { C as p, L as ie, c as de, P as V, a as b, f as ce, b as ue, A as fe, B as he, d as pe, e as me, g as ve, V as ge, h as q, i as xe, j as be, M as U, I as H, F as Ce, D as ye, k as we, l as Ne, m as Le, n as W, S as Pe, o as Se, p as w, U as Y, q as Me, r as ke, s as E, t as Re, u as G, v as De, w as Be, x as Te, y as $e, z as Ie, E as Fe, G as Oe, H as Ee, T as _e, J as je, X as ze, K as Ve, N as qe, O as Ue, Q as He } from "./F0Card-DW8b9wOu.js";
+import { $ as _a, R as ja, a5 as za, W as Va, Y as qa, Z as Ua, _ as Ha, a2 as Wa, a0 as Ya, a6 as Ga, a7 as Xa, a1 as Ja, a4 as Qa, a3 as Ka } from "./F0Card-DW8b9wOu.js";
 import { jsx as e, jsxs as c, Fragment as $ } from "react/jsx-runtime";
 import * as I from "react";
-import We, { forwardRef as B, useRef as X, useImperativeHandle as Ye, Children as Ge, useState as g, useEffect as J, useMemo as Xe, createContext as Q } from "react";
-const ya = {
+import We, { forwardRef as B, useRef as X, useImperativeHandle as Ye, Children as Ge, useState as g, useEffect as J, createContext as Xe } from "react";
+const ba = {
   approvals: {
     history: "Approval history",
     statuses: {
@@ -183,14 +183,14 @@ const ya = {
     openChat: "Open Chat",
     description: "Chat with AI"
   }
-}, wa = m(
+}, Ca = p(
   {
     name: "Link",
     type: "info"
   },
-  de
+  ie
 );
-var F = "Progress", O = 100, [Je, Na] = ce(F), [Qe, Ke] = Je(F), K = I.forwardRef(
+var F = "Progress", O = 100, [Je, ya] = de(F), [Qe, Ke] = Je(F), Q = I.forwardRef(
   (a, r) => {
     const {
       __scopeProgress: s,
@@ -211,7 +211,7 @@ var F = "Progress", O = 100, [Je, Na] = ce(F), [Qe, Ke] = Je(F), K = I.forwardRe
         "aria-valuenow": D(o) ? o : void 0,
         "aria-valuetext": f,
         role: "progressbar",
-        "data-state": ee(o, i),
+        "data-state": A(o, i),
         "data-value": o ?? void 0,
         "data-max": i,
         ...n,
@@ -220,14 +220,14 @@ var F = "Progress", O = 100, [Je, Na] = ce(F), [Qe, Ke] = Je(F), K = I.forwardRe
     ) });
   }
 );
-K.displayName = F;
-var Z = "ProgressIndicator", A = I.forwardRef(
+Q.displayName = F;
+var K = "ProgressIndicator", Z = I.forwardRef(
   (a, r) => {
-    const { __scopeProgress: s, ...l } = a, t = Ke(Z, s);
+    const { __scopeProgress: s, ...l } = a, t = Ke(K, s);
     return /* @__PURE__ */ e(
       V.div,
       {
-        "data-state": ee(t.value, t.max),
+        "data-state": A(t.value, t.max),
         "data-value": t.value ?? void 0,
         "data-max": t.max,
         ...l,
@@ -236,11 +236,11 @@ var Z = "ProgressIndicator", A = I.forwardRef(
     );
   }
 );
-A.displayName = Z;
+Z.displayName = K;
 function Ze(a, r) {
   return `${Math.round(a / r * 100)}%`;
 }
-function ee(a, r) {
+function A(a, r) {
   return a == null ? "indeterminate" : a === r ? "complete" : "loading";
 }
 function D(a) {
@@ -263,9 +263,9 @@ function ea(a, r) {
 
 Defaulting to \`null\`.`;
 }
-var ae = K, aa = A;
-const re = I.forwardRef(({ className: a, value: r, ...s }, l) => /* @__PURE__ */ e(
-  ae,
+var ee = Q, aa = Z;
+const ae = I.forwardRef(({ className: a, value: r, ...s }, l) => /* @__PURE__ */ e(
+  ee,
   {
     ref: l,
     className: b(
@@ -285,12 +285,12 @@ const re = I.forwardRef(({ className: a, value: r, ...s }, l) => /* @__PURE__ */
     )
   }
 ));
-re.displayName = ae.displayName;
+ae.displayName = ee.displayName;
 const ra = ({ value: a, max: r = 100, label: s, color: l }, t) => {
-  const u = l || fe(0), n = a / r * 100;
+  const u = l || ue(0), n = a / r * 100;
   return /* @__PURE__ */ c("div", { className: "flex items-center space-x-2", "aria-live": "polite", children: [
     /* @__PURE__ */ e("div", { className: "flex-grow", children: /* @__PURE__ */ e(
-      re,
+      ae,
       {
         color: u,
         value: n,
@@ -303,43 +303,43 @@ const ra = ({ value: a, max: r = 100, label: s, color: l }, t) => {
     ) }),
     s && /* @__PURE__ */ e("div", { className: "flex-shrink-0 text-sm font-medium", children: s })
   ] });
-}, sa = ue(ra), Pa = m(
+}, sa = ce(ra), wa = p(
   {
     name: "AreaChart",
     type: "info"
   },
-  he
-), La = m(
+  fe
+), Na = p(
   {
     name: "BarChart",
     type: "info"
   },
-  me
-), Sa = m(
+  he
+), La = p(
   {
     name: "CategoryBarChart",
     type: "info"
   },
   pe
-), Ma = m(
+), Pa = p(
   {
     name: "LineChart",
     type: "info"
   },
-  ve
-), ka = m(
+  me
+), Sa = p(
   {
     name: "PieChart",
     type: "info"
   },
-  ge
-), Ra = m(
+  ve
+), Ma = p(
   {
     name: "VerticalBarChart",
     type: "info"
   },
-  xe
-), Da = m(
+  ge
+), ka = p(
   {
     name: "ProgressBarChart",
     type: "info"
@@ -356,7 +356,7 @@ const ra = ({ value: a, max: r = 100, label: s, color: l }, t) => {
   const u = Ge.toArray(r).filter((n) => !!n).map((n, i) => /* @__PURE__ */ e("div", { className: "h-full @5xl:h-auto [&>div]:h-full", children: n }, i));
   return /* @__PURE__ */ e(q, { layout: "home", children: /* @__PURE__ */ c("div", { ref: t, className: "@container", children: [
     /* @__PURE__ */ c("div", { className: "flex flex-col gap-6 px-5 pt-4 @md:pt-2 @5xl:hidden", children: [
-      /* @__PURE__ */ e(be, { columns: la, showArrows: !1, children: u }),
+      /* @__PURE__ */ e(xe, { columns: la, showArrows: !1, children: u }),
       /* @__PURE__ */ e("main", { children: s })
     ] }),
     /* @__PURE__ */ c("div", { className: "hidden grid-cols-3 gap-5 px-6 pb-6 pt-2 @5xl:grid", children: [
@@ -391,14 +391,14 @@ const ra = ({ value: a, max: r = 100, label: s, color: l }, t) => {
       }
     ) });
   }
-), z = ({ children: a }) => /* @__PURE__ */ e("aside", { className: "py-5 pl-2 pr-4 sm:basis-1/4 sm:pb-6", children: a }), na = Ce({
+), z = ({ children: a }) => /* @__PURE__ */ e("aside", { className: "py-5 pl-2 pr-4 sm:basis-1/4 sm:pb-6", children: a }), na = be({
   base: "relative flex min-h-full w-full flex-col gap-4 place-self-center overflow-y-auto px-6 py-5",
   variants: {
     variant: {
       narrow: "max-w-screen-lg"
     }
   }
-}), se = We.forwardRef(({ children: a, variant: r, className: s, ...l }, t) => /* @__PURE__ */ e(q, { layout: "standard", children: /* @__PURE__ */ e(
+}), re = We.forwardRef(({ children: a, variant: r, className: s, ...l }, t) => /* @__PURE__ */ e(q, { layout: "standard", children: /* @__PURE__ */ e(
   "section",
   {
     ref: t,
@@ -407,29 +407,29 @@ const ra = ({ value: a, max: r = 100, label: s, color: l }, t) => {
     children: /* @__PURE__ */ e("div", { className: b(na({ variant: r })), children: a })
   }
 ) }));
-se.displayName = "StandardLayout";
-const Ba = m(
+re.displayName = "StandardLayout";
+const Ra = p(
   {
     name: "StandardLayout",
     type: "layout"
   },
-  se
-), Ta = m(
+  re
+), Da = p(
   {
     name: "TwoColumnLayout",
     type: "layout"
   },
   oa
-), $a = m(
+), Ba = p(
   {
     name: "HomeLayout",
     type: "layout"
   },
   ta
 ), ia = ({ benefits: a }) => /* @__PURE__ */ e("div", { className: "flex flex-col gap-2", children: a.map((r, s) => /* @__PURE__ */ e(da, { text: r }, s)) }), da = ({ text: a }) => /* @__PURE__ */ c("div", { className: "flex flex-row items-start gap-2", children: [
-  /* @__PURE__ */ e(H, { icon: ye, size: "md", className: "text-f1-icon-positive" }),
+  /* @__PURE__ */ e(H, { icon: Ce, size: "md", className: "text-f1-icon-positive" }),
   /* @__PURE__ */ e("span", { children: a })
-] }), le = B(
+] }), se = B(
   ({ title: a, image: r, benefits: s, actions: l, withShadow: t = !0, icon: u, moduleName: n }, i) => /* @__PURE__ */ c(
     "div",
     {
@@ -464,7 +464,7 @@ const Ba = m(
     }
   )
 );
-le.displayName = "ProductBlankslate";
+se.displayName = "ProductBlankslate";
 function ca({
   isOpen: a,
   onClose: r,
@@ -476,16 +476,16 @@ function ca({
   const [n, i] = g(a);
   return J(() => {
     i(a);
-  }, [a]), /* @__PURE__ */ e(we, { open: n, onOpenChange: (f) => {
+  }, [a]), /* @__PURE__ */ e(ye, { open: n, onOpenChange: (f) => {
     i(f), f || r();
   }, modal: !0, children: /* @__PURE__ */ c(
-    Ne,
+    we,
     {
       className: "max-h-[620px] w-[760px] overflow-y-auto overflow-x-hidden bg-f1-background",
       container: u,
       children: [
         /* @__PURE__ */ c("div", { className: "flex flex-row items-center justify-between px-4 py-4", children: [
-          /* @__PURE__ */ c(Pe, { className: "flex flex-row items-center gap-2 text-lg font-semibold text-f1-foreground", children: [
+          /* @__PURE__ */ c(Ne, { className: "flex flex-row items-center gap-2 text-lg font-semibold text-f1-foreground", children: [
             t && /* @__PURE__ */ e(U, { icon: t, size: "lg" }),
             s
           ] }),
@@ -500,10 +500,10 @@ function ca({
             }
           )
         ] }),
-        /* @__PURE__ */ c(Se, { className: "[*[data-state=visible]_div]:bg-f1-background flex max-h-[512px] flex-col", children: [
+        /* @__PURE__ */ c(Pe, { className: "[*[data-state=visible]_div]:bg-f1-background flex max-h-[512px] flex-col", children: [
           l,
           /* @__PURE__ */ e(
-            Me,
+            Se,
             {
               orientation: "vertical",
               className: "[&_div]:bg-f1-background"
@@ -514,7 +514,7 @@ function ca({
     }
   ) });
 }
-function Ia({
+function Ta({
   isOpen: a,
   onClose: r,
   title: s,
@@ -527,7 +527,7 @@ function Ia({
   closeLabel: f,
   primaryAction: h,
   modalTitle: N,
-  modalIcon: P,
+  modalIcon: L,
   secondaryAction: d,
   portalContainer: C
 }) {
@@ -542,7 +542,7 @@ function Ia({
         y(!1);
       }
     }
-  }, L = () => {
+  }, P = () => {
     M(!1), r == null || r();
   }, T = R;
   return /* @__PURE__ */ c($, { children: [
@@ -550,12 +550,12 @@ function Ia({
       ca,
       {
         isOpen: S,
-        onClose: L,
+        onClose: P,
         title: N,
-        icon: P,
+        icon: L,
         portalContainer: C,
         children: /* @__PURE__ */ e("div", { className: "pb-4 pl-4", children: /* @__PURE__ */ e(
-          le,
+          se,
           {
             title: s,
             image: l,
@@ -593,7 +593,7 @@ function Ia({
       {
         open: !0,
         onClose: () => {
-          L(), x(null);
+          P(), x(null);
         },
         success: k === "success",
         errorMessage: u,
@@ -622,9 +622,9 @@ function ua({
   J(() => {
     n && n(!f);
   }, [n, f]);
-  const P = a == null ? void 0 : a.includes(".mp4");
-  return /* @__PURE__ */ e($, { children: f ? null : /* @__PURE__ */ c(ke, { style: { width: u }, className: "relative bg-f1-background p-1", children: [
-    /* @__PURE__ */ c(Re, { children: [
+  const L = a == null ? void 0 : a.includes(".mp4");
+  return /* @__PURE__ */ e($, { children: f ? null : /* @__PURE__ */ c(Me, { style: { width: u }, className: "relative bg-f1-background p-1", children: [
+    /* @__PURE__ */ c(ke, { children: [
       t && /* @__PURE__ */ e("div", { className: "absolute right-2 top-2 z-10", children: /* @__PURE__ */ e(
         w,
         {
@@ -637,7 +637,7 @@ function ua({
         }
       ) }),
       /* @__PURE__ */ c("div", { children: [
-        /* @__PURE__ */ e("div", { children: a && (P ? /* @__PURE__ */ e(
+        /* @__PURE__ */ e("div", { children: a && (L ? /* @__PURE__ */ e(
           "video",
           {
             src: a,
@@ -661,7 +661,7 @@ function ua({
         ] })
       ] })
     ] }),
-    i && /* @__PURE__ */ e(De, { className: "p-3", children: i.map(
+    i && /* @__PURE__ */ e(Re, { className: "p-3", children: i.map(
       (d) => d.type === "upsell" ? /* @__PURE__ */ e(
         G,
         {
@@ -717,7 +717,7 @@ const fa = B(
       }
     ), n = (r == null ? void 0 : r.variant) !== "promote" ? r : void 0, i = (s == null ? void 0 : s.variant) !== "promote" ? s : void 0;
     return /* @__PURE__ */ c(
-      Be,
+      De,
       {
         ref: t,
         ...l,
@@ -732,7 +732,7 @@ const fa = B(
   }
 );
 fa.displayName = "UpsellingBanner";
-function Fa({
+function $a({
   isOpen: a,
   setIsOpen: r,
   label: s,
@@ -741,36 +741,36 @@ function Fa({
   showIcon: u = !0,
   side: n = "right",
   align: i = "center",
-  icon: o = Ie,
+  icon: o = $e,
   mediaUrl: f,
   title: h,
   description: N,
-  width: P = "300px",
+  width: L = "300px",
   trackVisibility: d,
   actions: C,
   onClick: S,
   hideLabel: M = !1
 }) {
-  const [k, x] = g(!1), [R, y] = g(null), [v, L] = g(null), T = (p) => {
-    r(p), S && S();
-  }, te = async (p) => {
-    if (p.type === "upsell") {
-      L(p);
+  const [k, x] = g(!1), [R, y] = g(null), [v, P] = g(null), T = (m) => {
+    r(m), S && S();
+  }, le = async (m) => {
+    if (m.type === "upsell") {
+      P(m);
       try {
-        await p.onClick(), p.showConfirmation && (x(!0), y("success"));
+        await m.onClick(), m.showConfirmation && (x(!0), y("success"));
       } catch {
         x(!0), y("error");
       }
     }
-  }, oe = () => {
-    y(null), x(!1), L(null), r(!1);
-  }, ne = a && !k, ie = C == null ? void 0 : C.map((p) => p.type === "upsell" ? {
-    ...p,
-    onClick: () => te(p)
-  } : p);
+  }, te = () => {
+    y(null), x(!1), P(null), r(!1);
+  }, oe = a && !k, ne = C == null ? void 0 : C.map((m) => m.type === "upsell" ? {
+    ...m,
+    onClick: () => le(m)
+  } : m);
   return /* @__PURE__ */ c($, { children: [
-    /* @__PURE__ */ c(Te, { open: ne, onOpenChange: T, children: [
-      /* @__PURE__ */ e($e, { asChild: !0, children: /* @__PURE__ */ e(
+    /* @__PURE__ */ c(Be, { open: oe, onOpenChange: T, children: [
+      /* @__PURE__ */ e(Te, { asChild: !0, children: /* @__PURE__ */ e(
         w,
         {
           variant: l,
@@ -782,7 +782,7 @@ function Fa({
         }
       ) }),
       /* @__PURE__ */ e(
-        Fe,
+        Ie,
         {
           side: n,
           align: i,
@@ -795,9 +795,9 @@ function Fa({
               description: N,
               onClose: () => r(!1),
               dismissible: !1,
-              width: P,
+              width: L,
               trackVisibility: d,
-              actions: ie,
+              actions: ne,
               showConfirmation: !1
             }
           )
@@ -808,7 +808,7 @@ function Fa({
       Y,
       {
         open: !0,
-        onClose: oe,
+        onClose: te,
         success: R === "success",
         errorMessage: v.errorMessage,
         successMessage: v.successMessage,
@@ -819,30 +819,19 @@ function Fa({
     )
   ] });
 }
-const Oa = m(
+const Ia = p(
   {
     name: "Icon",
     type: "info"
   },
   H
-), ha = Q(null);
-function ma({
-  children: a,
-  trackingFunction: r
-}) {
-  const s = Xe(
-    () => ({ track: r ?? (() => Promise.resolve(!1)) }),
-    [r]
-  );
-  return /* @__PURE__ */ e(ha.Provider, { value: s, children: a });
-}
-const pa = Q(
+), ha = Xe(
   null
-), va = ({ children: a, fullScreen: r = !0 }) => {
+), pa = ({ children: a, fullScreen: r = !0 }) => {
   const s = X(null), [l, t] = g(s.current);
   return He(() => {
     t(s.current);
-  }, []), /* @__PURE__ */ e(pa.Provider, { value: { element: l }, children: /* @__PURE__ */ e(
+  }, []), /* @__PURE__ */ e(ha.Provider, { value: { element: l }, children: /* @__PURE__ */ e(
     "div",
     {
       ref: s,
@@ -853,9 +842,9 @@ const pa = Q(
       children: a
     }
   ) });
-}, ga = ({
+}, ma = ({
   children: a
-}) => /* @__PURE__ */ e(Ue, { reducedMotion: "user", children: a }), Ea = ({
+}) => /* @__PURE__ */ e(Ue, { reducedMotion: "user", children: a }), Fa = ({
   children: a,
   layout: r,
   link: s,
@@ -866,12 +855,12 @@ const pa = Q(
   l10n: i,
   isDev: o = !1,
   showExperimentalWarnings: f = !1
-}) => /* @__PURE__ */ e(ga, { children: /* @__PURE__ */ e(
-  Oe,
+}) => /* @__PURE__ */ e(ma, { children: /* @__PURE__ */ e(
+  Fe,
   {
     isDev: o,
     showExperimentalWarnings: f,
-    children: /* @__PURE__ */ e(Ee, { ...i, children: /* @__PURE__ */ e(_e, { ...u, children: /* @__PURE__ */ e(ma, { trackingFunction: n, children: /* @__PURE__ */ e(je, { ...s, children: /* @__PURE__ */ e(va, { ...r, children: /* @__PURE__ */ e(ze, { children: /* @__PURE__ */ e(
+    children: /* @__PURE__ */ e(Oe, { ...i, children: /* @__PURE__ */ e(Ee, { ...u, children: /* @__PURE__ */ e(_e, { trackingFunction: n, children: /* @__PURE__ */ e(je, { ...s, children: /* @__PURE__ */ e(pa, { ...r, children: /* @__PURE__ */ e(ze, { children: /* @__PURE__ */ e(
       Ve,
       {
         initiallyEnabled: l,
@@ -881,41 +870,41 @@ const pa = Q(
   }
 ) });
 export {
-  Pa as AreaChart,
-  za as Await,
-  La as BarChart,
+  wa as AreaChart,
+  _a as Await,
+  Na as BarChart,
   w as Button,
-  Sa as CategoryBarChart,
-  Va as CopyButton,
-  qa as EmojiImage,
-  Ua as F0Card,
-  Ha as F0Checkbox,
-  Ea as FactorialOneProvider,
-  $a as HomeLayout,
-  Oa as Icon,
-  Ma as LineChart,
-  wa as Link,
-  Wa as OneFilterPicker,
-  ka as PieChart,
+  La as CategoryBarChart,
+  ja as CopyButton,
+  za as EmojiImage,
+  Va as F0Card,
+  qa as F0Checkbox,
+  Fa as FactorialOneProvider,
+  Ba as HomeLayout,
+  Ia as Icon,
+  Pa as LineChart,
+  Ca as Link,
+  Ua as OneFilterPicker,
+  Sa as PieChart,
   Ve as PrivacyModeProvider,
-  le as ProductBlankslate,
-  Ya as ProductCard,
-  Ia as ProductModal,
+  se as ProductBlankslate,
+  Ha as ProductCard,
+  Ta as ProductModal,
   ua as ProductWidget,
-  Da as ProgressBarChart,
-  Ba as StandardLayout,
-  Ta as TwoColumnLayout,
+  ka as ProgressBarChart,
+  Ra as StandardLayout,
+  Da as TwoColumnLayout,
   Y as UpsellRequestResponseDialog,
   fa as UpsellingBanner,
   G as UpsellingButton,
-  Fa as UpsellingPopover,
-  Ra as VerticalBarChart,
-  Ga as buildTranslations,
-  ya as defaultTranslations,
-  Xa as experimental,
-  Ja as getEmojiLabel,
-  Qa as useEmojiConfetti,
-  Ka as usePrivacyMode,
-  Za as useReducedMotion,
-  Aa as useXRay
+  $a as UpsellingPopover,
+  Ma as VerticalBarChart,
+  Wa as buildTranslations,
+  ba as defaultTranslations,
+  Ya as experimental,
+  Ga as getEmojiLabel,
+  Xa as useEmojiConfetti,
+  Ja as usePrivacyMode,
+  Qa as useReducedMotion,
+  Ka as useXRay
 };

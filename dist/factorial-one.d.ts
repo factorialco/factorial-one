@@ -1075,6 +1075,7 @@ export declare const OneFilterPicker: {
  * @template Definition - The type defining the structure of available filters
  */
 declare interface OneFilterPickerRootProps<Definition extends FiltersDefinition> {
+    trackingIdentifier?: string;
     /** The definition of available filters and their configurations */
     filters?: Definition;
     /** Current state of applied filters */
@@ -1496,15 +1497,15 @@ declare module "@tiptap/core" {
 }
 
 
-declare namespace Calendar {
-    var displayName: string;
-}
-
-
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
+}
+
+
+declare namespace Calendar {
+    var displayName: string;
 }
