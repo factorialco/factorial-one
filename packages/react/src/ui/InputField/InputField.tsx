@@ -281,11 +281,15 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
     const handleChange = (
       value: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-      const v =
+      let v =
         (typeof value === "string" ? value : value.target.value) ?? emptyValue
 
       if (maxLength && lengthProvider(v) > maxLength) {
-        return
+        if (typeof v === "string") {
+          v = v.substring(0, maxLength)
+        } else {
+          return
+        }
       }
 
       setLocalValue(v)
