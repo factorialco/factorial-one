@@ -16,7 +16,7 @@ import type { FiltersDefinition, FiltersState } from "./types"
 export interface OneFilterPickerRootProps<
   Definition extends FiltersDefinition,
 > {
-  trackingIdentifier: string
+  trackingIdentifier?: string
   /** The definition of available filters and their configurations */
   filters?: Definition
   /** Current state of applied filters */

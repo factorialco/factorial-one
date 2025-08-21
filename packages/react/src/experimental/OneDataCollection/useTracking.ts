@@ -44,7 +44,7 @@ export const useTracking = <Sortings extends SortingsDefinition>({
         ([field, value]) => latestFilters.current?.[field] !== value
       )
 
-      if (!newFilter || !isScalar(newFilter[1])) return
+      if (!newFilter || !isScalar(newFilter[1]) || !trackingIdentifier) return
 
       latestFilters.current = filters
 
@@ -59,20 +59,21 @@ export const useTracking = <Sortings extends SortingsDefinition>({
 
   const trackSortingChange = useCallback(
     (sortings: SortingsState<Sortings>) => {
-      const newSorting = Object.entries(sortings ?? {}).find(
-        ([field, order]) =>
-          latestSortings.current?.field !== field ||
-          latestSortings.current?.order !== order
+      if (
+        (latestSortings?.current?.field === sortings?.field &&
+          latestSortings?.current?.order === sortings?.order) ||
+        !sortings ||
+        typeof sortings.field !== "string" ||
+        !trackingIdentifier
       )
-
-      if (!newSorting || !isScalar(newSorting[1])) return
+        return
 
       latestSortings.current = sortings
 
       track("Data collection sorting change", {
         id: trackingIdentifier,
-        name: newSorting[0],
-        value: newSorting[1],
+        name: sortings.field,
+        value: sortings.order,
       })
     },
     [track, trackingIdentifier]
@@ -80,6 +81,8 @@ export const useTracking = <Sortings extends SortingsDefinition>({
 
   const trackPresetClick = useCallback(
     (preset: string) => {
+      if (!trackingIdentifier) return
+
       track("Data collection preset click", {
         id: trackingIdentifier,
         preset,

@@ -543,6 +543,7 @@ const OneDataCollectionComp = <
         className={cn("flex flex-col gap-4 px-4", fullHeight && "max-h-full")}
       >
         <OneFilterPicker
+          trackingIdentifier={trackingIdentifier}
           filters={filters}
           value={currentFilters}
           presets={presets}
