@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.160.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.160.0...factorial-one-react-v1.160.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* **DateNavigator:** pass the right value to onCompareToChange ([#2434](https://github.com/factorialco/factorial-one/issues/2434)) ([38ae18e](https://github.com/factorialco/factorial-one/commit/38ae18ea4be729b8b1bf5698a88395288fda260c))
+
 ## [1.160.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.159.0...factorial-one-react-v1.160.0) (2025-08-21)
 
 
