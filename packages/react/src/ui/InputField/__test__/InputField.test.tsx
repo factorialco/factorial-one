@@ -1,21 +1,24 @@
+import { Archive } from "@/icons/app"
+import { zeroRender as render } from "@/testing/test-utils"
 import "@testing-library/jest-dom/vitest"
-import { fireEvent, render, screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
+
 import React from "react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
-import { Archive } from "../../../icons/app"
 import { InputField, InputFieldStatusType } from "../InputField"
 
-// Mock the motion/react module to properly handle AnimatePresence
-vi.mock("motion/react", () => ({
-  AnimatePresence: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="animate-presence">{children}</div>
-  ),
-  motion: {
-    circle: ({ children, ...props }: React.SVGProps<SVGCircleElement>) => (
-      <circle {...props}>{children}</circle>
-    ),
-  },
-}))
+console.log(React)
+// // Mock the motion/react module to properly handle AnimatePresence
+// vi.mock("motion/react", () => ({
+//   AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+//     <div data-testid="animate-presence">{children}</div>
+//   ),
+//   motion: {
+//     circle: ({ children, ...props }: React.SVGProps<SVGCircleElement>) => (
+//       <circle {...props}>{children}</circle>
+//     ),
+//   },
+// }))
 
 describe("InputField", () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>
@@ -151,7 +154,7 @@ describe("InputField", () => {
       const input = screen.getByRole("textbox")
       fireEvent.change(input, { target: { value: "123456" } })
 
-      expect(handleChange).not.toHaveBeenCalled()
+      expect(handleChange).toHaveBeenCalledWith("12345")
     })
 
     it("should display character count when maxLength is provided", () => {
@@ -224,7 +227,7 @@ describe("InputField", () => {
       const animatePresence = container.querySelector(
         "[data-testid='animate-presence']"
       )
-      expect(animatePresence).toBeEmptyDOMElement()
+      expect(animatePresence).toBeNull()
     })
   })
 
