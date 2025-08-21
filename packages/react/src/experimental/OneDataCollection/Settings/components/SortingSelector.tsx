@@ -1,13 +1,13 @@
-import { Placeholder } from "@/icons/app"
-import { useI18n } from "@/lib/providers/i18n"
-import { EmptyValue, SelectWithDirection } from "@/ui/SelectWithDirection"
-import { useEffect, useState } from "react"
 import {
   SortingKey,
   SortingsDefinition,
   SortingsState,
   SortOrder,
-} from "../../../../hooks/datasource/types/sortings.typings"
+} from "@/hooks/datasource/types/sortings.typings"
+import { Placeholder } from "@/icons/app"
+import { useI18n } from "@/lib/providers/i18n"
+import { EmptyValue, SelectWithDirection } from "@/ui/SelectWithDirection"
+import { useEffect, useState } from "react"
 
 export const SortingSelector = <Sortings extends SortingsDefinition>({
   currentSortings,
@@ -48,30 +48,29 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
   }, [JSON.stringify(currentSortings)])
 
   return (
-    <>
-      <SelectWithDirection
-        options={sortingOptions}
-        value={
-          localSortings
-            ? {
-                selected: localSortings.field?.toString(),
-                direction: localSortings.order,
+    <SelectWithDirection
+      options={sortingOptions}
+      value={
+        localSortings
+          ? {
+              selected: localSortings.field?.toString(),
+              direction: localSortings.order,
+            }
+          : undefined
+      }
+      onChange={(value) =>
+        onChange(
+          !value
+            ? null
+            : {
+                field: value?.selected as SortingKey<Sortings>,
+                order: value?.direction as SortOrder,
               }
-            : undefined
-        }
-        onChange={
-          onChange
-            ? (value) =>
-                onChange({
-                  field: value?.selected as SortingKey<Sortings>,
-                  order: value?.direction as SortOrder,
-                })
-            : undefined
-        }
-        label={i18n.collections.sorting.sortBy}
-        labelIcon={Placeholder}
-        className={className}
-      />
-    </>
+        )
+      }
+      label={i18n.collections.sorting.sortBy}
+      labelIcon={Placeholder}
+      className={className}
+    />
   )
 }

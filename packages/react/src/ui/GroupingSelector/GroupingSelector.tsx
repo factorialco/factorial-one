@@ -82,21 +82,14 @@ export const GroupingSelector = <
   ]
 
   const handleChange = (value: SelectWithDirectionValue | undefined) => {
-    console.log("value", value)
-    if (!value) {
-      return
-    }
-
-    return (
-      onGroupingChange &&
-      onGroupingChange(
-        value?.selected === EmptyGroupingValue
-          ? undefined
-          : {
-              field: value?.selected as keyof Grouping["groupBy"],
-              order: value?.direction as SortOrder,
-            }
-      )
+    console.log("value ==========", value)
+    onGroupingChange?.(
+      !value
+        ? undefined
+        : {
+            field: value?.selected as keyof Grouping["groupBy"],
+            order: value?.direction as SortOrder,
+          }
     )
   }
 

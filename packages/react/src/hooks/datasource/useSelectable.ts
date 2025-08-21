@@ -61,6 +61,7 @@ export function useSelectable<
           "Cannot set default selected items by value for paginated data"
         )
       }
+      console.log("defaultSelected", defaultSelected)
 
       setDefaultSelectedItems({
         items: defaultSelected.map((id) => ({
