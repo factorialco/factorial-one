@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.159.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.158.1...factorial-one-react-v1.159.0) (2025-08-21)
+
+
+### Features
+
+* **Icons:** new icons for IT management ([#2432](https://github.com/factorialco/factorial-one/issues/2432)) ([305d13c](https://github.com/factorialco/factorial-one/commit/305d13c03763ab357c1898d2cddfd20ceb2ea193))
+
 ## [1.158.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.158.0...factorial-one-react-v1.158.1) (2025-08-21)
 
 
