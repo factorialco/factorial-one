@@ -20,7 +20,7 @@ import {
 } from "@/experimental/Widgets/Content/Lists/WidgetInboxList"
 import { Default as WidgetInboxListDefaultStory } from "@/experimental/Widgets/Content/Lists/WidgetInboxList/index.stories"
 import { Widget } from "@/experimental/Widgets/Widget"
-import { AreaChartProps } from "../../Charts/AreaChart"
+import { AreaChartProps } from "../../../components/Charts/AreaChart"
 
 const widgets = [
   <AreaChartWidget

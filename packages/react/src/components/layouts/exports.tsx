@@ -1,5 +1,5 @@
 import { Component } from "@/lib/component"
-import { HomeLayout as HomeLayoutComponent } from "./HomeLayout"
+import { HomeLayout as HomeLayoutComponent } from "../../sds/home/HomeLayout"
 import {
   TwoColumnLayout as TwoColumnLayoutComponent,
   TwoColumnLayoutProps,
