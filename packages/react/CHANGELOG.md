@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.160.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.159.0...factorial-one-react-v1.160.0) (2025-08-21)
+
+
+### Features
+
+* inputfield status and hint ([#2422](https://github.com/factorialco/factorial-one/issues/2422)) ([4069b47](https://github.com/factorialco/factorial-one/commit/4069b47b2c8f5780972b458c945f81faa86f274c))
+
 ## [1.159.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.158.1...factorial-one-react-v1.159.0) (2025-08-21)
 
 
