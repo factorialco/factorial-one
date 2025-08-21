@@ -9,10 +9,10 @@ import {
 } from "../../lib/providers/tracking"
 import { SortingsDefinition, SortingsState } from "./sortings"
 
-type UseTrackingParams = {
+type UseTrackingParams<Sortings extends SortingsDefinition> = {
   trackingIdentifier?: string
   defaultFilters?: FiltersState<FiltersDefinition>
-  defaultSortings?: SortingsState<SortingsDefinition>
+  defaultSorting?: SortingsState<Sortings>
 }
 
 const isScalar = (value: unknown): value is EventScalar => {
@@ -24,17 +24,17 @@ const isScalar = (value: unknown): value is EventScalar => {
   )
 }
 
-export const useTracking = ({
+export const useTracking = <Sortings extends SortingsDefinition>({
   trackingIdentifier,
   defaultFilters,
-  defaultSortings,
-}: UseTrackingParams) => {
-  const latestFilters = useRef<FiltersState<FiltersDefinition> | undefined>(
-    defaultFilters
-  )
-  const latestSortings = useRef<SortingsState<SortingsDefinition> | undefined>(
-    defaultSortings
-  )
+  defaultSorting,
+}: UseTrackingParams<Sortings>) => {
+  const latestFilters = useRef<
+    UseTrackingParams<Sortings>["defaultFilters"] | undefined
+  >(defaultFilters)
+  const latestSortings = useRef<
+    UseTrackingParams<Sortings>["defaultSorting"] | undefined
+  >(defaultSorting)
 
   const { track } = useBaseTracking()
 
@@ -58,7 +58,7 @@ export const useTracking = ({
   )
 
   const trackSortingChange = useCallback(
-    (sortings: SortingsState<SortingsDefinition>) => {
+    (sortings: SortingsState<Sortings>) => {
       const newSorting = Object.entries(sortings ?? {}).find(
         ([field, order]) =>
           latestSortings.current?.field !== field ||
