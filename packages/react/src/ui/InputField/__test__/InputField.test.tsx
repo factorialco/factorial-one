@@ -3,22 +3,8 @@ import { zeroRender as render } from "@/testing/test-utils"
 import "@testing-library/jest-dom/vitest"
 import { fireEvent, screen } from "@testing-library/react"
 
-import React from "react"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { InputField, InputFieldStatusType } from "../InputField"
-
-console.log(React)
-// // Mock the motion/react module to properly handle AnimatePresence
-// vi.mock("motion/react", () => ({
-//   AnimatePresence: ({ children }: { children: React.ReactNode }) => (
-//     <div data-testid="animate-presence">{children}</div>
-//   ),
-//   motion: {
-//     circle: ({ children, ...props }: React.SVGProps<SVGCircleElement>) => (
-//       <circle {...props}>{children}</circle>
-//     ),
-//   },
-// }))
 
 describe("InputField", () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>
