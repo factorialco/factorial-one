@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.160.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.160.0...factorial-one-react-v1.160.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* **DateNavigator:** pass the right value to onCompareToChange ([#2434](https://github.com/factorialco/factorial-one/issues/2434)) ([38ae18e](https://github.com/factorialco/factorial-one/commit/38ae18ea4be729b8b1bf5698a88395288fda260c))
+
+## [1.160.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.159.0...factorial-one-react-v1.160.0) (2025-08-21)
+
+
+### Features
+
+* inputfield status and hint ([#2422](https://github.com/factorialco/factorial-one/issues/2422)) ([4069b47](https://github.com/factorialco/factorial-one/commit/4069b47b2c8f5780972b458c945f81faa86f274c))
+
+## [1.159.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.158.1...factorial-one-react-v1.159.0) (2025-08-21)
+
+
+### Features
+
+* **Icons:** new icons for IT management ([#2432](https://github.com/factorialco/factorial-one/issues/2432)) ([305d13c](https://github.com/factorialco/factorial-one/commit/305d13c03763ab357c1898d2cddfd20ceb2ea193))
+
 ## [1.158.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.158.0...factorial-one-react-v1.158.1) (2025-08-21)
 
 

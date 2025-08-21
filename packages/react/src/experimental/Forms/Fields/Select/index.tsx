@@ -17,7 +17,7 @@ import {
   useData,
   useDataSource,
   useGroups,
-  useSelectionState,
+  useSelectable,
   WithGroupId,
 } from "@/hooks/datasource"
 import { ChevronDown } from "@/icons/app"
@@ -51,7 +51,7 @@ const SelectComponent = forwardRef(function Select<
   {
     placeholder,
     onChange,
-    _onChangeSelectedOption,
+    onChangeSelectedOption,
     value,
     options = [],
     mapOptions,
@@ -69,7 +69,6 @@ const SelectComponent = forwardRef(function Select<
     actions,
     source,
     label,
-    error,
     icon,
     labelIcon,
     clearable,
@@ -77,6 +76,9 @@ const SelectComponent = forwardRef(function Select<
     name,
     multiple,
     defaultItem,
+    error,
+    status,
+    hint,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -179,24 +181,30 @@ const SelectComponent = forwardRef(function Select<
     undefined
   )
 
-  const {
-    selectedIdsForLoadedItems,
-    materializedSelectedItems,
-    selectedState,
-    handleSelectItemChange,
-    handleSelectAll,
-    groupAllSelectedStatus,
-  } = useSelectionState<
-    R,
-    FiltersDefinition,
-    SortingsDefinition,
-    GroupingDefinition<R>
-  >(data, paginationInfo, localSource, {
-    singleSelection: !multiple,
-    defaultSelected: Array.isArray(value)
-      ? (value as unknown as string[])
-      : localValue,
-  })
+  const { handleSelectItemChange, handleSelectGroupChange, handleSelectAll } =
+    useSelectable<
+      R,
+      FiltersDefinition,
+      SortingsDefinition,
+      GroupingDefinition<R>
+    >(
+      data,
+      paginationInfo,
+      localSource,
+      (state) => {
+        setLocalValue(
+          Array.from(state.items.entries())
+            .filter(([_, checked]) => checked)
+            .map(([v]) => v) as T[]
+        )
+      },
+      multiple,
+      {
+        all: false,
+        items: new Map(localValue.map((v) => [v, true])),
+        groups: new Map(),
+      }
+    )
 
   // Emit onChange when selection changes
   useEffect(() => {
@@ -426,6 +434,8 @@ const SelectComponent = forwardRef(function Select<
             <InputField
               label={label}
               error={error}
+              status={status}
+              hint={hint}
               icon={icon}
               labelIcon={labelIcon}
               hideLabel={hideLabel}

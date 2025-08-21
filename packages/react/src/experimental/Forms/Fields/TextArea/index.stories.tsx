@@ -79,6 +79,42 @@ export const WithError: Story = {
   },
 }
 
+export const WithWarning: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Label text here",
+    status: {
+      type: "warning",
+      message: "Warning message",
+    },
+  },
+}
+
+export const WithInfo: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Label text here",
+    status: {
+      type: "info",
+      message: "Info message",
+    },
+  },
+}
+
+export const WithHint: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Label text here",
+    hint: "Hint message",
+  },
+}
+
 export const WithMaxLength: Story = {
   parameters: {
     chromatic: { disableSnapshot: true },

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
-import { Select, SelectItemObject, SelectProps } from "../index"
 
 import { IconType } from "@/components/Utilities/Icon"
 import { createDataSourceDefinition } from "@/hooks/datasource"
@@ -13,6 +12,8 @@ import {
   ROLES_MOCK,
   SURNAMES_MOCK,
 } from "@/mocks"
+import { Select, SelectProps } from "../index"
+
 import { useState } from "react"
 
 // Wraps the Select component with a hook to show the selected value

@@ -82,13 +82,15 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = (
     | "labelIcon"
     | "size"
     | "label"
-    | "error"
     | "icon"
     | "placeholder"
     | "disabled"
     | "name"
     | "minWidth"
     | "maxWidth"
+    | "error"
+    | "hint"
+    | "status"
   >
 
 export type SelectItemObject<T, R = unknown> = {
