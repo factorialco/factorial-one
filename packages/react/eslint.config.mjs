@@ -196,4 +196,40 @@ export default [
       ],
     },
   },
+  // Restrict imports from sds and kits folders in components
+  {
+    files: ["src/components/**/*.{js,jsx,ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["./src/sds/**", "./src/kits/**"],
+              message:
+                "Components in src/components cannot import from sds or kits folders. Use components from components/ or other allowed directories instead.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  // Restrict imports from sds and other kits folders in kits
+  {
+    files: ["src/kits/**/*.{js,jsx,ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["./src/sds/**", "./src/kits/**"],
+              message:
+                "Components in src/kits cannot import from sds or other kits folders. Use components from components/ or ui/ instead.",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ]
