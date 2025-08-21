@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.158.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.158.0...factorial-one-react-v1.158.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* empty value when no sorting ([#2430](https://github.com/factorialco/factorial-one/issues/2430)) ([1ac7052](https://github.com/factorialco/factorial-one/commit/1ac7052fe8365e048dc89407cb37fbd6d204aaf3))
+
+## [1.158.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.157.1...factorial-one-react-v1.158.0) (2025-08-20)
+
+
+### Features
+
+* tokens for spacing between elements ([#2423](https://github.com/factorialco/factorial-one/issues/2423)) ([8b6162e](https://github.com/factorialco/factorial-one/commit/8b6162e09973eb0bafbffd5632ca02620c5a465a))
+
+## [1.157.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.157.0...factorial-one-react-v1.157.1) (2025-08-19)
+
+
+### Bug Fixes
+
+* **DataCollection:** let users define avatar type in `AvatarList` cell type ([#2411](https://github.com/factorialco/factorial-one/issues/2411)) ([3480303](https://github.com/factorialco/factorial-one/commit/3480303d816e94fe6dbf6ee2a6c457c2242e89ea))
+
+## [1.157.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.156.0...factorial-one-react-v1.157.0) (2025-08-19)
+
+
+### Features
+
+* **DropdownButton:** use internal Action component as base ([#2412](https://github.com/factorialco/factorial-one/issues/2412)) ([c930e53](https://github.com/factorialco/factorial-one/commit/c930e53395573959b45e65815b1c0745be64a4d2))
+
 ## [1.156.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.155.0...factorial-one-react-v1.156.0) (2025-08-18)
 
 

@@ -16,7 +16,7 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
   className,
 }: {
   sortings: SortingsDefinition
-  currentSortings: SortingsState<Sortings> | null
+  currentSortings: SortingsState<Sortings>
   onChange: (sorting: SortingsState<Sortings>) => void
   className?: string
 }) => {
@@ -33,7 +33,7 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
   ]
 
   const [localSortings, setLocalSortings] =
-    useState<SortingsState<Sortings> | null>(currentSortings)
+    useState<SortingsState<Sortings>>(currentSortings)
 
   useEffect(() => {
     if (!currentSortings) {
