@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.158.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.158.0...factorial-one-react-v1.158.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* empty value when no sorting ([#2430](https://github.com/factorialco/factorial-one/issues/2430)) ([1ac7052](https://github.com/factorialco/factorial-one/commit/1ac7052fe8365e048dc89407cb37fbd6d204aaf3))
+
 ## [1.158.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.157.1...factorial-one-react-v1.158.0) (2025-08-20)
 
 
