@@ -1,3 +1,6 @@
+import { ButtonInternal } from "@/components/Actions/Button/internal"
+import { ArrowDown } from "@/icons/app"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useLangGraphInterruptRender } from "@copilotkit/react-core"
 import { useChatContext, type MessagesProps } from "@copilotkit/react-ui"
@@ -8,7 +11,7 @@ import {
   TextMessage,
 } from "@copilotkit/runtime-client-gql"
 import { AnimatePresence, motion } from "motion/react"
-import { useEffect, useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import OneIcon from "../OneIcon"
 import { useAiChatLabels } from "../providers/AiChatLabelsProvider"
 import { useChatWindowContext } from "./ChatWindow"
@@ -33,6 +36,7 @@ export const MessagesContainer = ({
   const context = useChatContext()
   const { greeting } = useAiChatLabels()
   const { reachedMaxHeight } = useChatWindowContext()
+  const translations = useI18n()
   const initialMessages = useMemo(
     () => makeInitialMessages(context.labels.initial),
     [context.labels.initial]
@@ -57,7 +61,12 @@ export const MessagesContainer = ({
     }
   }
 
-  const { messagesContainerRef, messagesEndRef } = useScrollToBottom(messages)
+  const {
+    messagesContainerRef,
+    messagesEndRef,
+    showScrollToBottom,
+    scrollToBottom,
+  } = useScrollToBottom(messages)
 
   const interrupt = useLangGraphInterruptRender()
 
@@ -65,7 +74,7 @@ export const MessagesContainer = ({
     <motion.div
       layout
       className={cn(
-        "scrollbar-macos isolate flex-1 px-4",
+        "scrollbar-macos relative isolate flex-1 px-4",
         reachedMaxHeight ? "overflow-y-scroll" : "overflow-y-hidden"
       )}
       ref={messagesContainerRef}
@@ -182,6 +191,27 @@ export const MessagesContainer = ({
       <footer className="copilotKitMessagesFooter" ref={messagesEndRef}>
         {children}
       </footer>
+      <AnimatePresence>
+        {showScrollToBottom && (
+          <motion.div
+            className="sticky bottom-2 z-10 flex justify-center"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{ duration: 0.2 }}
+          >
+            <div className="rounded bg-f1-background">
+              <ButtonInternal
+                onClick={scrollToBottom}
+                label={translations.ai.scrollToBottom}
+                variant="neutral"
+                icon={ArrowDown}
+                hideLabel
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   )
 }
@@ -210,13 +240,38 @@ export function useScrollToBottom(messages: Message[]) {
   const messagesContainerRef = useRef<HTMLDivElement | null>(null)
   const isProgrammaticScrollRef = useRef(false)
   const isUserScrollUpRef = useRef(false)
+  const [showScrollToBottom, setShowScrollToBottom] = useState(false)
 
   const scrollToBottom = () => {
     if (messagesContainerRef.current && messagesEndRef.current) {
+      setShowScrollToBottom(false)
       isProgrammaticScrollRef.current = true
-      messagesContainerRef.current.scrollTop =
-        messagesContainerRef.current.scrollHeight
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
     }
+  }
+
+  const checkIsScrollingUp = () => {
+    if (messagesContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } =
+        messagesContainerRef.current
+      isUserScrollUpRef.current = scrollTop + clientHeight < scrollHeight
+    } else {
+      isUserScrollUpRef.current = false
+    }
+  }
+
+  const checkScrollToBottomButtonVisibility = () => {
+    if (!messagesContainerRef.current) {
+      setShowScrollToBottom(false)
+      return
+    }
+
+    const { scrollTop, scrollHeight, clientHeight } =
+      messagesContainerRef.current
+
+    const isScrolledUpMoreThanTwoScreens =
+      scrollTop < scrollHeight - 2 * clientHeight
+    setShowScrollToBottom(isScrolledUpMoreThanTwoScreens)
   }
 
   const handleScroll = () => {
@@ -225,11 +280,8 @@ export function useScrollToBottom(messages: Message[]) {
       return
     }
 
-    if (messagesContainerRef.current) {
-      const { scrollTop, scrollHeight, clientHeight } =
-        messagesContainerRef.current
-      isUserScrollUpRef.current = scrollTop + clientHeight < scrollHeight
-    }
+    checkIsScrollingUp()
+    checkScrollToBottomButtonVisibility()
   }
 
   useEffect(() => {
@@ -254,6 +306,7 @@ export function useScrollToBottom(messages: Message[]) {
       if (!isUserScrollUpRef.current) {
         scrollToBottom()
       }
+      checkScrollToBottomButtonVisibility()
     })
 
     mutationObserver.observe(container, {
@@ -267,11 +320,16 @@ export function useScrollToBottom(messages: Message[]) {
     }
   }, [])
 
+  // scroll to bottom on every new user message
   useEffect(() => {
     isUserScrollUpRef.current = false
     scrollToBottom()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages.filter((m) => m.isTextMessage() && m.role === Role.User).length])
 
-  return { messagesEndRef, messagesContainerRef }
+  return {
+    messagesEndRef,
+    messagesContainerRef,
+    showScrollToBottom,
+    scrollToBottom,
+  }
 }
