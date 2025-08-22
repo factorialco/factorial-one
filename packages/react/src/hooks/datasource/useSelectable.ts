@@ -1,5 +1,5 @@
 import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import {
   DataSourceDefinition,
   GroupingDefinition,
@@ -30,12 +30,12 @@ type UseSelectable<R extends RecordType> = {
   allSelectedStatus: AllSelectionStatus
 }
 
-type ItemId = string | number
-type GroupId = string | number
+export type ItemId = string | number
+export type GroupId = string | number
 
 type CheckedState = Map<ItemId, boolean>
 
-type SelectionState = {
+export type SelectionState = {
   all: boolean
   items: CheckedState
   groups: CheckedState
@@ -64,13 +64,10 @@ export function useSelectable<
   multiple: boolean = false,
   state?: SelectionState
 ): UseSelectable<R> {
+  console.log("useSelectable")
   const isGrouped = data.type === "grouped"
   const isPaginated = paginationInfo !== null
-  const itemIdAccesor = useCallback(
-    (item: R) => source.selectable?.(item) ?? undefined,
-
-    [source.selectable]
-  )
+  const itemIdAccesor = (item: R) => source.selectable?.(item) ?? undefined
 
   const [localState, setLocalState] = useState<SelectionState>(
     state ?? emptyState()
@@ -78,6 +75,10 @@ export function useSelectable<
 
   // Sync the state with the external state if it is provided
   useEffect(() => {
+    if (JSON.stringify(state) === JSON.stringify(localState)) {
+      return
+    }
+    console.log("state", state)
     if (state) {
       setLocalState(state)
     } else {
@@ -87,6 +88,7 @@ export function useSelectable<
   }, [JSON.stringify(state)])
 
   useEffect(() => {
+    console.log("localState emit", localState)
     // Notify the parent component about the selected items
     onStateChange(localState, clearSelected)
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to check the changes inside the local state
@@ -106,6 +108,7 @@ export function useSelectable<
 
   // If the data changes, add the new items to the itemsByGroup
   useEffect(() => {
+    console.log("data.records", data.records)
     const newItemsByGroup = new Map<GroupId, ItemId[]>()
     for (const item of data.records) {
       const itemId = itemIdAccesor?.(item)
@@ -127,7 +130,7 @@ export function useSelectable<
       }
       return newState
     })
-  }, [data.records, itemIdAccesor])
+  }, [data.records])
 
   // /**
   //  * Set the default selected items and groups
@@ -166,6 +169,7 @@ export function useSelectable<
   )
 
   useEffect(() => {
+    console.log("localState.items", localState.items)
     const selected = new Set<GroupId>()
     const unselected = new Set<ItemId>()
     for (const [id, checked] of localState.items.entries()) {
@@ -177,7 +181,7 @@ export function useSelectable<
     }
     setSelectedItems(selected)
     setUnselectedItems(unselected)
-  }, [localState.items])
+  }, [JSON.stringify(localState.items)])
 
   const [selectedGroups] = useMemo(() => {
     const selected = new Set<GroupId>()
@@ -204,6 +208,8 @@ export function useSelectable<
       return
     }
 
+    console.log("handleSelectGroupChange")
+
     const groupsIds = Array.isArray(groups) ? groups : [groups]
 
     // Select/deselect all items in the group
@@ -224,10 +230,7 @@ export function useSelectable<
     }))
   }
 
-  const clearSelected = useCallback(() => {
-    setLocalState(emptyState())
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- handleSelectAll is a stable function
-  }, [])
+  const clearSelected = () => setLocalState(emptyState())
 
   // /**
   //  * Get the allSelectedCheck and isPartiallySelected status for each group
@@ -313,6 +316,7 @@ export function useSelectable<
   ) => {
     const itemIds = Array.isArray(items) ? items : [items]
 
+    console.log("handleSelectItemChange")
     if (!multiple) {
       setLocalState(() => ({
         ...emptyState(),
@@ -354,7 +358,12 @@ export function useSelectable<
     if (isGrouped) {
       handleSelectGroupChange(Array.from(itemsByGroup.keys()), checked)
     } else {
-      handleSelectItemChange(Array.from(localState.items.keys()), checked)
+      handleSelectItemChange(
+        data.records
+          .map((record) => itemIdAccesor(record))
+          .filter(Boolean) as ItemId[],
+        checked
+      )
     }
   }
 
@@ -453,8 +462,9 @@ export function useSelectable<
     // )
   }, [
     localState,
-    clearSelected,
-    onStateChange,
+    // onStateChange,
+    //clearSelected,
+    // onStateChange,
     // allSelectedCheck,
     // itemsState,
     // groupsState,
@@ -464,7 +474,6 @@ export function useSelectable<
   ])
 
   return {
-    localState,
     allSelectedStatus: {
       checked: localState.all || isPartiallySelected,
       indeterminate: isPartiallySelected,
