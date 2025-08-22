@@ -1,4 +1,5 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { zeroRender as render } from "@/testing/test-utils"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Search } from "../../../../icons/app"
@@ -76,6 +77,7 @@ describe("Select", () => {
   it("renders with placeholder", () => {
     render(
       <Select
+        label="Select an option"
         options={mockOptions}
         onChange={() => {}}
         placeholder="Select an option"
@@ -86,7 +88,13 @@ describe("Select", () => {
 
   it("shows options when clicked", async () => {
     const user = userEvent.setup()
-    render(<Select options={mockOptions} onChange={() => {}} />)
+    render(
+      <Select
+        label="Select an option"
+        options={mockOptions}
+        onChange={() => {}}
+      />
+    )
 
     await openSelect(user)
 
@@ -97,7 +105,14 @@ describe("Select", () => {
   })
 
   it("displays selected value", () => {
-    render(<Select options={mockOptions} onChange={() => {}} value="option1" />)
+    render(
+      <Select
+        label="Select an option"
+        options={mockOptions}
+        onChange={() => {}}
+        value="option1"
+      />
+    )
 
     expect(screen.getByText("Option 1")).toBeInTheDocument()
   })
@@ -106,6 +121,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
+        label="Select an option"
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -133,6 +149,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
+        label="Select an option"
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -147,7 +164,14 @@ describe("Select", () => {
   })
 
   it("disables select when disabled prop is true", async () => {
-    render(<Select options={mockOptions} onChange={() => {}} disabled />)
+    render(
+      <Select
+        label="Select an option"
+        options={mockOptions}
+        onChange={() => {}}
+        disabled
+      />
+    )
 
     await waitFor(() => {
       expect(screen.getByRole("combobox")).toBeDisabled()
@@ -156,7 +180,11 @@ describe("Select", () => {
 
   it("renders with custom trigger", () => {
     render(
-      <Select options={mockOptions} onChange={() => {}}>
+      <Select
+        label="Select an option"
+        options={mockOptions}
+        onChange={() => {}}
+      >
         <button>Custom Trigger</button>
       </Select>
     )
@@ -168,7 +196,13 @@ describe("Select", () => {
     const handleChange = vi.fn()
     const user = userEvent.setup()
 
-    render(<Select options={mockOptions} onChange={handleChange} />)
+    render(
+      <Select
+        label="Select an option"
+        options={mockOptions}
+        onChange={handleChange}
+      />
+    )
 
     await openSelect(user)
     await user.click(screen.getByText("Option 1"))
@@ -200,7 +234,13 @@ describe("Select", () => {
       },
     ]
 
-    render(<Select options={mockOptions} onChange={handleChange} />)
+    render(
+      <Select
+        label="Select an option"
+        options={mockOptions}
+        onChange={handleChange}
+      />
+    )
 
     await openSelect(user)
     await user.click(screen.getByText("Option 1"))
