@@ -19,6 +19,13 @@ describe("BreadcrumbSelect", () => {
     disconnect: vi.fn(),
   }))
 
+  Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+    value: 800,
+  })
+  Object.defineProperty(HTMLElement.prototype, "offsetWidth", {
+    value: 800,
+  })
+
   beforeEach(() => {
     // Mock getBoundingClientRect for width calculations
     Element.prototype.getBoundingClientRect = vi.fn(() => ({
