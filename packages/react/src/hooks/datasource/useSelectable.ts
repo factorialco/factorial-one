@@ -28,6 +28,7 @@ type UseSelectable<R extends RecordType> = {
   handleSelectAll: (checked: boolean) => void
   handleSelectGroupChange: (group: GroupId, checked: boolean) => void
   allSelectedStatus: AllSelectionStatus
+  setSelectionState: React.Dispatch<React.SetStateAction<SelectionState>>
 }
 
 export type ItemId = string | number
@@ -41,7 +42,7 @@ export type SelectionState = {
   groups: CheckedState
 }
 
-const emptyState = (): SelectionState => ({
+export const emptyState = (): SelectionState => ({
   all: false,
   items: new Map(),
   groups: new Map(),
@@ -62,7 +63,7 @@ export function useSelectable<
     clearSelectedItems: () => void
   ) => void,
   multiple: boolean = false,
-  state?: SelectionState
+  defaultState?: SelectionState
 ): UseSelectable<R> {
   console.log("useSelectable")
   const isGrouped = data.type === "grouped"
@@ -70,22 +71,8 @@ export function useSelectable<
   const itemIdAccesor = (item: R) => source.selectable?.(item) ?? undefined
 
   const [localState, setLocalState] = useState<SelectionState>(
-    state ?? emptyState()
+    defaultState ?? emptyState()
   )
-
-  // Sync the state with the external state if it is provided
-  useEffect(() => {
-    if (JSON.stringify(state) === JSON.stringify(localState)) {
-      return
-    }
-    console.log("state", state)
-    if (state) {
-      setLocalState(state)
-    } else {
-      setLocalState(emptyState())
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to check the changes inside the state
-  }, [JSON.stringify(state)])
 
   useEffect(() => {
     console.log("localState emit", localState)
@@ -485,5 +472,6 @@ export function useSelectable<
     handleSelectItemChange,
     handleSelectAll,
     handleSelectGroupChange,
+    setSelectionState: setLocalState,
   }
 }

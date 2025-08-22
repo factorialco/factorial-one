@@ -5,8 +5,10 @@ import { SelectValue } from "./components/SelectedValue"
 import {
   BaseFetchOptions,
   BaseResponse,
+  emptyState,
   FiltersDefinition,
   getDataSourcePaginationType,
+  ItemId,
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
@@ -18,6 +20,7 @@ import {
   WithGroupId,
 } from "@/hooks/datasource"
 import { ChevronDown } from "@/icons/app"
+import { toArray } from "@/lib/toArray"
 import { cn } from "@/lib/utils"
 import { GroupHeader } from "@/ui/GroupHeader"
 import { InputField } from "@/ui/InputField"
@@ -83,16 +86,6 @@ const SelectComponent = forwardRef(function Select<
   const [openLocal, setOpenLocal] = useState(open)
 
   const [localValue, setLocalValue] = useState<T[] | undefined>(undefined)
-
-  // useEffect(() => {
-  //   const defaultValue = multiple
-  //     ? (defaultItem || []).map((item) => item.value)
-  //     : [defaultItem?.value]
-
-  //   const localValue = value || defaultValue || []
-
-  //   setLocalValue(Array.isArray(localValue) ? localValue : [localValue])
-  // }, [defaultItem, value, multiple])
 
   const dataSource = useMemo(() => {
     if (
@@ -195,118 +188,86 @@ const SelectComponent = forwardRef(function Select<
           setPrimitiveValue(itemId as T)
           onChange?.(checked ? (itemId as T) : undefined, undefined, undefined)
         } else {
-          const selectedItems = Array.from(state.items.entries())
+          const selectedItemIds = Array.from(state.items.entries())
             .filter(([_, checked]) => checked)
             .map(([itemId]) => itemId as T)
 
-          console.log("selectedItems", state.items.entries(), selectedItems)
+          console.log("selectedItems", state.items.entries(), selectedItemIds)
           //setSelectedItems(selectedItems)
-          setLocalValue(selectedItems)
-          setPrimitiveValue(selectedItems)
-          onChange?.(selectedItems, undefined, undefined)
+          setLocalValue(selectedItemIds)
+          setPrimitiveValue(selectedItemIds)
+          onChange?.(selectedItemIds, undefined, undefined)
         }
-        // const selectedItems = state.items.entries()
-        //   .filter(([_, checked]) => checked)
-        //   .map(([itemId]) => itemId)
-        // const selectedItemsValues = selectedItems.map((item) => item.value as T)
-        // if (multiple) {
-        //   setSelectedItems(selectedItems)
-        //   setPrimitiveValue(selectedItemsValues)
-        //   onChange?.(
-        //     selectedItemsValues,
-        //     selectedItems,
-        //     findOptions(selectedItemsValues)
-        //   )
-        // } else {
-        //   console.log(
-        //     "selectedItems **************",
-        //     selectedItems[0],
-        //     selectedItemsValues[0]
-        //   )
-        //   setSelectedItems(selectedItems[0])
-        //   setPrimitiveValue(selectedItemsValues[0])
-        //   onChange?.(
-        //     selectedItemsValues[0],
-        //     selectedItems[0],
-        //     findOptions(selectedItemsValues)[0]
-        //   )
-        // }
       }
-      // If not paginated we convert the select status to an array of items
       return
-
-      if (notPaginated || !multiple) {
-        // Aa no pagination we return the real selected data not the definition of the selection
-        const items = status.itemsStatus
-          .filter((item) => item.checked)
-          .map((item) => ({
-            value: item.item.value,
-            item: item.item,
-            option: item.item,
-          }))
-
-        const values = items.map((item) => item.value as T)
-
-        // if (multiple) {
-        //   onChange?.(
-        //     values,
-        //     items.map((item) => item.item),
-        //     findOptions(values)
-        //   )
-        //   setSelectedOptions(findOptions(values))
-        // } else {
-        //   const value = values[0]
-        //   const item = items[0]?.item
-        //   const option = findOptions(value)?.[0]
-        //   onChange?.(value, item, option)
-        //   setSelectedOptions(option)
-        // }
-      } else {
-        onChange?.(status)
-      }
     },
-    [multiple, onChange, localSource.dataAdapter]
+    [
+      multiple,
+      onChange,
+      localSource.dataAdapter,
+      localValue,
+      JSON.stringify(data.records),
+    ]
   )
 
-  const { handleSelectItemChange, handleSelectAll } = useSelectable(
-    data,
-    paginationInfo,
-    localSource,
-    handleSelectionStatusChange,
-    multiple
+  const { handleSelectItemChange, handleSelectAll, setSelectionState } =
+    useSelectable(
+      data,
+      paginationInfo,
+      localSource,
+      handleSelectionStatusChange,
+      multiple
+    )
+
+  useEffect(() => {
+    if (JSON.stringify(localValue) === JSON.stringify(value)) {
+      return
+    }
+
+    const defaultItemValue = toArray(defaultItem).map((item) => item.value)
+    const valueArray = toArray(value)
+
+    const newValue = valueArray.length > 0 ? valueArray : defaultItemValue
+
+    setSelectionState({
+      ...emptyState(),
+      items: new Map(
+        newValue.map((itemId) => [itemId, true] as [ItemId, boolean])
+      ),
+    })
+  }, [JSON.stringify(defaultItem), JSON.stringify(value), multiple])
+
+  /**
+   * Finds an option in the data records by value and returns the mapped option
+   * @param value - The value to find
+   * @returns The options array if found, empty array otherwise
+   */
+  const findOptions = useCallback(
+    (
+      value: (string | T) | (string | T)[] | undefined
+    ): SelectItemObject<T, R>[] => {
+      const res: SelectItemObject<T, R>[] = []
+      if (value === undefined) {
+        return res
+      }
+
+      if (!Array.isArray(value)) {
+        value = [value]
+      }
+
+      for (const option of data.records) {
+        const mappedOption = optionMapper(option)
+        if (
+          mappedOption.type !== "separator" &&
+          value.includes(mappedOption.value)
+        ) {
+          res.push(mappedOption)
+        }
+      }
+      return res
+    },
+    [data.records, optionMapper]
   )
-
-  // /**
-  //  * Finds an option in the data records by value and returns the mapped option
-  //  * @param value - The value to find
-  //  * @returns The options array if found, empty array otherwise
-  //  */
-  // const findOptions = useCallback(
-  //   (
-  //     value: (string | T) | (string | T)[] | undefined
-  //   ): SelectItemObject<T, R>[] => {
-  //     const res: SelectItemObject<T, R>[] = []
-  //     if (value === undefined) {
-  //       return res
-  //     }
-
-  //     if (!Array.isArray(value)) {
-  //       value = [value]
-  //     }
-
-  //     for (const option of data.records) {
-  //       const mappedOption = optionMapper(option)
-  //       if (
-  //         mappedOption.type !== "separator" &&
-  //         value.includes(mappedOption.value)
-  //       ) {
-  //         res.push(mappedOption)
-  //       }
-  //     }
-  //     return res
-  //   },
-  //   [data.records, optionMapper]
-  // )
 
   useEffect(() => {
     if (open) {
@@ -419,6 +380,10 @@ const SelectComponent = forwardRef(function Select<
     (typeof multiple extends true ? T[] : T) | undefined
   >(undefined)
 
+  useEffect(() => {
+    setSelectedItems(findOptions(localValue))
+  }, [localValue, findOptions])
+
   return (
     <>
       <SelectPrimitive
@@ -496,7 +461,9 @@ const SelectComponent = forwardRef(function Select<
                 className="flex w-full max-w-full items-center justify-between"
                 aria-label={label || placeholder}
               >
-                {selectedItems && <SelectValue selection={selectedItems} />}
+                {selectedItems && (
+                  <SelectValue multiple={multiple} selection={selectedItems} />
+                )}
               </button>
             </InputField>
           )}

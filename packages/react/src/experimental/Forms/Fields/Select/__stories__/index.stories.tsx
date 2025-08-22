@@ -54,6 +54,10 @@ const SelectWithHooks = (props: SelectProps<string>) => {
       <div className="mt-20">
         Selected: {JSON.stringify(localValue, null, 2)}
       </div>
+
+      <button onClick={() => setLocalValue(["option-1", "option-3"])}>
+        Set state
+      </button>
     </div>
   )
 }
