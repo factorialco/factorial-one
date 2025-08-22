@@ -32,6 +32,8 @@ jobs:
     permissions:
       # Required to checkout the code
       contents: read
+      # Required to put a comment into the pull-request
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
