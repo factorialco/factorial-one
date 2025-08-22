@@ -49,6 +49,12 @@ describe("Select", () => {
   }))
 
   beforeEach(() => {
+    Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+      value: 800,
+    })
+    Object.defineProperty(HTMLElement.prototype, "offsetWidth", {
+      value: 800,
+    })
     vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
       () => ({
         width: 120,
@@ -77,7 +83,7 @@ describe("Select", () => {
   it("renders with placeholder", () => {
     render(
       <Select
-        label="Select an option"
+        label="Pick an option"
         options={mockOptions}
         onChange={() => {}}
         placeholder="Select an option"
@@ -90,7 +96,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
-        label="Select an option"
+        label="Pick an option"
         options={mockOptions}
         onChange={() => {}}
       />
@@ -107,7 +113,7 @@ describe("Select", () => {
   it("displays selected value", () => {
     render(
       <Select
-        label="Select an option"
+        label="Pick an option"
         options={mockOptions}
         onChange={() => {}}
         value="option1"
@@ -121,7 +127,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
-        label="Select an option"
+        label="Pick an option"
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -149,7 +155,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
-        label="Select an option"
+        label="Pick an option"
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -166,7 +172,7 @@ describe("Select", () => {
   it("disables select when disabled prop is true", async () => {
     render(
       <Select
-        label="Select an option"
+        label="Pick an option"
         options={mockOptions}
         onChange={() => {}}
         disabled
@@ -180,11 +186,7 @@ describe("Select", () => {
 
   it("renders with custom trigger", () => {
     render(
-      <Select
-        label="Select an option"
-        options={mockOptions}
-        onChange={() => {}}
-      >
+      <Select label="Pick an option" options={mockOptions} onChange={() => {}}>
         <button>Custom Trigger</button>
       </Select>
     )
@@ -198,7 +200,7 @@ describe("Select", () => {
 
     render(
       <Select
-        label="Select an option"
+        label="Pick an option"
         options={mockOptions}
         onChange={handleChange}
       />
@@ -236,7 +238,7 @@ describe("Select", () => {
 
     render(
       <Select
-        label="Select an option"
+        label="Pick an option"
         options={mockOptions}
         onChange={handleChange}
       />
