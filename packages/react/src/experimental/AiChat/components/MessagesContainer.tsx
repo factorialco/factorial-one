@@ -269,9 +269,8 @@ export function useScrollToBottom(messages: Message[]) {
     const { scrollTop, scrollHeight, clientHeight } =
       messagesContainerRef.current
 
-    const isScrolledUpMoreThanTwoScreens =
-      scrollTop < scrollHeight - 2 * clientHeight
-    setShowScrollToBottom(isScrolledUpMoreThanTwoScreens)
+    const isScrolledFarUp = scrollTop < scrollHeight - 3 * clientHeight
+    setShowScrollToBottom(isScrolledFarUp)
   }
 
   const handleScroll = () => {
