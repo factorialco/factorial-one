@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.161.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.160.1...factorial-one-react-v1.161.0) (2025-08-25)
+
+
+### Features
+
+* redirect users to docs message ([#2439](https://github.com/factorialco/factorial-one/issues/2439)) ([9b85ee4](https://github.com/factorialco/factorial-one/commit/9b85ee4c5f385e774697f56184577ad94b6e0576))
+
 ## [1.160.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.160.0...factorial-one-react-v1.160.1) (2025-08-21)
 
 
