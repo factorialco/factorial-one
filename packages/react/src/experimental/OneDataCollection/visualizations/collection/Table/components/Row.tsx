@@ -18,7 +18,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { TableColumnDefinition } from ".."
-import { DataCollectionSource } from "../../../../exports"
+import { DataCollectionSource } from "../../../../hooks/useDataCollectionSource/types"
 import { actionsToDropdownItems } from "../../utils"
 
 export type RowProps<

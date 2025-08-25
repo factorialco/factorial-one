@@ -187,6 +187,8 @@ const SelectComponent = forwardRef(function Select<
       console.log("handleSelectionStatusChange", state)
       if (notPaginated) {
         if (!multiple) {
+          console.log("handleSelectionStatusChange", state.items)
+
           if (!Array.from(state.items.entries())?.[0]) {
             onChange?.(undefined, undefined, undefined)
             setPrimitiveValue(undefined)
@@ -257,34 +259,38 @@ const SelectComponent = forwardRef(function Select<
   }, [JSON.stringify(value), multiple])
 
   /**
-   * Finds an option in the data records by value and returns the mapped option
-   * @param value - The value to find
-   * @returns The options array if found, empty array otherwise
+   * Finds options in the data records by value and returns the mapped option(s).
+   * @param value - The value or array of values to find
+   * @returns The mapped option(s) if found, otherwise undefined
    */
+  type FindOptionsFn = {
+    (value: T[]): SelectItemObject<T, R>[]
+    (value: T): SelectItemObject<T, R> | undefined
+    (value: T[] | undefined): SelectItemObject<T, R>[] | undefined
+    (value: T | undefined): SelectItemObject<T, R> | undefined
+  }
+
   const findOptions = useCallback(
-    (
-      value: (string | T) | (string | T)[] | undefined
-    ): SelectItemObject<T, R>[] => {
-      const res: SelectItemObject<T, R>[] = []
+    ((value: T | T[] | undefined) => {
       if (value === undefined) {
-        return res
+        return undefined
       }
 
-      if (!Array.isArray(value)) {
-        value = [value]
-      }
+      const valueArray = Array.isArray(value) ? value : [value]
+      const res: SelectItemObject<T, R>[] = []
 
       for (const option of data.records) {
         const mappedOption = optionMapper(option)
         if (
           mappedOption.type !== "separator" &&
-          value.includes(mappedOption.value)
+          valueArray.includes(mappedOption.value)
         ) {
           res.push(mappedOption)
         }
       }
-      return res
-    },
+
+      return Array.isArray(value) ? res : res[0]
+    }) as FindOptionsFn,
     [data.records, optionMapper]
   )
 
@@ -303,7 +309,7 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const handleLocalValueChange = (changedValue: string | undefined) => {
-    const changedOption = findOptions(changedValue)?.[0]
+    const changedOption = findOptions(changedValue as T | undefined)
 
     // Resets the search value when the option is selected
     setCurrentSearch(undefined)
