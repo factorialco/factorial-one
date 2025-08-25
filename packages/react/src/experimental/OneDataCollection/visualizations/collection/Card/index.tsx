@@ -8,7 +8,7 @@ import { DataCollectionSource } from "@/experimental/OneDataCollection/hooks/use
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { GroupingDefinition, RecordType } from "@/hooks/datasource"
 import { getAnimationVariants, useGroups } from "@/hooks/datasource/useGroups"
-import { useSelectable } from "@/hooks/datasource/useSelectable"
+import { useSelectable } from "@/hooks/datasource/useSelectable2"
 import { Placeholder } from "@/icons/app"
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { GroupHeader } from "@/ui/GroupHeader/GroupHeader"

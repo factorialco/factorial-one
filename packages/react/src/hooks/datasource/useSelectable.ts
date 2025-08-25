@@ -1,13 +1,15 @@
 import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import {
   DataSourceDefinition,
   GroupingDefinition,
+  OnSelectItemsCallback,
   PaginationInfo,
   RecordType,
+  SelectedItemsState,
 } from "./types"
 import type { SortingsDefinition } from "./types/sortings.typings"
-import { Data, GROUP_ID_SYMBOL, GroupRecord } from "./useData"
+import { Data, GROUP_ID_SYMBOL, GroupRecord, WithGroupId } from "./useData"
 
 export type AllSelectionStatus = {
   checked: boolean
@@ -21,32 +23,12 @@ type UseSelectable<R extends RecordType> = {
   selectedItems: Map<number | string, R>
   selectedGroups: Map<string, GroupRecord<R>>
   isPartiallySelected: boolean
-  handleSelectItemChange: (
-    item: ItemId | readonly ItemId[],
-    checked: boolean
-  ) => void
+  handleSelectItemChange: (item: R, checked: boolean) => void
   handleSelectAll: (checked: boolean) => void
-  handleSelectGroupChange: (group: GroupId, checked: boolean) => void
+  handleSelectGroupChange: (group: GroupRecord<R>, checked: boolean) => void
+  groupAllSelectedStatus: Record<string, AllSelectionStatus>
   allSelectedStatus: AllSelectionStatus
-  setSelectionState: React.Dispatch<React.SetStateAction<SelectionState>>
 }
-
-export type ItemId = string | number
-export type GroupId = string | number
-
-type CheckedState = Map<ItemId, boolean>
-
-export type SelectionState = {
-  all: boolean
-  items: CheckedState
-  groups: CheckedState
-}
-
-export const emptyState = (): SelectionState => ({
-  all: false,
-  items: new Map(),
-  groups: new Map(),
-})
 
 export function useSelectable<
   R extends RecordType,
@@ -57,237 +39,199 @@ export function useSelectable<
   data: Data<R>,
   paginationInfo: PaginationInfo | null,
   source: DataSourceDefinition<R, Filters, Sortings, Grouping>,
-  // onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
-  onStateChange: (
-    state: SelectionState,
-    clearSelectedItems: () => void
-  ) => void,
-  multiple: boolean = false,
-  defaultState?: SelectionState
+  onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
+  defaultSelectedItems?: SelectedItemsState | undefined
 ): UseSelectable<R> {
-  console.log("useSelectable")
   const isGrouped = data.type === "grouped"
   const isPaginated = paginationInfo !== null
-  const itemIdAccesor = (item: R) => source.selectable?.(item) ?? undefined
-
-  const [localState, setLocalState] = useState<SelectionState>(
-    defaultState ?? emptyState()
-  )
-
-  useEffect(() => {
-    console.log("localState emit", localState)
-    // Notify the parent component about the selected items
-    onStateChange(localState, clearSelected)
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to check the changes inside the local state
-  }, [JSON.stringify(localState)])
-
   /**
-   * Maps the items were some time in memory with its group to allow us to deselect or select the items in the group
+   * Items state and list of selected and unselected items
    */
-  const [itemsByGroup, setItemsByGroup] = useState<Map<GroupId, ItemId[]>>(
+  // itemsState is the state of the selected items
+  type ItemState = {
+    item: WithGroupId<R>
+    groupId?: unknown
+    checked: boolean
+  }
+  const [itemsState, setItemsState] = useState<Map<number | string, ItemState>>(
     new Map()
   )
 
-  // If the grouping or the datachanges, we need to clear the itemsByGroup
+  /**
+   * Set the default selected items and groups
+   */
   useEffect(() => {
-    setItemsByGroup(new Map())
-  }, [isGrouped, source.currentGrouping])
+    if (!defaultSelectedItems) {
+      return
+    }
 
-  // If the data changes, add the new items to the itemsByGroup
-  useEffect(() => {
-    console.log("data.records", data.records)
-    const newItemsByGroup = new Map<GroupId, ItemId[]>()
-    for (const item of data.records) {
-      const itemId = itemIdAccesor?.(item)
-      if (itemId) {
-        const groupId = item[GROUP_ID_SYMBOL] as GroupId
-        if (groupId) {
-          newItemsByGroup.set(groupId, [
-            ...(newItemsByGroup.get(groupId) || []),
-            itemId,
-          ])
+    if (isGrouped) {
+      for (const defaultGroup of defaultSelectedItems.groups || []) {
+        const group = data.groups.find(
+          (group) => group.key === defaultGroup.groupId
+        )
+        if (group) {
+          handleSelectGroupChange(group, defaultGroup.checked)
         }
       }
     }
 
-    setItemsByGroup((current) => {
-      const newState = new Map(current)
-      for (const [groupId, itemIds] of newItemsByGroup.entries()) {
-        newState.set(groupId, itemIds)
+    for (const item of defaultSelectedItems.items || []) {
+      const record = data.records.find((record) => record.id === item.id)
+      if (record) {
+        handleSelectItemChange(record, item.checked)
       }
-      return newState
-    })
-  }, [data.records])
-
-  // /**
-  //  * Set the default selected items and groups
-  //  */
-  // useEffect(() => {
-  //   if (!defaultSelectedItems) {
-  //     return
-  //   }
-
-  //   if (isGrouped) {
-  //     for (const defaultGroup of defaultSelectedItems.groups || []) {
-  //       const group = data.groups.find(
-  //         (group) => group.key === defaultGroup.groupId
-  //       )
-  //       if (group) {
-  //         handleSelectGroupChange(group, defaultGroup.checked)
-  //       }
-  //     }
-  //   }
-
-  //   for (const item of defaultSelectedItems.items || []) {
-  //     const record = data.records.find((record) => record.id === item.id)
-  //     if (record) {
-  //       handleSelectItemChange(record, item.checked)
-  //     }
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the defaultSelectedItems
-  // }, [JSON.stringify(defaultSelectedItems), data.records])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the defaultSelectedItems
+  }, [JSON.stringify(defaultSelectedItems), data.records])
 
   /**
    * Get the list of selected and unselected items from the itemsState for performance reasons
    */
-  const [selectedItems, setSelectedItems] = useState<Set<GroupId>>(new Set())
-  const [unselectedItems, setUnselectedItems] = useState<Set<GroupId>>(
-    new Set()
-  )
-
-  useEffect(() => {
-    console.log("localState.items", localState.items)
-    const selected = new Set<GroupId>()
-    const unselected = new Set<ItemId>()
-    for (const [id, checked] of localState.items.entries()) {
-      if (checked) {
-        selected.add(id)
+  const [selectedItems, unselectedItems] = useMemo(() => {
+    const selected = new Map()
+    const unselected = new Map()
+    for (const [id, value] of itemsState.entries()) {
+      if (value.checked) {
+        selected.set(id, value.item)
       } else {
-        unselected.add(id)
-      }
-    }
-    setSelectedItems(selected)
-    setUnselectedItems(unselected)
-  }, [JSON.stringify(localState.items)])
-
-  const [selectedGroups] = useMemo(() => {
-    const selected = new Set<GroupId>()
-    const unselected = new Set<GroupId>()
-
-    for (const [id, checked] of localState.groups.entries()) {
-      if (checked) {
-        selected.add(id)
-      } else {
-        unselected.add(id)
+        unselected.set(id, value.item)
       }
     }
     return [selected, unselected]
-  }, [localState.groups])
+  }, [itemsState])
+
+  /**
+   * Groups state and list of selected and unselected groups
+   */
+  const [groupsState, setGroupsState] = useState<
+    Map<string, { group: GroupRecord<R>; checked: boolean }>
+  >(new Map())
+
+  const [selectedGroups] = useMemo(() => {
+    const selected = new Map()
+    const unselected = new Map()
+
+    for (const [id, value] of groupsState.entries()) {
+      if (value.checked) {
+        selected.set(id, value.group)
+      } else {
+        unselected.set(id, value.group)
+      }
+    }
+    return [selected, unselected]
+  }, [groupsState])
 
   /**
    * Handle the change of the selected groups
    */
   const handleSelectGroupChange = (
-    groups: GroupId | GroupId[],
+    group: GroupRecord<R> | GroupRecord<R>[],
     checked: boolean
   ) => {
-    if (!isGrouped || !multiple) {
+    if (!isGrouped) {
       return
     }
 
-    console.log("handleSelectGroupChange")
-
-    const groupsIds = Array.isArray(groups) ? groups : [groups]
+    const groups = Array.isArray(group) ? group : [group]
 
     // Select/deselect all items in the group
-    const groupItemIds = [
-      // The known items in the group
-      ...Array.from(itemsByGroup.entries())
-        .filter(([groupId]) => groupsIds.includes(groupId))
-        .flatMap(([itemIds]) => itemIds),
+    const groupItems = [
+      ...groups.flatMap((group) => group.records),
+      ...Array.from(itemsState.values())
+        .filter(
+          (item) =>
+            item.item[GROUP_ID_SYMBOL] &&
+            groups.some((group) => group.key === item.item[GROUP_ID_SYMBOL])
+        )
+        .map((item) => item.item),
     ]
-    handleSelectItemChange(groupItemIds, checked)
+    handleSelectItemChange(groupItems, checked)
 
-    setLocalState((current) => ({
-      ...current,
-      groups: new Map([
-        ...Array.from(current.groups.entries()),
-        ...groupsIds.map((groupId) => [groupId, checked]),
-      ]),
-    }))
+    setGroupsState((current) => {
+      const newState = new Map(current)
+      for (const group of groups) {
+        newState.set(group.key, { group, checked })
+      }
+      return newState
+    })
   }
 
-  const clearSelected = () => setLocalState(emptyState())
+  const clearSelectedItems = useCallback(() => {
+    handleSelectAll(false)
+    setItemsState(new Map())
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- handleSelectAll is a stable function
+  }, [])
 
-  // /**
-  //  * Get the allSelectedCheck and isPartiallySelected status for each group
-  //  */
-  // const [groupAllSelectedStatus, setGroupAllSelectedStatus] = useState<
-  //   Record<string, AllSelectionStatus>
-  // >({})
+  /**
+   * Get the allSelectedCheck and isPartiallySelected status for each group
+   */
+  const [groupAllSelectedStatus, setGroupAllSelectedStatus] = useState<
+    Record<string, AllSelectionStatus>
+  >({})
 
-  // useEffect(() => {
-  //   const getGroupAllSelectedStatus = async () => {
-  //     if (!isGrouped) {
-  //       return {}
-  //     }
+  useEffect(() => {
+    const getGroupAllSelectedStatus = async () => {
+      if (!isGrouped) {
+        return {}
+      }
 
-  //     const groupsStatuses = Object.fromEntries(
-  //       await Promise.all(
-  //         data.groups.map(async (group) => {
-  //           const groupStatus = groupsState.get(group.key)
+      const groupsStatuses = Object.fromEntries(
+        await Promise.all(
+          data.groups.map(async (group) => {
+            const groupStatus = groupsState.get(group.key)
 
-  //           const groupItemsStatus = Array.from(itemsState.values()).filter(
-  //             (item) => item.item[GROUP_ID_SYMBOL] === group.key
-  //           )
+            const groupItemsStatus = Array.from(itemsState.values()).filter(
+              (item) => item.item[GROUP_ID_SYMBOL] === group.key
+            )
 
-  //           const knownItemsCount = isPaginated
-  //             ? (await group.itemCount) || groupItemsStatus.length
-  //             : group.records.length
+            const knownItemsCount = isPaginated
+              ? (await group.itemCount) || groupItemsStatus.length
+              : group.records.length
 
-  //           const groupSelectedItemCount = groupItemsStatus.filter(
-  //             (item) => item.checked
-  //           ).length
+            const groupSelectedItemCount = groupItemsStatus.filter(
+              (item) => item.checked
+            ).length
 
-  //           const groupUnselectedItemCount = groupItemsStatus.filter(
-  //             (item) => !item.checked
-  //           ).length
+            const groupUnselectedItemCount = groupItemsStatus.filter(
+              (item) => !item.checked
+            ).length
 
-  //           const areAllKnownGroupItemsSelected =
-  //             knownItemsCount ===
-  //             groupSelectedItemCount - groupUnselectedItemCount
+            const areAllKnownGroupItemsSelected =
+              knownItemsCount ===
+              groupSelectedItemCount - groupUnselectedItemCount
 
-  //           const isGroupAllItemsSelected =
-  //             (groupStatus?.checked || areAllKnownGroupItemsSelected) &&
-  //             groupSelectedItemCount > 0
+            const isGroupAllItemsSelected =
+              (groupStatus?.checked || areAllKnownGroupItemsSelected) &&
+              groupSelectedItemCount > 0
 
-  //           const isGroupPartiallySelected =
-  //             (groupSelectedItemCount > 0 && !isGroupAllItemsSelected) ||
-  //             (isGroupAllItemsSelected && groupUnselectedItemCount > 0)
+            const isGroupPartiallySelected =
+              (groupSelectedItemCount > 0 && !isGroupAllItemsSelected) ||
+              (isGroupAllItemsSelected && groupUnselectedItemCount > 0)
 
-  //           return [
-  //             group.key,
-  //             {
-  //               checked: isGroupAllItemsSelected || isGroupPartiallySelected,
-  //               indeterminate: isGroupPartiallySelected,
-  //               selectedCount:
-  //                 isGroupAllItemsSelected && !isGroupPartiallySelected
-  //                   ? knownItemsCount
-  //                   : knownItemsCount - groupUnselectedItemCount,
-  //               unselectedCount: groupUnselectedItemCount,
-  //             },
-  //           ] as const
-  //         })
-  //       )
-  //     )
+            return [
+              group.key,
+              {
+                checked: isGroupAllItemsSelected || isGroupPartiallySelected,
+                indeterminate: isGroupPartiallySelected,
+                selectedCount:
+                  isGroupAllItemsSelected && !isGroupPartiallySelected
+                    ? knownItemsCount
+                    : knownItemsCount - groupUnselectedItemCount,
+                unselectedCount: groupUnselectedItemCount,
+              },
+            ] as const
+          })
+        )
+      )
 
-  //     setGroupAllSelectedStatus(groupsStatuses)
-  //   }
+      setGroupAllSelectedStatus(groupsStatuses)
+    }
 
-  //   getGroupAllSelectedStatus()
+    getGroupAllSelectedStatus()
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isGrouped, isGrouped && data.groups, groupsState, itemsState])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGrouped, isGrouped && data.groups, groupsState, itemsState])
 
   /**
    * Selected items count
@@ -295,60 +239,57 @@ export function useSelectable<
   const selectedCount = selectedItems.size
   const unselectedCount = unselectedItems.size
 
+  /**
+   * All selected check
+   */
+  const [allSelectedCheck, setAllSelectedCheck] = useState(false)
+
+  const clearSelected = useCallback(() => {
+    handleSelectAll(false)
+    setGroupsState(new Map())
+    setItemsState(new Map())
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- handleSelectAll is a stable function
+  }, [])
+
   const handleSelectItemChange = (
-    items: ItemId | readonly ItemId[],
+    item: R | readonly R[],
     checked: boolean,
     // Only applies the checked state if the item has no state set yet
     onlyIfNotSelected: boolean = false
   ) => {
-    const itemIds = Array.isArray(items) ? items : [items]
-
-    console.log("handleSelectItemChange")
-    if (!multiple) {
-      setLocalState(() => ({
-        ...emptyState(),
-        items: new Map([[itemIds[0], checked]]),
-      }))
-      return
-    }
+    const items = Array.isArray(item) ? item : [item]
 
     let updated = 0
-    const newItems = new Map(localState.items)
-    for (const itemId of itemIds) {
+    for (const item of items) {
+      const id = source.selectable && source.selectable(item)
+      if (id === undefined) {
+        return
+      }
+
       // If the item is already selected, we don't need to update the state if onlyIfNotSelected is true
-      if (onlyIfNotSelected && localState.items.has(itemId)) {
+      if (onlyIfNotSelected && itemsState.has(id)) {
         return
       }
 
       updated++
-      newItems.set(itemId, checked)
+      itemsState.set(id, { item, checked })
     }
 
     if (updated > 0) {
-      setLocalState((current) => ({
-        ...current,
-        items: newItems,
-      }))
+      setItemsState((current) => new Map(current))
     }
   }
 
   const handleSelectAll = (checked: boolean) => {
-    if (!multiple) {
-      return
-    }
-
-    setLocalState((current) => ({
-      ...current,
-      all: checked,
-    }))
-
+    setAllSelectedCheck(checked)
     if (isGrouped) {
-      handleSelectGroupChange(Array.from(itemsByGroup.keys()), checked)
+      handleSelectGroupChange(
+        Array.from(groupsState.values()).map(({ group }) => group),
+        checked
+      )
     } else {
       handleSelectItemChange(
-        data.records
-          .map((record) => itemIdAccesor(record))
-          .filter(Boolean) as ItemId[],
+        Array.from(itemsState.values()).map(({ item }) => item),
         checked
       )
     }
@@ -365,8 +306,8 @@ export function useSelectable<
   )
 
   const isAllSelected = useMemo(
-    () => (localState.all || areAllKnownItemsSelected) && selectedCount > 0,
-    [localState.all, areAllKnownItemsSelected, selectedCount]
+    () => (allSelectedCheck || areAllKnownItemsSelected) && selectedCount > 0,
+    [allSelectedCheck, areAllKnownItemsSelected, selectedCount]
   )
 
   const isPartiallySelected = useMemo(
@@ -382,87 +323,84 @@ export function useSelectable<
     // eslint-disable-next-line react-hooks/exhaustive-deps -- clearSelected is a stable function
   }, [source.currentFilters])
 
-  // /**
-  //  * Handle the data changes to update the selected items status
-  //  */
-  // useEffect(() => {
-  //   if (isGrouped) {
-  //     for (const group of data.groups) {
-  //       // If the group was loaded before, we can't change the state
-  //       const groupChecked =
-  //         groupAllSelectedStatus[group.key]?.checked || isAllSelected
-  //       if (!groupsState.has(group.key)) {
-  //         setGroupsState((current) => {
-  //           const newState = new Map(current)
-  //           newState.set(group.key, { group, checked: groupChecked })
-  //           return newState
-  //         })
-  //       }
+  /**
+   * Handle the data changes to update the selected items status
+   */
+  useEffect(() => {
+    if (isGrouped) {
+      for (const group of data.groups) {
+        // If the group was loaded before, we can't change the state
+        const groupChecked =
+          groupAllSelectedStatus[group.key]?.checked || isAllSelected
+        if (!groupsState.has(group.key)) {
+          setGroupsState((current) => {
+            const newState = new Map(current)
+            newState.set(group.key, { group, checked: groupChecked })
+            return newState
+          })
+        }
 
-  //       // Apply the status to the new loaded group items
-  //       handleSelectItemChange(group.records, groupChecked, true)
-  //     }
-  //   } else {
-  //     // For the flattened data, we need to check if the item was loaded before
-  //     handleSelectItemChange(data.records, isAllSelected, true)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps -- handleItemStateChange is a stable function
-  // }, [data, isAllSelected, isGrouped])
+        // Apply the status to the new loaded group items
+        handleSelectItemChange(group.records, groupChecked, true)
+      }
+    } else {
+      // For the flattened data, we need to check if the item was loaded before
+      handleSelectItemChange(data.records, isAllSelected, true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- handleItemStateChange is a stable function
+  }, [data, isAllSelected, isGrouped])
 
-  // // Control the allSelectedCheck state
-  // // If all items are selected, we need to set the allSelectedCheck state to true
-  // // If there are no selected items, we need to set the allSelectedCheck state to false
-  // // If some items are selected, we need to keep the state as is to know if we will need to check the next page items
-  // useEffect(() => {
-  //   if (areAllKnownItemsSelected) {
-  //     setAllSelectedCheck(true)
-  //   }
+  // Control the allSelectedCheck state
+  // If all items are selected, we need to set the allSelectedCheck state to true
+  // If there are no selected items, we need to set the allSelectedCheck state to false
+  // If some items are selected, we need to keep the state as is to know if we will need to check the next page items
+  useEffect(() => {
+    if (areAllKnownItemsSelected) {
+      setAllSelectedCheck(true)
+    }
 
-  //   if (selectedCount === 0) {
-  //     setAllSelectedCheck(false)
-  //   }
-  // }, [areAllKnownItemsSelected, selectedCount])
+    if (selectedCount === 0) {
+      setAllSelectedCheck(false)
+    }
+  }, [areAllKnownItemsSelected, selectedCount])
 
   useEffect(() => {
-    onStateChange?.(localState, clearSelected)
-
     // Notify the parent component about the selected items
-    // onSelectItems?.(
-    //   {
-    //     allSelected:
-    //       unselectedCount === 0
-    //         ? allSelectedCheck
-    //         : allSelectedCheck
-    //           ? "indeterminate"
-    //           : false,
-    //     itemsStatus: Array.from(itemsState.values()),
-    //     groupsStatus: Object.fromEntries(
-    //       Array.from(groupsState.values()).map(({ group, checked }) => [
-    //         group.key,
-    //         !!checked,
-    //       ])
-    //     ),
-    //     filters: source.currentFilters || {},
-    //     selectedCount,
-    //   },
-    //   clearSelectedItems
-    // )
+    onSelectItems?.(
+      {
+        allSelected:
+          unselectedCount === 0
+            ? allSelectedCheck
+            : allSelectedCheck
+              ? "indeterminate"
+              : false,
+        itemsStatus: Array.from(itemsState.values()),
+        groupsStatus: Object.fromEntries(
+          Array.from(groupsState.values()).map(({ group, checked }) => [
+            group.key,
+            !!checked,
+          ])
+        ),
+        filters: source.currentFilters || {},
+        selectedCount,
+      },
+      clearSelectedItems
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps  --  We intentionally omit clearSelectedItems, onSelectItems, selectedCount, source.currentFilters, and unselectedCount
   }, [
-    localState,
-    // onStateChange,
-    //clearSelected,
-    // onStateChange,
-    // allSelectedCheck,
-    // itemsState,
-    // groupsState,
-    // groupAllSelectedStatus,
-    // paginationInfo?.total,
-    // data.records?.length,
+    allSelectedCheck,
+    itemsState,
+    groupsState,
+    groupAllSelectedStatus,
+    paginationInfo?.total,
+    data.records?.length,
   ])
 
   return {
+    selectedItems,
+    selectedGroups,
     allSelectedStatus: {
-      checked: localState.all || isPartiallySelected,
+      checked: allSelectedCheck || isPartiallySelected,
       indeterminate: isPartiallySelected,
       selectedCount,
       unselectedCount,
@@ -472,6 +410,6 @@ export function useSelectable<
     handleSelectItemChange,
     handleSelectAll,
     handleSelectGroupChange,
-    setSelectionState: setLocalState,
+    groupAllSelectedStatus,
   }
 }
