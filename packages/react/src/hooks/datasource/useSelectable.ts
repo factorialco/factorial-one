@@ -2,7 +2,9 @@ import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import {
   DataSourceDefinition,
+  GroupId,
   GroupingDefinition,
+  ItemId,
   OnSelectItemsCallback,
   PaginationInfo,
   RecordType,
@@ -20,13 +22,13 @@ export type AllSelectionStatus = {
 
 type UseSelectable<R extends RecordType> = {
   isAllSelected: boolean
-  selectedItems: Map<number | string, R>
-  selectedGroups: Map<string, GroupRecord<R>>
+  selectedItems: Map<ItemId, R>
+  selectedGroups: Map<GroupId, GroupRecord<R>>
   isPartiallySelected: boolean
   handleSelectItemChange: (item: R, checked: boolean) => void
   handleSelectAll: (checked: boolean) => void
   handleSelectGroupChange: (group: GroupRecord<R>, checked: boolean) => void
-  groupAllSelectedStatus: Record<string, AllSelectionStatus>
+  groupAllSelectedStatus: Record<GroupId, AllSelectionStatus>
   allSelectedStatus: AllSelectionStatus
 }
 
@@ -39,7 +41,8 @@ export function useSelectable<
   data: Data<R>,
   paginationInfo: PaginationInfo | null,
   source: DataSourceDefinition<R, Filters, Sortings, Grouping>,
-  onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
+  multiple?: boolean = false,
+  onSelectItems?: OnSelectItemsCallback<R, Filters> | undefined,
   defaultSelectedItems?: SelectedItemsState | undefined
 ): UseSelectable<R> {
   const isGrouped = data.type === "grouped"
@@ -284,12 +287,20 @@ export function useSelectable<
     setAllSelectedCheck(checked)
     if (isGrouped) {
       handleSelectGroupChange(
-        Array.from(groupsState.values()).map(({ group }) => group),
+        [
+          ...Array.from(groupsState.values()).map(({ group }) => group),
+          ...data.groups.filter((group) => !groupsState.has(group.key)),
+        ],
         checked
       )
     } else {
       handleSelectItemChange(
-        Array.from(itemsState.values()).map(({ item }) => item),
+        [
+          ...Array.from(itemsState.values()).map(({ item }) => item),
+          ...data.records.filter(
+            (record) => !itemsState.has(source.selectable?.(record) ?? "")
+          ),
+        ],
         checked
       )
     }

@@ -24,28 +24,26 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = (
       multiple: true
       onChange: {
         (
-          value: T[],
+          value: T[] | SelectedItemsState<T, R>,
           originalItem?: R[],
           option?: SelectItemObject<T, R>[]
         ): void
         (state: OnSelectItemsCallbackStatus<R, FiltersDefinition>): void
       }
-      onChangeSelectedOption?: (options: SelectItemObject<T, R>[]) => void
       value?: T[] | SelectedItemsState<T>
-      defaultItem?: SelectItemObject<T, R>[]
     }
   | {
       multiple?: false | never
       onChange: (
-        value: T,
+        value: T | SelectedItemsState<T, R>,
         originalItem?: R,
         option?: SelectItemObject<T, R>
       ) => void
-      onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
-      value?: T
-      defaultItem?: SelectItemObject<T, R>
+
+      value?: T | SelectedItemsState<T, R>
     }
 ) & {
+  onChangeSelectedOption?: (option: SelectItemObject<T, R> | undefined) => void
   children?: React.ReactNode
   open?: boolean
   showSearchBox?: boolean

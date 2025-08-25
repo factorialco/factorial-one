@@ -198,6 +198,7 @@ export const TableCollection = <
     data,
     paginationInfo,
     source,
+    true,
     onSelectItems,
     source.defaultSelectedItems
   )

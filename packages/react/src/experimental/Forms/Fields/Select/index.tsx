@@ -2,17 +2,22 @@ import { Icon } from "@/components/Utilities/Icon"
 import { SelectItem } from "./components/SelectItem"
 import { SelectValue } from "./components/SelectedValue"
 
+const emptyState = () => ({
+  all: false,
+  items: new Map<string, boolean>(),
+  groups: new Map<string, boolean>(),
+})
+
+type SelectionState = ReturnType<typeof emptyState>
+
 import {
   BaseFetchOptions,
   BaseResponse,
-  emptyState,
   FiltersDefinition,
   getDataSourcePaginationType,
-  ItemId,
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
-  SelectionState,
   useData,
   useDataSource,
   useGroups,
@@ -76,7 +81,6 @@ const SelectComponent = forwardRef(function Select<
     loading,
     name,
     multiple,
-    defaultItem,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -172,7 +176,11 @@ const SelectComponent = forwardRef(function Select<
    */
 
   const handleSelectionStatusChange = useCallback(
-    (state: SelectionState) => {
+    (state: SelectionState | undefined) => {
+      if (!state) {
+        return
+      }
+
       const notPaginated =
         getDataSourcePaginationType(localSource.dataAdapter) === "no-pagination"
 
@@ -220,8 +228,9 @@ const SelectComponent = forwardRef(function Select<
       data,
       paginationInfo,
       localSource,
+      multiple ?? false,
       handleSelectionStatusChange,
-      multiple
+      undefined
     )
 
   useEffect(() => {
@@ -229,10 +238,9 @@ const SelectComponent = forwardRef(function Select<
       return
     }
 
-    const defaultItemValue = toArray(defaultItem).map((item) => item.value)
     const valueArray = toArray(value)
 
-    const newValue = valueArray.length > 0 ? valueArray : defaultItemValue
+    const newValue = valueArray.length > 0 ? valueArray : []
 
     // If the value status describes a selection state, we dont need to transform it
     if (typeof value === "object" && "all" in value) {
@@ -246,7 +254,7 @@ const SelectComponent = forwardRef(function Select<
         newValue.map((itemId) => [itemId, true] as [ItemId, boolean])
       ),
     })
-  }, [JSON.stringify(defaultItem), JSON.stringify(value), multiple])
+  }, [JSON.stringify(value), multiple])
 
   /**
    * Finds an option in the data records by value and returns the mapped option
@@ -295,19 +303,14 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const handleLocalValueChange = (changedValue: string | undefined) => {
+    const changedOption = findOptions(changedValue)?.[0]
+
     // Resets the search value when the option is selected
     setCurrentSearch(undefined)
+
     setLocalValue(changedValue as T)
-    // const foundOptions = findOptions(changedValue)
 
-    // if (!changedValue) {
-    //   onChange?.(undefined, undefined, undefined)
-    //   return
-    // }
-
-    // if (foundOptions) {
-    //   onChange?.(foundOptions.value, foundOptions.item, foundOptions)
-    // }
+    onChangeSelectedOption?.(changedOption ?? undefined)
   }
 
   /**
