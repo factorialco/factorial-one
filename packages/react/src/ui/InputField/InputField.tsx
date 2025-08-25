@@ -186,7 +186,7 @@ export type InputFieldProps<T> = {
   }
   icon?: IconType
   isEmpty?: (value: T | undefined) => boolean
-  emptyValue?: T
+  emptyValue?: T | T[]
   maxLength?: number
   hideMaxLength?: boolean
   append?: React.ReactNode
@@ -298,6 +298,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
 
       setLocalValue(v)
       props.onChange?.(v)
+      props.onClear?.()
     }
 
     const handleClear = () => {

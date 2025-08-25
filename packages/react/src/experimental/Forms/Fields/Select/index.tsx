@@ -181,10 +181,13 @@ const SelectComponent = forwardRef(function Select<
         if (!multiple) {
           if (!Array.from(state.items.entries())?.[0]) {
             onChange?.(undefined, undefined, undefined)
+            setPrimitiveValue(undefined)
             return
           }
           const [itemId, checked] = Array.from(state.items.entries())[0]
           setLocalValue([itemId as T])
+
+          console.log("handleSelectionStatusChange", itemId, checked)
           setPrimitiveValue(itemId as T)
           onChange?.(checked ? (itemId as T) : undefined, undefined, undefined)
         } else {
@@ -192,13 +195,15 @@ const SelectComponent = forwardRef(function Select<
             .filter(([_, checked]) => checked)
             .map(([itemId]) => itemId as T)
 
-          console.log("selectedItems", state.items.entries(), selectedItemIds)
           //setSelectedItems(selectedItems)
           setLocalValue(selectedItemIds)
           setPrimitiveValue(selectedItemIds)
           onChange?.(selectedItemIds, undefined, undefined)
         }
+      } else {
+        onChange?.(state)
       }
+
       return
     },
     [
@@ -228,6 +233,12 @@ const SelectComponent = forwardRef(function Select<
     const valueArray = toArray(value)
 
     const newValue = valueArray.length > 0 ? valueArray : defaultItemValue
+
+    // If the value status describes a selection state, we dont need to transform it
+    if (typeof value === "object" && "all" in value) {
+      setSelectionState(value)
+      return
+    }
 
     setSelectionState({
       ...emptyState(),
@@ -386,6 +397,7 @@ const SelectComponent = forwardRef(function Select<
 
   return (
     <>
+      *** {JSON.stringify(primitiveValue)}
       <SelectPrimitive
         onValueChange={handleLocalValueChange}
         value={primitiveValue}
@@ -419,6 +431,9 @@ const SelectComponent = forwardRef(function Select<
               placeholder={placeholder || ""}
               disabled={disabled}
               clearable={clearable}
+              onClear={() => {
+                setSelectionState(emptyState())
+              }}
               size={size}
               loading={isInitialLoading || loading}
               name={name}
