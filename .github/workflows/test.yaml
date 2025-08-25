@@ -44,7 +44,7 @@ jobs:
       needs.detect-changes.outputs.package_react == 'true' &&
       github.head_ref != 'release-please--branches--master' &&
       !contains(github.event.pull_request.labels.*.name, 'autorelease') &&
-      !(github.event_name == 'pull_request' && needs.check-main-coverage.outputs.has_coverage_main == 'true' && matrix.branch == 'main')
+      (github.event_name == 'pull_request' || (needs.check-main-coverage.outputs.has_coverage_main == 'true' && matrix.branch == 'main'))
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
