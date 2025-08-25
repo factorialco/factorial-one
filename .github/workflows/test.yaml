@@ -57,42 +57,10 @@ jobs:
       - name: Run tests
         run: pnpm --filter @factorialco/factorial-one-react run vitest:ci --coverage.enabled true
       - name: "Report Coverage"
-        # Set if: always() to also generate the report if tests are failing
-        # Only works if you set `reportOnFailure: true` in your vite config as specified above
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: packages/react
-      - name: "Upload Coverage"
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-${{ matrix.artifact }}
-          path: packages/react/coverage
-
-  report-coverage:
-    needs: detect-changes
-    name: "[⚛️ REACT] Report Coverage"
-    if: |
-      needs.detect-changes.outputs.package_react == 'true' &&
-      github.head_ref != 'release-please--branches--master' &&
-      !contains(github.event.pull_request.labels.*.name, 'autorelease')
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: "Download Coverage Artifacts"
-        uses: actions/download-artifact@v4
-        with:
-          name: coverage-pull-request
-          path: packages/react/coverage
-      - uses: actions/download-artifact@v4
-        with:
-          name: coverage-main
-          path: packages/react/coverage-main
-      - name: "Report Coverage"
-        uses: davelosert/vitest-coverage-report-action@v2
-        with:
-          json-summary-compare-path: packages/react/coverage-main/coverage-summary.json
 
   # ------------------------------------------------------------------------------
 
