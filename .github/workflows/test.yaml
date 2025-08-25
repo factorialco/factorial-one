@@ -14,28 +14,19 @@ jobs:
   detect-changes:
     uses: ./.github/workflows/_check-workspaces-changes.yaml
   test:
-    needs: [detect-changes]
+    needs: detect-changes
     name: "[⚛️ REACT] Unit Tests"
     if: |
       needs.detect-changes.outputs.package_react == 'true' &&
       github.head_ref != 'release-please--branches--master' &&
-      !contains(github.event.pull_request.labels.*.name, 'autorelease') &&
-      !(github.event_name == 'pull_request' && needs.check-main-coverage.outputs.has_coverage_main == 'true' && matrix.branch == 'main')
+      !contains(github.event.pull_request.labels.*.name, 'autorelease')
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - branch: main
-            artifact: main
-          - branch: ${{ github.head_ref }}
-            artifact: pull-request
     permissions:
       # Required to checkout the code
       contents: read
       # Required to put a comment into the pull-request
       pull-requests: write
-
     steps:
       - uses: actions/checkout@v4
         with:
