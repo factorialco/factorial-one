@@ -78,7 +78,6 @@ export function OneCalendar({
       setSelectedInternal(date)
 
       // Set the input value
-      setInputValue(granularity.toRangeString(date))
 
       const newViewDate = granularity.getViewDateFromDate(
         date instanceof Date ? date : date?.from || date?.to || new Date()
@@ -154,15 +153,27 @@ export function OneCalendar({
   }
   useEffect(() => {
     const range = toDateRange(selected)
-
-    const { from, to } = granularity.toRangeString(
-      range ? range : { from: new Date(), to: undefined }
-    )
-    setInputValue({
-      from: from || "",
-      to: to || "",
-    })
-  }, [granularity, selected])
+    if (granularity.calendarView === "week") {
+      setInputValue({
+        from: granularity.toFormattedString(
+          i18n.date.granularities.week.range,
+          range?.from
+        ),
+        to: granularity.toFormattedString(
+          i18n.date.granularities.week.range,
+          range?.to
+        ),
+      })
+    } else {
+      const { from, to } = granularity.toRangeString(
+        range ? range : { from: new Date(), to: undefined }
+      )
+      setInputValue({
+        from: from || "",
+        to: to || "",
+      })
+    }
+  }, [granularity, selected, i18n.date.granularities.week.range])
 
   const handleInputNavigate = (input: "from" | "to", direction: -1 | 1) => {
     const currentDate = inputValue[input]
