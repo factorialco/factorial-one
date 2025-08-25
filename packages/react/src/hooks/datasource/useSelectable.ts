@@ -27,7 +27,7 @@ type UseSelectable<R extends RecordType> = {
   selectedItems: Map<ItemId, R>
   selectedGroups: Map<GroupId, GroupRecord<R>>
   isPartiallySelected: boolean
-  handleSelectItemChange: (item: R, checked: boolean) => void
+  handleSelectItemChange: (item: R | readonly R[], checked: boolean) => void
   handleSelectAll: (checked: boolean) => void
   handleSelectGroupChange: (group: GroupRecord<R>, checked: boolean) => void
   groupAllSelectedStatus: Record<GroupId, AllSelectionStatus>
@@ -253,14 +253,12 @@ export function useSelectable<
     if (!multiple) {
       const firstItem = items[0]
       if (firstItem) {
-        console.log("firstItem", firstItem)
         const id = source.selectable?.(firstItem) ?? undefined
         setLocalState((current) => ({
           ...current,
-          items: new Map([
-            ...current.items,
-            id ? [id, { id, item: firstItem, checked }] : [],
-          ]),
+          items: id
+            ? new Map([[id, { id, item: firstItem, checked }]])
+            : new Map(),
         }))
       } else {
         setLocalState(emptyState())
@@ -284,6 +282,8 @@ export function useSelectable<
       updated++
       newItemsState.set(id, { id, item, checked })
     }
+
+    console.log("updated", updated)
 
     if (updated > 0) {
       setLocalState((current) => ({

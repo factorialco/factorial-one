@@ -15,6 +15,7 @@ import {
   BaseResponse,
   FiltersDefinition,
   getDataSourcePaginationType,
+  OnSelectItemsCallbackStatus,
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
@@ -163,20 +164,13 @@ const SelectComponent = forwardRef(function Select<
 
   const { currentSearch, setCurrentSearch } = localSource
 
-  const [selectedItems, setSelectedItems] = useState<
-    | (typeof multiple extends true
-        ? SelectItemObject<T, R>[]
-        : SelectItemObject<T, R>)
-    | undefined
-  >(undefined)
-
   /**
    * Handles the selection of items and groups
    * We use the more complex case (chunked data) internally, but for the single selection we will return just the selected item outside the component
    */
 
   const handleSelectionStatusChange = useCallback(
-    (state: SelectionState | undefined) => {
+    (state: OnSelectItemsCallbackStatus<R, FiltersDefinition> | undefined) => {
       if (!state) {
         return
       }
@@ -186,29 +180,14 @@ const SelectComponent = forwardRef(function Select<
 
       console.log("handleSelectionStatusChange", state)
       if (notPaginated) {
+        const selectedItemsIds = state.itemsStatus
+          .filter((item) => item.checked)
+          .map((item) => localSource.selectable?.(item.item) as T)
+
         if (!multiple) {
-          console.log("handleSelectionStatusChange", state.items)
-
-          if (!Array.from(state.items.entries())?.[0]) {
-            onChange?.(undefined, undefined, undefined)
-            setPrimitiveValue(undefined)
-            return
-          }
-          const [itemId, checked] = Array.from(state.items.entries())[0]
-          setLocalValue([itemId as T])
-
-          console.log("handleSelectionStatusChange", itemId, checked)
-          setPrimitiveValue(itemId as T)
-          onChange?.(checked ? (itemId as T) : undefined, undefined, undefined)
+          onChange?.(selectedItemsIds[0], undefined, undefined)
         } else {
-          const selectedItemIds = Array.from(state.items.entries())
-            .filter(([_, checked]) => checked)
-            .map(([itemId]) => itemId as T)
-
-          //setSelectedItems(selectedItems)
-          setLocalValue(selectedItemIds)
-          setPrimitiveValue(selectedItemIds)
-          onChange?.(selectedItemIds, undefined, undefined)
+          onChange?.(selectedItemsIds, undefined, undefined)
         }
       } else {
         onChange?.(state)
@@ -225,15 +204,18 @@ const SelectComponent = forwardRef(function Select<
     ]
   )
 
-  const { handleSelectItemChange, handleSelectAll, setSelectionState } =
-    useSelectable(
-      data,
-      paginationInfo,
-      localSource,
-      multiple ?? false,
-      handleSelectionStatusChange,
-      undefined
-    )
+  const {
+    handleSelectItemChange,
+    handleSelectAll,
+    selectedItems: selectedItems,
+  } = useSelectable(
+    data,
+    paginationInfo,
+    localSource,
+    multiple ?? false,
+    handleSelectionStatusChange,
+    undefined
+  )
 
   useEffect(() => {
     if (JSON.stringify(localValue) === JSON.stringify(value)) {
@@ -246,16 +228,16 @@ const SelectComponent = forwardRef(function Select<
 
     // If the value status describes a selection state, we dont need to transform it
     if (typeof value === "object" && "all" in value) {
-      setSelectionState(value)
+      // setSelectionState(value)
       return
     }
 
-    setSelectionState({
-      ...emptyState(),
-      items: new Map(
-        newValue.map((itemId) => [itemId, true] as [ItemId, boolean])
-      ),
-    })
+    // setSelectionState({
+    //   ...emptyState(),
+    //   items: new Map(
+    //     newValue.map((itemId) => [itemId, true] as [ItemId, boolean])
+    //   ),
+    // })
   }, [JSON.stringify(value), multiple])
 
   /**
@@ -270,7 +252,7 @@ const SelectComponent = forwardRef(function Select<
     (value: T | undefined): SelectItemObject<T, R> | undefined
   }
 
-  const findOptions = useCallback(
+  const findMappedOptions = useCallback(
     ((value: T | T[] | undefined) => {
       if (value === undefined) {
         return undefined
@@ -294,6 +276,16 @@ const SelectComponent = forwardRef(function Select<
     [data.records, optionMapper]
   )
 
+  const findOptions = useCallback(
+    (value: T | T[] | undefined): R[] => {
+      const valueArray = toArray(value)
+      return data.records.filter((record) =>
+        valueArray.includes(localSource.selectable?.(record) as T)
+      )
+    },
+    [data.records, localSource]
+  )
+
   useEffect(() => {
     if (open) {
       searchInputRef.current?.focus()
@@ -309,12 +301,10 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const handleLocalValueChange = (changedValue: string | undefined) => {
-    const changedOption = findOptions(changedValue as T | undefined)
+    const changedOption = findMappedOptions(changedValue as T | undefined)
 
     // Resets the search value when the option is selected
     setCurrentSearch(undefined)
-
-    setLocalValue(changedValue as T)
 
     onChangeSelectedOption?.(changedOption ?? undefined)
   }
@@ -396,26 +386,35 @@ const SelectComponent = forwardRef(function Select<
     }, 0)
   }, [data])
 
-  const [primitiveValue, setPrimitiveValue] = useState<
-    (typeof multiple extends true ? T[] : T) | undefined
-  >(undefined)
+  const primitiveValue = useMemo(() => {
+    return selectedItems.keys()
+    // const items = (data.records || []).filter((record) => {
+    //   return selectedItemsState?.some((item) => item.value === record.id)
+    // })
+    // return items.map((item) => item.id)
+  }, [selectedItems])
 
-  useEffect(() => {
-    setSelectedItems(findOptions(localValue))
-  }, [localValue, findOptions])
+  const selectedOptions = useMemo(() => {
+    return Array.from(selectedItems.values()).map((item) => optionMapper(item))
+  }, [selectedItems])
 
   return (
     <>
       *** {JSON.stringify(primitiveValue)}
       <SelectPrimitive
-        onValueChange={handleLocalValueChange}
         value={primitiveValue}
         disabled={disabled}
         open={openLocal}
         multiple={multiple}
         onOpenChange={handleChangeOpenLocal}
         {...props}
-        onItemCheckChange={handleSelectItemChange}
+        onItemCheckChange={(value, checked) => {
+          const option = findOptions(value as T)
+          console.log("onItemCheckChange", value, checked, option)
+          if (option) {
+            handleSelectItemChange(option, checked)
+          }
+        }}
       >
         <SelectTrigger ref={ref} asChild>
           {children ? (
@@ -432,7 +431,7 @@ const SelectComponent = forwardRef(function Select<
               icon={icon}
               labelIcon={labelIcon}
               hideLabel={hideLabel}
-              value={localValue?.toString()}
+              value={selectedItems.size ? "content" : undefined}
               isEmpty={(value) =>
                 (Array.isArray(value) && value.length === 0) || !value
               }
@@ -441,7 +440,7 @@ const SelectComponent = forwardRef(function Select<
               disabled={disabled}
               clearable={clearable}
               onClear={() => {
-                setSelectionState(emptyState())
+                //setSelectionState(emptyState())
               }}
               size={size}
               loading={isInitialLoading || loading}
@@ -486,7 +485,10 @@ const SelectComponent = forwardRef(function Select<
                 aria-label={label || placeholder}
               >
                 {selectedItems && (
-                  <SelectValue multiple={multiple} selection={selectedItems} />
+                  <SelectValue
+                    multiple={multiple}
+                    selection={selectedOptions}
+                  />
                 )}
               </button>
             </InputField>

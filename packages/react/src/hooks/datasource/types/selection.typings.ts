@@ -33,7 +33,7 @@ export type GroupState<R extends RecordType> = {
 export type SelectionState<R extends RecordType> = {
   all: boolean
   items: Map<ItemId, ItemState<R>>
-  groups: Map<GroupId, GroupState<R>>
+  groups: Record<GroupId, GroupState<R>>
 }
 
 /**

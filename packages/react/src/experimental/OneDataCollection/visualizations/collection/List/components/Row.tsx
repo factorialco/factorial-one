@@ -11,7 +11,7 @@ import {
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
-import { DataCollectionSource } from "../../../../exports"
+import { DataCollectionSource } from "../../../../hooks/useDataCollectionSource/types"
 import {
   ActionDefinition,
   filterItemActions,
