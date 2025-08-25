@@ -13,32 +13,8 @@ jobs:
   # Detect which projects have changed
   detect-changes:
     uses: ./.github/workflows/_check-workspaces-changes.yaml
-  check-main-coverage:
-    name: "Check main coverage artifact"
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: read
-    outputs:
-      has_coverage_main: ${{ steps.check.outputs.has_coverage_main }}
-    steps:
-      - name: Check if coverage-main artifact exists on main
-        id: check
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const core = require('@actions/core');
-            const {owner, repo} = context.repo;
-            const artifactsResp = await github.rest.actions.listArtifactsForRepo({
-              owner,
-              repo,
-              per_page: 100
-            });
-            const artifacts = artifactsResp.data.artifacts || [];
-            const found = artifacts.find(a => a.name === 'coverage-main' && a.expired === false && a.workflow_run && a.workflow_run.head_branch === 'main');
-            core.setOutput('has_coverage_main', found ? 'true' : 'false');
   test:
-    needs: [detect-changes, check-main-coverage]
+    needs: [detect-changes]
     name: "[⚛️ REACT] Unit Tests"
     if: |
       needs.detect-changes.outputs.package_react == 'true' &&
@@ -59,8 +35,6 @@ jobs:
       contents: read
       # Required to put a comment into the pull-request
       pull-requests: write
-      # Required to download artifacts from other workflow runs
-      actions: read
 
     steps:
       - uses: actions/checkout@v4
@@ -94,14 +68,6 @@ jobs:
         with:
           name: coverage-${{ matrix.artifact }}
           path: packages/react/coverage
-      - name: "Download main coverage artifact"
-        if: ${{ github.event_name == 'pull_request' && needs.check-main-coverage.outputs.has_coverage_main == 'true' && matrix.artifact == 'pull-request' }}
-        uses: dawidd6/action-download-artifact@v6
-        with:
-          workflow: test.yaml
-          branch: main
-          name: coverage-main
-          path: packages/react/coverage-main
 
   report-coverage:
     needs: detect-changes
