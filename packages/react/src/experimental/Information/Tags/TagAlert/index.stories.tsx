@@ -4,7 +4,7 @@ import { TagAlert } from "./index"
 
 const meta: Meta = {
   component: TagAlert,
-  title: "Tag/AlertTag",
+  title: "Tag/TagAlert",
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",

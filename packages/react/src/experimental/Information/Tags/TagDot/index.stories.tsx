@@ -4,7 +4,7 @@ import { TagDot } from "./index"
 
 const meta: Meta = {
   component: TagDot,
-  title: "Tag/DotTag",
+  title: "Tag/TagDot",
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",

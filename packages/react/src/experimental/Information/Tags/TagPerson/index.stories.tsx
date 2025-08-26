@@ -4,7 +4,7 @@ import { TagPerson } from "./index"
 
 const meta: Meta = {
   component: TagPerson,
-  title: "Tag/PersonTag",
+  title: "Tag/TagPerson",
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",

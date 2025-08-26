@@ -5,7 +5,7 @@ import { TagRaw } from "./index"
 
 const meta: Meta = {
   component: TagRaw,
-  title: "Tag/RawTag",
+  title: "Tag/TagRaw",
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",

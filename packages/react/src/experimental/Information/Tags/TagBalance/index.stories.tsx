@@ -4,7 +4,7 @@ import { TagBalance } from "./index"
 
 const meta: Meta = {
   component: TagBalance,
-  title: "Tag/BalanceTag",
+  title: "Tag/TagBalance",
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
