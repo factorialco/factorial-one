@@ -1,6 +1,6 @@
 import { Button, type ButtonProps } from "@/components/Actions/Button"
-import { F0TagAlert } from "@/components/F0Tags/TagAlert"
-import { F0TagStatus, StatusVariant } from "@/components/F0Tags/TagStatus"
+import { F0TagAlert } from "@/components/tags/F0TagAlert"
+import { F0TagStatus, StatusVariant } from "@/components/tags/F0TagStatus"
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"

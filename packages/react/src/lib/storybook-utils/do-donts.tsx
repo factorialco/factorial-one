@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react"
-import { F0TagStatus } from "../../components/F0Tags/TagStatus"
+import { F0TagStatus } from "../../components/tags/F0TagStatus"
 
 interface DoDontsProps {
   do: {

@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
-import type { StatusVariant } from "@/components/F0Tags/TagStatus"
-import { F0TagStatus } from "@/components/F0Tags/TagStatus"
+import type { StatusVariant } from "@/components/tags/F0TagStatus"
+import { F0TagStatus } from "@/components/tags/F0TagStatus"
 import { IconType } from "@/components/Utilities/Icon"
 import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"

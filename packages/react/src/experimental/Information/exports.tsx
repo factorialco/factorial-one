@@ -1,4 +1,4 @@
-export * from "../../components/F0Tags/exports"
+export * from "../../components/tags/exports"
 export * from "./Activity/exports"
 export * from "./Alert"
 export * from "./Avatars/exports"

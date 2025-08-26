@@ -5,11 +5,11 @@ import { F0Checkbox } from "../../components/F0Checkbox"
 import { Delete, Ellipsis, Pencil } from "../../icons/app"
 import { PersonAvatar } from "../Information/Avatars/PersonAvatar"
 
-import { F0TagRaw } from "../../components/F0Tags/TagRaw"
+import { F0TagRaw } from "../../components/tags/F0TagRaw"
 import {
   F0TagStatus,
   type StatusVariant,
-} from "../../components/F0Tags/TagStatus"
+} from "../../components/tags/F0TagStatus"
 
 import { Dropdown } from "../Navigation/Dropdown"
 import { OnePagination } from "../OnePagination"

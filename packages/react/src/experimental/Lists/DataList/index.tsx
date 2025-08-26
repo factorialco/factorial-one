@@ -1,6 +1,6 @@
 import { forwardRef, ReactElement } from "react"
 
-import { F0TagDot, TagDotProps } from "@/components/F0Tags/TagDot"
+import { F0TagDot, TagDotProps } from "@/components/tags/F0TagDot"
 import { cn } from "@/lib/utils"
 import { IconType } from "../../../components/Utilities/Icon"
 import { CompanyAvatar } from "../../Information/Avatars/CompanyAvatar"

@@ -4,7 +4,7 @@ import {
   OneDropdownButton,
   OneDropdownButtonProps,
 } from "../../../../components/Actions/OneDropdownButton"
-import { StatusVariant } from "../../../../components/F0Tags/TagStatus"
+import { StatusVariant } from "../../../../components/tags/F0TagStatus"
 import { cn } from "../../../../lib/utils"
 import {
   Dropdown,

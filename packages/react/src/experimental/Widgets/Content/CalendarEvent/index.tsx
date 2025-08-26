@@ -1,5 +1,5 @@
 import { forwardRef } from "react"
-import { F0TagRaw } from "../../../../components/F0Tags/TagRaw"
+import { F0TagRaw } from "../../../../components/tags/F0TagRaw"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import { ChevronRight } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"

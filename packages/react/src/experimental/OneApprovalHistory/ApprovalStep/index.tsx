@@ -1,4 +1,4 @@
-import { F0TagStatus } from "@/components/F0Tags/TagStatus"
+import { F0TagStatus } from "@/components/tags/F0TagStatus"
 import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
 import { BadgeProps } from "@/experimental/Information/Badge"
 import {

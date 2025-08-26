@@ -4,7 +4,7 @@ import { Plus } from "@/icons/app"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { ComponentProps, useState } from "react"
 import { expect, fn, userEvent, within } from "storybook/test"
-import { F0TagRaw } from "../../../components/F0Tags/TagRaw"
+import { F0TagRaw } from "../../../components/tags/F0TagRaw"
 import { famousEmployees } from "./entity-select-name.factory"
 import {
   teamsWithEmployees,

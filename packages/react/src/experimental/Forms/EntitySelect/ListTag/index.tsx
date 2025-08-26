@@ -1,4 +1,4 @@
-import { BaseTag } from "../../../../components/F0Tags/BaseTag"
+import { BaseTag } from "../../../../components/tags/BaseTag"
 import { Icon } from "../../../../components/Utilities/Icon"
 import { Cross } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
