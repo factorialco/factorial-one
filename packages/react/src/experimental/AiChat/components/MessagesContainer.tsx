@@ -2,84 +2,92 @@ import { ButtonInternal } from "@/components/Actions/Button/internal"
 import { ArrowDown } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { useLangGraphInterruptRender } from "@copilotkit/react-core"
+import { useCopilotChat } from "@copilotkit/react-core"
 import { useChatContext, type MessagesProps } from "@copilotkit/react-ui"
-import {
-  Message,
-  ResultMessage,
-  Role,
-  TextMessage,
-} from "@copilotkit/runtime-client-gql"
+import { Message, Role, TextMessage } from "@copilotkit/runtime-client-gql"
 import { AnimatePresence, motion } from "motion/react"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useEventListener, useResizeObserver } from "usehooks-ts"
 import OneIcon from "../OneIcon"
 import { useAiChatLabels } from "../providers/AiChatLabelsProvider"
-import { useChatWindowContext } from "./ChatWindow"
 
 export const MessagesContainer = ({
-  messages,
   inProgress,
   children,
-  RenderTextMessage,
-  RenderActionExecutionMessage,
-  RenderAgentStateMessage,
-  RenderResultMessage,
-  RenderImageMessage,
+  RenderMessage,
   AssistantMessage,
   UserMessage,
+  ImageRenderer,
   onRegenerate,
   onCopy,
   onThumbsUp,
   onThumbsDown,
   markdownTagRenderers,
 }: MessagesProps) => {
+  const turnsContainerRef = useRef<HTMLDivElement>(null)
   const context = useChatContext()
+  const { visibleMessages: messages } = useCopilotChat()
   const { greeting } = useAiChatLabels()
-  const { reachedMaxHeight } = useChatWindowContext()
   const translations = useI18n()
+  const [longestTurnHeight, setLongestTurnHeight] = useState<number>(0)
   const initialMessages = useMemo(
     () => makeInitialMessages(context.labels.initial),
     [context.labels.initial]
   )
   const showWelcomeBlock =
     messages.length == 0 && (greeting || initialMessages.length > 0)
-  const actionResults: Record<string, string> = {}
-
-  for (let i = 0; i < messages.length; i++) {
-    if (messages[i].isActionExecutionMessage()) {
-      const id = messages[i].id
-      const resultMessage: ResultMessage | undefined = messages.find(
-        (message) =>
-          message.isResultMessage() && message.actionExecutionId === id
-      ) as ResultMessage | undefined
-
-      if (resultMessage) {
-        actionResults[id] = ResultMessage.decodeResult(
-          resultMessage.result || ""
-        )
-      }
-    }
-  }
 
   const {
     messagesContainerRef,
     messagesEndRef,
     showScrollToBottom,
     scrollToBottom,
-  } = useScrollToBottom(messages)
+  } = useScrollToBottom()
+  const { height: containerHeight } = useResizeObserver({
+    ref: messagesContainerRef,
+    box: "border-box",
+  })
+  useEffect(() => {
+    if (!turnsContainerRef.current) {
+      return
+    }
+    const turnElements = turnsContainerRef.current.children
+    if (turnElements.length === 0) {
+      return
+    }
 
-  const interrupt = useLangGraphInterruptRender()
+    const lastTurnElement = turnElements[turnElements.length - 1]
+    const height = lastTurnElement.scrollHeight
+    setLongestTurnHeight((prev) => (prev >= height ? prev : height))
+  }, [messages.length, initialMessages.length])
+
+  const turns = useMemo(() => {
+    return messages.reduce<Message[][]>((turns, message) => {
+      if (message && message.role === "user") {
+        turns.push([message])
+      } else {
+        turns[turns.length - 1].push(message)
+      }
+      return turns
+    }, [])
+  }, [messages])
 
   return (
     <motion.div
       layout
       className={cn(
         "scrollbar-macos relative isolate flex-1 px-4",
-        reachedMaxHeight ? "overflow-y-scroll" : "overflow-y-hidden"
+        "overflow-y-scroll"
       )}
       ref={messagesContainerRef}
+      style={{
+        height: containerHeight
+          ? Math.max(containerHeight, longestTurnHeight)
+          : undefined,
+        flex: containerHeight ? "initial" : undefined,
+      }}
     >
-      <motion.div className="flex flex-col gap-2" layout="position">
+      <motion.div layout="position" ref={turnsContainerRef}>
         <AnimatePresence>
           {showWelcomeBlock && (
             <motion.div
@@ -111,82 +119,42 @@ export const MessagesContainer = ({
             </motion.div>
           )}
         </AnimatePresence>
-        {messages.map((message, index) => {
-          const isCurrentMessage = index === messages.length - 1
+        {turns.map((turnMessages, turnIndex) => {
+          const isCurrentTurn = turnIndex === turns.length - 1
+          return (
+            <div
+              className="flex flex-col items-start justify-start gap-2"
+              key={`turn-${turnIndex}`}
+              style={{
+                minHeight: isCurrentTurn ? containerHeight : undefined,
+              }}
+            >
+              {turnMessages.map((message, index) => {
+                const isCurrentMessage =
+                  turnIndex === turnMessages.length - 1 &&
+                  index === turnMessages.length - 1
 
-          if (message.isTextMessage()) {
-            return (
-              <RenderTextMessage
-                key={index}
-                message={message}
-                inProgress={inProgress}
-                index={index}
-                isCurrentMessage={isCurrentMessage}
-                AssistantMessage={AssistantMessage}
-                UserMessage={UserMessage}
-                onRegenerate={onRegenerate}
-                onCopy={onCopy}
-                onThumbsUp={onThumbsUp}
-                onThumbsDown={onThumbsDown}
-                markdownTagRenderers={markdownTagRenderers}
-              />
-            )
-          } else if (message.isActionExecutionMessage()) {
-            return (
-              <RenderActionExecutionMessage
-                key={index}
-                message={message}
-                inProgress={inProgress}
-                index={index}
-                isCurrentMessage={isCurrentMessage}
-                actionResult={actionResults[message.id]}
-                AssistantMessage={AssistantMessage}
-                UserMessage={UserMessage}
-              />
-            )
-          } else if (message.isAgentStateMessage()) {
-            return (
-              <RenderAgentStateMessage
-                key={index}
-                message={message}
-                inProgress={inProgress}
-                index={index}
-                isCurrentMessage={isCurrentMessage}
-                AssistantMessage={AssistantMessage}
-                UserMessage={UserMessage}
-              />
-            )
-          } else if (message.isResultMessage()) {
-            return (
-              <RenderResultMessage
-                key={index}
-                message={message}
-                inProgress={inProgress}
-                index={index}
-                isCurrentMessage={isCurrentMessage}
-                AssistantMessage={AssistantMessage}
-                UserMessage={UserMessage}
-              />
-            )
-          } else if (message.isImageMessage && message.isImageMessage()) {
-            return (
-              <RenderImageMessage
-                key={index}
-                message={message}
-                inProgress={inProgress}
-                index={index}
-                isCurrentMessage={isCurrentMessage}
-                AssistantMessage={AssistantMessage}
-                UserMessage={UserMessage}
-                onRegenerate={onRegenerate}
-                onCopy={onCopy}
-                onThumbsUp={onThumbsUp}
-                onThumbsDown={onThumbsDown}
-              />
-            )
-          }
+                return (
+                  <RenderMessage
+                    key={`${turnIndex}-${index}`}
+                    message={message}
+                    inProgress={inProgress}
+                    index={index}
+                    isCurrentMessage={isCurrentMessage}
+                    AssistantMessage={AssistantMessage}
+                    UserMessage={UserMessage}
+                    ImageRenderer={ImageRenderer}
+                    onRegenerate={onRegenerate}
+                    onCopy={onCopy}
+                    onThumbsUp={onThumbsUp}
+                    onThumbsDown={onThumbsDown}
+                    markdownTagRenderers={markdownTagRenderers}
+                  />
+                )
+              })}
+            </div>
+          )
         })}
-        {interrupt}
       </motion.div>
       <footer className="copilotKitMessagesFooter" ref={messagesEndRef}>
         {children}
@@ -202,7 +170,7 @@ export const MessagesContainer = ({
           >
             <div className="rounded bg-f1-background">
               <ButtonInternal
-                onClick={scrollToBottom}
+                onClick={() => scrollToBottom()}
                 label={translations.ai.scrollToBottom}
                 variant="neutral"
                 icon={ArrowDown}
@@ -235,18 +203,18 @@ function makeInitialMessages(initial?: string | string[]): Message[] {
   )
 }
 
-export function useScrollToBottom(messages: Message[]) {
+export function useScrollToBottom() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const messagesContainerRef = useRef<HTMLDivElement | null>(null)
   const isProgrammaticScrollRef = useRef(false)
   const isUserScrollUpRef = useRef(false)
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
 
-  const scrollToBottom = () => {
+  const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
     if (messagesContainerRef.current && messagesEndRef.current) {
       setShowScrollToBottom(false)
       isProgrammaticScrollRef.current = true
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+      messagesEndRef.current.scrollIntoView({ behavior })
     }
   }
 
@@ -254,7 +222,10 @@ export function useScrollToBottom(messages: Message[]) {
     if (messagesContainerRef.current) {
       const { scrollTop, scrollHeight, clientHeight } =
         messagesContainerRef.current
-      isUserScrollUpRef.current = scrollTop + clientHeight < scrollHeight
+      const PRECISION = 20
+
+      isUserScrollUpRef.current =
+        scrollTop + clientHeight + PRECISION < scrollHeight
     } else {
       isUserScrollUpRef.current = false
     }
@@ -273,7 +244,7 @@ export function useScrollToBottom(messages: Message[]) {
     setShowScrollToBottom(isScrolledFarUp)
   }
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (isProgrammaticScrollRef.current) {
       isProgrammaticScrollRef.current = false
       return
@@ -281,25 +252,17 @@ export function useScrollToBottom(messages: Message[]) {
 
     checkIsScrollingUp()
     checkScrollToBottomButtonVisibility()
-  }
-
-  useEffect(() => {
-    const container = messagesContainerRef.current
-    if (container) {
-      container.addEventListener("scroll", handleScroll)
-    }
-    return () => {
-      if (container) {
-        container.removeEventListener("scroll", handleScroll)
-      }
-    }
   }, [])
+
+  useEventListener("scroll", handleScroll, messagesContainerRef)
 
   useEffect(() => {
     const container = messagesContainerRef.current
     if (!container) {
       return
     }
+
+    scrollToBottom("instant")
 
     const mutationObserver = new MutationObserver(() => {
       if (!isUserScrollUpRef.current) {
@@ -318,12 +281,6 @@ export function useScrollToBottom(messages: Message[]) {
       mutationObserver.disconnect()
     }
   }, [])
-
-  // scroll to bottom on every new user message
-  useEffect(() => {
-    isUserScrollUpRef.current = false
-    scrollToBottom()
-  }, [messages.filter((m) => m.isTextMessage() && m.role === Role.User).length])
 
   return {
     messagesEndRef,
