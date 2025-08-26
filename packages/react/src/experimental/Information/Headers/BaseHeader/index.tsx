@@ -8,6 +8,18 @@ import {
   Avatar,
   AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
+import { Description } from "@/experimental/Information/Headers/BaseHeader/Description"
+import {
+  Metadata,
+  MetadataAction,
+  MetadataProps,
+} from "@/experimental/Information/Headers/Metadata"
+import {
+  PrimaryAction,
+  PrimaryActionButton,
+  PrimaryDropdownAction,
+  SecondaryAction,
+} from "@/experimental/Information/utils"
 import {
   Dropdown,
   DropdownItem,
@@ -16,14 +28,6 @@ import {
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { Fragment, memo } from "react"
-import {
-  PrimaryAction,
-  PrimaryActionButton,
-  PrimaryDropdownAction,
-  SecondaryAction,
-} from "../../utils"
-import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
-import { Description } from "./Description"
 
 interface BaseHeaderProps {
   title: string

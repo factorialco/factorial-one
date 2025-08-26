@@ -1,7 +1,7 @@
+import { BaseTag } from "@/components/tags/BaseTag"
 import { useTextFormatEnforcer } from "@/lib/text"
 import { baseColors } from "@factorialco/factorial-one-core"
 import { forwardRef } from "react"
-import { BaseTag } from "../BaseTag"
 import type { NewColor, Props } from "./types"
 
 export const tagDotColors = Object.keys(baseColors) as NewColor[]
