@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import React from "react"
 import { Button } from "../../../components/Actions/Button"
+import { F0TagDot, TagDotProps } from "../../../components/F0Tags/TagDot"
+import { F0TagRaw, TagRawProps } from "../../../components/F0Tags/TagRaw"
 import { Icon, IconType } from "../../../components/Utilities/Icon"
 import { InfoCircle } from "../../../icons/app"
 import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import { TagDot, TagDotProps } from "../../Information/Tags/TagDot"
-import { TagRaw, TagRawProps } from "../../Information/Tags/TagRaw"
 
 export type OnePersonListItemProps = {
   person: {
@@ -77,7 +77,7 @@ const BaseOnePersonListItem = React.forwardRef<
           <div className="-ml-1.5 flex flex-row items-center [&>div]:-mr-1">
             {props.bottomTags.map((tag, i) => (
               <>
-                <TagRaw
+                <F0TagRaw
                   key={tag.text}
                   {...tag}
                   className="text-f1-foreground-secondary"
@@ -96,7 +96,7 @@ const BaseOnePersonListItem = React.forwardRef<
       </div>
       <div className="flex flex-row items-center justify-between gap-2">
         {"rightTag" in props && props.rightTag && (
-          <TagDot {...props.rightTag} />
+          <F0TagDot {...props.rightTag} />
         )}
         {"actions" in props && (
           <div className="flex flex-1 flex-row items-center justify-end gap-2">

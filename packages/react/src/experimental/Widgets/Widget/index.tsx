@@ -1,11 +1,8 @@
 import { Button, type ButtonProps } from "@/components/Actions/Button"
+import { F0TagAlert } from "@/components/F0Tags/TagAlert"
+import { F0TagStatus, StatusVariant } from "@/components/F0Tags/TagStatus"
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
-import { TagAlert } from "@/experimental/Information/Tags/TagAlert"
-import {
-  StatusVariant,
-  TagStatus,
-} from "@/experimental/Information/Tags/TagStatus"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { PrivateBox } from "@/experimental/Utilities/PrivateBox"
 import { EyeInvisible, EyeVisible, InfoCircleLine } from "@/icons/app"
@@ -137,9 +134,9 @@ const Container = forwardRef<
                 )}
               </div>
               <div className="flex flex-row items-center gap-3">
-                {alert && <TagAlert text={alert} level="critical" />}
+                {alert && <F0TagAlert text={alert} level="critical" />}
                 {status && (
-                  <TagStatus text={status.text} variant={status.variant} />
+                  <F0TagStatus text={status.text} variant={status.variant} />
                 )}
                 {header.link && (
                   <CardLink

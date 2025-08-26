@@ -1,5 +1,5 @@
+import { F0TagRaw } from "@/components/F0Tags/TagRaw"
 import { Icon } from "@/components/Utilities/Icon"
-import { TagRaw } from "@/experimental/Information/Tags/TagRaw"
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { InputField, InputFieldProps } from "@/ui/InputField"
@@ -81,7 +81,7 @@ const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
         </div>
         {item.tag && (
           <div className="self-center">
-            <TagRaw text={item.tag} />
+            <F0TagRaw text={item.tag} />
           </div>
         )}
       </div>

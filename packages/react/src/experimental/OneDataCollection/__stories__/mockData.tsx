@@ -1,7 +1,7 @@
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
 
-import { NewColor } from "@/experimental/Information/Tags/TagDot"
+import { NewColor } from "@/components/F0Tags/TagDot"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
 import { cn } from "@/lib/utils"
 

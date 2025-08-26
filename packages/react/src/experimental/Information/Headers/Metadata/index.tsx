@@ -1,14 +1,14 @@
 import { AnimatePresence, motion } from "motion/react"
 import { memo, useState } from "react"
 import { Button, CopyButton } from "../../../../components/Actions/Button"
+import { NewColor } from "../../../../components/F0Tags/TagDot"
+import { StatusVariant } from "../../../../components/F0Tags/TagStatus"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import { InfoCircleLine } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
 import { MobileDropdown } from "../../../Navigation/Dropdown"
 import { Tooltip } from "../../../Overlays/Tooltip"
 import { AvatarVariant } from "../../Avatars/Avatar"
-import { NewColor } from "../../Tags/TagDot"
-import { StatusVariant } from "../../Tags/TagStatus"
 import { MetadataValue } from "./MetadataValue"
 
 type MetadataItemValue =

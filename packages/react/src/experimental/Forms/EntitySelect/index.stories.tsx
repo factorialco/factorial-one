@@ -4,7 +4,7 @@ import { Plus } from "@/icons/app"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { ComponentProps, useState } from "react"
 import { expect, fn, userEvent, within } from "storybook/test"
-import { TagRaw } from "../../Information/Tags/TagRaw"
+import { F0TagRaw } from "../../../components/F0Tags/TagRaw"
 import { famousEmployees } from "./entity-select-name.factory"
 import {
   teamsWithEmployees,
@@ -513,7 +513,7 @@ export const WithCustomTrigger = {
           }}
         >
           <div className="flex justify-start gap-2">
-            <TagRaw icon={open ? ChevronDown : ChevronRight} />
+            <F0TagRaw icon={open ? ChevronDown : ChevronRight} />
             <span className="my-auto">{`${numSelected} selected`}</span>
           </div>
         </EntitySelect>

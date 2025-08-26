@@ -4,6 +4,7 @@ import {
   OneDropdownButton,
   OneDropdownButtonProps,
 } from "../../../../components/Actions/OneDropdownButton"
+import { StatusVariant } from "../../../../components/F0Tags/TagStatus"
 import { cn } from "../../../../lib/utils"
 import {
   Dropdown,
@@ -12,7 +13,6 @@ import {
 } from "../../../Navigation/Dropdown"
 import { Tooltip } from "../../../Overlays/Tooltip"
 import { Avatar, AvatarVariant } from "../../Avatars/Avatar"
-import { StatusVariant } from "../../Tags/TagStatus"
 import {
   PrimaryAction,
   PrimaryActionButton,

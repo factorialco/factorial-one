@@ -1,8 +1,8 @@
+import { BaseTag } from "../../../../components/F0Tags/BaseTag"
 import { Icon } from "../../../../components/Utilities/Icon"
 import { Cross } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
 import { BaseAvatar } from "../../../Information/Avatars/BaseAvatar"
-import { BaseTag } from "../../../Information/Tags/BaseTag"
 import { EntitySelectSubEntity } from "../types"
 
 export const ListTag = ({

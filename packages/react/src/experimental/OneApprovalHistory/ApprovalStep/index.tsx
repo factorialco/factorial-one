@@ -1,6 +1,6 @@
+import { F0TagStatus } from "@/components/F0Tags/TagStatus"
 import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
 import { BadgeProps } from "@/experimental/Information/Badge"
-import { TagStatus } from "@/experimental/Information/Tags/TagStatus"
 import {
   Check as CheckIcon,
   Cross as CrossIcon,
@@ -114,7 +114,7 @@ const ApprovalStep: FC<ApprovalStepProps> = ({
             {displayApprovalsRequired}
           </p>
         </div>
-        <TagStatus text={displayStatus} variant={statusTagVariants[status]} />
+        <F0TagStatus text={displayStatus} variant={statusTagVariants[status]} />
       </div>
       <div className="w-full">
         <AvatarList

@@ -1,9 +1,9 @@
 import { ComponentProps } from "react"
+import { F0TagAlert } from "../../../../../components/F0Tags/TagAlert"
+import { F0TagRaw } from "../../../../../components/F0Tags/TagRaw"
 import { Icon, IconType } from "../../../../../components/Utilities/Icon"
 import { cn } from "../../../../../lib/utils"
 import { Counter } from "../../../../Information/Counter"
-import { TagAlert } from "../../../../Information/Tags/TagAlert"
-import { TagRaw } from "../../../../Information/Tags/TagRaw"
 
 export type WidgetSimpleListItemProps<
   Id extends string | number = string | number,
@@ -15,8 +15,8 @@ export type WidgetSimpleListItemProps<
   rightIcon?: IconType
   rightIconClassName?: string
   count?: number
-  alert?: ComponentProps<typeof TagAlert>
-  rawTag?: ComponentProps<typeof TagRaw>
+  alert?: ComponentProps<typeof F0TagAlert>
+  rawTag?: ComponentProps<typeof F0TagRaw>
   onClick?: (id: Id) => void
 }
 
@@ -77,8 +77,8 @@ export function WidgetSimpleListItem({
         )}
       </div>
       <div className="flex flex-row items-center gap-2">
-        {alert && <TagAlert {...alert} />}
-        {rawTag && <TagRaw {...rawTag} />}
+        {alert && <F0TagAlert {...alert} />}
+        {rawTag && <F0TagRaw {...rawTag} />}
         {!!count && <Counter value={count} />}
       </div>
     </Wrapper>
