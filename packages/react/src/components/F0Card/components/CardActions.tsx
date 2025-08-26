@@ -34,7 +34,7 @@ export function CardActions({
   compact = false,
 }: CardActionsProps) {
   const isDesktop = useMediaQuery("(min-width: 640px)")
-  const hasActions = primaryAction || secondaryActions
+  const hasActions = primaryAction || (secondaryActions?.length)
 
   if (!hasActions) {
     return null
