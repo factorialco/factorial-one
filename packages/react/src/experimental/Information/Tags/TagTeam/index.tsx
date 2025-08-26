@@ -1,5 +1,5 @@
 import { forwardRef } from "react"
-import { AvatarTag } from "../AvatarTag"
+import { TagAvatar } from "../TagAvatar"
 
 type Props = {
   teamName: string
@@ -7,10 +7,10 @@ type Props = {
   onClick?: () => void
 }
 
-export const TeamTag = forwardRef<HTMLDivElement, Props>(
+export const TagTeam = forwardRef<HTMLDivElement, Props>(
   ({ teamName, teamImageUrl, onClick }, ref) => {
     return (
-      <AvatarTag
+      <TagAvatar
         ref={ref}
         avatar={{
           type: "team",
@@ -24,4 +24,4 @@ export const TeamTag = forwardRef<HTMLDivElement, Props>(
   }
 )
 
-TeamTag.displayName = "TeamTag"
+TagTeam.displayName = "TagTeam"

@@ -12,7 +12,7 @@ import {
 } from "../../../Navigation/Dropdown"
 import { Tooltip } from "../../../Overlays/Tooltip"
 import { Avatar, AvatarVariant } from "../../Avatars/Avatar"
-import { StatusVariant } from "../../Tags/StatusTag"
+import { StatusVariant } from "../../Tags/TagStatus"
 import {
   PrimaryAction,
   PrimaryActionButton,

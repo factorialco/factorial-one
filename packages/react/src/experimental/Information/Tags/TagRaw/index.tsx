@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 import { BaseTag } from "../BaseTag"
 
-export type RawTagProps = {
+export type TagRawProps = {
   text?: string
   additionalAccesibleText?: string
   icon?: IconType
@@ -12,7 +12,7 @@ export type RawTagProps = {
   className?: string
 }
 
-export const RawTag = forwardRef<HTMLDivElement, RawTagProps>(
+export const TagRaw = forwardRef<HTMLDivElement, TagRawProps>(
   ({ text, additionalAccesibleText, icon, noBorder, className }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
@@ -35,4 +35,4 @@ export const RawTag = forwardRef<HTMLDivElement, RawTagProps>(
   }
 )
 
-RawTag.displayName = "RawTag"
+TagRaw.displayName = "TagRaw"

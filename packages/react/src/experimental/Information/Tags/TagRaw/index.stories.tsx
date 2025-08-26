@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { Ai } from "../../../../icons/app"
 
-import { RawTag } from "./index"
+import { TagRaw } from "./index"
 
 const meta: Meta = {
-  component: RawTag,
+  component: TagRaw,
   title: "Tag/RawTag",
   tags: ["autodocs", "experimental"],
   parameters: {

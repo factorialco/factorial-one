@@ -3,7 +3,7 @@
  * Used for labeling or categorizing items in data collections.
  */
 import { IconType } from "@/components/Utilities/Icon"
-import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { TagRaw } from "@/experimental/Information/Tags/TagRaw"
 
 interface TagValue {
   label: string
@@ -12,5 +12,5 @@ interface TagValue {
 export type TagCellValue = TagValue
 
 export const TagCell = (args: TagCellValue) => (
-  <RawTag text={args.label} icon={args.icon} />
+  <TagRaw text={args.label} icon={args.icon} />
 )

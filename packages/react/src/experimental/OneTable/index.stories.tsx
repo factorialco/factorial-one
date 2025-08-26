@@ -5,8 +5,8 @@ import { F0Checkbox } from "../../components/F0Checkbox"
 import { Delete, Ellipsis, Pencil } from "../../icons/app"
 import { PersonAvatar } from "../Information/Avatars/PersonAvatar"
 
-import { RawTag } from "../Information/Tags/RawTag"
-import { StatusTag, type StatusVariant } from "../Information/Tags/StatusTag"
+import { TagRaw } from "../Information/Tags/TagRaw"
+import { TagStatus, type StatusVariant } from "../Information/Tags/TagStatus"
 
 import { Dropdown } from "../Navigation/Dropdown"
 import { OnePagination } from "../OnePagination"
@@ -110,12 +110,12 @@ export const Default: Story = {
             <TableCell>{row.email}</TableCell>
             <TableCell>
               <div className="w-fit">
-                <RawTag text={row.role} />
+                <TagRaw text={row.role} />
               </div>
             </TableCell>
             <TableCell>
               <div className="w-fit">
-                <StatusTag
+                <TagStatus
                   text={row.status.label}
                   variant={row.status.variant}
                 />
@@ -342,7 +342,7 @@ export const StickyColumn: Story = {
             <TableCell>{row.manager}</TableCell>
             <TableCell>
               <div className="w-fit">
-                <StatusTag
+                <TagStatus
                   text={row.status.label}
                   variant={row.status.variant}
                 />
@@ -497,12 +497,12 @@ export const Footer: Story = {
               <TableCell>{row.email}</TableCell>
               <TableCell>
                 <div className="w-fit">
-                  <RawTag text={row.role} />
+                  <TagRaw text={row.role} />
                 </div>
               </TableCell>
               <TableCell>
                 <div className="w-fit">
-                  <StatusTag
+                  <TagStatus
                     text={row.status.label}
                     variant={row.status.variant}
                   />
@@ -554,12 +554,12 @@ export const Actions: Story = {
             <TableCell>{row.email}</TableCell>
             <TableCell>
               <div className="w-fit">
-                <RawTag text={row.role} />
+                <TagRaw text={row.role} />
               </div>
             </TableCell>
             <TableCell>
               <div className="w-fit">
-                <StatusTag
+                <TagStatus
                   text={row.status.label}
                   variant={row.status.variant}
                 />
@@ -634,12 +634,12 @@ export const WithLinks: Story = {
             <TableCell href="/">{row.email}</TableCell>
             <TableCell href="/">
               <div className="w-fit">
-                <RawTag text={row.role} />
+                <TagRaw text={row.role} />
               </div>
             </TableCell>
             <TableCell href="/">
               <div className="w-fit">
-                <StatusTag
+                <TagStatus
                   text={row.status.label}
                   variant={row.status.variant}
                 />
@@ -721,12 +721,12 @@ export const Loading: Story = {
                 <TableCell>{row.email}</TableCell>
                 <TableCell>
                   <div className="w-fit">
-                    <RawTag text={row.role} />
+                    <TagRaw text={row.role} />
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="w-fit">
-                    <StatusTag
+                    <TagStatus
                       text={row.status.label}
                       variant={row.status.variant}
                     />
@@ -782,12 +782,12 @@ export const WithOnClick: Story = {
               <TableCell onClick={action}>{row.email}</TableCell>
               <TableCell onClick={action}>
                 <div className="w-fit">
-                  <RawTag text={row.role} />
+                  <TagRaw text={row.role} />
                 </div>
               </TableCell>
               <TableCell onClick={action}>
                 <div className="w-fit">
-                  <StatusTag
+                  <TagStatus
                     text={row.status.label}
                     variant={row.status.variant}
                   />

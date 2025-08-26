@@ -2,7 +2,7 @@
  * Dot tag cell type for displaying colored dot indicators with labels.
  * Used for status indicators or category markers with color coding.
  */
-import { DotTag, NewColor } from "@/experimental/Information/Tags/DotTag"
+import { NewColor, TagDot } from "@/experimental/Information/Tags/TagDot"
 
 interface DotTagValue {
   label: string
@@ -11,5 +11,5 @@ interface DotTagValue {
 export type DotTagCellValue = DotTagValue
 
 export const DotTagCell = (args: DotTagCellValue) => (
-  <DotTag text={args.label} color={args.color} />
+  <TagDot text={args.label} color={args.color} />
 )

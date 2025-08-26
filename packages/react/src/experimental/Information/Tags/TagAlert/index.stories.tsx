@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { AlertTag } from "./index"
+import { TagAlert } from "./index"
 
 const meta: Meta = {
-  component: AlertTag,
+  component: TagAlert,
   title: "Tag/AlertTag",
   tags: ["autodocs", "experimental"],
   parameters: {

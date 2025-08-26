@@ -1,8 +1,8 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
 import { ModuleId } from "@/experimental/Information/ModuleAvatar"
-import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
-import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
+import type { StatusVariant } from "@/experimental/Information/Tags/TagStatus"
+import { TagStatus } from "@/experimental/Information/Tags/TagStatus"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
@@ -222,7 +222,7 @@ export function PageHeader({
             {statusTag.tooltip ? (
               <Tooltip label={statusTag.tooltip}>
                 <div>
-                  <StatusTag
+                  <TagStatus
                     text={statusTag.text}
                     variant={statusTag.variant}
                     additionalAccesibleText={statusTag.tooltip}
@@ -230,7 +230,7 @@ export function PageHeader({
                 </div>
               </Tooltip>
             ) : (
-              <StatusTag text={statusTag.text} variant={statusTag.variant} />
+              <TagStatus text={statusTag.text} variant={statusTag.variant} />
             )}
           </div>
         )}

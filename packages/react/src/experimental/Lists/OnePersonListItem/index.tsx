@@ -8,8 +8,8 @@ import { Button } from "../../../components/Actions/Button"
 import { Icon, IconType } from "../../../components/Utilities/Icon"
 import { InfoCircle } from "../../../icons/app"
 import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import { DotTag, DotTagProps } from "../../Information/Tags/DotTag"
-import { RawTag, RawTagProps } from "../../Information/Tags/RawTag"
+import { TagDot, TagDotProps } from "../../Information/Tags/TagDot"
+import { TagRaw, TagRawProps } from "../../Information/Tags/TagRaw"
 
 export type OnePersonListItemProps = {
   person: {
@@ -19,8 +19,8 @@ export type OnePersonListItemProps = {
     avatarBadge?: AvatarBadge
   }
   description?: string
-  bottomTags: Omit<RawTagProps, "noBorder">[]
-  rightTag?: DotTagProps
+  bottomTags: Omit<TagRawProps, "noBorder">[]
+  rightTag?: TagDotProps
   actions?: {
     primary?: {
       icon?: IconType
@@ -77,7 +77,7 @@ const BaseOnePersonListItem = React.forwardRef<
           <div className="-ml-1.5 flex flex-row items-center [&>div]:-mr-1">
             {props.bottomTags.map((tag, i) => (
               <>
-                <RawTag
+                <TagRaw
                   key={tag.text}
                   {...tag}
                   className="text-f1-foreground-secondary"
@@ -96,7 +96,7 @@ const BaseOnePersonListItem = React.forwardRef<
       </div>
       <div className="flex flex-row items-center justify-between gap-2">
         {"rightTag" in props && props.rightTag && (
-          <DotTag {...props.rightTag} />
+          <TagDot {...props.rightTag} />
         )}
         {"actions" in props && (
           <div className="flex flex-1 flex-row items-center justify-end gap-2">

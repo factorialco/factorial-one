@@ -7,8 +7,8 @@ import { cn } from "../../../../lib/utils"
 import { MobileDropdown } from "../../../Navigation/Dropdown"
 import { Tooltip } from "../../../Overlays/Tooltip"
 import { AvatarVariant } from "../../Avatars/Avatar"
-import { NewColor } from "../../Tags/DotTag"
-import { StatusVariant } from "../../Tags/StatusTag"
+import { NewColor } from "../../Tags/TagDot"
+import { StatusVariant } from "../../Tags/TagStatus"
 import { MetadataValue } from "./MetadataValue"
 
 type MetadataItemValue =

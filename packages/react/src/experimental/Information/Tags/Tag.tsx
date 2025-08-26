@@ -1,18 +1,18 @@
 import { ComponentProps, ReactNode } from "react"
-import { AlertTag } from "./AlertTag"
-import { BalanceTag } from "./BalanceTag"
-import { CompanyTag } from "./CompanyTag"
-import { DotTag, DotTagProps } from "./DotTag"
-import { PersonTag } from "./PersonTag"
-import { RawTag, RawTagProps } from "./RawTag"
-import { StatusTag, StatusTagProps } from "./StatusTag"
-import { TeamTag } from "./TeamTag"
+import { TagAlert } from "./TagAlert"
+import { TagBalance } from "./TagBalance"
+import { TagCompany } from "./TagCompany"
+import { TagDot, TagDotProps } from "./TagDot"
+import { TagPerson } from "./TagPerson"
+import { TagRaw, TagRawProps } from "./TagRaw"
+import { TagStatus, TagStatusProps } from "./TagStatus"
+import { TagTeam } from "./TagTeam"
 
-type PersonTagProps = ComponentProps<typeof PersonTag>
-type TeamTagProps = ComponentProps<typeof TeamTag>
-type CompanyTagProps = ComponentProps<typeof CompanyTag>
-type AlertTagProps = ComponentProps<typeof AlertTag>
-type BalanceTagProps = ComponentProps<typeof BalanceTag>
+type PersonTagProps = ComponentProps<typeof TagPerson>
+type TeamTagProps = ComponentProps<typeof TagTeam>
+type CompanyTagProps = ComponentProps<typeof TagCompany>
+type AlertTagProps = ComponentProps<typeof TagAlert>
+type BalanceTagProps = ComponentProps<typeof TagBalance>
 
 // Base interface for optional tooltip description
 interface WithTooltipDescription {
@@ -26,26 +26,26 @@ interface WithTooltipDescription {
 type BaseTag<T extends { type: string }> = T & WithTooltipDescription
 
 export type TagVariant =
-  | BaseTag<{ type: "dot" } & DotTagProps>
+  | BaseTag<{ type: "dot" } & TagDotProps>
   | BaseTag<{ type: "person" } & PersonTagProps>
   | BaseTag<{ type: "team" } & TeamTagProps>
   | BaseTag<{ type: "company" } & CompanyTagProps>
   | BaseTag<{ type: "alert" } & AlertTagProps>
-  | BaseTag<{ type: "status" } & StatusTagProps>
+  | BaseTag<{ type: "status" } & TagStatusProps>
   | BaseTag<{ type: "balance" } & BalanceTagProps>
-  | BaseTag<{ type: "raw" } & RawTagProps>
+  | BaseTag<{ type: "raw" } & TagRawProps>
 
 const tagComponent = (tag: TagVariant): ReactNode | undefined => {
   const { type } = tag
 
-  if (type === "dot") return <DotTag {...tag} />
-  if (type === "person") return <PersonTag {...tag} />
-  if (type === "team") return <TeamTag {...tag} />
-  if (type === "company") return <CompanyTag {...tag} />
-  if (type === "alert") return <AlertTag {...tag} />
-  if (type === "status") return <StatusTag {...tag} />
-  if (type === "balance") return <BalanceTag {...tag} />
-  if (type === "raw") return <RawTag {...tag} />
+  if (type === "dot") return <TagDot {...tag} />
+  if (type === "person") return <TagPerson {...tag} />
+  if (type === "team") return <TagTeam {...tag} />
+  if (type === "company") return <TagCompany {...tag} />
+  if (type === "alert") return <TagAlert {...tag} />
+  if (type === "status") return <TagStatus {...tag} />
+  if (type === "balance") return <TagBalance {...tag} />
+  if (type === "raw") return <TagRaw {...tag} />
 
   return undefined
 }

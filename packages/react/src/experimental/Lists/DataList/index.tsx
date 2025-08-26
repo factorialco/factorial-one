@@ -1,6 +1,6 @@
 import { forwardRef, ReactElement } from "react"
 
-import { DotTag, DotTagProps } from "@/experimental/Information/Tags/DotTag"
+import { TagDot, TagDotProps } from "@/experimental/Information/Tags/TagDot"
 import { cn } from "@/lib/utils"
 import { IconType } from "../../../components/Utilities/Icon"
 import { CompanyAvatar } from "../../Information/Avatars/CompanyAvatar"
@@ -157,13 +157,13 @@ const TeamItem = forwardRef<HTMLLIElement, TeamItemProps>(
 
 TeamItem.displayName = "TeamItem"
 
-type DotTagItemProps = DotTagProps
+type DotTagItemProps = TagDotProps
 
 const DotTagItem = forwardRef<HTMLLIElement, DotTagItemProps>(
   ({ ...props }, ref) => {
     return (
       <li ref={ref} className="flex items-start pt-1">
-        <DotTag {...props} />
+        <TagDot {...props} />
       </li>
     )
   }

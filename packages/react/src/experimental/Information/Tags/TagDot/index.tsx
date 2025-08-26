@@ -20,13 +20,13 @@ export type NewColor = Extract<
   | "camel"
 >
 
-export const dotTagColors = Object.keys(baseColors) as NewColor[]
+export const tagDotColors = Object.keys(baseColors) as NewColor[]
 
-export type DotTagProps = {
+export type TagDotProps = {
   text: string
 } & ({ color: NewColor } | { customColor: string })
 
-export const DotTag = forwardRef<HTMLDivElement, DotTagProps>(
+export const TagDot = forwardRef<HTMLDivElement, TagDotProps>(
   ({ text, ...props }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
@@ -56,4 +56,4 @@ export const DotTag = forwardRef<HTMLDivElement, DotTagProps>(
   }
 )
 
-DotTag.displayName = "DotTag"
+TagDot.displayName = "TagDot"

@@ -17,7 +17,7 @@ const iconMap: Record<Exclude<Status, "neutral">, IconType> = {
   negative: ArrowDown,
 }
 
-export const BalanceTag = forwardRef<HTMLDivElement, Props>(
+export const TagBalance = forwardRef<HTMLDivElement, Props>(
   ({ text, status }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
@@ -53,4 +53,4 @@ export const BalanceTag = forwardRef<HTMLDivElement, Props>(
   }
 )
 
-BalanceTag.displayName = "BalanceTag"
+TagBalance.displayName = "TagBalance"

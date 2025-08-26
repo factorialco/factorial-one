@@ -3,8 +3,8 @@ import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
 import { useState } from "react"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Tooltip } from "../../../Overlays/Tooltip"
-import { RawTag } from "../RawTag"
 import { Tag, TagVariant } from "../Tag"
+import { TagRaw } from "../TagRaw"
 
 export type TagCounterItem = TagVariant
 
@@ -16,7 +16,7 @@ type Props = {
 export const TagCounter = ({ count, list }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const counter = <RawTag text={`+${count}`} />
+  const counter = <TagRaw text={`+${count}`} />
 
   if (!list?.length) return counter
 

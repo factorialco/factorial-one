@@ -1,5 +1,5 @@
 import { Icon } from "@/components/Utilities/Icon"
-import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { TagRaw } from "@/experimental/Information/Tags/TagRaw"
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { InputField, InputFieldProps } from "@/ui/InputField"
@@ -81,7 +81,7 @@ const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
         </div>
         {item.tag && (
           <div className="self-center">
-            <RawTag text={item.tag} />
+            <TagRaw text={item.tag} />
           </div>
         )}
       </div>

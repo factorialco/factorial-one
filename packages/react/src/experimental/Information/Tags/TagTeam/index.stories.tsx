@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { TeamTag } from "./index"
+import { TagTeam } from "./index"
 
 const meta: Meta = {
-  component: TeamTag,
+  component: TagTeam,
   title: "Tag/TeamTag",
   tags: ["autodocs", "experimental"],
   parameters: {

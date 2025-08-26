@@ -18,7 +18,7 @@ const iconMap: Record<Level, IconType> = {
   critical: AlertCircle,
 }
 
-export const AlertTag = forwardRef<HTMLDivElement, Props>(
+export const TagAlert = forwardRef<HTMLDivElement, Props>(
   ({ text, level }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
@@ -53,4 +53,4 @@ export const AlertTag = forwardRef<HTMLDivElement, Props>(
   }
 )
 
-AlertTag.displayName = "AlertTag"
+TagAlert.displayName = "TagAlert"

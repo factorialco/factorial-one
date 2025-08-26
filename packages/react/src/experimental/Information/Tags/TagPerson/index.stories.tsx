@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { CompanyTag } from "./index"
+import { TagPerson } from "./index"
 
 const meta: Meta = {
-  component: CompanyTag,
-  title: "Tag/CompanyTag",
+  component: TagPerson,
+  title: "Tag/PersonTag",
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
   },
   args: {
-    companyName: "Factorial",
-    companyImageUrl: "/avatars/factorial.png",
+    name: "Saul Dominguez",
+    avatarUrl: "/avatars/person05.jpg",
     onClick: () => {},
   },
 }
@@ -19,4 +19,4 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const DefaultCompanyTag: Story = {}
+export const DefaultPersonTag: Story = {}

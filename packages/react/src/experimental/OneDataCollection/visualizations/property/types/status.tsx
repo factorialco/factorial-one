@@ -3,9 +3,9 @@
  * Used for showing the current state or condition of items in data collections.
  */
 import {
-  StatusTag,
   StatusVariant,
-} from "@/experimental/Information/Tags/StatusTag"
+  TagStatus,
+} from "@/experimental/Information/Tags/TagStatus"
 
 interface StatusValue {
   status: StatusVariant
@@ -14,5 +14,5 @@ interface StatusValue {
 export type StatusCellValue = StatusValue
 
 export const StatusCell = (args: StatusCellValue) => (
-  <StatusTag variant={args.status} text={args.label} />
+  <TagStatus variant={args.status} text={args.label} />
 )

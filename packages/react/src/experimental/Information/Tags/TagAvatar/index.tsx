@@ -9,7 +9,7 @@ type Props = {
   onClick?: () => void
 }
 
-export const AvatarTag = forwardRef<HTMLDivElement, Props>(
+export const TagAvatar = forwardRef<HTMLDivElement, Props>(
   ({ avatar, onClick, text }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
@@ -25,4 +25,4 @@ export const AvatarTag = forwardRef<HTMLDivElement, Props>(
   }
 )
 
-AvatarTag.displayName = "AvatarTag"
+TagAvatar.displayName = "AvatarTag"

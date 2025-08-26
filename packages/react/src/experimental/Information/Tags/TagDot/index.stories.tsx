@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { DotTag } from "./index"
+import { TagDot } from "./index"
 
 const meta: Meta = {
-  component: DotTag,
+  component: TagDot,
   title: "Tag/DotTag",
   tags: ["autodocs", "experimental"],
   parameters: {

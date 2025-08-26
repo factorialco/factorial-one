@@ -1,4 +1,4 @@
-import { NewColor } from "@/experimental/Information/Tags/DotTag"
+import { NewColor } from "@/experimental/Information/Tags/TagDot"
 import { Meta, StoryObj } from "@storybook/react-vite"
 import { Placeholder } from "../../../icons/app"
 import { PropertyDefinition, renderProperty } from "../property-render"

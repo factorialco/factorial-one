@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { BalanceTag } from "./index"
+import { TagBalance } from "./index"
 
 const meta: Meta = {
-  component: BalanceTag,
+  component: TagBalance,
   title: "Tag/BalanceTag",
   tags: ["autodocs", "experimental"],
   parameters: {
