@@ -1,18 +1,15 @@
+import { Button } from "@/components/Actions/Button"
+import { F0Checkbox } from "@/components/F0Checkbox"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { Delete, Ellipsis, Pencil } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import React, { useState } from "react"
-import { Button } from "../../components/Actions/Button"
-import { F0Checkbox } from "../../components/F0Checkbox"
-import { Delete, Ellipsis, Pencil } from "../../icons/app"
-import { PersonAvatar } from "../Information/Avatars/PersonAvatar"
 
-import { F0TagRaw } from "../../components/tags/F0TagRaw"
-import {
-  F0TagStatus,
-  type StatusVariant,
-} from "../../components/tags/F0TagStatus"
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
+import { F0TagStatus, type StatusVariant } from "@/components/tags/F0TagStatus"
 
-import { Dropdown } from "../Navigation/Dropdown"
-import { OnePagination } from "../OnePagination"
+import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { OnePagination } from "@/experimental/OnePagination"
 import {
   OneTable,
   TableBody,

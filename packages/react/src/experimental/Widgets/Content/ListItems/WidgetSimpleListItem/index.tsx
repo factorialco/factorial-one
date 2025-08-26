@@ -1,9 +1,9 @@
+import { F0TagAlert } from "@/components/tags/F0TagAlert"
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Counter } from "@/experimental/Information/Counter"
+import { cn } from "@/lib/utils"
 import { ComponentProps } from "react"
-import { F0TagAlert } from "../../../../../components/tags/F0TagAlert"
-import { F0TagRaw } from "../../../../../components/tags/F0TagRaw"
-import { Icon, IconType } from "../../../../../components/Utilities/Icon"
-import { cn } from "../../../../../lib/utils"
-import { Counter } from "../../../../Information/Counter"
 
 export type WidgetSimpleListItemProps<
   Id extends string | number = string | number,

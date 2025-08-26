@@ -1,7 +1,7 @@
+import { BaseTag } from "@/components/tags/BaseTag"
+import { useTextFormatEnforcer } from "@/lib/text"
+import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
-import { useTextFormatEnforcer } from "../../../lib/text"
-import { cn } from "../../../lib/utils"
-import { BaseTag } from "../BaseTag"
 import type { Props } from "./types"
 
 export const F0TagStatus = forwardRef<HTMLDivElement, Props>(

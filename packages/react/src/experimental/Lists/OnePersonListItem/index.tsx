@@ -1,15 +1,15 @@
+import { Button } from "@/components/Actions/Button"
+import { F0TagDot, TagDotProps } from "@/components/tags/F0TagDot"
+import { F0TagRaw, TagRawProps } from "@/components/tags/F0TagRaw"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { AvatarBadge } from "@/experimental/Information/Avatars/types"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { InfoCircle } from "@/icons/app"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import React from "react"
-import { Button } from "../../../components/Actions/Button"
-import { F0TagDot, TagDotProps } from "../../../components/tags/F0TagDot"
-import { F0TagRaw, TagRawProps } from "../../../components/tags/F0TagRaw"
-import { Icon, IconType } from "../../../components/Utilities/Icon"
-import { InfoCircle } from "../../../icons/app"
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 
 export type OnePersonListItemProps = {
   person: {

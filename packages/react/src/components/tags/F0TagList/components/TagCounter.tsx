@@ -1,10 +1,10 @@
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
+import { Tag, TagVariant } from "@/components/tags/Tag"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { cn, focusRing } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
 import { useState } from "react"
-import { Tooltip } from "../../../../experimental/Overlays/Tooltip"
-import { cn, focusRing } from "../../../../lib/utils"
-import { F0TagRaw } from "../../F0TagRaw"
-import { Tag, TagVariant } from "../../Tag"
 
 export type TagCounterItem = TagVariant
 

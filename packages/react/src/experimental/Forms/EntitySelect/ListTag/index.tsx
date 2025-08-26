@@ -1,9 +1,9 @@
-import { BaseTag } from "../../../../components/tags/BaseTag"
-import { Icon } from "../../../../components/Utilities/Icon"
-import { Cross } from "../../../../icons/app"
-import { cn } from "../../../../lib/utils"
-import { BaseAvatar } from "../../../Information/Avatars/BaseAvatar"
-import { EntitySelectSubEntity } from "../types"
+import { BaseTag } from "@/components/tags/BaseTag"
+import { Icon } from "@/components/Utilities/Icon"
+import { EntitySelectSubEntity } from "@/experimental/Forms/EntitySelect/types"
+import { BaseAvatar } from "@/experimental/Information/Avatars/BaseAvatar"
+import { Cross } from "@/icons/app"
+import { cn } from "@/lib/utils"
 
 export const ListTag = ({
   entity,

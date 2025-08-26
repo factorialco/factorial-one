@@ -1,6 +1,6 @@
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { OverflowList } from "@/ui/OverflowList"
 import { cva } from "cva"
-import { Tooltip } from "../../../experimental/Overlays/Tooltip"
 import { Tag, TagVariant } from "../Tag"
 import { TagCounter } from "./components/TagCounter"
 import type { Props, TagType } from "./types"

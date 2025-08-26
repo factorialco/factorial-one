@@ -1,5 +1,5 @@
+import { Ai } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { Ai } from "../../../../icons/app"
 
 import { F0TagRaw } from "../"
 

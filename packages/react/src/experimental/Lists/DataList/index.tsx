@@ -1,11 +1,11 @@
 import { forwardRef, ReactElement } from "react"
 
 import { F0TagDot, TagDotProps } from "@/components/tags/F0TagDot"
+import { IconType } from "@/components/Utilities/Icon"
+import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { TeamAvatar } from "@/experimental/Information/Avatars/TeamAvatar"
 import { cn } from "@/lib/utils"
-import { IconType } from "../../../components/Utilities/Icon"
-import { CompanyAvatar } from "../../Information/Avatars/CompanyAvatar"
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import { TeamAvatar } from "../../Information/Avatars/TeamAvatar"
 import { InternalActionType, ItemContainer } from "./ItemContainer"
 
 export type DataListProps = {

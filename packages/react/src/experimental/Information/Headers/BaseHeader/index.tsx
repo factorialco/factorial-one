@@ -1,18 +1,21 @@
-import { Fragment, memo } from "react"
-import { Button, ButtonProps } from "../../../../components/Actions/Button"
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import {
   OneDropdownButton,
   OneDropdownButtonProps,
-} from "../../../../components/Actions/OneDropdownButton"
-import { StatusVariant } from "../../../../components/tags/F0TagStatus"
-import { cn } from "../../../../lib/utils"
+} from "@/components/Actions/OneDropdownButton"
+import { StatusVariant } from "@/components/tags/F0TagStatus"
+import {
+  Avatar,
+  AvatarVariant,
+} from "@/experimental/Information/Avatars/Avatar"
 import {
   Dropdown,
   DropdownItem,
   MobileDropdown,
-} from "../../../Navigation/Dropdown"
-import { Tooltip } from "../../../Overlays/Tooltip"
-import { Avatar, AvatarVariant } from "../../Avatars/Avatar"
+} from "@/experimental/Navigation/Dropdown"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { cn } from "@/lib/utils"
+import { Fragment, memo } from "react"
 import {
   PrimaryAction,
   PrimaryActionButton,
