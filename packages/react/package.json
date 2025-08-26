@@ -162,6 +162,7 @@
     "@rollup/rollup-linux-x64-gnu": "^4.34"
   },
   "dependencies": {
+    "@atlaskit/pragmatic-drag-and-drop": "^1.7.4",
     "@copilotkit/runtime-client-gql": "^1.9.2",
     "@factorialco/factorial-one-core": "workspace:*",
     "@radix-ui/react-hover-card": "^1.1.6",
