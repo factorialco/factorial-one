@@ -35,7 +35,7 @@ export const Default: Story = {
       icon: Icon.Add,
       onClick: fn(),
     },
-    supportButton: {
+    link: {
       label: "Help Center link",
       href: "https://help.factorialhr.com/",
     },
@@ -47,7 +47,7 @@ export const NoAction: Story = {
   args: {
     title: "Course catalog",
     description: "Select any course you would like to request.",
-    supportButton: {
+    link: {
       label: "Help Center link",
       href: "https://help.factorialhr.com/",
     },
