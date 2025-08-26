@@ -156,6 +156,9 @@ const GroupCards = <
 
         const cardProperty = convertToCardMetadataProperty(result)
         if (!cardProperty) return null
+        if (cardProperty.type === 'file') return {
+          property: cardProperty,
+        }
 
         return {
           icon: property.icon ?? Placeholder,
@@ -163,6 +166,7 @@ const GroupCards = <
         }
       })
       .filter((item): item is CardMetadata => item !== null)
+
   }
 
   function convertToCardMetadataProperty(
