@@ -1,8 +1,8 @@
 import { Skeleton } from "@/ui/skeleton"
 import { f1Colors } from "@factorialco/factorial-one-core"
+import { CalendarEvent } from "../../../../../experimental/Widgets/Content/CalendarEvent"
 import { formatTime } from "../../../../../lib/date"
 import { withSkeleton } from "../../../../../lib/skeleton"
-import { CalendarEvent } from "../../../../Widgets/Content/CalendarEvent"
 
 export type PostEventProps = {
   title: string

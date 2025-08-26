@@ -85,6 +85,8 @@ export default defineConfig({
       entry: {
         ["factorial-one"]: resolve(__dirname, "src/factorial-one.ts"),
         ["experimental"]: resolve(__dirname, "src/experimental.ts"),
+        ["kits"]: resolve(__dirname, "src/kits.ts"),
+        ["sds"]: resolve(__dirname, "src/sds.ts"),
       },
       fileName: (_, entryName) => {
         return `${entryName}.js`
