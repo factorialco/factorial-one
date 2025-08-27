@@ -7,11 +7,7 @@ type OneLaneHeaderProps = {
   count: number
 }
 
-export const OneLaneHeader = ({
-  label,
-  variant,
-  count,
-}: OneLaneHeaderProps) => {
+export const LaneHeader = ({ label, variant, count }: OneLaneHeaderProps) => {
   return (
     <div className="flex items-center gap-2 px-1 py-2">
       <F0TagStatus text={label} variant={variant || "neutral"} />

@@ -2,17 +2,17 @@ import { ScrollArea } from "@/experimental"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "motion/react"
 import React from "react"
-import { Spinner } from "../Information/Spinner"
-import { RecordType } from "../OneDataCollection/types"
-import { useInfiniteScrollPagination } from "../OneDataCollection/useInfiniteScrollPagination"
+import { Spinner } from "../../experimental/Information/Spinner"
+import { RecordType } from "../../experimental/OneDataCollection/types"
+import { useInfiniteScrollPagination } from "../../experimental/OneDataCollection/useInfiniteScrollPagination"
+import { LaneHeader } from "./components/LaneHeader"
 import { LoadingSkeleton } from "./components/LoadingSkeleton"
-import { OneLaneHeader } from "./components/OneLaneHeader"
 import { OneLaneProps } from "./types"
 
 const DEFAULT_MAX_LANE_HEIGHT = 700
 const HEADER_HEIGHT = 40
 
-export function OneLane<Record extends RecordType>({
+export function Lane<Record extends RecordType>({
   title,
   items,
   renderCard,
@@ -51,7 +51,7 @@ export function OneLane<Record extends RecordType>({
         backgroundColor: "hsla(210, 91%, 22%, 0.02)",
       }}
     >
-      <OneLaneHeader
+      <LaneHeader
         label={title || "Lane"}
         variant="neutral"
         count={items.length}

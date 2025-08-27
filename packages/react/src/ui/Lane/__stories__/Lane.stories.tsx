@@ -7,8 +7,8 @@ import { useDroppableList } from "@/lib/dnd/hooks"
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useEffect, useRef, useState } from "react"
-import { RecordType } from "../../OneDataCollection/types"
-import { OneLane } from "../OneLane"
+import { RecordType } from "../../../experimental/OneDataCollection/types"
+import { Lane } from "../Lane"
 import type { OneLaneProps } from "../types"
 import {
   additionalMockTasks,
@@ -20,7 +20,7 @@ import {
 const FETCH_DELAY = 1500
 
 const meta = {
-  component: OneLane,
+  component: Lane,
   title: "Lane",
   parameters: {
     docs: {
@@ -48,7 +48,7 @@ const meta = {
       )
     },
   ],
-} satisfies Meta<typeof OneLane>
+} satisfies Meta<typeof Lane>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -204,7 +204,7 @@ export const WithFetchMore: Story = {
     }
 
     return (
-      <OneLane
+      <Lane
         {...args}
         items={items}
         loading={loading}
@@ -412,7 +412,7 @@ export const TwoLanesDnD: Story = {
       <DndProvider driver={createAtlaskitDriver(instanceId)}>
         <div className="grid grid-cols-2 gap-6">
           <LaneDroppable id="lane-left">
-            <OneLane<MockTask>
+            <Lane<MockTask>
               title="Left"
               items={left}
               getKey={(item) => item.id}
@@ -429,7 +429,7 @@ export const TwoLanesDnD: Story = {
           </LaneDroppable>
 
           <LaneDroppable id="lane-right">
-            <OneLane<MockTask>
+            <Lane<MockTask>
               title="Right"
               items={right}
               getKey={(item) => item.id}
