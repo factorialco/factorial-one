@@ -10,6 +10,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useEventListener, useResizeObserver } from "usehooks-ts"
 import OneIcon from "../OneIcon"
 import { useAiChatLabels } from "../providers/AiChatLabelsProvider"
+import { useChatWindowContext } from "./ChatWindow"
+
+// corresponds to padding pt-14 applied for the header
+const HEADER_HEIGHT_PX = 56
 
 export const MessagesContainer = ({
   inProgress,
@@ -44,7 +48,7 @@ export const MessagesContainer = ({
     showScrollToBottom,
     scrollToBottom,
   } = useScrollToBottom()
-  const { height: containerHeight } = useResizeObserver({
+  const { height: containerHeight = 0 } = useResizeObserver({
     ref: messagesContainerRef,
     box: "border-box",
   })
@@ -82,7 +86,7 @@ export const MessagesContainer = ({
     <motion.div
       layout
       className={cn(
-        "scrollbar-macos relative isolate flex-1 px-4",
+        "scrollbar-macos relative isolate flex-1 scroll-pt-14 px-4 pt-14",
         "overflow-y-scroll"
       )}
       ref={messagesContainerRef}
@@ -94,9 +98,10 @@ export const MessagesContainer = ({
       }}
     >
       <motion.div layout="position" ref={turnsContainerRef}>
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           {showWelcomeBlock && (
             <motion.div
+              key="welcome"
               className="flex flex-col px-2"
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -127,7 +132,9 @@ export const MessagesContainer = ({
               className="flex flex-col items-start justify-start gap-2"
               key={`turn-${turnIndex}`}
               style={{
-                minHeight: isCurrentTurn ? containerHeight : undefined,
+                minHeight: isCurrentTurn
+                  ? containerHeight - HEADER_HEIGHT_PX
+                  : undefined,
               }}
             >
               {turnMessages.map((message, index) => {
@@ -208,6 +215,7 @@ export function useScrollToBottom() {
   const isProgrammaticScrollRef = useRef(false)
   const isUserScrollUpRef = useRef(false)
   const [showScrollToBottom, setShowScrollToBottom] = useState(false)
+  const { setMessageContainerScrollTop } = useChatWindowContext()
 
   const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
     if (messagesContainerRef.current && messagesEndRef.current) {
@@ -244,6 +252,8 @@ export function useScrollToBottom() {
   }
 
   const handleScroll = useCallback(() => {
+    setMessageContainerScrollTop(messagesContainerRef.current?.scrollTop ?? 0)
+
     if (isProgrammaticScrollRef.current) {
       isProgrammaticScrollRef.current = false
       return
@@ -251,7 +261,7 @@ export function useScrollToBottom() {
 
     checkIsScrollingUp()
     checkScrollToBottomButtonVisibility()
-  }, [])
+  }, [setMessageContainerScrollTop])
 
   useEventListener("scroll", handleScroll, messagesContainerRef)
 
