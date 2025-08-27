@@ -32,11 +32,6 @@ const config: StorybookConfig = {
           },
         ]),
   ],
-  managerHead: (head) => {
-    return `${head}
-      <link rel="icon" href="/favicon-dev.svg" type="image/svg+xml" />
-  `
-  },
   staticDirs: ["../public", "./static"],
   addons: [
     getAbsolutePath("@storybook/addon-links"),
