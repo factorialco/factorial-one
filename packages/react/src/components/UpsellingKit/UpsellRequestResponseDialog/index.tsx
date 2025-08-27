@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
+import { F0AvatarAlert } from "@/components/avatars/F0AvatarAlert"
 import { Icon } from "@/components/Utilities/Icon"
-import { AlertAvatar } from "@/experimental/Information/Avatars/AlertAvatar"
 import { AlertCircle, CheckCircle, DottedCircle } from "@/icons/app"
 import {
   Dialog,
@@ -170,7 +170,7 @@ const UpsellRequestResponseDialog = forwardRef<
           <DialogHeader
             className={`flex flex-col items-start gap-4 px-4 ${success ? "pt-5" : "py-5"}`}
           >
-            <AlertAvatar
+            <F0AvatarAlert
               type={success ? "positive" : "critical"}
               size="lg"
               icon={success ? CheckCircle : AlertCircle}

@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
 import { F0Checkbox } from "@/components/F0Checkbox"
-import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { Delete, Ellipsis, Pencil } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import React, { useState } from "react"
@@ -99,7 +99,7 @@ export const Default: Story = {
           <TableRow key={row.id}>
             <TableCell>
               <div className="flex items-center gap-2">
-                <PersonAvatar
+                <F0AvatarPerson
                   firstName={row.name.split(" ")[0]}
                   lastName={row.name.split(" ")[1]}
                   size="small"
@@ -486,7 +486,7 @@ export const Footer: Story = {
             <TableRow key={row.id}>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <PersonAvatar
+                  <F0AvatarPerson
                     firstName={row.name.split(" ")[0]}
                     lastName={row.name.split(" ")[1]}
                     size="small"
@@ -543,7 +543,7 @@ export const Actions: Story = {
           <TableRow key={row.id}>
             <TableCell>
               <div className="flex items-center gap-2">
-                <PersonAvatar
+                <F0AvatarPerson
                   firstName={row.name.split(" ")[0]}
                   lastName={row.name.split(" ")[1]}
                   size="small"
@@ -623,7 +623,7 @@ export const WithLinks: Story = {
             </TableCell>
             <TableCell href="/">
               <div className="flex items-center gap-2">
-                <PersonAvatar
+                <F0AvatarPerson
                   firstName={row.name.split(" ")[0]}
                   lastName={row.name.split(" ")[1]}
                   size="small"
@@ -710,7 +710,7 @@ export const Loading: Story = {
               <TableRow key={row.id}>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <PersonAvatar
+                    <F0AvatarPerson
                       firstName={row.name.split(" ")[0]}
                       lastName={row.name.split(" ")[1]}
                       size="small"
@@ -771,7 +771,7 @@ export const WithOnClick: Story = {
               </TableCell>
               <TableCell onClick={action}>
                 <div className="flex items-center gap-2">
-                  <PersonAvatar
+                  <F0AvatarPerson
                     firstName={row.name.split(" ")[0]}
                     lastName={row.name.split(" ")[1]}
                     size="small"

@@ -1,9 +1,9 @@
 import { Button } from "@/components/Actions/Button"
+import { AvatarBadge } from "@/components/avatars/F0Avatar/types"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
 import { F0TagDot, TagDotProps } from "@/components/tags/F0TagDot"
 import { F0TagRaw, TagRawProps } from "@/components/tags/F0TagRaw"
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
-import { AvatarBadge } from "@/experimental/Information/Avatars/types"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { InfoCircle } from "@/icons/app"
 import { withSkeleton } from "@/lib/skeleton"
@@ -54,7 +54,7 @@ const BaseOnePersonListItem = React.forwardRef<
       )}
       onClick={handleClick}
     >
-      <PersonAvatar
+      <F0AvatarPerson
         firstName={person.firstName}
         lastName={person.lastName}
         src={person.avatarUrl}

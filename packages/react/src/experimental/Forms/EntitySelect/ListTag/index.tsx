@@ -1,7 +1,7 @@
+import { BaseAvatar } from "@/components/avatars/BaseAvatar"
 import { BaseTag } from "@/components/tags/BaseTag"
 import { Icon } from "@/components/Utilities/Icon"
 import { EntitySelectSubEntity } from "@/experimental/Forms/EntitySelect/types"
-import { BaseAvatar } from "@/experimental/Information/Avatars/BaseAvatar"
 import { Cross } from "@/icons/app"
 import { cn } from "@/lib/utils"
 

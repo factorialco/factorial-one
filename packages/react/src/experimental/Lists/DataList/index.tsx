@@ -1,10 +1,10 @@
 import { forwardRef, ReactElement } from "react"
 
+import { F0AvatarCompany } from "@/components/avatars/F0AvatarCompany"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
+import { F0AvatarTeam } from "@/components/avatars/F0AvatarTeam"
 import { F0TagDot, TagDotProps } from "@/components/tags/F0TagDot"
 import { IconType } from "@/components/Utilities/Icon"
-import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
-import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
-import { TeamAvatar } from "@/experimental/Information/Avatars/TeamAvatar"
 import { cn } from "@/lib/utils"
 import { InternalActionType, ItemContainer } from "./ItemContainer"
 
@@ -99,7 +99,7 @@ const PersonItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
       <ItemContainer
         ref={ref}
         leftIcon={() => (
-          <PersonAvatar
+          <F0AvatarPerson
             size="xsmall"
             src={avatarUrl}
             firstName={firstName}
@@ -126,7 +126,7 @@ const CompanyItem = forwardRef<HTMLLIElement, CompanyItemProps>(
       <ItemContainer
         ref={ref}
         leftIcon={() => (
-          <CompanyAvatar name={name} size="xsmall" src={avatarUrl} />
+          <F0AvatarCompany name={name} size="xsmall" src={avatarUrl} />
         )}
         text={name}
         action={getInternalAction(action, name)}
@@ -147,7 +147,7 @@ const TeamItem = forwardRef<HTMLLIElement, TeamItemProps>(
     return (
       <ItemContainer
         ref={ref}
-        leftIcon={() => <TeamAvatar name={name} size="xsmall" />}
+        leftIcon={() => <F0AvatarTeam name={name} size="xsmall" />}
         text={name}
         action={getInternalAction(action, name)}
       />

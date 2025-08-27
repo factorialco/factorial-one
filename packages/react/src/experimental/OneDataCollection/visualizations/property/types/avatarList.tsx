@@ -2,8 +2,8 @@
  * Avatar list cell type for displaying multiple user avatars in a collection.
  * Supports limiting the maximum number of visible avatars.
  */
-import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
-import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
+import { AvatarVariant } from "@/components/avatars/F0Avatar"
+import { F0AvatarList } from "@/components/avatars/F0AvatarList"
 
 interface AvatarListValue {
   avatarList: AvatarVariant[]
@@ -13,7 +13,7 @@ interface AvatarListValue {
 export type AvatarListCellValue = AvatarListValue
 
 export const AvatarListCell = (args: AvatarListCellValue) => (
-  <AvatarList
+  <F0AvatarList
     avatars={args.avatarList}
     size="xsmall"
     max={args.max}

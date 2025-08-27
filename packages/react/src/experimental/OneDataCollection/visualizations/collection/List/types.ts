@@ -1,5 +1,5 @@
+import { AvatarVariant } from "@/components/avatars/F0Avatar"
 import { FiltersDefinition } from "@/components/OneFilterPicker/types"
-import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import {
   SortingKey,
   SortingsDefinition,
