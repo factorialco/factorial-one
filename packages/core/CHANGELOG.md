@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.25.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.24.0...factorial-one-core-v1.25.0) (2025-08-21)
+
+
+### Features
+
+* **Icons:** new icons for IT management ([#2432](https://github.com/factorialco/factorial-one/issues/2432)) ([305d13c](https://github.com/factorialco/factorial-one/commit/305d13c03763ab357c1898d2cddfd20ceb2ea193))
+
+## [1.24.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.23.0...factorial-one-core-v1.24.0) (2025-08-20)
+
+
+### Features
+
+* tokens for spacing between elements ([#2423](https://github.com/factorialco/factorial-one/issues/2423)) ([8b6162e](https://github.com/factorialco/factorial-one/commit/8b6162e09973eb0bafbffd5632ca02620c5a465a))
+
+## [1.23.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.22.2...factorial-one-core-v1.23.0) (2025-08-11)
+
+
+### Features
+
+* add IT Management module ([#2393](https://github.com/factorialco/factorial-one/issues/2393)) ([16f1f32](https://github.com/factorialco/factorial-one/commit/16f1f32e2e8ff987e77cf2e29eb52b31d5783404))
+
 ## [1.22.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.22.1...factorial-one-core-v1.22.2) (2025-08-05)
 
 

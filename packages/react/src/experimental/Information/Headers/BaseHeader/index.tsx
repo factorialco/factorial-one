@@ -1,26 +1,33 @@
-import { Fragment, memo } from "react"
-import { Button, ButtonProps } from "../../../../components/Actions/Button"
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import {
   OneDropdownButton,
   OneDropdownButtonProps,
-} from "../../../../components/Actions/OneDropdownButton"
-import { cn } from "../../../../lib/utils"
+} from "@/components/Actions/OneDropdownButton"
+import { StatusVariant } from "@/components/tags/F0TagStatus"
 import {
-  Dropdown,
-  DropdownItem,
-  MobileDropdown,
-} from "../../../Navigation/Dropdown"
-import { Tooltip } from "../../../Overlays/Tooltip"
-import { Avatar, AvatarVariant } from "../../Avatars/Avatar"
-import { StatusVariant } from "../../Tags/StatusTag"
+  Avatar,
+  AvatarVariant,
+} from "@/experimental/Information/Avatars/Avatar"
+import { Description } from "@/experimental/Information/Headers/BaseHeader/Description"
+import {
+  Metadata,
+  MetadataAction,
+  MetadataProps,
+} from "@/experimental/Information/Headers/Metadata"
 import {
   PrimaryAction,
   PrimaryActionButton,
   PrimaryDropdownAction,
   SecondaryAction,
-} from "../../utils"
-import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
-import { Description } from "./Description"
+} from "@/experimental/Information/utils"
+import {
+  Dropdown,
+  DropdownItem,
+  MobileDropdown,
+} from "@/experimental/Navigation/Dropdown"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { cn } from "@/lib/utils"
+import { Fragment, memo } from "react"
 
 interface BaseHeaderProps {
   title: string

@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { Icon } from "../../../../components/Utilities/Icon"
 import { ChevronDown } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
-import { PersonAvatar } from "../../../exports"
+import { PersonAvatar } from "../../../Information/Avatars/PersonAvatar"
 import {
   EntitySelectEntity,
   EntitySelectSubEntity,

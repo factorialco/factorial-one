@@ -1,6 +1,6 @@
-import { NewColor } from "@/experimental/Information/Tags/DotTag"
+import { NewColor } from "@/components/tags/F0TagDot"
+import { Placeholder } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
-import { Placeholder } from "../../../icons/app"
 import { PropertyDefinition, renderProperty } from "../property-render"
 
 function Cell({
@@ -174,6 +174,32 @@ export const NumberValueInputAsObject: Story = {
   },
 }
 
+export const NumberValueInputAsObjectWithDecimals: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Value",
+      render: () => ({
+        type: "number",
+        value: { number: 1234.56789, decimalPlaces: 0 },
+      }),
+    },
+  },
+}
+
+export const NumberValueInputAsObjectWithUnits: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Speed",
+      render: () => ({
+        type: "number",
+        value: { number: 82, units: "km/h", decimalPlaces: 2 },
+      }),
+    },
+  },
+}
+
 export const NumberWithPlaceholder: Story = {
   args: {
     item: mockItem,
@@ -263,6 +289,38 @@ export const AmountWithPlaceholder: Story = {
       render: () => ({
         type: "amount",
         value: { amount: undefined, placeholder: "Some placeholder" },
+      }),
+    },
+  },
+}
+
+export const AmountWithCurrency: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Amount",
+      render: () => ({
+        type: "amount",
+        value: {
+          amount: 1234.56789,
+          currency: { symbol: "$", symbolPosition: "left", decimalPlaces: 2 },
+        },
+      }),
+    },
+  },
+}
+
+export const AmountWithCurrencyEuro: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Amount",
+      render: () => ({
+        type: "amount",
+        value: {
+          amount: 1234.56789,
+          currency: { symbol: "EUR", decimalPlaces: 2 },
+        },
       }),
     },
   },
@@ -471,6 +529,37 @@ export const IconType: Story = {
         value: {
           icon: Placeholder,
           label: "Icon",
+        },
+      }),
+    },
+  },
+}
+
+export const FileType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "File",
+      render: () => ({
+        type: "file",
+        value: {
+          name: "My file",
+          type: "application/pdf",
+        },
+      }),
+    },
+  },
+}
+
+export const FolderType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Folder",
+      render: () => ({
+        type: "folder",
+        value: {
+          name: "My folder",
         },
       }),
     },

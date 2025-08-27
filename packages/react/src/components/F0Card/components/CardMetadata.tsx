@@ -3,7 +3,7 @@ import { propertyRenderers } from "@/experimental/OneDataCollection/visualizatio
 import React from "react"
 import { CardMetadata as CardMetadataType } from "../types"
 
-const cardPropertyRenderers = {
+export const cardPropertyRenderers = {
   text: propertyRenderers.text,
   number: propertyRenderers.number,
   date: propertyRenderers.date,
@@ -17,6 +17,8 @@ const cardPropertyRenderers = {
   tagList: propertyRenderers.tagList,
   alertTag: propertyRenderers.alertTag,
   dotTag: propertyRenderers.dotTag,
+  file: propertyRenderers.file,
+  folder: propertyRenderers.folder,
 } as const
 
 export type CardPropertyType = keyof typeof cardPropertyRenderers

@@ -9,11 +9,17 @@ import {
   Office,
   Star,
 } from "@/icons/app"
+import { createAtlaskitDriver } from "@/lib/dnd/atlaskitDriver"
+import { DndProvider } from "@/lib/dnd/context"
 import image from "@storybook-static/avatars/person04.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 import { fn } from "storybook/test"
 import { F0Card } from "../F0Card"
+import { DraggableStoryCard } from "./DraggableStoryCard"
+import { DropLaneCancel } from "./DropLaneCancel"
+import { DropLaneEnter } from "./DropLaneEnter"
+import { DropLaneReorder } from "./DropLaneReorder"
 
 const SlotComponent = () => {
   return (
@@ -33,13 +39,18 @@ const meta = {
   },
   tags: ["autodocs", "stable"],
   decorators: [
-    (Story) => (
-      <div className="flex h-[calc(100vh-32px)] w-full items-center justify-center">
-        <div className="w-full max-w-[372px]">
-          <Story />
+    (Story, context) => {
+      if (context.parameters?.noMetaLayout) {
+        return <Story />
+      }
+      return (
+        <div className="flex h-[calc(100vh-32px)] w-full items-center justify-center">
+          <div className="w-full max-w-[372px]">
+            <Story />
+          </div>
         </div>
-      </div>
-    ),
+      )
+    },
   ],
 } satisfies Meta<typeof F0Card>
 
@@ -255,5 +266,94 @@ export const SkeletonCompact: Story = {
   },
   render: () => {
     return <F0Card.Skeleton compact />
+  },
+}
+
+export const IntentsShowcase: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+    docs: {
+      story: { inline: false, height: "420px" },
+    },
+    noMetaLayout: true,
+  },
+  render: () => {
+    type CardItem = { id: string; title: string }
+
+    const [items, setItems] = useState<CardItem[]>([
+      { id: "card-1", title: "First card" },
+      { id: "card-2", title: "Second card" },
+      { id: "card-3", title: "Third card" },
+    ])
+    const [log, setLog] = useState<string[]>([])
+    const [instanceId] = useState(() => Symbol("showcase-instance"))
+    const getIndexById = (id: string) => items.findIndex((i) => i.id === id)
+    const pushLog = (s: string) => setLog((prev) => [s, ...prev].slice(0, 6))
+
+    return (
+      <DndProvider driver={createAtlaskitDriver(instanceId)}>
+        <div className="flex h-full w-full flex-row justify-center gap-6 align-middle">
+          <div>
+            <p className="mb-2 text-sm font-medium">Reorder</p>
+            <DropLaneReorder
+              id="lane-reorder"
+              instanceId={instanceId}
+              getIndexById={getIndexById}
+              onReorder={(from, to) => {
+                setItems((prev) => {
+                  const next = [...prev]
+                  const [removed] = next.splice(from, 1)
+                  next.splice(to, 0, removed)
+                  return next
+                })
+                pushLog(`reorder: ${from} → ${to}`)
+              }}
+            >
+              {items.map((item, index) => (
+                <DraggableStoryCard
+                  key={item.id}
+                  id={item.id}
+                  index={index}
+                  title={item.title}
+                  description="Drag over cards to reorder"
+                />
+              ))}
+            </DropLaneReorder>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <div>
+              <p className="mb-2 text-sm font-medium">Enter container</p>
+              <DropLaneEnter
+                id="lane-enter"
+                instanceId={instanceId}
+                onEnter={(sourceId) => pushLog(`enter: ${sourceId}`)}
+              >
+                <div className="p-2 text-xs text-f1-foreground-secondary">
+                  Hover here (not over a card) to trigger enter-container
+                </div>
+              </DropLaneEnter>
+            </div>
+
+            <div>
+              <p className="mb-2 text-sm font-medium">Cancel zone</p>
+              <DropLaneCancel id="lane-cancel" instanceId={instanceId}>
+                <div className="p-2 text-xs text-f1-foreground-secondary">
+                  Hover here without targeting a card → cancel intent
+                </div>
+              </DropLaneCancel>
+            </div>
+          </div>
+          <div className="rounded border border-f1-border-secondary p-2 text-xs text-f1-foreground-secondary">
+            <div className="mb-1 font-medium">Log</div>
+            <ul className="list-disc pl-4">
+              {log.map((l, i) => (
+                <li key={i}>{l}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </DndProvider>
+    )
   },
 }

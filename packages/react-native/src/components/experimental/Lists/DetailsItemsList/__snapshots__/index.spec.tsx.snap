@@ -216,14 +216,14 @@ exports[`DetailsItemsList Snapshot  1`] = `
                 className="flex flex-row items-center gap-1.5"
               >
                 <View
-                  className="flex inline-flex"
+                  className="flex inline-flex "
                 >
                   <View
                     className="h-fit w-fit"
                   >
                     <View
                       aria-hidden={true}
-                      className="flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold w-5 h-5 rounded-full bg-f1-background dark:bg-f1-background-inverse-secondary"
+                      className="flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold w-5 h-5 rounded-full dark:bg-f1-background-inverse-secondary bg-f1-background"
                       data-a11y-color-contrast-ignore={true}
                       role="img"
                     >
@@ -374,7 +374,7 @@ exports[`DetailsItemsList Snapshot  1`] = `
                 className="flex flex-row items-center gap-1.5"
               >
                 <View
-                  className="flex inline-flex"
+                  className="flex inline-flex "
                 >
                   <View
                     className="h-fit w-fit"
@@ -503,7 +503,7 @@ exports[`DetailsItemsList Snapshot  1`] = `
                 className="flex flex-row items-center gap-1.5"
               >
                 <View
-                  className="flex inline-flex"
+                  className="flex inline-flex "
                 >
                   <View
                     className="h-fit w-fit"
