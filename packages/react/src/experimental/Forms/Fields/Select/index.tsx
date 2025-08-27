@@ -224,7 +224,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
   return (
     <div
       onClick={(e) => {
-        console.log("clicked select trigger", e)
+        console.log("clicked select DIV", e)
         e.preventDefault()
       }}
     >
@@ -246,7 +246,14 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
             </div>
           </SelectTrigger>
         ) : (
-          <SelectTrigger ref={ref} asChild>
+          <SelectTrigger
+            ref={ref}
+            asChild
+            onClick={(e) => {
+              console.log("clicked select trigger", e)
+              e.preventDefault()
+            }}
+          >
             <InputField
               label={label}
               error={error}
