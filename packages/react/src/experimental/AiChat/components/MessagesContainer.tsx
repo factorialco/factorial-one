@@ -74,6 +74,10 @@ export const MessagesContainer = ({
     }, [])
   }, [messages])
 
+  // the scroll container's height is manually controlled by the size of the biggest turn (see `motion.div` below)
+  // However the initial height is dynamic and set via `flex-1` class.
+  // This way the scroll container takes all available vertical space in the chat window.
+  // When we measure it's size in the effect and start manipulating the hight manually. The flex is reset to initial.
   return (
     <motion.div
       layout
@@ -123,6 +127,7 @@ export const MessagesContainer = ({
         </AnimatePresence>
         {turns.map((turnMessages, turnIndex) => {
           const isCurrentTurn = turnIndex === turns.length - 1
+
           return (
             <div
               className="flex flex-col items-start justify-start gap-2"
