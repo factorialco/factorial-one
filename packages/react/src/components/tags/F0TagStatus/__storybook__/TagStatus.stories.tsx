@@ -4,7 +4,7 @@ import { F0TagStatus } from "../"
 
 const meta: Meta = {
   component: F0TagStatus,
-  title: "Tag/F0TagStatus",
+  title: "Tag/TagStatus",
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
