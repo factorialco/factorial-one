@@ -1,6 +1,6 @@
-import { NewColor } from "@/experimental/Information/Tags/DotTag"
+import { NewColor } from "@/components/tags/F0TagDot"
+import { Placeholder } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
-import { Placeholder } from "../../../icons/app"
 import { PropertyDefinition, renderProperty } from "../property-render"
 
 function Cell({

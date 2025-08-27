@@ -1,11 +1,11 @@
+import { Button } from "@/components/Actions/Button"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { PulseAvatar } from "@/experimental/Information/Avatars/PulseAvatar"
+import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
+import Menu from "@/icons/app/Menu"
+import { cn } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
 import { ComponentProps } from "react"
-import { Button } from "../../../components/Actions/Button"
-import Menu from "../../../icons/app/Menu"
-import { cn } from "../../../lib/utils"
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import { useSidebar } from "../ApplicationFrame/FrameProvider"
 
 const daytimePageVariants = cva({
   base: "pointer-events-none absolute inset-0 h-screen max-h-[1000px] opacity-[0.08]",

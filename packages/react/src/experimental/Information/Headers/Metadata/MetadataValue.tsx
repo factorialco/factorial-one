@@ -1,11 +1,11 @@
+import { F0TagDot } from "@/components/tags/F0TagDot"
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
+import { F0TagStatus } from "@/components/tags/F0TagStatus"
 import { Icon } from "@/components/Utilities/Icon"
+import { Avatar } from "@/experimental/Information/Avatars/Avatar"
+import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
 import { AlertCircle, Warning } from "@/icons/app"
 import { cn } from "@/lib/utils"
-import { Avatar } from "../../Avatars/Avatar"
-import { AvatarList } from "../../Avatars/AvatarList"
-import { DotTag } from "../../Tags/DotTag"
-import { RawTag } from "../../Tags/RawTag"
-import { StatusTag } from "../../Tags/StatusTag"
 import { MetadataItem } from "./index"
 
 const DATE_ICON_STYLES = {
@@ -42,7 +42,7 @@ export function MetadataValue({
       )
 
     case "status":
-      return <StatusTag text={value.label} variant={value.variant} />
+      return <F0TagStatus text={value.label} variant={value.variant} />
     case "list":
       return (
         <AvatarList
@@ -74,7 +74,7 @@ export function MetadataValue({
     case "tag-list":
       return collapse ? (
         <div className="flex flex-wrap items-center justify-center gap-1 font-medium">
-          <RawTag text={value.tags[0]} />
+          <F0TagRaw text={value.tags[0]} />
           {value.tags.length > 1 && (
             <span className="tabular-nums text-f1-foreground-secondary">
               +{value.tags.length - 1}
@@ -89,13 +89,13 @@ export function MetadataValue({
           )}
         >
           {value.tags.map((tag) => (
-            <RawTag key={tag} text={tag} />
+            <F0TagRaw key={tag} text={tag} />
           ))}
         </div>
       )
 
     case "dot-tag":
-      return <DotTag text={value.label} color={value.color} />
+      return <F0TagDot text={value.label} color={value.color} />
     case "date": {
       if (value.icon === undefined) {
         return <span>{value.formattedDate}</span>

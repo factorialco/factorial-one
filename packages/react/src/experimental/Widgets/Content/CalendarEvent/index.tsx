@@ -1,10 +1,10 @@
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { DateAvatar } from "@/experimental/Information/Avatars/DateAvatar"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { ChevronRight } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
-import { Icon, IconType } from "../../../../components/Utilities/Icon"
-import { ChevronRight } from "../../../../icons/app"
-import { cn } from "../../../../lib/utils"
-import { DateAvatar } from "../../../Information/Avatars/DateAvatar"
-import { RawTag } from "../../../Information/Tags/RawTag"
-import { Tooltip } from "../../../Overlays/Tooltip"
 
 type Tag = {
   icon: IconType
@@ -22,7 +22,7 @@ const Tags = ({ tags, right }: { tags: Tag[]; right?: boolean }) => (
     {tags.map((tag) => {
       const Content = (
         <div>
-          <RawTag
+          <F0TagRaw
             icon={tag.icon}
             additionalAccesibleText={`${tag.label}: ${tag.description}`}
           />
