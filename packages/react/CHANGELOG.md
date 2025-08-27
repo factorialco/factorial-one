@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.162.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.2...factorial-one-react-v1.162.0) (2025-08-27)
+
+
+### Features
+
+* **EntitySelect:** enhance match scoring with word normalization ([#2342](https://github.com/factorialco/factorial-one/issues/2342)) ([2f7c6c0](https://github.com/factorialco/factorial-one/commit/2f7c6c03331982271745f5ba44da30867f49abc9))
+
 ## [1.161.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.1...factorial-one-react-v1.161.2) (2025-08-27)
 
 
