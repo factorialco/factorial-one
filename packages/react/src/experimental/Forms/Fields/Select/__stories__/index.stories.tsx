@@ -23,7 +23,12 @@ const SelectWithHooks = (props: SelectProps<string>) => {
   }
 
   return (
-    <div className="w-48">
+    <div
+      className="w-48"
+      onClick={() => {
+        console.log("clicked")
+      }}
+    >
       <Select
         {...props}
         value={localValue}
