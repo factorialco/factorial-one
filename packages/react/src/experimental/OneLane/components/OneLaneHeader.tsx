@@ -1,5 +1,5 @@
+import { F0TagStatus, Variant } from "@/components/tags/F0TagStatus"
 import { Counter } from "@/experimental/Information/Counter"
-import { StatusTag, Variant } from "@/experimental/Information/Tags/StatusTag"
 
 type OneLaneHeaderProps = {
   label: string
@@ -14,7 +14,7 @@ export const OneLaneHeader = ({
 }: OneLaneHeaderProps) => {
   return (
     <div className="flex items-center gap-2 px-1 py-2">
-      <StatusTag text={label} variant={variant || "neutral"} />
+      <F0TagStatus text={label} variant={variant || "neutral"} />
       <Counter size="md" type="default" value={count} />
     </div>
   )

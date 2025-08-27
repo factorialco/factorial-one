@@ -1,9 +1,15 @@
 import { F0Card } from "@/components/F0Card"
+import { DraggableF0Card } from "@/components/F0Card/__stories__/DraggableF0Card"
 import { ArrowUp, Clock, Delete, Pencil, Person, Search } from "@/icons/app"
+import { createAtlaskitDriver } from "@/lib/dnd/atlaskitDriver"
+import { DndProvider } from "@/lib/dnd/context"
+import { useDroppableList } from "@/lib/dnd/hooks"
+import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { RecordType } from "../../OneDataCollection/types"
 import { OneLane } from "../OneLane"
+import type { OneLaneProps } from "../types"
 import {
   additionalMockTasks,
   allMockTasks,
@@ -23,13 +29,24 @@ const meta = {
   },
   tags: ["autodocs", "experimental"],
   decorators: [
-    (Story) => (
-      <div className="flex h-[calc(100vh-32px)] w-full items-center justify-center p-4">
-        <div className="w-full max-w-[400px]">
-          <Story />
+    (Story, context) => {
+      const containerHeight =
+        context.parameters?.containerHeight || "calc(100vh-32px)"
+      const containerMaxWidth = context.parameters?.containerMaxWidth || "400px"
+      return (
+        <div
+          className="flex w-full items-center justify-center p-4"
+          style={{ height: containerHeight as string }}
+        >
+          <div
+            className="w-full"
+            style={{ maxWidth: containerMaxWidth as string }}
+          >
+            <Story />
+          </div>
         </div>
-      </div>
-    ),
+      )
+    },
   ],
 } satisfies Meta<typeof OneLane>
 
@@ -41,7 +58,7 @@ export const Default: Story = {
     maxHeight: 600,
     title: "In Progress",
     items: mockTasks,
-    getKey: (task, _index) => (task as MockTask).id,
+    getKey: (task: RecordType) => (task as MockTask).id,
     hasMore: false,
     renderCard: (task: RecordType, _index: number) => {
       const mockTask = task as MockTask
@@ -105,7 +122,7 @@ export const WithFetchMore: Story = {
     maxHeight: 600,
     title: "Tasks - Infinite Scroll",
     items: mockTasks,
-    getKey: (task, _index) => (task as MockTask).id,
+    getKey: (task: RecordType) => (task as MockTask).id,
     hasMore: true,
     loading: false,
     renderCard: (task: RecordType, _index: number) => {
@@ -130,7 +147,7 @@ export const WithFetchMore: Story = {
       )
     },
   },
-  render: function Render(args: any) {
+  render: function Render(args: OneLaneProps<RecordType>) {
     const [items, setItems] = useState<MockTask[]>(mockTasks)
     const [loading, setLoading] = useState(true)
     const [loadingMore, setLoadingMore] = useState(false)
@@ -203,7 +220,7 @@ export const EmptyState: Story = {
   args: {
     title: "Backlog",
     items: [],
-    getKey: (task) => (task as MockTask).id,
+    getKey: (task: RecordType) => (task as MockTask).id,
     renderCard: (task) => {
       const mockTask = task as MockTask
       return (
@@ -217,7 +234,7 @@ export const CustomEmptyState: Story = {
   args: {
     title: "Backlog",
     items: [],
-    getKey: (task) => (task as MockTask).id,
+    getKey: (task: RecordType) => (task as MockTask).id,
     renderCard: (task) => {
       const mockTask = task as MockTask
       return (
@@ -241,7 +258,7 @@ export const Loading: Story = {
   args: {
     title: "Loading Tasks",
     items: [],
-    getKey: (task) => (task as MockTask).id,
+    getKey: (task: RecordType) => (task as MockTask).id,
     renderCard: (task) => <F0Card title={(task as MockTask).title} />,
     loading: true,
   },
@@ -298,9 +315,15 @@ export const WithImages: Story = {
       image: string
       team: string
     }>,
-    getKey: (project) => (project as any).id,
-    renderCard: (project) => {
-      const proj = project as any
+    getKey: (project: RecordType) => (project as MockTask).id,
+    renderCard: (project: RecordType) => {
+      const proj = project as {
+        id: string
+        title: string
+        description: string
+        image: string
+        team: string
+      }
       return (
         <F0Card
           title={proj.title}
@@ -317,4 +340,186 @@ export const WithImages: Story = {
       )
     },
   },
+}
+
+export const TwoLanesDnD: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+    docs: { story: { inline: false, height: "560px" } },
+    containerHeight: "800px",
+    containerMaxWidth: "900px",
+  },
+  args: {
+    title: "",
+    items: [],
+    getKey: () => "",
+    renderCard: () => null,
+    hasMore: false,
+  },
+  render: () => {
+    const [instanceId] = useState(() => Symbol("two-lanes"))
+    const [left, setLeft] = useState(mockTasks.slice(0, 3))
+    const [right, setRight] = useState(mockTasks.slice(3, 6))
+
+    function LaneDroppable({
+      id,
+      children,
+    }: {
+      id: string
+      children: React.ReactNode
+    }) {
+      const ref = useRef<HTMLDivElement | null>(null)
+      useDroppableList({
+        ref: ref as React.RefObject<HTMLElement>,
+        id,
+        accepts: ["list-card"],
+      })
+      const [isOver, setIsOver] = useState(false)
+      useEffect(() => {
+        return monitorForElements({
+          canMonitor: ({ source }) =>
+            (source.data as { instanceId?: symbol }).instanceId === instanceId,
+          onDropTargetChange: ({ location }) => {
+            const targets = location.current.dropTargets as Array<{
+              data?: { type?: string; id?: string }
+            }>
+            const overThisLane = targets.some(
+              (t) => t.data?.type === "list-droppable" && t.data?.id === id
+            )
+            setIsOver(overThisLane)
+          },
+        })
+      }, [id])
+      return (
+        <div
+          ref={ref}
+          className={
+            "rounded border p-2 transition-colors " +
+            (isOver
+              ? "border-f1-border-hover bg-f1-background-info/20"
+              : "border-f1-border-secondary")
+          }
+        >
+          {children}
+        </div>
+      )
+    }
+
+    return (
+      <DndProvider driver={createAtlaskitDriver(instanceId)}>
+        <div className="grid grid-cols-2 gap-6">
+          <LaneDroppable id="lane-left">
+            <OneLane<MockTask>
+              title="Left"
+              items={left}
+              getKey={(item) => item.id}
+              renderCard={(item, _i) => {
+                return (
+                  <DraggableF0Card
+                    drag={{ id: item.id, type: "list-card" }}
+                    title={item.title}
+                    description={item.description}
+                  />
+                )
+              }}
+            />
+          </LaneDroppable>
+
+          <LaneDroppable id="lane-right">
+            <OneLane<MockTask>
+              title="Right"
+              items={right}
+              getKey={(item) => item.id}
+              renderCard={(item, _i) => {
+                return (
+                  <DraggableF0Card
+                    drag={{ id: item.id, type: "list-card" }}
+                    title={item.title}
+                    description={item.description}
+                  />
+                )
+              }}
+            />
+          </LaneDroppable>
+        </div>
+
+        {/* Simple cross-lane move: drop into a lane appends at end */}
+        <MoveMonitor
+          instanceId={instanceId}
+          onMove={(sourceId, fromLane, toLane) => {
+            if (fromLane === toLane) return
+            setLeft((prev) => {
+              const exists = prev.find((t) => t.id === sourceId)
+              return exists ? prev.filter((t) => t.id !== sourceId) : prev
+            })
+            setRight((prev) => {
+              const inRight = prev.find((t) => t.id === sourceId)
+              if (toLane === "lane-right" && !inRight) {
+                const from =
+                  left.find((t) => t.id === sourceId) ||
+                  right.find((t) => t.id === sourceId)
+                return from ? [...prev, from] : prev
+              }
+              if (toLane === "lane-left" && inRight) {
+                return prev.filter((t) => t.id !== sourceId)
+              }
+              return prev
+            })
+            setLeft((prev) => {
+              const inLeft = prev.find((t) => t.id === sourceId)
+              if (toLane === "lane-left" && !inLeft) {
+                const from =
+                  right.find((t) => t.id === sourceId) ||
+                  left.find((t) => t.id === sourceId)
+                return from ? [...prev, from] : prev
+              }
+              if (toLane === "lane-right" && inLeft) {
+                return prev.filter((t) => t.id !== sourceId)
+              }
+              return prev
+            })
+          }}
+        />
+      </DndProvider>
+    )
+  },
+}
+
+// Types are kept inline in the effect to avoid unused warnings
+
+function MoveMonitor({
+  instanceId,
+  onMove,
+}: {
+  instanceId: symbol
+  onMove: (sourceId: string, fromLaneId: string, toLaneId: string) => void
+}) {
+  useEffect(() => {
+    return monitorForElements({
+      canMonitor: ({ source }) =>
+        (source.data as { instanceId?: symbol }).instanceId === instanceId,
+      onDrop: ({ location, source }) => {
+        if (!location.current.dropTargets.length) return
+        const currentTargets = location.current.dropTargets as Array<{
+          data?: { type?: string; id?: string }
+        }>
+        const initialTargets = location.initial.dropTargets as Array<{
+          data?: { type?: string; id?: string }
+        }>
+
+        const sourceId = String((source.data as { id?: string }).id ?? "")
+        const fromLane = String(
+          initialTargets.find((t) => t.data?.type === "list-droppable")?.data
+            ?.id ?? ""
+        )
+        const toLane = String(
+          currentTargets.find((t) => t.data?.type === "list-droppable")?.data
+            ?.id ?? ""
+        )
+        if (!toLane || !fromLane || !sourceId) return
+        onMove(sourceId, fromLane, toLane)
+      },
+    })
+  }, [instanceId, onMove])
+  return null
 }
