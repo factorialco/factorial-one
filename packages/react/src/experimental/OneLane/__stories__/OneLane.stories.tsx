@@ -17,7 +17,7 @@ import {
   mockTasks,
 } from "./mockData"
 
-const FETCH_DELAY = 1000
+const FETCH_DELAY = 1500
 
 const meta = {
   component: OneLane,
@@ -242,14 +242,17 @@ export const CustomEmptyState: Story = {
       )
     },
     emptyState: (
-      <div className="flex flex-col items-center justify-center py-8 text-center">
-        <div className="mb-2 text-f1-foreground-secondary">
+      <section
+        aria-label="Empty lane"
+        className="flex flex-col items-center justify-center py-8 text-center"
+      >
+        <h2 className="mb-2 text-base font-medium text-f1-foreground">
           No tasks in backlog
-        </div>
-        <div className="text-sm text-f1-foreground-tertiary">
+        </h2>
+        <p className="text-sm text-f1-foreground-secondary">
           Tasks will appear here when added to the backlog
-        </div>
-      </div>
+        </p>
+      </section>
     ),
   },
 }
