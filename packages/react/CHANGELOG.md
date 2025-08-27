@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.161.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.0...factorial-one-react-v1.161.1) (2025-08-27)
+
+
+### Bug Fixes
+
+* Rename tag variants to match name convention ([#2445](https://github.com/factorialco/factorial-one/issues/2445)) ([f8d0f18](https://github.com/factorialco/factorial-one/commit/f8d0f1834d2b16a29f70d1f99e4c981b46645a00))
+
 ## [1.161.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.160.1...factorial-one-react-v1.161.0) (2025-08-25)
 
 
