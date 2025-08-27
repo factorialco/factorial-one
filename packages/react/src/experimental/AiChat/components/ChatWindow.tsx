@@ -1,14 +1,25 @@
 import { cn } from "@/lib/utils"
 import { useChatContext, type WindowProps } from "@copilotkit/react-ui"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { createContext, useContext, useEffect, useRef, useState } from "react"
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 
 interface ChatWindowContextType {
   reachedMaxHeight: boolean
+  messageContainerScrollTop: number
+  setMessageContainerScrollTop: (scrollTop: number) => void
 }
 
 const ChatWindowContext = createContext<ChatWindowContextType>({
   reachedMaxHeight: false,
+  messageContainerScrollTop: 0,
+  setMessageContainerScrollTop: () => {},
 })
 
 export const useChatWindowContext = () => useContext(ChatWindowContext)
@@ -22,6 +33,7 @@ export const ChatWindow = ({ children, ...rest }: WindowProps) => {
   const { setOpen, open } = useChatContext()
   const windowRef = useRef<HTMLDivElement>(null)
   const [windowHeight, setWindowHeight] = useState(MIN_HEIGHT)
+  const [messageContainerScrollTop, setMessageContainerScrollTop] = useState(0)
 
   useEffect(() => {
     if (!open) return
@@ -65,6 +77,18 @@ export const ChatWindow = ({ children, ...rest }: WindowProps) => {
     }
   }, [open])
 
+  const chatWindowContext = useMemo(
+    () => ({
+      reachedMaxHeight:
+        windowHeight >= MAX_HEIGHT ||
+        windowHeight >=
+          document.documentElement.clientHeight - FULL_HEIGHT_MARGIN,
+      messageContainerScrollTop,
+      setMessageContainerScrollTop,
+    }),
+    [messageContainerScrollTop, windowHeight]
+  )
+
   return (
     <DialogPrimitive.Root
       open={open}
@@ -82,14 +106,7 @@ export const ChatWindow = ({ children, ...rest }: WindowProps) => {
           )}
           ref={windowRef}
         >
-          <ChatWindowContext.Provider
-            value={{
-              reachedMaxHeight:
-                windowHeight >= MAX_HEIGHT ||
-                windowHeight >=
-                  document.documentElement.clientHeight - FULL_HEIGHT_MARGIN,
-            }}
-          >
+          <ChatWindowContext.Provider value={chatWindowContext}>
             {children}
           </ChatWindowContext.Provider>
         </DialogPrimitive.Content>
