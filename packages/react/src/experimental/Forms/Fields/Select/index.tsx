@@ -220,108 +220,109 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
       ),
     [filteredOptions]
   )
+  alert("hola")
 
   return (
-    <SelectPrimitive
-      onValueChange={handleLocalValueChange}
-      value={localValue}
-      disabled={disabled}
-      open={openLocal}
-      onOpenChange={handleChangeOpenLocal}
-      {...props}
+    <div
+      onClick={(e) => {
+        console.log("clicked select trigger")
+        e.preventDefault()
+      }}
     >
-      {children ? (
-        <SelectTrigger ref={ref} asChild>
-          <div
-            className="flex w-full items-center justify-between"
-            aria-label={label || placeholder}
-          >
-            {children}
-          </div>
-        </SelectTrigger>
-      ) : (
-        <SelectTrigger
-          ref={ref}
-          asChild
-          onClick={(e) => {
-            console.log("clicked select trigger")
-            e.preventDefault()
-          }}
-        >
-          <InputField
-            label={label}
-            error={error}
-            status={status}
-            hint={hint}
-            icon={icon}
-            labelIcon={labelIcon}
-            hideLabel={hideLabel}
-            value={localValue}
-            onChange={(value) => handleLocalValueChange(value as T)}
-            placeholder={placeholder || ""}
-            disabled={disabled}
-            clearable={clearable}
-            size={size}
-            loading={loading}
-            name={name}
-            onClickContent={() => {
-              handleChangeOpenLocal(!openLocal)
-            }}
-            append={
-              <div
-                className={cn(
-                  "rounded-2xs bg-f1-background-secondary p-0.5",
-                  "flex items-center justify-center",
-                  !disabled && "cursor-pointer"
-                )}
-              >
-                <div
-                  className={cn(
-                    "origin-center transition-transform duration-200",
-                    "flex items-center justify-center",
-                    openLocal && "rotate-180"
-                  )}
-                >
-                  <Icon
-                    onClick={() => {
-                      if (disabled) return
-                      handleChangeOpenLocal(!openLocal)
-                    }}
-                    icon={ChevronDown}
-                    size="sm"
-                  />
-                </div>
-              </div>
-            }
-          >
-            <button
+      <SelectPrimitive
+        onValueChange={handleLocalValueChange}
+        value={localValue}
+        disabled={disabled}
+        open={openLocal}
+        onOpenChange={handleChangeOpenLocal}
+        {...props}
+      >
+        {children ? (
+          <SelectTrigger ref={ref} asChild>
+            <div
               className="flex w-full items-center justify-between"
               aria-label={label || placeholder}
             >
-              {selectedOption && <SelectValue item={selectedOption} />}
-            </button>
-          </InputField>
-        </SelectTrigger>
-      )}
+              {children}
+            </div>
+          </SelectTrigger>
+        ) : (
+          <SelectTrigger ref={ref} asChild>
+            <InputField
+              label={label}
+              error={error}
+              status={status}
+              hint={hint}
+              icon={icon}
+              labelIcon={labelIcon}
+              hideLabel={hideLabel}
+              value={localValue}
+              onChange={(value) => handleLocalValueChange(value as T)}
+              placeholder={placeholder || ""}
+              disabled={disabled}
+              clearable={clearable}
+              size={size}
+              loading={loading}
+              name={name}
+              onClickContent={() => {
+                handleChangeOpenLocal(!openLocal)
+              }}
+              append={
+                <div
+                  className={cn(
+                    "rounded-2xs bg-f1-background-secondary p-0.5",
+                    "flex items-center justify-center",
+                    !disabled && "cursor-pointer"
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "origin-center transition-transform duration-200",
+                      "flex items-center justify-center",
+                      openLocal && "rotate-180"
+                    )}
+                  >
+                    <Icon
+                      onClick={() => {
+                        if (disabled) return
+                        handleChangeOpenLocal(!openLocal)
+                      }}
+                      icon={ChevronDown}
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              }
+            >
+              <button
+                className="flex w-full items-center justify-between"
+                aria-label={label || placeholder}
+              >
+                {selectedOption && <SelectValue item={selectedOption} />}
+              </button>
+            </InputField>
+          </SelectTrigger>
+        )}
 
-      {openLocal && (
-        <SelectContent
-          items={items}
-          className={cn(selectContentClassName)}
-          emptyMessage={searchEmptyMessage}
-          bottom={<SelectBottomActions actions={actions} />}
-          top={
-            <SelectTopActions
-              searchInputRef={searchInputRef}
-              searchValue={searchValue}
-              onSearchChange={onSearchChangeLocal}
-              searchBoxPlaceholder={searchBoxPlaceholder}
-              showSearchBox={showSearchBox}
-            />
-          }
-        ></SelectContent>
-      )}
-    </SelectPrimitive>
+        {openLocal && (
+          <SelectContent
+            items={items}
+            className={cn(selectContentClassName)}
+            emptyMessage={searchEmptyMessage}
+            bottom={<SelectBottomActions actions={actions} />}
+            top={
+              <SelectTopActions
+                searchInputRef={searchInputRef}
+                searchValue={searchValue}
+                onSearchChange={onSearchChangeLocal}
+                searchBoxPlaceholder={searchBoxPlaceholder}
+                showSearchBox={showSearchBox}
+              />
+            }
+          ></SelectContent>
+        )}
+      </SelectPrimitive>
+    </div>
   )
 })
 
