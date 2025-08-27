@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.161.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.1...factorial-one-react-v1.161.2) (2025-08-27)
+
+
+### Bug Fixes
+
+* show proper titles in Storybook ([#2450](https://github.com/factorialco/factorial-one/issues/2450)) ([db9aab8](https://github.com/factorialco/factorial-one/commit/db9aab8c86ab05e66526ef87fb3e8019165a864e))
+
 ## [1.161.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.0...factorial-one-react-v1.161.1) (2025-08-27)
 
 
