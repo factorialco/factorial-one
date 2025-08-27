@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.163.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.0...factorial-one-react-v1.163.1) (2025-08-27)
+
+
+### Bug Fixes
+
+* add context type info ([32663c6](https://github.com/factorialco/factorial-one/commit/32663c612d9d6eac5225b5a64d6404af7d30a645))
+
 ## [1.163.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.162.0...factorial-one-react-v1.163.0) (2025-08-27)
 
 
