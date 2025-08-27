@@ -2,7 +2,7 @@ import { ButtonInternal } from "@/components/Actions/Button/internal"
 import { ArrowDown } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { useCopilotChat } from "@copilotkit/react-core"
+import { useCopilotChatInternal as useCopilotChat } from "@copilotkit/react-core"
 import { useChatContext, type MessagesProps } from "@copilotkit/react-ui"
 import { Message, Role, TextMessage } from "@copilotkit/runtime-client-gql"
 import { AnimatePresence, motion } from "motion/react"
@@ -26,7 +26,8 @@ export const MessagesContainer = ({
 }: MessagesProps) => {
   const turnsContainerRef = useRef<HTMLDivElement>(null)
   const context = useChatContext()
-  const { visibleMessages: messages } = useCopilotChat()
+  const { messages, interrupt } = useCopilotChat()
+
   const { greeting } = useAiChatLabels()
   const translations = useI18n()
   const [longestTurnHeight, setLongestTurnHeight] = useState<number>(0)
@@ -60,13 +61,14 @@ export const MessagesContainer = ({
     const height = lastTurnElement.scrollHeight
     setLongestTurnHeight((prev) => (prev >= height ? prev : height))
   }, [messages.length, initialMessages.length])
-
   const turns = useMemo(() => {
-    return messages.reduce<Message[][]>((turns, message) => {
+    return messages.reduce<Array<Array<Message>>>((turns, message) => {
       if (message && message.role === "user") {
         turns.push([message])
       } else {
-        turns[turns.length - 1].push(message)
+        if (turns.length > 0) {
+          turns[turns.length - 1].push(message)
+        }
       }
       return turns
     }, [])
@@ -133,7 +135,6 @@ export const MessagesContainer = ({
                 const isCurrentMessage =
                   turnIndex === turnMessages.length - 1 &&
                   index === turnMessages.length - 1
-
                 return (
                   <RenderMessage
                     key={`${turnIndex}-${index}`}
@@ -155,6 +156,7 @@ export const MessagesContainer = ({
             </div>
           )
         })}
+        {interrupt}
       </motion.div>
       <footer className="copilotKitMessagesFooter" ref={messagesEndRef}>
         {children}

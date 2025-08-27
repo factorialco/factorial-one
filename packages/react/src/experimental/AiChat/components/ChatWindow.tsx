@@ -5,14 +5,10 @@ import { createContext, useContext, useEffect, useRef, useState } from "react"
 
 interface ChatWindowContextType {
   reachedMaxHeight: boolean
-  setWindowHeight: (height: number) => void
-  windowHeight: number
 }
 
 const ChatWindowContext = createContext<ChatWindowContextType>({
   reachedMaxHeight: false,
-  setWindowHeight: () => {},
-  windowHeight: 0,
 })
 
 export const useChatWindowContext = () => useContext(ChatWindowContext)
@@ -92,8 +88,6 @@ export const ChatWindow = ({ children, ...rest }: WindowProps) => {
                 windowHeight >= MAX_HEIGHT ||
                 windowHeight >=
                   document.documentElement.clientHeight - FULL_HEIGHT_MARGIN,
-              setWindowHeight,
-              windowHeight,
             }}
           >
             {children}
