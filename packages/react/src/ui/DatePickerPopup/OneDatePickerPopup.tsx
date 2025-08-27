@@ -160,7 +160,7 @@ export function OneDatePickerPopup({
 
       return {
         label: compare.label,
-        value: index.toString(),
+        value: (index + 1).toString(), // This leaves index 0 spot vacant for the 'none' option.
         description,
         dateValue: value,
       }
@@ -173,7 +173,7 @@ export function OneDatePickerPopup({
     return [
       {
         label: i18n.date.none,
-        value: "none",
+        value: "0",
         description: "",
         dateValue: undefined,
       },
@@ -183,7 +183,7 @@ export function OneDatePickerPopup({
   }, [compareTo, localValue, granularityDefinition, localGranularity])
 
   useEffect(() => {
-    setSelectedCompareTo("none")
+    setSelectedCompareTo("0")
   }, [localValue])
 
   const handleCompareToChange = (value: string) => {

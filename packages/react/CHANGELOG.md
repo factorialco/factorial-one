@@ -1,5 +1,75 @@
 # Changelog
 
+## [1.161.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.1...factorial-one-react-v1.161.2) (2025-08-27)
+
+
+### Bug Fixes
+
+* show proper titles in Storybook ([#2450](https://github.com/factorialco/factorial-one/issues/2450)) ([db9aab8](https://github.com/factorialco/factorial-one/commit/db9aab8c86ab05e66526ef87fb3e8019165a864e))
+
+## [1.161.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.0...factorial-one-react-v1.161.1) (2025-08-27)
+
+
+### Bug Fixes
+
+* Rename tag variants to match name convention ([#2445](https://github.com/factorialco/factorial-one/issues/2445)) ([f8d0f18](https://github.com/factorialco/factorial-one/commit/f8d0f1834d2b16a29f70d1f99e4c981b46645a00))
+
+## [1.161.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.160.1...factorial-one-react-v1.161.0) (2025-08-25)
+
+
+### Features
+
+* redirect users to docs message ([#2439](https://github.com/factorialco/factorial-one/issues/2439)) ([9b85ee4](https://github.com/factorialco/factorial-one/commit/9b85ee4c5f385e774697f56184577ad94b6e0576))
+
+## [1.160.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.160.0...factorial-one-react-v1.160.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* **DateNavigator:** pass the right value to onCompareToChange ([#2434](https://github.com/factorialco/factorial-one/issues/2434)) ([38ae18e](https://github.com/factorialco/factorial-one/commit/38ae18ea4be729b8b1bf5698a88395288fda260c))
+
+## [1.160.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.159.0...factorial-one-react-v1.160.0) (2025-08-21)
+
+
+### Features
+
+* inputfield status and hint ([#2422](https://github.com/factorialco/factorial-one/issues/2422)) ([4069b47](https://github.com/factorialco/factorial-one/commit/4069b47b2c8f5780972b458c945f81faa86f274c))
+
+## [1.159.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.158.1...factorial-one-react-v1.159.0) (2025-08-21)
+
+
+### Features
+
+* **Icons:** new icons for IT management ([#2432](https://github.com/factorialco/factorial-one/issues/2432)) ([305d13c](https://github.com/factorialco/factorial-one/commit/305d13c03763ab357c1898d2cddfd20ceb2ea193))
+
+## [1.158.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.158.0...factorial-one-react-v1.158.1) (2025-08-21)
+
+
+### Bug Fixes
+
+* empty value when no sorting ([#2430](https://github.com/factorialco/factorial-one/issues/2430)) ([1ac7052](https://github.com/factorialco/factorial-one/commit/1ac7052fe8365e048dc89407cb37fbd6d204aaf3))
+
+## [1.158.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.157.1...factorial-one-react-v1.158.0) (2025-08-20)
+
+
+### Features
+
+* tokens for spacing between elements ([#2423](https://github.com/factorialco/factorial-one/issues/2423)) ([8b6162e](https://github.com/factorialco/factorial-one/commit/8b6162e09973eb0bafbffd5632ca02620c5a465a))
+
+## [1.157.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.157.0...factorial-one-react-v1.157.1) (2025-08-19)
+
+
+### Bug Fixes
+
+* **DataCollection:** let users define avatar type in `AvatarList` cell type ([#2411](https://github.com/factorialco/factorial-one/issues/2411)) ([3480303](https://github.com/factorialco/factorial-one/commit/3480303d816e94fe6dbf6ee2a6c457c2242e89ea))
+
+## [1.157.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.156.0...factorial-one-react-v1.157.0) (2025-08-19)
+
+
+### Features
+
+* **DropdownButton:** use internal Action component as base ([#2412](https://github.com/factorialco/factorial-one/issues/2412)) ([c930e53](https://github.com/factorialco/factorial-one/commit/c930e53395573959b45e65815b1c0745be64a4d2))
+
 ## [1.156.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.155.0...factorial-one-react-v1.156.0) (2025-08-18)
 
 

@@ -1,6 +1,6 @@
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { Icon } from "@/components/Utilities/Icon"
 
-import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import {
   BaseFetchOptions,
@@ -95,11 +95,13 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = {
     | "labelIcon"
     | "size"
     | "label"
-    | "error"
     | "icon"
     | "placeholder"
     | "disabled"
     | "name"
+    | "error"
+    | "status"
+    | "hint"
   >
 
 const SelectItem = <T extends string, R>({
@@ -126,7 +128,7 @@ const SelectItem = <T extends string, R>({
         </div>
         {item.tag && (
           <div className="self-center">
-            <RawTag text={item.tag} />
+            <F0TagRaw text={item.tag} />
           </div>
         )}
       </div>
@@ -175,12 +177,14 @@ const SelectComponent = forwardRef(function Select<
     actions,
     source,
     label,
-    error,
     icon,
     labelIcon,
     clearable,
     loading,
     name,
+    error,
+    status,
+    hint,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -429,6 +433,8 @@ const SelectComponent = forwardRef(function Select<
             <InputField
               label={label}
               error={error}
+              status={status}
+              hint={hint}
               icon={icon}
               labelIcon={labelIcon}
               hideLabel={hideLabel}

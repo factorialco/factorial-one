@@ -49,7 +49,7 @@ export function CardActions({
       )}
     >
       {secondaryActions && (
-        <div className="flex w-full flex-col gap-2 sm:flex-row [&_a]:justify-center sm:[&_a]:justify-start [&_button]:w-full sm:[&_button]:w-fit [&_div]:w-full [&_div]:justify-center sm:[&_div]:w-fit">
+        <div className="flex w-full flex-col gap-md sm:flex-row [&_a]:justify-center sm:[&_a]:justify-start [&_button]:w-full sm:[&_button]:w-fit [&_div]:w-full [&_div]:justify-center sm:[&_div]:w-fit">
           {Array.isArray(secondaryActions) ? (
             secondaryActions.map((action, index) => (
               <Button

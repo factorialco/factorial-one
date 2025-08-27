@@ -52,6 +52,8 @@ const defaultSelectProps = {
   size: "md" as const,
   disabled: false,
   placeholder: "",
+  label: "Pick an option",
+  hideLabel: false,
 }
 
 describe("Select", () => {
@@ -63,6 +65,12 @@ describe("Select", () => {
   }))
 
   beforeEach(() => {
+    Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+      value: 800,
+    })
+    Object.defineProperty(HTMLElement.prototype, "offsetWidth", {
+      value: 800,
+    })
     vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
       () => ({
         width: 120,
@@ -73,7 +81,6 @@ describe("Select", () => {
         right: 0,
         x: 0,
         y: 0,
-
         toJSON: () => {},
       })
     )
@@ -92,8 +99,6 @@ describe("Select", () => {
     render(
       <Select
         {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
         options={mockOptions}
         onChange={() => {}}
         placeholder="Select an option"
@@ -107,8 +112,6 @@ describe("Select", () => {
     render(
       <Select
         {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
         options={mockOptions}
         onChange={() => {}}
       />
@@ -126,8 +129,6 @@ describe("Select", () => {
     render(
       <Select
         {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
         options={mockOptions}
         onChange={() => {}}
         value="option1"
@@ -144,8 +145,6 @@ describe("Select", () => {
     render(
       <Select
         {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -163,8 +162,6 @@ describe("Select", () => {
     render(
       <Select
         {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -185,8 +182,6 @@ describe("Select", () => {
     render(
       <Select
         {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -242,8 +237,6 @@ describe("Select", () => {
     render(
       <Select
         {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
         options={mockOptions}
         onChange={() => {}}
         disabled
@@ -257,13 +250,7 @@ describe("Select", () => {
 
   it("renders with custom trigger", () => {
     render(
-      <Select
-        {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-      >
+      <Select {...defaultSelectProps} options={mockOptions} onChange={() => {}}>
         <button>Custom Trigger</button>
       </Select>
     )
@@ -278,8 +265,6 @@ describe("Select", () => {
     render(
       <Select
         {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
         options={mockOptions}
         onChange={handleChange}
       />
@@ -326,8 +311,6 @@ describe("Select", () => {
     render(
       <Select
         {...defaultSelectProps}
-        label="Select an option"
-        hideLabel
         options={mockOptions}
         onChange={handleChange}
       />
