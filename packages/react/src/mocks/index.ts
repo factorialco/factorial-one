@@ -1,4 +1,4 @@
-import { NewColor } from "@/experimental/Information/Tags/DotTag"
+import { NewColor } from "@/components/tags/F0TagDot"
 import {
   Ai,
   Alert,
