@@ -57,7 +57,7 @@ export function DropLaneReorder({
         onReorder(startIndex, finishIndex, sourceId)
       },
     })
-  }, [instanceId, getIndexById, onReorder])
+  }, [instanceId, id, getIndexById, onReorder])
 
   return (
     <div className="rounded border border-solid p-2">

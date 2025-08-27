@@ -40,7 +40,7 @@ export function DropLaneEnter({
         }
       },
     })
-  }, [instanceId, onEnter])
+  }, [instanceId, id, onEnter])
 
   return (
     <div>
