@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.163.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.162.0...factorial-one-react-v1.163.0) (2025-08-27)
+
+
+### Features
+
+* **ai:** smooth scrolling ([#2457](https://github.com/factorialco/factorial-one/issues/2457)) ([30c71b3](https://github.com/factorialco/factorial-one/commit/30c71b3291010ef8da5656371d540f2ab7287306))
+
 ## [1.162.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.2...factorial-one-react-v1.162.0) (2025-08-27)
 
 
