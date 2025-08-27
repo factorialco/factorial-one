@@ -4,7 +4,7 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useCopilotChatInternal as useCopilotChat } from "@copilotkit/react-core"
 import { useChatContext, type MessagesProps } from "@copilotkit/react-ui"
-import { Message, Role, TextMessage } from "@copilotkit/runtime-client-gql"
+import { type Message } from "@copilotkit/shared"
 import { AnimatePresence, motion } from "motion/react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useEventListener, useResizeObserver } from "usehooks-ts"
@@ -108,20 +108,14 @@ export const MessagesContainer = ({
                   {greeting}
                 </p>
               )}
-              {initialMessages.map((message) => {
-                if (!message.isTextMessage()) {
-                  return null
-                }
-
-                return (
-                  <p
-                    className="text-2xl font-semibold text-f1-foreground"
-                    key={message.id}
-                  >
-                    {message.content}
-                  </p>
-                )
-              })}
+              {initialMessages.map((message) => (
+                <p
+                  className="text-2xl font-semibold text-f1-foreground"
+                  key={message.id}
+                >
+                  {message.content}
+                </p>
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
@@ -201,13 +195,11 @@ function makeInitialMessages(initial?: string | string[]): Message[] {
     }
   }
 
-  return initialArray.map(
-    (message) =>
-      new TextMessage({
-        role: Role.Assistant,
-        content: message,
-      })
-  )
+  return initialArray.map((message) => ({
+    id: message,
+    role: "assistant",
+    content: message,
+  }))
 }
 
 export function useScrollToBottom() {
