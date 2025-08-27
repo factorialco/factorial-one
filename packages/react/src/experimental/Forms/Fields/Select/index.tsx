@@ -220,7 +220,6 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
       ),
     [filteredOptions]
   )
-  alert("hola")
 
   return (
     <div
