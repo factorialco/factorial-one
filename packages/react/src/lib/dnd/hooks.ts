@@ -19,7 +19,7 @@ export function useDraggable(args: {
       disabled,
       handle: handleRef?.current ?? null,
     })
-  }, [ctx, ref, payload.id, payload.kind, disabled, handleRef])
+  }, [ctx, ref, payload, disabled, handleRef])
 }
 
 export function useDroppableList(args: {
@@ -34,10 +34,15 @@ export function useDroppableList(args: {
     if (!ref.current) return
     if (!ctx) return
     return ctx.driver.registerDroppable(ref.current, { id, accepts })
-  }, [ctx, ref, id, accepts.join("|")])
+  }, [ctx, ref, id, accepts])
 }
 
-export function useDndEvents(handler: (e: any) => void) {
+export function useDndEvents(
+  handler: (e: {
+    phase: "start" | "over" | "drop" | "cancel"
+    source: DragPayload
+  }) => void
+) {
   const ctx = useDndContextOptional()
   useEffect(
     () => (ctx ? ctx.driver.subscribe(handler) : undefined),

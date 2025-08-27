@@ -1,4 +1,4 @@
-import { useDraggable } from "@/lib/exports"
+import { useDraggable } from "@/lib/dnd/hooks"
 import { useRef } from "react"
 import { F0Card } from "../F0Card"
 

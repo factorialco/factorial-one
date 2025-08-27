@@ -5,12 +5,12 @@ import {
   dropTargetForElements,
   monitorForElements,
 } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
-import type { DndDriver, DragPayload } from "./types"
+import type { DndDriver, DragPayload, DropIntent } from "./types"
 
 type Subscriber = (e: {
   phase: "start" | "over" | "drop" | "cancel"
   source: DragPayload
-  intent?: any
+  intent?: DropIntent
 }) => void
 
 export function createAtlaskitDriver(instanceId: symbol): DndDriver {

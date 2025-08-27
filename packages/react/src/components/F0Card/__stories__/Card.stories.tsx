@@ -9,7 +9,8 @@ import {
   Office,
   Star,
 } from "@/icons/app"
-import { DndProvider, createAtlaskitDriver } from "@/lib/exports"
+import { createAtlaskitDriver } from "@/lib/dnd/atlaskitDriver"
+import { DndProvider } from "@/lib/dnd/context"
 import image from "@storybook-static/avatars/person04.jpg"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"

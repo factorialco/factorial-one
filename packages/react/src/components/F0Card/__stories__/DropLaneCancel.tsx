@@ -1,4 +1,4 @@
-import { useDroppableList } from "@/lib/exports"
+import { useDroppableList } from "@/lib/dnd/hooks"
 import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
 import { useEffect, useRef, useState } from "react"
 
