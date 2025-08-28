@@ -7,23 +7,19 @@ import {
 } from "@storybook/addon-docs/blocks"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
-import * as DataCollectionStories from "./index.stories"
-import * as ActionDataCollectionStories from "./collection-actions.stories"
-import * as CellTypesDataCollectionStories from "./cell-types.stories"
+import * as DataCollectionStories from "../../../experimental/OneDataCollection/__stories__/index.stories"
+import * as ActionDataCollectionStories from "../../../experimental/OneDataCollection/__stories__/collection-actions.stories"
+import * as CellTypesDataCollectionStories from "./MetadataTypes.stories"
 
-<Meta title="Data collection/Cell Types" />
+<Meta title="Metadata" />
 
-# Data collection Cell Types / Properties
+# Metadata
 
 ## Introduction
 
 In order to provide an homogeneus experience to the customers and abstract the
-render logic to developers, Data Collection's visualizacions ara limited to the
-following cell types
-
-Cell types also provide a semantic meaning to the data and allow visualizations
-to render the data according to the cell type, for example a `number` cell type
-renders the value as text and in the table visualizacion aligns it to right
+render logic to developers, Metadata provices a semantic way to define the
+value'srender of a property.
 
 The way a cell/property must be rendered is defined in the `render` function of
 the datacollection, the type is the cell type to render and the value depends on

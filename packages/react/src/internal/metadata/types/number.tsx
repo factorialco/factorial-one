@@ -4,7 +4,7 @@
  */
 import { cn } from "@/lib/utils"
 import { isShowingPlaceholder, resolveValue } from "../property-utils"
-import { PropertyRendererMetadata } from "../types"
+import { PropertyRendererContext } from "../renderers"
 import { WithPlaceholder } from "./types"
 
 interface NumberValue extends WithPlaceholder {
@@ -18,7 +18,7 @@ export type NumberCellValue = number | undefined | NumberValue
 
 export const NumberCell = (
   args: NumberCellValue,
-  meta: PropertyRendererMetadata<never>
+  meta: PropertyRendererContext
 ) => {
   const value = resolveValue<number>(args, "number")
   const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "number")

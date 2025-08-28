@@ -2,7 +2,7 @@
  * Amount cell type for displaying monetary values in data collections.
  * Similar to number cell but specifically designed for currency amounts.
  */
-import { PropertyRendererMetadata } from "../types"
+import { PropertyRendererContext } from "../renderers"
 import { NumberCell } from "./number"
 import { WithPlaceholder } from "./types"
 
@@ -21,7 +21,7 @@ export type AmountCellValue = number | undefined | AmountValue
 
 export const AmountCell = (
   args: AmountCellValue,
-  meta: PropertyRendererMetadata<never>
+  meta: PropertyRendererContext
 ) => {
   const amount = {
     // defaults
