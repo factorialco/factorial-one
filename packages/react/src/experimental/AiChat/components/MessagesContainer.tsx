@@ -139,8 +139,9 @@ export const MessagesContainer = ({
             >
               {turnMessages.map((message, index) => {
                 const isCurrentMessage =
-                  turnIndex === turnMessages.length - 1 &&
+                  turnIndex === turns.length - 1 &&
                   index === turnMessages.length - 1
+
                 return (
                   <RenderMessage
                     key={`${turnIndex}-${index}`}
