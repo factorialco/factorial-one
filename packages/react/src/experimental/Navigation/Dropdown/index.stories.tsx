@@ -50,7 +50,6 @@ export const Default: Story = {
 
 export const PlayTest: Story = {
   parameters: {
-    chromatic: { disableSnapshot: true },
     a11y: {
       skipCi: true,
       disable: true, // as the play test uses body storybook container, it will be marked as an issues

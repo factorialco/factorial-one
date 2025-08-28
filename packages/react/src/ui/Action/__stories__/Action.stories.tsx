@@ -6,9 +6,6 @@ import { Action } from "../Action"
 const meta: Meta<typeof Action> = {
   title: "Components/Action",
   component: Action,
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   tags: ["autodocs"],
   argTypes: {
     variant: {
