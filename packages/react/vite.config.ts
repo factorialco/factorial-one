@@ -94,7 +94,7 @@ export default defineConfig({
     outDir: "dist",
     copyPublicDir: false,
     rollupOptions: {
-      external: ["react/jsx-runtime", "react", "react-dom"],
+      external: ["react/jsx-runtime", "react", "react-dom", /@copilotkit\/.*/],
       maxParallelFileOps: 100, // Workaround to fix rebuild https://github.com/vitejs/vite/issues/19410#issuecomment-2661835482
       output: {
         globals: {
@@ -106,5 +106,11 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     setupFiles: ["./vite/vitest.setup.ts"],
+    coverage: {
+      // you can include other reporters, but 'json-summary' is required, json is recommended
+      reporter: ["text", "json-summary", "json"],
+      // If you want a coverage reports even if your tests are failing, include the reportOnFailure option
+      reportOnFailure: true,
+    },
   },
 })

@@ -1,15 +1,15 @@
-import { AvatarBadge } from "@/experimental/exports"
+import { Button } from "@/components/Actions/Button"
+import { F0TagDot, TagDotProps } from "@/components/tags/F0TagDot"
+import { F0TagRaw, TagRawProps } from "@/components/tags/F0TagRaw"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { AvatarBadge } from "@/experimental/Information/Avatars/types"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { InfoCircle } from "@/icons/app"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import React from "react"
-import { Button } from "../../../components/Actions/Button"
-import { Icon, IconType } from "../../../components/Utilities/Icon"
-import { InfoCircle } from "../../../icons/app"
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import { DotTag, DotTagProps } from "../../Information/Tags/DotTag"
-import { RawTag, RawTagProps } from "../../Information/Tags/RawTag"
 
 export type OnePersonListItemProps = {
   person: {
@@ -19,8 +19,8 @@ export type OnePersonListItemProps = {
     avatarBadge?: AvatarBadge
   }
   description?: string
-  bottomTags: Omit<RawTagProps, "noBorder">[]
-  rightTag?: DotTagProps
+  bottomTags: Omit<TagRawProps, "noBorder">[]
+  rightTag?: TagDotProps
   actions?: {
     primary?: {
       icon?: IconType
@@ -77,7 +77,7 @@ const BaseOnePersonListItem = React.forwardRef<
           <div className="-ml-1.5 flex flex-row items-center [&>div]:-mr-1">
             {props.bottomTags.map((tag, i) => (
               <>
-                <RawTag
+                <F0TagRaw
                   key={tag.text}
                   {...tag}
                   className="text-f1-foreground-secondary"
@@ -96,7 +96,7 @@ const BaseOnePersonListItem = React.forwardRef<
       </div>
       <div className="flex flex-row items-center justify-between gap-2">
         {"rightTag" in props && props.rightTag && (
-          <DotTag {...props.rightTag} />
+          <F0TagDot {...props.rightTag} />
         )}
         {"actions" in props && (
           <div className="flex flex-1 flex-row items-center justify-end gap-2">

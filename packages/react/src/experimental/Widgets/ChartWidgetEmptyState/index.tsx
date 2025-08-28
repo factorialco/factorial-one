@@ -20,8 +20,8 @@ interface Props {
 export type ChatWidgetEmptyStateProps = Props
 
 const ROOT_CLASSNAMES: Record<Type, string> = {
-  "line-chart": "border-f1-border-accent-alpha20",
-  "bar-chart": "border-f1-border-promote-alpha30",
+  "line-chart": "border-f1-border",
+  "bar-chart": "border-f1-border-promote",
 }
 
 const CONTENT_CLASSNAMES: Record<Type, string> = {
@@ -30,8 +30,8 @@ const CONTENT_CLASSNAMES: Record<Type, string> = {
 }
 
 const BG_CLASSNAMES: Record<Type, string> = {
-  "line-chart": "from-f1-background-accent-alpha5",
-  "bar-chart": "from-f1-background-promote-alpha5",
+  "line-chart": "from-f1-background-accent",
+  "bar-chart": "from-f1-background-promote",
 }
 
 const BUTTON_VARIANT: Record<Type, ButtonProps["variant"]> = {
@@ -63,7 +63,7 @@ export const ChartWidgetEmptyState = forwardRef<HTMLDivElement, Props>(
         <CardContent className={cn("flex flex-col gap-4", contentClassName)}>
           <div
             className={cn(
-              "absolute -top-12 bottom-0 left-0 right-0 flex flex-col justify-end bg-gradient-to-b to-transparent",
+              "absolute -top-12 bottom-0 left-0 right-0 flex flex-col justify-end bg-gradient-to-b to-transparent opacity-30",
               bgClassName
             )}
           >

@@ -24,9 +24,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const BasicListVisualization: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     const mockVisualizations = getMockVisualizations()
     return <ExampleComponent visualizations={[mockVisualizations.list]} />
@@ -34,9 +31,6 @@ export const BasicListVisualization: Story = {
 }
 
 export const ListVisualizationWithGrouping: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     const mockVisualizations = getMockVisualizations()
     return (
@@ -63,9 +57,6 @@ export const ListVisualizationWithGrouping: Story = {
 }
 
 export const ListVisualizationWithGroupingAndAllGroupsOpenByDefault: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     const mockVisualizations = getMockVisualizations()
     return (
@@ -93,9 +84,6 @@ export const ListVisualizationWithGroupingAndAllGroupsOpenByDefault: Story = {
 }
 
 export const ListVisualizationWithInfiniteScrollPagination: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     const mockVisualizations = getMockVisualizations()
     return (
@@ -105,6 +93,25 @@ export const ListVisualizationWithInfiniteScrollPagination: Story = {
           data: generateMockUsers(100),
           paginationType: "infinite-scroll",
         })}
+        totalItemSummary={(totalItems) => `Total items: ${totalItems}`}
+        fullHeight
+      />
+    )
+  },
+}
+
+export const ListVisualizationWithRegularPagination: Story = {
+  render: () => {
+    const mockVisualizations = getMockVisualizations()
+    return (
+      <ExampleComponent
+        visualizations={[mockVisualizations.list]}
+        dataAdapter={createDataAdapter({
+          data: generateMockUsers(100),
+          paginationType: "pages",
+        })}
+        totalItemSummary={(totalItems) => `Total items: ${totalItems}`}
+        fullHeight
       />
     )
   },

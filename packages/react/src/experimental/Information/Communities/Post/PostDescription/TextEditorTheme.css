@@ -75,7 +75,7 @@
 }
 
 .FactorialOneTextEditor .TextEditorTheme__link {
-  @apply font-medium text-f1-link;
+  @apply font-medium text-f1-foreground underline;
 }
 
 .FactorialOneTextEditor .TextEditorTheme__link:hover {

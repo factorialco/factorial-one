@@ -1,5 +1,5 @@
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { Icon } from "@/components/Utilities/Icon"
-import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { InputField, InputFieldProps } from "@/ui/InputField"
@@ -54,9 +54,11 @@ export type SelectProps<T, R = any> = {
   | "labelIcon"
   | "size"
   | "label"
-  | "error"
   | "icon"
   | "placeholder"
+  | "error"
+  | "status"
+  | "hint"
 >
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
@@ -79,7 +81,7 @@ const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
         </div>
         {item.tag && (
           <div className="self-center">
-            <RawTag text={item.tag} />
+            <F0TagRaw text={item.tag} />
           </div>
         )}
       </div>
@@ -123,12 +125,14 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
     selectContentClassName,
     actions,
     label,
-    error,
     icon,
     labelIcon,
     clearable,
     loading,
     name,
+    error,
+    status,
+    hint,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -240,6 +244,8 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
           <InputField
             label={label}
             error={error}
+            status={status}
+            hint={hint}
             icon={icon}
             labelIcon={labelIcon}
             hideLabel={hideLabel}

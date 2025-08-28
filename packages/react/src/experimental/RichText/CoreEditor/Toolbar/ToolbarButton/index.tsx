@@ -1,5 +1,5 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { Shortcut } from "@/experimental/exports"
+import { Shortcut } from "@/experimental/Information/Shortcut"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"

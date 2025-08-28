@@ -78,7 +78,9 @@ export const Settings = <
     : 0
 
   const shouldShowSettings =
-    (visualizations && visualizations.length > 1) || groupByOptions > 0
+    (visualizations && visualizations.length > 1) ||
+    (groupByOptions > 0 && !grouping?.hideSelector) ||
+    (sortings && Object.keys(sortings).length > 0)
 
   const [open, setOpen] = useState(false)
 
@@ -97,64 +99,64 @@ export const Settings = <
   const hasGrouping = grouping && groupByOptions > 0
   const hasSortings = sortings && Object.keys(sortings).length > 0
 
+  if (!shouldShowSettings) return null
+
   return (
-    shouldShowSettings && (
-      <div className="flex gap-2">
-        <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild onClick={() => setOpen(!open)}>
-            <Button
-              variant="outline"
-              label="Filters"
-              icon={Sliders}
-              onClick={() => {}}
-              hideLabel
-              round
-              pressed={open}
-            />
-          </PopoverTrigger>
-          <PopoverContent
-            className="flex w-[280px] flex-col gap-0 rounded-md border border-solid border-f1-border-secondary p-0"
-            align="end"
-            sideOffset={8}
-          >
-            {[
-              hasVisualizations && (
-                <VisualizationSelector
-                  key="visualization"
-                  visualizations={visualizations}
-                  currentVisualization={currentVisualization}
-                  onVisualizationChange={handleVisualizationChange}
-                />
-              ),
-              hasGrouping && (
-                <GroupingSelector
-                  key="grouping"
-                  grouping={grouping}
-                  currentGrouping={currentGrouping}
-                  onGroupingChange={handleGroupingChange}
-                />
-              ),
-              hasSortings && (
-                <SortingSelector
-                  key="sorting"
-                  currentSortings={currentSortings}
-                  onChange={onSortingsChange}
-                  sortings={sortings}
-                />
-              ),
-            ]
-              .filter(Boolean)
-              .map((block, index, array) => (
-                <div key={index}>
-                  {block}
-                  {index < array.length - 1 && (
-                    <div className="h-px w-full bg-f1-border-secondary" />
-                  )}
-                </div>
-              ))}
-          </PopoverContent>
-        </Popover>
-      </div>
-    )
+    <div className="flex gap-2">
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild onClick={() => setOpen(!open)}>
+          <Button
+            variant="outline"
+            label="Filters"
+            icon={Sliders}
+            onClick={() => {}}
+            hideLabel
+            round
+            pressed={open}
+          />
+        </PopoverTrigger>
+        <PopoverContent
+          className="flex w-[280px] flex-col gap-0 rounded-md border border-solid border-f1-border-secondary p-0"
+          align="end"
+          sideOffset={8}
+        >
+          {[
+            hasVisualizations && (
+              <VisualizationSelector
+                key="visualization"
+                visualizations={visualizations}
+                currentVisualization={currentVisualization}
+                onVisualizationChange={handleVisualizationChange}
+              />
+            ),
+            hasGrouping && !grouping?.hideSelector && (
+              <GroupingSelector
+                key="grouping"
+                grouping={grouping}
+                currentGrouping={currentGrouping}
+                onGroupingChange={handleGroupingChange}
+              />
+            ),
+            hasSortings && (
+              <SortingSelector
+                key="sorting"
+                currentSortings={currentSortings}
+                onChange={onSortingsChange}
+                sortings={sortings}
+              />
+            ),
+          ]
+            .filter(Boolean)
+            .map((block, index, array) => (
+              <div key={index}>
+                {block}
+                {index < array.length - 1 && (
+                  <div className="h-px w-full bg-f1-border-secondary" />
+                )}
+              </div>
+            ))}
+        </PopoverContent>
+      </Popover>
+    </div>
   )
 }

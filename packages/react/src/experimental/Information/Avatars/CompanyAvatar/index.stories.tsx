@@ -26,18 +26,12 @@ type Story = StoryObj<typeof CompanyAvatar>
 export const Default: Story = {}
 
 export const WithImage: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     src: "/avatars/factorial.png",
   },
 }
 
 export const WithModuleBadge: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     src: "/avatars/factorial.png",
     badge: {

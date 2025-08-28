@@ -1,9 +1,5 @@
 import { Icon } from "@/components/Utilities/Icon"
-import {
-  EditorBubbleMenu,
-  Toolbar,
-  ToolbarLabels,
-} from "@/experimental/RichText/CoreEditor"
+import { Toolbar, ToolbarLabels } from "@/experimental/RichText/CoreEditor"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
 import { Handle, Plus } from "@/icons/app"
 import { Button } from "@/ui/button"
@@ -279,15 +275,6 @@ const BasicTextEditorComponent = forwardRef<
         <EditorContent
           editor={editor}
           className="pb-6 [&>div]:w-full [&>div]:px-16"
-        />
-
-        <EditorBubbleMenu
-          editor={editor}
-          toolbarLabels={toolbarLabels}
-          disableButtons={false}
-          isToolbarOpen={false}
-          isFullscreen={false}
-          editorId={editorId}
         />
       </ScrollArea>
     </div>

@@ -1,16 +1,11 @@
-import {
-  Button,
-  ButtonProps,
-  IconType,
-  ProductWidget,
-  UpsellRequestResponseDialog,
-} from "@/factorial-one"
-import { Popover, PopoverContent, PopoverTrigger } from "../../../ui/popover"
-
+import { Button, ButtonProps } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { PopoverContentProps } from "@radix-ui/react-popover"
 import { useState } from "react"
 import { Upsell } from "../../../icons/app"
-import { Action } from "../ProductWidget"
+import { Action, ProductWidget } from "../ProductWidget"
+import { UpsellRequestResponseDialog } from "../UpsellRequestResponseDialog"
 
 type UpsellingPopoverProps = {
   isOpen: boolean
