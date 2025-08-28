@@ -177,6 +177,7 @@ export const defaultTranslations = {
   ai: {
     openChat: "Open Chat",
     description: "Chat with AI",
+    scrollToBottom: "Scroll to bottom",
   },
 } as const
 
