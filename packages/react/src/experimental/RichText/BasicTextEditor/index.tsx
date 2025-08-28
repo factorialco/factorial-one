@@ -230,13 +230,11 @@ const BasicTextEditorComponent = forwardRef<
         />
       </div>
 
-      <ScrollArea
-        className="basic-text-editor-container h-full gap-6 pt-6"
-        onClick={() => editor.commands.focus()}
-      >
-        {onTitleChange && (
+      <ScrollArea className="h-full gap-6 pt-6">
+        {(onTitleChange || title) && (
           <div className="flex flex-col px-16 pb-6">
             <input
+              disabled={!onTitleChange}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder={labels.titlePlaceholder || ""}
@@ -244,38 +242,43 @@ const BasicTextEditorComponent = forwardRef<
             />
           </div>
         )}
-        <DragHandle
-          editor={editor}
-          tippyOptions={tippyOptions}
-          onNodeChange={handleNodeChange}
+        <div
+          className="basic-text-editor-container h-full"
+          onClick={() => editor.commands.focus()}
         >
-          <div className="flex flex-row">
-            <Button
-              round
-              variant="ghost"
-              size="sm"
-              className="text-f1-foreground-tertiary"
-              onClick={handlePlusClick}
-            >
-              <Icon icon={Plus} size="sm" />
-            </Button>
-            <Button
-              round
-              variant="ghost"
-              size="sm"
-              className="text-f1-foreground-tertiary"
-              data-drag-handle
-              draggable
-            >
-              <Icon icon={Handle} size="xs" />
-            </Button>
-          </div>
-        </DragHandle>
+          <DragHandle
+            editor={editor}
+            tippyOptions={tippyOptions}
+            onNodeChange={handleNodeChange}
+          >
+            <div className="flex flex-row">
+              <Button
+                round
+                variant="ghost"
+                size="sm"
+                className="text-f1-foreground-tertiary"
+                onClick={handlePlusClick}
+              >
+                <Icon icon={Plus} size="sm" />
+              </Button>
+              <Button
+                round
+                variant="ghost"
+                size="sm"
+                className="text-f1-foreground-tertiary"
+                data-drag-handle
+                draggable
+              >
+                <Icon icon={Handle} size="xs" />
+              </Button>
+            </div>
+          </DragHandle>
 
-        <EditorContent
-          editor={editor}
-          className="pb-6 [&>div]:w-full [&>div]:px-16"
-        />
+          <EditorContent
+            editor={editor}
+            className="pb-6 [&>div]:w-full [&>div]:px-16"
+          />
+        </div>
       </ScrollArea>
     </div>
   )
