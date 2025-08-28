@@ -1,5 +1,4 @@
 import { Button as ActionButton } from "@/components/Actions/Button"
-import { BaseAvatar } from "@/components/avatars/BaseAvatar"
 import { Icon, IconProps, IconType } from "@/components/Utilities/Icon"
 import {
   FaceNegative,
@@ -14,6 +13,7 @@ import { useI18n } from "@/lib/providers/i18n"
 import { Button } from "@/ui/button"
 import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, useState } from "react"
+import { BaseAvatar } from "../BaseAvatar"
 
 export type Pulse =
   | "superNegative"
