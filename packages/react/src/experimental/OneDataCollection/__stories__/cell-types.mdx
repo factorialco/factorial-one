@@ -1,0 +1,30 @@
+import {
+  Canvas,
+  Meta,
+  Controls,
+  Unstyled,
+  Story,
+} from "@storybook/addon-docs/blocks"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
+
+import * as DataCollectionStories from "./index.stories"
+import * as ActionDataCollectionStories from "./collection-actions.stories"
+import * as CellTypesDataCollectionStories from "./MetadataTypes.stories"
+
+<Meta title="OneDataCollection/Cell Types" />
+
+# Cell Types
+
+## Introduction
+
+In order to provide an homogeneus experience to the customers and abstract the
+render logic to developers, Metadata provices a semantic way to define the
+value'srender of a property.
+
+The way a cell/property must be rendered is defined in the `render` function of
+the datacollection, the type is the cell type to render and the value depends on
+that type
+
+{/* prettier-ignore */}
+Check <LinkTo kind="Metadata" story="Documentation">Metadata</LinkTo>
+for details.

@@ -17,6 +17,20 @@ import { TagListCell } from "./types/tagList.tsx"
 import { TeamCell } from "./types/team.tsx"
 import { TextCell } from "./types/text.tsx"
 
+export type PropertyRendererContext = {
+  visualization: MetadataVisualizationType
+}
+
+/**
+ * The renderer function to use for a property.
+ */
+export type MetadataRenderer = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- The any type for the definition parameter is acceptable here since the actual type safety is enforced by the MetadataRendererDefinition type when it's used in practice.
+  def: any,
+  context: PropertyRendererContext,
+  undefinedValue?: string
+) => ReactNode
+
 export const metadataRenderers = {
   text: TextCell,
   number: NumberCell,
@@ -34,7 +48,7 @@ export const metadataRenderers = {
   icon: IconCell,
   file: FileCell,
   folder: FolderCell,
-} as const satisfies Record<string, MetadataRenderer<never>>
+} as const satisfies Record<string, MetadataRenderer>
 
 /**
  * The type of renderer to use for a property.
@@ -56,19 +70,6 @@ export type MetadataDefinition = {
   render: MetadataRendererDefinition | string | number | undefined
 }
 
-export type PropertyRendererContext = {
-  visualization: MetadataVisualizationType
-}
-
-/**
- * The renderer function to use for a property.
- */
-export type MetadataRenderer<T> = (
-  def: MetadataRendererDefinition<T>,
-  context: PropertyRendererContext,
-  undefinedValue?: string
-) => ReactNode
-
 /**
  * Renders a value for a given item and property definition.
  * Used by both table and card visualizations to ensure consistent rendering.
@@ -86,7 +87,7 @@ const renderIsRendererDefinition = (
  * @returns
  */
 
-export const metadataRenderer: MetadataRenderer<never> = (
+export const metadataRenderer: MetadataRenderer = (
   def,
   context,
   undefinedValue = ""
