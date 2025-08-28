@@ -1,29 +1,23 @@
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { Icon } from "@/components/Utilities/Icon"
 
-import {
-  FiltersDefinition,
-  ItemActionsDefinition,
-  NavigationFiltersDefinition,
-} from "@/experimental"
-import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import {
   BaseFetchOptions,
   BaseResponse,
   DataSourceDefinition,
+  FiltersDefinition,
+  getDataSourcePaginationType,
   GroupingDefinition,
   PaginatedDataAdapter,
   PromiseOrObservable,
   RecordType,
   SortingsDefinition,
-  SummariesDefinition,
-} from "@/experimental/OneDataCollection/types"
-import { useData, WithGroupId } from "@/experimental/OneDataCollection/useData"
-import {
-  getDataSourcePaginationType,
+  useData,
   useDataSource,
-} from "@/experimental/OneDataCollection/useDataSource"
-import { useGroups } from "@/experimental/OneDataCollection/useGroups"
+  useGroups,
+  WithGroupId,
+} from "@/hooks/datasource"
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { InputField, InputFieldProps } from "@/ui/InputField"
@@ -47,7 +41,6 @@ import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
 import { SelectTopActions } from "./SelectTopActions"
 import type { SelectItemObject, SelectItemProps } from "./types"
-
 export * from "./types"
 
 /**
@@ -58,7 +51,11 @@ export * from "./types"
  *
  */
 export type SelectProps<T extends string, R extends RecordType = RecordType> = {
-  onChange: (value: T, origialItem?: R, option?: SelectItemObject<T, R>) => void
+  onChange: (
+    value: T,
+    originalItem?: R,
+    option?: SelectItemObject<T, R>
+  ) => void
   onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
   value?: T
   defaultItem?: SelectItemObject<T, R>
@@ -79,9 +76,6 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = {
         R,
         FiltersDefinition,
         SortingsDefinition,
-        SummariesDefinition,
-        ItemActionsDefinition<R>,
-        NavigationFiltersDefinition,
         GroupingDefinition<R>
       >
       mapOptions: (item: R) => SelectItemProps<T, R>
@@ -101,11 +95,13 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = {
     | "labelIcon"
     | "size"
     | "label"
-    | "error"
     | "icon"
     | "placeholder"
     | "disabled"
     | "name"
+    | "error"
+    | "status"
+    | "hint"
   >
 
 const SelectItem = <T extends string, R>({
@@ -132,7 +128,7 @@ const SelectItem = <T extends string, R>({
         </div>
         {item.tag && (
           <div className="self-center">
-            <RawTag text={item.tag} />
+            <F0TagRaw text={item.tag} />
           </div>
         )}
       </div>
@@ -181,12 +177,14 @@ const SelectComponent = forwardRef(function Select<
     actions,
     source,
     label,
-    error,
     icon,
     labelIcon,
     clearable,
     loading,
     name,
+    error,
+    status,
+    hint,
     ...props
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
@@ -214,18 +212,13 @@ const SelectComponent = forwardRef(function Select<
     return {
       ...source,
       dataAdapter: source
-        ? (source.dataAdapter as PaginatedDataAdapter<
-            R,
-            FiltersDefinition,
-            NavigationFiltersDefinition
-          >)
+        ? (source.dataAdapter as PaginatedDataAdapter<R, FiltersDefinition>)
         : {
             fetchData: ({
               search,
-            }: BaseFetchOptions<
-              FiltersDefinition,
-              NavigationFiltersDefinition
-            >): PromiseOrObservable<BaseResponse<R>> => {
+            }: BaseFetchOptions<FiltersDefinition>): PromiseOrObservable<
+              BaseResponse<R>
+            > => {
               return {
                 records: options.filter(
                   (option) =>
@@ -252,6 +245,9 @@ const SelectComponent = forwardRef(function Select<
     [options]
   )
 
+  /**
+   * Maps an item to a SelectItemProps<T, R>
+   */
   const optionMapper = useCallback(
     (item: R): SelectItemProps<T, R> => {
       if (source) {
@@ -267,7 +263,7 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const { data, isInitialLoading, loadMore, isLoadingMore } =
-    useData(localSource)
+    useData<R>(localSource)
 
   const { currentSearch, setCurrentSearch } = localSource
 
@@ -437,6 +433,8 @@ const SelectComponent = forwardRef(function Select<
             <InputField
               label={label}
               error={error}
+              status={status}
+              hint={hint}
               icon={icon}
               labelIcon={labelIcon}
               hideLabel={hideLabel}

@@ -1,18 +1,15 @@
 import { Icon } from "@/components/Utilities/Icon"
-
+import { RecordType } from "@/hooks/datasource"
 import { focusRing } from "@/lib/utils"
 
+import { GroupingDefinition } from "@/hooks/datasource"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { FiltersDefinition } from "../../../../components/OneFilterPicker/types"
-import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
-import {
-  RecordType,
-  SortingsDefinition,
-  SummariesDefinition,
-} from "../../types"
+import { SortingsDefinition, SummariesDefinition } from "../../types"
+
 import {
   collectionVisualizations,
   Visualization,

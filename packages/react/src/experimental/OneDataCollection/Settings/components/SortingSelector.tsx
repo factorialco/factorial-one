@@ -3,7 +3,11 @@ import { Select } from "@/experimental/Forms/Fields/Select"
 import { ArrowDown, ArrowUp, Placeholder } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { useEffect, useState } from "react"
-import { SortingKey, SortingsDefinition, SortingsState } from "../../sortings"
+import {
+  SortingKey,
+  SortingsDefinition,
+  SortingsState,
+} from "../../../../hooks/datasource/types/sortings.typings"
 
 export const EmptySortingValue = "__no-sorting__"
 
@@ -13,7 +17,7 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
   onChange,
 }: {
   sortings: SortingsDefinition
-  currentSortings: SortingsState<Sortings> | null
+  currentSortings: SortingsState<Sortings>
   onChange: (sorting: SortingsState<Sortings>) => void
 }) => {
   const i18n = useI18n()
@@ -29,7 +33,7 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
   ]
 
   const [localSortings, setLocalSortings] =
-    useState<SortingsState<Sortings> | null>(currentSortings)
+    useState<SortingsState<Sortings>>(currentSortings)
 
   useEffect(() => {
     if (!currentSortings) {
@@ -43,9 +47,17 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we are deep comparing the currentSortings
   }, [JSON.stringify(currentSortings)])
 
+  const handleChange = (sorting: SortingsState<Sortings>) => {
+    if (!sorting || sorting.field === EmptySortingValue) {
+      onChange(null)
+    } else {
+      onChange(sorting)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-0 py-3">
-      <div className="flex items-center gap-2 px-3">
+      <div className="flex items-end gap-2 px-3">
         <div className="shrink grow [&_button]:h-8 [&_button]:rounded">
           <Select
             label={i18n.collections.sorting.sortBy}
@@ -53,12 +65,10 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
             options={sortingOptions}
             value={localSortings?.field as string}
             onChange={(value) => {
-              if (value) {
-                onChange({
-                  field: value as SortingKey<Sortings>,
-                  order: localSortings?.order ?? "asc",
-                })
-              }
+              handleChange({
+                field: value as SortingKey<Sortings>,
+                order: localSortings?.order ?? "asc",
+              })
             }}
           />
         </div>
@@ -71,7 +81,7 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
               variant="outline"
               icon={localSortings?.order === "asc" ? ArrowUp : ArrowDown}
               onClick={() =>
-                onChange({
+                handleChange({
                   field: localSortings?.field as SortingKey<Sortings>,
                   order: localSortings?.order === "asc" ? "desc" : "asc",
                 })

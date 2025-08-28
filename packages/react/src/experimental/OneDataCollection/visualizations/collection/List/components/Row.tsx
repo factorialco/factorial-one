@@ -2,10 +2,16 @@ import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
 import { F0Checkbox } from "@/components/F0Checkbox"
 import { DropdownItemSeparator } from "@/experimental/Navigation/Dropdown/internal"
+import {
+  FiltersDefinition,
+  GroupingDefinition,
+  RecordType,
+  SortingsDefinition,
+} from "@/hooks/datasource"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
-import { FiltersDefinition } from "../../../../../../components/OneFilterPicker/types"
+import { DataCollectionSource } from "../../../../exports"
 import {
   ActionDefinition,
   filterItemActions,
@@ -14,9 +20,7 @@ import {
 import { ItemActionsDropdown } from "../../../../ItemActions/ItemActionsDropdown"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { renderProperty } from "../../../../property-render"
-import { SortingsDefinition } from "../../../../sortings"
 import { SummariesDefinition } from "../../../../summary"
-import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
 import { actionsToDropdownItems } from "../../utils"
 import { ItemDefinition, ListPropertyDefinition } from "../types"
 import { ItemTeaser } from "./ItemTeaser"
@@ -30,7 +34,7 @@ type RowProps<
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 > = {
-  source: DataSource<
+  source: DataCollectionSource<
     R,
     Filters,
     Sortings,

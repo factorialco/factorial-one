@@ -1,4 +1,6 @@
+import type { RecordType } from "@/hooks/datasource"
 import { zeroRender as render } from "@/testing/test-utils"
+import "@testing-library/jest-dom/vitest"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
@@ -6,7 +8,7 @@ import { Search } from "../../../../icons/app"
 import { Select } from "./index"
 import type { SelectItemProps } from "./types"
 
-const mockOptions: SelectItemProps<string>[] = [
+const mockOptions: SelectItemProps<string, RecordType>[] = [
   {
     value: "option1",
     label: "Option 1",
@@ -40,6 +42,20 @@ const mockOptions: SelectItemProps<string>[] = [
   },
 ]
 
+// Default props to satisfy InputFieldProps requirements
+const defaultSelectProps = {
+  error: undefined,
+  icon: undefined,
+  loading: false,
+  clearable: false,
+  labelIcon: undefined,
+  size: "md" as const,
+  disabled: false,
+  placeholder: "",
+  label: "Pick an option",
+  hideLabel: false,
+}
+
 describe("Select", () => {
   // Mock ResizeObserver
   global.ResizeObserver = vi.fn().mockImplementation(() => ({
@@ -49,6 +65,12 @@ describe("Select", () => {
   }))
 
   beforeEach(() => {
+    Object.defineProperty(HTMLElement.prototype, "offsetHeight", {
+      value: 800,
+    })
+    Object.defineProperty(HTMLElement.prototype, "offsetWidth", {
+      value: 800,
+    })
     vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
       () => ({
         width: 120,
@@ -59,7 +81,6 @@ describe("Select", () => {
         right: 0,
         x: 0,
         y: 0,
-
         toJSON: () => {},
       })
     )
@@ -77,8 +98,7 @@ describe("Select", () => {
   it("renders with placeholder", () => {
     render(
       <Select
-        label="Select an option"
-        hideLabel
+        {...defaultSelectProps}
         options={mockOptions}
         onChange={() => {}}
         placeholder="Select an option"
@@ -91,8 +111,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
-        label="Select an option"
-        hideLabel
+        {...defaultSelectProps}
         options={mockOptions}
         onChange={() => {}}
       />
@@ -109,8 +128,7 @@ describe("Select", () => {
   it("displays selected value", async () => {
     render(
       <Select
-        label="Select an option"
-        hideLabel
+        {...defaultSelectProps}
         options={mockOptions}
         onChange={() => {}}
         value="option1"
@@ -126,8 +144,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
-        label="Select an option"
-        hideLabel
+        {...defaultSelectProps}
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -144,8 +161,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
-        label="Select an option"
-        hideLabel
+        {...defaultSelectProps}
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -165,8 +181,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(
       <Select
-        label="Select an option"
-        hideLabel
+        {...defaultSelectProps}
         options={mockOptions}
         onChange={() => {}}
         showSearchBox
@@ -221,8 +236,7 @@ describe("Select", () => {
   it("disables select when disabled prop is true", async () => {
     render(
       <Select
-        label="Select an option"
-        hideLabel
+        {...defaultSelectProps}
         options={mockOptions}
         onChange={() => {}}
         disabled
@@ -236,12 +250,7 @@ describe("Select", () => {
 
   it("renders with custom trigger", () => {
     render(
-      <Select
-        label="Select an option"
-        hideLabel
-        options={mockOptions}
-        onChange={() => {}}
-      >
+      <Select {...defaultSelectProps} options={mockOptions} onChange={() => {}}>
         <button>Custom Trigger</button>
       </Select>
     )
@@ -255,8 +264,7 @@ describe("Select", () => {
 
     render(
       <Select
-        label="Select an option"
-        hideLabel
+        {...defaultSelectProps}
         options={mockOptions}
         onChange={handleChange}
       />
@@ -302,8 +310,7 @@ describe("Select", () => {
 
     render(
       <Select
-        label="Select an option"
-        hideLabel
+        {...defaultSelectProps}
         options={mockOptions}
         onChange={handleChange}
       />

@@ -1,8 +1,7 @@
 import { FiltersDefinition } from "@/components/OneFilterPicker"
 import { IconType } from "@/components/Utilities/Icon"
 import { SelectItemProps } from "@/experimental/Forms/Fields/Select/types"
-import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
-import { PaginatedFetchOptions } from "@/experimental/OneDataCollection/types"
+import { PaginatedFetchOptions } from "@/hooks/datasource"
 import {
   FIRST_NAMES_MOCK,
   getMockValue,
@@ -122,12 +121,7 @@ export const WithSelectBreadcrumbWithDatasource: Story = {
     const source = {
       dataAdapter: {
         paginationType: "infinite-scroll",
-        fetchData: (
-          options: PaginatedFetchOptions<
-            FiltersDefinition,
-            NavigationFiltersDefinition
-          >
-        ) => {
+        fetchData: (options: PaginatedFetchOptions<FiltersDefinition>) => {
           const { search, pagination } = options
           return new Promise((resolve) => {
             setTimeout(() => {

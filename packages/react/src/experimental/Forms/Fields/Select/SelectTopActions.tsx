@@ -1,15 +1,15 @@
+import { GroupingSelector } from "@/experimental/OneDataCollection/Settings/components/GroupingSelector"
 import {
   GroupingDefinition,
   GroupingState,
-} from "@/experimental/OneDataCollection/grouping"
-import { GroupingSelector } from "@/experimental/OneDataCollection/Settings/components/GroupingSelector"
-import { RecordType } from "@/experimental/OneDataCollection/types"
+  RecordType,
+} from "@/hooks/datasource"
 import { F1SearchBox } from "../F1SearchBox"
 
-type SelectTopActionsProps<
-  R extends RecordType,
+interface SelectTopActionsProps<
+  R extends RecordType = RecordType,
   Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
-> = {
+> {
   showSearchBox?: boolean
   searchBoxPlaceholder?: string
   onSearchChange: (value: string) => void
@@ -22,7 +22,7 @@ type SelectTopActionsProps<
   onGroupingChange?: (grouping: GroupingState<R, Grouping>) => void
 }
 
-export const SelectTopActions = <R extends RecordType>({
+export const SelectTopActions = <R extends RecordType = RecordType>({
   showSearchBox,
   searchBoxPlaceholder,
   onSearchChange,

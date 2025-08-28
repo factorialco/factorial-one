@@ -1,4 +1,4 @@
-import { NewColor } from "@/experimental/Information/Tags/DotTag"
+import { NewColor } from "@/components/tags/F0TagDot"
 import {
   Ai,
   Alert,
@@ -194,6 +194,55 @@ export const getMockValue = <T>(mock: readonly T[], index: number): T => {
   return mock[index % mock.length]
 }
 
+export type MockUser = {
+  index: number
+  id: string
+  name: string
+  email: string
+  role: string
+  department: (typeof DEPARTMENTS_MOCK)[number]
+  status: string
+  isStarred: boolean
+  manager: string
+  image: string
+  salary: number | undefined
+  joinedAt: Date
+  canBeSelected: boolean
+  permissions: {
+    read?: boolean
+    write?: boolean
+    delete: boolean
+  }
+}
+
+export const generateMockUsers = (count: number): MockUser[] => {
+  return Array.from({ length: count }).map((_, index) => {
+    const department = getMockValue(DEPARTMENTS_MOCK, index)
+    const name = `${getMockValue(FIRST_NAMES_MOCK, index)} ${getMockValue(SURNAMES_MOCK, index)}`
+    const email = `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`
+    return {
+      index,
+      id: `user-${index + 1}`,
+      name,
+      email,
+      role: getMockValue(ROLES_MOCK, index),
+      department,
+      status: getMockValue(STATUS_MOCK, index),
+      isStarred: index % 3 === 0,
+      manager: getMockValue(MANAGERS_MOCK, index),
+      image: getMockValue(IMAGE_MOCK, index),
+      href: `/users/user-${index + 1}`,
+      salary: getMockValue(SALARY_MOCK, index),
+      joinedAt: getMockValue(START_DATE_MOCK, index),
+      canBeSelected: index < 1,
+      permissions: {
+        read: index % 2 === 0,
+        write: index % 3 === 0,
+        delete: index % 4 === 0,
+      },
+    }
+  })
+}
 export const IMAGE_MOCK = [
   "/avatars/person01.jpg",
   "/avatars/person02.jpg",
