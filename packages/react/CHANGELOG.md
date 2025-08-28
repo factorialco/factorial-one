@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.165.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.164.0...factorial-one-react-v1.165.0) (2025-08-28)
+
+
+### Features
+
+* upgrade copilot kit 1.10.2 ([#2465](https://github.com/factorialco/factorial-one/issues/2465)) ([b99b73d](https://github.com/factorialco/factorial-one/commit/b99b73deef240962c63072e1b8978dda75d0e611))
+
 ## [1.164.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.2...factorial-one-react-v1.164.0) (2025-08-28)
 
 
