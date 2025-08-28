@@ -8763,8 +8763,8 @@ packages:
       openai:
         optional: true
 
-  langsmith@0.3.64:
-    resolution: {integrity: sha512-67yccwrREK5pgVX7PktkUImbNT4bQpSPH7SETSPYZ+X42OpGGAABU4s+pNV/55/ke+INrmpXXlKxfMpZOCrzQA==}
+  langsmith@0.3.65:
+    resolution: {integrity: sha512-p9CWvc0R1fAARgPyaGt2JTz1FXq0Zlrq57uiOKZOoTHzAauhwU3PFtANK0EYSoHAJqJNIaO6GIaVj4q0a7IiLw==}
     peerDependencies:
       '@opentelemetry/api': '*'
       '@opentelemetry/exporter-trace-otlp-proto': '*'
@@ -15601,7 +15601,7 @@ snapshots:
       camelcase: 6.3.0
       decamelize: 1.2.0
       js-tiktoken: 1.0.20
-      langsmith: 0.3.64(openai@4.104.0(ws@8.18.1)(zod@3.25.76))
+      langsmith: 0.3.65(openai@4.104.0(ws@8.18.1)(zod@3.25.76))
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
@@ -22448,7 +22448,7 @@ snapshots:
     optionalDependencies:
       openai: 4.104.0(ws@8.18.1)(zod@3.25.76)
 
-  langsmith@0.3.64(openai@4.104.0(ws@8.18.1)(zod@3.25.76)):
+  langsmith@0.3.65(openai@4.104.0(ws@8.18.1)(zod@3.25.76)):
     dependencies:
       '@types/uuid': 10.0.0
       chalk: 4.1.2
