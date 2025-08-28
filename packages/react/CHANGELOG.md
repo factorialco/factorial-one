@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.164.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.2...factorial-one-react-v1.164.0) (2025-08-28)
+
+
+### Features
+
+* **ai-chat:** add effects to header ([#2461](https://github.com/factorialco/factorial-one/issues/2461)) ([76c2027](https://github.com/factorialco/factorial-one/commit/76c2027a349844f0abc15a5c4d6148fcf3215f19))
+
+## [1.163.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.1...factorial-one-react-v1.163.2) (2025-08-28)
+
+
+### Bug Fixes
+
+* onclick propagation ([#2460](https://github.com/factorialco/factorial-one/issues/2460)) ([f82e5df](https://github.com/factorialco/factorial-one/commit/f82e5df6c4942f3099a6f4ecc0c31799d8a6ca7d))
+
+## [1.163.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.0...factorial-one-react-v1.163.1) (2025-08-27)
+
+
+### Bug Fixes
+
+* add context type info ([32663c6](https://github.com/factorialco/factorial-one/commit/32663c612d9d6eac5225b5a64d6404af7d30a645))
+
+## [1.163.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.162.0...factorial-one-react-v1.163.0) (2025-08-27)
+
+
+### Features
+
+* **ai:** smooth scrolling ([#2457](https://github.com/factorialco/factorial-one/issues/2457)) ([30c71b3](https://github.com/factorialco/factorial-one/commit/30c71b3291010ef8da5656371d540f2ab7287306))
+
+## [1.162.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.2...factorial-one-react-v1.162.0) (2025-08-27)
+
+
+### Features
+
+* **EntitySelect:** enhance match scoring with word normalization ([#2342](https://github.com/factorialco/factorial-one/issues/2342)) ([2f7c6c0](https://github.com/factorialco/factorial-one/commit/2f7c6c03331982271745f5ba44da30867f49abc9))
+
 ## [1.161.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.1...factorial-one-react-v1.161.2) (2025-08-27)
 
 

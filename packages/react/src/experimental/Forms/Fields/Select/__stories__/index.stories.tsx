@@ -14,6 +14,7 @@ import {
   SURNAMES_MOCK,
 } from "@/mocks"
 
+import { inputFieldStatus } from "@/ui/InputField"
 import { useState } from "react"
 
 // Wraps the Select component with a hook to show the selected value
@@ -96,6 +97,67 @@ const meta: Meta = {
     },
   },
   argTypes: {
+    label: {
+      description: "Label of the select",
+      required: true,
+    },
+    placeholder: {
+      description: "Placeholder of the select",
+    },
+    value: {
+      description: "Current selected value of the select",
+    },
+    defaultItem: {
+      description: "Default item to be selected when component mounts",
+    },
+    size: {
+      control: "select",
+      options: ["sm", "md"],
+      defaultValue: "sm",
+      description: "Size of the select",
+    },
+    disabled: {
+      control: "boolean",
+      description: "Whether the select is disabled",
+    },
+    open: {
+      control: "boolean",
+      description: "Controls whether the select dropdown is open",
+    },
+    hideLabel: {
+      control: "boolean",
+      description:
+        "Whether to hide the label visually (still accessible to screen readers)",
+    },
+    clearable: {
+      control: "boolean",
+      description: "Whether the select value can be cleared",
+    },
+    icon: {
+      description: "Icon to display inside the select input",
+    },
+    labelIcon: {
+      description: "Icon to display next to the label",
+    },
+    error: {
+      description:
+        "Error message to display below the select, This is a shortcut for status.type = 'error'",
+    },
+    status: {
+      description:
+        "Status of the select and a message to display below the select",
+      control: "select",
+      options: inputFieldStatus,
+      defaultValue: "default",
+    },
+    hint: {
+      description:
+        "Hint to display below the select, This is a shortcut for status.type = 'default'. Error status overwrites hint",
+    },
+    children: {
+      description:
+        "Custom trigger content for the select. When provided, replaces the default input field trigger",
+    },
     showSearchBox: {
       description:
         "Shows a search box. The component will filter the items by name and by description unless searchFunc will be in use",
@@ -108,6 +170,13 @@ const meta: Meta = {
     },
     searchBoxPlaceholder: {
       description: "Placeholder for the search box",
+    },
+    onSearchChange: {
+      description: "Function called when the search input value changes",
+    },
+    onOpenChange: {
+      description:
+        "Function called when the select dropdown open state changes",
     },
     options: {
       description:
@@ -138,6 +207,11 @@ const meta: Meta = {
         "  variant?: 'ghost' | 'critical'\n" +
         "}```",
     },
+    loading: {
+      control: "boolean",
+      description:
+        "Whether the select is loading. If true, the select will be disabled",
+    },
   },
   args: {
     placeholder: "Select a theme",
@@ -153,8 +227,6 @@ const meta: Meta = {
         item,
       }
     }),
-    label: "Select a theme",
-    hideLabel: true,
     disabled: false,
     showSearchBox: false,
   },
@@ -164,7 +236,131 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    label: "Select a theme",
+    value: undefined,
+    placeholder: undefined,
+  },
+}
+
+export const WithPreselectedValue: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    value: "dark",
+  },
+}
+
+export const WithPlaceholder: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    placeholder: "Select a theme",
+    value: undefined,
+  },
+}
+
+export const WithHiddenLabel: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    hideLabel: true,
+  },
+}
+
+export const WithIcon: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    icon: Desktop,
+  },
+}
+
+export const WithLabelIcon: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    labelIcon: Circle,
+  },
+}
+
+export const SizeMd: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    icon: Desktop,
+    size: "md",
+  },
+}
+
+export const WithError: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    error: "Error message",
+  },
+}
+
+export const WithWarning: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    status: {
+      type: "warning",
+      message: "Warning message",
+    },
+  },
+}
+
+export const WithInfo: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    status: {
+      type: "info",
+      message: "Info message",
+    },
+  },
+}
+
+export const WithHint: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    hint: "Hint message",
+  },
+}
+
+export const Clearable: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    label: "Select a theme",
+    clearable: true,
+  },
+}
 
 export const WithSearchBox: Story = {
   args: {
