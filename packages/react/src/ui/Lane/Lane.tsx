@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from "motion/react"
 import React from "react"
 import { LaneHeader } from "./components/LaneHeader"
 import { LoadingSkeleton } from "./components/LoadingSkeleton"
-import { OneLaneProps } from "./types"
+import { LaneProps } from "./types"
 
 const DEFAULT_MAX_LANE_HEIGHT = 700
 const HEADER_HEIGHT = 40
@@ -20,10 +20,11 @@ export function Lane<Record extends RecordType>({
   emptyState,
   fetchMore,
   maxHeight = DEFAULT_MAX_LANE_HEIGHT,
+  variant = "neutral",
   loading = false,
   hasMore = false,
   loadingMore = false,
-}: OneLaneProps<Record>) {
+}: LaneProps<Record>) {
   const scrollAreaHeight = maxHeight - HEADER_HEIGHT - 4 // 4px for ScrollArea mb-1
 
   // Create pagination info for infinite scroll
@@ -45,23 +46,22 @@ export function Lane<Record extends RecordType>({
 
   return (
     <div
-      className={`shadow-sm flex min-w-80 max-w-72 flex-col rounded-xl border border-f1-border-secondary px-1`}
+      className={`shadow-sm flex min-w-80 max-w-72 flex-col`}
       style={{
         maxHeight: `${maxHeight}px`,
-        backgroundColor: "hsla(210, 91%, 22%, 0.02)",
       }}
     >
       <LaneHeader
         label={title || "Lane"}
-        variant="neutral"
+        variant={variant}
         count={items.length}
       />
 
-      <div className="flex min-h-0 flex-1 flex-col">
+      <div className="flex min-h-0 flex-1 flex-col px-1">
         {loading ? (
           <ScrollArea
             className={cn(
-              "relative mb-1 flex-1 rounded-lg",
+              "relative flex-1 rounded-lg",
               loading && "select-none opacity-50 transition-opacity"
             )}
             style={{ maxHeight: `${scrollAreaHeight}px` }}
@@ -83,12 +83,11 @@ export function Lane<Record extends RecordType>({
         ) : (
           <div className="relative">
             <ScrollArea
-              className="mb-1 flex-1 rounded-lg"
+              className="flex-1"
               style={{ maxHeight: `${scrollAreaHeight}px` }}
             >
               <div
                 className={cn(
-                  "space-y-1",
                   loadingMore && "select-none opacity-50 transition-opacity"
                 )}
                 aria-live={loadingMore ? "polite" : undefined}
