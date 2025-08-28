@@ -44,7 +44,7 @@ export const AssistantMessage = ({
 
   return (
     <div
-      className="relative isolate flex w-fit max-w-[330px] flex-col items-start justify-center last:mb-8"
+      className="relative isolate flex w-full flex-col items-start justify-center last:mb-8"
       ref={containerRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -56,7 +56,7 @@ export const AssistantMessage = ({
       )}
       {message && (
         <>
-          <div className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1">
+          <div className="w-fit max-w-[330px] [&>div]:flex [&>div]:flex-col [&>div]:gap-1">
             <Markdown
               content={content}
               components={{ ...f0MarkdownRenderers, ...markdownTagRenderers }}
