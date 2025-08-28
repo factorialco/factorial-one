@@ -83,18 +83,12 @@ export const Disabled: Story = {
 }
 
 export const WithLabel: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
   },
 }
 
 export const WithHiddenLabel: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
     hideLabel: true,
@@ -102,9 +96,6 @@ export const WithHiddenLabel: Story = {
 }
 
 export const WithLabelIcon: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
     labelIcon: Placeholder,
@@ -112,9 +103,6 @@ export const WithLabelIcon: Story = {
 }
 
 export const WithIcon: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
     icon: Placeholder,
@@ -122,9 +110,6 @@ export const WithIcon: Story = {
 }
 
 export const WithError: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
     error: "Error message here",
@@ -132,9 +117,6 @@ export const WithError: Story = {
 }
 
 export const WithWarning: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
     status: {
@@ -145,9 +127,6 @@ export const WithWarning: Story = {
 }
 
 export const WithInfo: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
     status: {
@@ -158,9 +137,6 @@ export const WithInfo: Story = {
 }
 
 export const WithHint: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
     hint: "Hint message",
@@ -168,9 +144,6 @@ export const WithHint: Story = {
 }
 
 export const WithMaxLength: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
     maxLength: 10,
@@ -178,9 +151,6 @@ export const WithMaxLength: Story = {
 }
 
 export const Clearable: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Label text here",
     maxLength: 10,

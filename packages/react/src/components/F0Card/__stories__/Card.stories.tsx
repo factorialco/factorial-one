@@ -110,9 +110,6 @@ export const Default: Story = {
 }
 
 export const WithActions: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     title: "Product designer",
     description:
@@ -167,9 +164,6 @@ export const WithActionsAndLink: Story = {
 }
 
 export const WithLink: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     ...Default.args,
     link: "/",
@@ -177,9 +171,6 @@ export const WithLink: Story = {
 }
 
 export const Selectable: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     ...Default.args,
     selectable: true,
@@ -191,9 +182,6 @@ export const Selectable: Story = {
 }
 
 export const WithChildren: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     title: "Card with children",
     children: <SlotComponent />,
@@ -201,9 +189,6 @@ export const WithChildren: Story = {
 }
 
 export const WithEmoji: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     ...Default.args,
     avatar: {
@@ -226,9 +211,6 @@ export const WithImage: Story = {
 }
 
 export const WithFileAvatar: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     ...WithImage.args,
     selectable: true,
@@ -252,18 +234,12 @@ export const Compact: Story = {
 }
 
 export const Skeleton: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     return <F0Card.Skeleton />
   },
 }
 
 export const SkeletonCompact: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     return <F0Card.Skeleton compact />
   },
@@ -271,7 +247,6 @@ export const SkeletonCompact: Story = {
 
 export const IntentsShowcase: Story = {
   parameters: {
-    chromatic: { disableSnapshot: true },
     docs: {
       story: { inline: false, height: "420px" },
     },

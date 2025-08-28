@@ -24,9 +24,6 @@ export const Default: Story = {
     file: new File([""], "document.pdf", { type: "application/pdf" }),
     size: "medium",
   },
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
 }
 
 export const AllFileTypes: Story = {

@@ -225,7 +225,6 @@ export const CardActionsExample: Story = {
     a11y: {
       skipCi: true,
     },
-    chromatic: { disableSnapshot: true },
   },
   render: () => {
     const dataSource = useDataSource({
