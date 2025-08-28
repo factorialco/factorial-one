@@ -9,7 +9,7 @@ import { monitorForElements } from "@atlaskit/pragmatic-drag-and-drop/element/ad
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useEffect, useRef, useState } from "react"
 import { Lane } from "../Lane"
-import type { OneLaneProps } from "../types"
+import type { LaneProps } from "../types"
 import {
   additionalMockTasks,
   allMockTasks,
@@ -147,7 +147,7 @@ export const WithFetchMore: Story = {
       )
     },
   },
-  render: function Render(args: OneLaneProps<RecordType>) {
+  render: function Render(args: LaneProps<RecordType>) {
     const [items, setItems] = useState<MockTask[]>(mockTasks)
     const [loading, setLoading] = useState(true)
     const [loadingMore, setLoadingMore] = useState(false)
