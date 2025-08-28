@@ -6,12 +6,9 @@ import {
   Story,
 } from "@storybook/addon-docs/blocks"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
+import LinkTo from "@storybook/addon-links/react"
 
-import * as DataCollectionStories from "./index.stories"
-import * as ActionDataCollectionStories from "./collection-actions.stories"
-import * as CellTypesDataCollectionStories from "./MetadataTypes.stories"
-
-<Meta title="OneDataCollection/Cell Types" />
+<Meta title="Data Collection/Cell Types" />
 
 # Cell Types
 
@@ -26,5 +23,5 @@ the datacollection, the type is the cell type to render and the value depends on
 that type
 
 {/* prettier-ignore */}
-Check <LinkTo kind="Metadata" story="Documentation">Metadata</LinkTo>
-for details.
+> Check <LinkTo kind="Metadata" story="Documentation">Metadata</LinkTo>
+> for details.

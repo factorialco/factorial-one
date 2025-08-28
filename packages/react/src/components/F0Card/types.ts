@@ -1,5 +1,5 @@
 import { IconType } from "@/components/Utilities/Icon"
-import { metadataRenderers } from "@/internal/metadata"
+import { metadataRenderers } from "@/components/metadata"
 import { CardPropertyType } from "./components/CardMetadata"
 
 /**

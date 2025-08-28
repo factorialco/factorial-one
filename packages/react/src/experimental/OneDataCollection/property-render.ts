@@ -1,7 +1,7 @@
 import {
   metadataRenderer,
   MetadataRendererDefinition,
-} from "@/internal/metadata"
+} from "@/components/metadata"
 import { ReactNode } from "react"
 import { RecordType } from "./types"
 import { VisualizationType } from "./visualizations/collection/types"
