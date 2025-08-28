@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.166.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.165.0...factorial-one-react-v1.166.0) (2025-08-28)
+
+
+### Features
+
+* **ai-chat:** add create new chat button ([#2469](https://github.com/factorialco/factorial-one/issues/2469)) ([49388a7](https://github.com/factorialco/factorial-one/commit/49388a7be79e0b1443bf96c362beeae0e9cc3642))
+
 ## [1.165.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.164.0...factorial-one-react-v1.165.0) (2025-08-28)
 
 
