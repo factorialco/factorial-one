@@ -13,7 +13,6 @@ import { useCallback, useRef, useState } from "react"
 import { markdownRenderers as f0MarkdownRenderers } from "../markdownRenderers"
 
 export const AssistantMessage = ({
-  isCurrentMessage,
   isGenerating,
   isLoading,
   markdownTagRenderers,
@@ -42,8 +41,9 @@ export const AssistantMessage = ({
   }, [])
   const content = message?.content || ""
   const subComponent = message?.generativeUI?.()
+  const isEmptyMessage = !content && !subComponent
 
-  if (!isCurrentMessage && !content && !subComponent) {
+  if (!isLoading && !isGenerating && isEmptyMessage) {
     return null
   }
 
