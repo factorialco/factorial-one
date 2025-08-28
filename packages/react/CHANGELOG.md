@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.164.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.2...factorial-one-react-v1.164.0) (2025-08-28)
+
+
+### Features
+
+* **ai-chat:** add effects to header ([#2461](https://github.com/factorialco/factorial-one/issues/2461)) ([76c2027](https://github.com/factorialco/factorial-one/commit/76c2027a349844f0abc15a5c4d6148fcf3215f19))
+
 ## [1.163.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.1...factorial-one-react-v1.163.2) (2025-08-28)
 
 
