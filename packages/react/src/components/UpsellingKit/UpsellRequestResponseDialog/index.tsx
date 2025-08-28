@@ -186,7 +186,7 @@ const UpsellRequestResponseDialog = forwardRef<
               </DialogDescription>
             </div>
           </DialogHeader>
-          {success ? (
+          {success && nextSteps ? (
             <>
               <Separator />
               <NextSteps title={nextSteps.title} items={nextSteps.items} />

@@ -27,14 +27,18 @@ type ProductModalProps = {
   loadingState: {
     label: string
   }
-  nextSteps: {
+  closeLabel: string
+  nextSteps?: {
     title: string
     items: {
       text: string
       isCompleted?: boolean
     }[]
   }
-  closeLabel: string
+  tag?: {
+    label: string
+    icon: IconType
+  }
   primaryAction?: Action
   secondaryAction?: Action
   portalContainer?: HTMLElement | null
@@ -66,6 +70,7 @@ export function ProductModal({
   modalIcon,
   secondaryAction,
   portalContainer,
+  tag
 }: ProductModalProps) {
   const [isModalOpen, setIsOpen] = useState(isOpen)
   const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
@@ -108,6 +113,7 @@ export function ProductModal({
             image={image}
             benefits={benefits}
             withShadow={false}
+            tag={tag}
             actions={
               <div className="flex gap-3">
                 {primaryAction && (

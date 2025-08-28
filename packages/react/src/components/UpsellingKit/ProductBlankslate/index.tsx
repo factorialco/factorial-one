@@ -4,6 +4,7 @@ import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import { CheckCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
+import { RawTag } from "@factorialco/factorial-one-react-native";
 
 type ProductBlankslateProps = {
   title: string
@@ -14,6 +15,10 @@ type ProductBlankslateProps = {
   withShadow?: boolean
   icon?: IconType
   moduleName?: string
+  tag?: {
+    label: string
+    icon: IconType
+  }
 }
 
 const Benefits = ({ benefits }: { benefits: string[] }) => (
@@ -40,7 +45,7 @@ export const ProductBlankslate = forwardRef<
   ProductBlankslateProps
 >(
   (
-    { title, image, benefits, actions, withShadow = true, icon, moduleName },
+    { title, image, benefits, actions, withShadow = true, icon, moduleName, tag },
     ref
   ) => {
     return (
@@ -72,6 +77,11 @@ export const ProductBlankslate = forwardRef<
                   </p>
                 )}
               </div>
+              {tag && (
+                <div className="mb-2">
+                  <RawTag icon={tag.icon} text={tag.label} />
+                </div>
+              )}
               <h2 className="font-bold text-xl text-f1-foreground">{title}</h2>
             </div>
             <Benefits benefits={benefits} />
