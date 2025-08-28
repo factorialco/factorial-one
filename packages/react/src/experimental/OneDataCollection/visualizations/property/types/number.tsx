@@ -39,7 +39,7 @@ export const NumberCell = (
   return (
     <div
       className={cn(
-        "flex items-center gap-1 text-f1-foreground",
+        "flex flex-1 items-center gap-1 text-f1-foreground",
         meta.visualization === "table" && "justify-end",
         shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
       )}
