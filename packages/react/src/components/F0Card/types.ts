@@ -13,7 +13,11 @@ export type CardMetadataProperty = {
   }
 }[CardPropertyType]
 
-export type CardMetadata = {
-  icon: IconType
-  property: CardMetadataProperty
-}
+export type CardMetadata =
+  | {
+      icon: IconType
+      property: Exclude<CardMetadataProperty, { type: "file" }>
+    }
+  | {
+      property: Extract<CardMetadataProperty, { type: "file" }>
+    }

@@ -34,7 +34,7 @@ export function CardActions({
   compact = false,
 }: CardActionsProps) {
   const isDesktop = useMediaQuery("(min-width: 640px)")
-  const hasActions = primaryAction || secondaryActions
+  const hasActions = primaryAction || hasSecondaryActions()
 
   if (!hasActions) {
     return null
@@ -89,4 +89,12 @@ export function CardActions({
       )}
     </CardFooter>
   )
+
+  function hasSecondaryActions(): boolean {
+    if (!secondaryActions) return false
+    if ("href" in secondaryActions) return true
+    if ("length" in secondaryActions) return secondaryActions.length > 0
+
+    return false
+  }
 }
