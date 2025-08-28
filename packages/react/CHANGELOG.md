@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.167.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.1...factorial-one-react-v1.167.0) (2025-08-28)
+
+
+### Features
+
+* **BasicTextEditor:** ScrollArea  ([#2335](https://github.com/factorialco/factorial-one/issues/2335)) ([844b066](https://github.com/factorialco/factorial-one/commit/844b0663f81bd5bea2cfb10c18b6e9b22fd2f848))
+
 ## [1.166.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.0...factorial-one-react-v1.166.1) (2025-08-28)
 
 
