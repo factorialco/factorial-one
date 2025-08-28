@@ -322,6 +322,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       <div
         className={cn(
           "flex flex-col gap-2",
+          "pointer-events-none",
           disabled && "cursor-not-allowed opacity-50",
           className
         )}
@@ -375,7 +376,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
           data-testid="input-field-wrapper"
         >
           <div
-            className="relative flex h-full w-full min-w-0 flex-1"
+            className="pointer-events-auto relative flex h-full w-full min-w-0 flex-1"
             onClick={handleClickContent}
           >
             {icon && (

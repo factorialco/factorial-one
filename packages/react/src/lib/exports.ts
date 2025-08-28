@@ -12,4 +12,3 @@ export type { TranslationsType } from "./providers/i18n"
 export { defaultTranslations } from "./providers/i18n/i18n-provider-defaults"
 export { FactorialOneProvider } from "./providers/one/one-provider"
 export { useXRay } from "./xray"
-// 11
