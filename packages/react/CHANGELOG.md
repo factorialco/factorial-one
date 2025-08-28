@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.166.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.0...factorial-one-react-v1.166.1) (2025-08-28)
+
+
+### Bug Fixes
+
+* number metadata flex to align ([#2471](https://github.com/factorialco/factorial-one/issues/2471)) ([2a8f477](https://github.com/factorialco/factorial-one/commit/2a8f47733831e62579b7ee1b6ec1987745da72c3))
+
 ## [1.166.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.165.0...factorial-one-react-v1.166.0) (2025-08-28)
 
 
