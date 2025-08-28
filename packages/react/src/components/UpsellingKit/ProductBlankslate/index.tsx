@@ -1,10 +1,10 @@
 // packages/react/src/experimental/ProductBlankslate/index.tsx
 import { Icon, IconType } from "@/components/Utilities/Icon"
+import { F0TagRaw } from "@/experimental"
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import { CheckCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
-import { RawTag } from "@factorialco/factorial-one-react-native";
 
 type ProductBlankslateProps = {
   title: string
@@ -45,7 +45,16 @@ export const ProductBlankslate = forwardRef<
   ProductBlankslateProps
 >(
   (
-    { title, image, benefits, actions, withShadow = true, icon, moduleName, tag },
+    {
+      title,
+      image,
+      benefits,
+      actions,
+      withShadow = true,
+      icon,
+      moduleName,
+      tag,
+    },
     ref
   ) => {
     return (
@@ -78,8 +87,8 @@ export const ProductBlankslate = forwardRef<
                 )}
               </div>
               {tag && (
-                <div className="mb-2">
-                  <RawTag icon={tag.icon} text={tag.label} />
+                <div className="flex justify-start">
+                  <F0TagRaw icon={tag.icon} text={tag.label} />
                 </div>
               )}
               <h2 className="font-bold text-xl text-f1-foreground">{title}</h2>

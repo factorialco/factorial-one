@@ -21,8 +21,8 @@ type ProductModalProps = {
   successMessage: {
     title: string
     description: string
-    buttonLabel: string
-    buttonOnClick: () => void
+    buttonLabel?: string
+    buttonOnClick?: () => void
   }
   loadingState: {
     label: string
@@ -70,7 +70,7 @@ export function ProductModal({
   modalIcon,
   secondaryAction,
   portalContainer,
-  tag
+  tag,
 }: ProductModalProps) {
   const [isModalOpen, setIsOpen] = useState(isOpen)
   const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
