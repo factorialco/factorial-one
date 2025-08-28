@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.163.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.1...factorial-one-react-v1.163.2) (2025-08-28)
+
+
+### Bug Fixes
+
+* onclick propagation ([#2460](https://github.com/factorialco/factorial-one/issues/2460)) ([f82e5df](https://github.com/factorialco/factorial-one/commit/f82e5df6c4942f3099a6f4ecc0c31799d8a6ca7d))
+
 ## [1.163.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.0...factorial-one-react-v1.163.1) (2025-08-27)
 
 
