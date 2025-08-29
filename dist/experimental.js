@@ -18676,7 +18676,7 @@ const c3 = V(
     ...c
   }, u) => {
     var C;
-    const h = $e(), p = he(() => !t || !t.value ? h.date.selectDate : dt[t.granularity].toString(t.value, h, "long") ?? h.date.selectDate, [t, h.date.selectDate]), m = (_) => {
+    const h = $e(), p = he(() => !t || !t.value ? h.date.selectDate : dt[t.granularity].toString(t.value, h, "long") ?? h.date.selectDate, [t, h]), m = (_) => {
       _ && (e == null || e(_));
     }, g = he(() => {
       var _;
