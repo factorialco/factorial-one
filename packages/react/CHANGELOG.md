@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.168.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.167.0...factorial-one-react-v1.168.0) (2025-08-29)
+
+
+### Features
+
+* added a comment to force a release ([#2476](https://github.com/factorialco/factorial-one/issues/2476)) ([eb42c54](https://github.com/factorialco/factorial-one/commit/eb42c54585c58b606729c5235b5bc3f935dcbf03))
+
 ## [1.167.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.1...factorial-one-react-v1.167.0) (2025-08-28)
 
 
