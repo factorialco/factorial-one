@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { Select } from "@/experimental/Forms/Fields/Select"
-import { ArrowDown, ArrowUp } from "@/icons/app"
+import { Ascending, Descending } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { useEffect, useState } from "react"
 import { SortingKey, SortingsDefinition, SortingsState } from "../../sortings"
@@ -74,7 +74,7 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
               hideLabel
               label={i18n.collections.sorting.toggleDirection}
               variant="outline"
-              icon={localSortings?.order === "asc" ? ArrowUp : ArrowDown}
+              icon={localSortings?.order === "asc" ? Ascending : Descending}
               onClick={() =>
                 handleChange({
                   field: localSortings?.field as SortingKey<Sortings>,
