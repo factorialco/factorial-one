@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.168.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.0...factorial-one-react-v1.168.1) (2025-08-29)
+
+
+### Bug Fixes
+
+* replace fireworks icon for megaphone in discover section ([4f96336](https://github.com/factorialco/factorial-one/commit/4f96336ded3379f9e474078d7d0bfe198477d5a6))
+
 ## [1.168.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.167.0...factorial-one-react-v1.168.0) (2025-08-29)
 
 
