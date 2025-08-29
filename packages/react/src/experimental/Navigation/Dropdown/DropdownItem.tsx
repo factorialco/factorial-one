@@ -1,11 +1,11 @@
-import { Avatar } from "@/experimental/Information/Avatars/Avatar"
-import { Icon } from "../../../components/Utilities/Icon"
-import { cn } from "../../../lib/utils"
+import { F0Avatar } from "@/components/avatars/F0Avatar"
+import { Icon } from "@/components/Utilities/Icon"
+import { cn } from "@/lib/utils"
 import { DropdownItemObject } from "./internal"
 
 export const DropdownItemContent = ({ item }: { item: DropdownItemObject }) => (
   <>
-    {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
+    {item.avatar && <F0Avatar avatar={item.avatar} size="xsmall" />}
     {item.icon && (
       <Icon
         icon={item.icon}

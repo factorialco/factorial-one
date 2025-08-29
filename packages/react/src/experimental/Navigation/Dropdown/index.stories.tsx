@@ -1,7 +1,7 @@
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
+import * as Icons from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { expect, userEvent, within } from "storybook/test"
-import * as Icons from "../../../icons/app"
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 import { Dropdown, MobileDropdown as MobileDropdownComponent } from "./index"
 
 const meta: Meta<typeof Dropdown> = {
@@ -119,7 +119,7 @@ export const WithCustomTrigger: Story = {
   render: (args) => (
     <Dropdown {...args}>
       <button aria-label="Open user menu">
-        <PersonAvatar
+        <F0AvatarPerson
           src="/avatars/person04.jpg"
           firstName="Dani"
           lastName="Moreno"

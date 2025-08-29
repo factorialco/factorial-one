@@ -2,7 +2,7 @@
  * Person cell type for displaying person information with avatars.
  * Shows full name alongside a person avatar with optional badge.
  */
-import { Avatar } from "@/experimental/Information/Avatars/Avatar"
+import { F0Avatar } from "@/components/avatars/F0Avatar"
 import { WithAvatarBadge } from "./types"
 
 interface PersonValue {
@@ -15,7 +15,7 @@ export type PersonCellValue = WithAvatarBadge<PersonValue>
 
 export const PersonCell = (args: PersonCellValue) => (
   <div className="flex items-center gap-2">
-    <Avatar
+    <F0Avatar
       avatar={{
         type: "person",
         firstName: args.firstName.toString(),

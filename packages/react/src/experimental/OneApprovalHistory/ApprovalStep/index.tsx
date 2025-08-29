@@ -1,5 +1,5 @@
+import { F0AvatarList } from "@/components/avatars/F0AvatarList"
 import { F0TagStatus } from "@/components/tags/F0TagStatus"
-import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
 import { BadgeProps } from "@/experimental/Information/Badge"
 import {
   Check as CheckIcon,
@@ -117,7 +117,7 @@ const ApprovalStep: FC<ApprovalStepProps> = ({
         <F0TagStatus text={displayStatus} variant={statusTagVariants[status]} />
       </div>
       <div className="w-full">
-        <AvatarList
+        <F0AvatarList
           avatars={avatars}
           layout="fill"
           type="person"

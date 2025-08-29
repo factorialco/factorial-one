@@ -210,7 +210,7 @@ export const WithImage: Story = {
   },
 }
 
-export const WithFileAvatar: Story = {
+export const WithAvatarFile: Story = {
   args: {
     ...WithImage.args,
     selectable: true,

@@ -1,9 +1,9 @@
+import { F0Avatar } from "@/components/avatars/F0Avatar"
+import { F0AvatarList } from "@/components/avatars/F0AvatarList"
 import { F0TagDot } from "@/components/tags/F0TagDot"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { F0TagStatus } from "@/components/tags/F0TagStatus"
 import { Icon } from "@/components/Utilities/Icon"
-import { Avatar } from "@/experimental/Information/Avatars/Avatar"
-import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
 import { AlertCircle, Warning } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { MetadataItem } from "./index"
@@ -36,7 +36,7 @@ export function MetadataValue({
     case "avatar":
       return (
         <div className="flex items-center gap-1">
-          <Avatar avatar={value.variant} size="xsmall" />
+          <F0Avatar avatar={value.variant} size="xsmall" />
           {value.text && <span>{value.text}</span>}
         </div>
       )
@@ -45,7 +45,7 @@ export function MetadataValue({
       return <F0TagStatus text={value.label} variant={value.variant} />
     case "list":
       return (
-        <AvatarList
+        <F0AvatarList
           avatars={value.avatars}
           size="xsmall"
           type={value.variant}
