@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { Select } from "@/experimental/Forms/Fields/Select"
-import { ArrowDown, ArrowUp, Placeholder } from "@/icons/app"
+import { ArrowDown, ArrowUp } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { useEffect, useState } from "react"
 import { SortingKey, SortingsDefinition, SortingsState } from "../../sortings"
@@ -57,7 +57,6 @@ export const SortingSelector = <Sortings extends SortingsDefinition>({
         <div className="shrink grow [&_button]:h-8 [&_button]:rounded">
           <Select
             label={i18n.collections.sorting.sortBy}
-            labelIcon={Placeholder}
             options={sortingOptions}
             value={localSortings?.field as string}
             onChange={(value) => {
