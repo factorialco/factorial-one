@@ -1,4 +1,4 @@
-import { AvatarBadge } from "@/experimental/Information/Avatars/types"
+import { AvatarBadge } from "@/components/avatars/F0Avatar/types"
 
 export type WithAvatarBadge<T> = T & {
   badge?: AvatarBadge

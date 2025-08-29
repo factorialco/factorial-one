@@ -21,6 +21,7 @@ import { DropLaneCancel } from "./DropLaneCancel"
 import { DropLaneEnter } from "./DropLaneEnter"
 import { DropLaneReorder } from "./DropLaneReorder"
 
+//
 const SlotComponent = () => {
   return (
     <div className="w-full rounded border-2 border-dashed border-f1-border-info bg-f1-background-info p-5 text-center font-medium text-f1-foreground-info">
@@ -110,9 +111,6 @@ export const Default: Story = {
 }
 
 export const WithActions: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     title: "Product designer",
     description:
@@ -167,9 +165,6 @@ export const WithActionsAndLink: Story = {
 }
 
 export const WithLink: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     ...Default.args,
     link: "/",
@@ -177,9 +172,6 @@ export const WithLink: Story = {
 }
 
 export const Selectable: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     ...Default.args,
     selectable: true,
@@ -191,9 +183,6 @@ export const Selectable: Story = {
 }
 
 export const WithChildren: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     title: "Card with children",
     children: <SlotComponent />,
@@ -201,9 +190,6 @@ export const WithChildren: Story = {
 }
 
 export const WithEmoji: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     ...Default.args,
     avatar: {
@@ -225,10 +211,7 @@ export const WithImage: Story = {
   },
 }
 
-export const WithFileAvatar: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
+export const WithAvatarFile: Story = {
   args: {
     ...WithImage.args,
     selectable: true,
@@ -252,18 +235,12 @@ export const Compact: Story = {
 }
 
 export const Skeleton: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     return <F0Card.Skeleton />
   },
 }
 
 export const SkeletonCompact: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     return <F0Card.Skeleton compact />
   },
@@ -271,7 +248,6 @@ export const SkeletonCompact: Story = {
 
 export const IntentsShowcase: Story = {
   parameters: {
-    chromatic: { disableSnapshot: true },
     docs: {
       story: { inline: false, height: "420px" },
     },

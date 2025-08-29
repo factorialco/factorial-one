@@ -440,7 +440,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
             {(clearable || append || appendTag || loading) && (
               <div
                 className={cn(
-                  "flex h-fit items-center gap-1.5 pr-0.5 pt-0.5",
+                  "flex h-fit items-center gap-1.5 self-center pr-1",
                   size === "md" && "pr-1.5 pt-1.5"
                 )}
               >

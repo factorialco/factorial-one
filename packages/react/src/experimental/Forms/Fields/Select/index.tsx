@@ -1,3 +1,4 @@
+import { F0Avatar } from "@/components/avatars/F0Avatar"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { Icon } from "@/components/Utilities/Icon"
 
@@ -37,7 +38,6 @@ import {
   useRef,
   useState,
 } from "react"
-import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
 import { SelectTopActions } from "./SelectTopActions"
 import type { SelectItemObject, SelectItemProps } from "./types"
@@ -112,7 +112,7 @@ const SelectItem = <T extends string, R>({
   return (
     <SelectItemPrimitive value={item.value}>
       <div className="flex w-full items-start gap-1.5">
-        {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
+        {item.avatar && <F0Avatar avatar={item.avatar} size="xsmall" />}
         {item.icon && (
           <div className="text-f1-icon">
             <Icon icon={item.icon} />

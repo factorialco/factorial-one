@@ -5,7 +5,7 @@ import {
   GroupingState,
   RecordType,
 } from "@/hooks/datasource"
-import { ArrowDown, ArrowUp, Placeholder } from "@/icons/app"
+import { ArrowDown, ArrowUp } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 
 type GroupingSelectorProps<
@@ -67,7 +67,6 @@ export const GroupingSelector = <
         <div className="shrink grow [&_button]:h-8 [&_button]:rounded">
           <Select
             label={i18n.collections.grouping.groupBy}
-            labelIcon={Placeholder}
             options={groupingOptions}
             hideLabel={hideLabel}
             value={currentGrouping?.field.toString() ?? EmptyGroupingValue}

@@ -2,7 +2,7 @@
  * Team cell type for displaying team information with avatars.
  * Shows team name alongside a team avatar with optional badge.
  */
-import { Avatar } from "@/experimental/Information/Avatars/Avatar"
+import { F0Avatar } from "@/components/avatars/F0Avatar"
 import { WithAvatarBadge } from "./types"
 
 interface TeamValue {
@@ -13,7 +13,7 @@ export type TeamCellValue = WithAvatarBadge<TeamValue>
 
 export const TeamCell = (args: TeamCellValue) => (
   <div className="flex items-center gap-2">
-    <Avatar
+    <F0Avatar
       avatar={{
         type: "team",
         name: args.name,

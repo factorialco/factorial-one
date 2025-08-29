@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
-import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
-import { PulseAvatar } from "@/experimental/Information/Avatars/PulseAvatar"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
+import { F0AvatarPulse } from "@/components/avatars/F0AvatarPulse"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import Menu from "@/icons/app/Menu"
 import { cn } from "@/lib/utils"
@@ -33,8 +33,8 @@ export interface DaytimePageProps
     employeeFirstName: string
     employeeLastName: string
     employeeAvatar?: string
-    pulse?: ComponentProps<typeof PulseAvatar>["pulse"]
-    onPulseClick?: ComponentProps<typeof PulseAvatar>["onPulseClick"]
+    pulse?: ComponentProps<typeof F0AvatarPulse>["pulse"]
+    onPulseClick?: ComponentProps<typeof F0AvatarPulse>["onPulseClick"]
   }
   embedded?: boolean
 }
@@ -74,7 +74,7 @@ export function DaytimePage({
               )}
             >
               {header?.onPulseClick ? (
-                <PulseAvatar
+                <F0AvatarPulse
                   src={header.employeeAvatar}
                   firstName={header.employeeFirstName}
                   lastName={header.employeeLastName}
@@ -82,7 +82,7 @@ export function DaytimePage({
                   onPulseClick={header.onPulseClick}
                 />
               ) : (
-                <PersonAvatar
+                <F0AvatarPerson
                   src={header.employeeAvatar}
                   firstName={header.employeeFirstName}
                   lastName={header.employeeLastName}

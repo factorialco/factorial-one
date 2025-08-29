@@ -150,6 +150,10 @@ const GroupCards = <
 
         const cardProperty = convertToCardMetadataProperty(result)
         if (!cardProperty) return null
+        if (cardProperty.type === "file")
+          return {
+            property: cardProperty,
+          }
 
         return {
           icon: property.icon ?? Placeholder,

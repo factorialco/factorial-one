@@ -35,7 +35,9 @@ export function CardMetadata({ metadata }: CardMetadataProps) {
   if (!renderer) {
     return (
       <div className="flex h-8 items-center gap-1.5 font-medium">
-        <Icon icon={metadata.icon} color="default" size="md" />
+        {"icon" in metadata && (
+          <Icon icon={metadata.icon} color="default" size="md" />
+        )}
         <span>Unsupported property type: {type}</span>
       </div>
     )
@@ -48,7 +50,9 @@ export function CardMetadata({ metadata }: CardMetadataProps) {
 
   return (
     <div className="flex h-8 items-center gap-1.5 font-medium">
-      <Icon icon={metadata.icon} color="default" size="md" />
+      {"icon" in metadata && (
+        <Icon icon={metadata.icon} color="default" size="md" />
+      )}
       {typedRenderer(value, { visualization: "card" })}
     </div>
   )

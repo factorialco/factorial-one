@@ -347,7 +347,6 @@ export const WithImages: Story = {
 
 export const TwoLanesDnD: Story = {
   parameters: {
-    chromatic: { disableSnapshot: true },
     docs: { story: { inline: false, height: "560px" } },
     containerHeight: "800px",
     containerMaxWidth: "900px",

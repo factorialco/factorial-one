@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.168.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.1...factorial-one-react-v1.168.2) (2025-08-29)
+
+
+### Bug Fixes
+
+* apply visual fixes to data collection grouping and sorting selectors ([#2482](https://github.com/factorialco/factorial-one/issues/2482)) ([46c1207](https://github.com/factorialco/factorial-one/commit/46c12075ec4284e843268715402be58ac5ed24fd))
+
+## [1.168.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.0...factorial-one-react-v1.168.1) (2025-08-29)
+
+
+### Bug Fixes
+
+* replace fireworks icon for megaphone in discover section ([4f96336](https://github.com/factorialco/factorial-one/commit/4f96336ded3379f9e474078d7d0bfe198477d5a6))
+
+## [1.168.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.167.0...factorial-one-react-v1.168.0) (2025-08-29)
+
+
+### Features
+
+* added a comment to force a release ([#2476](https://github.com/factorialco/factorial-one/issues/2476)) ([eb42c54](https://github.com/factorialco/factorial-one/commit/eb42c54585c58b606729c5235b5bc3f935dcbf03))
+
+## [1.167.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.1...factorial-one-react-v1.167.0) (2025-08-28)
+
+
+### Features
+
+* **BasicTextEditor:** ScrollArea  ([#2335](https://github.com/factorialco/factorial-one/issues/2335)) ([844b066](https://github.com/factorialco/factorial-one/commit/844b0663f81bd5bea2cfb10c18b6e9b22fd2f848))
+
+## [1.166.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.0...factorial-one-react-v1.166.1) (2025-08-28)
+
+
+### Bug Fixes
+
+* number metadata flex to align ([#2471](https://github.com/factorialco/factorial-one/issues/2471)) ([2a8f477](https://github.com/factorialco/factorial-one/commit/2a8f47733831e62579b7ee1b6ec1987745da72c3))
+
+## [1.166.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.165.0...factorial-one-react-v1.166.0) (2025-08-28)
+
+
+### Features
+
+* **ai-chat:** add create new chat button ([#2469](https://github.com/factorialco/factorial-one/issues/2469)) ([49388a7](https://github.com/factorialco/factorial-one/commit/49388a7be79e0b1443bf96c362beeae0e9cc3642))
+
+## [1.165.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.164.0...factorial-one-react-v1.165.0) (2025-08-28)
+
+
+### Features
+
+* upgrade copilot kit 1.10.2 ([#2465](https://github.com/factorialco/factorial-one/issues/2465)) ([b99b73d](https://github.com/factorialco/factorial-one/commit/b99b73deef240962c63072e1b8978dda75d0e611))
+
 ## [1.164.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.2...factorial-one-react-v1.164.0) (2025-08-28)
 
 

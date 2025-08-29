@@ -1,9 +1,6 @@
-import {
-  Avatar,
-  AvatarVariant,
-} from "@/experimental/Information/Avatars/Avatar"
-import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
-import { FileAvatar } from "@/experimental/Information/Avatars/FileAvatar"
+import { AvatarVariant, F0Avatar } from "@/components/avatars/F0Avatar"
+import { F0AvatarEmoji } from "@/components/avatars/F0AvatarEmoji"
+import { F0AvatarFile } from "@/components/avatars/F0AvatarFile"
 import { cn } from "@/lib/utils"
 
 type CardAvatarVariant =
@@ -37,13 +34,15 @@ const AvatarRender = ({
 }) => {
   if (avatar.type === "emoji") {
     return (
-      <EmojiAvatar emoji={avatar.emoji} size={compact ? "small" : "large"} />
+      <F0AvatarEmoji emoji={avatar.emoji} size={compact ? "small" : "large"} />
     )
   }
   if (avatar.type === "file") {
-    return <FileAvatar file={avatar.file} size={compact ? "small" : "large"} />
+    return (
+      <F0AvatarFile file={avatar.file} size={compact ? "small" : "large"} />
+    )
   }
-  return <Avatar avatar={avatar} size={compact ? "small" : "large"} />
+  return <F0Avatar avatar={avatar} size={compact ? "small" : "large"} />
 }
 
 export function CardAvatar({
