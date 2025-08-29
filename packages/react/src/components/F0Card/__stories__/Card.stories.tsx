@@ -21,6 +21,7 @@ import { DropLaneCancel } from "./DropLaneCancel"
 import { DropLaneEnter } from "./DropLaneEnter"
 import { DropLaneReorder } from "./DropLaneReorder"
 
+//
 const SlotComponent = () => {
   return (
     <div className="w-full rounded border-2 border-dashed border-f1-border-info bg-f1-background-info p-5 text-center font-medium text-f1-foreground-info">
