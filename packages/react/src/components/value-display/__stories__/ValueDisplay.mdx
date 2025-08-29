@@ -7,29 +7,26 @@ import {
 } from "@storybook/addon-docs/blocks"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
-import * as DataCollectionStories from "../../../experimental/OneDataCollection/__stories__/index.stories"
-import * as ActionDataCollectionStories from "../../../experimental/OneDataCollection/__stories__/collection-actions.stories"
-import * as CellTypesDataCollectionStories from "./MetadataTypes.stories"
+import * as ValueDisplayStories from "./ValueDisplay.stories"
 
-<Meta title="Metadata" />
+<Meta title="ValueDisplay" />
 
-# Metadata
+# ValueDisplay
 
 ## Introduction
 
 In order to provide an homogeneus experience to the customers and abstract the
-render logic to developers, Metadata provices a semantic way to define the
-value'srender of a property.
+render logic to developers, ValueDisplay provices a semantic way to define the
+value's display of a property.
 
-The way a cell/property must be rendered is defined in the `render` function of
-the datacollection, the type is the cell type to render and the value depends on
-that type
+The way a value must be rendered is defined in the render `type`
 
-> Note each cell type could have an adapted visualizacion depending on the
-> datacollection type. Ex: Number cell type in a table will be rendered as a
-> right aligned text, but in a list it will be rendered aligned to the left.
+> Note each value display type could have an adapted visualizacion depending on
+> the value display type. Ex: Number value display type in a table will be
+> rendered as a right aligned text, but in a list it will be rendered aligned to
+> the left.
 
-## Cell types
+## Value display types
 
 ### text
 
@@ -46,7 +43,7 @@ type value = {
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.TextType}
+  of={ValueDisplayStories.TextType}
   source={{
     code: `
     render: (item) => 'John Doe'
@@ -57,7 +54,7 @@ type value = {
 #### TextInputAsObject
 
 <Canvas
-  of={CellTypesDataCollectionStories.TextInputAsObject}
+  of={ValueDisplayStories.TextInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -70,7 +67,7 @@ render: (item) => ({
 #### TextValueInputAsObject
 
 <Canvas
-  of={CellTypesDataCollectionStories.TextValueInputAsObject}
+  of={ValueDisplayStories.TextValueInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -85,7 +82,7 @@ render: (item) => ({
 #### With placeholder
 
 <Canvas
-  of={CellTypesDataCollectionStories.TextWithPlaceholder}
+  of={ValueDisplayStories.TextWithPlaceholder}
   source={{
     code: `
 render: (item) => ({
@@ -121,7 +118,7 @@ type value = {
 #### NumberInputAsObject
 
 <Canvas
-  of={CellTypesDataCollectionStories.NumberInputAsObject}
+  of={ValueDisplayStories.NumberInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -135,7 +132,7 @@ render: (item) => ({
 #### NumberValueInputAsObject
 
 <Canvas
-  of={CellTypesDataCollectionStories.NumberValueInputAsObject}
+  of={ValueDisplayStories.NumberValueInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -151,7 +148,7 @@ render: (item) => ({
 #### With decimal places
 
 <Canvas
-  of={CellTypesDataCollectionStories.NumberValueInputAsObjectWithDecimals}
+  of={ValueDisplayStories.NumberValueInputAsObjectWithDecimals}
   source={{
     code: `
 render: (item) => ({
@@ -168,7 +165,7 @@ render: (item) => ({
 #### With units
 
 <Canvas
-  of={CellTypesDataCollectionStories.NumberValueInputAsObjectWithUnits}
+  of={ValueDisplayStories.NumberValueInputAsObjectWithUnits}
   source={{
     code: `
 render: (item) => ({
@@ -186,7 +183,7 @@ render: (item) => ({
 #### With placeholder
 
 <Canvas
-  of={CellTypesDataCollectionStories.NumberWithPlaceholder}
+  of={ValueDisplayStories.NumberWithPlaceholder}
   source={{
     code: `
 render: (item) => ({
@@ -217,7 +214,7 @@ type value = {
 #### DateInputAsObject
 
 <Canvas
-  of={CellTypesDataCollectionStories.DateInputAsObject}
+  of={ValueDisplayStories.DateInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -231,7 +228,7 @@ render: (item) => ({
 #### DateValueInputAsObject
 
 <Canvas
-  of={CellTypesDataCollectionStories.DateValueInputAsObject}
+  of={ValueDisplayStories.DateValueInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -247,7 +244,7 @@ render: (item) => ({
 #### With placeholder
 
 <Canvas
-  of={CellTypesDataCollectionStories.DateWithPlaceholder}
+  of={ValueDisplayStories.DateWithPlaceholder}
   source={{
     code: `
 render: (item) => ({
@@ -285,7 +282,7 @@ type CurrencyDef = {
 #### AmountInputAsObject
 
 <Canvas
-  of={CellTypesDataCollectionStories.AmountInputAsObject}
+  of={ValueDisplayStories.AmountInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -299,7 +296,7 @@ render: (item) => ({
 #### AmountValueInputAsObject
 
 <Canvas
-  of={CellTypesDataCollectionStories.AmountValueInputAsObject}
+  of={ValueDisplayStories.AmountValueInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -314,7 +311,7 @@ render: (item) => ({
 
 <Canvas
 
-of={CellTypesDataCollectionStories.AmountWithCurrency} source={{
+of={ValueDisplayStories.AmountWithCurrency} source={{
     code: `
 render: (item) => ({
     type: 'amount'
@@ -326,7 +323,7 @@ render: (item) => ({
 
   <Canvas
 
-of={CellTypesDataCollectionStories.AmountWithCurrencyEuro} source={{
+of={ValueDisplayStories.AmountWithCurrencyEuro} source={{
     code: `
 render: (item) => ({
     type: 'amount'
@@ -339,7 +336,7 @@ render: (item) => ({
 #### With placeholder
 
 <Canvas
-  of={CellTypesDataCollectionStories.AmountWithPlaceholder}
+  of={ValueDisplayStories.AmountWithPlaceholder}
   source={{
     code: `
 render: (item) => ({
@@ -367,7 +364,7 @@ type value = {
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.AvatarListType}
+  of={ValueDisplayStories.AvatarListType}
   source={{
     code: `
 render: (item) => ({
@@ -395,7 +392,7 @@ type value = {
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.StatusType}
+  of={ValueDisplayStories.StatusType}
   source={{
     code: `
 render: (item) => ({
@@ -437,7 +434,7 @@ type AvatarBadge = ({
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.PersonType}
+  of={ValueDisplayStories.PersonType}
   source={{
     code: `
 render: (item) => ({
@@ -455,8 +452,8 @@ render: (item) => ({
 **With badge and badgetooltip**
 
 <Canvas
-  of={CellTypesDataCollectionStories.PersonTypeWithBadge}
-  meta={CellTypesDataCollectionStories}
+  of={ValueDisplayStories.PersonTypeWithBadge}
+  meta={ValueDisplayStories}
   source={{
     code: `
 render: (item) => ({
@@ -479,8 +476,8 @@ render: (item) => ({
 **With module badge**
 
 <Canvas
-  of={CellTypesDataCollectionStories.PersonTypeWithModuleBadge}
-  meta={CellTypesDataCollectionStories}
+  of={ValueDisplayStories.PersonTypeWithModuleBadge}
+  meta={ValueDisplayStories}
   source={{
     code: `
 render: (item) => ({
@@ -516,7 +513,7 @@ type value = {
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.CompanyType}
+  of={ValueDisplayStories.CompanyType}
   source={{
     code: `
 render: (item) => ({
@@ -549,7 +546,7 @@ type value = {
 Example:
 
 <Canvas
-  of={CellTypesDataCollectionStories.TeamType}
+  of={ValueDisplayStories.TeamType}
   source={{
     code: `
 render: (item) => ({
@@ -576,7 +573,7 @@ type value = { label: string icon?: IconType }
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.TagType}
+  of={ValueDisplayStories.TagType}
   source={{
     code: `
 render: (item) => ({
@@ -601,7 +598,7 @@ type value = { label: string, color: NewColor }
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.DotTagType}
+  of={ValueDisplayStories.DotTagType}
   source={{
     code: `
 render: (item) => ({
@@ -631,7 +628,7 @@ type value = {
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.TagArrayType}
+  of={ValueDisplayStories.TagArrayType}
   source={{
     code: `
 // Example with dot tags
@@ -661,7 +658,7 @@ type value = { icon: IconType, label: string }
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.IconType}
+  of={ValueDisplayStories.IconType}
   source={{
     code: `
 // Example with dot tags
@@ -692,7 +689,7 @@ type value = { file: File } | { file: FileDef }
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.FileType}
+  of={ValueDisplayStories.FileType}
   source={{
     code: `
 render: (item) => ({
@@ -722,7 +719,7 @@ type value = { name: string }
 ```
 
 <Canvas
-  of={CellTypesDataCollectionStories.FolderType}
+  of={ValueDisplayStories.FolderType}
   source={{
     code: `
 render: (item) => ({

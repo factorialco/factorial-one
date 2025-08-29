@@ -1,12 +1,12 @@
 import {
   metadataRenderer,
-  MetadataRendererDefinition,
-} from "@/components/metadata"
+  ValueDisplayRendererDefinition,
+} from "@/components/value-display"
 import { ReactNode } from "react"
 import { RecordType } from "./types"
 import { VisualizationType } from "./visualizations/collection/types"
 
-export type RendererDefinition = MetadataRendererDefinition
+export type RendererDefinition = ValueDisplayRendererDefinition
 
 export type PropertyDefinition<T> = {
   label: string
@@ -44,7 +44,7 @@ export const renderProperty = <R extends RecordType>(
   const renderDefinition = property.render(item)
 
   return metadataRenderer(
-    renderDefinition as MetadataRendererDefinition,
+    renderDefinition as ValueDisplayRendererDefinition,
     {
       visualization,
     },

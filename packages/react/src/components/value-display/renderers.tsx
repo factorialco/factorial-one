@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { MetadataVisualizationType } from "./types.ts"
+import { ValueDisplayVisualizationType } from "./types.ts"
 import { AlertTagCell } from "./types/alertTag.tsx"
 import { AmountCell } from "./types/amount.tsx"
 import { AvatarListCell } from "./types/avatarList.tsx"
@@ -17,21 +17,21 @@ import { TagListCell } from "./types/tagList.tsx"
 import { TeamCell } from "./types/team.tsx"
 import { TextCell } from "./types/text.tsx"
 
-export type PropertyRendererContext = {
-  visualization: MetadataVisualizationType
+export type ValueDisplayRendererContext = {
+  visualization: ValueDisplayVisualizationType
 }
 
 /**
  * The renderer function to use for a property.
  */
-export type MetadataRenderer = (
+export type ValueDisplayRenderer = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- The any type for the definition parameter is acceptable here since the actual type safety is enforced by the MetadataRendererDefinition type when it's used in practice.
   def: any,
-  context: PropertyRendererContext,
+  context: ValueDisplayRendererContext,
   undefinedValue?: string
 ) => ReactNode
 
-export const metadataRenderers = {
+export const valueDisplayRenderers = {
   text: TextCell,
   number: NumberCell,
   date: DateCell,
@@ -48,26 +48,26 @@ export const metadataRenderers = {
   icon: IconCell,
   file: FileCell,
   folder: FolderCell,
-} as const satisfies Record<string, MetadataRenderer>
+} as const satisfies Record<string, ValueDisplayRenderer>
 
 /**
  * The type of renderer to use for a property.
  */
-export type MetadataRendererType = keyof typeof metadataRenderers
+export type ValueDisplayRendererType = keyof typeof valueDisplayRenderers
 
 /**
  * The definition of a renderer.
  * Union type of all possible renderer definitions to ensure the value is the type related the `type`{ [RenderedType]: RendererFuncArgument }.
  */
-export type MetadataRendererDefinition = {
-  [K in keyof typeof metadataRenderers]: {
+export type ValueDisplayRendererDefinition = {
+  [K in keyof typeof valueDisplayRenderers]: {
     type: K
-    value: Parameters<(typeof metadataRenderers)[K]>[0]
+    value: Parameters<(typeof valueDisplayRenderers)[K]>[0]
   }
-}[keyof typeof metadataRenderers]
+}[keyof typeof valueDisplayRenderers]
 
-export type MetadataDefinition = {
-  render: MetadataRendererDefinition | string | number | undefined
+export type ValueDisplayDefinition = {
+  render: ValueDisplayRendererDefinition | string | number | undefined
 }
 
 /**
@@ -75,8 +75,8 @@ export type MetadataDefinition = {
  * Used by both table and card visualizations to ensure consistent rendering.
  */
 const renderIsRendererDefinition = (
-  renderDef: MetadataRendererDefinition | string | number | undefined
-): renderDef is MetadataRendererDefinition => {
+  renderDef: ValueDisplayRendererDefinition | string | number | undefined
+): renderDef is ValueDisplayRendererDefinition => {
   return renderDef !== undefined && typeof renderDef === "object"
 }
 
@@ -87,7 +87,7 @@ const renderIsRendererDefinition = (
  * @returns
  */
 
-export const metadataRenderer: MetadataRenderer = (
+export const metadataRenderer: ValueDisplayRenderer = (
   def,
   context,
   undefinedValue = ""
@@ -97,12 +97,12 @@ export const metadataRenderer: MetadataRenderer = (
     : ({
         type: "text" as const,
         value: def ?? "-",
-      } satisfies MetadataRendererDefinition)
+      } satisfies ValueDisplayRendererDefinition)
 
   // Type assertion to ensure the renderer function is typed correctly as typescript can't infer the type correctly
-  const renderer = metadataRenderers[type] as (
-    arg: Parameters<(typeof metadataRenderers)[typeof type]>[0],
-    context: PropertyRendererContext
+  const renderer = valueDisplayRenderers[type] as (
+    arg: Parameters<(typeof valueDisplayRenderers)[typeof type]>[0],
+    context: ValueDisplayRendererContext
   ) => ReactNode
 
   if (!renderer) {

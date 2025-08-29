@@ -1,4 +1,4 @@
-export type MetadataVisualizationType =
+export type ValueDisplayVisualizationType =
   | "table"
   | "card"
   | "list"

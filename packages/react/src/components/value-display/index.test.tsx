@@ -1,9 +1,5 @@
 import { describe, expect, it } from "vitest"
-import {
-  hasPlaceholder,
-  isShowingPlaceholder,
-  resolveValue,
-} from "./property-utils"
+import { hasPlaceholder, isShowingPlaceholder, resolveValue } from "./utils"
 
 describe("hasPlaceholder", () => {
   it("should return true when object has placeholder property with string value", () => {

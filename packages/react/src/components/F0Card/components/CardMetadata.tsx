@@ -1,24 +1,24 @@
 import { Icon } from "@/components/Utilities/Icon"
-import { metadataRenderers } from "@/components/metadata"
+import { valueDisplayRenderers } from "@/components/value-display"
 import React from "react"
 import { CardMetadata as CardMetadataType } from "../types"
 
 export const cardPropertyRenderers = {
-  text: metadataRenderers.text,
-  number: metadataRenderers.number,
-  date: metadataRenderers.date,
-  amount: metadataRenderers.amount,
-  person: metadataRenderers.person,
-  company: metadataRenderers.company,
-  team: metadataRenderers.team,
-  status: metadataRenderers.status,
-  tag: metadataRenderers.tag,
-  avatarList: metadataRenderers.avatarList,
-  tagList: metadataRenderers.tagList,
-  alertTag: metadataRenderers.alertTag,
-  dotTag: metadataRenderers.dotTag,
-  file: metadataRenderers.file,
-  folder: metadataRenderers.folder,
+  text: valueDisplayRenderers.text,
+  number: valueDisplayRenderers.number,
+  date: valueDisplayRenderers.date,
+  amount: valueDisplayRenderers.amount,
+  person: valueDisplayRenderers.person,
+  company: valueDisplayRenderers.company,
+  team: valueDisplayRenderers.team,
+  status: valueDisplayRenderers.status,
+  tag: valueDisplayRenderers.tag,
+  avatarList: valueDisplayRenderers.avatarList,
+  tagList: valueDisplayRenderers.tagList,
+  alertTag: valueDisplayRenderers.alertTag,
+  dotTag: valueDisplayRenderers.dotTag,
+  file: valueDisplayRenderers.file,
+  folder: valueDisplayRenderers.folder,
 } as const
 
 export type CardPropertyType = keyof typeof cardPropertyRenderers

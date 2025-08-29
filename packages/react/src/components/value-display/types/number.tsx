@@ -3,8 +3,8 @@
  * Supports both direct number values and objects with placeholder states.
  */
 import { cn } from "@/lib/utils"
-import { isShowingPlaceholder, resolveValue } from "../property-utils"
-import { PropertyRendererContext } from "../renderers"
+import { ValueDisplayRendererContext } from "../renderers"
+import { isShowingPlaceholder, resolveValue } from "../utils"
 import { WithPlaceholder } from "./types"
 
 interface NumberValue extends WithPlaceholder {
@@ -18,7 +18,7 @@ export type NumberCellValue = number | undefined | NumberValue
 
 export const NumberCell = (
   args: NumberCellValue,
-  meta: PropertyRendererContext
+  meta: ValueDisplayRendererContext
 ) => {
   const value = resolveValue<number>(args, "number")
   const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "number")

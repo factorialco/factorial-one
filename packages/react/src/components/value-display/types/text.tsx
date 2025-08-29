@@ -3,7 +3,7 @@
  * Supports both direct values and objects with placeholder states.
  */
 import { cn } from "@/lib/utils"
-import { isShowingPlaceholder, resolveValue } from "../property-utils"
+import { isShowingPlaceholder, resolveValue } from "../utils"
 import { WithPlaceholder } from "./types"
 
 export interface TextValue extends WithPlaceholder {
