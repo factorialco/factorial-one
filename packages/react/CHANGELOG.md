@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.168.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.2...factorial-one-react-v1.168.3) (2025-08-29)
+
+
+### Bug Fixes
+
+* **ai-chat:** several small improvements ([#2472](https://github.com/factorialco/factorial-one/issues/2472)) ([e768b96](https://github.com/factorialco/factorial-one/commit/e768b96762fcbefd1543cdea28716d0d97c409f0))
+
 ## [1.168.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.1...factorial-one-react-v1.168.2) (2025-08-29)
 
 
