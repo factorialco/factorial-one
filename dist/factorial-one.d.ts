@@ -1,30 +1,31 @@
-import { AlertTagCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/alertTag';
+import { AlertTagCellValue } from '../../value-display/types/alertTag';
 import { AlertTagCellValue as AlertTagCellValue_2 } from './types/alertTag.tsx';
-import { AmountCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/amount';
+import { AmountCellValue } from '../../value-display/types/amount';
 import { AmountCellValue as AmountCellValue_2 } from './types/amount.tsx';
 import { AnchorHTMLAttributes } from 'react';
-import { AvatarListCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/avatarList';
+import { AvatarListCellValue } from '../../value-display/types/avatarList';
 import { AvatarListCellValue as AvatarListCellValue_2 } from './types/avatarList.tsx';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { AvatarProps } from '@radix-ui/react-avatar';
+import { baseColors } from '@factorialco/factorial-one-core';
 import { CategoryBarProps } from './CategoryBarChart';
 import { ChartConfig } from '../../ui/chart';
 import { ChartConfig as ChartConfig_2 } from './utils/types';
 import { ChartPropsBase } from './utils/types';
 import { ClassValue } from 'cva';
-import { color as color_2 } from '../../../../ui/avatar';
-import { CompanyCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/company';
+import { color as color_2 } from '../../../ui/avatar';
+import { CompanyCellValue } from '../../value-display/types/company';
 import { CompanyCellValue as CompanyCellValue_2 } from './types/company.tsx';
 import { ComponentProps } from 'react';
-import { DateCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/date';
+import { DateCellValue } from '../../value-display/types/date';
 import { DateCellValue as DateCellValue_2 } from './types/date.tsx';
 import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
-import { DotTagCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/dotTag';
+import { DotTagCellValue } from '../../value-display/types/dotTag';
 import { DotTagCellValue as DotTagCellValue_2 } from './types/dotTag.tsx';
-import { FileCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/file';
+import { FileCellValue } from '../../value-display/types/file';
 import { FileCellValue as FileCellValue_2 } from './types/file.tsx';
-import { FolderCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/folder';
+import { FolderCellValue } from '../../value-display/types/folder';
 import { FolderCellValue as FolderCellValue_2 } from './types/folder.tsx';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
@@ -38,31 +39,31 @@ import { LineChartConfig } from '../../ui/chart';
 import { LineChartPropsBase } from './utils/types';
 import { LinkProps as LinkProps_3 } from './Link';
 import { MouseEventHandler } from 'react';
-import { NumberCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/number';
+import { NumberCellValue } from '../../value-display/types/number';
 import { NumberCellValue as NumberCellValue_2 } from './types/number.tsx';
-import { PersonCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/person';
+import { Observable } from 'zen-observable-ts';
+import { PersonCellValue } from '../../value-display/types/person';
 import { PersonCellValue as PersonCellValue_2 } from './types/person.tsx';
 import { PieChartProps } from './PieChart';
 import { PopoverContentProps } from '@radix-ui/react-popover';
-import { PropertyRendererMetadata } from '../../../experimental/OneDataCollection/visualizations/property/types';
-import { PropertyRendererMetadata as PropertyRendererMetadata_2 } from './types.ts';
 import * as React_2 from 'react';
 import { ReactNode } from 'react';
 import { RefAttributes } from 'react';
 import { RefObject } from 'react';
-import { sizes as sizes_3 } from '../../../../ui/avatar';
-import { StatusCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/status';
+import { sizes as sizes_3 } from '../../../ui/avatar';
+import { StatusCellValue } from '../../value-display/types/status';
 import { StatusCellValue as StatusCellValue_2 } from './types/status.tsx';
 import { SVGProps } from 'react';
-import { TagCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/tag';
+import { TagCellValue } from '../../value-display/types/tag';
 import { TagCellValue as TagCellValue_2 } from './types/tag.tsx';
-import { TagListCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/tagList';
+import { TagListCellValue } from '../../value-display/types/tagList';
 import { TagListCellValue as TagListCellValue_2 } from './types/tagList.tsx';
-import { TeamCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/team';
+import { TeamCellValue } from '../../value-display/types/team';
 import { TeamCellValue as TeamCellValue_2 } from './types/team.tsx';
-import { TextCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/text';
+import { TextCellValue } from '../../value-display/types/text';
 import { TextCellValue as TextCellValue_2 } from './types/text.tsx';
-import { type as type_2 } from '../../../../ui/avatar';
+import { type as type_2 } from '../../../ui/avatar';
+import { ValueDisplayRendererContext } from '../../value-display';
 import { VariantProps } from 'cva';
 
 export declare type Action = UpsellAction | RegularAction;
@@ -74,6 +75,38 @@ declare type Action_2 = {
     variant?: ButtonVariant;
     size?: "md" | "lg";
     loading?: boolean;
+};
+
+export declare type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
+    icon?: IconType;
+    type: "critical" | "warning" | "info" | "positive";
+    size?: "sm" | "md" | "lg";
+};
+
+declare const alertAvatarVariants: (props?: ({
+    type?: "info" | "critical" | "warning" | "positive" | undefined;
+    size?: "lg" | "md" | "sm" | undefined;
+} & ({
+    class?: ClassValue;
+    className?: never;
+} | {
+    class?: never;
+    className?: ClassValue;
+})) | undefined) => string;
+
+declare type AlertTagProps = ComponentProps<typeof F0TagAlert>;
+
+export declare type AllSelectionStatus = {
+    checked: boolean;
+    indeterminate: boolean;
+    selectedCount: number;
+    unselectedCount: number;
+};
+
+declare type AnimationVariantsOptions = {
+    delay?: number;
+    duration?: number;
+    maxDelay?: number;
 };
 
 export declare const AreaChart: ForwardRefExoticComponent<Omit<LineChartPropsBase<LineChartConfig> & {
@@ -89,7 +122,7 @@ declare const Avatar: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.Ava
     color?: (typeof color)[number];
 } & React_2.RefAttributes<HTMLSpanElement>>;
 
-declare type AvatarBadge = ({
+export declare type AvatarBadge = ({
     type: "module";
     module: ModuleId;
 } | {
@@ -99,7 +132,19 @@ declare type AvatarBadge = ({
     tooltip?: string;
 };
 
-declare type AvatarVariant = ({
+export declare type AvatarListSize = Extract<(typeof sizes_2)[number], "xsmall" | "small" | "medium">;
+
+declare type AvatarType = AvatarVariant["type"];
+
+export declare type AvatarVariant = ({
+    type: "person";
+} & Omit<PersonAvatarProps_2, "size">) | ({
+    type: "team";
+} & Omit<TeamAvatarProps_2, "size">) | ({
+    type: "company";
+} & Omit<CompanyAvatarProps_2, "size">);
+
+declare type AvatarVariant_2 = ({
     type: "person";
 } & Omit<PersonAvatarProps, "size">) | ({
     type: "team";
@@ -132,6 +177,8 @@ declare const badgeVariants: (props?: ({
     class?: never;
     className?: ClassValue;
 })) | undefined) => string;
+
+declare type BalanceTagProps = ComponentProps<typeof F0TagBalance>;
 
 declare type BannerAction = {
     label: string;
@@ -189,6 +236,35 @@ declare type BaseBannerProps = {
     children?: React.ReactNode;
 };
 
+declare type BaseColor = keyof typeof baseColors;
+
+/**
+ * Base data adapter configuration for non-paginated collections
+ * @template R - The type of records in the collection
+ * @template Filters - The available filter configurations
+ */
+export declare type BaseDataAdapter<R extends RecordType, Filters extends FiltersDefinition, Options extends BaseFetchOptions<Filters>, FetchReturn = BaseResponse<R>> = {
+    /** Indicates this adapter doesn't use pagination */
+    paginationType?: never | undefined;
+    /**
+     * Function to fetch data based on filter options
+     * @param options - The filter options to apply when fetching data
+     * @returns Array of records, promise of records, or observable of records
+     */
+    fetchData: (options: Options) => FetchReturn | Promise<FetchReturn> | Observable<PromiseState<FetchReturn>>;
+};
+
+/**
+ * Base options for data fetching
+ * @template Filters - The available filter configurations
+ */
+export declare type BaseFetchOptions<Filters extends FiltersDefinition> = {
+    /** Currently applied filters */
+    filters: FiltersState<Filters>;
+    sortings: SortingsStateMultiple;
+    search?: string;
+};
+
 /**
  * Base definition for all filter types.
  * Provides common properties that all filters must implement.
@@ -203,6 +279,38 @@ declare type BaseFilterDefinition<T extends FilterTypeKey> = {
      */
     hideSelector?: boolean;
 };
+
+/**
+ * Represents a base structure for paginated API responses, providing
+ * details about the records on the current page and pagination metadata.
+ *
+ * @template R The type of each record in the paginated response.
+ *
+ * @property {number} total The total number of records available.
+ * @property {number} perPage The number of records displayed per page.
+ */
+export declare type BasePaginatedResponse<R> = BaseResponse<R> & {
+    /** Total number of records available */
+    total: number;
+    /** Number of records per page */
+    perPage: number;
+};
+
+/**
+ * Base response type for collection data
+ * @template R - The type of records in the collection
+ *
+ * @property {R[]} records The list of records for the current page.
+ * @property {TRecord} [summaries] Optional summaries data for the collection.
+ */
+export declare type BaseResponse<R> = {
+    records: R[];
+    summaries?: R;
+};
+
+declare type BaseTag<T extends {
+    type: string;
+}> = T & WithTooltipDescription;
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
 
@@ -367,7 +475,13 @@ declare interface CardInternalProps {
 
 declare type CardMetadata = {
     icon: IconType;
-    property: CardMetadataProperty;
+    property: Exclude<CardMetadataProperty, {
+        type: "file";
+    }>;
+} | {
+    property: Extract<CardMetadataProperty, {
+        type: "file";
+    }>;
 };
 
 /**
@@ -377,7 +491,7 @@ declare type CardMetadata = {
 declare type CardMetadataProperty = {
     [K in CardPropertyType]: {
         type: K;
-        value: Parameters<(typeof propertyRenderers)[K]>[0];
+        value: Parameters<(typeof valueDisplayRenderers)[K]>[0];
     };
 }[CardPropertyType];
 
@@ -389,9 +503,9 @@ declare interface CardPrimaryAction {
 
 declare const cardPropertyRenderers: {
     readonly text: (args: TextCellValue) => default_2.JSX.Element;
-    readonly number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => default_2.JSX.Element;
+    readonly number: (args: NumberCellValue, meta: ValueDisplayRendererContext) => default_2.JSX.Element;
     readonly date: (args: DateCellValue) => default_2.JSX.Element;
-    readonly amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => default_2.JSX.Element;
+    readonly amount: (args: AmountCellValue, meta: ValueDisplayRendererContext) => default_2.JSX.Element;
     readonly person: (args: PersonCellValue) => default_2.JSX.Element;
     readonly company: (args: CompanyCellValue) => default_2.JSX.Element;
     readonly team: (args: TeamCellValue) => default_2.JSX.Element;
@@ -474,12 +588,11 @@ declare interface CheckboxProps extends DataAttributes {
 
 declare const color: readonly ["viridian", "malibu", "yellow", "purple", "lilac", "barbie", "smoke", "army", "flubber", "indigo", "camel"];
 
-declare const CompanyAvatar: {
-    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props_2): JSX_2.Element;
-    displayName: string;
-};
+declare type CompanyAvatarProps = ComponentProps<typeof F0AvatarCompany>;
 
-declare type CompanyAvatarProps = ComponentProps<typeof CompanyAvatar>;
+declare type CompanyAvatarProps_2 = ComponentProps<typeof F0AvatarCompany>;
+
+declare type CompanyTagProps = ComponentProps<typeof F0TagCompany>;
 
 declare type ComponentTypes = (typeof componentTypes)[number];
 
@@ -494,6 +607,18 @@ declare type CopyButtonProps = Omit<ComponentProps<typeof Button_2>, "onClick" |
     onCopy?: MouseEventHandler<HTMLButtonElement>;
 };
 
+export declare function createAtlaskitDriver(instanceId: symbol): DndDriver;
+
+/**
+ * Create a data source definition from a data source definition
+ * This function is a helper to allow to infer the type of the data source definition
+ * from the data source definition.
+ *
+ * @param definition - The data source definition to create from
+ * @returns The created data source definition
+ */
+export declare const createDataSourceDefinition: <R extends RecordType = RecordType, FiltersSchema extends FiltersDefinition = FiltersDefinition, Sortings extends SortingsDefinition = SortingsDefinition, Grouping extends GroupingDefinition<R> = GroupingDefinition<R>>(definition: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>) => DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>;
+
 /**
  * Extracts the current filters type from filter options.
  * Creates a type mapping filter keys to their respective value types.
@@ -505,6 +630,92 @@ export declare type CurrentFilters<F extends FilterOptions<string>> = F extends 
 } ? {
     [Key in K]?: FilterValue<F["fields"][Key]>;
 } : Record<string, never>;
+
+export declare type Data<R extends RecordType> = {
+    records: WithGroupId<R>[];
+    type: "grouped" | "flat";
+    groups: GroupRecord<R>[];
+};
+
+/**
+ * Combined type for all possible data adapter configurations
+ * @template R - The type of records in the collection
+ * @template Filters - The available filter configurations
+ */
+export declare type DataAdapter<R extends RecordType, Filters extends FiltersDefinition> = BaseDataAdapter<R, Filters, BaseFetchOptions<Filters>, BaseResponse<R>> | PaginatedDataAdapter<R, Filters, PaginatedFetchOptions<Filters>, PaginatedResponse<R>>;
+
+/**
+ * Represents an error that occurred during data fetching
+ */
+export declare interface DataError {
+    message: string;
+    cause?: unknown;
+}
+
+/**
+ * Represents a data source with filtering capabilities and data fetching functionality.
+ * Extends DataSourceDefinition with runtime properties for state management.
+ * @template R - The type of records in the collection
+ * @template Filters - The available filter configurations for the collection
+ * @template ItemActions - The available actions that can be performed on records
+ */
+export declare type DataSource<R extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, Grouping extends GroupingDefinition<R>> = DataSourceDefinition<R, Filters, Sortings, Grouping> & {
+    /** Current state of applied filters */
+    currentFilters: FiltersState<Filters>;
+    /** Function to update the current filters state */
+    setCurrentFilters: React.Dispatch<React.SetStateAction<FiltersState<Filters>>>;
+    /** Current state of applied sortings */
+    currentSortings: SortingsState<Sortings>;
+    /** Function to update the current sortings state */
+    setCurrentSortings: React.Dispatch<React.SetStateAction<SortingsState<Sortings>>>;
+    currentSearch: undefined | string;
+    debouncedCurrentSearch: undefined | string;
+    setCurrentSearch: (search: string | undefined) => void;
+    isLoading: boolean;
+    setIsLoading: (loading: boolean) => void;
+    /** Current state of applied grouping */
+    currentGrouping?: Grouping["mandatory"] extends true ? Exclude<GroupingState<R, Grouping>, undefined> : GroupingState<R, Grouping>;
+    /** Function to update the current grouping state */
+    setCurrentGrouping: React.Dispatch<React.SetStateAction<GroupingState<R, Grouping>>>;
+    /** Function to provide an id for a record, necessary for append mode */
+    idProvider?: (item: R, index?: number) => string | number | symbol;
+};
+
+/**
+ * Defines the structure and configuration of a data source for a collection.
+ * @template R - The type of records in the collection
+ * @template Filters - The available filter configurations for the collection
+ * @template ItemActions - The available actions that can be performed on records
+ * @template NavigationFilters - The available navigation filters for the collection
+ * @template Sortings - The available sortings for the collection
+ * @template ItemActions - The available actions that can be performed on records
+ * @template PrimaryActions - The available primary actions that can be performed on the collection
+ * @template SecondaryActions - The available actions that can be performed on the collection
+ * @template OtherActions - The available actions that can be performed on the collection
+ * @template Summaries - The available summaries for the collection
+ */
+export declare type DataSourceDefinition<R extends RecordType = RecordType, Filters extends FiltersDefinition = FiltersDefinition, Sortings extends SortingsDefinition = SortingsDefinition, Grouping extends GroupingDefinition<R> = GroupingDefinition<R>> = {
+    /** Available filter configurations */
+    filters?: Filters;
+    /** Current state of applied filters */
+    currentFilters?: FiltersState<Filters>;
+    /** Predefined filter configurations that can be applied */
+    presets?: PresetsDefinition<Filters>;
+    /** Search configuration */
+    search?: SearchOptions;
+    /** Available sorting fields. If not provided, sorting is not allowed. */
+    sortings?: Sortings;
+    defaultSorting?: SortingsState<Sortings>;
+    /** Data adapter responsible for fetching and managing data */
+    dataAdapter: DataAdapter<R, Filters>;
+    /** Selectable items value under the checkbox column (undefined if not selectable) */
+    selectable?: (item: R) => string | number | undefined;
+    /** Default selected items */
+    defaultSelectedItems?: SelectedItemsState;
+    /** Grouping configuration */
+    grouping?: Grouping;
+    currentGrouping?: GroupingState<R, Grouping>;
+};
 
 declare type DateFilterDefinition = BaseFilterDefinition<"date"> & {
     options?: DateFilterOptions_2;
@@ -702,9 +913,39 @@ export declare const defaultTranslations: {
     };
     readonly notifications: "Notifications";
     readonly ai: {
-        readonly openChat: "Open Chat";
         readonly description: "Chat with AI";
+        readonly newChat: "New Chat";
+        readonly openChat: "Open Chat";
+        readonly scrollToBottom: "Scroll to bottom";
     };
+};
+
+export declare interface DndDriver {
+    registerDraggable: (el: HTMLElement, options: {
+        payload: DragPayload;
+        disabled?: boolean;
+        handle?: HTMLElement | null;
+    }) => () => void;
+    registerDroppable: (el: HTMLElement, options: {
+        id: string;
+        accepts: string[];
+    }) => () => void;
+    subscribe: (cb: (e: {
+        phase: "start" | "over" | "drop" | "cancel";
+        source: DragPayload;
+        intent?: DropIntent;
+    }) => void) => () => void;
+}
+
+export declare function DndProvider({ driver, children, }: {
+    driver: DndDriver;
+    children: ReactNode;
+}): JSX_2.Element;
+
+export declare type DragPayload<T = unknown> = {
+    kind: string;
+    id: string;
+    data?: T;
 };
 
 declare type DropdownItem = DropdownItemObject | DropdownItemSeparator;
@@ -720,6 +961,24 @@ declare type DropdownItemObject = NavigationItem & {
 
 declare type DropdownItemSeparator = {
     type: "separator";
+};
+
+export declare type DropIntent = {
+    type: "reorder";
+    containerId: string;
+    fromIndex: number;
+    toIndex: number;
+} | {
+    type: "move";
+    fromContainerId: string;
+    toContainerId: string;
+    fromIndex: number;
+    toIndex: number | null;
+} | {
+    type: "enter-container";
+    toContainerId: string;
+} | {
+    type: "cancel";
 };
 
 export declare function EmojiImage({ emoji, size }: EmojiImageProps): JSX_2.Element;
@@ -745,6 +1004,103 @@ export declare interface ErrorMessageProps {
 
 export declare const experimental: <T extends (...args: any[]) => any>(name: string, component: T) => T;
 
+export declare const F0Avatar: ({ avatar, size, }: {
+    avatar: AvatarVariant_2;
+    size?: (typeof sizes_2)[number];
+}) => ReactNode;
+
+export declare const F0AvatarAlert: ({ icon, type, size }: AlertAvatarProps) => JSX_2.Element;
+
+export declare const F0AvatarCompany: {
+    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: F0AvatarCompanyProps): JSX_2.Element;
+    displayName: string;
+};
+
+export declare type F0AvatarCompanyProps = {
+    name: string;
+    src?: string;
+    size?: BaseAvatarProps_3["size"];
+    badge?: AvatarBadge;
+} & Pick<BaseAvatarProps_3, "aria-label" | "aria-labelledby">;
+
+export declare const F0AvatarDate: ({ date }: Props_2) => JSX_2.Element;
+
+export declare const F0AvatarEmoji: {
+    ({ emoji, size }: Props_3): JSX_2.Element;
+    displayName: string;
+};
+
+export declare const F0AvatarFile: ForwardRefExoticComponent<Omit<Omit<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
+size?: (typeof sizes_2)[number];
+type?: type_2[number];
+color?: color_2[number];
+} & RefAttributes<HTMLSpanElement>, "ref">, "type"> & {
+file: FileDef;
+size?: F0AvatarFileSize;
+} & RefAttributes<HTMLSpanElement>>;
+
+export declare type F0AvatarFileProps = Omit<React.ComponentPropsWithoutRef<typeof Avatar>, "type"> & {
+    file: FileDef;
+    size?: F0AvatarFileSize;
+};
+
+declare type F0AvatarFileSize = Extract<(typeof sizes_2)[number], "small" | "medium" | "large">;
+
+export declare const F0AvatarIcon: {
+    ({ icon, size, className }: Props_4): JSX_2.Element;
+    displayName: string;
+};
+
+export declare const F0AvatarList: {
+    ({ avatars, size, type, noTooltip, remainingCount: initialRemainingCount, max, layout, }: F0AvatarListProps): JSX_2.Element;
+    displayName: string;
+};
+
+export declare type F0AvatarListProps = {
+    avatars: AvatarVariant[];
+    size?: AvatarListSize;
+    type?: AvatarType;
+    /**
+     * Whether to hide tooltips in each avatar.
+     * @default false
+     */
+    noTooltip?: boolean;
+    /**
+     * The maximum number of avatars to display.
+     * @default 3
+     */
+    max?: number;
+    /**
+     * The remaining number to display.
+     */
+    remainingCount?: number;
+    /**
+     * The layout of the avatar list.
+     * - "fill" - Avatars will expand to fill the available width, with overflow items shown in a counter
+     * - "compact" - Avatars will be stacked tightly together up to the max limit, with remaining shown in counter
+     * @default "compact"
+     */
+    layout?: "fill" | "compact";
+};
+
+export declare const F0AvatarPerson: {
+    ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: F0AvatarPersonProps): JSX_2.Element;
+    displayName: string;
+};
+
+export declare type F0AvatarPersonProps = {
+    firstName: string;
+    lastName: string;
+    src?: string;
+    size?: BaseAvatarProps["size"];
+    badge?: AvatarBadge;
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
+
+export declare const F0AvatarTeam: {
+    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props): JSX_2.Element;
+    displayName: string;
+};
+
 export declare const F0Card: ForwardRefExoticComponent<F0CardProps & RefAttributes<HTMLDivElement>> & {
     Skeleton: ({ compact }: {
         compact?: boolean;
@@ -760,6 +1116,27 @@ export declare const F0Checkbox: typeof _F0Checkbox;
 
 declare function _F0Checkbox({ title, onCheckedChange, id, disabled, indeterminate, checked, value, hideLabel, presentational, stopPropagation, name, ...rest }: CheckboxProps): JSX_2.Element;
 
+export declare const F0TagAlert: ForwardRefExoticComponent<TagAlertProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagBalance: ForwardRefExoticComponent<TagBalanceProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagCompany: ForwardRefExoticComponent<TagCompanyProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagDot: ForwardRefExoticComponent<TagDotProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagList: {
+    <T extends TagType>({ type, tags, max, remainingCount: initialRemainingCount, layout, }: TagListProps<T>): JSX_2.Element;
+    displayName: string;
+};
+
+export declare const F0TagPerson: ForwardRefExoticComponent<TagPersonProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagRaw: ForwardRefExoticComponent<TagRawProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagStatus: ForwardRefExoticComponent<TagStatusProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagTeam: ForwardRefExoticComponent<TagTeamProps & RefAttributes<HTMLDivElement>>;
+
 export declare const FactorialOneProvider: React.FC<{
     children: React.ReactNode;
     link?: LinkContextValue;
@@ -771,6 +1148,11 @@ export declare const FactorialOneProvider: React.FC<{
     isDev?: boolean;
     showExperimentalWarnings?: boolean;
 }>;
+
+declare type FileDef = {
+    name: string;
+    type: string;
+};
 
 /**
  * Union of all available filter types.
@@ -864,7 +1246,82 @@ declare type FilterTypeSchema<Options extends object = never> = {
  */
 export declare type FilterValue<T extends FilterDefinition> = T extends InFilterDefinition<infer U> ? U[] : T extends SearchFilterDefinition ? string : T extends DateFilterDefinition ? DateRange | Date | undefined : never;
 
+export declare const getAnimationVariants: (options?: AnimationVariantsOptions) => {
+    hidden: {
+        opacity: number;
+        y: number;
+    };
+    visible: (i: number) => {
+        opacity: number;
+        y: number;
+        transition: {
+            delay: number;
+            duration: number;
+            type: string;
+            stiffness: number;
+            damping: number;
+        };
+    };
+};
+
+/**
+ * Get the pagination type of a data adapter
+ * @param dataAdapter - The data adapter to get the pagination type of
+ * @returns The pagination type of the data adapter
+ */
+export declare const getDataSourcePaginationType: <D extends {
+    paginationType?: PaginationType | undefined | never;
+}>(dataAdapter: D) => PaginationType;
+
 export declare function getEmojiLabel(emoji: string): string;
+
+/**
+ * Symbol used to identify the groupId in the data
+ */
+export declare const GROUP_ID_SYMBOL: unique symbol;
+
+/**
+ * Defines the structure and configuration of a grouping options for a data source.
+ * @template RecordType - The type of records in the collection
+ */
+export declare type GroupingDefinition<R extends RecordType> = {
+    /** Whether grouping is mandatory or the user can chose not to group */
+    mandatory?: boolean;
+    hideSelector?: boolean;
+    groupBy: {
+        [K in RecordPaths<R>]?: {
+            /** The label for the grouping */
+            name: string;
+            /** The item count for the grouping */
+            label: (groupId: RecordPathValue<R, K>, filters: FiltersState<FiltersDefinition>) => string | Promise<string>;
+            itemCount?: (groupId: RecordPathValue<R, K>, filters: FiltersState<FiltersDefinition>) => number | undefined | Promise<number | undefined>;
+        };
+    };
+} & ({
+    /** Whether the grouping is non collapsible */
+    collapsible: true;
+    /** The initial open groups */
+    defaultOpenGroups?: boolean | string[];
+} | {
+    collapsible?: false;
+    defaultOpenGroups?: never;
+});
+
+/**
+ * The selected the grouping state
+ * @template Grouping - The grouping definition
+ */
+export declare type GroupingState<R extends RecordType, Grouping extends GroupingDefinition<R>> = {
+    field: keyof Grouping["groupBy"];
+    order: SortOrder;
+} | undefined;
+
+export declare type GroupRecord<RecordType> = {
+    key: string;
+    label: string | Promise<string>;
+    itemCount: number | undefined | Promise<number | undefined>;
+    records: RecordType[];
+};
 
 export declare const HomeLayout: ForwardRefExoticComponent<Omit<{
 widgets?: ReactNode[];
@@ -920,6 +1377,37 @@ declare type InFilterOptions_2<T> = {
     options: Array<InFilterOptionItem<T>> | (() => Array<InFilterOptionItem<T>> | Promise<Array<InFilterOptionItem<T>>>);
 };
 
+/**
+ * Represents a paginated response structure tailored for infinite scroll implementations.
+ *
+ * @template TRecord The type of the individual record contained in the paginated response.
+ *
+ * @extends BasePaginatedResponse
+ *
+ * @property {"infinite-scroll"} type Identifies the pagination type as "infinite-scroll".
+ * @property {string | null} cursor The current position cursor used to fetch the next set of records.
+ * @property {boolean} hasMore Indicates whether there are additional records available for loading.
+ */
+export declare type InfiniteScrollPaginatedResponse<TRecord> = BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "infinite-scroll">;
+    /**
+     * Represents the current position cursor for pagination.
+     * This is typically a string (often Base64-encoded) that represents
+     * the position of the last item in the current result set.
+     * Used to fetch the next page of results.
+     */
+    cursor: string | null;
+    /**
+     * A boolean flag indicating whether there are more items available for fetching.
+     * Used to determine if additional requests should be made for pagination.
+     */
+    hasMore: boolean;
+};
+
+export declare function isInfiniteScrollPagination<R extends RecordType>(pagination: PaginationInfo | null): pagination is InfiniteScrollPaginatedResponse<R>;
+
+export declare function isPageBasedPagination<R extends RecordType>(pagination: PaginationInfo | null): pagination is PageBasedPaginatedResponse<R>;
+
 declare type L10nContextValue = {
     locale: string;
 };
@@ -947,6 +1435,8 @@ declare const layoutVariants: (props?: ({
     class?: never;
     className?: ClassValue;
 })) | undefined) => string;
+
+export declare type Level = "info" | "warning" | "critical";
 
 export declare const LineChart: ForwardRefExoticComponent<Omit<LineChartPropsBase<LineChartConfig> & {
 lineType?: "natural" | "linear";
@@ -1054,6 +1544,8 @@ declare type NavigationItem = Pick<LinkProps_2, "href" | "exactMatch" | "onClick
     label: string;
 } & DataAttributes;
 
+export declare type NewColor = Extract<BaseColor, "viridian" | "malibu" | "yellow" | "purple" | "lilac" | "barbie" | "smoke" | "army" | "flubber" | "indigo" | "camel">;
+
 export declare interface NextStepsProps {
     title: string;
     items: StepItemProps[];
@@ -1084,20 +1576,94 @@ declare interface OneFilterPickerRootProps<Definition extends FiltersDefinition>
     children?: React.ReactNode;
 }
 
-declare const PersonAvatar: {
-    ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: PersonAvatarProps_2): JSX_2.Element;
-    displayName: string;
+export declare type OnSelectItemsCallback<R extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {
+    allSelected: boolean | "indeterminate";
+    itemsStatus: ReadonlyArray<{
+        item: R;
+        checked: boolean;
+    }>;
+    groupsStatus: Record<string, boolean>;
+    filters: FiltersState<Filters>;
+    selectedCount: number;
+}, clearSelectedItems: () => void) => void;
+
+/**
+ * Represents a paginated response with page-based navigation.
+ *
+ * Combines the base pagination response with additional properties specific to
+ * page-based pagination, allowing clients to navigate the dataset using page numbers.
+ *
+ * This type is useful for APIs returning data in discrete pages, where both the
+ * current page index and the total number of pages are provided.
+ *
+ * @template TRecord - The type of the individual records in the dataset.
+ *
+ * @property {"pages"} type - Indicates the pagination type is page-based.
+ * @property {number} currentPage - The index of the current page being viewed.
+ * @property {number} pagesCount - The total number of pages available.
+ */
+export declare type PageBasedPaginatedResponse<TRecord> = BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "pages">;
+    /** Current page number (1-indexed) */
+    currentPage: number;
+    /** Total number of pages available */
+    pagesCount: number;
 };
 
-declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
+/**
+ * Paginated data adapter configuration
+ * @template R - The type of records in the collection
+ * @template Filters - The available filter configurations
+ */
+export declare type PaginatedDataAdapter<R extends RecordType, Filters extends FiltersDefinition, Options extends PaginatedFetchOptions<Filters> = PaginatedFetchOptions<Filters>, FetchReturn = PaginatedResponse<R>> = {
+    /** Indicates this adapter uses page-based pagination */
+    paginationType: PaginationType;
+    /** Default number of records per page */
+    perPage?: number;
+    /**
+     * Function to fetch paginated data based on filter and pagination options
+     * @param options - The filter and pagination options to apply when fetching data
+     * @returns Paginated response with records and pagination info
+     */
+    fetchData: (options: Options) => FetchReturn | Promise<FetchReturn> | Observable<PromiseState<FetchReturn>>;
+};
 
-declare type PersonAvatarProps_2 = {
-    firstName: string;
-    lastName: string;
-    src?: string;
-    size?: BaseAvatarProps["size"];
-    badge?: AvatarBadge;
-} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
+export declare type PaginatedFetchOptions<Filters extends FiltersDefinition> = BaseFetchOptions<Filters> & {
+    pagination: {
+        perPage?: number;
+    } & ({
+        currentPage: number;
+        cursor?: never;
+    } | {
+        cursor?: string | null;
+        currentPage?: never;
+    });
+};
+
+/**
+ * Response type for paginated collection data
+ * @template Record - The type of records in the collection
+ */
+export declare type PaginatedResponse<TRecord> = PageBasedPaginatedResponse<TRecord> | InfiniteScrollPaginatedResponse<TRecord>;
+
+/**
+ * Pagination state and controls
+ */
+export declare type PaginationInfo = Omit<PageBasedPaginatedResponse<unknown>, "records"> | Omit<InfiniteScrollPaginatedResponse<unknown>, "records">;
+
+/**
+ * Defines the available pagination types used throughout the application.
+ * - "pages": Represents traditional page-based navigation with numbered pages.
+ * - "infinite-scroll": Represents continuous loading of content as the user scrolls.
+ * - "no-pagination": Represents a collection that does not use pagination.
+ */
+export declare type PaginationType = "pages" | "infinite-scroll" | "no-pagination";
+
+declare type PersonAvatarProps = ComponentProps<typeof F0AvatarPerson>;
+
+declare type PersonAvatarProps_2 = ComponentProps<typeof F0AvatarPerson>;
+
+declare type PersonTagProps = ComponentProps<typeof F0TagPerson>;
 
 export declare const PieChart: ForwardRefExoticComponent<Omit<PieChartProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
@@ -1211,6 +1777,18 @@ label?: string;
 color?: string;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
+/**
+ * Utility type for handling both Promise and Observable return types.
+ * @template T - The type of the value being promised or observed
+ */
+export declare type PromiseOrObservable<T> = T | Promise<T> | Observable<PromiseState<T>>;
+
+declare interface PromiseState<T> {
+    loading: boolean;
+    error?: Error | null;
+    data?: T | null;
+}
+
 declare type PromoteAction = {
     variant: "promote";
     label: string;
@@ -1225,31 +1803,6 @@ declare type PromoteAction = {
     icon?: IconType;
 };
 
-/**
- * Renders a property value based on the renderer type.
- * @param renderer - The renderer type to use
- * @param args - The arguments to pass to the renderer
- * @returns The rendered property value
- */
-declare const propertyRenderers: {
-    readonly text: (args: TextCellValue_2) => JSX_2.Element;
-    readonly number: (args: NumberCellValue_2, meta: PropertyRendererMetadata_2<never>) => JSX_2.Element;
-    readonly date: (args: DateCellValue_2) => JSX_2.Element;
-    readonly amount: (args: AmountCellValue_2, meta: PropertyRendererMetadata_2<never>) => JSX_2.Element;
-    readonly avatarList: (args: AvatarListCellValue_2) => JSX_2.Element;
-    readonly status: (args: StatusCellValue_2) => JSX_2.Element;
-    readonly alertTag: (args: AlertTagCellValue_2) => JSX_2.Element;
-    readonly person: (args: PersonCellValue_2) => JSX_2.Element;
-    readonly company: (args: CompanyCellValue_2) => JSX_2.Element;
-    readonly team: (args: TeamCellValue_2) => JSX_2.Element;
-    readonly tag: (args: TagCellValue_2) => JSX_2.Element;
-    readonly dotTag: (args: DotTagCellValue_2) => JSX_2.Element;
-    readonly tagList: (args: TagListCellValue_2) => JSX_2.Element;
-    readonly icon: (args: IconCellValue) => JSX_2.Element;
-    readonly file: (args: FileCellValue_2) => JSX_2.Element;
-    readonly folder: (args: FolderCellValue_2) => JSX_2.Element;
-};
-
 declare type Props = {
     name: string;
     src?: string;
@@ -1258,11 +1811,45 @@ declare type Props = {
 } & Pick<BaseAvatarProps_2, "aria-label" | "aria-labelledby">;
 
 declare type Props_2 = {
-    name: string;
-    src?: string;
-    size?: BaseAvatarProps_3["size"];
-    badge?: AvatarBadge;
-} & Pick<BaseAvatarProps_3, "aria-label" | "aria-labelledby">;
+    date: Date;
+};
+
+declare type Props_3 = {
+    emoji: string;
+    size?: "small" | "medium" | "large";
+};
+
+declare type Props_4 = {
+    icon: IconType;
+    size?: "sm" | "md" | "lg";
+    className?: string;
+};
+
+declare type Props_5 = {
+    count: number;
+    list?: TagCounterItem[];
+};
+
+/**
+ * Utility type to get all possible paths through an object using dot notation
+ * @template T - The object type to traverse
+ */
+declare type RecordPaths<T> = T extends Record<string, unknown> ? {
+    [K in keyof T]: K extends string ? T[K] extends Record<string, unknown> ? K | `${K}.${RecordPaths<T[K]>}` : K : never;
+}[keyof T] : never;
+
+/**
+ * Utility type to get the value type at a given path
+ * @template T - The object type
+ * @template P - The path string
+ */
+declare type RecordPathValue<T, P extends string> = P extends keyof T ? T[P] : P extends `${infer K}.${infer Rest}` ? K extends keyof T ? RecordPathValue<T[K], Rest> : never : never;
+
+/**
+ * Represents a record type with string keys and unknown values.
+ * This type is used to represent the data structure of a collection.
+ */
+export declare type RecordType = Record<string, unknown>;
 
 declare type RegularAction = BaseAction & {
     type: "regular";
@@ -1271,11 +1858,70 @@ declare type RegularAction = BaseAction & {
 
 declare type SearchFilterDefinition = BaseFilterDefinition<"search">;
 
+declare type SearchOptions = {
+    /** Whether search is enabled */
+    enabled: boolean;
+    /** Whether search is synchronous */
+    sync?: boolean;
+    /** Debounce time for search */
+    debounceTime?: number;
+};
+
+/**
+ * Represents a collection of selected items.
+ * @template T - The type of items in the collection
+ */
+export declare type SelectedItems<T> = ReadonlyArray<T>;
+
+/**
+ * Represents the selected items by id
+ */
+export declare type SelectedItemsState = {
+    allSelected?: boolean | "indeterminate";
+    items?: ReadonlyArray<{
+        id: string;
+        checked: boolean;
+    }>;
+    groups?: ReadonlyArray<{
+        groupId: string;
+        checked: boolean;
+    }>;
+};
+
 declare type ShadAvatarProps = ComponentProps<typeof Avatar>;
+
+/**
+ * Response structure for non-paginated data
+ */
+declare type SimpleResult<T> = T[];
 
 declare const sizes: readonly ["sm", "md", "lg"];
 
 declare const sizes_2: readonly ["xsmall", "small", "medium", "large", "xlarge", "xxlarge"];
+
+/**
+ * Type helper to extract keys from a SortingsDefinition
+ */
+export declare type SortingKey<Definition extends SortingsDefinition> = Definition extends readonly string[] ? Definition[number] : keyof Definition;
+
+export declare type SortingsDefinition = Record<string, {
+    label: string;
+}>;
+
+export declare type SortingsState<Definition extends SortingsDefinition> = {
+    field: keyof Definition;
+    order: SortOrder;
+} | null;
+
+/**
+ * Type helper to create a multiple sortings state (the main sorting and the grouping sorting)
+ */
+export declare type SortingsStateMultiple = {
+    field: string;
+    order: "asc" | "desc";
+}[];
+
+export declare type SortOrder = "asc" | "desc";
 
 declare type SrcProps = Pick<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet" | "sizes">;
 
@@ -1284,6 +1930,10 @@ export declare const StandardLayout: ForwardRefExoticComponent<Omit<StandardLayo
 export declare interface StandardLayoutProps extends VariantProps<typeof layoutVariants> {
     children?: default_2.ReactNode;
 }
+
+export declare type Status = "positive" | "neutral" | "negative";
+
+export declare type StatusVariant = Variant;
 
 export declare interface StepItemProps {
     text: string;
@@ -1297,12 +1947,136 @@ export declare interface SuccessMessageProps {
     buttonOnClick: () => void;
 }
 
-declare const TeamAvatar: {
-    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props): JSX_2.Element;
+export declare type TagAlertProps<Text extends string = string> = {
+    text: Text extends "" ? never : Text;
+    level: Level;
+};
+
+export declare interface TagBalanceProps {
+    text: string;
+    status: Status;
+}
+
+export declare interface TagCompanyProps {
+    companyName: string;
+    companyImageUrl: string;
+    onClick?: () => void;
+}
+
+export declare const TagCounter: {
+    ({ count, list }: Props_5): JSX_2.Element;
     displayName: string;
 };
 
-declare type TeamAvatarProps = ComponentProps<typeof TeamAvatar>;
+export declare type TagCounterItem = TagVariant;
+
+declare type TagDataType<T extends string> = Omit<Extract<TagVariant, {
+    type: T;
+}>, "type" | "description">;
+
+export declare const tagDotColors: NewColor[];
+
+export declare type TagDotProps = {
+    text: string;
+} & ({
+    color: NewColor;
+} | {
+    customColor: string;
+});
+
+export declare type TagListProps<T extends TagType> = {
+    /**
+     * The type of tags to display. Only one type can be used at a time.
+     */
+    type: T;
+    /**
+     * Array of tag data corresponding to the specified type.
+     */
+    tags: Array<TagTypeMapping[T] & WithTooltipDescription_2>;
+    /**
+     * The maximum number of tags to display.
+     * @default 4
+     */
+    max?: number;
+    /**
+     * The remaining number to display.
+     */
+    remainingCount?: number;
+    /**
+     * The layout of the tag list.
+     * - "fill" - Tags will expand to fill the available width, with overflow items shown in a counter
+     * - "compact" - Tags will be stacked together up to the max limit, with remaining shown in counter
+     * @default "compact"
+     */
+    layout?: "fill" | "compact";
+};
+
+export declare interface TagPersonProps {
+    name: string;
+    avatarUrl: string;
+    onClick?: () => void;
+}
+
+export declare interface TagRawProps {
+    text?: string;
+    additionalAccesibleText?: string;
+    icon?: IconType;
+    noBorder?: boolean;
+    className?: string;
+}
+
+export declare interface TagStatusProps {
+    text: string;
+    variant: Variant;
+    /**
+     * Sometimes you need to clarify the status for screen reader users
+     * E.g., when showing a tooltip for sighted user, provide the tootip text to this prop because tooltips aren't accessible
+     */
+    additionalAccesibleText?: string;
+}
+
+export declare interface TagTeamProps {
+    teamName: string;
+    teamImageUrl: string;
+    onClick?: () => void;
+}
+
+export declare type TagType = keyof TagTypeMapping;
+
+declare type TagTypeMapping = {
+    dot: TagDataType<"dot">;
+    person: TagDataType<"person">;
+    team: TagDataType<"team">;
+    company: TagDataType<"company">;
+    alert: TagDataType<"alert">;
+    status: TagDataType<"status">;
+    balance: TagDataType<"balance">;
+    raw: TagDataType<"raw">;
+};
+
+declare type TagVariant = BaseTag<{
+    type: "dot";
+} & TagDotProps> | BaseTag<{
+    type: "person";
+} & PersonTagProps> | BaseTag<{
+    type: "team";
+} & TeamTagProps> | BaseTag<{
+    type: "company";
+} & CompanyTagProps> | BaseTag<{
+    type: "alert";
+} & AlertTagProps> | BaseTag<{
+    type: "status";
+} & TagStatusProps> | BaseTag<{
+    type: "balance";
+} & BalanceTagProps> | BaseTag<{
+    type: "raw";
+} & TagRawProps>;
+
+declare type TeamAvatarProps = ComponentProps<typeof F0AvatarTeam>;
+
+declare type TeamAvatarProps_2 = ComponentProps<typeof F0AvatarTeam>;
+
+declare type TeamTagProps = ComponentProps<typeof F0TagTeam>;
 
 declare type TranslationShape<T> = {
     [K in keyof T]: T[K] extends string ? string : T[K] extends Record<string, string | Record<string, unknown>> ? TranslationShape<T[K]> : never;
@@ -1421,8 +2195,177 @@ declare interface UpsellRequestResponseDialogProps {
     portalContainer?: HTMLElement | null;
 }
 
+/**
+ * A core React hook that manages data fetching, state management, and pagination within the Collections ecosystem.
+ *
+ * ## Why a Separate Hook?
+ *
+ * `useData` exists as a separate hook for three main reasons:
+ *
+ * - **Visualization-Specific Needs**: Different visualizations have unique data requirements:
+ *   - Card visualizations need grid-aligned pagination (multiples of grid columns)
+ *   - Table visualizations work best with row-optimized data fetching
+ *   - Custom visualizations may need specialized data transformations
+ *
+ * - **Separation of Concerns**: Maintains clear boundaries between:
+ *   - Data source configuration (managed by `useDataSource`)
+ *   - Data fetching & state management (handled by `useData`)
+ *   - UI presentation (implemented by visualization components)
+ *
+ * - **Extensibility**: New visualization types can be added without modifying core data logic,
+ *   as each visualization directly controls how it consumes data
+ *
+ * ## Core Features
+ *
+ * - Handles multiple data source types seamlessly (synchronous, Promise-based, Observable-based)
+ * - Manages pagination state with automatic page handling
+ * - Provides consistent loading states (`isInitialLoading`, `isLoading`)
+ * - Implements standardized error handling with detailed error information
+ * - Performs automatic cleanup of subscriptions to prevent memory leaks
+ * - Supports filter application with proper filter state management
+ *
+ * ## Usage in Visualizations
+ *
+ * Each visualization component calls `useData` directly to maintain control over its specific data needs:
+ *
+ * ```tsx
+ * // Example: CardCollection customizing pagination before calling useData
+ * function CardCollection({ source }) {
+ *   // Override source to ensure grid-friendly pagination (multiples of 2,3,4)
+ *   const adaptedSource = useMemo(() => ({
+ *     ...source,
+ *     dataAdapter: {
+ *       ...source.dataAdapter,
+ *       perPage: source.dataAdapter.perPage ?? 24,
+ *     }
+ *   }), [source]);
+ *
+ *   // Let useData handle the data fetching with our customized source
+ *   const { data, isInitialLoading, paginationInfo, setPage } = useData(adaptedSource);
+ *
+ *   // Rendering logic follows...
+ * }
+ * ```
+ *
+ * @template R - The type of records in the collection
+ * @template Filters - The filters type extending FiltersDefinition
+ *
+ * @param source - The data source object containing dataAdapter and filter state
+ * @param options - Optional configuration including filter overrides
+ *
+ * @returns {UseDataReturn<R>} An object containing:
+ * - data: The current collection records
+ * - isInitialLoading: Whether this is the first data load
+ * - isLoading: Whether any data fetch is in progress
+ * - error: Any error that occurred during data fetching
+ * - paginationInfo: Pagination state and metadata if available
+ * - setPage: Function to navigate to a specific page
+ */
+export declare function useData<R extends RecordType = RecordType, Filters extends FiltersDefinition = FiltersDefinition, Sortings extends SortingsDefinition = SortingsDefinition, Grouping extends GroupingDefinition<R> = GroupingDefinition<R>>(source: DataSource<R, Filters, Sortings, Grouping>, { filters, onError, fetchParamsProvider, onResponse, }?: UseDataOptions<R, Filters>, deps?: unknown[]): UseDataReturn<R>;
+
+/**
+ * Hook options for useData
+ */
+export declare interface UseDataOptions<R extends RecordType, Filters extends FiltersDefinition> {
+    filters?: Partial<FiltersState<Filters>>;
+    /**
+     * A function that is called when an error occurs during data fetching.
+     * It is called with the error object.
+     * @param error - The error object.
+     */
+    onError?: (error: DataError) => void;
+    /**
+     * A function that provides the fetch parameters for the data source.
+     * It is called before each fetch request and can be used to modify the fetch parameters.
+     * @param options - The fetch parameters for the data source.
+     * @returns The fetch parameters for the data source.
+     */
+    fetchParamsProvider?: <O extends BaseFetchOptions<Filters>>(options: O) => O;
+    /**
+     * A function that is called when the data is fetched successfully.
+     * It is called with the response data.
+     * @param response - The response data.
+     */
+    onResponse?: (response: PaginatedResponse<R> | SimpleResult<R>) => void;
+}
+
+/**
+ * Hook return type for useData
+ */
+declare interface UseDataReturn<R extends RecordType> {
+    data: Data<R>;
+    isInitialLoading: boolean;
+    isLoading: boolean;
+    isLoadingMore: boolean;
+    error: DataError | null;
+    paginationInfo: PaginationInfo | null;
+    setPage: (page: number) => void;
+    loadMore: () => void;
+    totalItems: number | undefined;
+    summaries?: R;
+}
+
+/**
+ * A hook that manages data source state and filtering capabilities for a collection.
+ * It creates and returns a reusable data source that can be shared across different
+ * visualizations and components.
+ *
+ * This hook is intentionally separated from the rendering components to:
+ * 1. Enable sharing the same data source across multiple components
+ * 2. Allow for state management outside the rendering layer
+ * 3. Support more complex data filtering, querying, and pagination logic
+ * 4. Provide a clean separation between data management and visualization
+ *
+ * @template R - The type of records in the collection
+ * @template Filters - The definition of available filters for the collection
+ * @template ItemActions - The definition of available item actions
+ * @template Actions - The definition of available actions for the collection
+ *
+ * @param options - Configuration object containing:
+ *   - filters: Optional filter configurations for the collection
+ *   - currentFilters: Initial state of the filters
+ *   - dataAdapter: Adapter for data fetching and manipulation
+ *   - itemActions: Optional item actions available
+ *   - actions: Optional DataCollection actions
+ *   - presets: Optional filter presets
+ * @param deps - Dependency array for memoization, similar to useEffect dependencies
+ *
+ * @returns A DataSource object containing:
+ * - filters: The available filter configurations
+ * - currentFilters: The current state of the filters
+ * - setCurrentFilters: Function to update the filter state
+ * - dataAdapter: The data adapter for fetching/manipulating data
+ * - itemActions: Available actions for records (items)
+ * - actions: Available actions for the collection
+ * - presets: Available filter presets
+ */
+export declare function useDataSource<R extends RecordType = RecordType, FiltersSchema extends FiltersDefinition = FiltersDefinition, Sortings extends SortingsDefinition = SortingsDefinition, Grouping extends GroupingDefinition<R> = GroupingDefinition<R>>({ currentFilters: initialCurrentFilters, currentGrouping: initialCurrentGrouping, filters, search, defaultSorting, dataAdapter, grouping, ...rest }: DataSourceDefinition<R, FiltersSchema, Sortings, Grouping>, deps?: ReadonlyArray<unknown>): DataSource<R, FiltersSchema, Sortings, Grouping>;
+
+export declare function useDndEvents(handler: (e: {
+    phase: "start" | "over" | "drop" | "cancel";
+    source: DragPayload;
+}) => void): void;
+
+export declare function useDraggable(args: {
+    ref: React.RefObject<HTMLElement>;
+    payload: DragPayload;
+    disabled?: boolean;
+    handleRef?: React.RefObject<HTMLElement | null>;
+}): void;
+
+export declare function useDroppableList(args: {
+    ref: React.RefObject<HTMLElement>;
+    id: string;
+    accepts: string[];
+}): void;
+
 export declare const useEmojiConfetti: () => {
     fireEmojiConfetti: (emoji: string, elementRef: RefObject<HTMLElement>) => void;
+};
+
+export declare const useGroups: <R extends RecordType>(groups: GroupRecord<R>[], defaultOpenGroups?: boolean | GroupRecord<R>["key"][]) => {
+    openGroups: Record<string, boolean>;
+    setGroupOpen: (key: string, open: boolean) => void;
 };
 
 export declare const usePrivacyMode: () => {
@@ -1434,12 +2377,53 @@ export declare const usePrivacyMode: () => {
 
 export declare const useReducedMotion: () => boolean;
 
+declare type UseSelectable<R extends RecordType> = {
+    isAllSelected: boolean;
+    selectedItems: Map<number | string, R>;
+    selectedGroups: Map<string, GroupRecord<R>>;
+    isPartiallySelected: boolean;
+    handleSelectItemChange: (item: R, checked: boolean) => void;
+    handleSelectAll: (checked: boolean) => void;
+    handleSelectGroupChange: (group: GroupRecord<R>, checked: boolean) => void;
+    groupAllSelectedStatus: Record<string, AllSelectionStatus>;
+    allSelectedStatus: AllSelectionStatus;
+};
+
+export declare function useSelectable<R extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, Grouping extends GroupingDefinition<R>>(data: Data<R>, paginationInfo: PaginationInfo | null, source: DataSourceDefinition<R, Filters, Sortings, Grouping>, onSelectItems: OnSelectItemsCallback<R, Filters> | undefined, defaultSelectedItems?: SelectedItemsState | undefined): UseSelectable<R>;
+
 export declare const useXRay: () => {
     enabled: boolean;
     filter: ComponentTypes[];
     enable: (filter?: ComponentTypes[]) => void;
     disable: () => void;
 };
+
+declare type ValueDisplayRendererContext_2 = {
+    visualization: ValueDisplayVisualizationType;
+};
+
+declare const valueDisplayRenderers: {
+    readonly text: (args: TextCellValue_2) => JSX_2.Element;
+    readonly number: (args: NumberCellValue_2, meta: ValueDisplayRendererContext_2) => JSX_2.Element;
+    readonly date: (args: DateCellValue_2) => JSX_2.Element;
+    readonly amount: (args: AmountCellValue_2, meta: ValueDisplayRendererContext_2) => JSX_2.Element;
+    readonly avatarList: (args: AvatarListCellValue_2) => JSX_2.Element;
+    readonly status: (args: StatusCellValue_2) => JSX_2.Element;
+    readonly alertTag: (args: AlertTagCellValue_2) => JSX_2.Element;
+    readonly person: (args: PersonCellValue_2) => JSX_2.Element;
+    readonly company: (args: CompanyCellValue_2) => JSX_2.Element;
+    readonly team: (args: TeamCellValue_2) => JSX_2.Element;
+    readonly tag: (args: TagCellValue_2) => JSX_2.Element;
+    readonly dotTag: (args: DotTagCellValue_2) => JSX_2.Element;
+    readonly tagList: (args: TagListCellValue_2) => JSX_2.Element;
+    readonly icon: (args: IconCellValue) => JSX_2.Element;
+    readonly file: (args: FileCellValue_2) => JSX_2.Element;
+    readonly folder: (args: FolderCellValue_2) => JSX_2.Element;
+};
+
+declare type ValueDisplayVisualizationType = "table" | "card" | "list" | (string & {});
+
+export declare type Variant = "neutral" | "info" | "positive" | "warning" | "critical";
 
 declare const variants: readonly ["default", "outline", "critical", "neutral", "ghost", "promote", "outlinePromote"];
 
@@ -1448,6 +2432,21 @@ label?: boolean;
 showRatio?: boolean;
 valueFormatter?: (value: string | number | undefined) => string | number;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+export declare type WithGroupId<RecordType> = RecordType & {
+    [GROUP_ID_SYMBOL]: unknown | undefined;
+};
+
+declare interface WithTooltipDescription {
+    /**
+     * Optional description to show in the tooltip
+     */
+    description?: string;
+}
+
+declare type WithTooltipDescription_2 = {
+    description?: string;
+};
 
 export { }
 
