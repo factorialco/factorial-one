@@ -1,10 +1,10 @@
 import { Button } from "@/components/Actions/Button"
-import { Icon } from "@/components/Utilities/Icon"
 import {
   Pulse,
   pulseIcon,
   pulseIconColor,
-} from "@/experimental/Information/Avatars/PulseAvatar"
+} from "@/components/avatars/F0AvatarPulse"
+import { Icon } from "@/components/Utilities/Icon"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { Node } from "@tiptap/core"

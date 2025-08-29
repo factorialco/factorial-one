@@ -3,11 +3,8 @@ import {
   OneDropdownButton,
   OneDropdownButtonProps,
 } from "@/components/Actions/OneDropdownButton"
+import { AvatarVariant, F0Avatar } from "@/components/avatars/F0Avatar"
 import { StatusVariant } from "@/components/tags/F0TagStatus"
-import {
-  Avatar,
-  AvatarVariant,
-} from "@/experimental/Information/Avatars/Avatar"
 import { Description } from "@/experimental/Information/Headers/BaseHeader/Description"
 import {
   Metadata,
@@ -149,7 +146,7 @@ export function BaseHeader({
         >
           {avatar && (
             <div className="flex items-start">
-              <Avatar
+              <F0Avatar
                 avatar={{
                   ...(avatar.type === "generic"
                     ? { ...avatar, type: "company" }

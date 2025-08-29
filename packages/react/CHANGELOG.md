@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.168.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.167.0...factorial-one-react-v1.168.0) (2025-08-29)
+
+
+### Features
+
+* added a comment to force a release ([#2476](https://github.com/factorialco/factorial-one/issues/2476)) ([eb42c54](https://github.com/factorialco/factorial-one/commit/eb42c54585c58b606729c5235b5bc3f935dcbf03))
+
+## [1.167.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.1...factorial-one-react-v1.167.0) (2025-08-28)
+
+
+### Features
+
+* **BasicTextEditor:** ScrollArea  ([#2335](https://github.com/factorialco/factorial-one/issues/2335)) ([844b066](https://github.com/factorialco/factorial-one/commit/844b0663f81bd5bea2cfb10c18b6e9b22fd2f848))
+
+## [1.166.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.0...factorial-one-react-v1.166.1) (2025-08-28)
+
+
+### Bug Fixes
+
+* number metadata flex to align ([#2471](https://github.com/factorialco/factorial-one/issues/2471)) ([2a8f477](https://github.com/factorialco/factorial-one/commit/2a8f47733831e62579b7ee1b6ec1987745da72c3))
+
 ## [1.166.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.165.0...factorial-one-react-v1.166.0) (2025-08-28)
 
 

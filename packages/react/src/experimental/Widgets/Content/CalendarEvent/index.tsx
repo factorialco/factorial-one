@@ -1,6 +1,6 @@
+import { F0AvatarDate } from "@/components/avatars/F0AvatarDate"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { DateAvatar } from "@/experimental/Information/Avatars/DateAvatar"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { ChevronRight } from "@/icons/app"
 import { cn } from "@/lib/utils"
@@ -136,7 +136,7 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
             <div className="flex flex-row items-center">
               {fromDate && (
                 <>
-                  <DateAvatar date={fromDate} />
+                  <F0AvatarDate date={fromDate} />
                   <Icon
                     icon={ChevronRight}
                     size="sm"
@@ -144,7 +144,7 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
                   />
                 </>
               )}
-              {toDate && <DateAvatar date={toDate} />}
+              {toDate && <F0AvatarDate date={toDate} />}
             </div>
           </div>
           {(leftTags || rightTags) && (

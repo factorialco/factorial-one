@@ -1,3 +1,9 @@
+import { Button, ButtonProps } from "@/components/Actions/Button"
+import { AvatarVariant } from "@/components/avatars/F0Avatar"
+import { IconType } from "@/components/Utilities/Icon"
+import { EllipsisHorizontal } from "@/icons/app"
+import { Link } from "@/lib/linkHandler"
+import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,12 +12,6 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
 import React, { useState } from "react"
-import { Button, ButtonProps } from "../../../components/Actions/Button"
-import { IconType } from "../../../components/Utilities/Icon"
-import { EllipsisHorizontal } from "../../../icons/app"
-import { Link } from "../../../lib/linkHandler"
-import { cn } from "../../../lib/utils"
-import { AvatarVariant } from "../../Information/Avatars/Avatar"
 import { NavigationItem } from "../utils"
 import { DropdownItemContent } from "./DropdownItem"
 

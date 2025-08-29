@@ -1,8 +1,8 @@
+import { F0Avatar, type AvatarVariant } from "@/components/avatars/F0Avatar"
+import { Icon, type IconType } from "@/components/Utilities/Icon"
+import { CrossedCircle } from "@/icons/app"
+import { cn, focusRing } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
-import { Icon, type IconType } from "../../components/Utilities/Icon"
-import { CrossedCircle } from "../../icons/app"
-import { cn, focusRing } from "../../lib/utils"
-import { Avatar, type AvatarVariant } from "../Information/Avatars/Avatar"
 
 export const chipVariants = cva({
   base: "flex items-center gap-1 rounded-full border border-solid border-f1-border px-2 py-0.5 font-medium",
@@ -84,7 +84,7 @@ export const Chip = ({
       }}
       tabIndex={onClick ? 0 : undefined}
     >
-      {avatar && <Avatar avatar={avatar} size="xsmall" />}
+      {avatar && <F0Avatar avatar={avatar} size="xsmall" />}
       <div className="flex items-center gap-0.5">
         {icon && <Icon icon={icon} size="sm" className="text-f1-icon" />}
         {label}
