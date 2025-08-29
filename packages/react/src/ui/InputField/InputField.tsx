@@ -461,7 +461,13 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                   </AnimatePresence>
                 )}
                 {(append || appendTag) && (
-                  <div className="mt-px flex h-fit items-center pr-px">
+                  <div
+                    className={cn(
+                      "mt-px flex h-fit items-center",
+                      size === "sm" && "h-[24px] pr-0.5",
+                      size === "md" && "pr-0.1 h-[25px]"
+                    )}
+                  >
                     {append}
                     {appendTag && <AppendTag text={appendTag} />}
                   </div>
