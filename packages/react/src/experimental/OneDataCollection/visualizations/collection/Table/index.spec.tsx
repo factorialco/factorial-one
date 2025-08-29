@@ -1,3 +1,4 @@
+import { TextCell } from "@/components/value-display/types/text"
 import { useDataCollectionData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData/useDataCollectionData"
 import { DataCollectionSource } from "@/experimental/OneDataCollection/hooks/useDataCollectionSource/types"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
@@ -24,7 +25,6 @@ import {
 } from "../../../../../lib/providers/i18n"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SummariesDefinition } from "../../../summary"
-import { TextCell } from "../../property/types/text"
 import { TableCollection } from "./index"
 
 vi.mock("../../property", () => ({

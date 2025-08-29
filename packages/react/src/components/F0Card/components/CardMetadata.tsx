@@ -1,24 +1,24 @@
 import { Icon } from "@/components/Utilities/Icon"
-import { propertyRenderers } from "@/experimental/OneDataCollection/visualizations/property"
+import { valueDisplayRenderers } from "@/components/value-display"
 import React from "react"
 import { CardMetadata as CardMetadataType } from "../types"
 
 export const cardPropertyRenderers = {
-  text: propertyRenderers.text,
-  number: propertyRenderers.number,
-  date: propertyRenderers.date,
-  amount: propertyRenderers.amount,
-  person: propertyRenderers.person,
-  company: propertyRenderers.company,
-  team: propertyRenderers.team,
-  status: propertyRenderers.status,
-  tag: propertyRenderers.tag,
-  avatarList: propertyRenderers.avatarList,
-  tagList: propertyRenderers.tagList,
-  alertTag: propertyRenderers.alertTag,
-  dotTag: propertyRenderers.dotTag,
-  file: propertyRenderers.file,
-  folder: propertyRenderers.folder,
+  text: valueDisplayRenderers.text,
+  number: valueDisplayRenderers.number,
+  date: valueDisplayRenderers.date,
+  amount: valueDisplayRenderers.amount,
+  person: valueDisplayRenderers.person,
+  company: valueDisplayRenderers.company,
+  team: valueDisplayRenderers.team,
+  status: valueDisplayRenderers.status,
+  tag: valueDisplayRenderers.tag,
+  avatarList: valueDisplayRenderers.avatarList,
+  tagList: valueDisplayRenderers.tagList,
+  alertTag: valueDisplayRenderers.alertTag,
+  dotTag: valueDisplayRenderers.dotTag,
+  file: valueDisplayRenderers.file,
+  folder: valueDisplayRenderers.folder,
 } as const
 
 export type CardPropertyType = keyof typeof cardPropertyRenderers
