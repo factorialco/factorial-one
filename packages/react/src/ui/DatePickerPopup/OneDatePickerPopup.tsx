@@ -155,8 +155,8 @@ export function OneDatePickerPopup({
             )
 
       const description = Array.isArray(value)
-        ? value.map((v) => granularityDefinition.toString(v)).join(", ")
-        : granularityDefinition.toString(value)
+        ? value.map((v) => granularityDefinition.toString(v, i18n)).join(", ")
+        : granularityDefinition.toString(value, i18n)
 
       return {
         label: compare.label,
