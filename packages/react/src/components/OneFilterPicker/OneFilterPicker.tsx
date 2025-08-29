@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { FiltersChipsList as FiltersChipsListComponent } from "./components/FiltersChipsList"
 import { FiltersControls as FiltersControlsComponent } from "./components/FiltersControls"
 import { FiltersPresets as FiltersPresetsComponent } from "./components/FiltersPresets"
@@ -201,12 +201,20 @@ const FiltersChipsList = () => {
     value,
     filters,
     setIsFiltersOpen,
+    presets,
     removeFilterValue,
     setFiltersValue,
   } = useContext(FiltersContext)
 
+  const isPresetFilter = useMemo(() => {
+    return (presets || []).some((preset) => {
+      return JSON.stringify(value) === JSON.stringify(preset.filter)
+    })
+  }, [presets, value])
+
   return (
-    filters && (
+    filters &&
+    !isPresetFilter && (
       <FiltersChipsListComponent
         filters={filters}
         value={value}
