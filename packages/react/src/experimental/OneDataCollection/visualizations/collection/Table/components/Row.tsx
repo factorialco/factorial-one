@@ -1,8 +1,11 @@
 import { ItemActionsDropdown } from "@/experimental/OneDataCollection/ItemActions/ItemActionsDropdown"
-import { forwardRef } from "react"
+import { forwardRef, useState } from "react"
 
+import { Button } from "@/components/Actions/Button"
 import { FiltersDefinition } from "@/components/OneFilterPicker/types"
+import { DropdownItemSeparator } from "@/experimental/Navigation/Dropdown/internal"
 import {
+  ActionDefinition,
   filterItemActions,
   ItemActionsDefinition,
 } from "@/experimental/OneDataCollection/item-actions"
@@ -94,8 +97,55 @@ const RowComponentInner = <
 
   const itemActions = filterItemActions(source.itemActions, item)
 
+  // gets the primary item actions (max 2)
+  const primaryItemActions = itemActions
+    .filter(
+      (action): action is Exclude<ActionDefinition, DropdownItemSeparator> =>
+        action.type === "primary"
+    )
+    .slice(0, 2)
+
+  // the rest of the actions go to the dropdown
+  const dropdownItemActions = actionsToDropdownItems(
+    itemActions.filter(
+      (action) =>
+        action.type === "separator" || !primaryItemActions.includes(action)
+    )
+  )
+
+  const [dropDownOpen, setDropDownOpen] = useState(false)
+
+  const [dropDownOpenTimeout, setDropDownOpenTimeout] =
+    useState<NodeJS.Timeout | null>(null)
+
+  const handleDropDownOpenChange = (open: boolean) => {
+    // When the dropdown is closed, we wait 100ms before closing it to avoid losing the reference element to position the dropdown
+    if (!open) {
+      setDropDownOpenTimeout(
+        setTimeout(() => {
+          setDropDownOpen(false)
+        }, 100)
+      )
+      return
+    }
+
+    if (dropDownOpenTimeout) {
+      clearTimeout(dropDownOpenTimeout)
+      setDropDownOpenTimeout(null)
+    }
+    setDropDownOpen(true)
+  }
+
   return (
-    <TableRow ref={ref} key={key}>
+    <TableRow
+      ref={ref}
+      key={key}
+      className={cn(
+        "group transition-colors hover:bg-f1-background-hover",
+        "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-f1-border-secondary after:content-['']",
+        dropDownOpen && "bg-f1-background-hover"
+      )}
+    >
       {source.selectable && (
         <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
           {id !== undefined && (
@@ -147,13 +197,35 @@ const RowComponentInner = <
           sticky={{
             right: 0,
           }}
-          href={itemHref}
-          onClick={itemOnClick}
         >
-          <ItemActionsDropdown
-            items={actionsToDropdownItems(itemActions)}
-            className="pointer-events-auto"
-          />
+          <div className="relative flex h-full min-h-[3rem] w-full items-center">
+            <aside
+              className={cn(
+                "absolute inset-y-0 -right-px z-20 hidden items-center justify-end gap-2 py-2 pl-20 pr-3 opacity-0 transition-all group-hover:opacity-100 md:flex",
+                "bg-gradient-to-l from-[#F5F6F8] from-0% dark:from-[#192231]",
+                "via-[#F5F6F8] via-60% dark:via-[#192231]",
+                "to-transparent to-100%",
+                "pointer-events-auto",
+                dropDownOpen ? "opacity-100" : "opacity-0"
+              )}
+            >
+              {primaryItemActions.map((action) => (
+                <Button
+                  key={action.label}
+                  label={action.label}
+                  variant="outline"
+                  onClick={action.onClick}
+                  icon={action.icon}
+                />
+              ))}
+
+              <ItemActionsDropdown
+                align="end"
+                items={dropdownItemActions}
+                onOpenChange={handleDropDownOpenChange}
+              />
+            </aside>
+          </div>
         </TableCell>
       )}
     </TableRow>
