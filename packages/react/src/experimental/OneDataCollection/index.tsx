@@ -2,7 +2,7 @@ import { useLayout } from "@/components/layouts/LayoutProvider"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { motion } from "motion/react"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
@@ -43,8 +43,10 @@ import type {
 import { DataError } from "./useData"
 import { CustomEmptyStates, useEmptyState } from "./useEmptyState"
 
+import { useTracking } from "./useTracking"
 import type { Visualization } from "./visualizations/collection"
 import { VisualizationRenderer } from "./visualizations/collection"
+
 /**
  * A hook that manages data source state and filtering capabilities for a collection.
  * It creates and returns a reusable data source that can be shared across different
@@ -254,6 +256,7 @@ const OneDataCollectionComp = <
   onBulkAction,
   emptyStates,
   fullHeight,
+  trackingIdentifier,
 }: {
   source: DataSource<
     Record,
@@ -280,6 +283,7 @@ const OneDataCollectionComp = <
   emptyStates?: CustomEmptyStates
   onTotalItemsChange?: (totalItems: number) => void
   fullHeight?: boolean
+  trackingIdentifier?: string
 }): JSX.Element => {
   const {
     // Filters
@@ -313,6 +317,17 @@ const OneDataCollectionComp = <
     sortings,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
+
+  const defaultSortings = useRef(currentSortings)
+
+  const { trackSortingChange } = useTracking<Sortings>({
+    trackingIdentifier,
+    defaultSorting: defaultSortings.current,
+  })
+
+  useEffect(() => {
+    trackSortingChange(currentSortings)
+  }, [trackSortingChange, currentSortings])
 
   const primaryActionItem = useMemo(
     () => primaryActions && primaryActions(),
@@ -528,6 +543,7 @@ const OneDataCollectionComp = <
         className={cn("flex flex-col gap-4 px-4", fullHeight && "max-h-full")}
       >
         <OneFilterPicker
+          trackingIdentifier={trackingIdentifier}
           filters={filters}
           value={currentFilters}
           presets={presets}

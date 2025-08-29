@@ -9,6 +9,8 @@ export type FiltersContextType<Definition extends FiltersDefinition> = {
   setFiltersValue: (filters: FiltersState<Definition>) => void
   isFiltersOpen: boolean
   setIsFiltersOpen: (isOpen: boolean) => void
+  trackFilterChange: (filters: FiltersState<Definition>) => void
+  trackPresetClick: (preset: string) => void
 }
 
 export const FiltersContext = createContext<
@@ -21,4 +23,6 @@ export const FiltersContext = createContext<
   setFiltersValue: () => {},
   isFiltersOpen: false,
   setIsFiltersOpen: () => {},
+  trackFilterChange: () => {},
+  trackPresetClick: () => {},
 })

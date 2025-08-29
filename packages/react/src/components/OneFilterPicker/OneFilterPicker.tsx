@@ -1,10 +1,12 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { FiltersChipsList as FiltersChipsListComponent } from "./components/FiltersChipsList"
 import { FiltersControls as FiltersControlsComponent } from "./components/FiltersControls"
 import { FiltersPresets as FiltersPresetsComponent } from "./components/FiltersPresets"
 import { FiltersContext } from "./context"
 import { PresetsDefinition } from "./types"
 
+import { useTracking } from "@/experimental/OneDataCollection/useTracking"
+import { WithTracking } from "@/lib/providers/tracking/types"
 import { cn } from "@/lib/utils"
 import type { FiltersDefinition, FiltersState } from "./types"
 
@@ -12,20 +14,19 @@ import type { FiltersDefinition, FiltersState } from "./types"
  * Props for the Filters component.
  * @template Definition - The type defining the structure of available filters
  */
-export interface OneFilterPickerRootProps<
-  Definition extends FiltersDefinition,
-> {
-  /** The definition of available filters and their configurations */
-  filters?: Definition
-  /** Current state of applied filters */
-  value: FiltersState<Definition>
-  /** Optional preset configurations that users can select */
-  presets?: PresetsDefinition<Definition>
-  /** Callback fired when filters are changed */
-  onChange: (value: FiltersState<Definition>) => void
-  /** The children of the component */
-  children?: React.ReactNode
-}
+export type OneFilterPickerRootProps<Definition extends FiltersDefinition> =
+  WithTracking<{
+    /** The definition of available filters and their configurations */
+    filters?: Definition
+    /** Current state of applied filters */
+    value: FiltersState<Definition>
+    /** Optional preset configurations that users can select */
+    presets?: PresetsDefinition<Definition>
+    /** Callback fired when filters are changed */
+    onChange: (value: FiltersState<Definition>) => void
+    /** The children of the component */
+    children?: React.ReactNode
+  }>
 
 /**
  * A comprehensive filtering interface that manages multiple filter types.
@@ -88,11 +89,19 @@ export interface OneFilterPickerRootProps<
  * @see {@link FiltersState} for the structure of filter state
  */
 const FiltersRoot = <Definition extends FiltersDefinition>({
+  trackingMeta,
   filters,
   value,
   children,
   ...props
 }: OneFilterPickerRootProps<Definition>) => {
+  const defaultFilters = useRef(value)
+
+  const { trackFilterChange, trackPresetClick } = useTracking({
+    defaultFilters: defaultFilters.current,
+    trackingIdentifier: trackingMeta?.id,
+  })
+
   const [isFiltersOpen, setIsFiltersOpen] = useState(false)
 
   const [localFiltersValue, setLocalFiltersValue] = useState(value)
@@ -126,6 +135,8 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
           setFiltersValue(value as FiltersState<Definition>),
         isFiltersOpen,
         setIsFiltersOpen,
+        trackFilterChange,
+        trackPresetClick,
       }}
     >
       {children}
@@ -145,6 +156,7 @@ const FiltersControls = () => {
     setIsFiltersOpen,
     setFiltersValue,
     presets,
+    trackFilterChange,
   } = useContext(FiltersContext)
 
   const shownFilters = filters
@@ -153,6 +165,11 @@ const FiltersControls = () => {
       )
     : undefined
 
+  const handleFilterChange = (filters: FiltersState<FiltersDefinition>) => {
+    trackFilterChange(filters)
+    setFiltersValue(filters)
+  }
+
   if (!shownFilters || Object.keys(shownFilters).length === 0) return null
 
   return (
@@ -160,7 +177,7 @@ const FiltersControls = () => {
       <FiltersControlsComponent
         filters={shownFilters}
         value={value}
-        onChange={setFiltersValue}
+        onChange={handleFilterChange}
         onOpenChange={setIsFiltersOpen}
         isOpen={isFiltersOpen}
         hideLabel={!!presets}
@@ -179,14 +196,23 @@ FiltersControls.displayName = "OneFilterPicker.Controls"
  * Filter presets
  */
 const FiltersPresets = () => {
-  const { presets, value, setFiltersValue } = useContext(FiltersContext)
+  const { presets, value, setFiltersValue, trackPresetClick } =
+    useContext(FiltersContext)
+
+  const handlePresetClick = (
+    presetFilter: FiltersState<FiltersDefinition>,
+    presetLabel: string
+  ) => {
+    trackPresetClick(presetLabel)
+    setFiltersValue(presetFilter)
+  }
 
   return (
     presets && (
       <FiltersPresetsComponent
         presets={presets}
         value={value}
-        onPresetsChange={setFiltersValue}
+        onPresetsChange={handlePresetClick}
       />
     )
   )
