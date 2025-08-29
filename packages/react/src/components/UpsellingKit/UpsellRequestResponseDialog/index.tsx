@@ -19,7 +19,7 @@ interface UpsellRequestResponseDialogProps {
   success: boolean
   errorMessage: ErrorMessageProps
   successMessage: SuccessMessageProps
-  nextSteps: NextStepsProps
+  nextSteps?: NextStepsProps
   closeLabel: string
   portalContainer?: HTMLElement | null
 }
@@ -32,8 +32,8 @@ export interface ErrorMessageProps {
 export interface SuccessMessageProps {
   title: string
   description: string
-  buttonLabel: string
-  buttonOnClick: () => void
+  buttonLabel?: string
+  buttonOnClick?: () => void
 }
 
 export interface StepItemProps {
@@ -92,10 +92,12 @@ const DialogActions = ({
 }: {
   onClose?: () => void
   success: boolean
-  successButtonOnClick: () => void
-  successButtonLabel: string
+  successButtonOnClick?: () => void
+  successButtonLabel?: string
   closeLabel: string
 }) => {
+  const showSecondButton = success && successButtonLabel && successButtonOnClick
+
   const renderButtons = (isSmallScreen = false) => (
     <>
       <Button
@@ -104,7 +106,7 @@ const DialogActions = ({
         onClick={onClose}
         size={isSmallScreen ? "lg" : undefined}
       />
-      {success && (
+      {showSecondButton && (
         <Button
           variant="promote"
           label={successButtonLabel}
@@ -186,7 +188,7 @@ const UpsellRequestResponseDialog = forwardRef<
               </DialogDescription>
             </div>
           </DialogHeader>
-          {success ? (
+          {success && nextSteps ? (
             <>
               <Separator />
               <NextSteps title={nextSteps.title} items={nextSteps.items} />

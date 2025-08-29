@@ -86,6 +86,10 @@ const meta = {
       control: "text",
       description: "Label of the close modal",
     },
+    tag: {
+      control: "object",
+      description: "Tag of the modal",
+    },
   },
 } satisfies Meta<typeof ProductModal>
 
@@ -149,6 +153,10 @@ export const Default: Story = {
           text: "Demo to answer all your questions",
         },
       ],
+    },
+    tag: {
+      label: "Upgrade",
+      icon: UpsellIcon,
     },
     closeLabel: "Close",
   },
