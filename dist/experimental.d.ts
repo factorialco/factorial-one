@@ -3176,8 +3176,8 @@ declare type Props_3 = {
         icon?: IconType;
         variant?: "default" | "outline";
     };
-    /** Optional Link to related documentation (Help center or other link))*/
-    supportButton?: {
+    /** Optional link to related documentation (Help center or other link) */
+    link?: {
         label: string;
         href: string;
     };
@@ -3391,7 +3391,7 @@ export declare type secondaryActionType = (actionType | toggleActionType) & {
     type?: "button" | "switch";
 };
 
-export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_3) => JSX_2.Element;
+export declare const SectionHeader: ({ title, description, action, link, separator, }: Props_3) => JSX_2.Element;
 
 declare type SectionProps = {
     title: string;
@@ -4311,6 +4311,15 @@ declare global {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
+        aiBlock: {
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
         liveCompanion: {
             insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
@@ -4329,8 +4338,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        aiBlock: {
-            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
+        moodTracker: {
+            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
 }
@@ -4338,13 +4347,4 @@ declare module "@tiptap/core" {
 
 declare namespace Calendar {
     var displayName: string;
-}
-
-
-declare module "@tiptap/core" {
-    interface Commands<ReturnType> {
-        moodTracker: {
-            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
-        };
-    }
 }
