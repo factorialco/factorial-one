@@ -118,6 +118,8 @@ export const useDataSource = <
   NavigationFilters,
   Grouping
 > => {
+  const i18n = useI18n()
+
   const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
@@ -135,7 +137,7 @@ export const useDataSource = <
         return [
           key,
           filterType.valueConverter
-            ? filterType.valueConverter(filter.defaultValue, filter)
+            ? filterType.valueConverter(filter.defaultValue, filter, i18n)
             : filter.defaultValue,
         ]
       })
