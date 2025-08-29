@@ -121,7 +121,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
     searchBoxPlaceholder,
     externalSearch,
     searchEmptyMessage,
-    size,
+    size = "sm",
     selectContentClassName,
     actions,
     label,
@@ -264,7 +264,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
               <div
                 className={cn(
                   "rounded-2xs bg-f1-background-secondary p-0.5",
-                  "flex items-center justify-center",
+                  "flex h-full items-center justify-center",
                   !disabled && "cursor-pointer"
                 )}
               >
