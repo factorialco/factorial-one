@@ -47,12 +47,14 @@ export interface KanbanProps<TRecord extends RecordType> {
   dnd?: {
     instanceId: symbol
     getIndexById: (laneId: string, id: string) => number
-    onReorder: (
-      laneId: string,
-      fromIndex: number,
-      toIndex: number,
-      sourceId: string
-    ) => void
+    onMove?: (
+      fromLaneId: string,
+      toLaneId: string,
+      sourceId: string,
+      toIndex: number | null
+    ) => Promise<void>
+    /** Deprecated: kept for backwards compat, no longer changes behavior */
+    allowReorder?: boolean
   }
 
   /**

@@ -12,24 +12,30 @@ import type { LaneProps } from "../../Lane/types"
 
 export function KanbanLane<TRecord extends RecordType>({
   id,
-  instanceId,
   getIndexById,
-  onReorder,
+  onMove,
+  allowReorder: _allowReorder,
   ...laneProps
 }: {
   id?: string
-  instanceId?: symbol
   getIndexById?: (id: string) => number
-  onReorder?: (fromIndex: number, toIndex: number, sourceId: string) => void
+  onMove?: (
+    fromLaneId: string,
+    toLaneId: string,
+    sourceId: string,
+    toIndex: number | null
+  ) => void
+  allowReorder?: boolean
 } & LaneProps<TRecord>) {
   const laneRef = useRef<HTMLDivElement | null>(null)
   const [isOver, setIsOver] = useState(false)
+  const hasFullDnD = Boolean(id && getIndexById)
 
   useDroppableList(
-    id && instanceId && getIndexById && onReorder
+    hasFullDnD
       ? {
           ref: laneRef as React.RefObject<HTMLElement>,
-          id,
+          id: id as string,
           accepts: ["list-card"],
         }
       : undefined
@@ -38,15 +44,17 @@ export function KanbanLane<TRecord extends RecordType>({
   useEffect(() => {
     if (!id) return
     return monitorForElements({
-      canMonitor: ({ source }) =>
-        !instanceId ||
-        (source.data as { instanceId?: symbol }).instanceId === instanceId,
+      // Allow monitoring universally; driver already scopes by its own instance
       onDropTargetChange: ({ location }) => {
         const overThisLane = location.current.dropTargets.some((t) => {
           const data = t.data as { type?: string; id?: string }
           return data.type === "list-droppable" && data.id === id
         })
         setIsOver(overThisLane)
+        if (overThisLane) {
+          // Debug: hover over lane
+          console.log("[KanbanLane] over lane", id)
+        }
       },
       onDrop: ({ location, source }) => {
         if (!location.current.dropTargets.length) return
@@ -57,8 +65,55 @@ export function KanbanLane<TRecord extends RecordType>({
             (t.data as { type?: string; id?: string }).id === id
         )
         if (!inThisLane) return
-        if (!getIndexById || !onReorder) return
         const sourceId = String((source.data as { id?: string }).id)
+        // Prefer source laneId from payload; fallback to initial drop target
+        const sourceLaneIdFromPayload = String(
+          (source.data as unknown as { data?: { laneId?: string } }).data
+            ?.laneId ?? ""
+        )
+        const initialLaneId =
+          sourceLaneIdFromPayload ||
+          String(
+            (
+              location.initial.dropTargets.find(
+                (t) => (t.data as { type?: string }).type === "list-droppable"
+              )?.data as { id?: string }
+            )?.id ?? ""
+          )
+        const isSameLane = Boolean(initialLaneId && id && initialLaneId === id)
+
+        // Cross-lane move: always allowed, compute toIndex from card target edge
+        if (!isSameLane && onMove && initialLaneId) {
+          console.log(
+            "[KanbanLane] onMove",
+            initialLaneId,
+            "->",
+            id,
+            "source:",
+            sourceId
+          )
+          const cardTarget = location.current.dropTargets.find(
+            (t) => (t.data as { type?: string }).type === "list-card-target"
+          ) as { data?: { index?: number } } | undefined
+          const indexOfTarget: number | null = cardTarget
+            ? Number(cardTarget.data?.index)
+            : null
+          const edge = cardTarget?.data
+            ? extractClosestEdge(cardTarget.data as Record<string, unknown>)
+            : null
+          const toIndex =
+            indexOfTarget === null
+              ? null
+              : edge === "bottom"
+                ? indexOfTarget + 1
+                : indexOfTarget
+          onMove(initialLaneId, id, sourceId, toIndex)
+          setIsOver(false)
+          return
+        }
+
+        // Same-lane reorder → compute finishIndex and call onMove with toIndex
+        if (!isSameLane || !getIndexById) return
         const cardTarget = location.current.dropTargets.find(
           (t) => (t.data as { type?: string }).type === "list-card-target"
         ) as { data?: { index?: number } } | undefined
@@ -78,35 +133,34 @@ export function KanbanLane<TRecord extends RecordType>({
           closestEdgeOfTarget: closestEdge,
           axis: "vertical",
         })
-        onReorder(startIndex, finishIndex, sourceId)
+        if (onMove && initialLaneId) {
+          // Unify to onMove: same-lane reorder becomes onMove with toIndex
+          onMove(initialLaneId, id as string, sourceId, finishIndex)
+        }
+        setIsOver(false)
       },
     })
-  }, [instanceId, id, getIndexById, onReorder])
+  }, [id, getIndexById, onMove])
 
   // Fallback: directly track hover on the lane element to ensure visual feedback
   useEffect(() => {
-    if (!laneRef.current || !id) return
+    if (!laneRef.current || !id || hasFullDnD) return
     return dropTargetForElements({
       element: laneRef.current,
-      canDrop: ({ source }) =>
-        !instanceId ||
-        (source.data as { instanceId?: symbol }).instanceId === instanceId,
       getData: () => ({ type: "list-droppable", id }),
       onDragEnter: () => setIsOver(true),
       onDrag: () => setIsOver(true),
       onDragLeave: () => setIsOver(false),
       onDrop: () => setIsOver(false),
     })
-  }, [id, instanceId])
-
-  console.log("is Over: ", isOver)
+  }, [id, hasFullDnD])
 
   return (
-    <div className="rounded">
+    <div className="h-full rounded">
       <div
         ref={laneRef}
         className={
-          "relative flex min-h-56 w-full flex-col gap-0 rounded-xl border transition-colors"
+          "relative flex h-full min-h-56 w-full flex-col gap-0 rounded-xl border transition-colors"
         }
         style={{
           backgroundColor: isOver

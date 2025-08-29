@@ -211,6 +211,8 @@ export const useDataSource = <
     setCurrentGrouping,
     currentGrouping,
     grouping,
+    idProvider: (item, index): string | number =>
+      "id" in item ? `${item.id}` : index || JSON.stringify(item),
     ...rest,
   }
 }

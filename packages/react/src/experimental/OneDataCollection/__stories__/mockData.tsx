@@ -513,6 +513,12 @@ export const getMockVisualizations = (options?: {
       ],
     },
   },
+  kanban: {
+    type: "kanban",
+    options: {
+      lanes: [],
+    },
+  },
 })
 // Example of using the object-based approach (recommended)
 export const sortings = {
@@ -791,56 +797,64 @@ export const ExampleComponent = ({
     frozenColumns,
   })
 
-  const dataSource = useDataSource({
-    filters,
-    navigationFilters,
-    presets: usePresets ? filterPresets : undefined,
-    sortings,
-    grouping,
-    currentGrouping: currentGrouping,
-    primaryActions,
-    secondaryActions,
-    itemActions: (item) => [
-      {
-        label: "Edit",
-        icon: Pencil,
-        onClick: () => console.log(`Editing ${item.name}`),
-        description: "Modify user information",
-        type: "primary",
+  const dataSource = useDataSource(
+    {
+      filters,
+      navigationFilters,
+      presets: usePresets ? filterPresets : undefined,
+      sortings,
+      grouping,
+      currentGrouping: currentGrouping,
+      primaryActions,
+      secondaryActions,
+      itemActions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+          description: "Modify user information",
+          type: "primary",
+        },
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+        },
+        { type: "separator" },
+        {
+          label: item.isStarred ? "Remove Star" : "Star User",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
+        },
+        {
+          label: "Delete",
+          icon: Delete,
+          onClick: () => console.log(`Deleting ${item.name}`),
+          critical: true,
+          description: "Permanently remove user",
+          enabled:
+            item.department === "Engineering" && item.status === "active",
+        },
+      ],
+      selectable,
+      defaultSelectedItems,
+      bulkActions,
+      totalItemSummary,
+      dataAdapter: dataAdapter ?? {
+        fetchData: (...args) => {
+          return (
+            useObservable
+              ? createObservableDataFetch()
+              : createPromiseDataFetch()
+          )(...args)
+        },
       },
-      {
-        label: "View Profile",
-        icon: Ai,
-        onClick: () => console.log(`Viewing ${item.name}'s profile`),
-      },
-      { type: "separator" },
-      {
-        label: item.isStarred ? "Remove Star" : "Star User",
-        icon: Star,
-        onClick: () => console.log(`Toggling star for ${item.name}`),
-        description: item.isStarred
-          ? "Remove from favorites"
-          : "Add to favorites",
-      },
-      {
-        label: "Delete",
-        icon: Delete,
-        onClick: () => console.log(`Deleting ${item.name}`),
-        critical: true,
-        description: "Permanently remove user",
-        enabled: item.department === "Engineering" && item.status === "active",
-      },
-    ],
-    selectable,
-    defaultSelectedItems,
-    bulkActions,
-    totalItemSummary,
-    dataAdapter: dataAdapter ?? {
-      fetchData: useObservable
-        ? createObservableDataFetch()
-        : createPromiseDataFetch(),
     },
-  })
+    [dataAdapter]
+  )
 
   return (
     <div
@@ -889,7 +903,7 @@ export function createDataAdapter<
   TNavigationFilters extends NavigationFiltersDefinition,
 >({
   data,
-  delay = 500,
+  delay = 0,
   useObservable = false,
   paginationType,
   perPage = 20,

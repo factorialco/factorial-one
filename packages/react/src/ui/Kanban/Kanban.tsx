@@ -20,24 +20,21 @@ export function Kanban<TRecord extends RecordType>(
             <div key={lane.id ?? String(laneIndex)} className="shrink-0">
               <KanbanLane<TRecord>
                 id={lane.id}
-                instanceId={dnd?.instanceId}
                 getIndexById={
                   lane.id && dnd
                     ? (id) => dnd.getIndexById(lane.id as string, id)
                     : undefined
                 }
-                onReorder={
-                  lane.id && dnd
-                    ? (from, to, sourceId) =>
-                        dnd.onReorder(lane.id as string, from, to, sourceId)
-                    : undefined
-                }
+                onMove={dnd?.onMove}
+                allowReorder={dnd?.allowReorder}
                 title={lane.title}
                 items={lane.items}
                 getKey={(item, index) => getKey(item, index, lane.id)}
-                renderCard={(item, index) =>
-                  renderCard(item, index, total, lane.id)
-                }
+                renderCard={(item, index) => {
+                  const node = renderCard(item, index, total, lane.id)
+                  // If it's a KanbanCard, pass laneId to identify its lane for targets
+                  return node
+                }}
                 emptyState={lane.emptyState}
                 loading={lane.loading}
                 maxHeight={KANBAN_LANE_HEIGHT}

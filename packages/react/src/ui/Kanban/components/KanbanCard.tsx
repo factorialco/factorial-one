@@ -15,12 +15,16 @@ export function KanbanCard({
   id,
   index,
   total,
+  laneId,
+  showIndicator = true,
   ...props
 }: {
   drag: DragConfig
   id: string
   index: number
   total: number
+  laneId?: string
+  showIndicator?: boolean
 } & React.ComponentProps<typeof F0Card>) {
   const ref = useRef<HTMLDivElement | null>(null)
   const [overEdge, setOverEdge] = useState<"top" | "bottom" | null>(null)
@@ -36,7 +40,7 @@ export function KanbanCard({
       element: ref.current,
       getData: ({ input, element }) =>
         attachClosestEdge(
-          { type: "list-card-target", id, index },
+          { type: "list-card-target", id, index, laneId },
           {
             input,
             element,
@@ -62,7 +66,7 @@ export function KanbanCard({
       onDragLeave: () => setOverEdge(null),
       onDrop: () => setOverEdge(null),
     })
-  }, [id, index])
+  }, [id, index, laneId])
 
   const isFirst = index === 0
   const isLast = index === total - 1
@@ -78,7 +82,7 @@ export function KanbanCard({
       }
     >
       <F0Card {...props} />
-      {overEdge && (
+      {showIndicator && overEdge && (
         <DropIndicator edge={overEdge} type="terminal-no-bleed" gap="4px" />
       )}
     </div>
