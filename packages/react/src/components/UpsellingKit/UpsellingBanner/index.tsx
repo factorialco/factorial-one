@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { IconType } from "@/components/Utilities/Icon"
+import { F0IconType } from "@/components/F0Icon"
 import {
   BaseBanner,
   type BannerAction,
@@ -21,7 +21,7 @@ type PromoteAction = {
   closeLabel: UpsellingButtonProps["closeLabel"]
   showIcon?: boolean
   showConfirmation?: boolean
-  icon?: IconType
+  icon?: F0IconType
 }
 
 type UpsellingBannerProps = Omit<

@@ -1,8 +1,8 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
 import { Button } from "../../components/Actions/Button"
+import { F0Icon, F0IconType } from "../../components/F0Icon"
 import type { FiltersDefinition } from "../../components/OneFilterPicker/types"
-import { Icon, IconType } from "../../components/Utilities/Icon"
 import { Kanban, Sliders, Table } from "../../icons/app"
 import { useI18n } from "../../lib/providers/i18n"
 import { cn, focusRing } from "../../lib/utils"
@@ -58,7 +58,7 @@ export type Visualization<
       /** Human-readable label for the visualization */
       label: string
       /** Icon to represent the visualization in UI */
-      icon: IconType
+      icon: F0IconType
       /** Custom component to render the visualization */
       component: (props: {
         onLoadData: OnLoadDataCallback<Record, Filters>
@@ -183,7 +183,7 @@ export const VisualizationSelector = <
           <div className="grid grid-cols-2">
             {visualizations.map((visualization, index) => {
               const isSelected = currentVisualization === index
-              const IconVisualization: IconType =
+              const IconVisualization: F0IconType =
                 visualization.type === "custom"
                   ? visualization.icon
                   : visualization.type === "table"
@@ -206,7 +206,7 @@ export const VisualizationSelector = <
                   key={visualization.type}
                   onClick={() => handleVisualizationChange(index)}
                 >
-                  <Icon icon={IconVisualization} />
+                  <F0Icon icon={IconVisualization} />
                   {label}
                 </button>
               )

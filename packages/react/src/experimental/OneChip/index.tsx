@@ -1,5 +1,5 @@
 import { F0Avatar, type AvatarVariant } from "@/components/avatars/F0Avatar"
-import { Icon, type IconType } from "@/components/Utilities/Icon"
+import { F0Icon, type F0IconType } from "@/components/F0Icon"
 import { CrossedCircle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
@@ -47,7 +47,7 @@ type ChipVariants =
       /**
        * If defined, an icon will be displayed in the chip
        * */
-      icon: IconType
+      icon: F0IconType
       avatar?: undefined
     }
   | {
@@ -86,7 +86,7 @@ export const Chip = ({
     >
       {avatar && <F0Avatar avatar={avatar} size="xsmall" />}
       <div className="flex items-center gap-0.5">
-        {icon && <Icon icon={icon} size="sm" className="text-f1-icon" />}
+        {icon && <F0Icon icon={icon} size="sm" className="text-f1-icon" />}
         {label}
       </div>
       {onClose && (
@@ -105,7 +105,7 @@ export const Chip = ({
           tabIndex={0}
           aria-label="Close"
         >
-          <Icon icon={CrossedCircle} size="sm" />
+          <F0Icon icon={CrossedCircle} size="sm" />
         </button>
       )}
     </div>

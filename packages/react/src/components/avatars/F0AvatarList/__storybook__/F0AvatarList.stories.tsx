@@ -62,7 +62,7 @@ function getDummyAvatars(
 const meta: Meta<typeof F0AvatarList> = {
   component: F0AvatarList,
   title: "Avatars/AvatarList",
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs"],
   args: {
     size: "medium",
     type: "person",

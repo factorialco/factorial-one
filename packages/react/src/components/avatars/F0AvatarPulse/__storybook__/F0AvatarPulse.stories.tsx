@@ -4,7 +4,7 @@ import { F0AvatarPulse } from "../F0AvatarPulse"
 const meta: Meta<typeof F0AvatarPulse> = {
   component: F0AvatarPulse,
   title: "Avatars/AvatarPulse",
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs"],
   args: {
     firstName: "Dani",
     lastName: "Moreno",

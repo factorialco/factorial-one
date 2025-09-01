@@ -1,11 +1,10 @@
-import { SolidPause as SolidPauseIcon } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { F0AvatarAlert } from "../F0AvatarAlert"
 
 const meta: Meta<typeof F0AvatarAlert> = {
   component: F0AvatarAlert,
   title: "Avatars/AvatarAlert",
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs"],
 }
 
 export default meta
@@ -25,11 +24,4 @@ export const Default: Story = {
       ))}
     </div>
   ),
-}
-
-export const WithCustomIcon: Story = {
-  args: {
-    type: "warning",
-    icon: SolidPauseIcon,
-  },
 }

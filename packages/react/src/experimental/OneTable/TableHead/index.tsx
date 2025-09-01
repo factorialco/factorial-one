@@ -1,6 +1,6 @@
 import { TableHead as TableHeadRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "motion/react"
-import { Icon, IconType } from "../../../components/Utilities/Icon"
+import { F0Icon, F0IconType } from "../../../components/F0Icon"
 import { ArrowDown, InfoCircleLine } from "../../../icons/app"
 import { cn, focusRing } from "../../../lib/utils"
 import { Tooltip } from "../../Overlays/Tooltip"
@@ -46,7 +46,7 @@ interface TableHeadProps {
    * Icon to display when info is provided.
    * @default InfoCircleLine
    */
-  infoIcon?: IconType
+  infoIcon?: F0IconType
 
   /**
    * When true, the header cell will not be visible.
@@ -106,7 +106,7 @@ export function TableHead({
                     )}
                     tabIndex={0}
                   >
-                    <Icon icon={infoIcon} size="sm" />
+                    <F0Icon icon={infoIcon} size="sm" />
                   </div>
                 </Tooltip>
               </div>
@@ -137,7 +137,7 @@ export function TableHead({
                       ease: [0.175, 0.885, 0.32, 1.275],
                     }}
                   >
-                    <Icon icon={ArrowDown} size="xs" />
+                    <F0Icon icon={ArrowDown} size="xs" />
                   </motion.div>
                   {sortState === "none" && (
                     <motion.div
@@ -151,7 +151,7 @@ export function TableHead({
                         ease: [0.175, 0.885, 0.32, 1.275],
                       }}
                     >
-                      <Icon icon={ArrowDown} size="xs" />
+                      <F0Icon icon={ArrowDown} size="xs" />
                     </motion.div>
                   )}
                 </AnimatePresence>

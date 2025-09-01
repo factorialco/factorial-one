@@ -1,4 +1,4 @@
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { F0Icon } from "@/components/F0Icon"
 import { AlertCircle, CheckCircle, InfoCircle, Warning } from "@/icons/app"
 import { cva, type VariantProps } from "cva"
 
@@ -27,12 +27,11 @@ const alertAvatarVariants = cva({
 })
 
 export type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
-  icon?: IconType
   type: "critical" | "warning" | "info" | "positive"
   size?: "sm" | "md" | "lg"
 }
 
-export const F0AvatarAlert = ({ icon, type, size }: AlertAvatarProps) => {
+export const F0AvatarAlert = ({ type, size }: AlertAvatarProps) => {
   const iconMap = {
     critical: AlertCircle,
     warning: Warning,
@@ -42,7 +41,7 @@ export const F0AvatarAlert = ({ icon, type, size }: AlertAvatarProps) => {
 
   return (
     <div className={alertAvatarVariants({ type, size })}>
-      <Icon icon={icon ?? iconMap[type]} size={size} />
+      <F0Icon icon={iconMap[type]} size={size} />
     </div>
   )
 }

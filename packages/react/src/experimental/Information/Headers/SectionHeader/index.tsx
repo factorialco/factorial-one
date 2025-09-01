@@ -1,7 +1,7 @@
 import { useLayout } from "@/components/layouts/LayoutProvider"
 import { Button, type ButtonProps } from "../../../../components/Actions/Button"
 import { Link } from "../../../../components/Actions/Link"
-import type { IconType } from "../../../../components/Utilities/Icon"
+import type { F0IconType } from "../../../../components/F0Icon"
 import { cn } from "../../../../lib/utils"
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 
   /**  Complementary action specific to the section */
   action?: Pick<ButtonProps, "label" | "onClick"> & {
-    icon?: IconType
+    icon?: F0IconType
     variant?: "default" | "outline"
   }
 

@@ -1,13 +1,13 @@
 import { F0AvatarDate } from "@/components/avatars/F0AvatarDate"
+import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
-import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { ChevronRight } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
 type Tag = {
-  icon: IconType
+  icon: F0IconType
   label?: string
   description?: string
 }
@@ -137,7 +137,7 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
               {fromDate && (
                 <>
                   <F0AvatarDate date={fromDate} />
-                  <Icon
+                  <F0Icon
                     icon={ChevronRight}
                     size="sm"
                     className="text-f1-foreground-tertiary"

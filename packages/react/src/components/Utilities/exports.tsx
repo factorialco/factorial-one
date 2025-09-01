@@ -1,6 +1,6 @@
 import { Component } from "../../lib/component"
-import { Icon as IconComponent } from "./Icon"
-export type { IconType } from "./Icon"
+import { F0Icon as IconComponent } from "../F0Icon"
+export type { F0IconType as IconType } from "../F0Icon"
 
 export const Icon = Component(
   {

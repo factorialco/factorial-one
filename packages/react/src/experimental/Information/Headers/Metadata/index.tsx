@@ -1,8 +1,8 @@
 import { Button, CopyButton } from "@/components/Actions/Button"
 import { AvatarVariant } from "@/components/avatars/F0Avatar"
+import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { NewColor } from "@/components/tags/F0TagDot"
 import { StatusVariant } from "@/components/tags/F0TagStatus"
-import { Icon, IconType } from "@/components/Utilities/Icon"
 import { MobileDropdown } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { InfoCircleLine } from "@/icons/app"
@@ -22,7 +22,7 @@ type MetadataItemValue =
   | { type: "date"; formattedDate: string; icon?: "warning" | "critical" }
 
 type MetadataAction = {
-  icon: IconType
+  icon: F0IconType
   label: string
   onClick: () => void
   type?: never
@@ -129,7 +129,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
               label={item.info.title}
               description={item.info.description}
             >
-              <Icon icon={InfoCircleLine} size="sm" />
+              <F0Icon icon={InfoCircleLine} size="sm" />
             </Tooltip>
           </div>
         )}

@@ -1,5 +1,5 @@
 import { Button as ActionButton } from "@/components/Actions/Button"
-import { Icon, IconProps, IconType } from "@/components/Utilities/Icon"
+import { F0Icon, F0IconProps, F0IconType } from "@/components/F0Icon"
 import {
   FaceNegative,
   FaceNeutral,
@@ -22,7 +22,7 @@ export type Pulse =
   | "positive"
   | "superPositive"
 
-export const pulseIcon: Record<Pulse, IconType> = {
+export const pulseIcon: Record<Pulse, F0IconType> = {
   superNegative: FaceSuperNegative,
   negative: FaceNegative,
   neutral: FaceNeutral,
@@ -30,7 +30,7 @@ export const pulseIcon: Record<Pulse, IconType> = {
   superPositive: FaceSuperPositive,
 }
 
-export const pulseIconColor: Record<Pulse, IconProps["color"]> = {
+export const pulseIconColor: Record<Pulse, F0IconProps["color"]> = {
   superNegative: "mood-super-negative",
   negative: "mood-negative",
   neutral: "mood-neutral",
@@ -147,7 +147,10 @@ export const F0AvatarPulse = ({
                   round
                   aria-label={translations.actions.edit}
                 >
-                  <Icon icon={pulseIcon[pulse]} color={pulseIconColor[pulse]} />
+                  <F0Icon
+                    icon={pulseIcon[pulse]}
+                    color={pulseIconColor[pulse]}
+                  />
                 </Button>
               </div>
             ) : (

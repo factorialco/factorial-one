@@ -4,7 +4,7 @@ import { F0AvatarEmoji } from "../F0AvatarEmoji"
 const meta: Meta<typeof F0AvatarEmoji> = {
   component: F0AvatarEmoji,
   title: "Avatars/AvatarEmoji",
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs"],
   argTypes: {
     size: {
       control: "select",

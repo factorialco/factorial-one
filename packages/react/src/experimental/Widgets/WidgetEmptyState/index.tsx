@@ -1,10 +1,10 @@
-import { IconType } from "../../../components/Utilities/Icon"
+import { F0IconType } from "../../../components/F0Icon"
 import { OneEmptyState } from "../../OneEmptyState/OneEmptyState"
 
 type Action = {
   label: string
   onClick: () => void
-  icon?: IconType
+  icon?: F0IconType
   variant?: "default" | "outline" | "promote"
 }
 

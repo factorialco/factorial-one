@@ -4,7 +4,7 @@ import { F0AvatarFile, type F0AvatarFileProps } from "../F0AvatarFile"
 const meta = {
   component: F0AvatarFile,
   title: "Avatars/AvatarFile",
-  tags: ["experimental"],
+  tags: ["autodocs"],
   argTypes: {
     size: {
       control: "select",

@@ -1,19 +1,19 @@
 import { Button } from "@/components/Actions/Button"
 import { Link, type LinkProps } from "@/components/Actions/Link"
-import { IconType } from "@/components/Utilities/Icon"
+import { F0IconType } from "@/components/F0Icon"
 import { cn } from "@/lib/utils"
 import { CardFooter } from "@/ui/Card"
 import { useMediaQuery } from "usehooks-ts"
 
 export interface CardPrimaryAction {
   label: string
-  icon?: IconType
+  icon?: F0IconType
   onClick: () => void
 }
 
 export interface CardSecondaryAction {
   label: string
-  icon?: IconType
+  icon?: F0IconType
   onClick: () => void
 }
 

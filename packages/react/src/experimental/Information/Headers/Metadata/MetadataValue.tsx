@@ -1,9 +1,9 @@
 import { F0Avatar } from "@/components/avatars/F0Avatar"
 import { F0AvatarList } from "@/components/avatars/F0AvatarList"
+import { F0Icon } from "@/components/F0Icon"
 import { F0TagDot } from "@/components/tags/F0TagDot"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { F0TagStatus } from "@/components/tags/F0TagStatus"
-import { Icon } from "@/components/Utilities/Icon"
 import { AlertCircle, Warning } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { MetadataItem } from "./index"
@@ -105,7 +105,7 @@ export function MetadataValue({
 
       return (
         <div className="flex items-center justify-center gap-0.5 font-medium">
-          <Icon icon={icon} color={iconColor} />
+          <F0Icon icon={icon} color={iconColor} />
           <span className={textColor}>{value.formattedDate}</span>
         </div>
       )

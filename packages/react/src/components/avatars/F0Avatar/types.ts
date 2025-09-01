@@ -1,5 +1,5 @@
+import { ModuleId } from "@/components/avatars/F0AvatarModule"
 import { BadgeProps } from "@/experimental/Information/Badge"
-import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { ComponentProps } from "react"
 import { F0AvatarCompany } from "../F0AvatarCompany"
 import { F0AvatarPerson } from "../F0AvatarPerson"

@@ -1,11 +1,11 @@
 import { Button } from "@/components/Actions/Button"
-import { IconType } from "@/components/Utilities/Icon"
+import { F0IconType } from "@/components/F0Icon"
 import { ButtonVariant } from "@/ui/button"
 
 export type Action = {
   label: string
   onClick: () => void
-  icon?: IconType
+  icon?: F0IconType
   variant?: ButtonVariant
   disabled?: boolean
 }

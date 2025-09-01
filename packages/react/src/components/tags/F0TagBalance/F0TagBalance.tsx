@@ -1,4 +1,4 @@
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { ArrowDown, ArrowUp } from "@/icons/app"
 import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
@@ -6,7 +6,7 @@ import { forwardRef } from "react"
 import { BaseTag } from "../BaseTag"
 import type { Props, Status } from "./types"
 
-const iconMap: Record<Exclude<Status, "neutral">, IconType> = {
+const iconMap: Record<Exclude<Status, "neutral">, F0IconType> = {
   positive: ArrowUp,
   negative: ArrowDown,
 }
@@ -27,7 +27,7 @@ export const F0TagBalance = forwardRef<HTMLDivElement, Props>(
         )}
         left={
           status === "neutral" ? null : (
-            <Icon
+            <F0Icon
               icon={iconMap[status]}
               size="sm"
               className={cn(

@@ -1,4 +1,4 @@
-import { Icon } from "@/components/Utilities/Icon"
+import { F0Icon } from "@/components/F0Icon"
 import { EllipsisHorizontal } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { type } from "@/ui/avatar"
@@ -57,7 +57,7 @@ export const MaxCounter = ({
       className={cn("cursor-default font-medium", sizeVariants({ size, type }))}
     >
       {size === "xsmall" ? (
-        <Icon icon={EllipsisHorizontal} size="xs" />
+        <F0Icon icon={EllipsisHorizontal} size="xs" />
       ) : (
         `+${count}`
       )}

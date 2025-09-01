@@ -1,8 +1,8 @@
-import { Badge, BadgeProps } from "@/experimental/Information/Badge"
 import {
-  ModuleAvatar,
-  ModuleAvatarProps,
-} from "@/experimental/Information/ModuleAvatar"
+  F0AvatarModule,
+  F0AvatarModuleProps,
+} from "@/components/avatars/F0AvatarModule"
+import { Badge, BadgeProps } from "@/experimental/Information/Badge"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import {
   Avatar as AvatarComponent,
@@ -31,11 +31,11 @@ const getBadgeSize = (
 
 const getAvatarSize = (
   size: ShadAvatarProps["size"]
-): ModuleAvatarProps["size"] | undefined => {
+): F0AvatarModuleProps["size"] | undefined => {
   const sizeMap: Partial<
     Record<
       Exclude<ShadAvatarProps["size"], undefined>,
-      ModuleAvatarProps["size"]
+      F0AvatarModuleProps["size"]
     >
   > = {
     xxlarge: "md",
@@ -89,7 +89,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
         badge ? (
           <>
             {badge.type === "module" && (
-              <ModuleAvatar module={badge.module} size={moduleAvatarSize} />
+              <F0AvatarModule module={badge.module} size={moduleAvatarSize} />
             )}
             {badge.type !== "module" && (
               <Badge type={badge.type} icon={badge.icon} size={badgeSize} />

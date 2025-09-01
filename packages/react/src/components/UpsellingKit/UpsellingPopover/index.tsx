@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
-import { IconType } from "@/components/Utilities/Icon"
+import { F0IconType } from "@/components/F0Icon"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { PopoverContentProps } from "@radix-ui/react-popover"
 import { useState } from "react"
@@ -15,7 +15,7 @@ type UpsellingPopoverProps = {
   size?: ButtonProps["size"]
   side?: PopoverContentProps["side"]
   align?: PopoverContentProps["align"]
-  icon?: IconType
+  icon?: F0IconType
   showIcon?: boolean
   mediaUrl: string
   title: string

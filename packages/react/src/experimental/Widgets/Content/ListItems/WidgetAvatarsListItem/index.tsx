@@ -2,7 +2,6 @@ import { AvatarVariant } from "@/components/avatars/F0Avatar"
 import { F0AvatarAlert } from "@/components/avatars/F0AvatarAlert"
 import { F0AvatarEmoji } from "@/components/avatars/F0AvatarEmoji"
 import { F0AvatarList } from "@/components/avatars/F0AvatarList"
-import { IconType } from "@/components/Utilities/Icon"
 import { cn } from "@/lib/utils"
 import { ComponentProps } from "react"
 
@@ -18,7 +17,6 @@ export type WidgetAvatarsListItemProps = {
   | { emoji: string }
   | {
       alert: ComponentProps<typeof F0AvatarAlert>["type"]
-      alertIcon?: IconType
     }
 )
 
@@ -74,9 +72,7 @@ export function WidgetAvatarsListItem({
       withEmoji={"emoji" in props && !!props.emoji}
       withPointerCursor={withPointerCursor}
     >
-      {"alert" in props && (
-        <F0AvatarAlert type={props.alert} icon={props.alertIcon} />
-      )}
+      {"alert" in props && <F0AvatarAlert type={props.alert} />}
       {"emoji" in props && props.emoji && <F0AvatarEmoji emoji={props.emoji} />}
       <div className="flex-1">
         <p className="line-clamp-1 font-medium">{title}</p>

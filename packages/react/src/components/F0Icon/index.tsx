@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import { f1Colors } from "@factorialco/factorial-one-core"
 import { cva, type VariantProps } from "cva"
 import {
@@ -6,7 +7,6 @@ import {
   RefAttributes,
   SVGProps,
 } from "react"
-import { cn } from "../../../lib/utils"
 
 const iconVariants = cva({
   base: "inline-block shrink-0",
@@ -40,10 +40,11 @@ type NestedKeyOf<T> = {
       : `${K}`
 }[keyof T & string]
 
-export interface IconProps
+export interface F0IconProps
   extends SVGProps<SVGSVGElement>,
     VariantProps<typeof iconVariants> {
-  icon: IconType
+  icon: F0IconType
+  size?: "lg" | "md" | "sm" | "xs"
   state?: "normal" | "animate"
   color?:
     | "default"
@@ -52,14 +53,14 @@ export interface IconProps
     | Lowercase<NestedKeyOf<typeof f1Colors.icon>>
 }
 
-export type IconType = ForwardRefExoticComponent<
+export type F0IconType = ForwardRefExoticComponent<
   SVGProps<SVGSVGElement> &
     RefAttributes<SVGSVGElement> & {
       animate?: "normal" | "animate"
     }
 >
 
-export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
+export const F0Icon = forwardRef<SVGSVGElement, F0IconProps>(function F0Icon(
   { size, icon, state = "normal", color = "currentColor", ...props },
   ref
 ) {

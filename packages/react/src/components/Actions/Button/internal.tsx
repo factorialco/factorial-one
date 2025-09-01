@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { cva } from "cva"
 import { motion } from "motion/react"
 import { ComponentProps, forwardRef, useState } from "react"
-import { Icon, IconType } from "../../Utilities/Icon"
+import { F0Icon, F0IconType } from "../../F0Icon"
 
 export type ButtonInternalProps = Pick<
   ComponentProps<typeof ShadcnButton>,
@@ -29,7 +29,7 @@ export type ButtonInternalProps = Pick<
     /**
      * Adds an icon to the button, combined with the label for better clarity and recognition.
      */
-    icon?: IconType
+    icon?: F0IconType
     /**
      * Adds an emoji to the button, can be used as a special case of icon-only button.
      */
@@ -192,7 +192,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
           className={cn(isLoading && "invisible", "flex items-center gap-1")}
         >
           {icon && (
-            <Icon
+            <F0Icon
               size={size === "sm" ? "sm" : "md"}
               icon={icon}
               className={

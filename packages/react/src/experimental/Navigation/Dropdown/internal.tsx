@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { AvatarVariant } from "@/components/avatars/F0Avatar"
-import { IconType } from "@/components/Utilities/Icon"
+import { F0IconType } from "@/components/F0Icon"
 import { EllipsisHorizontal } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
@@ -21,7 +21,7 @@ export type DropdownItem = DropdownItemObject | DropdownItemSeparator
 export type DropdownItemObject = NavigationItem & {
   type?: "item"
   onClick?: () => void
-  icon?: IconType
+  icon?: F0IconType
   description?: string
   critical?: boolean
   avatar?: AvatarVariant
@@ -29,7 +29,7 @@ export type DropdownItemObject = NavigationItem & {
 
 export type DropdownInternalProps = {
   items: DropdownItem[]
-  icon?: IconType
+  icon?: F0IconType
   size?: ButtonProps["size"]
   children?: React.ReactNode
   align?: "start" | "end"

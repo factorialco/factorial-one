@@ -6,7 +6,7 @@ import { F0AvatarTeam } from "../F0AvatarTeam"
 const meta: Meta<typeof F0AvatarTeam> = {
   component: F0AvatarTeam,
   title: "Avatars/AvatarTeam",
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs"],
   argTypes: {
     size: {
       control: "select",

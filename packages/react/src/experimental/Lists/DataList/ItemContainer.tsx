@@ -1,11 +1,11 @@
 import { forwardRef, ReactElement, ReactNode } from "react"
-import { Icon, IconType } from "../../../components/Utilities/Icon"
+import { F0Icon, F0IconType } from "../../../components/F0Icon"
 import { cn } from "../../../lib/utils"
 import { CopyAction } from "./actions/CopyAction"
 import { NavigateAction } from "./actions/NavigateAction"
 
 type ItemContainerProps = {
-  leftIcon?: IconType | (() => ReactElement)
+  leftIcon?: F0IconType | (() => ReactElement)
   action?: InternalActionType
   text: string
   className?: string
@@ -53,7 +53,7 @@ export const ItemContainer = forwardRef<HTMLLIElement, ItemContainerProps>(
             (typeof LeftIcon === "function" ? (
               LeftIcon({})
             ) : (
-              <Icon icon={LeftIcon} size="md" aria-hidden="true" />
+              <F0Icon icon={LeftIcon} size="md" aria-hidden="true" />
             ))}
           <div className="line-clamp-5 flex-1 whitespace-pre-line text-left">
             {text}

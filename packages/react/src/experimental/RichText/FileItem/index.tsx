@@ -1,5 +1,5 @@
 import { F0AvatarFile } from "@/components/avatars/F0AvatarFile"
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { F0Icon, F0IconType } from "@/components/F0Icon"
 import {
   DropdownInternal,
   DropdownItem,
@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
 type FileAction = {
-  icon?: IconType
+  icon?: F0IconType
   label: string
   onClick: () => void
   critical?: boolean
@@ -51,7 +51,7 @@ const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
         </Tooltip>
         {hasActions &&
           (singleAction ? (
-            <Icon
+            <F0Icon
               size="md"
               icon={singleAction.icon ?? CrossedCircle}
               className={cn(

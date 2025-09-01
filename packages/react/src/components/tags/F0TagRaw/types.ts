@@ -1,9 +1,9 @@
-import { IconType } from "@/components/Utilities/Icon"
+import { F0IconType } from "@/components/F0Icon"
 
 export interface Props {
   text?: string
   additionalAccesibleText?: string
-  icon?: IconType
+  icon?: F0IconType
   noBorder?: boolean
   className?: string
 }

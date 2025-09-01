@@ -1,4 +1,4 @@
-import { IconType } from "@/components/Utilities/Icon"
+import { F0IconType } from "@/components/F0Icon"
 import {
   CheckDouble,
   ChevronDown,
@@ -17,7 +17,7 @@ import { AIBlockConfig } from "../AIBlock"
 
 interface CommandItem {
   title: string
-  icon?: IconType
+  icon?: F0IconType
   emoji?: string
   command: (editor: Editor) => void
 }

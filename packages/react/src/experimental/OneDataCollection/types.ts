@@ -1,9 +1,9 @@
+import { F0IconType } from "@/components/F0Icon"
 import type {
   FiltersDefinition,
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker/types"
-import { IconType } from "@/components/Utilities/Icon"
 import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
@@ -327,7 +327,7 @@ export type BulkAction = string
  */
 export type BulkActionDefinition = {
   label: string
-  icon?: IconType
+  icon?: F0IconType
   id: string
   keepSelection?: boolean // If true, the selection will not be cleared after the action is performed (false by default)
 }

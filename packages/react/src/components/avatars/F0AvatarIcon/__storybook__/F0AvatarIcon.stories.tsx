@@ -5,7 +5,7 @@ import { F0AvatarIcon } from "../F0AvatarIcon"
 const meta: Meta<typeof F0AvatarIcon> = {
   component: F0AvatarIcon,
   title: "Avatars/AvatarIcon",
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs"],
   argTypes: {
     size: {
       control: "select",

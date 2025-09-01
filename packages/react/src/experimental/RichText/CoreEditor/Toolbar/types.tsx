@@ -1,4 +1,4 @@
-import { IconType } from "@/components/Utilities/Icon"
+import { F0IconType } from "@/components/F0Icon"
 import { Shortcut } from "@/experimental/Information/Shortcut"
 import { Editor } from "@tiptap/react"
 import { ComponentProps } from "react"
@@ -37,7 +37,7 @@ export interface ToolbarLabels {
 
 export interface ButtonConfig {
   key: string
-  icon: IconType
+  icon: F0IconType
   active: (editor: Editor) => boolean
   onClick: (editor: Editor) => void
   tooltip: {
@@ -48,7 +48,7 @@ export interface ButtonConfig {
 
 export interface ToolbarDropdownItem {
   label: string
-  icon: IconType
+  icon: F0IconType
   onClick: () => void
   isActive: boolean
 }
@@ -58,7 +58,7 @@ export interface ToolbarButtonProps {
   active?: boolean
   label: string
   disabled: boolean
-  icon: IconType
+  icon: F0IconType
   tooltip?: {
     description?: string
     label?: string

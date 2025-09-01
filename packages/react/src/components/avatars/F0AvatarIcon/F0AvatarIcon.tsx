@@ -1,8 +1,8 @@
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { cn } from "@/lib/utils"
 
 type Props = {
-  icon: IconType
+  icon: F0IconType
   size?: "sm" | "md" | "lg"
   className?: string
 }
@@ -22,7 +22,11 @@ export const F0AvatarIcon = ({ icon, size = "md", className }: Props) => {
         className
       )}
     >
-      <Icon icon={icon} size={size} className="text-f1-foreground-secondary" />
+      <F0Icon
+        icon={icon}
+        size={size}
+        className="text-f1-foreground-secondary"
+      />
     </div>
   )
 }

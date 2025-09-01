@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { forwardRef } from "react"
 import { Button, ButtonProps } from "../../../components/Actions/Button"
-import { IconType } from "../../../components/Utilities/Icon"
+import { F0IconType } from "../../../components/F0Icon"
 import { cn } from "../../../lib/utils"
 import EmptyBarChart from "./Backgrounds/EmptyBarChart"
 import EmptyLineChart from "./Backgrounds/EmptyLineChart"
@@ -12,7 +12,7 @@ interface Props {
   title: string
   content: string
   buttonLabel?: string
-  buttonIcon?: IconType
+  buttonIcon?: F0IconType
   buttonAction?: () => void
   type: Type
 }

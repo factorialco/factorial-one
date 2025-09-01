@@ -1,6 +1,6 @@
+import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { F0TagAlert } from "@/components/tags/F0TagAlert"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
-import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
 import { cn } from "@/lib/utils"
 import { ComponentProps } from "react"
@@ -10,9 +10,9 @@ export type WidgetSimpleListItemProps<
 > = {
   id: Id
   title: string
-  icon?: IconType
+  icon?: F0IconType
   iconClassName?: string
-  rightIcon?: IconType
+  rightIcon?: F0IconType
   rightIconClassName?: string
   count?: number
   alert?: ComponentProps<typeof F0TagAlert>
@@ -65,11 +65,15 @@ export function WidgetSimpleListItem({
     <Wrapper onClick={handleOnClick} className={className}>
       <div className="flex flex-1 flex-row items-start gap-1">
         {icon && (
-          <Icon icon={icon} size="md" className={cn("mt-0.5", iconClassName)} />
+          <F0Icon
+            icon={icon}
+            size="md"
+            className={cn("mt-0.5", iconClassName)}
+          />
         )}
         <p className="mt-0.5 line-clamp-2 font-medium">{title}</p>
         {rightIcon && (
-          <Icon
+          <F0Icon
             icon={rightIcon}
             size="md"
             className={cn("mt-0.5", rightIconClassName)}

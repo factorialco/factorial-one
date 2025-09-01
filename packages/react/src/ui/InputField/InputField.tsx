@@ -1,4 +1,4 @@
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { Spinner } from "@/experimental/Information/Spinner"
 import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils.ts"
@@ -148,7 +148,7 @@ export type InputFieldStatus =
 export type InputFieldProps<T> = {
   label: string
   placeholder?: string
-  labelIcon?: IconType
+  labelIcon?: F0IconType
   hideLabel?: boolean
   hidePlaceholder?: boolean
   name?: string
@@ -184,7 +184,7 @@ export type InputFieldProps<T> = {
     ) => void
     value?: T
   }
-  icon?: IconType
+  icon?: F0IconType
   isEmpty?: (value: T | undefined) => boolean
   emptyValue?: T
   maxLength?: number
@@ -386,7 +386,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                   size === "md" && "left-3 top-2.5"
                 )}
               >
-                <Icon
+                <F0Icon
                   onClick={handleClickContent}
                   icon={icon}
                   color="default"
@@ -455,7 +455,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                         className="mr-px mt-px flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center"
                         onClick={handleClear}
                       >
-                        <Icon icon={CrossedCircle} color="bold" size="md" />
+                        <F0Icon icon={CrossedCircle} color="bold" size="md" />
                       </motion.div>
                     )}
                   </AnimatePresence>
