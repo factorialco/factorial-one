@@ -88450,7 +88450,7 @@ const Twt = (e) => typeof e == "string" || typeof e == "number" || typeof e == "
           return ((p = r.current) == null ? void 0 : p[f]) !== h;
         }
       );
-      !d || !Twt(d[1]) || !e || (r.current = c, i("Data collection filter change", {
+      !d || !Twt(d[1]) || !e || (r.current = c, i("Change Data Collection filter", {
         id: e,
         name: d == null ? void 0 : d[0],
         value: d == null ? void 0 : d[1]
@@ -88460,7 +88460,7 @@ const Twt = (e) => typeof e == "string" || typeof e == "number" || typeof e == "
   ), s = vn(
     (c) => {
       var d, f;
-      ((d = a == null ? void 0 : a.current) == null ? void 0 : d.field) === (c == null ? void 0 : c.field) && ((f = a == null ? void 0 : a.current) == null ? void 0 : f.order) === (c == null ? void 0 : c.order) || !c || typeof c.field != "string" || !e || (a.current = c, i("Data collection sorting change", {
+      ((d = a == null ? void 0 : a.current) == null ? void 0 : d.field) === (c == null ? void 0 : c.field) && ((f = a == null ? void 0 : a.current) == null ? void 0 : f.order) === (c == null ? void 0 : c.order) || !c || typeof c.field != "string" || !e || (a.current = c, i("Change Data Collection sorting", {
         id: e,
         name: c.field,
         value: c.order
@@ -88469,7 +88469,7 @@ const Twt = (e) => typeof e == "string" || typeof e == "number" || typeof e == "
     [i, e]
   ), u = vn(
     (c) => {
-      e && i("Data collection preset click", {
+      e && i("Click Data Collection preset", {
         id: e,
         preset: c
       });
