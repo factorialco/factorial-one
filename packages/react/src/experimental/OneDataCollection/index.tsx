@@ -43,6 +43,7 @@ import type {
 import { DataError } from "./useData"
 import { CustomEmptyStates, useEmptyState } from "./useEmptyState"
 
+import { WithTracking } from "@/lib/providers/tracking"
 import { useTracking } from "./useTracking"
 import type { Visualization } from "./visualizations/collection"
 import { VisualizationRenderer } from "./visualizations/collection"
@@ -256,8 +257,8 @@ const OneDataCollectionComp = <
   onBulkAction,
   emptyStates,
   fullHeight,
-  trackingIdentifier,
-}: {
+  trackingMeta,
+}: WithTracking<{
   source: DataSource<
     Record,
     Filters,
@@ -283,8 +284,7 @@ const OneDataCollectionComp = <
   emptyStates?: CustomEmptyStates
   onTotalItemsChange?: (totalItems: number) => void
   fullHeight?: boolean
-  trackingIdentifier?: string
-}): JSX.Element => {
+}>): JSX.Element => {
   const {
     // Filters
     filters,
@@ -321,7 +321,7 @@ const OneDataCollectionComp = <
   const defaultSortings = useRef(currentSortings)
 
   const { trackSortingChange } = useTracking<Sortings>({
-    trackingIdentifier,
+    trackingIdentifier: trackingMeta?.id,
     defaultSorting: defaultSortings.current,
   })
 
@@ -543,7 +543,7 @@ const OneDataCollectionComp = <
         className={cn("flex flex-col gap-4 px-4", fullHeight && "max-h-full")}
       >
         <OneFilterPicker
-          trackingIdentifier={trackingIdentifier}
+          trackingMeta={trackingMeta}
           filters={filters}
           value={currentFilters}
           presets={presets}
