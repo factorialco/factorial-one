@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.168.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.5...factorial-one-react-v1.168.6) (2025-09-01)
+
+
+### Bug Fixes
+
+* ensure that the footer is at the bottom in fullscreen modals ([#2493](https://github.com/factorialco/factorial-one/issues/2493)) ([0d74925](https://github.com/factorialco/factorial-one/commit/0d7492565e42c39443b8106b23fa6723a8370d7a))
+
 ## [1.168.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.4...factorial-one-react-v1.168.5) (2025-09-01)
 
 
