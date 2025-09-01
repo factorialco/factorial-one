@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.168.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.4...factorial-one-react-v1.168.5) (2025-09-01)
+
+
+### Bug Fixes
+
+* set correct tag raw import ([#2491](https://github.com/factorialco/factorial-one/issues/2491)) ([5af9fe1](https://github.com/factorialco/factorial-one/commit/5af9fe16c7300a624f6e8cd637867cde0eedafb5))
+
 ## [1.168.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.3...factorial-one-react-v1.168.4) (2025-09-01)
 
 
