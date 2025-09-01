@@ -144,7 +144,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
         size: {
           sm: "h-3 w-3 border-[1px]",
           md: "h-4 w-4 border-2",
-          lg: "h-5 w-5 border-2",
+          lg: "h-10 w-10 border-4",
         },
         variant: {
           default: "border-f1-foreground-inverse border-t-transparent",
