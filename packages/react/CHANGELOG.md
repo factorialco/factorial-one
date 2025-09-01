@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.168.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.3...factorial-one-react-v1.168.4) (2025-09-01)
+
+
+### Bug Fixes
+
+* scrollarea not working ([6c79cfb](https://github.com/factorialco/factorial-one/commit/6c79cfb3e4dd3d78444abcdde44a1e6738927685))
+
 ## [1.168.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.2...factorial-one-react-v1.168.3) (2025-08-29)
 
 
