@@ -2,11 +2,11 @@
  * Date cell type for displaying formatted dates in data collections.
  * Supports both direct date values and objects with placeholder states.
  */
-import { formatDateValue } from "../property-utils"
+import { formatDateValue } from "../utils"
 
 import { cn } from "@/lib/utils"
 
-import { isShowingPlaceholder } from "../property-utils"
+import { isShowingPlaceholder } from "../utils"
 import { WithPlaceholder } from "./types"
 
 interface DateValue extends WithPlaceholder {
