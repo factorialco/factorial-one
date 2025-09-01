@@ -31,9 +31,5 @@ export function TrackingProvider({
 export function useTracking() {
   const context = useContext(TrackingContext)
 
-  if (context === null) {
-    throw new Error("useTracking must be used within a TrackingProvider")
-  }
-
-  return context
+  return context ?? { track: () => Promise.resolve(false) }
 }
