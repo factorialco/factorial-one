@@ -47,6 +47,29 @@ different contexts and needs:
   meta={DataCollectionStories}
 />
 
+### Tracking
+
+The component supports tracking through the `trackingMeta` prop. The
+trackingMeta should be an object with the following properties:
+
+- `id`: The identifier of the data collection.
+
+```tsx
+<OneDataCollection
+  trackingMeta={{ id: 'data-collection' }}
+  ...
+/>
+```
+
+Given this `trackingMeta`, the component will track the following events:
+
+- `Click Data Collection preset`: When a preset is clicked.
+- `Change Data Collection filter`: When a filter is changed.
+- `Change Data Collection sorting`: When a sorting is changed.
+
+If we pass the `trackingFunction` prop function through `OneProvider`, we can
+capture these events and handle them as we want.
+
 ## Anatomy
 
 #### Data types

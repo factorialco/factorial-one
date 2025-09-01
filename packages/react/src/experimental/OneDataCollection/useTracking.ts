@@ -48,7 +48,7 @@ export const useTracking = <Sortings extends SortingsDefinition>({
 
       latestFilters.current = filters
 
-      track("Data collection filter change", {
+      track("Change Data Collection filter", {
         id: trackingIdentifier,
         name: newFilter?.[0],
         value: newFilter?.[1],
@@ -70,7 +70,7 @@ export const useTracking = <Sortings extends SortingsDefinition>({
 
       latestSortings.current = sortings
 
-      track("Data collection sorting change", {
+      track("Change Data Collection sorting", {
         id: trackingIdentifier,
         name: sortings.field,
         value: sortings.order,
@@ -83,7 +83,7 @@ export const useTracking = <Sortings extends SortingsDefinition>({
     (preset: string) => {
       if (!trackingIdentifier) return
 
-      track("Data collection preset click", {
+      track("Click Data Collection preset", {
         id: trackingIdentifier,
         preset,
       })
