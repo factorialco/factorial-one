@@ -1,5 +1,5 @@
+import { F0AvatarFile } from "@/components/avatars/F0AvatarFile"
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { FileAvatar } from "@/experimental/Information/Avatars/FileAvatar"
 import {
   DropdownInternal,
   DropdownItem,
@@ -43,7 +43,7 @@ const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
         )}
         {...props}
       >
-        <FileAvatar file={file} />
+        <F0AvatarFile file={file} />
         <Tooltip label={file.name}>
           <p className="text-neutral-1000 grow overflow-hidden truncate text-ellipsis text-sm font-medium">
             {file.name}

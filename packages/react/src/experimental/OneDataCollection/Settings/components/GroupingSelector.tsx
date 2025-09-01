@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { Select } from "@/experimental/Forms/Fields/Select"
-import { ArrowDown, ArrowUp, Placeholder } from "@/icons/app"
+import { Ascending, Descending } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { GroupingDefinition, GroupingState } from "../../grouping"
 import { RecordType } from "../../types"
@@ -55,7 +55,6 @@ export const GroupingSelector = <
         <div className="shrink grow [&_button]:h-8 [&_button]:rounded">
           <Select
             label={i18n.collections.grouping.groupBy}
-            labelIcon={Placeholder}
             options={groupingOptions}
             value={currentGrouping?.field.toString() ?? EmptyGroupingValue}
             onChange={(value: string) =>
@@ -71,20 +70,18 @@ export const GroupingSelector = <
           />
         </div>
         {currentGrouping?.field && (
-          <div className="pb-1">
-            <Button
-              hideLabel
-              label={i18n.collections.grouping.toggleDirection}
-              variant="outline"
-              icon={currentGrouping?.order === "asc" ? ArrowUp : ArrowDown}
-              onClick={() =>
-                onGroupingChange({
-                  field: currentGrouping.field,
-                  order: currentGrouping.order === "asc" ? "desc" : "asc",
-                })
-              }
-            />
-          </div>
+          <Button
+            hideLabel
+            label={i18n.collections.grouping.toggleDirection}
+            variant="outline"
+            icon={currentGrouping?.order === "asc" ? Ascending : Descending}
+            onClick={() =>
+              onGroupingChange({
+                field: currentGrouping.field,
+                order: currentGrouping.order === "asc" ? "desc" : "asc",
+              })
+            }
+          />
         )}
       </div>
     </div>

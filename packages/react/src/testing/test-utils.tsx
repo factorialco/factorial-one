@@ -5,6 +5,9 @@ import React, { type ReactElement } from "react"
 import { I18nProvider, defaultTranslations } from "../lib/providers/i18n"
 import { TrackingProvider } from "../lib/providers/tracking"
 
+import { MotionGlobalConfig } from "motion"
+MotionGlobalConfig.skipAnimations = true
+
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <UserPlatformProvider showExperimentalWarnings={false}>

@@ -1,4 +1,4 @@
-import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
 import { cn } from "@/lib/utils"
 import { MentionedUser } from "../types"
 
@@ -15,7 +15,7 @@ export const MentionItem = ({ item, selected }: MentionItemProps) => {
         selected ? "border-f1-border-selected-bold" : "border-f1-border-inverse"
       )}
     >
-      <PersonAvatar
+      <F0AvatarPerson
         firstName={item.label}
         lastName=""
         src={item.image_url ?? undefined}

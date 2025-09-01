@@ -1,3 +1,4 @@
+import { AlertAvatarProps } from "@/components/avatars/F0AvatarAlert"
 import { LoadingStateProps } from "@/components/UpsellingKit/UpsellingButton"
 import {
   ErrorMessageProps,
@@ -5,7 +6,6 @@ import {
   SuccessMessageProps,
 } from "@/components/UpsellingKit/UpsellRequestResponseDialog"
 import { IconType } from "@/components/Utilities/Icon"
-import { AlertAvatarProps } from "@/experimental/Information/Avatars/AlertAvatar"
 
 export type ActionProps = {
   /**

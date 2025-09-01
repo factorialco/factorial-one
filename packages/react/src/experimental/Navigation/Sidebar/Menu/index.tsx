@@ -1,5 +1,17 @@
+import { AvatarVariant, F0Avatar } from "@/components/avatars/F0Avatar"
 import { OneEllipsis } from "@/components/OneEllipsis"
 import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Counter } from "@/experimental/Information/Counter"
+import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
+import { NavigationItem } from "@/experimental/Navigation/utils"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import {
+  ChevronDown,
+  Delete,
+  EllipsisHorizontal,
+  MoveDown,
+  MoveUp,
+} from "@/icons/app"
 import { useReducedMotion } from "@/lib/a11y"
 import { Link, useNavigation } from "@/lib/linkHandler"
 import { useI18n } from "@/lib/providers/i18n"
@@ -16,18 +28,6 @@ import {
   useRef,
   useState,
 } from "react"
-import {
-  ChevronDown,
-  Delete,
-  EllipsisHorizontal,
-  MoveDown,
-  MoveUp,
-} from "../../../../icons/app"
-import { Avatar, AvatarVariant } from "../../../Information/Avatars/Avatar"
-import { Counter } from "../../../Information/Counter"
-import { Tooltip } from "../../../Overlays/Tooltip"
-import { Dropdown, DropdownItem } from "../../Dropdown"
-import { NavigationItem } from "../../utils"
 import { DragProvider, useDragContext } from "./DragContext"
 
 export interface MenuItem extends NavigationItem {
@@ -233,7 +233,7 @@ const FavoriteItem = ({
                   )}
                 />
               ) : item.avatar ? (
-                <Avatar size="xsmall" avatar={item.avatar} />
+                <F0Avatar size="xsmall" avatar={item.avatar} />
               ) : null}
 
               <OneEllipsis

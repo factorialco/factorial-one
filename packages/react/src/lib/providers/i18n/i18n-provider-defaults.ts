@@ -175,8 +175,10 @@ export const defaultTranslations = {
   },
   notifications: "Notifications",
   ai: {
-    openChat: "Open Chat",
     description: "Chat with AI",
+    newChat: "New Chat",
+    openChat: "Open Chat",
+    scrollToBottom: "Scroll to bottom",
   },
 } as const
 

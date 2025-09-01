@@ -12,6 +12,8 @@ export type InputProps = Omit<
     | "labelIcon"
     | "hideLabel"
     | "error"
+    | "status"
+    | "hint"
     | "disabled"
     | "required"
     | "size"
@@ -39,6 +41,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       labelIcon,
       icon,
       error,
+      status,
+      hint,
       disabled,
       required,
       value,
@@ -68,6 +72,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         icon={icon}
         labelIcon={labelIcon}
         error={error}
+        status={status}
+        hint={hint}
         disabled={disabled}
         required={required}
         value={value as string}

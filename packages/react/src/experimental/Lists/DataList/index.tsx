@@ -1,11 +1,11 @@
 import { forwardRef, ReactElement } from "react"
 
-import { DotTag, DotTagProps } from "@/experimental/Information/Tags/DotTag"
+import { F0AvatarCompany } from "@/components/avatars/F0AvatarCompany"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
+import { F0AvatarTeam } from "@/components/avatars/F0AvatarTeam"
+import { F0TagDot, TagDotProps } from "@/components/tags/F0TagDot"
+import { IconType } from "@/components/Utilities/Icon"
 import { cn } from "@/lib/utils"
-import { IconType } from "../../../components/Utilities/Icon"
-import { CompanyAvatar } from "../../Information/Avatars/CompanyAvatar"
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import { TeamAvatar } from "../../Information/Avatars/TeamAvatar"
 import { InternalActionType, ItemContainer } from "./ItemContainer"
 
 export type DataListProps = {
@@ -99,7 +99,7 @@ const PersonItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
       <ItemContainer
         ref={ref}
         leftIcon={() => (
-          <PersonAvatar
+          <F0AvatarPerson
             size="xsmall"
             src={avatarUrl}
             firstName={firstName}
@@ -126,7 +126,7 @@ const CompanyItem = forwardRef<HTMLLIElement, CompanyItemProps>(
       <ItemContainer
         ref={ref}
         leftIcon={() => (
-          <CompanyAvatar name={name} size="xsmall" src={avatarUrl} />
+          <F0AvatarCompany name={name} size="xsmall" src={avatarUrl} />
         )}
         text={name}
         action={getInternalAction(action, name)}
@@ -147,7 +147,7 @@ const TeamItem = forwardRef<HTMLLIElement, TeamItemProps>(
     return (
       <ItemContainer
         ref={ref}
-        leftIcon={() => <TeamAvatar name={name} size="xsmall" />}
+        leftIcon={() => <F0AvatarTeam name={name} size="xsmall" />}
         text={name}
         action={getInternalAction(action, name)}
       />
@@ -157,13 +157,13 @@ const TeamItem = forwardRef<HTMLLIElement, TeamItemProps>(
 
 TeamItem.displayName = "TeamItem"
 
-type DotTagItemProps = DotTagProps
+type DotTagItemProps = TagDotProps
 
 const DotTagItem = forwardRef<HTMLLIElement, DotTagItemProps>(
   ({ ...props }, ref) => {
     return (
       <li ref={ref} className="flex items-start pt-1">
-        <DotTag {...props} />
+        <F0TagDot {...props} />
       </li>
     )
   }
