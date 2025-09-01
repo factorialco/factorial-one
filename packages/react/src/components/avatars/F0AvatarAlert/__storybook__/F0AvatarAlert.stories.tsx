@@ -1,5 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { F0AvatarAlert } from "../F0AvatarAlert"
+import {
+  alertAvatarSizes,
+  alertAvatarTypes,
+  F0AvatarAlert,
+} from "../F0AvatarAlert"
 
 const meta: Meta<typeof F0AvatarAlert> = {
   component: F0AvatarAlert,
@@ -10,8 +14,8 @@ const meta: Meta<typeof F0AvatarAlert> = {
 export default meta
 type Story = StoryObj<typeof F0AvatarAlert>
 
-const SIZES = ["sm", "md", "lg"] as const
-const TYPES = ["info", "warning", "critical", "positive"] as const
+const SIZES = alertAvatarSizes
+const TYPES = alertAvatarTypes
 export const Default: Story = {
   render: () => (
     <div className="flex w-fit flex-col gap-2">

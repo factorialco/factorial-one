@@ -26,9 +26,16 @@ const alertAvatarVariants = cva({
   },
 })
 
+export const alertAvatarTypes = [
+  "critical",
+  "warning",
+  "info",
+  "positive",
+] as const
+export const alertAvatarSizes = ["sm", "md", "lg"] as const
 export type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
-  type: "critical" | "warning" | "info" | "positive"
-  size?: "sm" | "md" | "lg"
+  type: (typeof alertAvatarTypes)[number]
+  size?: (typeof alertAvatarSizes)[number]
 }
 
 export const F0AvatarAlert = ({ type, size }: AlertAvatarProps) => {

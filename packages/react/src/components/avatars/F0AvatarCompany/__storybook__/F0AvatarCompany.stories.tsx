@@ -10,6 +10,36 @@ const meta: Meta<typeof F0AvatarCompany> = {
     size: {
       control: "select",
       options: sizes,
+      defaultValue: "medium",
+      description: "The size of the avatar",
+    },
+    badge: {
+      control: "object",
+    },
+    "aria-label": {
+      control: "text",
+    },
+    "aria-labelledby": {
+      control: "text",
+    },
+    src: {
+      control: "text",
+    },
+    name: {
+      control: "text",
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "A company avatar component.",
+          "If no logo is provided, it will display the company name initials",
+          "NOTE: The avatar color is always viridian",
+        ]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
     },
   },
   args: {
