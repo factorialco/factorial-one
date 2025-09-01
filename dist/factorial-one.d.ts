@@ -1,30 +1,31 @@
-import { AlertTagCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/alertTag';
+import { AlertTagCellValue } from '../../value-display/types/alertTag';
 import { AlertTagCellValue as AlertTagCellValue_2 } from './types/alertTag.tsx';
-import { AmountCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/amount';
+import { AmountCellValue } from '../../value-display/types/amount';
 import { AmountCellValue as AmountCellValue_2 } from './types/amount.tsx';
 import { AnchorHTMLAttributes } from 'react';
-import { AvatarListCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/avatarList';
+import { AvatarListCellValue } from '../../value-display/types/avatarList';
 import { AvatarListCellValue as AvatarListCellValue_2 } from './types/avatarList.tsx';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { AvatarProps } from '@radix-ui/react-avatar';
+import { baseColors } from '@factorialco/factorial-one-core';
 import { CategoryBarProps } from './CategoryBarChart';
 import { ChartConfig } from '../../ui/chart';
 import { ChartConfig as ChartConfig_2 } from './utils/types';
 import { ChartPropsBase } from './utils/types';
 import { ClassValue } from 'cva';
-import { color as color_2 } from '../../../../ui/avatar';
-import { CompanyCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/company';
+import { color as color_2 } from '../../../ui/avatar';
+import { CompanyCellValue } from '../../value-display/types/company';
 import { CompanyCellValue as CompanyCellValue_2 } from './types/company.tsx';
 import { ComponentProps } from 'react';
-import { DateCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/date';
+import { DateCellValue } from '../../value-display/types/date';
 import { DateCellValue as DateCellValue_2 } from './types/date.tsx';
 import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
-import { DotTagCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/dotTag';
+import { DotTagCellValue } from '../../value-display/types/dotTag';
 import { DotTagCellValue as DotTagCellValue_2 } from './types/dotTag.tsx';
-import { FileCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/file';
+import { FileCellValue } from '../../value-display/types/file';
 import { FileCellValue as FileCellValue_2 } from './types/file.tsx';
-import { FolderCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/folder';
+import { FolderCellValue } from '../../value-display/types/folder';
 import { FolderCellValue as FolderCellValue_2 } from './types/folder.tsx';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
@@ -38,31 +39,30 @@ import { LineChartConfig } from '../../ui/chart';
 import { LineChartPropsBase } from './utils/types';
 import { LinkProps as LinkProps_3 } from './Link';
 import { MouseEventHandler } from 'react';
-import { NumberCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/number';
+import { NumberCellValue } from '../../value-display/types/number';
 import { NumberCellValue as NumberCellValue_2 } from './types/number.tsx';
-import { PersonCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/person';
+import { PersonCellValue } from '../../value-display/types/person';
 import { PersonCellValue as PersonCellValue_2 } from './types/person.tsx';
 import { PieChartProps } from './PieChart';
 import { PopoverContentProps } from '@radix-ui/react-popover';
-import { PropertyRendererMetadata } from '../../../experimental/OneDataCollection/visualizations/property/types';
-import { PropertyRendererMetadata as PropertyRendererMetadata_2 } from './types.ts';
 import * as React_2 from 'react';
 import { ReactNode } from 'react';
 import { RefAttributes } from 'react';
 import { RefObject } from 'react';
-import { sizes as sizes_3 } from '../../../../ui/avatar';
-import { StatusCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/status';
+import { sizes as sizes_3 } from '../../../ui/avatar';
+import { StatusCellValue } from '../../value-display/types/status';
 import { StatusCellValue as StatusCellValue_2 } from './types/status.tsx';
 import { SVGProps } from 'react';
-import { TagCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/tag';
+import { TagCellValue } from '../../value-display/types/tag';
 import { TagCellValue as TagCellValue_2 } from './types/tag.tsx';
-import { TagListCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/tagList';
+import { TagListCellValue } from '../../value-display/types/tagList';
 import { TagListCellValue as TagListCellValue_2 } from './types/tagList.tsx';
-import { TeamCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/team';
+import { TeamCellValue } from '../../value-display/types/team';
 import { TeamCellValue as TeamCellValue_2 } from './types/team.tsx';
-import { TextCellValue } from '../../../experimental/OneDataCollection/visualizations/property/types/text';
+import { TextCellValue } from '../../value-display/types/text';
 import { TextCellValue as TextCellValue_2 } from './types/text.tsx';
-import { type as type_2 } from '../../../../ui/avatar';
+import { type as type_2 } from '../../../ui/avatar';
+import { ValueDisplayRendererContext } from '../../value-display';
 import { VariantProps } from 'cva';
 
 export declare type Action = UpsellAction | RegularAction;
@@ -75,6 +75,25 @@ declare type Action_2 = {
     size?: "md" | "lg";
     loading?: boolean;
 };
+
+export declare type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
+    icon?: IconType;
+    type: "critical" | "warning" | "info" | "positive";
+    size?: "sm" | "md" | "lg";
+};
+
+declare const alertAvatarVariants: (props?: ({
+    type?: "info" | "critical" | "warning" | "positive" | undefined;
+    size?: "lg" | "md" | "sm" | undefined;
+} & ({
+    class?: ClassValue;
+    className?: never;
+} | {
+    class?: never;
+    className?: ClassValue;
+})) | undefined) => string;
+
+declare type AlertTagProps = ComponentProps<typeof F0TagAlert>;
 
 export declare const AreaChart: ForwardRefExoticComponent<Omit<LineChartPropsBase<LineChartConfig> & {
 lineType?: "step" | "linear" | "natural" | "monotoneX";
@@ -89,7 +108,7 @@ declare const Avatar: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.Ava
     color?: (typeof color)[number];
 } & React_2.RefAttributes<HTMLSpanElement>>;
 
-declare type AvatarBadge = ({
+export declare type AvatarBadge = ({
     type: "module";
     module: ModuleId;
 } | {
@@ -99,7 +118,19 @@ declare type AvatarBadge = ({
     tooltip?: string;
 };
 
-declare type AvatarVariant = ({
+export declare type AvatarListSize = Extract<(typeof sizes_2)[number], "xsmall" | "small" | "medium">;
+
+declare type AvatarType = AvatarVariant["type"];
+
+export declare type AvatarVariant = ({
+    type: "person";
+} & Omit<PersonAvatarProps_2, "size">) | ({
+    type: "team";
+} & Omit<TeamAvatarProps_2, "size">) | ({
+    type: "company";
+} & Omit<CompanyAvatarProps_2, "size">);
+
+declare type AvatarVariant_2 = ({
     type: "person";
 } & Omit<PersonAvatarProps, "size">) | ({
     type: "team";
@@ -132,6 +163,8 @@ declare const badgeVariants: (props?: ({
     class?: never;
     className?: ClassValue;
 })) | undefined) => string;
+
+declare type BalanceTagProps = ComponentProps<typeof F0TagBalance>;
 
 declare type BannerAction = {
     label: string;
@@ -189,6 +222,8 @@ declare type BaseBannerProps = {
     children?: React.ReactNode;
 };
 
+declare type BaseColor = keyof typeof baseColors;
+
 /**
  * Base definition for all filter types.
  * Provides common properties that all filters must implement.
@@ -203,6 +238,10 @@ declare type BaseFilterDefinition<T extends FilterTypeKey> = {
      */
     hideSelector?: boolean;
 };
+
+declare type BaseTag<T extends {
+    type: string;
+}> = T & WithTooltipDescription;
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
 
@@ -367,7 +406,13 @@ declare interface CardInternalProps {
 
 declare type CardMetadata = {
     icon: IconType;
-    property: CardMetadataProperty;
+    property: Exclude<CardMetadataProperty, {
+        type: "file";
+    }>;
+} | {
+    property: Extract<CardMetadataProperty, {
+        type: "file";
+    }>;
 };
 
 /**
@@ -377,7 +422,7 @@ declare type CardMetadata = {
 declare type CardMetadataProperty = {
     [K in CardPropertyType]: {
         type: K;
-        value: Parameters<(typeof propertyRenderers)[K]>[0];
+        value: Parameters<(typeof valueDisplayRenderers)[K]>[0];
     };
 }[CardPropertyType];
 
@@ -389,9 +434,9 @@ declare interface CardPrimaryAction {
 
 declare const cardPropertyRenderers: {
     readonly text: (args: TextCellValue) => default_2.JSX.Element;
-    readonly number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => default_2.JSX.Element;
+    readonly number: (args: NumberCellValue, meta: ValueDisplayRendererContext) => default_2.JSX.Element;
     readonly date: (args: DateCellValue) => default_2.JSX.Element;
-    readonly amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => default_2.JSX.Element;
+    readonly amount: (args: AmountCellValue, meta: ValueDisplayRendererContext) => default_2.JSX.Element;
     readonly person: (args: PersonCellValue) => default_2.JSX.Element;
     readonly company: (args: CompanyCellValue) => default_2.JSX.Element;
     readonly team: (args: TeamCellValue) => default_2.JSX.Element;
@@ -474,12 +519,11 @@ declare interface CheckboxProps extends DataAttributes {
 
 declare const color: readonly ["viridian", "malibu", "yellow", "purple", "lilac", "barbie", "smoke", "army", "flubber", "indigo", "camel"];
 
-declare const CompanyAvatar: {
-    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props_2): JSX_2.Element;
-    displayName: string;
-};
+declare type CompanyAvatarProps = ComponentProps<typeof F0AvatarCompany>;
 
-declare type CompanyAvatarProps = ComponentProps<typeof CompanyAvatar>;
+declare type CompanyAvatarProps_2 = ComponentProps<typeof F0AvatarCompany>;
+
+declare type CompanyTagProps = ComponentProps<typeof F0TagCompany>;
 
 declare type ComponentTypes = (typeof componentTypes)[number];
 
@@ -493,6 +537,8 @@ declare type CopyButtonProps = Omit<ComponentProps<typeof Button_2>, "onClick" |
     copyTooltipLabel?: string;
     onCopy?: MouseEventHandler<HTMLButtonElement>;
 };
+
+export declare function createAtlaskitDriver(instanceId: symbol): DndDriver;
 
 /**
  * Extracts the current filters type from filter options.
@@ -702,9 +748,39 @@ export declare const defaultTranslations: {
     };
     readonly notifications: "Notifications";
     readonly ai: {
-        readonly openChat: "Open Chat";
         readonly description: "Chat with AI";
+        readonly newChat: "New Chat";
+        readonly openChat: "Open Chat";
+        readonly scrollToBottom: "Scroll to bottom";
     };
+};
+
+export declare interface DndDriver {
+    registerDraggable: (el: HTMLElement, options: {
+        payload: DragPayload;
+        disabled?: boolean;
+        handle?: HTMLElement | null;
+    }) => () => void;
+    registerDroppable: (el: HTMLElement, options: {
+        id: string;
+        accepts: string[];
+    }) => () => void;
+    subscribe: (cb: (e: {
+        phase: "start" | "over" | "drop" | "cancel";
+        source: DragPayload;
+        intent?: DropIntent;
+    }) => void) => () => void;
+}
+
+export declare function DndProvider({ driver, children, }: {
+    driver: DndDriver;
+    children: ReactNode;
+}): JSX_2.Element;
+
+export declare type DragPayload<T = unknown> = {
+    kind: string;
+    id: string;
+    data?: T;
 };
 
 declare type DropdownItem = DropdownItemObject | DropdownItemSeparator;
@@ -720,6 +796,24 @@ declare type DropdownItemObject = NavigationItem & {
 
 declare type DropdownItemSeparator = {
     type: "separator";
+};
+
+export declare type DropIntent = {
+    type: "reorder";
+    containerId: string;
+    fromIndex: number;
+    toIndex: number;
+} | {
+    type: "move";
+    fromContainerId: string;
+    toContainerId: string;
+    fromIndex: number;
+    toIndex: number | null;
+} | {
+    type: "enter-container";
+    toContainerId: string;
+} | {
+    type: "cancel";
 };
 
 export declare function EmojiImage({ emoji, size }: EmojiImageProps): JSX_2.Element;
@@ -747,6 +841,103 @@ declare type EventScalar = string | number | boolean | undefined | null;
 
 export declare const experimental: <T extends (...args: any[]) => any>(name: string, component: T) => T;
 
+export declare const F0Avatar: ({ avatar, size, }: {
+    avatar: AvatarVariant_2;
+    size?: (typeof sizes_2)[number];
+}) => ReactNode;
+
+export declare const F0AvatarAlert: ({ icon, type, size }: AlertAvatarProps) => JSX_2.Element;
+
+export declare const F0AvatarCompany: {
+    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: F0AvatarCompanyProps): JSX_2.Element;
+    displayName: string;
+};
+
+export declare type F0AvatarCompanyProps = {
+    name: string;
+    src?: string;
+    size?: BaseAvatarProps_3["size"];
+    badge?: AvatarBadge;
+} & Pick<BaseAvatarProps_3, "aria-label" | "aria-labelledby">;
+
+export declare const F0AvatarDate: ({ date }: Props_2) => JSX_2.Element;
+
+export declare const F0AvatarEmoji: {
+    ({ emoji, size }: Props_3): JSX_2.Element;
+    displayName: string;
+};
+
+export declare const F0AvatarFile: ForwardRefExoticComponent<Omit<Omit<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
+size?: (typeof sizes_2)[number];
+type?: type_2[number];
+color?: color_2[number];
+} & RefAttributes<HTMLSpanElement>, "ref">, "type"> & {
+file: FileDef;
+size?: F0AvatarFileSize;
+} & RefAttributes<HTMLSpanElement>>;
+
+export declare type F0AvatarFileProps = Omit<React.ComponentPropsWithoutRef<typeof Avatar>, "type"> & {
+    file: FileDef;
+    size?: F0AvatarFileSize;
+};
+
+declare type F0AvatarFileSize = Extract<(typeof sizes_2)[number], "small" | "medium" | "large">;
+
+export declare const F0AvatarIcon: {
+    ({ icon, size, className }: Props_4): JSX_2.Element;
+    displayName: string;
+};
+
+export declare const F0AvatarList: {
+    ({ avatars, size, type, noTooltip, remainingCount: initialRemainingCount, max, layout, }: F0AvatarListProps): JSX_2.Element;
+    displayName: string;
+};
+
+export declare type F0AvatarListProps = {
+    avatars: AvatarVariant[];
+    size?: AvatarListSize;
+    type?: AvatarType;
+    /**
+     * Whether to hide tooltips in each avatar.
+     * @default false
+     */
+    noTooltip?: boolean;
+    /**
+     * The maximum number of avatars to display.
+     * @default 3
+     */
+    max?: number;
+    /**
+     * The remaining number to display.
+     */
+    remainingCount?: number;
+    /**
+     * The layout of the avatar list.
+     * - "fill" - Avatars will expand to fill the available width, with overflow items shown in a counter
+     * - "compact" - Avatars will be stacked tightly together up to the max limit, with remaining shown in counter
+     * @default "compact"
+     */
+    layout?: "fill" | "compact";
+};
+
+export declare const F0AvatarPerson: {
+    ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: F0AvatarPersonProps): JSX_2.Element;
+    displayName: string;
+};
+
+export declare type F0AvatarPersonProps = {
+    firstName: string;
+    lastName: string;
+    src?: string;
+    size?: BaseAvatarProps["size"];
+    badge?: AvatarBadge;
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
+
+export declare const F0AvatarTeam: {
+    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props): JSX_2.Element;
+    displayName: string;
+};
+
 export declare const F0Card: ForwardRefExoticComponent<F0CardProps & RefAttributes<HTMLDivElement>> & {
     Skeleton: ({ compact }: {
         compact?: boolean;
@@ -762,6 +953,27 @@ export declare const F0Checkbox: typeof _F0Checkbox;
 
 declare function _F0Checkbox({ title, onCheckedChange, id, disabled, indeterminate, checked, value, hideLabel, presentational, stopPropagation, name, ...rest }: CheckboxProps): JSX_2.Element;
 
+export declare const F0TagAlert: ForwardRefExoticComponent<TagAlertProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagBalance: ForwardRefExoticComponent<TagBalanceProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagCompany: ForwardRefExoticComponent<TagCompanyProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagDot: ForwardRefExoticComponent<TagDotProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagList: {
+    <T extends TagType>({ type, tags, max, remainingCount: initialRemainingCount, layout, }: TagListProps<T>): JSX_2.Element;
+    displayName: string;
+};
+
+export declare const F0TagPerson: ForwardRefExoticComponent<TagPersonProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagRaw: ForwardRefExoticComponent<TagRawProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagStatus: ForwardRefExoticComponent<TagStatusProps & RefAttributes<HTMLDivElement>>;
+
+export declare const F0TagTeam: ForwardRefExoticComponent<TagTeamProps & RefAttributes<HTMLDivElement>>;
+
 export declare const FactorialOneProvider: React.FC<{
     children: React.ReactNode;
     link?: LinkContextValue;
@@ -774,6 +986,11 @@ export declare const FactorialOneProvider: React.FC<{
     isDev?: boolean;
     showExperimentalWarnings?: boolean;
 }>;
+
+declare type FileDef = {
+    name: string;
+    type: string;
+};
 
 /**
  * Union of all available filter types.
@@ -951,6 +1168,8 @@ declare const layoutVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
+export declare type Level = "info" | "warning" | "critical";
+
 export declare const LineChart: ForwardRefExoticComponent<Omit<LineChartPropsBase<LineChartConfig> & {
 lineType?: "natural" | "linear";
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
@@ -1057,6 +1276,8 @@ declare type NavigationItem = Pick<LinkProps_2, "href" | "exactMatch" | "onClick
     label: string;
 } & DataAttributes;
 
+export declare type NewColor = Extract<BaseColor, "viridian" | "malibu" | "yellow" | "purple" | "lilac" | "barbie" | "smoke" | "army" | "flubber" | "indigo" | "camel">;
+
 export declare interface NextStepsProps {
     title: string;
     items: StepItemProps[];
@@ -1087,20 +1308,11 @@ declare type OneFilterPickerRootProps<Definition extends FiltersDefinition> = Wi
     children?: React.ReactNode;
 }>;
 
-declare const PersonAvatar: {
-    ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: PersonAvatarProps_2): JSX_2.Element;
-    displayName: string;
-};
+declare type PersonAvatarProps = ComponentProps<typeof F0AvatarPerson>;
 
-declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
+declare type PersonAvatarProps_2 = ComponentProps<typeof F0AvatarPerson>;
 
-declare type PersonAvatarProps_2 = {
-    firstName: string;
-    lastName: string;
-    src?: string;
-    size?: BaseAvatarProps["size"];
-    badge?: AvatarBadge;
-} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
+declare type PersonTagProps = ComponentProps<typeof F0TagPerson>;
 
 export declare const PieChart: ForwardRefExoticComponent<Omit<PieChartProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
@@ -1139,6 +1351,10 @@ declare type ProductBlankslateProps = {
     withShadow?: boolean;
     icon?: IconType;
     moduleName?: string;
+    tag?: {
+        label: string;
+        icon: IconType;
+    };
 };
 
 export declare function ProductCard({ title, description, onClick, onClose, isVisible, dismissable, trackVisibility, ...props }: ProductCardProps): false | JSX_2.Element;
@@ -1157,7 +1373,7 @@ export declare type ProductCardProps = {
     icon: IconType;
 });
 
-export declare function ProductModal({ isOpen, onClose, title, image, benefits, errorMessage, successMessage, loadingState, nextSteps, closeLabel, primaryAction, modalTitle, modalIcon, secondaryAction, portalContainer, }: ProductModalProps): JSX_2.Element;
+export declare function ProductModal({ isOpen, onClose, title, image, benefits, errorMessage, successMessage, loadingState, nextSteps, closeLabel, primaryAction, modalTitle, modalIcon, secondaryAction, portalContainer, tag, }: ProductModalProps): JSX_2.Element;
 
 declare type ProductModalProps = {
     isOpen: boolean;
@@ -1174,20 +1390,24 @@ declare type ProductModalProps = {
     successMessage: {
         title: string;
         description: string;
-        buttonLabel: string;
-        buttonOnClick: () => void;
+        buttonLabel?: string;
+        buttonOnClick?: () => void;
     };
     loadingState: {
         label: string;
     };
-    nextSteps: {
+    closeLabel: string;
+    nextSteps?: {
         title: string;
         items: {
             text: string;
             isCompleted?: boolean;
         }[];
     };
-    closeLabel: string;
+    tag?: {
+        label: string;
+        icon: IconType;
+    };
     primaryAction?: Action_2;
     secondaryAction?: Action_2;
     portalContainer?: HTMLElement | null;
@@ -1228,31 +1448,6 @@ declare type PromoteAction = {
     icon?: IconType;
 };
 
-/**
- * Renders a property value based on the renderer type.
- * @param renderer - The renderer type to use
- * @param args - The arguments to pass to the renderer
- * @returns The rendered property value
- */
-declare const propertyRenderers: {
-    readonly text: (args: TextCellValue_2) => JSX_2.Element;
-    readonly number: (args: NumberCellValue_2, meta: PropertyRendererMetadata_2<never>) => JSX_2.Element;
-    readonly date: (args: DateCellValue_2) => JSX_2.Element;
-    readonly amount: (args: AmountCellValue_2, meta: PropertyRendererMetadata_2<never>) => JSX_2.Element;
-    readonly avatarList: (args: AvatarListCellValue_2) => JSX_2.Element;
-    readonly status: (args: StatusCellValue_2) => JSX_2.Element;
-    readonly alertTag: (args: AlertTagCellValue_2) => JSX_2.Element;
-    readonly person: (args: PersonCellValue_2) => JSX_2.Element;
-    readonly company: (args: CompanyCellValue_2) => JSX_2.Element;
-    readonly team: (args: TeamCellValue_2) => JSX_2.Element;
-    readonly tag: (args: TagCellValue_2) => JSX_2.Element;
-    readonly dotTag: (args: DotTagCellValue_2) => JSX_2.Element;
-    readonly tagList: (args: TagListCellValue_2) => JSX_2.Element;
-    readonly icon: (args: IconCellValue) => JSX_2.Element;
-    readonly file: (args: FileCellValue_2) => JSX_2.Element;
-    readonly folder: (args: FolderCellValue_2) => JSX_2.Element;
-};
-
 declare type Props = {
     name: string;
     src?: string;
@@ -1261,11 +1456,24 @@ declare type Props = {
 } & Pick<BaseAvatarProps_2, "aria-label" | "aria-labelledby">;
 
 declare type Props_2 = {
-    name: string;
-    src?: string;
-    size?: BaseAvatarProps_3["size"];
-    badge?: AvatarBadge;
-} & Pick<BaseAvatarProps_3, "aria-label" | "aria-labelledby">;
+    date: Date;
+};
+
+declare type Props_3 = {
+    emoji: string;
+    size?: "small" | "medium" | "large";
+};
+
+declare type Props_4 = {
+    icon: IconType;
+    size?: "sm" | "md" | "lg";
+    className?: string;
+};
+
+declare type Props_5 = {
+    count: number;
+    list?: TagCounterItem[];
+};
 
 declare type RegularAction = BaseAction & {
     type: "regular";
@@ -1288,6 +1496,10 @@ export declare interface StandardLayoutProps extends VariantProps<typeof layoutV
     children?: default_2.ReactNode;
 }
 
+export declare type Status = "positive" | "neutral" | "negative";
+
+export declare type StatusVariant = Variant;
+
 export declare interface StepItemProps {
     text: string;
     isCompleted?: boolean;
@@ -1296,16 +1508,140 @@ export declare interface StepItemProps {
 export declare interface SuccessMessageProps {
     title: string;
     description: string;
-    buttonLabel: string;
-    buttonOnClick: () => void;
+    buttonLabel?: string;
+    buttonOnClick?: () => void;
 }
 
-declare const TeamAvatar: {
-    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props): JSX_2.Element;
+export declare type TagAlertProps<Text extends string = string> = {
+    text: Text extends "" ? never : Text;
+    level: Level;
+};
+
+export declare interface TagBalanceProps {
+    text: string;
+    status: Status;
+}
+
+export declare interface TagCompanyProps {
+    companyName: string;
+    companyImageUrl: string;
+    onClick?: () => void;
+}
+
+export declare const TagCounter: {
+    ({ count, list }: Props_5): JSX_2.Element;
     displayName: string;
 };
 
-declare type TeamAvatarProps = ComponentProps<typeof TeamAvatar>;
+export declare type TagCounterItem = TagVariant;
+
+declare type TagDataType<T extends string> = Omit<Extract<TagVariant, {
+    type: T;
+}>, "type" | "description">;
+
+export declare const tagDotColors: NewColor[];
+
+export declare type TagDotProps = {
+    text: string;
+} & ({
+    color: NewColor;
+} | {
+    customColor: string;
+});
+
+export declare type TagListProps<T extends TagType> = {
+    /**
+     * The type of tags to display. Only one type can be used at a time.
+     */
+    type: T;
+    /**
+     * Array of tag data corresponding to the specified type.
+     */
+    tags: Array<TagTypeMapping[T] & WithTooltipDescription_2>;
+    /**
+     * The maximum number of tags to display.
+     * @default 4
+     */
+    max?: number;
+    /**
+     * The remaining number to display.
+     */
+    remainingCount?: number;
+    /**
+     * The layout of the tag list.
+     * - "fill" - Tags will expand to fill the available width, with overflow items shown in a counter
+     * - "compact" - Tags will be stacked together up to the max limit, with remaining shown in counter
+     * @default "compact"
+     */
+    layout?: "fill" | "compact";
+};
+
+export declare interface TagPersonProps {
+    name: string;
+    avatarUrl: string;
+    onClick?: () => void;
+}
+
+export declare interface TagRawProps {
+    text?: string;
+    additionalAccesibleText?: string;
+    icon?: IconType;
+    noBorder?: boolean;
+    className?: string;
+}
+
+export declare interface TagStatusProps {
+    text: string;
+    variant: Variant;
+    /**
+     * Sometimes you need to clarify the status for screen reader users
+     * E.g., when showing a tooltip for sighted user, provide the tootip text to this prop because tooltips aren't accessible
+     */
+    additionalAccesibleText?: string;
+}
+
+export declare interface TagTeamProps {
+    teamName: string;
+    teamImageUrl: string;
+    onClick?: () => void;
+}
+
+export declare type TagType = keyof TagTypeMapping;
+
+declare type TagTypeMapping = {
+    dot: TagDataType<"dot">;
+    person: TagDataType<"person">;
+    team: TagDataType<"team">;
+    company: TagDataType<"company">;
+    alert: TagDataType<"alert">;
+    status: TagDataType<"status">;
+    balance: TagDataType<"balance">;
+    raw: TagDataType<"raw">;
+};
+
+declare type TagVariant = BaseTag<{
+    type: "dot";
+} & TagDotProps> | BaseTag<{
+    type: "person";
+} & PersonTagProps> | BaseTag<{
+    type: "team";
+} & TeamTagProps> | BaseTag<{
+    type: "company";
+} & CompanyTagProps> | BaseTag<{
+    type: "alert";
+} & AlertTagProps> | BaseTag<{
+    type: "status";
+} & TagStatusProps> | BaseTag<{
+    type: "balance";
+} & BalanceTagProps> | BaseTag<{
+    type: "raw";
+} & TagRawProps>;
+
+declare type TeamAvatarProps = ComponentProps<typeof F0AvatarTeam>;
+
+declare type TeamAvatarProps_2 = ComponentProps<typeof F0AvatarTeam>;
+
+declare type TeamTagProps = ComponentProps<typeof F0TagTeam>;
 
 declare type TrackingFunction = (eventName: string, params: TrackingParams) => Promise<boolean>;
 
@@ -1423,10 +1759,28 @@ declare interface UpsellRequestResponseDialogProps {
     success: boolean;
     errorMessage: ErrorMessageProps;
     successMessage: SuccessMessageProps;
-    nextSteps: NextStepsProps;
+    nextSteps?: NextStepsProps;
     closeLabel: string;
     portalContainer?: HTMLElement | null;
 }
+
+export declare function useDndEvents(handler: (e: {
+    phase: "start" | "over" | "drop" | "cancel";
+    source: DragPayload;
+}) => void): void;
+
+export declare function useDraggable(args: {
+    ref: React.RefObject<HTMLElement>;
+    payload: DragPayload;
+    disabled?: boolean;
+    handleRef?: React.RefObject<HTMLElement | null>;
+}): void;
+
+export declare function useDroppableList(args: {
+    ref: React.RefObject<HTMLElement>;
+    id: string;
+    accepts: string[];
+}): void;
 
 export declare const useEmojiConfetti: () => {
     fireEmojiConfetti: (emoji: string, elementRef: RefObject<HTMLElement>) => void;
@@ -1448,6 +1802,33 @@ export declare const useXRay: () => {
     disable: () => void;
 };
 
+declare type ValueDisplayRendererContext_2 = {
+    visualization: ValueDisplayVisualizationType;
+};
+
+declare const valueDisplayRenderers: {
+    readonly text: (args: TextCellValue_2) => JSX_2.Element;
+    readonly number: (args: NumberCellValue_2, meta: ValueDisplayRendererContext_2) => JSX_2.Element;
+    readonly date: (args: DateCellValue_2) => JSX_2.Element;
+    readonly amount: (args: AmountCellValue_2, meta: ValueDisplayRendererContext_2) => JSX_2.Element;
+    readonly avatarList: (args: AvatarListCellValue_2) => JSX_2.Element;
+    readonly status: (args: StatusCellValue_2) => JSX_2.Element;
+    readonly alertTag: (args: AlertTagCellValue_2) => JSX_2.Element;
+    readonly person: (args: PersonCellValue_2) => JSX_2.Element;
+    readonly company: (args: CompanyCellValue_2) => JSX_2.Element;
+    readonly team: (args: TeamCellValue_2) => JSX_2.Element;
+    readonly tag: (args: TagCellValue_2) => JSX_2.Element;
+    readonly dotTag: (args: DotTagCellValue_2) => JSX_2.Element;
+    readonly tagList: (args: TagListCellValue_2) => JSX_2.Element;
+    readonly icon: (args: IconCellValue) => JSX_2.Element;
+    readonly file: (args: FileCellValue_2) => JSX_2.Element;
+    readonly folder: (args: FolderCellValue_2) => JSX_2.Element;
+};
+
+declare type ValueDisplayVisualizationType = "table" | "card" | "list" | (string & {});
+
+export declare type Variant = "neutral" | "info" | "positive" | "warning" | "critical";
+
 declare const variants: readonly ["default", "outline", "critical", "neutral", "ghost", "promote", "outlinePromote"];
 
 export declare const VerticalBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
@@ -1455,6 +1836,17 @@ label?: boolean;
 showRatio?: boolean;
 valueFormatter?: (value: string | number | undefined) => string | number;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+declare interface WithTooltipDescription {
+    /**
+     * Optional description to show in the tooltip
+     */
+    description?: string;
+}
+
+declare type WithTooltipDescription_2 = {
+    description?: string;
+};
 
 declare type WithTracking<Props extends Record<string, unknown>> = Props & {
     trackingMeta?: {
@@ -1502,15 +1894,15 @@ declare module "@tiptap/core" {
 }
 
 
+declare namespace Calendar {
+    var displayName: string;
+}
+
+
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
-}
-
-
-declare namespace Calendar {
-    var displayName: string;
 }
