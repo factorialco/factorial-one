@@ -837,8 +837,6 @@ export declare interface ErrorMessageProps {
     description: string;
 }
 
-declare type EventScalar = string | number | boolean | undefined | null;
-
 export declare const experimental: <T extends (...args: any[]) => any>(name: string, component: T) => T;
 
 export declare const F0Avatar: ({ avatar, size, }: {
@@ -981,7 +979,6 @@ export declare const FactorialOneProvider: React.FC<{
     image?: ImageContextValue;
     layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">;
     i18n: Omit<I18nProviderProps, "children">;
-    trackingFunction?: TrackingFunction;
     l10n: Omit<L10nProviderProps, "children">;
     isDev?: boolean;
     showExperimentalWarnings?: boolean;
@@ -1295,7 +1292,7 @@ export declare const OneFilterPicker: {
  * Props for the Filters component.
  * @template Definition - The type defining the structure of available filters
  */
-declare type OneFilterPickerRootProps<Definition extends FiltersDefinition> = WithTracking<{
+declare type OneFilterPickerRootProps<Definition extends FiltersDefinition> = {
     /** The definition of available filters and their configurations */
     filters?: Definition;
     /** Current state of applied filters */
@@ -1306,7 +1303,7 @@ declare type OneFilterPickerRootProps<Definition extends FiltersDefinition> = Wi
     onChange: (value: FiltersState<Definition>) => void;
     /** The children of the component */
     children?: React.ReactNode;
-}>;
+};
 
 declare type PersonAvatarProps = ComponentProps<typeof F0AvatarPerson>;
 
@@ -1643,10 +1640,6 @@ declare type TeamAvatarProps_2 = ComponentProps<typeof F0AvatarTeam>;
 
 declare type TeamTagProps = ComponentProps<typeof F0TagTeam>;
 
-declare type TrackingFunction = (eventName: string, params: TrackingParams) => Promise<boolean>;
-
-declare type TrackingParams = Record<string, EventScalar | Array<EventScalar>>;
-
 declare type TranslationShape<T> = {
     [K in keyof T]: T[K] extends string ? string : T[K] extends Record<string, string | Record<string, unknown>> ? TranslationShape<T[K]> : never;
 };
@@ -1846,12 +1839,6 @@ declare interface WithTooltipDescription {
 
 declare type WithTooltipDescription_2 = {
     description?: string;
-};
-
-declare type WithTracking<Props extends Record<string, unknown>> = Props & {
-    trackingMeta?: {
-        id: string;
-    };
 };
 
 export { }
