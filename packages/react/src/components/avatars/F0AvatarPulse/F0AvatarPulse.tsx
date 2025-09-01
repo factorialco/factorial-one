@@ -15,12 +15,14 @@ import { AnimatePresence, motion } from "motion/react"
 import { ComponentProps, useState } from "react"
 import { BaseAvatar } from "../BaseAvatar"
 
-export type Pulse =
-  | "superNegative"
-  | "negative"
-  | "neutral"
-  | "positive"
-  | "superPositive"
+export const pulses = [
+  "superNegative",
+  "negative",
+  "neutral",
+  "positive",
+  "superPositive",
+] as const
+export type Pulse = (typeof pulses)[number]
 
 export const pulseIcon: Record<Pulse, F0IconType> = {
   superNegative: FaceSuperNegative,
@@ -40,11 +42,26 @@ export const pulseIconColor: Record<Pulse, F0IconProps["color"]> = {
 
 type BaseAvatarProps = ComponentProps<typeof BaseAvatar>
 
-type Props = {
+export type F0AvatarPulseProps = {
+  /**
+   * The first name of the person.
+   */
   firstName: string
+  /**
+   * The last name of the person.
+   */
   lastName: string
+  /**
+   * The source of the person's image.
+   */
   src?: string
+  /**
+   * The pulse to display on the avatar.
+   */
   pulse?: Pulse
+  /**
+   * The callback to be called when the pulse is clicked.
+   */
   onPulseClick: () => void
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
 
@@ -56,7 +73,7 @@ export const F0AvatarPulse = ({
   "aria-labelledby": ariaLabelledby,
   pulse,
   onPulseClick,
-}: Props) => {
+}: F0AvatarPulseProps) => {
   const translations = useI18n()
   const [showWave, setShowWave] = useState(!pulse)
 
@@ -129,7 +146,7 @@ export const F0AvatarPulse = ({
               type="rounded"
               name={[firstName, lastName]}
               src={src}
-              size="xlarge"
+              size="xl"
               color="random"
               aria-label={ariaLabel}
               aria-labelledby={ariaLabelledby}

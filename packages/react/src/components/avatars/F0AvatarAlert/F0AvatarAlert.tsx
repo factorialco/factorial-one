@@ -1,6 +1,7 @@
-import { F0Icon } from "@/components/F0Icon"
+import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { AlertCircle, CheckCircle, InfoCircle, Warning } from "@/icons/app"
 import { cva, type VariantProps } from "cva"
+import { BaseAvatarProps } from "../BaseAvatar/BaseAvatar"
 
 const alertAvatarVariants = cva({
   base: "flex items-center justify-center border border-solid",
@@ -36,10 +37,15 @@ export const alertAvatarSizes = ["sm", "md", "lg"] as const
 export type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
   type: (typeof alertAvatarTypes)[number]
   size?: (typeof alertAvatarSizes)[number]
-}
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
 
-export const F0AvatarAlert = ({ type, size }: AlertAvatarProps) => {
-  const iconMap = {
+export const F0AvatarAlert = ({
+  type,
+  size,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledby,
+}: AlertAvatarProps) => {
+  const iconMap: Record<AlertAvatarProps["type"], F0IconType> = {
     critical: AlertCircle,
     warning: Warning,
     info: InfoCircle,
@@ -47,7 +53,11 @@ export const F0AvatarAlert = ({ type, size }: AlertAvatarProps) => {
   }
 
   return (
-    <div className={alertAvatarVariants({ type, size })}>
+    <div
+      className={alertAvatarVariants({ type, size })}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
+    >
       <F0Icon icon={iconMap[type]} size={size} />
     </div>
   )

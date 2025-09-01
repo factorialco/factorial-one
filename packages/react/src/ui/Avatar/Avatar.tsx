@@ -3,33 +3,13 @@
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 import { cva } from "cva"
 import * as React from "react"
-import { Image } from "../lib/imageHandler"
-import { cn } from "../lib/utils"
-
-export const sizes = [
-  "xsmall",
-  "small",
-  "medium",
-  "large",
-  "xlarge",
-  "xxlarge",
-] as const
-
-export const type = ["base", "rounded"] as const
-
-export const color = [
-  "viridian",
-  "malibu",
-  "yellow",
-  "purple",
-  "lilac",
-  "barbie",
-  "smoke",
-  "army",
-  "flubber",
-  "indigo",
-  "camel",
-] as const
+import { Image } from "../../lib/imageHandler"
+import { cn } from "../../lib/utils"
+import {
+  internalAvatarColors,
+  internalAvatarSizes,
+  internalAvatarTypes,
+} from "./types"
 
 const avatarVariants = cva({
   base: "relative flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold ring-1 ring-inset ring-f1-border-secondary",
@@ -41,11 +21,11 @@ const avatarVariants = cva({
       large: "size-10 rounded-md text-lg",
       xlarge: "size-14 rounded-xl text-2xl",
       xxlarge: "size-18 rounded-[20px] text-3xl",
-    } satisfies Record<(typeof sizes)[number], string>,
+    } satisfies Record<(typeof internalAvatarSizes)[number], string>,
     type: {
       base: "",
       rounded: "rounded-full",
-    } satisfies Record<(typeof type)[number], string>,
+    } satisfies Record<(typeof internalAvatarTypes)[number], string>,
     color: {
       viridian: "bg-[hsl(theme(colors.viridian.50))]",
       malibu: "bg-[hsl(theme(colors.malibu.50))]",
@@ -58,7 +38,7 @@ const avatarVariants = cva({
       flubber: "bg-[hsl(theme(colors.flubber.50))]",
       indigo: "bg-[hsl(theme(colors.indigo.50))]",
       camel: "bg-[hsl(theme(colors.camel.50))]",
-    } satisfies Record<(typeof color)[number], string>,
+    } satisfies Record<(typeof internalAvatarColors)[number], string>,
   },
   defaultVariants: {
     size: "medium",
@@ -67,17 +47,17 @@ const avatarVariants = cva({
   },
 })
 
-type AvatarProps = React.ComponentPropsWithoutRef<
+export type InternalAvatarProps = React.ComponentPropsWithoutRef<
   typeof AvatarPrimitive.Root
 > & {
-  size?: (typeof sizes)[number]
-  type?: (typeof type)[number]
-  color?: (typeof color)[number]
+  size?: (typeof internalAvatarSizes)[number]
+  type?: (typeof internalAvatarTypes)[number]
+  color?: (typeof internalAvatarColors)[number]
 }
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
-  AvatarProps
+  InternalAvatarProps
 >(({ size, type, color, className, ...props }, ref) => (
   <AvatarPrimitive.Root
     ref={ref}

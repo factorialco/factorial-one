@@ -1,10 +1,27 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarDate } from "../F0AvatarDate"
 
 const meta: Meta<typeof F0AvatarDate> = {
   component: F0AvatarDate,
   title: "Avatars/AvatarDate",
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: ["An avatar component that displays a date."]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
+  },
+  argTypes: {
+    ...getBaseAvatarArgTypes(["aria-label", "aria-labelledby"]),
+    date: {
+      control: "date",
+      description: "The date to display in the avatar",
+    },
+  },
 }
 
 export default meta

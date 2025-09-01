@@ -22,6 +22,8 @@ type PersonAvatarProps = ComponentProps<typeof F0AvatarPerson>
 type TeamAvatarProps = ComponentProps<typeof F0AvatarTeam>
 type CompanyAvatarProps = ComponentProps<typeof F0AvatarCompany>
 
+export const avatarVariants = ["person", "team", "company"] as const
+
 export type AvatarVariant =
   | ({ type: "person" } & Omit<PersonAvatarProps, "size">)
   | ({ type: "team" } & Omit<TeamAvatarProps, "size">)

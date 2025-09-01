@@ -1,24 +1,38 @@
-import { EmojiImage } from "@/lib/emojis"
+import { EmojiImage, EmojiImageProps } from "@/lib/emojis"
 import { cn } from "@/lib/utils"
+import { sizesMapping } from "../BaseAvatar"
 
-type Props = {
+export const avatarEmojiSizes = ["sm", "md", "lg"] as const
+export type F0AvatarEmojiProps = {
   emoji: string
-  size?: "small" | "medium" | "large"
+  size?: (typeof avatarEmojiSizes)[number]
 }
 
 const sizes = {
-  small: "w-6 h-6 rounded-sm",
-  medium: "w-9 h-9 rounded",
-  large: "w-10 h-10 rounded-md",
+  sm: "w-6 h-6 rounded-sm",
+  md: "w-9 h-9 rounded",
+  lg: "w-10 h-10 rounded-md",
 }
 
-const imageSizes = {
-  small: "xs",
-  medium: "sm",
-  large: "md",
+const imageSizes: Record<
+  (typeof avatarEmojiSizes)[number],
+  EmojiImageProps["size"]
+> = {
+  sm: "xs",
+  md: "sm",
+  lg: "md",
 } as const
 
-export const F0AvatarEmoji = ({ emoji, size = "medium" }: Props) => {
+export const F0AvatarEmoji = ({ emoji, size = "md" }: F0AvatarEmojiProps) => {
+  // Check legacy size
+  if (!avatarEmojiSizes.includes(size)) {
+    console.warn(
+      `The emoji size: ${size} is deprecated. Use ${sizesMapping[size]} instead.`
+    )
+    const mappedSize = sizesMapping[size]
+    size = mappedSize === "xs" ? "sm" : mappedSize === "sm" ? "md" : "lg"
+  }
+
   // Check if emoji is a single emoji character using regex
   // \uFE0F is the variation selector that makes emojis display as colored graphics instead of black & white text
   const emojiRegex = /^\p{Emoji}\uFE0F?$/u

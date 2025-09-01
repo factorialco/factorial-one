@@ -1,5 +1,5 @@
-import { sizes } from "@/ui/avatar"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarCompany } from "../F0AvatarCompany"
 
 const meta: Meta<typeof F0AvatarCompany> = {
@@ -7,36 +7,27 @@ const meta: Meta<typeof F0AvatarCompany> = {
   title: "Avatars/AvatarCompany",
   tags: ["autodocs"],
   argTypes: {
-    size: {
-      control: "select",
-      options: sizes,
-      defaultValue: "medium",
-      description: "The size of the avatar",
-    },
-    badge: {
-      control: "object",
-    },
-    "aria-label": {
+    ...getBaseAvatarArgTypes([
+      "size",
+      "aria-label",
+      "aria-labelledby",
+      "badge",
+    ]),
+    name: {
       control: "text",
-    },
-    "aria-labelledby": {
-      control: "text",
+      description:
+        "The company name to display (used for initials if no image provided)",
     },
     src: {
       control: "text",
-    },
-    name: {
-      control: "text",
+      description:
+        "URL of the company logo/image. If no logo is provided, it will display the company name initials with a fixed background color.",
     },
   },
   parameters: {
     docs: {
       description: {
-        component: [
-          "A company avatar component.",
-          "If no logo is provided, it will display the company name initials",
-          "NOTE: The avatar color is always viridian",
-        ]
+        component: ["A company avatar component."]
           .map((line) => `<p>${line}</p>`)
           .join(""),
       },
@@ -44,7 +35,7 @@ const meta: Meta<typeof F0AvatarCompany> = {
   },
   args: {
     name: "Factorial",
-    size: "medium",
+    size: "md",
     "aria-label": "Factorial avatar",
   },
 }

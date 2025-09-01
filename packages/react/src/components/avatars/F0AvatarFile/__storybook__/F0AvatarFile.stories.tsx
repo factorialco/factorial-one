@@ -1,18 +1,33 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarFile, type F0AvatarFileProps } from "../F0AvatarFile"
+import { avatarFileSizes } from "../types"
 
 const meta = {
   component: F0AvatarFile,
   title: "Avatars/AvatarFile",
   tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+    docs: {
+      description: {
+        component: ["An avatar component that displays a file type icon."]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
+  },
   argTypes: {
     size: {
       control: "select",
-      options: ["small", "medium", "large"],
+      options: avatarFileSizes,
+      description: "The size of the avatar",
     },
-  },
-  parameters: {
-    layout: "centered",
+    ...getBaseAvatarArgTypes(["aria-label", "aria-labelledby"]),
+    file: {
+      description:
+        "<p>The file to display in the avatar `type FileDef = { name: string, type: string }`</p><p>TIP: you can use `File` as extends the `FileDef` type.</p>",
+    },
   },
 } satisfies Meta<typeof F0AvatarFile>
 
@@ -21,15 +36,15 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    file: new File([""], "document.pdf", { type: "application/pdf" }),
-    size: "medium",
+    file: { name: "document.pdf", type: "application/pdf" },
+    size: "mdm",
   },
 }
 
 export const AllFileTypes: Story = {
   args: {
-    file: new File([""], "document.pdf", { type: "application/pdf" }),
-    size: "medium",
+    file: { name: "document.pdf", type: "application/pdf" },
+    size: "md",
   },
   render: (args: F0AvatarFileProps) => {
     const fileTypes = [

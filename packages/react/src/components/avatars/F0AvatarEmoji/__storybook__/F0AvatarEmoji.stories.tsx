@@ -1,21 +1,31 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { F0AvatarEmoji } from "../F0AvatarEmoji"
+import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
+import { avatarEmojiSizes, F0AvatarEmoji } from "../F0AvatarEmoji"
 
 const meta: Meta<typeof F0AvatarEmoji> = {
   component: F0AvatarEmoji,
   title: "Avatars/AvatarEmoji",
   tags: ["autodocs"],
   argTypes: {
+    ...getBaseAvatarArgTypes(["size", "aria-label", "aria-labelledby"]),
     size: {
       control: "select",
-      options: ["small", "medium", "large"],
+      options: avatarEmojiSizes,
+      description: "The size of the avatar",
     },
   },
   args: {
     emoji: "🍑",
-    size: "medium",
+    size: "sm",
   },
   parameters: {
+    docs: {
+      description: {
+        component: ["An avatar component that displays an emoji."]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
     a11y: {
       config: {
         rules: [

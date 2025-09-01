@@ -1,5 +1,5 @@
-import { sizes } from "@/ui/avatar"
 import { ComponentProps, ReactNode } from "react"
+import { AvatarSize } from "../BaseAvatar"
 import { F0AvatarCompany } from "../F0AvatarCompany"
 import { F0AvatarPerson } from "../F0AvatarPerson"
 import { F0AvatarTeam } from "../F0AvatarTeam"
@@ -15,10 +15,10 @@ export type AvatarVariant =
 
 export const F0Avatar = ({
   avatar,
-  size = "xsmall",
+  size = "xs",
 }: {
   avatar: AvatarVariant
-  size?: (typeof sizes)[number]
+  size?: AvatarSize
 }): ReactNode => {
   switch (avatar.type) {
     case "person":

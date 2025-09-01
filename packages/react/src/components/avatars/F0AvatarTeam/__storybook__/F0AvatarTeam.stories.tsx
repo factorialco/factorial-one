@@ -1,6 +1,6 @@
 import { Check } from "@/icons/app"
-import { sizes } from "@/ui/avatar"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarTeam } from "../F0AvatarTeam"
 
 const meta: Meta<typeof F0AvatarTeam> = {
@@ -8,14 +8,16 @@ const meta: Meta<typeof F0AvatarTeam> = {
   title: "Avatars/AvatarTeam",
   tags: ["autodocs"],
   argTypes: {
-    size: {
-      control: "select",
-      options: sizes,
-    },
+    ...getBaseAvatarArgTypes([
+      "size",
+      "aria-label",
+      "aria-labelledby",
+      "badge",
+    ]),
   },
   args: {
     name: "Design",
-    size: "medium",
+    size: "md",
   },
 }
 

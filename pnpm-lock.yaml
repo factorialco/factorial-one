@@ -509,6 +509,9 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.10
         version: 0.6.11(prettier-plugin-organize-imports@4.1.0(prettier@3.5.2)(typescript@5.8.2))(prettier@3.5.2)
+      react-docgen-typescript:
+        specifier: ^2.4.0
+        version: 2.4.0(typescript@5.8.2)
       react-syntax-highlighter:
         specifier: ^15.6.1
         version: 15.6.1(react@18.3.1)
@@ -10520,8 +10523,8 @@ packages:
   react-devtools-core@5.3.2:
     resolution: {integrity: sha512-crr9HkVrDiJ0A4zot89oS0Cgv0Oa4OG1Em4jit3P3ZxZSKPMYyMjfwMqgcJna9o625g8oN87rBm8SWWrSTBZxg==}
 
-  react-docgen-typescript@2.2.2:
-    resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
+  react-docgen-typescript@2.4.0:
+    resolution: {integrity: sha512-ZtAp5XTO5HRzQctjPU0ybY0RRCQO19X/8fxn3w7y2VVTUbGHDKULPTL4ky3vB05euSgG5NpALhEhDPvQ56wvXg==}
     peerDependencies:
       typescript: '>= 4.3.x'
 
@@ -15483,7 +15486,7 @@ snapshots:
     dependencies:
       glob: 10.4.5
       magic-string: 0.30.17
-      react-docgen-typescript: 2.2.2(typescript@5.8.2)
+      react-docgen-typescript: 2.4.0(typescript@5.8.2)
       vite: 6.3.5(@types/node@22.15.21)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.43.1)(yaml@2.7.0)
     optionalDependencies:
       typescript: 5.8.2
@@ -24627,7 +24630,7 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  react-docgen-typescript@2.2.2(typescript@5.8.2):
+  react-docgen-typescript@2.4.0(typescript@5.8.2):
     dependencies:
       typescript: 5.8.2
 

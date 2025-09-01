@@ -1,21 +1,21 @@
+import { avatarVariants } from "@/factorial-one"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarList } from "../F0AvatarList"
+import { avatarListSizes } from "../types"
 
 const dummyPeople = [
   {
-    type: "person" as const,
     firstName: "Nik",
     lastName: "Lopin",
     src: "/avatars/person01.jpg",
   },
   {
-    type: "person" as const,
     firstName: "Josep Jaume",
     lastName: "Rey",
     src: "/avatars/person02.jpg",
   },
   {
-    type: "person" as const,
     firstName: "Saúl",
     lastName: "Domínguez",
   },
@@ -23,25 +23,22 @@ const dummyPeople = [
 
 const dummyCompanies = [
   {
-    type: "company" as const,
     name: "Factorial",
     src: "/avatars/company01.jpg",
   },
   {
-    type: "company" as const,
     name: "Itnig",
   },
   {
-    type: "company" as const,
     name: "Another cool company",
     src: "/avatars/company02.jpg",
   },
 ]
 
 const dummyTeams = [
-  { type: "team" as const, name: "Designers" },
-  { type: "team" as const, name: "Engineering" },
-  { type: "team" as const, name: "Product Management" },
+  { name: "Designers" },
+  { name: "Engineering" },
+  { name: "Product Management" },
 ]
 
 function getDummyAvatars(
@@ -64,18 +61,40 @@ const meta: Meta<typeof F0AvatarList> = {
   title: "Avatars/AvatarList",
   tags: ["autodocs"],
   args: {
-    size: "medium",
+    size: "md",
     type: "person",
     avatars: getDummyAvatars(3, "person"),
     noTooltip: false,
   },
   parameters: {
+    docs: {
+      description: {
+        component: [
+          "An avatar component that displays a list of avatars of the same type.",
+        ]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
     layout: "centered",
   },
+  argTypes: {
+    ...getBaseAvatarArgTypes(["aria-label", "aria-labelledby"]),
+    size: {
+      control: "select",
+      options: avatarListSizes,
+      description: "The size of the avatars in the list",
+    },
+    type: {
+      control: "select",
+      options: avatarVariants,
+      description: "The type of the avatars in the list",
+    },
+  },
   decorators: [
-    (Story) => (
+    (StoryComponent: Story) => (
       <div className="w-[270px]">
-        <Story />
+        <StoryComponent />
       </div>
     ),
   ],
@@ -89,7 +108,7 @@ export const Default: Story = {}
 
 export const Companies: Story = {
   args: {
-    size: "medium",
+    size: "md",
     type: "company",
     avatars: getDummyAvatars(3, "company"),
   },
@@ -97,7 +116,7 @@ export const Companies: Story = {
 
 export const Teams: Story = {
   args: {
-    size: "medium",
+    size: "md",
     type: "team",
     avatars: getDummyAvatars(3, "team"),
   },

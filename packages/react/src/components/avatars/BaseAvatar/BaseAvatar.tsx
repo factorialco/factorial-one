@@ -8,58 +8,79 @@ import {
   Avatar as AvatarComponent,
   AvatarFallback,
   AvatarImage,
-} from "@/ui/avatar"
-import { ComponentProps, forwardRef, useMemo } from "react"
+  InternalAvatarProps,
+} from "@/ui/Avatar"
+import { forwardRef, useMemo } from "react"
 import { AvatarBadge } from "../F0Avatar/types"
+import { AvatarSize, avatarSizes, sizesMapping } from "./types"
 import { getAvatarColor, getInitials, getMask } from "./utils"
 
-const getBadgeSize = (
-  size: ShadAvatarProps["size"]
-): BadgeProps["size"] | undefined => {
+const getBadgeSize = (size: AvatarSize): BadgeProps["size"] | undefined => {
   const sizeMap: Partial<
-    Record<Exclude<ShadAvatarProps["size"], undefined>, BadgeProps["size"]>
+    Record<Exclude<AvatarSize, undefined>, BadgeProps["size"]>
   > = {
-    xxlarge: "lg",
-    xlarge: "md",
-    large: "sm",
-    small: "sm",
-    xsmall: "xs",
+    "2xl": "lg",
+    xl: "md",
+    lg: "sm",
+    sm: "sm",
+    xs: "xs",
   } as const
 
-  return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
+  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
 }
 
 const getAvatarSize = (
-  size: ShadAvatarProps["size"]
+  size: AvatarSize
 ): F0AvatarModuleProps["size"] | undefined => {
   const sizeMap: Partial<
-    Record<
-      Exclude<ShadAvatarProps["size"], undefined>,
-      F0AvatarModuleProps["size"]
-    >
+    Record<Exclude<AvatarSize, undefined>, F0AvatarModuleProps["size"]>
   > = {
-    xxlarge: "md",
-    xlarge: "sm",
-    large: "xs",
-    small: "xs",
-    xsmall: "xxs",
+    "2xl": "md",
+    xl: "sm",
+    lg: "xs",
+    sm: "xs",
+    xs: "xxs",
   } as const
 
-  return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
+  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
 }
 
-type ShadAvatarProps = ComponentProps<typeof AvatarComponent>
-
-type Props = {
-  type: ShadAvatarProps["type"]
+export type BaseAvatarProps = {
+  /**
+   * The type of the avatar.
+   */
+  type: InternalAvatarProps["type"]
+  /**
+   * The name of the avatar.
+   */
   name: string | string[]
+  /**
+   * The source of the avatar's image.
+   */
   src?: string
-  size?: ShadAvatarProps["size"]
-  color?: ShadAvatarProps["color"] | "random"
+  /**
+   * The color of the avatar.
+   * @default "random"
+   */
+  color?: InternalAvatarProps["color"] | "random"
+  /**
+   * The badge to display on the avatar. Can be a module badge or a custom badge.
+   */
   badge?: AvatarBadge
-} & Pick<ShadAvatarProps, "aria-label" | "aria-labelledby">
+} & Pick<InternalAvatarProps, "aria-label" | "aria-labelledby"> &
+  (
+    | {
+        size: AvatarSize
+      }
+    | {
+        /**
+         * @deprecated Use AvatarSize instead (xs, sm, md, lg, xl, 2xl)
+         */
+        size: InternalAvatarProps["size"]
+      }
+  )
 
-export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
+export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
   (
     {
       src,
@@ -73,6 +94,21 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
     },
     ref
   ) => {
+    const reversedSizesMapping = useMemo(
+      () =>
+        Object.fromEntries(
+          Object.entries(sizesMapping).map(([key, value]) => [value, key])
+        ),
+      [sizesMapping]
+    )
+
+    // Check if size is a valid avatar size
+    if (!avatarSizes.includes(size)) {
+      console.warn(
+        `The avatar size: ${size} is deprecated. Use ${sizesMapping[size]} instead.`
+      )
+    }
+
     const initials = getInitials(name, size)
     const avatarColor =
       color === "random"
@@ -117,7 +153,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
             }
           >
             <AvatarComponent
-              size={size}
+              size={reversedSizesMapping[size] || size}
               type={type}
               color={avatarColor}
               ref={ref}

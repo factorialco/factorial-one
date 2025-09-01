@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import {
   alertAvatarSizes,
   alertAvatarTypes,
@@ -9,6 +10,30 @@ const meta: Meta<typeof F0AvatarAlert> = {
   component: F0AvatarAlert,
   title: "Avatars/AvatarAlert",
   tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "An avatar component that displays an alert icon and color based on the type.",
+        ]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
+  },
+  argTypes: {
+    ...getBaseAvatarArgTypes(["size", "aria-label", "aria-labelledby"]),
+    type: {
+      control: "select",
+      options: alertAvatarTypes,
+      description: "The type of the avatar",
+      table: {
+        type: {
+          summary: "AlertAvatarType",
+        },
+      },
+    },
+  },
 }
 
 export default meta

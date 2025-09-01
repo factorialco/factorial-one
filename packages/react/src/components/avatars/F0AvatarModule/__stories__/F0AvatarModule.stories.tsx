@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarModule } from "../index"
 import { ModuleId, modules } from "../modules"
 
@@ -11,6 +12,7 @@ const meta: Meta<typeof F0AvatarModule> = {
       control: "radio",
       options: ["sm", "md", "lg"],
     },
+    ...getBaseAvatarArgTypes(["aria-label", "aria-labelledby"]),
     module: {
       control: "select",
       options: Object.keys(modules).sort((a, b) => a.localeCompare(b)),
