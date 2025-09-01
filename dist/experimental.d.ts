@@ -2591,7 +2591,7 @@ export declare interface OneCalendarProps {
 /**
  * @experimental This is an experimental component use it at your own risk
  */
-export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, Summaries extends SummariesDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>>({ source, visualizations, onSelectItems, onBulkAction, emptyStates, fullHeight, trackingIdentifier, }: {
+export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, Summaries extends SummariesDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>>({ source, visualizations, onSelectItems, onBulkAction, emptyStates, fullHeight, trackingMeta, }: WithTracking<{
     source: DataSource<Record, Filters, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>;
     visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>>;
     onSelectItems?: OnSelectItemsCallback<Record, Filters>;
@@ -2599,8 +2599,7 @@ export declare const OneDataCollection: <Record extends RecordType, Filters exte
     emptyStates?: CustomEmptyStates;
     onTotalItemsChange?: (totalItems: number) => void;
     fullHeight?: boolean;
-    trackingIdentifier?: string;
-}) => JSX.Element;
+}>) => JSX.Element;
 
 export declare function OneDateNavigator({ onSelect, defaultValue, presets, granularities, hideNavigation, hideGoToCurrent, compareTo, onCompareToChange, ...props }: OneDatePickerProps): JSX_2.Element;
 
@@ -2684,8 +2683,7 @@ export declare const OneFilterPicker: {
  * Props for the Filters component.
  * @template Definition - The type defining the structure of available filters
  */
-declare interface OneFilterPickerRootProps<Definition extends FiltersDefinition> {
-    trackingIdentifier?: string;
+declare type OneFilterPickerRootProps<Definition extends FiltersDefinition> = WithTracking<{
     /** The definition of available filters and their configurations */
     filters?: Definition;
     /** Current state of applied filters */
@@ -2696,7 +2694,7 @@ declare interface OneFilterPickerRootProps<Definition extends FiltersDefinition>
     onChange: (value: FiltersState<Definition>) => void;
     /** The children of the component */
     children?: React.ReactNode;
-}
+}>;
 
 export declare const OneModal: OneModalComponent;
 
@@ -4512,6 +4510,12 @@ declare interface WithTooltipDescription {
 
 declare type WithTooltipDescription_2 = {
     description?: string;
+};
+
+declare type WithTracking<Props extends Record<string, unknown>> = Props & {
+    trackingMeta?: {
+        id: string;
+    };
 };
 
 export { }

@@ -1074,8 +1074,7 @@ export declare const OneFilterPicker: {
  * Props for the Filters component.
  * @template Definition - The type defining the structure of available filters
  */
-declare interface OneFilterPickerRootProps<Definition extends FiltersDefinition> {
-    trackingIdentifier?: string;
+declare type OneFilterPickerRootProps<Definition extends FiltersDefinition> = WithTracking<{
     /** The definition of available filters and their configurations */
     filters?: Definition;
     /** Current state of applied filters */
@@ -1086,7 +1085,7 @@ declare interface OneFilterPickerRootProps<Definition extends FiltersDefinition>
     onChange: (value: FiltersState<Definition>) => void;
     /** The children of the component */
     children?: React.ReactNode;
-}
+}>;
 
 declare const PersonAvatar: {
     ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: PersonAvatarProps_2): JSX_2.Element;
@@ -1456,6 +1455,12 @@ label?: boolean;
 showRatio?: boolean;
 valueFormatter?: (value: string | number | undefined) => string | number;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+declare type WithTracking<Props extends Record<string, unknown>> = Props & {
+    trackingMeta?: {
+        id: string;
+    };
+};
 
 export { }
 
