@@ -45,12 +45,6 @@ export const FactorialOne = (Story, { parameters }) => {
           locale: parameters.l10n?.locale ?? "en",
         },
       }}
-      trackingFunction={(
-        eventName: string,
-        params: Record<string, unknown>
-      ) => {
-        console.log(eventName, params)
-      }}
       link={{
         currentPath,
         component: (props, ref) => (

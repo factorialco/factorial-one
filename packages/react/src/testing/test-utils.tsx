@@ -3,7 +3,6 @@ import { render, type RenderOptions } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import React, { type ReactElement } from "react"
 import { I18nProvider, defaultTranslations } from "../lib/providers/i18n"
-import { TrackingProvider } from "../lib/providers/tracking"
 
 import { MotionGlobalConfig } from "motion"
 MotionGlobalConfig.skipAnimations = true
@@ -11,11 +10,7 @@ MotionGlobalConfig.skipAnimations = true
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <UserPlatformProvider showExperimentalWarnings={false}>
-      <TrackingProvider>
-        <I18nProvider translations={defaultTranslations}>
-          {children}
-        </I18nProvider>
-      </TrackingProvider>
+      <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
     </UserPlatformProvider>
   )
 }

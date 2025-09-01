@@ -6,7 +6,6 @@ import { FiltersContext } from "./context"
 import { PresetsDefinition } from "./types"
 
 import { useTracking } from "@/experimental/OneDataCollection/useTracking"
-import { WithTracking } from "@/lib/providers/tracking/types"
 import { cn } from "@/lib/utils"
 import type { FiltersDefinition, FiltersState } from "./types"
 
@@ -14,19 +13,18 @@ import type { FiltersDefinition, FiltersState } from "./types"
  * Props for the Filters component.
  * @template Definition - The type defining the structure of available filters
  */
-export type OneFilterPickerRootProps<Definition extends FiltersDefinition> =
-  WithTracking<{
-    /** The definition of available filters and their configurations */
-    filters?: Definition
-    /** Current state of applied filters */
-    value: FiltersState<Definition>
-    /** Optional preset configurations that users can select */
-    presets?: PresetsDefinition<Definition>
-    /** Callback fired when filters are changed */
-    onChange: (value: FiltersState<Definition>) => void
-    /** The children of the component */
-    children?: React.ReactNode
-  }>
+export type OneFilterPickerRootProps<Definition extends FiltersDefinition> = {
+  /** The definition of available filters and their configurations */
+  filters?: Definition
+  /** Current state of applied filters */
+  value: FiltersState<Definition>
+  /** Optional preset configurations that users can select */
+  presets?: PresetsDefinition<Definition>
+  /** Callback fired when filters are changed */
+  onChange: (value: FiltersState<Definition>) => void
+  /** The children of the component */
+  children?: React.ReactNode
+}
 
 /**
  * A comprehensive filtering interface that manages multiple filter types.
@@ -89,7 +87,6 @@ export type OneFilterPickerRootProps<Definition extends FiltersDefinition> =
  * @see {@link FiltersState} for the structure of filter state
  */
 const FiltersRoot = <Definition extends FiltersDefinition>({
-  trackingMeta,
   filters,
   value,
   children,
@@ -99,7 +96,6 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
 
   const { trackFilterChange, trackPresetClick } = useTracking({
     defaultFilters: defaultFilters.current,
-    trackingIdentifier: trackingMeta?.id,
   })
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false)

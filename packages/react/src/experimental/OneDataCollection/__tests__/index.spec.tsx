@@ -1,4 +1,3 @@
-import { TrackingProvider } from "@/lib/providers/tracking"
 import {
   act,
   render,
@@ -30,9 +29,7 @@ import type {
 import { GROUP_ID_SYMBOL, useData, WithGroupId } from "../useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <TrackingProvider trackingFunction={vi.fn()}>
-    <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
-  </TrackingProvider>
+  <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
 )
 
 describe("Collections", () => {

@@ -3,14 +3,10 @@ import {
   FiltersDefinition,
   FiltersState,
 } from "../../components/OneFilterPicker/types"
-import {
-  EventScalar,
-  useTracking as useBaseTracking,
-} from "../../lib/providers/tracking"
+import { EventScalar, useEventCatcher } from "../../lib/providers/events"
 import { SortingsDefinition, SortingsState } from "./sortings"
 
 type UseTrackingParams<Sortings extends SortingsDefinition> = {
-  trackingIdentifier?: string
   defaultFilters?: FiltersState<FiltersDefinition>
   defaultSorting?: SortingsState<Sortings>
 }
@@ -25,7 +21,6 @@ const isScalar = (value: unknown): value is EventScalar => {
 }
 
 export const useTracking = <Sortings extends SortingsDefinition>({
-  trackingIdentifier,
   defaultFilters,
   defaultSorting,
 }: UseTrackingParams<Sortings>) => {
@@ -36,7 +31,7 @@ export const useTracking = <Sortings extends SortingsDefinition>({
     UseTrackingParams<Sortings>["defaultSorting"] | undefined
   >(defaultSorting)
 
-  const { track } = useBaseTracking()
+  const { onEvent } = useEventCatcher()
 
   const trackFilterChange = useCallback(
     (filters: FiltersState<FiltersDefinition>) => {
@@ -44,17 +39,16 @@ export const useTracking = <Sortings extends SortingsDefinition>({
         ([field, value]) => latestFilters.current?.[field] !== value
       )
 
-      if (!newFilter || !isScalar(newFilter[1]) || !trackingIdentifier) return
+      if (!newFilter || !isScalar(newFilter[1])) return
 
       latestFilters.current = filters
 
-      track("Change Data Collection filter", {
-        id: trackingIdentifier,
+      onEvent("datacollection.filter-change", {
         name: newFilter?.[0],
         value: newFilter?.[1],
       })
     },
-    [track, trackingIdentifier]
+    [onEvent]
   )
 
   const trackSortingChange = useCallback(
@@ -63,32 +57,27 @@ export const useTracking = <Sortings extends SortingsDefinition>({
         (latestSortings?.current?.field === sortings?.field &&
           latestSortings?.current?.order === sortings?.order) ||
         !sortings ||
-        typeof sortings.field !== "string" ||
-        !trackingIdentifier
+        typeof sortings.field !== "string"
       )
         return
 
       latestSortings.current = sortings
 
-      track("Change Data Collection sorting", {
-        id: trackingIdentifier,
+      onEvent("datacollection.sorting-change", {
         name: sortings.field,
         value: sortings.order,
       })
     },
-    [track, trackingIdentifier]
+    [onEvent]
   )
 
   const trackPresetClick = useCallback(
     (preset: string) => {
-      if (!trackingIdentifier) return
-
-      track("Click Data Collection preset", {
-        id: trackingIdentifier,
-        preset,
+      onEvent("datacollection.preset-click", {
+        name: preset,
       })
     },
-    [track, trackingIdentifier]
+    [onEvent]
   )
 
   return {
