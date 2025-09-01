@@ -88432,10 +88432,7 @@ function B2t({
   return /* @__PURE__ */ b(pq.Provider, { value: n, children: e });
 }
 function _wt() {
-  const e = Ue(pq);
-  if (e === null)
-    throw new Error("useTracking must be used within a TrackingProvider");
-  return e;
+  return Ue(pq) ?? { track: () => Promise.resolve(!1) };
 }
 const Twt = (e) => typeof e == "string" || typeof e == "number" || typeof e == "boolean" || Array.isArray(e), Ewt = ({
   trackingIdentifier: e,
