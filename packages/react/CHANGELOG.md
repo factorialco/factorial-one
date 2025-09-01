@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.168.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.3...factorial-one-react-v1.168.4) (2025-09-01)
+
+
+### Bug Fixes
+
+* scrollarea not working ([6c79cfb](https://github.com/factorialco/factorial-one/commit/6c79cfb3e4dd3d78444abcdde44a1e6738927685))
+
+## [1.168.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.2...factorial-one-react-v1.168.3) (2025-08-29)
+
+
+### Bug Fixes
+
+* **ai-chat:** several small improvements ([#2472](https://github.com/factorialco/factorial-one/issues/2472)) ([e768b96](https://github.com/factorialco/factorial-one/commit/e768b96762fcbefd1543cdea28716d0d97c409f0))
+
+## [1.168.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.1...factorial-one-react-v1.168.2) (2025-08-29)
+
+
+### Bug Fixes
+
+* apply visual fixes to data collection grouping and sorting selectors ([#2482](https://github.com/factorialco/factorial-one/issues/2482)) ([46c1207](https://github.com/factorialco/factorial-one/commit/46c12075ec4284e843268715402be58ac5ed24fd))
+
+## [1.168.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.0...factorial-one-react-v1.168.1) (2025-08-29)
+
+
+### Bug Fixes
+
+* replace fireworks icon for megaphone in discover section ([4f96336](https://github.com/factorialco/factorial-one/commit/4f96336ded3379f9e474078d7d0bfe198477d5a6))
+
 ## [1.168.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.167.0...factorial-one-react-v1.168.0) (2025-08-29)
 
 
