@@ -1,6 +1,6 @@
 // packages/react/src/experimental/ProductBlankslate/index.tsx
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { F0TagRaw } from "@/experimental"
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import { CheckCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
