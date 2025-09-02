@@ -92,7 +92,7 @@ describe("F0AvatarAlert", () => {
       it(`should pass correct size to F0Icon for ${size} size`, () => {
         zeroRender(<F0AvatarAlert type="info" size={size} />)
 
-        const iconElement = screen.getByRole("img", { hidden: true })
+        const iconElement = screen.getByRole("alert", { hidden: true })
 
         expect(iconElement).toHaveClass(expectedIconClass)
       })

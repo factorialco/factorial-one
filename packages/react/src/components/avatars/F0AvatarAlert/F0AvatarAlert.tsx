@@ -57,7 +57,7 @@ export const F0AvatarAlert = ({
       className={alertAvatarVariants({ type, size })}
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
-      role="img"
+      role="alert"
     >
       <F0Icon icon={iconMap[type]} size={size} />
     </div>
