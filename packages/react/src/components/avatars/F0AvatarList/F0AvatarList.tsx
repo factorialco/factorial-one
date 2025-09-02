@@ -1,7 +1,7 @@
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { OverflowList } from "@/ui/OverflowList"
 import { cva } from "cva"
-import { F0Avatar } from "../F0Avatar"
+import { AvatarVariant, F0Avatar } from "../F0Avatar"
 import { MaxCounter } from "./components/MaxCounter"
 
 import { AvatarListSize, F0AvatarListProps } from "./types"
@@ -39,6 +39,21 @@ const CLIP_MASK: Record<"base" | "rounded", Record<AvatarListSize, string>> = {
   },
 }
 
+const getDisplayName = (avatar: AvatarVariant) => {
+  switch (avatar.type) {
+    case "person":
+      return `${avatar.firstName} ${avatar.lastName}`
+    case "team":
+      return avatar.name
+    case "company":
+      return avatar.name
+    case "file":
+      return avatar.file.name
+    default:
+      return ""
+  }
+}
+
 export const F0AvatarList = ({
   avatars,
   size = "medium",
@@ -53,10 +68,7 @@ export const F0AvatarList = ({
       <OverflowList
         items={avatars}
         renderListItem={(avatar) => {
-          const displayName =
-            avatar.type === "person"
-              ? `${avatar.firstName} ${avatar.lastName}`
-              : avatar.name
+          const displayName = getDisplayName(avatar)
 
           return (
             <Tooltip label={displayName}>
@@ -94,10 +106,7 @@ export const F0AvatarList = ({
   return (
     <div className={avatarListVariants({ size })}>
       {visibleAvatars.map((avatar, index) => {
-        const displayName =
-          avatar.type === "person"
-            ? `${avatar.firstName} ${avatar.lastName}`
-            : avatar.name
+        const displayName = getDisplayName(avatar)
 
         const clippedAvatar = (
           <div
