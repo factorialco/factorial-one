@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.169.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.0...factorial-one-react-v1.169.1) (2025-09-02)
+
+
+### Bug Fixes
+
+* fill discover avatar module ([66557b7](https://github.com/factorialco/factorial-one/commit/66557b739b9e64203902a0397e98615377a9f35a))
+
 ## [1.169.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.6...factorial-one-react-v1.169.0) (2025-09-02)
 
 
