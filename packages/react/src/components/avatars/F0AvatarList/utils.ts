@@ -1,10 +1,26 @@
-import { AvatarVariant, AvatarVariants } from "../F0Avatar"
+import { AvatarVariant } from "../F0Avatar"
 
-export const getAvatarDisplayName = <T extends AvatarVariants>(
-  avatarType: T,
-  avatar: Omit<Extract<AvatarVariant, { type: T }>, "type"> &
-    Record<string, unknown>
-): string => {
+export function getAvatarDisplayName(
+  avatarType: "person",
+  avatar: Omit<Extract<AvatarVariant, { type: "person" }>, "type">
+): string
+export function getAvatarDisplayName(
+  avatarType: "team",
+  avatar: Omit<Extract<AvatarVariant, { type: "team" }>, "type">
+): string
+export function getAvatarDisplayName(
+  avatarType: "company",
+  avatar: Omit<Extract<AvatarVariant, { type: "company" }>, "type">
+): string
+export function getAvatarDisplayName(
+  avatarType: "file",
+  avatar: Omit<Extract<AvatarVariant, { type: "file" }>, "type">
+): string
+export function getAvatarDisplayName(
+  avatarType: "person" | "team" | "company" | "file",
+  avatar: any
+): string
+export function getAvatarDisplayName(avatarType: string, avatar: any): string {
   switch (avatarType) {
     case "person":
       return `${avatar.firstName} ${avatar.lastName}`
