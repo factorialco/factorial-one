@@ -1,7 +1,7 @@
 import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { AlertCircle, CheckCircle, InfoCircle, Warning } from "@/icons/app"
 import { cva, type VariantProps } from "cva"
-import { BaseAvatarProps } from "../BaseAvatar/BaseAvatar"
+import { BaseAvatarProps } from "../BaseAvatar"
 
 const alertAvatarVariants = cva({
   base: "flex items-center justify-center border border-solid",
@@ -37,7 +37,7 @@ export const alertAvatarSizes = ["sm", "md", "lg"] as const
 export type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
   type: (typeof alertAvatarTypes)[number]
   size?: (typeof alertAvatarSizes)[number]
-} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
+} & Partial<Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">>
 
 export const F0AvatarAlert = ({
   type,

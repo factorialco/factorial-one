@@ -1,4 +1,4 @@
-import { BaseAvatarProps } from "../BaseAvatar/BaseAvatar"
+import { BaseAvatarProps } from "../BaseAvatar/types"
 import { AvatarBadge } from "../F0Avatar/types"
 
 export type F0AvatarCompanyProps = {

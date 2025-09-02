@@ -5,7 +5,7 @@ import { DropdownItemObject } from "./internal"
 
 export const DropdownItemContent = ({ item }: { item: DropdownItemObject }) => (
   <>
-    {item.avatar && <F0Avatar avatar={item.avatar} size="xsmall" />}
+    {item.avatar && <F0Avatar avatar={item.avatar} size="xs" />}
     {item.icon && (
       <F0Icon
         icon={item.icon}

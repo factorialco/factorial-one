@@ -1,15 +1,15 @@
 import { getAbbreviateMonth, getDayOfMonth } from "@/lib/date"
-import { BaseAvatarProps } from "../BaseAvatar/BaseAvatar"
+import { BaseAvatarProps } from "../BaseAvatar"
 
-type Props = {
+export type F0AvatarDateProps = {
   date: Date
-} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
+} & Partial<Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">>
 
 export const F0AvatarDate = ({
   date,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledby,
-}: Props) => {
+}: F0AvatarDateProps) => {
   const dateDay = getDayOfMonth(date)
   const month = getAbbreviateMonth(date)
 

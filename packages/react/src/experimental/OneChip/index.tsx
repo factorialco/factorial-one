@@ -55,7 +55,10 @@ type ChipVariants =
       icon?: undefined
     }
 
-export type ChipProps = BaseChipProps & ChipVariants
+export type ChipProps = BaseChipProps &
+  ChipVariants & {
+    variant?: "default" | "selected"
+  }
 
 export const Chip = ({
   label,
@@ -84,7 +87,7 @@ export const Chip = ({
       }}
       tabIndex={onClick ? 0 : undefined}
     >
-      {avatar && <F0Avatar avatar={avatar} size="xsmall" />}
+      {avatar && <F0Avatar avatar={avatar} size="xs" />}
       <div className="flex items-center gap-0.5">
         {icon && <F0Icon icon={icon} size="sm" className="text-f1-icon" />}
         {label}

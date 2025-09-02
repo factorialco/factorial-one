@@ -5,9 +5,15 @@ export const avatarListSizes = ["xs", "sm", "md"] as const
 export type AvatarListSize = (typeof avatarListSizes)[number]
 
 // Extract specific avatar types from the discriminated union
-type PersonAvatar = Omit<Extract<AvatarVariant, { type: "person" }>, "type">
-type TeamAvatar = Omit<Extract<AvatarVariant, { type: "team" }>, "type">
-type CompanyAvatar = Omit<Extract<AvatarVariant, { type: "company" }>, "type">
+export type PersonAvatar = Omit<
+  Extract<AvatarVariant, { type: "person" }>,
+  "type"
+>
+export type TeamAvatar = Omit<Extract<AvatarVariant, { type: "team" }>, "type">
+export type CompanyAvatar = Omit<
+  Extract<AvatarVariant, { type: "company" }>,
+  "type"
+>
 
 // Discriminated union that enforces type consistency
 export type F0AvatarListProps = {

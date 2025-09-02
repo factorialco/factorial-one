@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback } from "@/ui/Avatar"
 import { ElementRef, forwardRef } from "react"
-import { BaseAvatarProps } from "../BaseAvatar/BaseAvatar"
+import { BaseAvatarProps } from "../BaseAvatar"
 import { AvatarFileSize, FileDef } from "./types"
 import { getFileTypeInfo } from "./utils"
 

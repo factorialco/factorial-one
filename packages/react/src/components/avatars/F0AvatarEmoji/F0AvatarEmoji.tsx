@@ -1,12 +1,12 @@
 import { EmojiImage, EmojiImageProps } from "@/lib/emojis"
 import { cn } from "@/lib/utils"
-import { sizesMapping } from "../BaseAvatar"
+import { BaseAvatarProps, sizesMapping } from "../BaseAvatar"
 
 export const avatarEmojiSizes = ["sm", "md", "lg"] as const
 export type F0AvatarEmojiProps = {
   emoji: string
   size?: (typeof avatarEmojiSizes)[number]
-}
+} & Partial<Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">>
 
 const sizes = {
   sm: "w-6 h-6 rounded-sm",
@@ -23,7 +23,12 @@ const imageSizes: Record<
   lg: "md",
 } as const
 
-export const F0AvatarEmoji = ({ emoji, size = "md" }: F0AvatarEmojiProps) => {
+export const F0AvatarEmoji = ({
+  emoji,
+  size = "md",
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledby,
+}: F0AvatarEmojiProps) => {
   // Check legacy size
   if (!avatarEmojiSizes.includes(size)) {
     console.warn(
@@ -46,6 +51,8 @@ export const F0AvatarEmoji = ({ emoji, size = "md" }: F0AvatarEmojiProps) => {
         "flex aspect-square items-center justify-center border border-solid border-f1-border-secondary bg-f1-background dark:bg-f1-background-inverse-secondary",
         sizes[size]
       )}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
     >
       <EmojiImage emoji={emoji} size={imageSizes[size]} />
     </div>

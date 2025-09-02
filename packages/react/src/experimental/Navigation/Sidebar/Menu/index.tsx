@@ -233,7 +233,7 @@ const FavoriteItem = ({
                   )}
                 />
               ) : item.avatar ? (
-                <F0Avatar size="xsmall" avatar={item.avatar} />
+                <F0Avatar size="xs" avatar={item.avatar} />
               ) : null}
 
               <OneEllipsis

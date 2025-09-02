@@ -1,7 +1,7 @@
-import { AvatarVariant } from "@/components/avatars/F0Avatar"
 import { F0AvatarAlert } from "@/components/avatars/F0AvatarAlert"
 import { F0AvatarEmoji } from "@/components/avatars/F0AvatarEmoji"
 import { F0AvatarList } from "@/components/avatars/F0AvatarList"
+import { PersonAvatar } from "@/components/avatars/F0AvatarList/types"
 import { cn } from "@/lib/utils"
 import { ComponentProps } from "react"
 
@@ -9,14 +9,14 @@ export type WidgetAvatarsListItemProps = {
   id: string | number
   title: string
   subtitle: string
-  avatars: AvatarVariant[]
+  avatars: Omit<PersonAvatar, "type">[]
   remainingCount?: number
   withPointerCursor?: boolean
   onClick?: (id: string | number) => void
 } & (
-  | { emoji: string }
+  | { emoji?: string }
   | {
-      alert: ComponentProps<typeof F0AvatarAlert>["type"]
+      alert?: ComponentProps<typeof F0AvatarAlert>["type"]
     }
 )
 
@@ -81,7 +81,7 @@ export function WidgetAvatarsListItem({
       <F0AvatarList
         avatars={avatars}
         remainingCount={remainingCount}
-        size={"emoji" in props && props.emoji ? "medium" : "small"}
+        size={"emoji" in props && props.emoji ? "md" : "sm"}
         type="person"
       />
     </Wrapper>

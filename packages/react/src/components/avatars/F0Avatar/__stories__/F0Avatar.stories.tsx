@@ -1,5 +1,6 @@
 import { internalAvatarSizes } from "@/ui/Avatar"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { avatarSizes } from "../../BaseAvatar"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0Avatar } from "../F0Avatar"
 
@@ -46,7 +47,7 @@ const meta: Meta<typeof F0Avatar> = {
 export default meta
 type Story = StoryObj<typeof F0Avatar>
 
-const SIZES = internalAvatarSizes
+const SIZES = avatarSizes
 
 export const PersonAvatar: Story = {
   render: () => (
@@ -60,6 +61,8 @@ export const PersonAvatar: Story = {
               type: "person",
               firstName: "John",
               lastName: "Doe",
+              "aria-label": "John Doe",
+              "aria-labelledby": "John Doe",
             }}
           />
           <F0Avatar

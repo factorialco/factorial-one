@@ -8,18 +8,17 @@ type PersonAvatarProps = ComponentProps<typeof F0AvatarPerson>
 type TeamAvatarProps = ComponentProps<typeof F0AvatarTeam>
 type CompanyAvatarProps = ComponentProps<typeof F0AvatarCompany>
 
+export type AvatarProps = {
+  avatar: AvatarVariant
+  size?: AvatarSize
+}
+
 export type AvatarVariant =
   | ({ type: "person" } & Omit<PersonAvatarProps, "size">)
   | ({ type: "team" } & Omit<TeamAvatarProps, "size">)
   | ({ type: "company" } & Omit<CompanyAvatarProps, "size">)
 
-export const F0Avatar = ({
-  avatar,
-  size = "xs",
-}: {
-  avatar: AvatarVariant
-  size?: AvatarSize
-}): ReactNode => {
+export const F0Avatar = ({ avatar, size = "xs" }: AvatarProps): ReactNode => {
   switch (avatar.type) {
     case "person":
       return (

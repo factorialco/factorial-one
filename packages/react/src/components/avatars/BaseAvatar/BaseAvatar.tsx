@@ -1,84 +1,20 @@
-import {
-  F0AvatarModule,
-  F0AvatarModuleProps,
-} from "@/components/avatars/F0AvatarModule"
-import { Badge, BadgeProps } from "@/experimental/Information/Badge"
+import { F0AvatarModule } from "@/components/avatars/F0AvatarModule"
+import { Badge } from "@/experimental/Information/Badge"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import {
   Avatar as AvatarComponent,
   AvatarFallback,
   AvatarImage,
-  InternalAvatarProps,
 } from "@/ui/Avatar"
 import { forwardRef, useMemo } from "react"
-import { AvatarBadge } from "../F0Avatar/types"
-import { AvatarSize, avatarSizes, sizesMapping } from "./types"
-import { getAvatarColor, getInitials, getMask } from "./utils"
-
-const getBadgeSize = (size: AvatarSize): BadgeProps["size"] | undefined => {
-  const sizeMap: Partial<
-    Record<Exclude<AvatarSize, undefined>, BadgeProps["size"]>
-  > = {
-    "2xl": "lg",
-    xl: "md",
-    lg: "sm",
-    sm: "sm",
-    xs: "xs",
-  } as const
-
-  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
-}
-
-const getAvatarSize = (
-  size: AvatarSize
-): F0AvatarModuleProps["size"] | undefined => {
-  const sizeMap: Partial<
-    Record<Exclude<AvatarSize, undefined>, F0AvatarModuleProps["size"]>
-  > = {
-    "2xl": "md",
-    xl: "sm",
-    lg: "xs",
-    sm: "xs",
-    xs: "xxs",
-  } as const
-
-  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
-}
-
-export type BaseAvatarProps = {
-  /**
-   * The type of the avatar.
-   */
-  type: InternalAvatarProps["type"]
-  /**
-   * The name of the avatar.
-   */
-  name: string | string[]
-  /**
-   * The source of the avatar's image.
-   */
-  src?: string
-  /**
-   * The color of the avatar.
-   * @default "random"
-   */
-  color?: InternalAvatarProps["color"] | "random"
-  /**
-   * The badge to display on the avatar. Can be a module badge or a custom badge.
-   */
-  badge?: AvatarBadge
-} & Pick<InternalAvatarProps, "aria-label" | "aria-labelledby"> &
-  (
-    | {
-        size: AvatarSize
-      }
-    | {
-        /**
-         * @deprecated Use AvatarSize instead (xs, sm, md, lg, xl, 2xl)
-         */
-        size: InternalAvatarProps["size"]
-      }
-  )
+import { avatarSizes, BaseAvatarProps, sizesMapping } from "./types"
+import {
+  getAvatarColor,
+  getAvatarSize,
+  getBadgeSize,
+  getInitials,
+  getMask,
+} from "./utils"
 
 export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
   (
@@ -107,6 +43,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
       console.warn(
         `The avatar size: ${size} is deprecated. Use ${sizesMapping[size]} instead.`
       )
+      size = sizesMapping[size]
     }
 
     const initials = getInitials(name, size)

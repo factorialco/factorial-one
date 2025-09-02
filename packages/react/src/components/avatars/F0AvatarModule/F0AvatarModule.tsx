@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "cva"
-import { BaseAvatarProps } from "../BaseAvatar/BaseAvatar"
+import { BaseAvatarProps } from "../BaseAvatar"
 import { ModuleId, modules } from "./modules"
 
 const moduleAvatarVariants = cva({
@@ -47,13 +47,15 @@ const squirclePath =
  * @experimental
  * @returns
  */
-export function F0AvatarModule({ size = "md", ...props }: F0AvatarModuleProps) {
-  const IconComponent = modules[props.module]
+export function F0AvatarModule({
+  size = "md",
+  module,
+  ...props
+}: F0AvatarModuleProps) {
+  const IconComponent = modules[module as ModuleId]
 
   if (!IconComponent) {
-    console.warn(
-      `ModuleAvatar: The module ${"icon" in props ? props.icon : props.module} is not supported.`
-    )
+    console.warn(`ModuleAvatar: The module ${module} is not supported.`)
   }
 
   const code = Math.random().toString(36).substring(2, 15)

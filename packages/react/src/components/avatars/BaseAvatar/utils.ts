@@ -1,8 +1,10 @@
+import { BadgeProps } from "@/experimental/Information/Badge"
 import {
   internalAvatarColors as AvatarColors,
   Avatar as AvatarComponent,
 } from "@/ui/Avatar"
 import { type ComponentProps } from "react"
+import { F0AvatarModuleProps } from "../F0AvatarModule"
 import { AvatarSize } from "./types"
 
 type ShadAvatarProps = ComponentProps<typeof AvatarComponent>
@@ -12,8 +14,10 @@ export function getInitials(
   size?: ShadAvatarProps["size"]
 ): string {
   const nameArray = Array.isArray(name) ? name : [name]
-  const isSmall = size === "xs" || size === "sm"
-  if (isSmall) return (nameArray[0][0] ?? "").toUpperCase()
+  const isSmall = ["xs", "sm"].includes(size)
+  if (isSmall) {
+    return (nameArray[0][0] ?? "").toUpperCase()
+  }
   if (!Array.isArray(name)) {
     return name.slice(0, 2).toUpperCase()
   }
@@ -132,9 +136,44 @@ export const getMask = {
     type: MaskType = "base",
     size: MaskSize = "md",
     variant: MaskVariant = "default"
-  ): string => getMask[type][size][variant],
+  ): string => {
+    console.log("test", type, size, variant)
+    return getMask[type][size][variant]
+  },
 } as const satisfies {
   base: MaskPaths["base"]
   rounded: MaskPaths["rounded"]
   get: (type: MaskType, size: MaskSize, variant: MaskVariant) => string
+}
+
+export const getBadgeSize = (
+  size: AvatarSize
+): BadgeProps["size"] | undefined => {
+  const sizeMap: Partial<
+    Record<Exclude<AvatarSize, undefined>, BadgeProps["size"]>
+  > = {
+    "2xl": "lg",
+    xl: "md",
+    lg: "sm",
+    sm: "sm",
+    xs: "xs",
+  } as const
+
+  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
+}
+
+export const getAvatarSize = (
+  size: AvatarSize
+): F0AvatarModuleProps["size"] | undefined => {
+  const sizeMap: Partial<
+    Record<Exclude<AvatarSize, undefined>, F0AvatarModuleProps["size"]>
+  > = {
+    "2xl": "md",
+    xl: "sm",
+    lg: "xs",
+    sm: "xs",
+    xs: "xxs",
+  } as const
+
+  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
 }

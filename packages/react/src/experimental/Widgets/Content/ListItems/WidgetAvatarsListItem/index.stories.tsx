@@ -9,9 +9,9 @@ const meta: Meta<WidgetAvatarsListItemProps> = {
     layout: "centered",
   },
   decorators: [
-    (Story) => (
+    (StoryComp: Story) => (
       <div className="w-[348px]">
-        <Story />
+        <StoryComp />
       </div>
     ),
   ],
@@ -63,25 +63,21 @@ export const WithLongTitle: Story = {
     subtitle: "4 people",
     avatars: [
       {
-        type: "person",
         firstName: "Miguel",
         lastName: "Pousa",
         src: "/avatars/person01.jpg",
       },
       {
-        type: "person",
         firstName: "Nik",
         lastName: "Lopin",
         src: "/avatars/person02.jpg",
       },
       {
-        type: "person",
         firstName: "Josep Jaume",
         lastName: "Rey",
         src: "/avatars/person03.jpg",
       },
       {
-        type: "person",
         firstName: "Saúl",
         lastName: "Domínguez",
       },

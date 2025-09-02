@@ -36,7 +36,7 @@ export function MetadataValue({
     case "avatar":
       return (
         <div className="flex items-center gap-1">
-          <F0Avatar avatar={value.variant} size="xsmall" />
+          <F0Avatar avatar={value.variant} size="xs" />
           {value.text && <span>{value.text}</span>}
         </div>
       )
@@ -47,7 +47,7 @@ export function MetadataValue({
       return (
         <F0AvatarList
           avatars={value.avatars}
-          size="xsmall"
+          size="xs"
           type={value.variant}
           max={3}
         />
