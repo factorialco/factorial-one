@@ -509,9 +509,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.10
         version: 0.6.11(prettier-plugin-organize-imports@4.1.0(prettier@3.5.2)(typescript@5.8.2))(prettier@3.5.2)
-      react-docgen-typescript:
-        specifier: ^2.4.0
-        version: 2.4.0(typescript@5.8.2)
       react-syntax-highlighter:
         specifier: ^15.6.1
         version: 15.6.1(react@18.3.1)
