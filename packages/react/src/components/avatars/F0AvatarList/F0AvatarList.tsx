@@ -5,6 +5,7 @@ import { F0Avatar } from "../F0Avatar"
 import { MaxCounter } from "./components/MaxCounter"
 
 import { AvatarListSize, F0AvatarListProps } from "./types"
+import { getAvatarDisplayName } from "./utils"
 
 const avatarListVariants = cva({
   base: "flex items-center",
@@ -53,10 +54,7 @@ export const F0AvatarList = ({
       <OverflowList
         items={avatars}
         renderListItem={(avatar) => {
-          const displayName =
-            avatar.type === "person"
-              ? `${avatar.firstName} ${avatar.lastName}`
-              : avatar.name
+          const displayName = getAvatarDisplayName(avatar)
 
           return (
             <Tooltip label={displayName}>
@@ -94,10 +92,7 @@ export const F0AvatarList = ({
   return (
     <div className={avatarListVariants({ size })}>
       {visibleAvatars.map((avatar, index) => {
-        const displayName =
-          avatar.type === "person"
-            ? `${avatar.firstName} ${avatar.lastName}`
-            : avatar.name
+        const displayName = getAvatarDisplayName(avatar)
 
         const clippedAvatar = (
           <div

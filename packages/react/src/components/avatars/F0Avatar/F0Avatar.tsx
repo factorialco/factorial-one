@@ -1,24 +1,16 @@
-import { sizes } from "@/ui/avatar"
 import { ComponentProps, ReactNode } from "react"
 import { F0AvatarCompany } from "../F0AvatarCompany"
+import { F0AvatarFile } from "../F0AvatarFile"
 import { F0AvatarPerson } from "../F0AvatarPerson"
 import { F0AvatarTeam } from "../F0AvatarTeam"
-
-type PersonAvatarProps = ComponentProps<typeof F0AvatarPerson>
-type TeamAvatarProps = ComponentProps<typeof F0AvatarTeam>
-type CompanyAvatarProps = ComponentProps<typeof F0AvatarCompany>
-
-export type AvatarVariant =
-  | ({ type: "person" } & Omit<PersonAvatarProps, "size">)
-  | ({ type: "team" } & Omit<TeamAvatarProps, "size">)
-  | ({ type: "company" } & Omit<CompanyAvatarProps, "size">)
+import { AvatarVariant, AvatarVariantWithSize } from "./types"
 
 export const F0Avatar = ({
   avatar,
-  size = "xsmall",
+  size = "small",
 }: {
   avatar: AvatarVariant
-  size?: (typeof sizes)[number]
+  size?: AvatarVariantWithSize["size"]
 }): ReactNode => {
   switch (avatar.type) {
     case "person":
@@ -51,6 +43,16 @@ export const F0Avatar = ({
           src={avatar.src}
           badge={avatar.badge}
           size={size}
+          aria-label={avatar["aria-label"]}
+          aria-labelledby={avatar["aria-labelledby"]}
+        />
+      )
+    case "file":
+      return (
+        <F0AvatarFile
+          file={avatar.file}
+          size={size as ComponentProps<typeof F0AvatarFile>["size"]}
+          badge={avatar.badge}
           aria-label={avatar["aria-label"]}
           aria-labelledby={avatar["aria-labelledby"]}
         />
