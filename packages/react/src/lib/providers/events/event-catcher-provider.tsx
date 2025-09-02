@@ -21,7 +21,7 @@ export interface EventCatcherProviderProps {
   catchEvents?: string[]
 }
 
-export function EventCatcherProvider({
+export function F0EventCatcherProvider({
   children,
   onEvent,
   enabled = true,
@@ -52,7 +52,7 @@ export function EventCatcherProvider({
   )
 }
 
-export function useEventCatcher() {
+export function useF0EventCatcher() {
   const context = useContext(EventCatcherContext)
 
   return context ?? { onEvent: () => Promise.resolve(false) }
