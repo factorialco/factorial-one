@@ -28,6 +28,6 @@ describe("getInitials", () => {
   test("returns an empty string if name is an empty array or an empty string", () => {
     expect(getInitials("")).eq("")
     expect(getInitials([])).eq("")
-    expect(getInitials([""], "xsmall")).eq("")
+    expect(getInitials([""], "xs")).eq("")
   })
 })

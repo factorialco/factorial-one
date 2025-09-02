@@ -33,16 +33,12 @@ const AvatarRender = ({
   compact?: boolean
 }) => {
   if (avatar.type === "emoji") {
-    return (
-      <F0AvatarEmoji emoji={avatar.emoji} size={compact ? "small" : "large"} />
-    )
+    return <F0AvatarEmoji emoji={avatar.emoji} size={compact ? "sm" : "lg"} />
   }
   if (avatar.type === "file") {
-    return (
-      <F0AvatarFile file={avatar.file} size={compact ? "small" : "large"} />
-    )
+    return <F0AvatarFile file={avatar.file} size={compact ? "sm" : "lg"} />
   }
-  return <F0Avatar avatar={avatar} size={compact ? "small" : "large"} />
+  return <F0Avatar avatar={avatar} size={compact ? "sm" : "lg"} />
 }
 
 export function CardAvatar({

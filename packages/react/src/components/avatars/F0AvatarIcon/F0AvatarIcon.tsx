@@ -1,13 +1,13 @@
 import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { cn } from "@/lib/utils"
-import { BaseAvatarProps } from "../BaseAvatar/BaseAvatar"
+import { BaseAvatarProps } from "../BaseAvatar"
 
 export const avatarIconSizes = ["sm", "md", "lg"] as const
 
 export type F0AvatarIconProps = {
   icon: F0IconType
   size?: (typeof avatarIconSizes)[number]
-} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
+} & Partial<Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">>
 
 const sizes = {
   sm: "size-6 rounded-sm",

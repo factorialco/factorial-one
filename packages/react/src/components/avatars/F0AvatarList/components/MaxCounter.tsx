@@ -44,9 +44,16 @@ type Props = {
   size?: AvatarListSize
   type?: (typeof internalAvatarTypes)[number]
   list?: Omit<AvatarVariant, "type">[]
+  avatarType?: "person" | "team" | "company"
 }
 
-export const MaxCounter = ({ count, size = "md", type, list }: Props) => {
+export const MaxCounter = ({
+  count,
+  size = "md",
+  type,
+  list,
+  avatarType = "person",
+}: Props) => {
   const counter = (
     <div
       className={cn("cursor-default font-medium", sizeVariants({ size, type }))}
@@ -72,12 +79,15 @@ export const MaxCounter = ({ count, size = "md", type, list }: Props) => {
               className="flex w-[180px] min-w-0 items-center gap-1.5 px-2 py-1 [&:first-child]:pt-2 [&:last-child]:pb-2"
             >
               <div className="h-6 w-6 shrink-0">
-                <F0Avatar avatar={{ type, ...avatar }} size="sm" />
+                <F0Avatar
+                  avatar={{ type: avatarType, ...avatar } as AvatarVariant}
+                  size="sm"
+                />
               </div>
               <div className="min-w-0 flex-1 truncate font-semibold">
-                {type === "person"
-                  ? `${avatar.firstName} ${avatar.lastName}`
-                  : avatar.name}
+                {avatarType === "person"
+                  ? `${(avatar as any).firstName} ${(avatar as any).lastName}`
+                  : (avatar as any).name}
               </div>
             </div>
           ))}

@@ -1,5 +1,10 @@
 import { Button, CopyButton } from "@/components/Actions/Button"
 import { AvatarVariant } from "@/components/avatars/F0Avatar"
+import {
+  CompanyAvatar,
+  PersonAvatar,
+  TeamAvatar,
+} from "@/components/avatars/F0AvatarList/types"
 import { F0Icon, F0IconType } from "@/components/F0Icon"
 import { NewColor } from "@/components/tags/F0TagDot"
 import { StatusVariant } from "@/components/tags/F0TagStatus"
@@ -15,7 +20,20 @@ type MetadataItemValue =
   | { type: "text"; content: string }
   | { type: "avatar"; variant: AvatarVariant; text: string }
   | { type: "status"; label: string; variant: StatusVariant }
-  | { type: "list"; variant: AvatarVariant["type"]; avatars: AvatarVariant[] }
+  | ({ type: "list" } & (
+      | {
+          variant: "person"
+          avatars: (PersonAvatar | (PersonAvatar & Record<string, unknown>))[]
+        }
+      | {
+          variant: "team"
+          avatars: (TeamAvatar | (TeamAvatar & Record<string, unknown>))[]
+        }
+      | {
+          variant: "company"
+          avatars: (CompanyAvatar | (CompanyAvatar & Record<string, unknown>))[]
+        }
+    ))
   | { type: "data-list"; data: string[] }
   | { type: "tag-list"; tags: string[] }
   | { type: "dot-tag"; label: string; color: NewColor }

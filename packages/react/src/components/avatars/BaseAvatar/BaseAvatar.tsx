@@ -5,9 +5,10 @@ import {
   Avatar as AvatarComponent,
   AvatarFallback,
   AvatarImage,
+  InternalAvatarProps,
 } from "@/ui/Avatar"
 import { forwardRef, useMemo } from "react"
-import { avatarSizes, BaseAvatarProps, sizesMapping } from "./types"
+import { AvatarSize, avatarSizes, BaseAvatarProps, sizesMapping } from "./types"
 import {
   getAvatarColor,
   getAvatarSize,
@@ -39,14 +40,18 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
     )
 
     // Check if size is a valid avatar size
+    let mappedSize: AvatarSize = "sm"
+    // @ts-expect-error - size is not a valid size
     if (!avatarSizes.includes(size)) {
       console.warn(
+        // @ts-expect-error - size is not a valid size
         `The avatar size: ${size} is deprecated. Use ${sizesMapping[size]} instead.`
       )
-      size = sizesMapping[size]
+      // @ts-expect-error - size is not a valid size
+      mappedSize = sizesMapping[size] ?? "sm"
     }
 
-    const initials = getInitials(name, size)
+    const initials = getInitials(name, mappedSize)
     const avatarColor =
       color === "random"
         ? getAvatarColor(Array.isArray(name) ? name.join("") : name)
@@ -54,8 +59,8 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
 
     const hasAria = Boolean(ariaLabel || ariaLabelledby)
 
-    const badgeSize = getBadgeSize(size)
-    const moduleAvatarSize = getAvatarSize(size)
+    const badgeSize = getBadgeSize(mappedSize)
+    const moduleAvatarSize = getAvatarSize(mappedSize)
 
     const badgeContent = useMemo(
       () =>
@@ -82,7 +87,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
                 ? {
                     clipPath: getMask.get(
                       type === "rounded" ? "rounded" : "base",
-                      size,
+                      mappedSize,
                       badge.type === "module" ? "module" : "default"
                     ),
                   }
@@ -90,7 +95,12 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
             }
           >
             <AvatarComponent
-              size={reversedSizesMapping[size] || size}
+              size={
+                (reversedSizesMapping[
+                  mappedSize
+                ] as InternalAvatarProps["size"]) ||
+                ("small" as InternalAvatarProps["size"])
+              }
               type={type}
               color={avatarColor}
               ref={ref}

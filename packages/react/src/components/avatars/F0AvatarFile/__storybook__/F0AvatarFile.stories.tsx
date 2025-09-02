@@ -37,7 +37,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     file: { name: "document.pdf", type: "application/pdf" },
-    size: "mdm",
+    size: "md",
   },
 }
 

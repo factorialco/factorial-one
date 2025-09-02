@@ -2,7 +2,12 @@ import { avatarVariants } from "@/factorial-one"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarList } from "../F0AvatarList"
-import { avatarListSizes } from "../types"
+import {
+  avatarListSizes,
+  CompanyAvatar,
+  PersonAvatar,
+  TeamAvatar,
+} from "../types"
 
 const dummyPeople = [
   {
@@ -41,10 +46,14 @@ const dummyTeams = [
   { name: "Product Management" },
 ]
 
-function getDummyAvatars(
+function getDummyAvatars<T extends "person" | "company" | "team" = "person">(
   count: number,
-  type: "person" | "company" | "team" = "person"
-) {
+  type: T
+): T extends "person"
+  ? PersonAvatar[]
+  : T extends "company"
+    ? CompanyAvatar[]
+    : TeamAvatar[] {
   const sourceData = {
     person: dummyPeople,
     company: dummyCompanies,
@@ -53,7 +62,11 @@ function getDummyAvatars(
 
   return Array.from({ length: count }, (_, index) => ({
     ...sourceData[index % sourceData.length],
-  }))
+  })) as T extends "person"
+    ? PersonAvatar[]
+    : T extends "company"
+      ? CompanyAvatar[]
+      : TeamAvatar[]
 }
 
 const meta: Meta<typeof F0AvatarList> = {
@@ -92,9 +105,9 @@ const meta: Meta<typeof F0AvatarList> = {
     },
   },
   decorators: [
-    (StoryComponent: Story) => (
+    (Story) => (
       <div className="w-[270px]">
-        <StoryComponent />
+        <Story />
       </div>
     ),
   ],
@@ -125,6 +138,7 @@ export const Teams: Story = {
 export const WithMaxAvatars: Story = {
   args: {
     ...Default.args,
+    type: "person",
     avatars: getDummyAvatars(50, "person"),
     max: 3,
   },
@@ -133,6 +147,7 @@ export const WithMaxAvatars: Story = {
 export const FillContainer: Story = {
   args: {
     ...Default.args,
+    type: "person",
     avatars: getDummyAvatars(50, "person"),
     layout: "fill",
   },
@@ -141,6 +156,7 @@ export const FillContainer: Story = {
 export const CompaniesWithMaxAvatars: Story = {
   args: {
     ...Companies.args,
+    type: "company",
     avatars: getDummyAvatars(50, "company"),
     max: 3,
   },
@@ -149,6 +165,7 @@ export const CompaniesWithMaxAvatars: Story = {
 export const WithRemainingCount: Story = {
   args: {
     ...Default.args,
+    type: "person",
     avatars: getDummyAvatars(7, "person"),
     remainingCount: 10,
   },

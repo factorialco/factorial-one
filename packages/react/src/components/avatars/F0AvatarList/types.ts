@@ -15,6 +15,20 @@ export type CompanyAvatar = Omit<
   "type"
 >
 
+export type F0AvatarListPropsAvatars =
+  | {
+      type: "person"
+      avatars: (PersonAvatar | (PersonAvatar & Record<string, unknown>))[]
+    }
+  | {
+      type: "team"
+      avatars: (TeamAvatar | (TeamAvatar & Record<string, unknown>))[]
+    }
+  | {
+      type: "company"
+      avatars: (CompanyAvatar | (CompanyAvatar & Record<string, unknown>))[]
+    }
+
 // Discriminated union that enforces type consistency
 export type F0AvatarListProps = {
   /**
@@ -47,17 +61,4 @@ export type F0AvatarListProps = {
    * @default "compact"
    */
   layout?: "fill" | "compact"
-} & (
-  | {
-      type: "person"
-      avatars: PersonAvatar[]
-    }
-  | {
-      type: "team"
-      avatars: TeamAvatar[]
-    }
-  | {
-      type: "company"
-      avatars: CompanyAvatar[]
-    }
-)
+} & F0AvatarListPropsAvatars

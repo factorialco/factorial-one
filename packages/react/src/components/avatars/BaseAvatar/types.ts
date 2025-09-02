@@ -5,7 +5,10 @@ export const avatarSizes = ["xs", "sm", "md", "lg", "xl", "2xl"] as const
 
 export type AvatarSize = (typeof avatarSizes)[number]
 
-export const sizesMapping: Record<InternalAvatarProps["size"], AvatarSize> = {
+export const sizesMapping: Record<
+  NonNullable<InternalAvatarProps["size"]>,
+  AvatarSize
+> = {
   xxlarge: "2xl",
   xlarge: "xl",
   large: "lg",
@@ -36,7 +39,7 @@ export type BaseAvatarProps = {
    * The badge to display on the avatar. Can be a module badge or a custom badge.
    */
   badge?: AvatarBadge
-} & Pick<InternalAvatarProps, "aria-label" | "aria-labelledby"> &
+} & Partial<Pick<InternalAvatarProps, "aria-label" | "aria-labelledby">> &
   (
     | {
         size: AvatarSize

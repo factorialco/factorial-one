@@ -32,10 +32,12 @@ export const F0AvatarEmoji = ({
   // Check legacy size
   if (!avatarEmojiSizes.includes(size)) {
     console.warn(
+      // @ts-expect-error - size is not a valid size
       `The emoji size: ${size} is deprecated. Use ${sizesMapping[size]} instead.`
     )
-    const mappedSize = sizesMapping[size]
-    size = mappedSize === "xs" ? "sm" : mappedSize === "sm" ? "md" : "lg"
+    // @ts-expect-error - size is not a valid size
+    const mappedSize = sizesMapping[size] ?? size
+    size = mappedSize
   }
 
   // Check if emoji is a single emoji character using regex

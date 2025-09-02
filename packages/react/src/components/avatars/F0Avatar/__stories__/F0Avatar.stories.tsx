@@ -1,3 +1,4 @@
+import { Check, Warning } from "@/icons/app"
 import { internalAvatarSizes } from "@/ui/Avatar"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { avatarSizes } from "../../BaseAvatar"
@@ -82,7 +83,7 @@ export const PersonAvatar: Story = {
               lastName: "Johnson",
               badge: {
                 type: "module",
-                module: "time",
+                module: "time-tracking",
               },
             }}
           />
@@ -120,7 +121,7 @@ export const TeamAvatar: Story = {
               name: "Product Team",
               badge: {
                 type: "module",
-                module: "projects",
+                module: "company_projects",
               },
             }}
           />
@@ -157,8 +158,8 @@ export const CompanyAvatar: Story = {
               type: "company",
               name: "Tech Solutions",
               badge: {
-                type: "success",
-                icon: "CheckIcon",
+                type: "positive",
+                icon: Check,
               },
             }}
           />
@@ -218,14 +219,14 @@ export const WithBadges: Story = {
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm font-medium">Module Badge</span>
           <F0Avatar
-            size="large"
+            size="lg"
             avatar={{
               type: "person",
               firstName: "John",
               lastName: "Doe",
               badge: {
                 type: "module",
-                module: "time",
+                module: "time-tracking",
               },
             }}
           />
@@ -233,13 +234,13 @@ export const WithBadges: Story = {
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm font-medium">Success Badge</span>
           <F0Avatar
-            size="large"
+            size="lg"
             avatar={{
               type: "team",
               name: "Engineering Team",
               badge: {
-                type: "success",
-                icon: "CheckIcon",
+                type: "positive",
+                icon: Check,
               },
             }}
           />
@@ -247,13 +248,13 @@ export const WithBadges: Story = {
         <div className="flex flex-col items-center gap-2">
           <span className="text-sm font-medium">Warning Badge</span>
           <F0Avatar
-            size="large"
+            size="lg"
             avatar={{
               type: "company",
               name: "Factorial HR",
               badge: {
                 type: "warning",
-                icon: "ExclamationTriangleIcon",
+                icon: Warning,
               },
             }}
           />

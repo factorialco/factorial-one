@@ -9,14 +9,14 @@ export type WidgetAvatarsListItemProps = {
   id: string | number
   title: string
   subtitle: string
-  avatars: Omit<PersonAvatar, "type">[]
+  avatars: PersonAvatar[]
   remainingCount?: number
   withPointerCursor?: boolean
   onClick?: (id: string | number) => void
 } & (
-  | { emoji?: string }
+  | { emoji: string }
   | {
-      alert?: ComponentProps<typeof F0AvatarAlert>["type"]
+      alert: ComponentProps<typeof F0AvatarAlert>["type"]
     }
 )
 
@@ -72,7 +72,7 @@ export function WidgetAvatarsListItem({
       withEmoji={"emoji" in props && !!props.emoji}
       withPointerCursor={withPointerCursor}
     >
-      {"alert" in props && <F0AvatarAlert type={props.alert} />}
+      {"alert" in props && props.alert && <F0AvatarAlert type={props.alert} />}
       {"emoji" in props && props.emoji && <F0AvatarEmoji emoji={props.emoji} />}
       <div className="flex-1">
         <p className="line-clamp-1 font-medium">{title}</p>

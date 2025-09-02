@@ -12,7 +12,7 @@ const avatarListVariants = cva({
     size: {
       xs: "-space-x-0.5",
       sm: "-space-x-[3px]",
-      mm: "-space-x-1",
+      md: "-space-x-1",
     } satisfies Record<AvatarListSize, string>,
   },
   defaultVariants: {
@@ -82,6 +82,7 @@ export const F0AvatarList = ({
             count={(initialRemainingCount ?? 0) + count}
             size={size}
             type={type === "person" ? "rounded" : "base"}
+            avatarType={type}
             list={
               initialRemainingCount
                 ? undefined
@@ -142,6 +143,7 @@ export const F0AvatarList = ({
           count={remainingCount}
           size={size}
           type={type === "person" ? "rounded" : "base"}
+          avatarType={type}
           list={
             noTooltip || initialRemainingCount ? undefined : remainingAvatars
           }

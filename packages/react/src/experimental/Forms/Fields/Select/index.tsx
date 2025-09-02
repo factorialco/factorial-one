@@ -65,7 +65,7 @@ const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   return (
     <SelectItemPrimitive value={item.value}>
       <div className="flex w-full items-start gap-1.5">
-        {item.avatar && <F0Avatar avatar={item.avatar} size="xsmall" />}
+        {item.avatar && <F0Avatar avatar={item.avatar} size="xs" />}
         {item.icon && (
           <div className="text-f1-icon">
             <F0Icon icon={item.icon} />
