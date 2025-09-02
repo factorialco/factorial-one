@@ -18,8 +18,10 @@ export function getAvatarDisplayName(
 ): string
 export function getAvatarDisplayName(
   avatarType: "person" | "team" | "company" | "file",
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- this is functionn overload to waranty the avatar type
   avatar: any
 ): string
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- this is a generic function
 export function getAvatarDisplayName(avatarType: string, avatar: any): string {
   switch (avatarType) {
     case "person":

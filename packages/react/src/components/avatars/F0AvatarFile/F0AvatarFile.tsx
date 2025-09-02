@@ -61,7 +61,7 @@ const F0AvatarFile = forwardRef<ElementRef<typeof Avatar>, F0AvatarFileProps>(
         lg: "text-sm",
       }
       return textSizeMap[props.size || "sm"] ?? textSizeMap.sm
-    }, [mappedSize])
+    }, [props.size])
 
     return (
       <Avatar
