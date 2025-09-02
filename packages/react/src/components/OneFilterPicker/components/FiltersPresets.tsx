@@ -6,7 +6,7 @@ import { FiltersDefinition, FiltersState, PresetsDefinition } from "../types"
 
 interface FilterPresetsProps<Filters extends FiltersDefinition> {
   value: FiltersState<Filters>
-  onPresetsChange: (filter: FiltersState<Filters>) => void
+  onPresetsChange: (filter: FiltersState<Filters>, label: string) => void
   presets: PresetsDefinition<Filters>
 }
 
@@ -27,7 +27,7 @@ export const FiltersPresets = <Filters extends FiltersDefinition>({
         key={index}
         label={preset.label}
         selected={isSelected}
-        onClick={() => onPresetsChange?.(preset.filter)}
+        onClick={() => onPresetsChange?.(preset.filter, preset.label)}
         data-visible={isVisible}
         number={preset.itemsCount?.(value) ?? undefined}
       />
@@ -48,7 +48,7 @@ export const FiltersPresets = <Filters extends FiltersDefinition>({
             "bg-f1-background-selected hover:bg-f1-background-selected",
           focusRing()
         )}
-        onClick={() => onPresetsChange?.(preset.filter)}
+        onClick={() => onPresetsChange?.(preset.filter, preset.label)}
         data-visible={true}
       >
         {preset.label}
