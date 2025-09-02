@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.171.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.170.0...factorial-one-react-v1.171.0) (2025-09-02)
+
+
+### Features
+
+* **One:** welcome message animation ([#2503](https://github.com/factorialco/factorial-one/issues/2503)) ([582b222](https://github.com/factorialco/factorial-one/commit/582b222de47a5c124451a85438baf3a17048bf06))
+
 ## [1.170.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.1...factorial-one-react-v1.170.0) (2025-09-02)
 
 
