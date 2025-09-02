@@ -1,9 +1,10 @@
 import { ModuleId } from "@/components/avatars/F0AvatarModule"
 import { BadgeProps } from "@/experimental/Information/Badge"
-import { ComponentProps } from "react"
-import { F0AvatarCompany } from "../F0AvatarCompany"
-import { F0AvatarPerson } from "../F0AvatarPerson"
-import { F0AvatarTeam } from "../F0AvatarTeam"
+import { DistributiveOmit } from "@/lib/typscript-utils/distributive-omit"
+import { F0AvatarCompanyProps } from "../F0AvatarCompany"
+import { F0AvatarFileProps } from "../F0AvatarFile"
+import { F0AvatarPersonProps } from "../F0AvatarPerson"
+import { F0AvatarTeamProps } from "../F0AvatarTeam"
 
 export type AvatarBadge = (
   | {
@@ -18,13 +19,14 @@ export type AvatarBadge = (
   tooltip?: string
 }
 
-type PersonAvatarProps = ComponentProps<typeof F0AvatarPerson>
-type TeamAvatarProps = ComponentProps<typeof F0AvatarTeam>
-type CompanyAvatarProps = ComponentProps<typeof F0AvatarCompany>
+export const avatarVariants = ["person", "team", "company", "file"] as const
 
-export const avatarVariants = ["person", "team", "company"] as const
+export type AvatarVariants = (typeof avatarVariants)[number]
 
-export type AvatarVariant =
-  | ({ type: "person" } & Omit<PersonAvatarProps, "size">)
-  | ({ type: "team" } & Omit<TeamAvatarProps, "size">)
-  | ({ type: "company" } & Omit<CompanyAvatarProps, "size">)
+export type AvatarVariant = DistributiveOmit<
+  | ({ type: "person" } & F0AvatarPersonProps)
+  | ({ type: "team" } & F0AvatarTeamProps)
+  | ({ type: "company" } & F0AvatarCompanyProps)
+  | ({ type: "file" } & F0AvatarFileProps),
+  "size"
+>

@@ -5,8 +5,9 @@ import { internalAvatarTypes } from "@/ui/Avatar"
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/ui/hover-card"
 import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
 import { cva } from "cva"
-import { AvatarVariant, F0Avatar } from "../../F0Avatar"
+import { AvatarVariant, AvatarVariants, F0Avatar } from "../../F0Avatar"
 import { type AvatarListSize } from "../types"
+import { getAvatarDisplayName } from "../utils"
 
 const sizeVariants = cva({
   base: "flex shrink-0 items-center justify-center bg-f1-background-secondary font-medium text-f1-foreground-secondary",
@@ -44,7 +45,7 @@ type Props = {
   size?: AvatarListSize
   type?: (typeof internalAvatarTypes)[number]
   list?: Omit<AvatarVariant, "type">[]
-  avatarType?: "person" | "team" | "company"
+  avatarType?: AvatarVariants
 }
 
 export const MaxCounter = ({
@@ -68,12 +69,6 @@ export const MaxCounter = ({
 
   if (!list?.length) return counter
 
-  const isPersonAvatar = (
-    avatar: Omit<AvatarVariant, "type">
-  ): avatar is Extract<AvatarVariant, { type: "person" }> => {
-    return avatar && avatarType === "person"
-  }
-
   return (
     <HoverCard>
       <HoverCardTrigger asChild>{counter}</HoverCardTrigger>
@@ -91,11 +86,7 @@ export const MaxCounter = ({
                 />
               </div>
               <div className="min-w-0 flex-1 truncate font-semibold">
-                {isPersonAvatar(avatar)
-                  ? `${avatar.firstName?.toString()} ${avatar.lastName?.toString()}`
-                  : "name" in avatar
-                    ? avatar.name?.toString()
-                    : ""}
+                {getAvatarDisplayName(avatarType, avatar)}
               </div>
             </div>
           ))}

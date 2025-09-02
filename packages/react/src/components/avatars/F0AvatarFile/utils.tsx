@@ -1,4 +1,6 @@
-import { FileDef } from "./types"
+import { BadgeProps } from "@/experimental/Information/Badge"
+import { F0AvatarModuleProps } from "../F0AvatarModule"
+import { AvatarFileSize, FileDef } from "./types"
 
 type FileTypeInfo = {
   type: string
@@ -144,6 +146,30 @@ const getFileTypeInfo = (file: FileDef): FileTypeInfo => {
   }
 
   return FILE_TYPE_MAP.default
+}
+
+export const getBadgeSize = (size?: AvatarFileSize): BadgeProps["size"] => {
+  const sizeMap: Partial<
+    Record<Exclude<AvatarFileSize, undefined>, BadgeProps["size"]>
+  > = {
+    lg: "sm",
+    sm: "sm",
+  } as const
+
+  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sn
+}
+
+export const getAvatarSize = (
+  size?: AvatarFileSize
+): F0AvatarModuleProps["size"] | undefined => {
+  const sizeMap: Partial<
+    Record<Exclude<AvatarFileSize, undefined>, F0AvatarModuleProps["size"]>
+  > = {
+    lg: "xs",
+    sm: "xs",
+  } as const
+
+  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
 }
 
 export { getFileTypeInfo }

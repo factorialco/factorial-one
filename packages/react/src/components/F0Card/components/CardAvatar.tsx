@@ -1,12 +1,15 @@
 import { AvatarVariant, F0Avatar } from "@/components/avatars/F0Avatar"
 import { F0AvatarEmoji } from "@/components/avatars/F0AvatarEmoji"
 import { F0AvatarFile } from "@/components/avatars/F0AvatarFile"
+import { F0AvatarIcon } from "@/components/avatars/F0AvatarIcon"
+import { IconType } from "@/components/F0Icon"
 import { cn } from "@/lib/utils"
 
 type CardAvatarVariant =
   | AvatarVariant
   | { type: "emoji"; emoji: string }
   | { type: "file"; file: File }
+  | { type: "icon"; icon: IconType }
 
 interface CardAvatarProps {
   /**
@@ -32,13 +35,14 @@ const AvatarRender = ({
   avatar: CardAvatarVariant
   compact?: boolean
 }) => {
-  if (avatar.type === "emoji") {
-    return <F0AvatarEmoji emoji={avatar.emoji} size={compact ? "sm" : "lg"} />
+  const avatars: Record<CardAvatarVariant["type"], React.ReactNode> = {
+    emoji: <F0AvatarEmoji emoji={avatar.emoji} size={compact ? "sm" : "lg"} />,
+    file: <F0AvatarFile file={avatar.file} size={compact ? "sm" : "lg"} />,
+    icon: <F0AvatarIcon icon={avatar.icon} size={compact ? "sm" : "lg"} />,
+    default: <F0Avatar avatar={avatar} size={compact ? "sm" : "lg"} />,
   }
-  if (avatar.type === "file") {
-    return <F0AvatarFile file={avatar.file} size={compact ? "sm" : "lg"} />
-  }
-  return <F0Avatar avatar={avatar} size={compact ? "sm" : "lg"} />
+
+  return avatars[avatar.type] ?? avatars.default
 }
 
 export function CardAvatar({

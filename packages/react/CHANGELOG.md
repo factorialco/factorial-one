@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.169.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.6...factorial-one-react-v1.169.0) (2025-09-02)
+
+
+### Features
+
+* add support to show file avatar in data collection ([#2497](https://github.com/factorialco/factorial-one/issues/2497)) ([ff54cc0](https://github.com/factorialco/factorial-one/commit/ff54cc006fe894c18a3bdf9e47811bfdc32887c0))
+
 ## [1.168.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.5...factorial-one-react-v1.168.6) (2025-09-01)
 
 

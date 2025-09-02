@@ -14,6 +14,7 @@ export type CompanyAvatar = Omit<
   Extract<AvatarVariant, { type: "company" }>,
   "type"
 >
+export type FileAvatar = Omit<Extract<AvatarVariant, { type: "file" }>, "type">
 
 export type F0AvatarListPropsAvatars =
   | {
@@ -27,6 +28,10 @@ export type F0AvatarListPropsAvatars =
   | {
       type: "company"
       avatars: (CompanyAvatar | (CompanyAvatar & Record<string, unknown>))[]
+    }
+  | {
+      type: "file"
+      avatars: (FileAvatar | (FileAvatar & Record<string, unknown>))[]
     }
 
 // Discriminated union that enforces type consistency

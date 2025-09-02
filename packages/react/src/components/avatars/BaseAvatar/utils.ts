@@ -158,12 +158,12 @@ export const getBadgeSize = (
     xs: "xs",
   } as const
 
-  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
+  return size && sizeMap[size] ? (sizeMap[size] ?? sizeMap.sm) : sizeMap.sm
 }
 
 export const getAvatarSize = (
   size: AvatarSize
-): F0AvatarModuleProps["size"] | undefined => {
+): F0AvatarModuleProps["size"] => {
   const sizeMap: Partial<
     Record<Exclude<AvatarSize, undefined>, F0AvatarModuleProps["size"]>
   > = {
@@ -174,5 +174,5 @@ export const getAvatarSize = (
     xs: "xxs",
   } as const
 
-  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
+  return size && sizeMap[size] ? (sizeMap[size] ?? sizeMap.sm) : sizeMap.sm
 }

@@ -1,9 +1,14 @@
+import { Badge } from "@/experimental/Information/Badge"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, InternalAvatarProps } from "@/ui/Avatar"
 import { ElementRef, forwardRef, useMemo } from "react"
 import { BaseAvatarProps, sizesMapping } from "../BaseAvatar"
 import { AvatarFileSize, FileDef } from "./types"
-import { getFileTypeInfo } from "./utils"
+import { getAvatarSize, getBadgeSize, getFileTypeInfo } from "./utils"
+
+import { AvatarBadge } from "../F0Avatar/types"
+import { F0AvatarModule } from "../F0AvatarModule"
 
 export type F0AvatarFileProps = Omit<
   React.ComponentPropsWithoutRef<typeof Avatar>,
@@ -11,10 +16,11 @@ export type F0AvatarFileProps = Omit<
 > & {
   file: FileDef
   size?: AvatarFileSize
+  badge?: AvatarBadge
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
 
 const F0AvatarFile = forwardRef<ElementRef<typeof Avatar>, F0AvatarFileProps>(
-  ({ file, ...props }, ref) => {
+  ({ file, badge, ...props }, ref) => {
     const { type: fileType, color: fileColor } = getFileTypeInfo(file)
 
     const reversedSizesMapping = useMemo(
@@ -29,6 +35,24 @@ const F0AvatarFile = forwardRef<ElementRef<typeof Avatar>, F0AvatarFileProps>(
       props.size as string
     ] ?? "small") as InternalAvatarProps["size"]
 
+    const badgeSize = getBadgeSize(props.size)
+    const moduleAvatarSize = getAvatarSize(props.size)
+
+    const badgeContent = useMemo(
+      () =>
+        badge ? (
+          <>
+            {badge.type === "module" && (
+              <F0AvatarModule module={badge.module} size={moduleAvatarSize} />
+            )}
+            {badge.type !== "module" && (
+              <Badge type={badge.type} icon={badge.icon} size={badgeSize} />
+            )}
+          </>
+        ) : null,
+      [badge, badgeSize, moduleAvatarSize]
+    )
+
     return (
       <Avatar
         ref={ref}
@@ -39,6 +63,17 @@ const F0AvatarFile = forwardRef<ElementRef<typeof Avatar>, F0AvatarFileProps>(
         <AvatarFallback className={cn("text-xs font-semibold", fileColor)}>
           {fileType}
         </AvatarFallback>
+        {badge && (
+          <div className="absolute -bottom-0.5 -right-0.5">
+            {badge.tooltip ? (
+              <Tooltip description={badge.tooltip}>
+                <div className="cursor-help">{badgeContent}</div>
+              </Tooltip>
+            ) : (
+              badgeContent
+            )}
+          </div>
+        )}
       </Avatar>
     )
   }
