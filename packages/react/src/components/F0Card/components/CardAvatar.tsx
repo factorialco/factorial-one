@@ -35,14 +35,16 @@ const AvatarRender = ({
   avatar: CardAvatarVariant
   compact?: boolean
 }) => {
-  const avatars: Record<CardAvatarVariant["type"], React.ReactNode> = {
-    emoji: <F0AvatarEmoji emoji={avatar.emoji} size={compact ? "sm" : "lg"} />,
-    file: <F0AvatarFile file={avatar.file} size={compact ? "sm" : "lg"} />,
-    icon: <F0AvatarIcon icon={avatar.icon} size={compact ? "sm" : "lg"} />,
-    default: <F0Avatar avatar={avatar} size={compact ? "sm" : "lg"} />,
+  if (avatar.type === "emoji") {
+    return <F0AvatarEmoji emoji={avatar.emoji} size={compact ? "sm" : "lg"} />
   }
-
-  return avatars[avatar.type] ?? avatars.default
+  if (avatar.type === "file") {
+    return <F0AvatarFile file={avatar.file} size={compact ? "sm" : "lg"} />
+  }
+  if (avatar.type === "icon") {
+    return <F0AvatarIcon icon={avatar.icon} size={compact ? "sm" : "lg"} />
+  }
+  return <F0Avatar avatar={avatar} size={compact ? "sm" : "lg"} />
 }
 
 export function CardAvatar({

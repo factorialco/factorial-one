@@ -156,7 +156,7 @@ export const getBadgeSize = (size?: AvatarFileSize): BadgeProps["size"] => {
     sm: "sm",
   } as const
 
-  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sn
+  return size && sizeMap[size] ? sizeMap[size] : sizeMap.sm
 }
 
 export const getAvatarSize = (
