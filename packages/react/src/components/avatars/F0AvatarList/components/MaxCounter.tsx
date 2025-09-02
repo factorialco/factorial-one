@@ -7,6 +7,7 @@ import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
 import { cva } from "cva"
 import { AvatarVariant, F0Avatar } from "../../F0Avatar"
 import { type AvatarListSize } from "../types"
+import { getAvatarDisplayName } from "../utils"
 
 const sizeVariants = cva({
   base: "flex shrink-0 items-center justify-center bg-f1-background-secondary font-medium text-f1-foreground-secondary",
@@ -80,9 +81,7 @@ export const MaxCounter = ({
                 <F0Avatar avatar={avatar} size="small" />
               </div>
               <div className="min-w-0 flex-1 truncate font-semibold">
-                {avatar.type === "person"
-                  ? `${avatar.firstName} ${avatar.lastName}`
-                  : avatar.name}
+                {getAvatarDisplayName(avatar)}
               </div>
             </div>
           ))}
