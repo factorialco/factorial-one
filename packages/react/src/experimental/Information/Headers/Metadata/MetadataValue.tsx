@@ -1,5 +1,6 @@
 import { F0Avatar } from "@/components/avatars/F0Avatar"
 import { F0AvatarList } from "@/components/avatars/F0AvatarList"
+import { F0AvatarListProps } from "@/components/avatars/F0AvatarList/types"
 import { F0Icon } from "@/components/F0Icon"
 import { F0TagDot } from "@/components/tags/F0TagDot"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
@@ -46,10 +47,13 @@ export function MetadataValue({
     case "list":
       return (
         <F0AvatarList
-          avatars={value.avatars}
-          size="xs"
-          type={value.variant}
-          max={3}
+          {...({
+            type: value.variant,
+            avatars: value.avatars,
+            size: "xs" as const,
+            max: 3,
+          } as F0AvatarListProps)}
+          // TS dont narrow correctly the type of the list when destructuring the value
         />
       )
 

@@ -43,7 +43,7 @@ export const F0AvatarList = ({
   layout = "compact",
 }: F0AvatarListProps) => {
   // Check legacy size
-  if (!avatarListSizes.includes(size)) {
+  if (size && !avatarListSizes.includes(size)) {
     const sizesMappingList: Record<string, AvatarListSize> = {
       small: "sm",
       medium: "md",

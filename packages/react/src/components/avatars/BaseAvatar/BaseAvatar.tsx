@@ -40,16 +40,17 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
     )
 
     // Check if size is a valid avatar size
-    let mappedSize: AvatarSize = "sm"
+    let mappedSize: AvatarSize = "md"
     // @ts-expect-error - size is not a valid size
-    if (!avatarSizes.includes(size)) {
+    if (size && !avatarSizes.includes(size)) {
       console.warn(
         // @ts-expect-error - size is not a valid size
         `The avatar size: ${size} is deprecated. Use ${sizesMapping[size]} instead.`
       )
       // @ts-expect-error - size is not a valid size
-      mappedSize = sizesMapping[size] ?? "sm"
+      mappedSize = sizesMapping[size] ?? "md"
     }
+    console.log("mappedSize", mappedSize)
 
     const initials = getInitials(name, mappedSize)
     const avatarColor =
