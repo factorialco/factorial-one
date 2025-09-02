@@ -53,14 +53,24 @@ const F0AvatarFile = forwardRef<ElementRef<typeof Avatar>, F0AvatarFileProps>(
       [badge, badgeSize, moduleAvatarSize]
     )
 
+    const textSize = useMemo(() => {
+      const textSizeMap: Record<AvatarFileSize, string> = {
+        xs: "text-[7px]",
+        sm: "text-[8px]",
+        md: "text-sm",
+        lg: "text-sm",
+      }
+      return textSizeMap[props.size || "sm"] ?? textSizeMap.sm
+    }, [mappedSize])
+
     return (
       <Avatar
         ref={ref}
-        className={cn("bg-f1-background")}
+        className={cn("bg-f1-background", "overflow-visible")}
         {...props}
         size={mappedSize}
       >
-        <AvatarFallback className={cn("text-xs font-semibold", fileColor)}>
+        <AvatarFallback className={cn("font-semibold", textSize, fileColor)}>
           {fileType}
         </AvatarFallback>
         {badge && (

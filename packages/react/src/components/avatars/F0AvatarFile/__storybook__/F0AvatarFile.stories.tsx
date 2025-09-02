@@ -41,6 +41,17 @@ export const Default: Story = {
   },
 }
 
+export const WithBadge: Story = {
+  args: {
+    file: { name: "document.pdf", type: "application/pdf" },
+    size: "md",
+    badge: {
+      type: "module",
+      module: "inbox",
+    },
+  },
+}
+
 export const AllFileTypes: Story = {
   args: {
     file: { name: "document.pdf", type: "application/pdf" },
