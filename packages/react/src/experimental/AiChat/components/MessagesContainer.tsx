@@ -107,19 +107,57 @@ export const MessagesContainer = ({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <OneIcon className="my-4 h-10 w-10 cursor-pointer rounded-xl" />
+              <motion.div
+                className="flex w-fit justify-center"
+                initial={{ opacity: 0, scale: 0.8, filter: "blur(6px)" }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, scale: 0.8, filter: "blur(6px)" }}
+                transition={{
+                  opacity: { duration: 0.2, ease: "easeOut", delay: 0.1 },
+                  scale: { duration: 0.3, ease: [0.25, 0.46, 0.45, 1.94] },
+                  filter: { duration: 0.2, ease: "easeOut", delay: 0.1 },
+                }}
+              >
+                <OneIcon className="my-4 h-10 w-10" />
+              </motion.div>
               {greeting && (
-                <p className="text-lg font-medium text-f1-foreground-secondary">
+                <motion.p
+                  className="text-lg font-medium text-f1-foreground-secondary"
+                  initial={{ opacity: 0, filter: "blur(2px)", translateY: -8 }}
+                  animate={{ opacity: 1, filter: "blur(0px)", translateY: 0 }}
+                  exit={{ opacity: 0, filter: "blur(2px)", translateY: -8 }}
+                  transition={{
+                    opacity: { duration: 0.2, ease: "easeOut", delay: 0.2 },
+                    filter: { duration: 0.2, ease: "easeOut", delay: 0.2 },
+                    translateY: {
+                      duration: 0.2,
+                      ease: [0.25, 0.46, 0.45, 1.94],
+                      delay: 0.2,
+                    },
+                  }}
+                >
                   {greeting}
-                </p>
+                </motion.p>
               )}
               {initialMessages.map((message) => (
-                <p
+                <motion.p
                   className="text-2xl font-semibold text-f1-foreground"
                   key={message.id}
+                  initial={{ opacity: 0, filter: "blur(2px)", translateY: -8 }}
+                  animate={{ opacity: 1, filter: "blur(0px)", translateY: 0 }}
+                  exit={{ opacity: 0, filter: "blur(2px)", translateY: -8 }}
+                  transition={{
+                    opacity: { duration: 0.2, ease: "easeOut", delay: 0.4 },
+                    filter: { duration: 0.2, ease: "easeOut", delay: 0.4 },
+                    translateY: {
+                      duration: 0.2,
+                      ease: [0.25, 0.46, 0.45, 1.94],
+                      delay: 0.4,
+                    },
+                  }}
                 >
                   {message.content}
-                </p>
+                </motion.p>
               ))}
             </motion.div>
           )}
