@@ -11,7 +11,7 @@ type ShadAvatarProps = ComponentProps<typeof AvatarComponent>
 
 export function getInitials(
   name: string | string[],
-  size: AvatarSize = "sm"
+  size: AvatarSize = "md"
 ): string {
   const nameArray = Array.isArray(name) ? name : [name]
   const isSmall = ["xs", "sm"].includes(size)

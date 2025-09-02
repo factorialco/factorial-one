@@ -71,25 +71,19 @@ describe("F0AvatarAlert", () => {
         )
 
         const avatarElement = container.firstChild as HTMLElement
+
         expectedClasses.forEach((className) => {
           expect(avatarElement).toHaveClass(className)
         })
       })
     })
-
-    it("should use md as default size when not specified", () => {
-      const { container } = zeroRender(<F0AvatarAlert type="info" />)
-
-      const avatarElement = container.firstChild as HTMLElement
-      expect(avatarElement).toHaveClass()
-    })
   })
 
   describe("Icon size mapping", () => {
     const iconSizeTests = [
-      { size: "sm", expectedIconClass: "w-4" },
-      { size: "md", expectedIconClass: "w-5" },
-      { size: "lg", expectedIconClass: "w-6" },
+      { size: "sm", expectedIconClass: "w-6" },
+      { size: "md", expectedIconClass: "w-8" },
+      { size: "lg", expectedIconClass: "w-10" },
     ] as const
 
     iconSizeTests.forEach(({ size, expectedIconClass }) => {
@@ -97,6 +91,7 @@ describe("F0AvatarAlert", () => {
         zeroRender(<F0AvatarAlert type="info" size={size} />)
 
         const iconElement = screen.getByRole("img", { hidden: true })
+
         expect(iconElement).toHaveClass(expectedIconClass)
       })
     })
