@@ -68,6 +68,12 @@ export const MaxCounter = ({
 
   if (!list?.length) return counter
 
+  const isPersonAvatar = (
+    avatar: Omit<AvatarVariant, "type">
+  ): avatar is Extract<AvatarVariant, { type: "person" }> => {
+    return avatar && avatarType === "person"
+  }
+
   return (
     <HoverCard>
       <HoverCardTrigger asChild>{counter}</HoverCardTrigger>
@@ -85,9 +91,11 @@ export const MaxCounter = ({
                 />
               </div>
               <div className="min-w-0 flex-1 truncate font-semibold">
-                {avatarType === "person"
-                  ? `${(avatar as any).firstName} ${(avatar as any).lastName}`
-                  : (avatar as any).name}
+                {isPersonAvatar(avatar)
+                  ? `${avatar.firstName?.toString()} ${avatar.lastName?.toString()}`
+                  : "name" in avatar
+                    ? avatar.name?.toString()
+                    : ""}
               </div>
             </div>
           ))}

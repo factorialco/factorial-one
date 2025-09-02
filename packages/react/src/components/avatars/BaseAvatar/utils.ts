@@ -137,7 +137,6 @@ export const getMask = {
     size: MaskSize = "md",
     variant: MaskVariant = "default"
   ): string => {
-    console.log("test", type, size, variant)
     return getMask[type][size][variant]
   },
 } as const satisfies {

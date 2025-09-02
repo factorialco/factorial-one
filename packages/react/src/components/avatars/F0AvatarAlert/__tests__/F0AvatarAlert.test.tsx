@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from "vitest"
 import { F0AvatarAlert } from "../F0AvatarAlert"
 
 // Mock F0Icon component to capture the icon prop
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const MockF0Icon = vi.fn(({ icon, size }: { icon: any; size: any }) => {
   return (
     <div
@@ -22,6 +23,7 @@ vi.mock("@/icons/app", () => ({
 }))
 
 vi.mock("@/components/F0Icon", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   F0Icon: (props: any) => MockF0Icon(props),
 }))
 

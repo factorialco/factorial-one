@@ -22,7 +22,7 @@ const F0AvatarFile = forwardRef<ElementRef<typeof Avatar>, F0AvatarFileProps>(
         Object.fromEntries(
           Object.entries(sizesMapping).map(([key, value]) => [value, key])
         ),
-      [sizesMapping]
+      []
     )
 
     const mappedSize: InternalAvatarProps["size"] = (reversedSizesMapping[

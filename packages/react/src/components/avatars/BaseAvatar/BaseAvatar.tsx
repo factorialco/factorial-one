@@ -36,7 +36,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
         Object.fromEntries(
           Object.entries(sizesMapping).map(([key, value]) => [value, key])
         ),
-      [sizesMapping]
+      []
     )
 
     // Check if size is a valid avatar size
@@ -50,7 +50,6 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
       // @ts-expect-error - size is not a valid size
       mappedSize = sizesMapping[size] ?? "md"
     }
-    console.log("mappedSize", mappedSize)
 
     const initials = getInitials(name, mappedSize)
     const avatarColor =
