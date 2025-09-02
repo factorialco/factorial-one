@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.170.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.1...factorial-one-react-v1.170.0) (2025-09-02)
+
+
+### Features
+
+* **One:** trigger button ([#2498](https://github.com/factorialco/factorial-one/issues/2498)) ([9574eaf](https://github.com/factorialco/factorial-one/commit/9574eaf68e54857266fd944c561fb5e100e871e6))
+
 ## [1.169.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.0...factorial-one-react-v1.169.1) (2025-09-02)
 
 
