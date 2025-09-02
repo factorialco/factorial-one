@@ -2,10 +2,10 @@
  * Icon cell type for displaying icons with associated labels in data collections.
  * Used for visual representation of status or type indicators.
  */
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 
 interface IconValue {
-  icon: F0IconType
+  icon: IconType
   label: string
 }
 export type IconCellValue = IconValue

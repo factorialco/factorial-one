@@ -1,6 +1,6 @@
 import { TableHead as TableHeadRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "motion/react"
-import { F0Icon, F0IconType } from "../../../components/F0Icon"
+import { F0Icon, IconType } from "../../../components/F0Icon"
 import { ArrowDown, InfoCircleLine } from "../../../icons/app"
 import { cn, focusRing } from "../../../lib/utils"
 import { Tooltip } from "../../Overlays/Tooltip"
@@ -46,7 +46,7 @@ interface TableHeadProps {
    * Icon to display when info is provided.
    * @default InfoCircleLine
    */
-  infoIcon?: F0IconType
+  infoIcon?: IconType
 
   /**
    * When true, the header cell will not be visible.

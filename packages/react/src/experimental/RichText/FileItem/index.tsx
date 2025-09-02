@@ -1,5 +1,5 @@
 import { F0AvatarFile } from "@/components/avatars/F0AvatarFile"
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import {
   DropdownInternal,
   DropdownItem,
@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
 type FileAction = {
-  icon?: F0IconType
+  icon?: IconType
   label: string
   onClick: () => void
   critical?: boolean

@@ -1,4 +1,4 @@
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { cn, focusRing } from "@/lib/utils"
 import { actionVariants, buttonSizeVariants } from "@/ui/Action/variants"
 import * as TogglePrimitive from "@radix-ui/react-toggle"
@@ -9,7 +9,7 @@ interface F0ButtonToggleProps {
   onSelectedChange?: (selected: boolean) => void
   label: string
   disabled?: boolean
-  icon: F0IconType
+  icon: IconType
   size?: "sm" | "md" | "lg"
 }
 

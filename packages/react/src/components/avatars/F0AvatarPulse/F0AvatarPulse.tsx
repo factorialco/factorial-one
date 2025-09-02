@@ -1,5 +1,5 @@
 import { Button as ActionButton } from "@/components/Actions/Button"
-import { F0Icon, F0IconProps, F0IconType } from "@/components/F0Icon"
+import { F0Icon, F0IconProps, IconType } from "@/components/F0Icon"
 import {
   FaceNegative,
   FaceNeutral,
@@ -24,7 +24,7 @@ export const pulses = [
 ] as const
 export type Pulse = (typeof pulses)[number]
 
-export const pulseIcon: Record<Pulse, F0IconType> = {
+export const pulseIcon: Record<Pulse, IconType> = {
   superNegative: FaceSuperNegative,
   negative: FaceNegative,
   neutral: FaceNeutral,

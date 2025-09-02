@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import { cva } from "cva"
 import { motion } from "motion/react"
 import { ComponentProps, forwardRef, useState } from "react"
-import { F0Icon, F0IconType } from "../../F0Icon"
+import { F0Icon, IconType } from "../../F0Icon"
 
 export type ButtonInternalProps = Pick<
   ComponentProps<typeof ShadcnButton>,
@@ -29,7 +29,7 @@ export type ButtonInternalProps = Pick<
     /**
      * Adds an icon to the button, combined with the label for better clarity and recognition.
      */
-    icon?: F0IconType
+    icon?: IconType
     /**
      * Adds an emoji to the button, can be used as a special case of icon-only button.
      */

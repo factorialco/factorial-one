@@ -1,4 +1,4 @@
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { F0TagAlert } from "@/components/tags/F0TagAlert"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { Counter } from "@/experimental/Information/Counter"
@@ -10,9 +10,9 @@ export type WidgetSimpleListItemProps<
 > = {
   id: Id
   title: string
-  icon?: F0IconType
+  icon?: IconType
   iconClassName?: string
-  rightIcon?: F0IconType
+  rightIcon?: IconType
   rightIconClassName?: string
   count?: number
   alert?: ComponentProps<typeof F0TagAlert>

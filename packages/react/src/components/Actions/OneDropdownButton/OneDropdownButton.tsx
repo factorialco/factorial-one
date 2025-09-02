@@ -5,13 +5,13 @@ import { ChevronDown } from "../../../icons/app"
 import { cn, focusRing } from "../../../lib/utils"
 import { Action } from "../../../ui/Action"
 import { actionVariants, buttonSizeVariants } from "../../../ui/Action/variants"
-import { F0Icon, F0IconType } from "../../F0Icon/index.tsx"
+import { F0Icon, IconType } from "../../F0Icon/index.tsx"
 import { OneDropdownButtonSize, OneDropdownButtonVariant } from "./types.ts"
 
 export type OneDropdownButtonItem<T = string> = {
   value: T
   label: string
-  icon?: F0IconType
+  icon?: IconType
   critical?: boolean
 }
 

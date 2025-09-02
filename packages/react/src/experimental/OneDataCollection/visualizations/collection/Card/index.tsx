@@ -2,7 +2,7 @@ import { F0Card } from "@/components/F0Card"
 import { CardAvatarVariant } from "@/components/F0Card/components/CardAvatar"
 import { cardPropertyRenderers } from "@/components/F0Card/components/CardMetadata"
 import { CardMetadata, CardMetadataProperty } from "@/components/F0Card/types"
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
@@ -30,7 +30,7 @@ import {
 import { useData } from "../../../useData"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T> & {
-  icon?: F0IconType
+  icon?: IconType
 }
 
 export type CardVisualizationOptions<

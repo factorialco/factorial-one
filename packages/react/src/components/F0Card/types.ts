@@ -1,4 +1,4 @@
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { valueDisplayRenderers } from "@/components/value-display"
 import { CardPropertyType } from "./components/CardMetadata"
 
@@ -15,7 +15,7 @@ export type CardMetadataProperty = {
 
 export type CardMetadata =
   | {
-      icon: F0IconType
+      icon: IconType
       property: Exclude<CardMetadataProperty, { type: "file" }>
     }
   | {

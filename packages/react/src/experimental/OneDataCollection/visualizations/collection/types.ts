@@ -1,4 +1,4 @@
-import { F0IconType } from "../../../../components/F0Icon"
+import { IconType } from "../../../../components/F0Icon"
 import type { FiltersDefinition } from "../../../../components/OneFilterPicker/types"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
@@ -55,7 +55,7 @@ export type Visualization<
       /** Human-readable label for the visualization */
       label: string
       /** Icon to represent the visualization in UI */
-      icon: F0IconType
+      icon: IconType
       /** Custom visualization type */
       type: "custom"
       /** Custom component to render the visualization */

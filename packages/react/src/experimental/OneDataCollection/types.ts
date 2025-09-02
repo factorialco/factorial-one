@@ -1,4 +1,4 @@
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import type {
   FiltersDefinition,
   FiltersState,
@@ -327,7 +327,7 @@ export type BulkAction = string
  */
 export type BulkActionDefinition = {
   label: string
-  icon?: F0IconType
+  icon?: IconType
   id: string
   keepSelection?: boolean // If true, the selection will not be cleared after the action is performed (false by default)
 }

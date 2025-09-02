@@ -1,4 +1,4 @@
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { Spinner } from "@/experimental/Information/Spinner"
 import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils.ts"
@@ -148,7 +148,7 @@ export type InputFieldStatus =
 export type InputFieldProps<T> = {
   label: string
   placeholder?: string
-  labelIcon?: F0IconType
+  labelIcon?: IconType
   hideLabel?: boolean
   hidePlaceholder?: boolean
   name?: string
@@ -184,7 +184,7 @@ export type InputFieldProps<T> = {
     ) => void
     value?: T
   }
-  icon?: F0IconType
+  icon?: IconType
   isEmpty?: (value: T | undefined) => boolean
   emptyValue?: T
   maxLength?: number

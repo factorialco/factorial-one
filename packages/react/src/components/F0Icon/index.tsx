@@ -43,7 +43,7 @@ type NestedKeyOf<T> = {
 export interface F0IconProps
   extends SVGProps<SVGSVGElement>,
     VariantProps<typeof iconVariants> {
-  icon: F0IconType
+  icon: IconType
   size?: "lg" | "md" | "sm" | "xs"
   state?: "normal" | "animate"
   color?:
@@ -53,7 +53,7 @@ export interface F0IconProps
     | Lowercase<NestedKeyOf<typeof f1Colors.icon>>
 }
 
-export type F0IconType = ForwardRefExoticComponent<
+export type IconType = ForwardRefExoticComponent<
   SVGProps<SVGSVGElement> &
     RefAttributes<SVGSVGElement> & {
       animate?: "normal" | "animate"

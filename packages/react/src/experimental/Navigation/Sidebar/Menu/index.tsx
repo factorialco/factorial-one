@@ -1,5 +1,5 @@
 import { AvatarVariant, F0Avatar } from "@/components/avatars/F0Avatar"
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { OneEllipsis } from "@/components/OneEllipsis"
 import { Counter } from "@/experimental/Information/Counter"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
@@ -31,14 +31,14 @@ import {
 import { DragProvider, useDragContext } from "./DragContext"
 
 export interface MenuItem extends NavigationItem {
-  icon: F0IconType
+  icon: IconType
   badge?: number
 }
 
 type FavoriteMenuItem = (
   | {
       type: "icon"
-      icon: F0IconType
+      icon: IconType
     }
   | {
       type: "avatar"

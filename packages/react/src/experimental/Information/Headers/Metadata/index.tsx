@@ -5,7 +5,7 @@ import {
   PersonAvatar,
   TeamAvatar,
 } from "@/components/avatars/F0AvatarList/types"
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { NewColor } from "@/components/tags/F0TagDot"
 import { StatusVariant } from "@/components/tags/F0TagStatus"
 import { MobileDropdown } from "@/experimental/Navigation/Dropdown"
@@ -40,7 +40,7 @@ type MetadataItemValue =
   | { type: "date"; formattedDate: string; icon?: "warning" | "critical" }
 
 type MetadataAction = {
-  icon: F0IconType
+  icon: IconType
   label: string
   onClick: () => void
   type?: never

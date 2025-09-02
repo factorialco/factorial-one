@@ -1,4 +1,4 @@
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { DropdownDefault } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
@@ -10,7 +10,7 @@ function Selector({
 }: {
   text?: string
   placeholder: string
-  icon?: F0IconType
+  icon?: IconType
   onClick?: () => void
 }) {
   return (

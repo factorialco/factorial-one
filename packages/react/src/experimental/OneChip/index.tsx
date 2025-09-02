@@ -1,5 +1,5 @@
 import { F0Avatar, type AvatarVariant } from "@/components/avatars/F0Avatar"
-import { F0Icon, type F0IconType } from "@/components/F0Icon"
+import { F0Icon, type IconType } from "@/components/F0Icon"
 import { CrossedCircle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
@@ -47,7 +47,7 @@ type ChipVariants =
       /**
        * If defined, an icon will be displayed in the chip
        * */
-      icon: F0IconType
+      icon: IconType
       avatar?: undefined
     }
   | {

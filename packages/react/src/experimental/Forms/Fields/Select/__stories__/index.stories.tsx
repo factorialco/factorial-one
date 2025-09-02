@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
 import { Select, SelectProps } from "../index"
 
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { Appearance, Circle, Desktop, Plus } from "@/icons/app"
 import { inputFieldStatus } from "@/ui/InputField"
 import { useState } from "react"
@@ -34,7 +34,7 @@ const SelectWithHooks = (props: SelectProps<string>) => {
   )
 }
 
-const icons: Record<string, F0IconType> = {
+const icons: Record<string, IconType> = {
   light: Circle,
   dark: Appearance,
   system: Desktop,

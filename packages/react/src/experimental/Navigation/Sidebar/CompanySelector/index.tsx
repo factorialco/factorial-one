@@ -1,6 +1,6 @@
 import { AvatarVariant } from "@/components/avatars/F0Avatar"
 import { F0AvatarCompany } from "@/components/avatars/F0AvatarCompany"
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { ChevronDown, Circle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
@@ -23,7 +23,7 @@ export type CompanySelectorProps = {
   additionalOptions?: {
     label: string
     value: string
-    icon?: F0IconType
+    icon?: IconType
     description?: string
     onClick?: () => void
   }[]

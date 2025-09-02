@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { Select } from "@/experimental/Forms/Fields/Select"
 import { SolidPause, SolidPlay, SolidStop } from "@/icons/app"
@@ -45,7 +45,7 @@ export interface ClockInControlsProps {
   locations: {
     id: string
     name: string
-    icon: F0IconType
+    icon: IconType
   }[]
   breakTypes?: BreakType[]
   onChangeBreakTypeId?: Dispatch<string>

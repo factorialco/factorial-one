@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { AvatarBadge } from "@/components/avatars/F0Avatar/types"
 import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { F0TagDot, TagDotProps } from "@/components/tags/F0TagDot"
 import { F0TagRaw, TagRawProps } from "@/components/tags/F0TagRaw"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
@@ -23,12 +23,12 @@ export type OnePersonListItemProps = {
   rightTag?: TagDotProps
   actions?: {
     primary?: {
-      icon?: F0IconType
+      icon?: IconType
       label: string
       onClick: () => void
     }
     secondary?: {
-      icon: F0IconType
+      icon: IconType
       onClick: () => void
     }
   }

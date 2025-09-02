@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { ModuleId } from "@/experimental"
 import { ButtonVariant } from "@/ui/button"
 import { useState } from "react"
@@ -38,7 +38,7 @@ type ProductModalProps = {
   }
   tag?: {
     label: string
-    icon: F0IconType
+    icon: IconType
   }
   primaryAction?: Action
   secondaryAction?: Action
@@ -48,7 +48,7 @@ type ProductModalProps = {
 type Action = {
   label: string
   onClick: () => void
-  icon?: F0IconType
+  icon?: IconType
   variant?: ButtonVariant
   size?: "md" | "lg"
   loading?: boolean

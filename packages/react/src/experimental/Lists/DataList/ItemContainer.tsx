@@ -1,11 +1,11 @@
 import { forwardRef, ReactElement, ReactNode } from "react"
-import { F0Icon, F0IconType } from "../../../components/F0Icon"
+import { F0Icon, IconType } from "../../../components/F0Icon"
 import { cn } from "../../../lib/utils"
 import { CopyAction } from "./actions/CopyAction"
 import { NavigateAction } from "./actions/NavigateAction"
 
 type ItemContainerProps = {
-  leftIcon?: F0IconType | (() => ReactElement)
+  leftIcon?: IconType | (() => ReactElement)
   action?: InternalActionType
   text: string
   className?: string

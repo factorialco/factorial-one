@@ -1,5 +1,5 @@
 import { F0AvatarIcon } from "@/components/avatars/F0AvatarIcon"
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { Bell as BellIcon } from "@/icons/app"
 import { getDisplayDateBasedOnDuration } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
@@ -11,7 +11,7 @@ export type ActivityItemProps = {
   createdAt: Date
   title: string
   description?: string
-  icon?: F0IconType
+  icon?: IconType
   category: string
   isUnread?: boolean
   onClick: (id: string) => void

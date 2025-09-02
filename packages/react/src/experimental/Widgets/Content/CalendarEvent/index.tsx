@@ -1,5 +1,5 @@
 import { F0AvatarDate } from "@/components/avatars/F0AvatarDate"
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { ChevronRight } from "@/icons/app"
@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
 type Tag = {
-  icon: F0IconType
+  icon: IconType
   label?: string
   description?: string
 }

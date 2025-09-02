@@ -1,4 +1,4 @@
-import { F0Icon, F0IconProps, F0IconType } from "@/components/F0Icon"
+import { F0Icon, F0IconProps, IconType } from "@/components/F0Icon"
 import { AlertCircle, InfoCircle, Warning } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { InputFieldStatus, InputFieldStatusType } from "../InputField"
@@ -9,7 +9,7 @@ type InputMessagesProps = {
 
 const statuses: Record<
   InputFieldStatusType,
-  { color: string; iconColor: F0IconProps["color"]; icon?: F0IconType }
+  { color: string; iconColor: F0IconProps["color"]; icon?: IconType }
 > = {
   default: {
     color: "text-f1-foreground-secondary",

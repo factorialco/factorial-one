@@ -1,4 +1,4 @@
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { AlertCircle, InfoCircle, Warning } from "@/icons/app"
 import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
@@ -6,7 +6,7 @@ import { forwardRef } from "react"
 import { BaseTag } from "../BaseTag"
 import type { Level, Props } from "./types"
 
-const iconMap: Record<Level, F0IconType> = {
+const iconMap: Record<Level, IconType> = {
   info: InfoCircle,
   warning: Warning,
   critical: AlertCircle,

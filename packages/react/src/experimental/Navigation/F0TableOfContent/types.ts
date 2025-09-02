@@ -1,11 +1,11 @@
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 
 // Base TOC item interface without children
 interface BaseTOCItem {
   id: string
   label: string
   onClick?: (id: string) => void
-  icon?: F0IconType
+  icon?: IconType
   disabled?: boolean
   otherActions?: TOCItemAction[]
 }
@@ -24,7 +24,7 @@ export type TOCItemAction =
   | {
       label: string
       onClick: () => void
-      icon?: F0IconType
+      icon?: IconType
     }
   | {
       type: "separator"

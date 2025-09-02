@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { LiveCompanionLabels } from "@/experimental/RichText/CoreEditor/Extensions/LiveCompanion"
 import { MoodTrackerLabels } from "@/experimental/RichText/CoreEditor/Extensions/MoodTracker"
@@ -26,7 +26,7 @@ export type AIButton = {
   type: string
   emoji: string
   label: string
-  icon: F0IconType
+  icon: IconType
 }
 
 export interface AIBlockLabels {

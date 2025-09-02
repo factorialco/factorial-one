@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { F0Icon, F0IconType } from "../../src/components/F0Icon"
+import { F0Icon, IconType } from "../../src/components/F0Icon"
 
 interface FeatureCardProps {
-  icon: F0IconType
+  icon: IconType
   title: string
   description: string
   href: string

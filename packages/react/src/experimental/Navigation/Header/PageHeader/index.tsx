@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { ModuleId } from "@/components/avatars/F0AvatarModule"
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import type { StatusVariant } from "@/components/tags/F0TagStatus"
 import { F0TagStatus } from "@/components/tags/F0TagStatus"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
@@ -19,7 +19,7 @@ import { ProductUpdates, ProductUpdatesProp } from "../ProductUpdates"
 
 export type PageAction = {
   label: string
-  icon: F0IconType
+  icon: IconType
 } & (
   | {
       href: string
@@ -75,7 +75,7 @@ function PageNavigationLink({
   label,
   disabled,
 }: {
-  icon: F0IconType
+  icon: IconType
   href: string
   label: string
   disabled?: boolean

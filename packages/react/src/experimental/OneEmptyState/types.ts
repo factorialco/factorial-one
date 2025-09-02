@@ -1,5 +1,5 @@
 import { AlertAvatarProps } from "@/components/avatars/F0AvatarAlert"
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { LoadingStateProps } from "@/components/UpsellingKit/UpsellingButton"
 import {
   ErrorMessageProps,
@@ -29,7 +29,7 @@ export type ActionProps = {
    * The icon of the action
    * @optional
    */
-  icon?: F0IconType
+  icon?: IconType
 } & (
   | {
       /**

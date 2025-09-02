@@ -1,4 +1,4 @@
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { FiltersDefinition } from "@/components/OneFilterPicker"
 import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
@@ -16,7 +16,7 @@ import { TableCollection, TableCollectionProps } from "./Table"
 export type VisualizacionTypeDefinition<Props> = {
   render: (props: Props) => JSX.Element
   name: string
-  icon: F0IconType
+  icon: IconType
 }
 
 type CollectionVisualizations<

@@ -1,13 +1,13 @@
 import { EmojiImage } from "@/lib/emojis"
 import { forwardRef } from "react"
-import { F0Icon, F0IconType } from "../components/F0Icon"
+import { F0Icon, IconType } from "../components/F0Icon"
 import { cn } from "../lib/utils"
 
 type IndicatorProps = {
   content: string
   label: string
   color?: string
-} & ({ icon?: F0IconType } | { emoji?: string })
+} & ({ icon?: IconType } | { emoji?: string })
 
 export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
   function Indicator({ content, label, color, ...props }, ref) {

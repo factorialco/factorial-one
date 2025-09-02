@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { OneDropdownButton } from "@/components/Actions/OneDropdownButton"
 import { F0AvatarAlert } from "@/components/avatars/F0AvatarAlert"
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import {
   Dropdown,
   DropdownItem,
@@ -14,7 +14,7 @@ import { AnimatePresence, motion } from "motion/react"
 
 type ActionType = {
   label: string
-  icon?: F0IconType
+  icon?: IconType
   onClick?: () => void
   disabled?: boolean
   critical?: boolean

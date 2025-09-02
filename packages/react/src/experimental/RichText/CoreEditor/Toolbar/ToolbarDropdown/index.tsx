@@ -1,4 +1,4 @@
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { cn } from "@/lib/utils"
 import * as Popover from "@radix-ui/react-popover"
 import { AnimatePresence, motion } from "motion/react"
@@ -6,7 +6,7 @@ import { useState } from "react"
 import { ToolbarButton } from "../ToolbarButton"
 
 interface ToolbarDropdownItem {
-  icon: F0IconType
+  icon: IconType
   label: string
   onClick: () => void
   isActive?: boolean
@@ -20,7 +20,7 @@ interface ToolbarDropdownProps {
   position?: "top" | "bottom"
   activator: {
     label: string
-    icon: F0IconType
+    icon: IconType
   }
 }
 

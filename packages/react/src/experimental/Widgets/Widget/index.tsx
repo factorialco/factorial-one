@@ -1,5 +1,5 @@
 import { Button, type ButtonProps } from "@/components/Actions/Button"
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { F0TagAlert } from "@/components/tags/F0TagAlert"
 import { F0TagStatus, StatusVariant } from "@/components/tags/F0TagStatus"
 import { Counter } from "@/experimental/Information/Counter"
@@ -35,7 +35,7 @@ export interface WidgetProps {
       title: string
       url?: string
       onClick?: () => void
-      icon?: F0IconType
+      icon?: IconType
     }
     count?: number
   }

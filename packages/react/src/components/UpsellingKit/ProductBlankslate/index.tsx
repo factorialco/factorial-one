@@ -1,6 +1,6 @@
 // packages/react/src/experimental/ProductBlankslate/index.tsx
 import { F0AvatarModule, ModuleId } from "@/components/avatars/F0AvatarModule"
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { CheckCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
@@ -17,7 +17,7 @@ type ProductBlankslateProps = {
   moduleName?: string
   tag?: {
     label: string
-    icon: F0IconType
+    icon: IconType
   }
 }
 

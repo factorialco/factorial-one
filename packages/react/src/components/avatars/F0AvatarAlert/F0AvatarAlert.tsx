@@ -1,4 +1,4 @@
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { AlertCircle, CheckCircle, InfoCircle, Warning } from "@/icons/app"
 import { cva, type VariantProps } from "cva"
 import { BaseAvatarProps } from "../BaseAvatar"
@@ -45,7 +45,7 @@ export const F0AvatarAlert = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledby,
 }: AlertAvatarProps) => {
-  const iconMap: Record<AlertAvatarProps["type"], F0IconType> = {
+  const iconMap: Record<AlertAvatarProps["type"], IconType> = {
     critical: AlertCircle,
     warning: Warning,
     info: InfoCircle,

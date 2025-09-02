@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils"
 import ChevronRight from "../../icons/app/ChevronRight"
 import InfoCircleLine from "../../icons/app/InfoCircleLine"
 
-import { F0Icon, F0IconType } from "@/components/F0Icon"
+import { F0Icon, IconType } from "@/components/F0Icon"
 import { Link } from "@/lib/linkHandler"
 import { useI18n } from "@/lib/providers/i18n"
 import {
@@ -140,7 +140,7 @@ CardInfo.displayName = "CardInfo"
  */
 const CardLink = React.forwardRef<
   HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<"a"> & { icon?: F0IconType }
+  React.ComponentPropsWithoutRef<"a"> & { icon?: IconType }
 >(({ className, title, icon = ChevronRight, ...props }, ref) => {
   return (
     <Link

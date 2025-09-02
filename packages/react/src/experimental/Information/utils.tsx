@@ -1,5 +1,5 @@
 import { OneDropdownButtonItem } from "../../components/Actions/OneDropdownButton"
-import { F0IconType } from "../../components/F0Icon"
+import { IconType } from "../../components/F0Icon"
 
 export interface PrimaryAction {
   disabled?: boolean
@@ -8,7 +8,7 @@ export interface PrimaryAction {
 }
 export interface PrimaryActionButton extends PrimaryAction {
   label: string
-  icon?: F0IconType
+  icon?: IconType
   onClick: () => void
 }
 

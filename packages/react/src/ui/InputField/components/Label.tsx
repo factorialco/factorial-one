@@ -1,4 +1,4 @@
-import { F0Icon, type F0IconType } from "@/components/F0Icon"
+import { F0Icon, type IconType } from "@/components/F0Icon"
 import { OneEllipsis } from "@/components/OneEllipsis"
 import { cn } from "@/lib/utils"
 
@@ -7,7 +7,7 @@ type LabelProps = {
   required?: boolean
   htmlFor: string
   className?: string
-  icon?: F0IconType
+  icon?: IconType
   disabled?: boolean
 }
 const Label = ({

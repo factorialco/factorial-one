@@ -1,9 +1,9 @@
-import { F0Icon, F0IconType } from "../../../../../components/F0Icon"
+import { F0Icon, IconType } from "../../../../../components/F0Icon"
 import { cn } from "../../../../../lib/utils"
 
 type Props = {
   label: string
-  icon: F0IconType
+  icon: IconType
   iconClassName?: string
   count: number
   onClick?: () => void

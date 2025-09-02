@@ -1,4 +1,4 @@
-import { F0IconType } from "@/components/F0Icon"
+import { IconType } from "@/components/F0Icon"
 import { JSONContent } from "@tiptap/react"
 import { FileType } from "./constants"
 
@@ -59,7 +59,7 @@ type actionType = {
   onClick: () => void
   disabled?: boolean
   variant: "default" | "outline" | "neutral" | undefined
-  icon?: F0IconType
+  icon?: IconType
 }
 
 type toggleActionType = {
@@ -80,7 +80,7 @@ type subActionType = {
   label: string
   onClick: () => void
   disabled?: boolean
-  icon?: F0IconType
+  icon?: IconType
 }
 
 type primaryActionType = {
