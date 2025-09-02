@@ -1,23 +1,15 @@
-import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
 import { F0Checkbox } from "@/components/F0Checkbox"
-import { DropdownItemSeparator } from "@/experimental/Navigation/Dropdown/internal"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { useState } from "react"
 import { FiltersDefinition } from "../../../../../../components/OneFilterPicker/types"
-import {
-  ActionDefinition,
-  filterItemActions,
-  ItemActionsDefinition,
-} from "../../../../item-actions"
-import { ItemActionsDropdown } from "../../../../ItemActions/ItemActionsDropdown"
+import { ItemActionsDefinition } from "../../../../item-actions"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { renderProperty } from "../../../../property-render"
 import { SortingsDefinition } from "../../../../sortings"
 import { SummariesDefinition } from "../../../../summary"
 import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
-import { actionsToDropdownItems } from "../../utils"
+import { ItemActionsRenderer } from "../../components/ItemActionsRenderer"
 import { ItemDefinition, ListPropertyDefinition } from "../types"
 import { ItemTeaser } from "./ItemTeaser"
 
@@ -87,61 +79,11 @@ export const Row = <
   const id = source.selectable ? source.selectable(item) : undefined
   const itemDef = itemDefinition(item)
 
-  const itemActions = filterItemActions(source.itemActions, item)
-
-  // gets the primary item actions (max 2)
-  const primaryItemActions = itemActions
-    .filter(
-      (action): action is Exclude<ActionDefinition, DropdownItemSeparator> =>
-        action.type === "primary"
-    )
-    .slice(0, 2)
-
-  // the rest of the actions go to the dropdown
-  const dropdownItemActions = actionsToDropdownItems(
-    itemActions.filter(
-      (action) =>
-        action.type === "separator" || !primaryItemActions.includes(action)
-    )
-  )
-
-  // mobile dropdown includes primary actions
-  const mobileDropdownItemActions = actionsToDropdownItems([
-    ...primaryItemActions,
-    ...itemActions.filter(
-      (action) =>
-        action.type === "separator" || !primaryItemActions.includes(action)
-    ),
-  ])
-
-  const [dropDownOpen, setDropDownOpen] = useState(false)
-
-  const [dropDownOpenTimeout, setDropDownOpenTimeout] =
-    useState<NodeJS.Timeout | null>(null)
-  const handleDropDownOpenChange = (open: boolean) => {
-    // When the dropdown is closed, we wait 100ms before closing it to avoid losing the reference element to position the dropdown
-    if (!open) {
-      setDropDownOpenTimeout(
-        setTimeout(() => {
-          setDropDownOpen(false)
-        }, 100)
-      )
-      return
-    }
-
-    if (dropDownOpenTimeout) {
-      clearTimeout(dropDownOpenTimeout)
-      setDropDownOpenTimeout(null)
-    }
-    setDropDownOpen(true)
-  }
-
   return (
     <div
       className={cn(
         "relative flex w-full flex-col justify-between gap-4 p-3 transition-colors md:flex-row md:p-2 md:pl-3 md:pr-4",
-        "group after:absolute after:inset-y-0 after:-right-px after:z-10 after:hidden after:h-full after:w-10 after:bg-gradient-to-r after:from-transparent after:via-f1-background after:via-75% after:to-f1-background after:transition-all after:content-[''] hover:after:via-[#F5F6F8] hover:after:to-[#F5F6F8] dark:hover:after:via-[#192231] dark:hover:after:to-[#192231] md:after:block hover:md:bg-f1-background-hover",
-        dropDownOpen && "md:bg-f1-background-hover"
+        "group after:absolute after:inset-y-0 after:-right-px after:z-10 after:hidden after:h-full after:w-10 after:bg-gradient-to-r after:from-transparent after:via-f1-background after:via-75% after:to-f1-background after:transition-all after:content-[''] hover:after:via-[#F5F6F8] hover:after:to-[#F5F6F8] dark:hover:after:via-[#192231] dark:hover:after:to-[#192231] md:after:block hover:md:bg-f1-background-hover"
       )}
     >
       <div className="flex flex-1 flex-row items-center gap-2">
@@ -179,40 +121,7 @@ export const Row = <
         ))}
       </div>
       {source.itemActions && (
-        <>
-          <aside
-            className={cn(
-              "absolute -right-px bottom-0 top-0 z-20 hidden items-center justify-end gap-2 py-2 pl-20 pr-3 opacity-0 transition-all group-hover:opacity-100 md:flex",
-              "bg-gradient-to-l from-[#F5F6F8] from-0% dark:from-[#192231]",
-              "via-[#F5F6F8] via-60% dark:via-[#192231]",
-              "to-transparent to-100%",
-              dropDownOpen ? "opacity-100" : "opacity-0"
-            )}
-          >
-            {primaryItemActions.map((action) => (
-              <Button
-                key={action.label}
-                label={action.label}
-                variant="outline"
-                onClick={action.onClick}
-                icon={action.icon}
-              />
-            ))}
-
-            <ItemActionsDropdown
-              align="end"
-              items={dropdownItemActions}
-              onOpenChange={handleDropDownOpenChange}
-            />
-          </aside>
-          <div className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center md:hidden">
-            <ItemActionsDropdown
-              align="end"
-              items={mobileDropdownItemActions}
-              onOpenChange={handleDropDownOpenChange}
-            />
-          </div>
-        </>
+        <ItemActionsRenderer source={source} item={item} />
       )}
       {source.selectable && id !== undefined && (
         <div

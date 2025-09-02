@@ -340,7 +340,7 @@ export const TableCollection = <
                 {label}
               </TableHead>
             ))}
-            {source.itemActions && (
+            {/* {source.itemActions && (
               <TableHead
                 key="actions"
                 width={68}
@@ -351,7 +351,7 @@ export const TableCollection = <
               >
                 {t.collections.actions.actions}
               </TableHead>
-            )}
+            )} */}
           </TableRow>
         </TableHeader>
         <TableBody>
