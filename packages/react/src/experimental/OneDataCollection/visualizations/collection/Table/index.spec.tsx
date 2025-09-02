@@ -972,9 +972,11 @@ describe("TableCollection", () => {
       ).toBeInTheDocument()
 
       // Secondary actions go to dropdown (just verify dropdown exists)
-      expect(
-        screen.getByRole("button", { name: /actions/i })
-      ).toBeInTheDocument()
+      // ItemActionsRenderer renders both desktop and mobile versions,
+      // so we expect 2 buttons total (1 desktop + 1 mobile for 1 row)
+      const actionsButtons = screen.getAllByRole("button", { name: /actions/i })
+      expect(actionsButtons).toHaveLength(2) // Desktop + Mobile
+      expect(actionsButtons[0]).toBeInTheDocument()
     })
 
     it("calls onClick handlers when buttons are clicked", async () => {

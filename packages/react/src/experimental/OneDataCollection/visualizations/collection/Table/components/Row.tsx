@@ -142,15 +142,7 @@ const RowComponentInner = <
         </TableCell>
       ))}
       {source.itemActions && (
-        // <TableCell
-        //   key={`table-cell-${groupIndex}-${index}-actions`}
-        //   width={68}
-        //   sticky={{
-        //     right: 0,
-        //   }}
-        // >
         <ItemActionsRenderer source={source} item={item} />
-        // </TableCell>
       )}
     </TableRow>
   )
