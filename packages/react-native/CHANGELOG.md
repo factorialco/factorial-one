@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.18.1...factorial-one-react-native-v0.19.0) (2025-09-03)
+
+
+### Features
+
+* remove module inbox ([#2514](https://github.com/factorialco/factorial-one/issues/2514)) ([183c97c](https://github.com/factorialco/factorial-one/commit/183c97c8803792ef0312ec876b45a827af085574))
+
 ## [0.18.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.18.0...factorial-one-react-native-v0.18.1) (2025-08-13)
 
 
