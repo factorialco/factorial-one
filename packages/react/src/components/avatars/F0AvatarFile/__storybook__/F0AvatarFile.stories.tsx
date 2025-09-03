@@ -100,6 +100,10 @@ export const AllFileTypes: Story = {
 
 export const Snapshot: Story = {
   parameters: withSnapshot({}),
+  args: {
+    size: "md",
+    file: { name: "document.pdf", type: "application/pdf" },
+  },
   render: () => (
     <div className="flex w-fit flex-col gap-2">
       {avatarFileSizes.map((size) => (
