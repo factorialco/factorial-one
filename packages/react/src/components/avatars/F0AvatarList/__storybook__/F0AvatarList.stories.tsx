@@ -1,13 +1,13 @@
-import { avatarVariants } from "@/components/avatars/F0Avatar"
+import {
+  avatarVariants,
+  CompanyAvatarVariant,
+  PersonAvatarVariant,
+  TeamAvatarVariant,
+} from "@/components/avatars/F0Avatar"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarList } from "../F0AvatarList"
-import {
-  avatarListSizes,
-  CompanyAvatar,
-  PersonAvatar,
-  TeamAvatar,
-} from "../types"
+import { avatarListSizes } from "../types"
 
 const dummyPeople = [
   {
@@ -50,10 +50,10 @@ function getDummyAvatars<T extends "person" | "company" | "team" = "person">(
   count: number,
   type: T
 ): T extends "person"
-  ? PersonAvatar[]
+  ? PersonAvatarVariant[]
   : T extends "company"
-    ? CompanyAvatar[]
-    : TeamAvatar[] {
+    ? CompanyAvatarVariant[]
+    : TeamAvatarVariant[] {
   const sourceData = {
     person: dummyPeople,
     company: dummyCompanies,
@@ -63,10 +63,10 @@ function getDummyAvatars<T extends "person" | "company" | "team" = "person">(
   return Array.from({ length: count }, (_, index) => ({
     ...sourceData[index % sourceData.length],
   })) as T extends "person"
-    ? PersonAvatar[]
+    ? PersonAvatarVariant[]
     : T extends "company"
-      ? CompanyAvatar[]
-      : TeamAvatar[]
+      ? CompanyAvatarVariant[]
+      : TeamAvatarVariant[]
 }
 
 const meta: Meta<typeof F0AvatarList> = {

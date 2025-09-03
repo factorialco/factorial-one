@@ -1,37 +1,31 @@
-import { AvatarVariant } from "../F0Avatar/types"
+import {
+  CompanyAvatarVariant,
+  FileAvatarVariant,
+  PersonAvatarVariant,
+  TeamAvatarVariant,
+} from "../F0Avatar/types"
 
 export const avatarListSizes = ["xs", "sm", "md"] as const
 
 export type AvatarListSize = (typeof avatarListSizes)[number]
 
-// Extract specific avatar types from the discriminated union
-export type PersonAvatar = Omit<
-  Extract<AvatarVariant, { type: "person" }>,
-  "type"
->
-export type TeamAvatar = Omit<Extract<AvatarVariant, { type: "team" }>, "type">
-export type CompanyAvatar = Omit<
-  Extract<AvatarVariant, { type: "company" }>,
-  "type"
->
-export type FileAvatar = Omit<Extract<AvatarVariant, { type: "file" }>, "type">
-
 export type F0AvatarListPropsAvatars =
   | {
       type: "person"
-      avatars: (PersonAvatar | (PersonAvatar & Record<string, unknown>))[]
+      avatars: // Allow to have more properties in the avatar variant
+      (Omit<PersonAvatarVariant, "type"> & Record<string, unknown>)[]
     }
   | {
       type: "team"
-      avatars: (TeamAvatar | (TeamAvatar & Record<string, unknown>))[]
+      avatars: (Omit<TeamAvatarVariant, "type"> & Record<string, unknown>)[]
     }
   | {
       type: "company"
-      avatars: (CompanyAvatar | (CompanyAvatar & Record<string, unknown>))[]
+      avatars: (Omit<CompanyAvatarVariant, "type"> & Record<string, unknown>)[]
     }
   | {
       type: "file"
-      avatars: (FileAvatar | (FileAvatar & Record<string, unknown>))[]
+      avatars: (Omit<FileAvatarVariant, "type"> & Record<string, unknown>)[]
     }
 
 // Discriminated union that enforces type consistency

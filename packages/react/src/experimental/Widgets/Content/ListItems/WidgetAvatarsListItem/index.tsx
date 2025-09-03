@@ -1,7 +1,7 @@
+import { PersonAvatarVariant } from "@/components/avatars/F0Avatar"
 import { F0AvatarAlert } from "@/components/avatars/F0AvatarAlert"
 import { F0AvatarEmoji } from "@/components/avatars/F0AvatarEmoji"
 import { F0AvatarList } from "@/components/avatars/F0AvatarList"
-import { PersonAvatar } from "@/components/avatars/F0AvatarList/types"
 import { cn } from "@/lib/utils"
 import { ComponentProps } from "react"
 
@@ -9,7 +9,7 @@ export type WidgetAvatarsListItemProps = {
   id: string | number
   title: string
   subtitle: string
-  avatars: PersonAvatar[]
+  avatars: Omit<PersonAvatarVariant, "type">[] & Record<string, unknown>[]
   remainingCount?: number
   withPointerCursor?: boolean
   onClick?: (id: string | number) => void

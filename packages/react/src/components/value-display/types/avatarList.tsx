@@ -2,28 +2,30 @@
  * Avatar list cell type for displaying multiple user avatars in a collection.
  * Supports limiting the maximum number of visible avatars.
  */
-import { F0AvatarList } from "@/components/avatars/F0AvatarList"
 import {
-  CompanyAvatar,
+  CompanyAvatarVariant,
+  PersonAvatarVariant,
+  TeamAvatarVariant,
+} from "@/components/avatars/F0Avatar"
+import {
+  F0AvatarList,
   F0AvatarListProps,
-  PersonAvatar,
-  TeamAvatar,
-} from "@/components/avatars/F0AvatarList/types"
+} from "@/components/avatars/F0AvatarList"
 
 type AvatarListValue = {
   max?: number
 } & (
   | {
       type?: "person"
-      avatarList: PersonAvatar[]
+      avatarList: PersonAvatarVariant[]
     }
   | {
       type: "team"
-      avatarList: TeamAvatar[]
+      avatarList: TeamAvatarVariant[]
     }
   | {
       type: "company"
-      avatarList: CompanyAvatar[]
+      avatarList: CompanyAvatarVariant[]
     }
 )
 export type AvatarListCellValue = AvatarListValue
