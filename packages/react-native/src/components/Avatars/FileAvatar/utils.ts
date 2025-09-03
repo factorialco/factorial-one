@@ -5,7 +5,7 @@ type FileTypeInfo = {
 
 type FileLike = {
   name: string;
-  type?: string; // opcional porque a veces no lo tendrás
+  type?: string;
 };
 
 const FILE_TYPE_MAP: Record<string, FileTypeInfo> = {
