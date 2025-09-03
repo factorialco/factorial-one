@@ -53866,7 +53866,7 @@ const GU = ({ title: t, info: e }) => /* @__PURE__ */ b("div", { className: "fle
 ] }), KK = V(
   function({ title: e, titleValue: n, list: i }, r) {
     return /* @__PURE__ */ b("div", { ref: r, className: "flex flex-col gap-2", children: [
-      e && /* @__PURE__ */ b("div", { className: "flex items-center justify-between font-medium", children: [
+      e && /* @__PURE__ */ b("div", { className: "flex items-center justify-between gap-2 font-medium", children: [
         /* @__PURE__ */ f("div", { children: e }),
         n && /* @__PURE__ */ f("div", { children: n })
       ] }),
