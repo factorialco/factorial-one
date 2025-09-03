@@ -1,15 +1,15 @@
+import { Button } from "@/components/Actions/Button"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
+import { F0Checkbox } from "@/components/F0Checkbox"
+import { Delete, Ellipsis, Pencil } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import React, { useState } from "react"
-import { Button } from "../../components/Actions/Button"
-import { F0Checkbox } from "../../components/F0Checkbox"
-import { Delete, Ellipsis, Pencil } from "../../icons/app"
-import { PersonAvatar } from "../Information/Avatars/PersonAvatar"
 
-import { RawTag } from "../Information/Tags/RawTag"
-import { StatusTag, type StatusVariant } from "../Information/Tags/StatusTag"
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
+import { F0TagStatus, type StatusVariant } from "@/components/tags/F0TagStatus"
 
-import { Dropdown } from "../Navigation/Dropdown"
-import { OnePagination } from "../OnePagination"
+import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { OnePagination } from "@/experimental/OnePagination"
 import {
   OneTable,
   TableBody,
@@ -99,7 +99,7 @@ export const Default: Story = {
           <TableRow key={row.id}>
             <TableCell>
               <div className="flex items-center gap-2">
-                <PersonAvatar
+                <F0AvatarPerson
                   firstName={row.name.split(" ")[0]}
                   lastName={row.name.split(" ")[1]}
                   size="small"
@@ -110,12 +110,12 @@ export const Default: Story = {
             <TableCell>{row.email}</TableCell>
             <TableCell>
               <div className="w-fit">
-                <RawTag text={row.role} />
+                <F0TagRaw text={row.role} />
               </div>
             </TableCell>
             <TableCell>
               <div className="w-fit">
-                <StatusTag
+                <F0TagStatus
                   text={row.status.label}
                   variant={row.status.variant}
                 />
@@ -342,7 +342,7 @@ export const StickyColumn: Story = {
             <TableCell>{row.manager}</TableCell>
             <TableCell>
               <div className="w-fit">
-                <StatusTag
+                <F0TagStatus
                   text={row.status.label}
                   variant={row.status.variant}
                 />
@@ -486,7 +486,7 @@ export const Footer: Story = {
             <TableRow key={row.id}>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <PersonAvatar
+                  <F0AvatarPerson
                     firstName={row.name.split(" ")[0]}
                     lastName={row.name.split(" ")[1]}
                     size="small"
@@ -497,12 +497,12 @@ export const Footer: Story = {
               <TableCell>{row.email}</TableCell>
               <TableCell>
                 <div className="w-fit">
-                  <RawTag text={row.role} />
+                  <F0TagRaw text={row.role} />
                 </div>
               </TableCell>
               <TableCell>
                 <div className="w-fit">
-                  <StatusTag
+                  <F0TagStatus
                     text={row.status.label}
                     variant={row.status.variant}
                   />
@@ -543,7 +543,7 @@ export const Actions: Story = {
           <TableRow key={row.id}>
             <TableCell>
               <div className="flex items-center gap-2">
-                <PersonAvatar
+                <F0AvatarPerson
                   firstName={row.name.split(" ")[0]}
                   lastName={row.name.split(" ")[1]}
                   size="small"
@@ -554,12 +554,12 @@ export const Actions: Story = {
             <TableCell>{row.email}</TableCell>
             <TableCell>
               <div className="w-fit">
-                <RawTag text={row.role} />
+                <F0TagRaw text={row.role} />
               </div>
             </TableCell>
             <TableCell>
               <div className="w-fit">
-                <StatusTag
+                <F0TagStatus
                   text={row.status.label}
                   variant={row.status.variant}
                 />
@@ -623,7 +623,7 @@ export const WithLinks: Story = {
             </TableCell>
             <TableCell href="/">
               <div className="flex items-center gap-2">
-                <PersonAvatar
+                <F0AvatarPerson
                   firstName={row.name.split(" ")[0]}
                   lastName={row.name.split(" ")[1]}
                   size="small"
@@ -634,12 +634,12 @@ export const WithLinks: Story = {
             <TableCell href="/">{row.email}</TableCell>
             <TableCell href="/">
               <div className="w-fit">
-                <RawTag text={row.role} />
+                <F0TagRaw text={row.role} />
               </div>
             </TableCell>
             <TableCell href="/">
               <div className="w-fit">
-                <StatusTag
+                <F0TagStatus
                   text={row.status.label}
                   variant={row.status.variant}
                 />
@@ -710,7 +710,7 @@ export const Loading: Story = {
               <TableRow key={row.id}>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <PersonAvatar
+                    <F0AvatarPerson
                       firstName={row.name.split(" ")[0]}
                       lastName={row.name.split(" ")[1]}
                       size="small"
@@ -721,12 +721,12 @@ export const Loading: Story = {
                 <TableCell>{row.email}</TableCell>
                 <TableCell>
                   <div className="w-fit">
-                    <RawTag text={row.role} />
+                    <F0TagRaw text={row.role} />
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="w-fit">
-                    <StatusTag
+                    <F0TagStatus
                       text={row.status.label}
                       variant={row.status.variant}
                     />
@@ -771,7 +771,7 @@ export const WithOnClick: Story = {
               </TableCell>
               <TableCell onClick={action}>
                 <div className="flex items-center gap-2">
-                  <PersonAvatar
+                  <F0AvatarPerson
                     firstName={row.name.split(" ")[0]}
                     lastName={row.name.split(" ")[1]}
                     size="small"
@@ -782,12 +782,12 @@ export const WithOnClick: Story = {
               <TableCell onClick={action}>{row.email}</TableCell>
               <TableCell onClick={action}>
                 <div className="w-fit">
-                  <RawTag text={row.role} />
+                  <F0TagRaw text={row.role} />
                 </div>
               </TableCell>
               <TableCell onClick={action}>
                 <div className="w-fit">
-                  <StatusTag
+                  <F0TagStatus
                     text={row.status.label}
                     variant={row.status.variant}
                   />

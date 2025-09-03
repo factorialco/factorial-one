@@ -1,5 +1,6 @@
 // packages/react/src/experimental/ProductBlankslate/index.tsx
 import { Icon, IconType } from "@/components/Utilities/Icon"
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import { CheckCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
@@ -14,6 +15,10 @@ type ProductBlankslateProps = {
   withShadow?: boolean
   icon?: IconType
   moduleName?: string
+  tag?: {
+    label: string
+    icon: IconType
+  }
 }
 
 const Benefits = ({ benefits }: { benefits: string[] }) => (
@@ -40,7 +45,16 @@ export const ProductBlankslate = forwardRef<
   ProductBlankslateProps
 >(
   (
-    { title, image, benefits, actions, withShadow = true, icon, moduleName },
+    {
+      title,
+      image,
+      benefits,
+      actions,
+      withShadow = true,
+      icon,
+      moduleName,
+      tag,
+    },
     ref
   ) => {
     return (
@@ -72,6 +86,11 @@ export const ProductBlankslate = forwardRef<
                   </p>
                 )}
               </div>
+              {tag && (
+                <div className="flex justify-start">
+                  <F0TagRaw icon={tag.icon} text={tag.label} />
+                </div>
+              )}
               <h2 className="font-bold text-xl text-f1-foreground">{title}</h2>
             </div>
             <Benefits benefits={benefits} />

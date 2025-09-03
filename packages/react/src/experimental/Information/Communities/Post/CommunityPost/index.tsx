@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
-import { IconAvatar } from "@/experimental/Information/Avatars/IconAvatar"
-import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { F0AvatarIcon } from "@/components/avatars/F0AvatarIcon"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
 import { Reactions, ReactionsProps } from "@/experimental/Information/Reactions"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import {
@@ -103,14 +103,14 @@ export const BaseCommunityPost = ({
       <div className="hidden md:block">
         {author ? (
           <Link href={author.url} title={authorFullName} stopPropagation>
-            <PersonAvatar
+            <F0AvatarPerson
               firstName={author.firstName}
               lastName={author.lastName}
               src={author.avatarUrl}
             />
           </Link>
         ) : (
-          <IconAvatar icon={PersonIcon} className="rounded-full" />
+          <F0AvatarIcon icon={PersonIcon} className="rounded-full" />
         )}
       </div>
       <div className="flex flex-1 flex-col gap-3">
@@ -126,7 +126,7 @@ export const BaseCommunityPost = ({
                     stopPropagation
                   >
                     <span className="flex items-center">
-                      <PersonAvatar
+                      <F0AvatarPerson
                         firstName={author.firstName}
                         lastName={author.lastName}
                         src={author.avatarUrl}
@@ -145,7 +145,7 @@ export const BaseCommunityPost = ({
                 </>
               ) : (
                 <div className="block md:hidden">
-                  <IconAvatar
+                  <F0AvatarIcon
                     icon={PersonIcon}
                     size="sm"
                     className="size-5 rounded-full"

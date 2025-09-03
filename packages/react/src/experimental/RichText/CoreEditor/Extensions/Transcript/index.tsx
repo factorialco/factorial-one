@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { ChevronDown, ChevronUp, Delete } from "@/icons/app"
 import { Node } from "@tiptap/core"
@@ -192,7 +192,7 @@ export const TranscriptView: React.FC<NodeViewProps> = ({
                     return (
                       <div key={index} className="flex flex-row gap-3">
                         {user?.imageUrl && (
-                          <PersonAvatar
+                          <F0AvatarPerson
                             size="xsmall"
                             src={user.imageUrl}
                             firstName={user.fullname}

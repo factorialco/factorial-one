@@ -1,13 +1,13 @@
+import { Button } from "@/components/Actions/Button"
+import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
+import { Icon } from "@/components/Utilities/Icon"
+import { Counter } from "@/experimental/Information/Counter"
+import { CheckCircle } from "@/icons/app"
+import LogoAvatar from "@/icons/app/LogoAvatar"
+import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { useState } from "react"
-import { Button } from "../../../../components/Actions/Button"
-import { Icon } from "../../../../components/Utilities/Icon"
-import { CheckCircle } from "../../../../icons/app"
-import LogoAvatar from "../../../../icons/app/LogoAvatar"
-import { cn } from "../../../../lib/utils"
-import { PersonAvatar } from "../../../Information/Avatars/PersonAvatar"
-import { Counter } from "../../../Information/Counter"
 import { HighlightText } from "../HighLightText"
 import { EntitySelectEntity } from "../types"
 
@@ -117,7 +117,7 @@ export const ListItemSingleContent = ({
         )}
       >
         {!hiddenAvatar && (
-          <PersonAvatar
+          <F0AvatarPerson
             src={entity.avatar}
             firstName={firstName}
             lastName={lastName}

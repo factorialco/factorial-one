@@ -224,9 +224,6 @@ export const Default: Story = {
 }
 
 export const WithPreselectedValue: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     value: "dark",
@@ -234,9 +231,6 @@ export const WithPreselectedValue: Story = {
 }
 
 export const WithPlaceholder: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     placeholder: "Select a theme",
@@ -245,9 +239,6 @@ export const WithPlaceholder: Story = {
 }
 
 export const WithHiddenLabel: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     hideLabel: true,
@@ -255,9 +246,6 @@ export const WithHiddenLabel: Story = {
 }
 
 export const WithIcon: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     icon: Desktop,
@@ -265,9 +253,6 @@ export const WithIcon: Story = {
 }
 
 export const WithLabelIcon: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     labelIcon: Circle,
@@ -275,9 +260,6 @@ export const WithLabelIcon: Story = {
 }
 
 export const SizeMd: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     icon: Desktop,
@@ -286,9 +268,6 @@ export const SizeMd: Story = {
 }
 
 export const WithError: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     error: "Error message",
@@ -296,9 +275,6 @@ export const WithError: Story = {
 }
 
 export const WithWarning: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     status: {
@@ -309,9 +285,6 @@ export const WithWarning: Story = {
 }
 
 export const WithInfo: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     status: {
@@ -322,9 +295,6 @@ export const WithInfo: Story = {
 }
 
 export const WithHint: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     hint: "Hint message",
@@ -332,9 +302,6 @@ export const WithHint: Story = {
 }
 
 export const Clearable: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   args: {
     label: "Select a theme",
     clearable: true,

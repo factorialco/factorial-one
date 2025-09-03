@@ -1,5 +1,166 @@
 # Changelog
 
+## [1.171.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.0...factorial-one-react-v1.171.1) (2025-09-03)
+
+
+### Bug Fixes
+
+* select arrow align ([#2487](https://github.com/factorialco/factorial-one/issues/2487)) ([101c96f](https://github.com/factorialco/factorial-one/commit/101c96f7e5ef34c856e25ba322863ba926431958))
+
+## [1.171.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.170.0...factorial-one-react-v1.171.0) (2025-09-02)
+
+
+### Features
+
+* **One:** welcome message animation ([#2503](https://github.com/factorialco/factorial-one/issues/2503)) ([582b222](https://github.com/factorialco/factorial-one/commit/582b222de47a5c124451a85438baf3a17048bf06))
+
+## [1.170.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.1...factorial-one-react-v1.170.0) (2025-09-02)
+
+
+### Features
+
+* **One:** trigger button ([#2498](https://github.com/factorialco/factorial-one/issues/2498)) ([9574eaf](https://github.com/factorialco/factorial-one/commit/9574eaf68e54857266fd944c561fb5e100e871e6))
+
+## [1.169.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.0...factorial-one-react-v1.169.1) (2025-09-02)
+
+
+### Bug Fixes
+
+* fill discover avatar module ([66557b7](https://github.com/factorialco/factorial-one/commit/66557b739b9e64203902a0397e98615377a9f35a))
+
+## [1.169.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.6...factorial-one-react-v1.169.0) (2025-09-02)
+
+
+### Features
+
+* add support to show file avatar in data collection ([#2497](https://github.com/factorialco/factorial-one/issues/2497)) ([ff54cc0](https://github.com/factorialco/factorial-one/commit/ff54cc006fe894c18a3bdf9e47811bfdc32887c0))
+
+## [1.168.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.5...factorial-one-react-v1.168.6) (2025-09-01)
+
+
+### Bug Fixes
+
+* ensure that the footer is at the bottom in fullscreen modals ([#2493](https://github.com/factorialco/factorial-one/issues/2493)) ([0d74925](https://github.com/factorialco/factorial-one/commit/0d7492565e42c39443b8106b23fa6723a8370d7a))
+
+## [1.168.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.4...factorial-one-react-v1.168.5) (2025-09-01)
+
+
+### Bug Fixes
+
+* set correct tag raw import ([#2491](https://github.com/factorialco/factorial-one/issues/2491)) ([5af9fe1](https://github.com/factorialco/factorial-one/commit/5af9fe16c7300a624f6e8cd637867cde0eedafb5))
+
+## [1.168.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.3...factorial-one-react-v1.168.4) (2025-09-01)
+
+
+### Bug Fixes
+
+* scrollarea not working ([6c79cfb](https://github.com/factorialco/factorial-one/commit/6c79cfb3e4dd3d78444abcdde44a1e6738927685))
+
+## [1.168.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.2...factorial-one-react-v1.168.3) (2025-08-29)
+
+
+### Bug Fixes
+
+* **ai-chat:** several small improvements ([#2472](https://github.com/factorialco/factorial-one/issues/2472)) ([e768b96](https://github.com/factorialco/factorial-one/commit/e768b96762fcbefd1543cdea28716d0d97c409f0))
+
+## [1.168.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.1...factorial-one-react-v1.168.2) (2025-08-29)
+
+
+### Bug Fixes
+
+* apply visual fixes to data collection grouping and sorting selectors ([#2482](https://github.com/factorialco/factorial-one/issues/2482)) ([46c1207](https://github.com/factorialco/factorial-one/commit/46c12075ec4284e843268715402be58ac5ed24fd))
+
+## [1.168.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.0...factorial-one-react-v1.168.1) (2025-08-29)
+
+
+### Bug Fixes
+
+* replace fireworks icon for megaphone in discover section ([4f96336](https://github.com/factorialco/factorial-one/commit/4f96336ded3379f9e474078d7d0bfe198477d5a6))
+
+## [1.168.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.167.0...factorial-one-react-v1.168.0) (2025-08-29)
+
+
+### Features
+
+* added a comment to force a release ([#2476](https://github.com/factorialco/factorial-one/issues/2476)) ([eb42c54](https://github.com/factorialco/factorial-one/commit/eb42c54585c58b606729c5235b5bc3f935dcbf03))
+
+## [1.167.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.1...factorial-one-react-v1.167.0) (2025-08-28)
+
+
+### Features
+
+* **BasicTextEditor:** ScrollArea  ([#2335](https://github.com/factorialco/factorial-one/issues/2335)) ([844b066](https://github.com/factorialco/factorial-one/commit/844b0663f81bd5bea2cfb10c18b6e9b22fd2f848))
+
+## [1.166.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.166.0...factorial-one-react-v1.166.1) (2025-08-28)
+
+
+### Bug Fixes
+
+* number metadata flex to align ([#2471](https://github.com/factorialco/factorial-one/issues/2471)) ([2a8f477](https://github.com/factorialco/factorial-one/commit/2a8f47733831e62579b7ee1b6ec1987745da72c3))
+
+## [1.166.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.165.0...factorial-one-react-v1.166.0) (2025-08-28)
+
+
+### Features
+
+* **ai-chat:** add create new chat button ([#2469](https://github.com/factorialco/factorial-one/issues/2469)) ([49388a7](https://github.com/factorialco/factorial-one/commit/49388a7be79e0b1443bf96c362beeae0e9cc3642))
+
+## [1.165.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.164.0...factorial-one-react-v1.165.0) (2025-08-28)
+
+
+### Features
+
+* upgrade copilot kit 1.10.2 ([#2465](https://github.com/factorialco/factorial-one/issues/2465)) ([b99b73d](https://github.com/factorialco/factorial-one/commit/b99b73deef240962c63072e1b8978dda75d0e611))
+
+## [1.164.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.2...factorial-one-react-v1.164.0) (2025-08-28)
+
+
+### Features
+
+* **ai-chat:** add effects to header ([#2461](https://github.com/factorialco/factorial-one/issues/2461)) ([76c2027](https://github.com/factorialco/factorial-one/commit/76c2027a349844f0abc15a5c4d6148fcf3215f19))
+
+## [1.163.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.1...factorial-one-react-v1.163.2) (2025-08-28)
+
+
+### Bug Fixes
+
+* onclick propagation ([#2460](https://github.com/factorialco/factorial-one/issues/2460)) ([f82e5df](https://github.com/factorialco/factorial-one/commit/f82e5df6c4942f3099a6f4ecc0c31799d8a6ca7d))
+
+## [1.163.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.163.0...factorial-one-react-v1.163.1) (2025-08-27)
+
+
+### Bug Fixes
+
+* add context type info ([32663c6](https://github.com/factorialco/factorial-one/commit/32663c612d9d6eac5225b5a64d6404af7d30a645))
+
+## [1.163.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.162.0...factorial-one-react-v1.163.0) (2025-08-27)
+
+
+### Features
+
+* **ai:** smooth scrolling ([#2457](https://github.com/factorialco/factorial-one/issues/2457)) ([30c71b3](https://github.com/factorialco/factorial-one/commit/30c71b3291010ef8da5656371d540f2ab7287306))
+
+## [1.162.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.2...factorial-one-react-v1.162.0) (2025-08-27)
+
+
+### Features
+
+* **EntitySelect:** enhance match scoring with word normalization ([#2342](https://github.com/factorialco/factorial-one/issues/2342)) ([2f7c6c0](https://github.com/factorialco/factorial-one/commit/2f7c6c03331982271745f5ba44da30867f49abc9))
+
+## [1.161.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.1...factorial-one-react-v1.161.2) (2025-08-27)
+
+
+### Bug Fixes
+
+* show proper titles in Storybook ([#2450](https://github.com/factorialco/factorial-one/issues/2450)) ([db9aab8](https://github.com/factorialco/factorial-one/commit/db9aab8c86ab05e66526ef87fb3e8019165a864e))
+
+## [1.161.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.161.0...factorial-one-react-v1.161.1) (2025-08-27)
+
+
+### Bug Fixes
+
+* Rename tag variants to match name convention ([#2445](https://github.com/factorialco/factorial-one/issues/2445)) ([f8d0f18](https://github.com/factorialco/factorial-one/commit/f8d0f1834d2b16a29f70d1f99e4c981b46645a00))
+
 ## [1.161.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.160.1...factorial-one-react-v1.161.0) (2025-08-25)
 
 

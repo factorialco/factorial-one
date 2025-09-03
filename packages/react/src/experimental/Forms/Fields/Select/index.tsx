@@ -1,5 +1,6 @@
+import { F0Avatar } from "@/components/avatars/F0Avatar"
+import { F0TagRaw } from "@/components/tags/F0TagRaw"
 import { Icon } from "@/components/Utilities/Icon"
-import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { ChevronDown } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { InputField, InputFieldProps } from "@/ui/InputField"
@@ -19,7 +20,6 @@ import {
   useRef,
   useState,
 } from "react"
-import { Avatar } from "../../../Information/Avatars/Avatar"
 import { Action, SelectBottomActions } from "./SelectBottomActions"
 import { SelectTopActions } from "./SelectTopActions"
 import type { SelectItemObject, SelectItemProps } from "./types"
@@ -65,7 +65,7 @@ const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   return (
     <SelectItemPrimitive value={item.value}>
       <div className="flex w-full items-start gap-1.5">
-        {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
+        {item.avatar && <F0Avatar avatar={item.avatar} size="xsmall" />}
         {item.icon && (
           <div className="text-f1-icon">
             <Icon icon={item.icon} />
@@ -81,7 +81,7 @@ const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
         </div>
         {item.tag && (
           <div className="self-center">
-            <RawTag text={item.tag} />
+            <F0TagRaw text={item.tag} />
           </div>
         )}
       </div>
@@ -121,7 +121,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
     searchBoxPlaceholder,
     externalSearch,
     searchEmptyMessage,
-    size,
+    size = "sm",
     selectContentClassName,
     actions,
     label,
@@ -264,7 +264,7 @@ const SelectComponent = forwardRef(function Select<T extends string, R>(
               <div
                 className={cn(
                   "rounded-2xs bg-f1-background-secondary p-0.5",
-                  "flex items-center justify-center",
+                  "flex h-full items-center justify-center",
                   !disabled && "cursor-pointer"
                 )}
               >

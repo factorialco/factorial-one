@@ -322,6 +322,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
       <div
         className={cn(
           "flex flex-col gap-2",
+          "pointer-events-none",
           disabled && "cursor-not-allowed opacity-50",
           className
         )}
@@ -375,7 +376,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
           data-testid="input-field-wrapper"
         >
           <div
-            className="relative flex h-full w-full min-w-0 flex-1"
+            className="pointer-events-auto relative flex h-full w-full min-w-0 flex-1"
             onClick={handleClickContent}
           >
             {icon && (
@@ -439,7 +440,7 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
             {(clearable || append || appendTag || loading) && (
               <div
                 className={cn(
-                  "flex h-fit items-center gap-1.5 pr-0.5 pt-0.5",
+                  "flex h-fit items-center gap-1.5 self-center pr-1",
                   size === "md" && "pr-1.5 pt-1.5"
                 )}
               >
@@ -460,7 +461,13 @@ const InputField = forwardRef<HTMLDivElement, InputFieldProps<string>>(
                   </AnimatePresence>
                 )}
                 {(append || appendTag) && (
-                  <div className="mt-px flex h-fit items-center pr-px">
+                  <div
+                    className={cn(
+                      "mt-px flex h-fit items-center",
+                      size === "sm" && "h-[24px] pr-0.5",
+                      size === "md" && "pr-0.1 h-[25px]"
+                    )}
+                  >
                     {append}
                     {appendTag && <AppendTag text={appendTag} />}
                   </div>

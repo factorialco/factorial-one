@@ -236,7 +236,4 @@ export const WithCompareTo: Story = {
       ],
     },
   },
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
 }

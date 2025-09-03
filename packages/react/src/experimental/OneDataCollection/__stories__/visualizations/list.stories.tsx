@@ -24,9 +24,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const BasicListVisualization: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     const mockVisualizations = getMockVisualizations()
     return <ExampleComponent visualizations={[mockVisualizations.list]} />
@@ -34,9 +31,6 @@ export const BasicListVisualization: Story = {
 }
 
 export const ListVisualizationWithGrouping: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     const mockVisualizations = getMockVisualizations()
     return (
@@ -63,9 +57,6 @@ export const ListVisualizationWithGrouping: Story = {
 }
 
 export const ListVisualizationWithGroupingAndAllGroupsOpenByDefault: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     const mockVisualizations = getMockVisualizations()
     return (
@@ -93,9 +84,6 @@ export const ListVisualizationWithGroupingAndAllGroupsOpenByDefault: Story = {
 }
 
 export const ListVisualizationWithInfiniteScrollPagination: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     const mockVisualizations = getMockVisualizations()
     return (
@@ -113,9 +101,6 @@ export const ListVisualizationWithInfiniteScrollPagination: Story = {
 }
 
 export const ListVisualizationWithRegularPagination: Story = {
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
   render: () => {
     const mockVisualizations = getMockVisualizations()
     return (

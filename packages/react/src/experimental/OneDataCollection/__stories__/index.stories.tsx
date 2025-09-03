@@ -718,9 +718,6 @@ export const WithSelectableAndDefaultSelectedItems: Story = {
       }}
     />
   ),
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
 }
 export const WithSelectableAndDefaultSelectedGroups: Story = {
   render: () => (
@@ -747,9 +744,6 @@ export const WithSelectableAndDefaultSelectedGroups: Story = {
       }}
     />
   ),
-  parameters: {
-    chromatic: { disableSnapshot: true },
-  },
 }
 
 const JsonVisualization = ({

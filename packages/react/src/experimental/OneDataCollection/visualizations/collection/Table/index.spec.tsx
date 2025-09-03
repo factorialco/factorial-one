@@ -1,3 +1,4 @@
+import { TextCell } from "@/components/value-display/types/text"
 import {
   act,
   render,
@@ -27,7 +28,6 @@ import type {
   PaginationType,
 } from "../../../types"
 import { useData } from "../../../useData"
-import { TextCell } from "../../property/types/text"
 import { TableCollection } from "./index"
 
 vi.mock("../../property", () => ({
