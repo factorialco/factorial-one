@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.171.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.1...factorial-one-react-v1.171.2) (2025-09-03)
+
+
+### Bug Fixes
+
+* **One:** dialog origin position ([#2508](https://github.com/factorialco/factorial-one/issues/2508)) ([5c74417](https://github.com/factorialco/factorial-one/commit/5c74417dd8e301493380ffab9e57bd919694c384))
+
 ## [1.171.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.0...factorial-one-react-v1.171.1) (2025-09-03)
 
 
