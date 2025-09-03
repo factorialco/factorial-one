@@ -14,7 +14,7 @@ export const sizesMapping: Record<
   large: "lg",
   medium: "md",
   small: "sm",
-  xsmall: "xs",   
+  xsmall: "xs",
 } as const
 
 export type BaseAvatarProps = {
