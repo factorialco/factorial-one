@@ -64,6 +64,7 @@ export function FiltersControls<Filters extends FiltersDefinition>({
 
         return !filterType.isEmpty(value, {
           schema: filters[key] as unknown as FilterTypeSchema,
+          i18n,
         })
       })
     }
