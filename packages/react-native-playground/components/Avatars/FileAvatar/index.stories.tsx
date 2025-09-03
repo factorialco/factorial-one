@@ -49,7 +49,7 @@ export const AllFileTypesGrid = (): React.ReactElement => {
       {fileTypes.map((fileType, index) => (
         <FileAvatar
           key={index}
-          file={new File([""], fileType.name, { type: fileType.type })}
+          file={{ name: fileType.name, type: fileType.type }}
         />
       ))}
     </View>
@@ -58,14 +58,14 @@ export const AllFileTypesGrid = (): React.ReactElement => {
 
 export const AllFileTypes: Story = {
   args: {
-    file: new File([""], "dummy.txt", { type: "text/plain" }),
+    file: { name: "dummy.txt", type: "text/plain" },
   },
   render: () => <AllFileTypesGrid />,
 };
 
 export const WithBadge: Story = {
   args: {
-    file: new File([""], "dummy.txt", { type: "text/plain" }),
+    file: { name: "dummy.txt", type: "text/plain" },
     badge: {
       type: "positive",
       icon: Check,
@@ -76,7 +76,7 @@ export const WithBadge: Story = {
 
 export const WithBadgeModuleAvatar: Story = {
   args: {
-    file: new File([""], "test.pdf", { type: "application/pdf" }),
+    file: { name: "test.pdf", type: "application/pdf" },
     badge: {
       type: "module",
       module: "benefits",

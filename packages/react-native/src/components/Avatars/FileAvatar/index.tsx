@@ -1,6 +1,6 @@
 import { ComponentProps, useMemo } from "react";
 import { Text } from "react-native";
-import { getFileTypeInfo } from "./utils";
+import { FileLike, getFileTypeInfo } from "./utils";
 import { Avatar } from "../../../ui/avatar";
 import { cn } from "../../../lib/utils";
 import { BaseAvatar } from "../BaseAvatar";
@@ -13,7 +13,7 @@ import { getInitials } from "../BaseAvatar/utils";
 type BaseAvatarProps = ComponentProps<typeof BaseAvatar>;
 
 type Props = {
-  file: File;
+  file: FileLike;
   className?: string;
   size?: BaseAvatarProps["size"];
   badge?: AvatarBadge;
