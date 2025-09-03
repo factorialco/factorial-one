@@ -340,18 +340,6 @@ export const TableCollection = <
                 {label}
               </TableHead>
             ))}
-            {/* {source.itemActions && (
-              <TableHead
-                key="actions"
-                width={68}
-                hidden
-                sticky={{
-                  right: 0,
-                }}
-              >
-                {t.collections.actions.actions}
-              </TableHead>
-            )} */}
           </TableRow>
         </TableHeader>
         <TableBody>
