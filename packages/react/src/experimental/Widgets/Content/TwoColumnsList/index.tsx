@@ -7,6 +7,7 @@ interface TwoColumnsItemType {
 
 interface TwoColumnsListType {
   title?: string
+  titleValue?: string
   list: TwoColumnsItemType[]
 }
 
@@ -20,10 +21,15 @@ const Item = ({ title, info }: TwoColumnsItemType) => (
 )
 
 export const TwoColumnsList = forwardRef<HTMLDivElement, TwoColumnsListType>(
-  function TwoColumnsList({ title, list }, ref) {
+  function TwoColumnsList({ title, titleValue, list }, ref) {
     return (
       <div ref={ref} className="flex flex-col gap-2">
-        {title && <div className="font-medium">{title}</div>}
+        {title && (
+          <div className="flex items-center justify-between font-medium">
+            <div>{title}</div>
+            {titleValue && <div>{titleValue}</div>}
+          </div>
+        )}
         {list.map((item) => (
           <Item key={item.title} title={item.title} info={item.info} />
         ))}
