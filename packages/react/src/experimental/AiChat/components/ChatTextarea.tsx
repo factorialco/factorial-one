@@ -49,7 +49,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
       ref={formRef}
       className={cn(
         "relative isolate m-2 flex flex-col gap-3 rounded-lg border border-solid border-f1-border",
-        "after:pointer-events-none after:absolute after:inset-px after:z-[-2] after:rounded-[inherit] after:bg-f1-foreground-secondary after:opacity-0 after:blur-[6px] after:content-['']",
+        "after:pointer-events-none after:absolute after:inset-0.5 after:z-[-2] after:rounded-[inherit] after:bg-f1-foreground-secondary after:opacity-0 after:blur-[5px] after:content-['']",
         "from-[#E55619] via-[#A1ADE5] to-[#E51943] after:scale-90 after:bg-[conic-gradient(from_var(--gradient-angle),var(--tw-gradient-stops))]",
         "after:transition-all after:delay-200 after:duration-300 has-[textarea:focus]:after:scale-100 has-[textarea:focus]:after:opacity-100",
         "before:pointer-events-none before:absolute before:inset-0 before:z-[-1] before:rounded-[inherit] before:bg-f1-background before:content-['']"
