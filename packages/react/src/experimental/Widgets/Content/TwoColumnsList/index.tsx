@@ -7,7 +7,7 @@ interface TwoColumnsItemType {
 
 interface TwoColumnsListType {
   title?: string
-  titleValue?: string
+  titleValue?: string | ReactNode
   list: TwoColumnsItemType[]
 }
 
