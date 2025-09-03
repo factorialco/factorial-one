@@ -1,4 +1,5 @@
 import { FileAvatar } from "@factorialco/factorial-one-react-native";
+import { Check } from "@factorialco/factorial-one-react-native/src/icons/app";
 import type { Meta, StoryObj } from "@storybook/react";
 import { View } from "react-native";
 
@@ -60,4 +61,26 @@ export const AllFileTypes: Story = {
     file: new File([""], "dummy.txt", { type: "text/plain" }),
   },
   render: () => <AllFileTypesGrid />,
+};
+
+export const WithBadge: Story = {
+  args: {
+    file: new File([""], "dummy.txt", { type: "text/plain" }),
+    badge: {
+      type: "positive",
+      icon: Check,
+    },
+    size: "medium",
+  },
+};
+
+export const WithBadgeModuleAvatar: Story = {
+  args: {
+    file: new File([""], "test.pdf", { type: "application/pdf" }),
+    badge: {
+      type: "module",
+      module: "benefits",
+    },
+    size: "medium",
+  },
 };
