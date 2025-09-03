@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.172.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.3...factorial-one-react-v1.172.0) (2025-09-03)
+
+
+### Features
+
+* hide filter chips if the filter matches a preset ([#2485](https://github.com/factorialco/factorial-one/issues/2485)) ([586ab4e](https://github.com/factorialco/factorial-one/commit/586ab4e095742fe0a88267e131dcbd4462c38bc6))
+* long format in week granularity ([#2479](https://github.com/factorialco/factorial-one/issues/2479)) ([6f01a18](https://github.com/factorialco/factorial-one/commit/6f01a18557b1ca0f7928b4485cd98a76fdc57964))
+
 ## [1.171.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.2...factorial-one-react-v1.171.3) (2025-09-03)
 
 
