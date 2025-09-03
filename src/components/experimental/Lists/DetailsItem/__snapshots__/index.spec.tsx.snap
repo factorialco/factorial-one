@@ -55,7 +55,7 @@ exports[`DetailsItem Snapshot type company 1`] = `
             className="flex flex-row items-center gap-1.5"
           >
             <View
-              className="flex inline-flex "
+              className="inline-flex "
             >
               <View
                 className="h-fit w-fit"
@@ -467,7 +467,7 @@ exports[`DetailsItem Snapshot type person 1`] = `
             className="flex flex-row items-center gap-1.5"
           >
             <View
-              className="flex inline-flex "
+              className="inline-flex "
             >
               <View
                 className="h-fit w-fit"
@@ -640,7 +640,7 @@ exports[`DetailsItem Snapshot type team 1`] = `
             className="flex flex-row items-center gap-1.5"
           >
             <View
-              className="flex inline-flex "
+              className="inline-flex "
             >
               <View
                 className="h-fit w-fit"
