@@ -29,7 +29,11 @@ const MIN_HEIGHT = 416
 const MAX_HEIGHT = 680
 const FULL_HEIGHT_MARGIN = 20
 
-export const ChatWindow = ({ children, ...rest }: WindowProps) => {
+export const PopupWindow = ({
+  children,
+  hitEscapeToClose,
+  ...rest
+}: WindowProps) => {
   const { setOpen, open } = useChatContext()
   const windowRef = useRef<HTMLDivElement>(null)
   const [windowHeight, setWindowHeight] = useState(MIN_HEIGHT)
@@ -90,15 +94,15 @@ export const ChatWindow = ({ children, ...rest }: WindowProps) => {
   )
 
   return (
-    <DialogPrimitive.Root
-      open={open}
-      onOpenChange={setOpen}
-      modal={false}
-      {...rest}
-    >
+    <DialogPrimitive.Root open={open} onOpenChange={setOpen} modal={false}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Content
-          onPointerDownOutside={(e) => e.preventDefault()}
+          onPointerDownOutside={(e) => {
+            e.preventDefault()
+          }}
+          onInteractOutside={(e) => {
+            e.preventDefault()
+          }}
           className={cn(
             "fixed bottom-4 right-4 isolate z-50 w-[90%] rounded-xl border bg-f1-background shadow-lg",
             "duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -112,5 +116,30 @@ export const ChatWindow = ({ children, ...rest }: WindowProps) => {
         </DialogPrimitive.Content>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
+  )
+}
+
+export const SidebarWindow = ({ children }: WindowProps) => {
+  const { open } = useChatContext()
+  const [messageContainerScrollTop, setMessageContainerScrollTop] = useState(0)
+  const chatWindowContext = useMemo(
+    () => ({
+      reachedMaxHeight: true,
+      messageContainerScrollTop,
+      setMessageContainerScrollTop,
+    }),
+    [messageContainerScrollTop]
+  )
+
+  if (!open) {
+    return null
+  }
+
+  return (
+    <div className="relative flex h-full w-[360px] flex-col overflow-hidden bg-f1-special-page shadow xs:rounded-xl">
+      <ChatWindowContext.Provider value={chatWindowContext}>
+        {children}
+      </ChatWindowContext.Provider>
+    </div>
   )
 }

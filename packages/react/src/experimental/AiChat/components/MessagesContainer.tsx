@@ -9,7 +9,7 @@ import { AnimatePresence, motion } from "motion/react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useEventListener, useResizeObserver } from "usehooks-ts"
 import OneIcon from "../OneIcon"
-import { useAiChatLabels } from "../providers/AiChatLabelsProvider"
+import { useAiChat } from "../providers/AiChatStateProvider"
 import { useChatWindowContext } from "./ChatWindow"
 
 // corresponds to padding pt-14 applied for the header
@@ -32,7 +32,7 @@ export const MessagesContainer = ({
   const context = useChatContext()
   const { messages, interrupt } = useCopilotChat()
 
-  const { greeting } = useAiChatLabels()
+  const { greeting } = useAiChat()
   const translations = useI18n()
   const [longestTurnHeight, setLongestTurnHeight] = useState<number>(0)
   const initialMessages = useMemo(

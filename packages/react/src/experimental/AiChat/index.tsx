@@ -1,51 +1,95 @@
-import { CopilotKit } from "@copilotkit/react-core"
-import { CopilotPopup } from "@copilotkit/react-ui"
+import { CopilotKit, CopilotKitProps } from "@copilotkit/react-core"
+import { CopilotPopup, CopilotSidebar } from "@copilotkit/react-ui"
 
 import { experimentalComponent } from "@/lib/experimental"
-import { type ComponentProps } from "react"
 
 import {
   AssistantMessage,
   ChatButton,
-  ChatHeader,
   ChatTextarea,
-  ChatWindow,
   MessagesContainer,
+  PopupHeader,
+  PopupWindow,
+  SidebarHeader,
+  SidebarWindow,
   UserMessage,
 } from "./components"
-import {
-  AiChatLabelsProvider,
-  type AiChatLabels,
-} from "./providers/AiChatLabelsProvider"
+import { AiChatStateProvider, useAiChat } from "./providers/AiChatStateProvider"
 
-type AiChatProviderProps = ComponentProps<typeof CopilotKit>
+export type AiChatMode = "popup" | "sidebar"
 
-const AiChatProviderCmp = (props: AiChatProviderProps) => {
-  return <CopilotKit {...props} />
-}
-type CopilotPopupProps = ComponentProps<typeof CopilotPopup>
+export type AiChatProviderProps = {
+  enabled?: boolean
+  mode?: AiChatMode
+  greeting?: string
+} & Pick<
+  CopilotKitProps,
+  | "agent"
+  | "credentials"
+  | "children"
+  | "runtimeUrl"
+  | "showDevConsole"
+  | "threadId"
+  | "headers"
+>
 
-type AiChatProps = Omit<CopilotPopupProps, "labels"> & {
-  labels?: ComponentProps<typeof CopilotPopup>["labels"] & AiChatLabels
-}
-
-const AiChatCmp = ({ labels, ...props }: AiChatProps) => {
-  const { greeting, ...copilotLabels } = labels || {}
-
+const AiChatProviderCmp = ({
+  enabled = false,
+  mode = "popup",
+  greeting,
+  children,
+  ...copilotKitProps
+}: AiChatProviderProps) => {
   return (
-    <AiChatLabelsProvider greeting={greeting}>
-      <CopilotPopup
-        Window={ChatWindow}
-        Header={ChatHeader}
-        Messages={MessagesContainer}
-        Button={ChatButton}
-        Input={ChatTextarea}
-        UserMessage={UserMessage}
-        AssistantMessage={AssistantMessage}
-        {...props}
-        labels={copilotLabels}
-      />
-    </AiChatLabelsProvider>
+    <CopilotKit {...copilotKitProps}>
+      <AiChatStateProvider
+        enabled={enabled}
+        initialMode={mode}
+        greeting={greeting}
+      >
+        {children}
+      </AiChatStateProvider>
+    </CopilotKit>
+  )
+}
+
+const AiChatCmp = () => {
+  const { enabled, mode, open, setOpen } = useAiChat()
+
+  if (!enabled) {
+    return null
+  }
+
+  return mode === "sidebar" ? (
+    <CopilotSidebar
+      className="h-full py-1 xs:pr-1"
+      defaultOpen={open}
+      onSetOpen={(open) => {
+        setOpen(open)
+      }}
+      Window={SidebarWindow}
+      Header={SidebarHeader}
+      Messages={MessagesContainer}
+      Button={ChatButton}
+      Input={ChatTextarea}
+      UserMessage={UserMessage}
+      AssistantMessage={AssistantMessage}
+    />
+  ) : (
+    <CopilotPopup
+      clickOutsideToClose={false}
+      defaultOpen={open}
+      onSetOpen={(open) => {
+        setOpen(open)
+      }}
+      Window={PopupWindow}
+      Header={PopupHeader}
+      Messages={MessagesContainer}
+      Button={ChatButton}
+      Input={ChatTextarea}
+      UserMessage={UserMessage}
+      AssistantMessage={AssistantMessage}
+    />
   )
 }
 
@@ -59,4 +103,4 @@ const AiChatProvider = experimentalComponent(
   AiChatProviderCmp
 )
 
-export { AiChat, AiChatProvider, type AiChatProps, type AiChatProviderProps }
+export { AiChat, AiChatProvider }

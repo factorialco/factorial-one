@@ -4,9 +4,11 @@ import { cn, focusRing } from "../../../lib/utils"
 import { useReducedMotion } from "../../../lib/a11y"
 import { useI18n } from "../../../lib/providers/i18n"
 
+import { AiChat, AiChatProvider, AiChatProviderProps } from "../../AiChat"
 import { FrameProvider, useSidebar } from "./FrameProvider"
 
 interface ApplicationFrameProps {
+  ai?: Omit<AiChatProviderProps, "children">
   banner?: React.ReactNode
   sidebar: React.ReactNode
   children: React.ReactNode
@@ -16,12 +18,15 @@ export function ApplicationFrame({
   children,
   sidebar,
   banner,
+  ai,
 }: ApplicationFrameProps) {
   return (
     <FrameProvider>
-      <ApplicationFrameContent sidebar={sidebar} banner={banner}>
-        {children}
-      </ApplicationFrameContent>
+      <AiChatProvider {...ai}>
+        <ApplicationFrameContent sidebar={sidebar} banner={banner}>
+          {children}
+        </ApplicationFrameContent>
+      </AiChatProvider>
     </FrameProvider>
   )
 }
@@ -110,6 +115,12 @@ function ApplicationFrameContent({
             >
               {children}
             </motion.main>
+            <AiChat
+              labels={{
+                greeting: "Hey Adam,",
+                initial: ["How can I help you today?"],
+              }}
+            />
           </div>
         </div>
       </MotionConfig>
