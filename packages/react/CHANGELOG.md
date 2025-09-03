@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.171.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.0...factorial-one-react-v1.171.1) (2025-09-03)
+
+
+### Bug Fixes
+
+* select arrow align ([#2487](https://github.com/factorialco/factorial-one/issues/2487)) ([101c96f](https://github.com/factorialco/factorial-one/commit/101c96f7e5ef34c856e25ba322863ba926431958))
+
 ## [1.171.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.170.0...factorial-one-react-v1.171.0) (2025-09-02)
 
 
