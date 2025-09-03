@@ -1,4 +1,5 @@
 import { Check, Warning } from "@/icons/app"
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import { internalAvatarSizes } from "@/ui/Avatar"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { avatarSizes } from "../../BaseAvatar"
@@ -212,6 +213,7 @@ export const AllTypes: Story = {
 }
 
 export const WithBadges: Story = {
+  parameters: withSnapshot({}),
   render: () => (
     <div className="flex w-fit flex-col gap-4">
       <h3 className="text-lg font-semibold">Avatars with Badges</h3>

@@ -1,3 +1,4 @@
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarDate } from "../F0AvatarDate"
@@ -35,4 +36,15 @@ export const Default: Story = {
   args: {
     date: exampleDate,
   },
+}
+
+export const Snapshot: Story = {
+  parameters: withSnapshot({}),
+  render: () => (
+    <div className="flex w-fit flex-col gap-2">
+      <div className="flex flex-row gap-2">
+        <F0AvatarDate date={exampleDate} />
+      </div>
+    </div>
+  ),
 }

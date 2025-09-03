@@ -1,3 +1,4 @@
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import {
@@ -42,6 +43,7 @@ type Story = StoryObj<typeof F0AvatarAlert>
 const SIZES = alertAvatarSizes
 const TYPES = alertAvatarTypes
 export const Default: Story = {
+  parameters: withSnapshot({}),
   render: () => (
     <div className="flex w-fit flex-col gap-2">
       {SIZES.map((size) => (

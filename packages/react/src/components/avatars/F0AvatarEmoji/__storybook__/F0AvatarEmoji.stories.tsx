@@ -1,3 +1,4 @@
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { avatarEmojiSizes, F0AvatarEmoji } from "../F0AvatarEmoji"
@@ -44,3 +45,23 @@ export default meta
 type Story = StoryObj<typeof F0AvatarEmoji>
 
 export const Default: Story = {}
+
+export const Snapshot: Story = {
+  parameters: withSnapshot({}),
+  render: () => (
+    <div className="flex w-fit flex-col gap-2">
+      <div className="flex flex-row gap-2">
+        <h4 className="text-lg font-semibold">Valid Emoji</h4>
+        {avatarEmojiSizes.map((size) => (
+          <F0AvatarEmoji key={size} size={size} emoji="🍑" />
+        ))}
+      </div>
+      <div className="flex flex-row gap-2">
+        <h4 className="text-lg font-semibold">Invalid Emoji</h4>
+        {avatarEmojiSizes.map((size) => (
+          <F0AvatarEmoji key={size} size={size} emoji="�" />
+        ))}
+      </div>
+    </div>
+  ),
+}

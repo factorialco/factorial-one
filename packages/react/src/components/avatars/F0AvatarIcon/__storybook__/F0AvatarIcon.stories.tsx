@@ -1,4 +1,5 @@
 import * as Icons from "@/icons/app"
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { avatarIconSizes, F0AvatarIcon } from "../F0AvatarIcon"
@@ -51,3 +52,14 @@ export default meta
 type Story = StoryObj<typeof F0AvatarIcon>
 
 export const Default: Story = {}
+
+export const Snapshot: Story = {
+  parameters: withSnapshot({}),
+  render: () => (
+    <div className="flex w-fit flex-row gap-2">
+      {avatarIconSizes.map((size) => (
+        <F0AvatarIcon key={size} size={size} icon={Icons.Placeholder} />
+      ))}
+    </div>
+  ),
+}

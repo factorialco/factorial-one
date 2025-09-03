@@ -1,9 +1,11 @@
 import {
   avatarVariants,
   CompanyAvatarVariant,
+  FileAvatarVariant,
   PersonAvatarVariant,
   TeamAvatarVariant,
 } from "@/components/avatars/F0Avatar"
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarList } from "../F0AvatarList"
@@ -46,18 +48,30 @@ const dummyTeams = [
   { name: "Product Management" },
 ]
 
-function getDummyAvatars<T extends "person" | "company" | "team" = "person">(
+const dummyFiles = [
+  { file: { name: "document.pdf", type: "application/pdf" } },
+  { file: { name: "image.jpg", type: "image/jpeg" } },
+]
+
+function getDummyAvatars<
+  T extends "person" | "company" | "team" | "file" = "person",
+>(
   count: number,
   type: T
 ): T extends "person"
   ? PersonAvatarVariant[]
   : T extends "company"
     ? CompanyAvatarVariant[]
-    : TeamAvatarVariant[] {
+    : T extends "team"
+      ? TeamAvatarVariant[]
+      : T extends "file"
+        ? FileAvatarVariant[]
+        : never {
   const sourceData = {
     person: dummyPeople,
     company: dummyCompanies,
     team: dummyTeams,
+    file: dummyFiles,
   }[type]
 
   return Array.from({ length: count }, (_, index) => ({
@@ -66,7 +80,11 @@ function getDummyAvatars<T extends "person" | "company" | "team" = "person">(
     ? PersonAvatarVariant[]
     : T extends "company"
       ? CompanyAvatarVariant[]
-      : TeamAvatarVariant[]
+      : T extends "team"
+        ? TeamAvatarVariant[]
+        : T extends "file"
+          ? FileAvatarVariant[]
+          : never
 }
 
 const meta: Meta<typeof F0AvatarList> = {
@@ -169,4 +187,51 @@ export const WithRemainingCount: Story = {
     avatars: getDummyAvatars(7, "person"),
     remainingCount: 10,
   },
+}
+
+export const Snapshot: Story = {
+  parameters: withSnapshot({}),
+  render: () => (
+    <div className="flex w-fit gap-10">
+      <section className="mb-8">
+        <h4 className="mb-4 text-lg font-semibold">All avatars visible</h4>
+
+        {avatarVariants.map((type) => (
+          <>
+            <h5 className="mb-2 text-lg font-semibold">{type}</h5>
+            <div key={`${type}-3`} className="flex w-fit flex-col gap-2">
+              {avatarListSizes.map((size) => (
+                <div key={`${type}-${size}-3`} className="mb-3">
+                  <F0AvatarList
+                    size={size}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    avatars={getDummyAvatars(3, type) as any}
+                    type={type}
+                  />
+                </div>
+              ))}
+            </div>
+          </>
+        ))}
+      </section>
+
+      <section>
+        <h4 className="text-lg font-semibold">Overflow</h4>
+        {avatarVariants.map((type) => (
+          <div key={`${type}-10`} className="flex w-fit flex-col gap-2">
+            {avatarListSizes.map((size) => (
+              <div key={`${type}-${size}-10`} className="mb-3">
+                <F0AvatarList
+                  size={size}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  avatars={getDummyAvatars(10, type) as any}
+                  type={type}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </section>
+    </div>
+  ),
 }

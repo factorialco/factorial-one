@@ -17,6 +17,8 @@ import {
   getMask,
 } from "./utils"
 
+const DEFAULT_SIZE = "md"
+
 export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
   (
     {
@@ -39,16 +41,19 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
       []
     )
 
+    const isSize = (
+      size: AvatarSize | InternalAvatarProps["size"]
+    ): size is AvatarSize => avatarSizes.includes(size as AvatarSize)
+
     // Check if size is a valid avatar size
-    let mappedSize: AvatarSize = "md"
-    // @ts-expect-error - size is not a valid size
-    if (size && !avatarSizes.includes(size)) {
+    let mappedSize: AvatarSize = DEFAULT_SIZE
+    if (size && !isSize(size)) {
       console.warn(
-        // @ts-expect-error - size is not a valid size
         `The avatar size: ${size} is deprecated. Use ${sizesMapping[size]} instead.`
       )
-      // @ts-expect-error - size is not a valid size
-      mappedSize = sizesMapping[size] ?? "md"
+      mappedSize = sizesMapping[size] ?? DEFAULT_SIZE
+    } else {
+      mappedSize = size ?? DEFAULT_SIZE
     }
 
     const initials = getInitials(name, mappedSize)
@@ -79,9 +84,9 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
 
     return (
       <>
-        <div className="relative inline-flex">
+        <div className="relative inline-flex h-fit w-fit">
           <div
-            className="h-fit w-fit"
+            className="relative h-fit w-fit"
             style={
               badge
                 ? {

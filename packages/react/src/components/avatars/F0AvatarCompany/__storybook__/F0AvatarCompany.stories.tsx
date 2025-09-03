@@ -1,4 +1,7 @@
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
+import { mockImage } from "@/testing/mocks/images"
 import type { Meta, StoryObj } from "@storybook/react-vite"
+import { avatarSizes } from "../../BaseAvatar"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarCompany } from "../F0AvatarCompany"
 
@@ -60,4 +63,49 @@ export const WithModuleBadge: Story = {
       module: "inbox",
     },
   },
+}
+
+export const Snapshot: Story = {
+  parameters: withSnapshot({}),
+  render: () => (
+    <div className="flex w-fit flex-col gap-2">
+      <h3 className="text-lg font-semibold">All Company Avatars</h3>
+
+      <section>
+        <h4 className="text-lg font-semibold">Without Image</h4>
+        <div className="flex flex-row gap-2">
+          {avatarSizes.map((size) => (
+            <F0AvatarCompany key={size} size={size} name="Factorial" />
+          ))}
+        </div>
+      </section>
+      <section>
+        <h4 className="text-lg font-semibold">With Image</h4>
+        <div className="flex flex-row gap-2">
+          {avatarSizes.map((size, index) => (
+            <F0AvatarCompany
+              key={size}
+              size={size}
+              name="Factorial"
+              src={mockImage("company", index)}
+            />
+          ))}
+        </div>
+      </section>
+      <section>
+        <h4 className="text-lg font-semibold">With Module Badge</h4>
+        <div className="flex flex-row gap-2">
+          {avatarSizes.map((size, index) => (
+            <F0AvatarCompany
+              key={size}
+              size={size}
+              name="Factorial"
+              src={mockImage("company", index)}
+              badge={{ type: "module", module: "inbox" }}
+            />
+          ))}
+        </div>
+      </section>
+    </div>
+  ),
 }

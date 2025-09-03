@@ -1,3 +1,4 @@
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarModule } from "../index"
@@ -31,7 +32,8 @@ export const Default: Story = {
   },
 }
 
-export const AllModules: Story = {
+export const Snapshot: Story = {
+  parameters: withSnapshot({}),
   render: () => (
     <div
       className="grid gap-3"

@@ -1,3 +1,4 @@
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { getBaseAvatarArgTypes } from "../../BaseAvatar/__stories__/utils"
 import { F0AvatarFile, type F0AvatarFileProps } from "../F0AvatarFile"
@@ -52,37 +53,37 @@ export const WithBadge: Story = {
   },
 }
 
+const fileTypes = [
+  { name: "document.pdf", type: "application/pdf" },
+  { name: "image.jpg", type: "image/jpeg" },
+  {
+    name: "document.docx",
+    type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  },
+  {
+    name: "spreadsheet.xlsx",
+    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  },
+  {
+    name: "presentation.pptx",
+    type: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  },
+  { name: "text.txt", type: "text/plain" },
+  { name: "video.mp4", type: "video/mp4" },
+  { name: "audio.mp3", type: "audio/mpeg" },
+  { name: "archive.zip", type: "application/zip" },
+  { name: "data.csv", type: "csv" },
+  { name: "webpage.html", type: "html" },
+  { name: "readme.md", type: "markdown" },
+  { name: "unknown.xyz", type: "undefined" },
+]
+
 export const AllFileTypes: Story = {
   args: {
     file: { name: "document.pdf", type: "application/pdf" },
     size: "md",
   },
   render: (args: F0AvatarFileProps) => {
-    const fileTypes = [
-      { name: "document.pdf", type: "application/pdf" },
-      { name: "image.jpg", type: "image/jpeg" },
-      {
-        name: "document.docx",
-        type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      },
-      {
-        name: "spreadsheet.xlsx",
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      },
-      {
-        name: "presentation.pptx",
-        type: "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-      },
-      { name: "text.txt", type: "text/plain" },
-      { name: "video.mp4", type: "video/mp4" },
-      { name: "audio.mp3", type: "audio/mpeg" },
-      { name: "archive.zip", type: "application/zip" },
-      { name: "data.csv", type: "csv" },
-      { name: "webpage.html", type: "html" },
-      { name: "readme.md", type: "markdown" },
-      { name: "unknown.xyz", type: "undefined" },
-    ]
-
     return (
       <div className="grid grid-cols-12 gap-4">
         {fileTypes.map((fileType, index) => (
@@ -95,4 +96,23 @@ export const AllFileTypes: Story = {
       </div>
     )
   },
+}
+
+export const Snapshot: Story = {
+  parameters: withSnapshot({}),
+  render: () => (
+    <div className="flex w-fit flex-col gap-2">
+      {avatarFileSizes.map((size) => (
+        <div key={size} className="flex flex-row gap-2">
+          {fileTypes.map((fileType, index) => (
+            <F0AvatarFile
+              key={`${size}-${index}`}
+              size={size}
+              file={fileType}
+            />
+          ))}
+        </div>
+      ))}
+    </div>
+  ),
 }
