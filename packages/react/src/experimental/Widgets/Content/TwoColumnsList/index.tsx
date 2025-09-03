@@ -25,7 +25,7 @@ export const TwoColumnsList = forwardRef<HTMLDivElement, TwoColumnsListType>(
     return (
       <div ref={ref} className="flex flex-col gap-2">
         {title && (
-          <div className="flex items-center justify-between font-medium">
+          <div className="flex items-center justify-between gap-2 font-medium">
             <div>{title}</div>
             {titleValue && <div>{titleValue}</div>}
           </div>
