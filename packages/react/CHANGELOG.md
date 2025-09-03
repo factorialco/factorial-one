@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.171.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.170.0...factorial-one-react-v1.171.0) (2025-09-02)
+
+
+### Features
+
+* **One:** welcome message animation ([#2503](https://github.com/factorialco/factorial-one/issues/2503)) ([582b222](https://github.com/factorialco/factorial-one/commit/582b222de47a5c124451a85438baf3a17048bf06))
+
+## [1.170.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.1...factorial-one-react-v1.170.0) (2025-09-02)
+
+
+### Features
+
+* **One:** trigger button ([#2498](https://github.com/factorialco/factorial-one/issues/2498)) ([9574eaf](https://github.com/factorialco/factorial-one/commit/9574eaf68e54857266fd944c561fb5e100e871e6))
+
+## [1.169.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.0...factorial-one-react-v1.169.1) (2025-09-02)
+
+
+### Bug Fixes
+
+* fill discover avatar module ([66557b7](https://github.com/factorialco/factorial-one/commit/66557b739b9e64203902a0397e98615377a9f35a))
+
 ## [1.169.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.6...factorial-one-react-v1.169.0) (2025-09-02)
 
 
