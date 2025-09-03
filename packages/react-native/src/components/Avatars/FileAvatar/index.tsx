@@ -68,7 +68,6 @@ export const FileAvatar = ({
   const initials = getInitials(fileType, size, true);
   const badgeSize = getBadgeSize(size);
   const moduleAvatarSize = getAvatarSize(size);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const badgeContent = useMemo(
     () =>
       badge ? (
