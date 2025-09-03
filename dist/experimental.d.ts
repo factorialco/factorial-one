@@ -4250,7 +4250,7 @@ export declare const TwoColumnsList: ForwardRefExoticComponent<TwoColumnsListTyp
 
 declare interface TwoColumnsListType {
     title?: string;
-    titleValue?: string;
+    titleValue?: string | ReactNode;
     list: TwoColumnsItemType[];
 }
 
