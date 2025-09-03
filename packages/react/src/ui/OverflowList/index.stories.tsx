@@ -31,7 +31,11 @@ const meta = {
       description: "Additional styling for the container.",
     },
     gap: {
-      description: "The gap between items in pixels.",
+      description: "The gap between items in pixels. Can be negative.",
+    },
+    max: {
+      description:
+        "The maximum number of items to display. If not provided, the maximum number of items will be auto-calculated. ",
     },
   },
   decorators: [

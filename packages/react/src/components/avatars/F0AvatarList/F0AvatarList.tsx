@@ -1,25 +1,10 @@
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { OverflowList } from "@/ui/OverflowList"
-import { cva } from "cva"
 import { AvatarVariant, F0Avatar } from "../F0Avatar"
 import { MaxCounter } from "./components/MaxCounter"
 
 import { AvatarListSize, avatarListSizes, F0AvatarListProps } from "./types"
 import { getAvatarDisplayName } from "./utils"
-
-const avatarListVariants = cva({
-  base: "flex items-center",
-  variants: {
-    size: {
-      xs: "-space-x-0.5",
-      sm: "-space-x-[3px]",
-      md: "-space-x-1",
-    } satisfies Record<AvatarListSize, string>,
-  },
-  defaultVariants: {
-    size: "md",
-  },
-})
 
 const CLIP_MASK: Record<"base" | "rounded", Record<AvatarListSize, string>> = {
   base: {
@@ -40,8 +25,7 @@ export const F0AvatarList = ({
   type,
   noTooltip = false,
   remainingCount: initialRemainingCount,
-  max = 3,
-  layout = "compact",
+  max,
 }: F0AvatarListProps) => {
   // Check legacy size
   if (size && !avatarListSizes.includes(size)) {
@@ -56,52 +40,20 @@ export const F0AvatarList = ({
     size = sizesMappingList[size] ?? "md"
   }
 
-  if (layout === "fill") {
-    return (
-      <OverflowList
-        items={avatars.map((avatar) => ({ type, ...avatar }) as AvatarVariant)}
-        renderListItem={(avatar) => {
-          const displayName = getAvatarDisplayName(type, avatar)
-
-          return (
-            <>
-              <Tooltip label={displayName}>
-                <div>
-                  <F0Avatar avatar={avatar} size={size} />
-                </div>
-              </Tooltip>
-            </>
-          )
-        }}
-        renderDropdownItem={() => null}
-        forceShowingOverflowIndicator={initialRemainingCount !== undefined}
-        renderOverflowIndicator={(count) => (
-          <MaxCounter
-            count={(initialRemainingCount ?? 0) + count}
-            size={size}
-            type={type === "person" ? "rounded" : "base"}
-            avatarType={type}
-            list={
-              initialRemainingCount
-                ? undefined
-                : avatars.slice(avatars.length - count)
-            }
-          />
-        )}
-        overflowIndicatorWithPopover={false}
-        className="flex-1"
-      />
-    )
-  }
-
-  const visibleAvatars = avatars.slice(0, max)
-  const remainingAvatars = avatars.slice(max)
-  const remainingCount = initialRemainingCount ?? avatars.length - max
-  const showCounter = remainingCount > 0
+  const gaps = {
+    xs: -0.5,
+    sm: -3,
+    md: -10,
+  } satisfies Record<AvatarListSize, number>
+  const gap = gaps[size] ?? 0
 
   return (
-    <div className={avatarListVariants({ size })}>
-      {visibleAvatars.map((avatar, index) => {
+    <OverflowList
+      max={max}
+      items={avatars.map((avatar) => ({ type, ...avatar }) as AvatarVariant)}
+      gap={gap}
+      className="flex items-center"
+      renderListItem={(avatar, index) => {
         const displayName = getAvatarDisplayName(type, avatar)
 
         const clippedAvatar = (
@@ -132,19 +84,24 @@ export const F0AvatarList = ({
             )}
           </div>
         )
-      })}
-      {showCounter && (
+      }}
+      renderDropdownItem={() => null}
+      forceShowingOverflowIndicator={initialRemainingCount !== undefined}
+      renderOverflowIndicator={(count) => (
         <MaxCounter
-          count={remainingCount}
+          count={(initialRemainingCount ?? 0) + count}
           size={size}
           type={type === "person" ? "rounded" : "base"}
           avatarType={type}
           list={
-            noTooltip || initialRemainingCount ? undefined : remainingAvatars
+            initialRemainingCount
+              ? undefined
+              : avatars.slice(avatars.length - count)
           }
         />
       )}
-    </div>
+      overflowIndicatorWithPopover={false}
+    />
   )
 }
 

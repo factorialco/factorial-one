@@ -162,12 +162,10 @@ export const WithMaxAvatars: Story = {
   },
 }
 
-export const FillContainer: Story = {
+export const LargeAvatarsList: Story = {
   args: {
-    ...Default.args,
     type: "person",
     avatars: getDummyAvatars(50, "person"),
-    layout: "fill",
   },
 }
 
