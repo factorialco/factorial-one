@@ -1024,7 +1024,6 @@ describe("Collections", () => {
     await userEvent.hover(tableRows[0])
 
     // Find and click the actions button (typically has MoreVertical icon or similar)
-    // ItemActionsRenderer renders both desktop and mobile versions,
     // so we expect 4 buttons total (2 desktop + 2 mobile for 2 rows)
     const actionsButtons = await waitFor(() =>
       screen.getAllByRole("button", { name: /actions/i })

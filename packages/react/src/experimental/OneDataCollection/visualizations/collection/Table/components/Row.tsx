@@ -1,6 +1,9 @@
 import { forwardRef } from "react"
 
 import { FiltersDefinition } from "@/components/OneFilterPicker/types"
+import { ItemActionsMobile } from "@/experimental/OneDataCollection/components/itemActions/ItemActionsMobile/ItemActionsMobile"
+import { ItemActionsRowContainer } from "@/experimental/OneDataCollection/components/itemActions/ItemActionsRowContainer"
+import { useItemActions } from "@/experimental/OneDataCollection/components/itemActions/useItemActions"
 import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { renderProperty } from "@/experimental/OneDataCollection/property-render"
@@ -15,7 +18,7 @@ import { TableCell, TableRow } from "@/experimental/OneTable"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { TableColumnDefinition } from ".."
-import { ItemActionsRenderer } from "../../components/ItemActionsRenderer"
+import { ItemActionsRow } from "../../../../components/itemActions/ItemActionsRow/ItemActionsRow"
 
 export type RowProps<
   R extends RecordType,
@@ -88,6 +91,14 @@ const RowComponentInner = <
 
   const key = `table-row-${groupIndex}-${index}`
 
+  const {
+    primaryItemActions,
+    dropdownItemActions,
+    mobileDropdownItemActions,
+    handleDropDownOpenChange,
+    dropDownOpen,
+  } = useItemActions({ source, item })
+
   return (
     <TableRow
       ref={ref}
@@ -141,8 +152,36 @@ const RowComponentInner = <
           </div>
         </TableCell>
       ))}
+
+      {/** Mobile item actions */}
       {source.itemActions && (
-        <ItemActionsRenderer source={source} item={item} />
+        <>
+          {/** Desktop item actions adds a sticky column to the table to not overflow when the table is scrolled horizontally*/}
+          <td className="sticky right-0 top-0 z-10 hidden md:table-cell">
+            <ItemActionsRowContainer dropDownOpen={dropDownOpen}>
+              <ItemActionsRow
+                primaryItemActions={primaryItemActions}
+                dropdownItemActions={dropdownItemActions}
+                handleDropDownOpenChange={handleDropDownOpenChange}
+              />
+            </ItemActionsRowContainer>
+          </td>
+
+          <TableCell
+            key={`table-cell-${groupIndex}-${index}-actions`}
+            width={68}
+            sticky={{
+              right: 0,
+            }}
+            href={itemHref}
+            className="table-cell md:hidden"
+          >
+            <ItemActionsMobile
+              items={mobileDropdownItemActions}
+              onOpenChange={handleDropDownOpenChange}
+            />
+          </TableCell>
+        </>
       )}
     </TableRow>
   )

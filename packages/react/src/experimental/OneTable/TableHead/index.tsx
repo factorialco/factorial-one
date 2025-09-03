@@ -59,6 +59,11 @@ interface TableHeadProps {
    * @default "left"
    */
   align?: "left" | "right"
+
+  /**
+   * The class name of the header cell
+   */
+  className?: string
 }
 
 export function TableHead({
@@ -71,6 +76,7 @@ export function TableHead({
   sticky,
   hidden = false,
   align = "left",
+  className,
 }: TableHeadProps) {
   const { isScrolled, isScrolledRight } = useTable()
 
@@ -174,7 +180,8 @@ export function TableHead({
           (isScrolled || isScrolledRight) &&
           "relative bg-f1-background before:absolute before:inset-x-0 before:bottom-0 before:h-px before:w-full before:bg-f1-border-secondary before:content-['']",
         isSticky && "sticky z-10",
-        hidden && "after:hidden"
+        hidden && "after:hidden",
+        className
       )}
       tabIndex={sticky ? 0 : undefined}
       // Min and max width is needed to prevent the cell from shrinking or expanding when the table is scrolled

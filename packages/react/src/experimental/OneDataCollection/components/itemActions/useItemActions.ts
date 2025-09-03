@@ -1,12 +1,13 @@
-import { Button } from "@/components/Actions/Button"
 import { FiltersDefinition } from "@/components/OneFilterPicker/types"
-import { DropdownItemSeparator } from "@/experimental/Navigation/Dropdown/internal"
+import {
+  DropdownItem,
+  DropdownItemSeparator,
+} from "@/experimental/Navigation/Dropdown/internal"
 import {
   ActionDefinition,
   filterItemActions,
   ItemActionsDefinition,
 } from "@/experimental/OneDataCollection/item-actions"
-import { ItemActionsDropdown } from "@/experimental/OneDataCollection/ItemActions/ItemActionsDropdown"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary"
@@ -15,11 +16,10 @@ import {
   GroupingDefinition,
   RecordType,
 } from "@/experimental/OneDataCollection/types"
-import { cn } from "@/lib/utils"
 import { useState } from "react"
-import { actionsToDropdownItems } from "../utils"
+import { actionsToDropdownItems } from "../../visualizations/collection/utils"
 
-type ItemActionsRendererProps<
+type UseItemActionProps<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -38,12 +38,18 @@ type ItemActionsRendererProps<
     Grouping
   >
   item: R
-  className?: string
-  desktopContainerClassName?: string
-  mobileContainerClassName?: string
 }
 
-export const ItemActionsRenderer = <
+export type UseItemActions = {
+  primaryItemActions: Exclude<ActionDefinition, DropdownItemSeparator>[]
+  dropdownItemActions: DropdownItem[]
+  mobileDropdownItemActions: DropdownItem[]
+  handleDropDownOpenChange: (open: boolean) => void
+  dropDownOpen: boolean
+  setDropDownOpen: (open: boolean) => void
+}
+
+export const useItemActions = <
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -54,10 +60,7 @@ export const ItemActionsRenderer = <
 >({
   source,
   item,
-  className,
-  desktopContainerClassName,
-  mobileContainerClassName,
-}: ItemActionsRendererProps<
+}: UseItemActionProps<
   R,
   Filters,
   Sortings,
@@ -65,13 +68,20 @@ export const ItemActionsRenderer = <
   ItemActions,
   NavigationFilters,
   Grouping
->) => {
+>): UseItemActions => {
   const [dropDownOpen, setDropDownOpen] = useState(false)
   const [dropDownOpenTimeout, setDropDownOpenTimeout] =
     useState<NodeJS.Timeout | null>(null)
 
   if (!source.itemActions) {
-    return null
+    return {
+      primaryItemActions: [],
+      dropdownItemActions: [],
+      mobileDropdownItemActions: [],
+      handleDropDownOpenChange: () => {},
+      dropDownOpen: false,
+      setDropDownOpen: () => {},
+    }
   }
 
   const itemActions = filterItemActions(source.itemActions, item)
@@ -119,48 +129,12 @@ export const ItemActionsRenderer = <
     setDropDownOpen(true)
   }
 
-  return (
-    <>
-      <aside
-        className={cn(
-          "absolute -right-px bottom-0 top-0 z-20 hidden items-center justify-end gap-2 py-2 pl-20 pr-3 opacity-0 transition-all group-hover:opacity-100 md:flex",
-          "bg-gradient-to-l from-[#F5F6F8] from-0% dark:from-[#192231]",
-          "via-[#F5F6F8] via-60% dark:via-[#192231]",
-          "to-transparent to-100%",
-          dropDownOpen ? "opacity-100" : "opacity-0",
-          desktopContainerClassName,
-          className
-        )}
-      >
-        {primaryItemActions.map((action) => (
-          <Button
-            key={action.label}
-            label={action.label}
-            variant="outline"
-            onClick={action.onClick}
-            icon={action.icon}
-          />
-        ))}
-
-        <ItemActionsDropdown
-          align="end"
-          items={dropdownItemActions}
-          onOpenChange={handleDropDownOpenChange}
-        />
-      </aside>
-      <div
-        className={cn(
-          "absolute right-3 top-3 flex h-8 w-8 items-center justify-center md:hidden",
-          mobileContainerClassName,
-          className
-        )}
-      >
-        <ItemActionsDropdown
-          align="end"
-          items={mobileDropdownItemActions}
-          onOpenChange={handleDropDownOpenChange}
-        />
-      </div>
-    </>
-  )
+  return {
+    primaryItemActions,
+    dropdownItemActions,
+    mobileDropdownItemActions,
+    handleDropDownOpenChange,
+    dropDownOpen,
+    setDropDownOpen,
+  }
 }

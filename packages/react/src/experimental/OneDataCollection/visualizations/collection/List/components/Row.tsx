@@ -1,15 +1,18 @@
 import { Link } from "@/components/Actions/Link"
 import { F0Checkbox } from "@/components/F0Checkbox"
+import { ItemActionsMobile } from "@/experimental/OneDataCollection/components/itemActions/ItemActionsMobile/ItemActionsMobile"
+import { ItemActionsRowContainer } from "@/experimental/OneDataCollection/components/itemActions/ItemActionsRowContainer"
+import { useItemActions } from "@/experimental/OneDataCollection/components/itemActions/useItemActions"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { FiltersDefinition } from "../../../../../../components/OneFilterPicker/types"
+import { ItemActionsRow } from "../../../../components/itemActions/ItemActionsRow/ItemActionsRow"
 import { ItemActionsDefinition } from "../../../../item-actions"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { renderProperty } from "../../../../property-render"
 import { SortingsDefinition } from "../../../../sortings"
 import { SummariesDefinition } from "../../../../summary"
 import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
-import { ItemActionsRenderer } from "../../components/ItemActionsRenderer"
 import { ItemDefinition, ListPropertyDefinition } from "../types"
 import { ItemTeaser } from "./ItemTeaser"
 
@@ -79,6 +82,14 @@ export const Row = <
   const id = source.selectable ? source.selectable(item) : undefined
   const itemDef = itemDefinition(item)
 
+  const {
+    primaryItemActions,
+    dropdownItemActions,
+    mobileDropdownItemActions,
+    handleDropDownOpenChange,
+    dropDownOpen,
+  } = useItemActions({ source, item })
+
   return (
     <div
       className={cn(
@@ -121,7 +132,24 @@ export const Row = <
         ))}
       </div>
       {source.itemActions && (
-        <ItemActionsRenderer source={source} item={item} />
+        <>
+          <ItemActionsRowContainer
+            dropDownOpen={dropDownOpen}
+            className="hidden md:flex"
+          >
+            <ItemActionsRow
+              primaryItemActions={primaryItemActions}
+              dropdownItemActions={dropdownItemActions}
+              handleDropDownOpenChange={handleDropDownOpenChange}
+            />
+          </ItemActionsRowContainer>
+
+          <ItemActionsMobile
+            className="absolute -right-px bottom-0 top-0 z-20 items-center justify-end gap-2 py-2 pl-20 pr-3 md:hidden"
+            items={mobileDropdownItemActions}
+            onOpenChange={handleDropDownOpenChange}
+          />
+        </>
       )}
       {source.selectable && id !== undefined && (
         <div

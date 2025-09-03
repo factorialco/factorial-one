@@ -340,6 +340,23 @@ export const TableCollection = <
                 {label}
               </TableHead>
             ))}
+
+            {source.itemActions && (
+              <>
+                <th></th>
+                <TableHead
+                  key="actions"
+                  width={68}
+                  hidden
+                  sticky={{
+                    right: 0,
+                  }}
+                  className="table-cell md:hidden"
+                >
+                  {t.collections.actions.actions}
+                </TableHead>
+              </>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -522,15 +539,19 @@ export const TableCollection = <
                 </TableCell>
               ))}
               {source.itemActions && (
-                <TableCell
-                  key="summary-actions"
-                  width={68}
-                  sticky={{
-                    right: 0,
-                  }}
-                >
-                  {""}
-                </TableCell>
+                <>
+                  <th className="hidden md:table-cell"></th>
+                  <TableCell
+                    key="summary-actions"
+                    width={68}
+                    sticky={{
+                      right: 0,
+                    }}
+                    className="table-cell md:hidden"
+                  >
+                    {""}
+                  </TableCell>
+                </>
               )}
             </TableRow>
           </TableFooter>
