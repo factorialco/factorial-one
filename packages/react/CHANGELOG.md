@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.171.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.2...factorial-one-react-v1.171.3) (2025-09-03)
+
+
+### Bug Fixes
+
+* show presets itemCount when value is 0 ([#2484](https://github.com/factorialco/factorial-one/issues/2484)) ([7b2779c](https://github.com/factorialco/factorial-one/commit/7b2779cf40d7f165e8493eb38247da68a9eeea47))
+
 ## [1.171.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.1...factorial-one-react-v1.171.2) (2025-09-03)
 
 
