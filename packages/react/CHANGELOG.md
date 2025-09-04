@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.176.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.175.1...factorial-one-react-v1.176.0) (2025-09-04)
+
+
+### Features
+
+* **One:** make the whole textarea clickable ([#2519](https://github.com/factorialco/factorial-one/issues/2519)) ([3b762a0](https://github.com/factorialco/factorial-one/commit/3b762a001ef20275782dd5033c751a226844b491))
+
 ## [1.175.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.175.0...factorial-one-react-v1.175.1) (2025-09-04)
 
 
