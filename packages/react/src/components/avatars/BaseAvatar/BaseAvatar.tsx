@@ -1,65 +1,25 @@
-import { Badge, BadgeProps } from "@/experimental/Information/Badge"
-import {
-  ModuleAvatar,
-  ModuleAvatarProps,
-} from "@/experimental/Information/ModuleAvatar"
+import { F0AvatarModule } from "@/components/avatars/F0AvatarModule"
+import { Badge } from "@/experimental/Information/Badge"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import {
   Avatar as AvatarComponent,
   AvatarFallback,
   AvatarImage,
-} from "@/ui/avatar"
-import { ComponentProps, forwardRef, useMemo } from "react"
-import { AvatarBadge } from "../F0Avatar/types"
-import { getAvatarColor, getInitials, getMask } from "./utils"
+  InternalAvatarProps,
+} from "@/ui/Avatar"
+import { forwardRef, useMemo } from "react"
+import { AvatarSize, avatarSizes, BaseAvatarProps, sizesMapping } from "./types"
+import {
+  getAvatarColor,
+  getAvatarSize,
+  getBadgeSize,
+  getInitials,
+  getMask,
+} from "./utils"
 
-const getBadgeSize = (
-  size: ShadAvatarProps["size"]
-): BadgeProps["size"] | undefined => {
-  const sizeMap: Partial<
-    Record<Exclude<ShadAvatarProps["size"], undefined>, BadgeProps["size"]>
-  > = {
-    xxlarge: "lg",
-    xlarge: "md",
-    large: "sm",
-    small: "sm",
-    xsmall: "xs",
-  } as const
+const DEFAULT_SIZE = "md"
 
-  return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
-}
-
-const getAvatarSize = (
-  size: ShadAvatarProps["size"]
-): ModuleAvatarProps["size"] | undefined => {
-  const sizeMap: Partial<
-    Record<
-      Exclude<ShadAvatarProps["size"], undefined>,
-      ModuleAvatarProps["size"]
-    >
-  > = {
-    xxlarge: "md",
-    xlarge: "sm",
-    large: "xs",
-    small: "xs",
-    xsmall: "xxs",
-  } as const
-
-  return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
-}
-
-type ShadAvatarProps = ComponentProps<typeof AvatarComponent>
-
-type Props = {
-  type: ShadAvatarProps["type"]
-  name: string | string[]
-  src?: string
-  size?: ShadAvatarProps["size"]
-  color?: ShadAvatarProps["color"] | "random"
-  badge?: AvatarBadge
-} & Pick<ShadAvatarProps, "aria-label" | "aria-labelledby">
-
-export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
+export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
   (
     {
       src,
@@ -73,7 +33,30 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
     },
     ref
   ) => {
-    const initials = getInitials(name, size)
+    const reversedSizesMapping = useMemo(
+      () =>
+        Object.fromEntries(
+          Object.entries(sizesMapping).map(([key, value]) => [value, key])
+        ),
+      []
+    )
+
+    const isSize = (
+      size: AvatarSize | InternalAvatarProps["size"]
+    ): size is AvatarSize => avatarSizes.includes(size as AvatarSize)
+
+    // Check if size is a valid avatar size
+    let mappedSize: AvatarSize = DEFAULT_SIZE
+    if (size && !isSize(size)) {
+      console.warn(
+        `The avatar size: ${size} is deprecated. Use ${sizesMapping[size]} instead.`
+      )
+      mappedSize = sizesMapping[size] ?? DEFAULT_SIZE
+    } else {
+      mappedSize = size ?? DEFAULT_SIZE
+    }
+
+    const initials = getInitials(name, mappedSize)
     const avatarColor =
       color === "random"
         ? getAvatarColor(Array.isArray(name) ? name.join("") : name)
@@ -81,15 +64,15 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
 
     const hasAria = Boolean(ariaLabel || ariaLabelledby)
 
-    const badgeSize = getBadgeSize(size)
-    const moduleAvatarSize = getAvatarSize(size)
+    const badgeSize = getBadgeSize(mappedSize)
+    const moduleAvatarSize = getAvatarSize(mappedSize)
 
     const badgeContent = useMemo(
       () =>
         badge ? (
           <>
             {badge.type === "module" && (
-              <ModuleAvatar module={badge.module} size={moduleAvatarSize} />
+              <F0AvatarModule module={badge.module} size={moduleAvatarSize} />
             )}
             {badge.type !== "module" && (
               <Badge type={badge.type} icon={badge.icon} size={badgeSize} />
@@ -101,15 +84,15 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
 
     return (
       <>
-        <div className="relative inline-flex">
+        <div className="relative inline-flex h-fit w-fit">
           <div
-            className="h-fit w-fit"
+            className="relative h-fit w-fit"
             style={
               badge
                 ? {
                     clipPath: getMask.get(
                       type === "rounded" ? "rounded" : "base",
-                      size,
+                      mappedSize,
                       badge.type === "module" ? "module" : "default"
                     ),
                   }
@@ -117,7 +100,12 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
             }
           >
             <AvatarComponent
-              size={size}
+              size={
+                (reversedSizesMapping[
+                  mappedSize
+                ] as InternalAvatarProps["size"]) ||
+                ("small" as InternalAvatarProps["size"])
+              }
               type={type}
               color={avatarColor}
               ref={ref}
@@ -134,7 +122,10 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
               }
             >
               <AvatarImage src={src} alt={initials} />
-              <AvatarFallback data-a11y-color-contrast-ignore>
+              <AvatarFallback
+                data-a11y-color-contrast-ignore
+                className="select-none"
+              >
                 {initials}
               </AvatarFallback>
             </AvatarComponent>

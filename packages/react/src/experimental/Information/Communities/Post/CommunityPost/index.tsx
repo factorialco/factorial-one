@@ -110,7 +110,7 @@ export const BaseCommunityPost = ({
             />
           </Link>
         ) : (
-          <F0AvatarIcon icon={PersonIcon} className="rounded-full" />
+          <F0AvatarIcon icon={PersonIcon} />
         )}
       </div>
       <div className="flex flex-1 flex-col gap-3">
@@ -130,7 +130,7 @@ export const BaseCommunityPost = ({
                         firstName={author.firstName}
                         lastName={author.lastName}
                         src={author.avatarUrl}
-                        size="xsmall"
+                        size="xs"
                       />
                     </span>
                   </Link>
@@ -145,11 +145,7 @@ export const BaseCommunityPost = ({
                 </>
               ) : (
                 <div className="block md:hidden">
-                  <F0AvatarIcon
-                    icon={PersonIcon}
-                    size="sm"
-                    className="size-5 rounded-full"
-                  />
+                  <F0AvatarIcon icon={PersonIcon} size="sm" />
                 </div>
               )}
               <span

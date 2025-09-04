@@ -1,6 +1,6 @@
 import { Meta, Canvas, Controls } from "@storybook/addon-docs/blocks"
 import LinkTo from "@storybook/addon-links/react"
-import * as IconStories from "./index.stories"
+import * as IconStories from "./F0Icon.stories"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 <Meta title="Icon" />
@@ -27,7 +27,7 @@ to the Icon component as a prop.
 import { Icon } from "@/components/Utilities/Icon"
 import { Archive } from "@/icons/app"
 
-<Icon icon={Archive} size="md" />
+<F0Icon icon={Archive} size="md" />
 ```
 
 <DoDonts
@@ -51,14 +51,14 @@ The Icon component supports different color options through the `color` prop:
 
 ```jsx
 // Using token colors
-<Icon icon={Archive} color="secondary" />
-<Icon icon={Alert} color="critical" />
+<F0Icon icon={Archive} color="secondary" />
+<F0Icon icon={Alert} color="critical" />
 
 // Using hex colors
-<Icon icon={Star} color="#ff0000" />
+<F0Icon icon={Star} color="#ff0000" />
 
 // Using current color (default)
-<Icon icon={Home} />
+<F0Icon icon={Home} />
 ```
 
 Please, use the token colors unless you have a specific reason to use a hex

@@ -23,6 +23,7 @@ storybook-static
 *.njsproj
 *.sln
 *.sw?
+.husky
 
 *storybook.log
 

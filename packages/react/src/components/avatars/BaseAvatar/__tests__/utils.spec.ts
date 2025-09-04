@@ -5,15 +5,15 @@ describe("getInitials", () => {
   test("returns first two letters in uppercase from the name, if a string passed", () => {
     expect(getInitials("j")).eq("J")
     expect(getInitials("John")).eq("JO")
-    expect(getInitials("John Doe", "medium")).eq("JO")
-    expect(getInitials("John Doe", "large")).eq("JO")
+    expect(getInitials("John Doe", "md")).eq("JO")
+    expect(getInitials("John Doe", "lg")).eq("JO")
   })
 
-  test("returns first letter in uppercase from the name, if requested size is xsmall or small", () => {
-    expect(getInitials("John Doe", "small")).eq("J")
-    expect(getInitials("John Doe", "small")).eq("J")
-    expect(getInitials(["John"], "xsmall")).eq("J")
-    expect(getInitials(["John", "Doe"], "xsmall")).eq("J")
+  test("returns first letter in uppercase from the name, if requested size is xs or sm", () => {
+    expect(getInitials("John Doe", "sm")).eq("J")
+    expect(getInitials("John Doe", "sm")).eq("J")
+    expect(getInitials(["John"], "xs")).eq("J")
+    expect(getInitials(["John", "Doe"], "xs")).eq("J")
   })
 
   test("returns first letter in uppercase from them name, if one element array is passed", () => {
@@ -28,6 +28,6 @@ describe("getInitials", () => {
   test("returns an empty string if name is an empty array or an empty string", () => {
     expect(getInitials("")).eq("")
     expect(getInitials([])).eq("")
-    expect(getInitials([""], "xsmall")).eq("")
+    expect(getInitials([""], "xs")).eq("")
   })
 })

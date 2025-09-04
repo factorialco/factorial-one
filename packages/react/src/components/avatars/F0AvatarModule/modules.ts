@@ -1,3 +1,4 @@
+import { IconType } from "@/components/F0Icon"
 import * as ModuleIcons from "@/icons/modules"
 
 export const modules = {
@@ -63,6 +64,6 @@ export const modules = {
   "time-tracking": ModuleIcons.TimeTracking,
   timeoff: ModuleIcons.TimeOff,
   workflows: ModuleIcons.Workflows,
-} as const
+} as const satisfies Record<string, IconType>
 
 export type ModuleId = keyof typeof modules

@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import { useState } from "react"
 
+import * as AnimatedIcons from "@/icons/animated"
+import * as Icons from "@/icons/app"
+import * as ModuleIcons from "@/icons/modules"
 import { ComponentProps } from "react"
-import * as AnimatedIcons from "../../../icons/animated"
-import * as Icons from "../../../icons/app"
-import * as ModuleIcons from "../../../icons/modules"
-import { Icon } from "./index"
+import { F0Icon } from "../index"
 
 const meta = {
   title: "Icon",
-  component: Icon,
+  component: F0Icon,
   argTypes: {
     icon: {
       control: "select",
@@ -27,7 +27,7 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs", "stable"],
-} satisfies Meta<ComponentProps<typeof Icon>>
+} satisfies Meta<ComponentProps<typeof F0Icon>>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -71,7 +71,7 @@ export const Animated: Story = {
       description: "Size of the icon",
     },
   },
-  render: ({ size, icon }) => {
+  render: ({ size, icon }: ComponentProps<typeof F0Icon>) => {
     const [isHovered, setIsHovered] = useState(false)
 
     return (
@@ -80,7 +80,7 @@ export const Animated: Story = {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <Icon
+        <F0Icon
           icon={icon}
           state={isHovered ? "animate" : "normal"}
           size={size}
