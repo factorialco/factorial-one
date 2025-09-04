@@ -1,5 +1,5 @@
 import { InternalAvatarProps } from "@/ui/Avatar"
-import { AvatarBadge } from "../F0Avatar/types"
+import { AvatarBadge } from "../../F0Avatar/types"
 
 export const avatarSizes = ["xs", "sm", "md", "lg", "xl", "2xl"] as const
 

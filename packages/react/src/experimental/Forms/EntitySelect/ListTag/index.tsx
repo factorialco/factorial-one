@@ -1,4 +1,4 @@
-import { BaseAvatar } from "@/components/avatars/BaseAvatar"
+import { BaseAvatar } from "@/components/avatars/internal/BaseAvatar"
 import { F0Icon } from "@/components/F0Icon"
 import { BaseTag } from "@/components/tags/BaseTag"
 import { EntitySelectSubEntity } from "@/experimental/Forms/EntitySelect/types"

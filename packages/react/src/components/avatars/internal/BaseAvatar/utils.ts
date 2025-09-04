@@ -4,7 +4,7 @@ import {
   Avatar as AvatarComponent,
 } from "@/ui/Avatar"
 import { type ComponentProps } from "react"
-import { F0AvatarModuleProps } from "../F0AvatarModule"
+import { F0AvatarModuleProps } from "../../F0AvatarModule"
 import { AvatarSize } from "./types"
 
 type ShadAvatarProps = ComponentProps<typeof AvatarComponent>
