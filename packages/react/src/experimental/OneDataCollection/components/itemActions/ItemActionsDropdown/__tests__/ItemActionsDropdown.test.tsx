@@ -1,7 +1,7 @@
+import { DropdownItem } from "@/experimental/Navigation/Dropdown/internal"
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import { DropdownItem } from "../../Navigation/Dropdown"
-import { ItemActionsDropdown } from "./ItemActionsDropdown"
+import { ItemActionsDropdown } from "../ItemActionsDropdown"
 
 // Mock the imported components
 vi.mock("@/components/Utilities/Icon", () => ({
@@ -13,11 +13,11 @@ vi.mock("@/lib/utils", () => ({
   focusRing: (className: string) => className,
 }))
 
-vi.mock("../../../icons/app", () => ({
+vi.mock("@/icons/app", () => ({
   Ellipsis: () => <div data-testid="ellipsis-icon">...</div>,
 }))
 
-vi.mock("../../Navigation/Dropdown", () => ({
+vi.mock("@/experimental/Navigation/Dropdown", () => ({
   Dropdown: ({ children, items, open, onOpenChange }) => (
     <div
       data-testid="dropdown"
