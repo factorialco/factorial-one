@@ -69,7 +69,7 @@ export const F0AvatarList = ({
             }
           >
             <F0Avatar
-              avatar={{ type, ...avatar } as AvatarVariant}
+              avatar={{ ...avatar, type } as AvatarVariant}
               size={size}
             />
           </div>
