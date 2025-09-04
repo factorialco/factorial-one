@@ -9,6 +9,15 @@ const meta: Meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component: [
+          "A tag component that displays a company with a name and an optional logo image.",
+        ]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
   },
   args: {
     name: "Factorial",

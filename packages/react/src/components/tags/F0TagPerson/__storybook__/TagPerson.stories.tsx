@@ -9,6 +9,15 @@ const meta: Meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component: [
+          "A tag component that displays a person with a name and an optional image.",
+        ]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
   },
   argTypes: {
     name: {

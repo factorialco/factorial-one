@@ -10,10 +10,49 @@ const meta: Meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component: [
+          "A tag component that displays semantically a balance with a percentage and an amount. With a trend indicator.",
+        ]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
+  },
+  argTypes: {
+    percentage: {
+      control: "number",
+      description:
+        "The percentage of the balance, it can be a number or an object with the numeric value that allows to define the decimal places and locale.",
+      table: {
+        type: {
+          summary: "number | Omit<NumericValue, 'units' | 'unitsPosition'>",
+        },
+      },
+    },
+    amount: {
+      control: "number",
+      description:
+        "The amount of the balance, it can be a number or an object with the numeric value that allows to define the decimal places, units, units position and locale.",
+      table: {
+        type: {
+          summary: "number | NumericValue",
+        },
+      },
+    },
   },
   args: {
+    info: "This is a balance tag with info",
+    hint: "vs last month",
     percentage: 2,
-    amount: 1522.48,
+    amount: {
+      number: 1522.48,
+      decimalPlaces: 2,
+      units: "€",
+      unitsPosition: "right",
+      locale: "en-US",
+    },
   },
 }
 
@@ -37,7 +76,7 @@ export const NegativeBalanceTag: Story = {
       decimalPlaces: 2,
       units: "€",
       unitsPosition: "right",
-      locale: "de-DE",
+      locale: "es-ES",
     },
   },
 }
@@ -64,6 +103,13 @@ export const Snapshot: Story = {
     <div className="flex flex-col gap-2">
       {statuses.map((status) => (
         <F0TagBalance
+          hint={
+            status === "positive"
+              ? "vs last month"
+              : status === "negative"
+                ? "vs last month"
+                : undefined
+          }
           key={status}
           percentage={
             status === "positive" ? 10 : status === "negative" ? -10 : 0

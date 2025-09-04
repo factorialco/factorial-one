@@ -36,7 +36,7 @@ const numericFormatter = (value: Required<NumericValue>) => {
 }
 
 export const F0TagBalance = forwardRef<HTMLDivElement, F0TagBalanceProps>(
-  ({ percentage, amount, inverted, info }, ref) => {
+  ({ percentage, amount, inverted, info, hint }, ref) => {
     const perventageDef = toNumericValue(percentage, 2, "%", "right")
     const amountDef = toNumericValue(amount, 2, "", "right")
 
@@ -64,6 +64,7 @@ export const F0TagBalance = forwardRef<HTMLDivElement, F0TagBalanceProps>(
           }[status]
         )}
         info={info}
+        hint={hint}
         left={
           status === "neutral" ? null : (
             <F0Icon

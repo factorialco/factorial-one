@@ -10,6 +10,15 @@ const meta: Meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component: [
+          "A tag component that displays semantically a text alert with an icon and color based on the severity level.",
+        ]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
   },
   argTypes: {
     level: {

@@ -10,6 +10,15 @@ const meta: Meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component: [
+          "A tag component that displays a status with a label. This should not be used for user uses cases rather than status, e.g. for alerts, use `TagAlert` instead.",
+        ]
+          .map((line) => `<p>${line}</p>`)
+          .join(""),
+      },
+    },
   },
   argTypes: {
     variant: {

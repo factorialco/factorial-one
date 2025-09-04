@@ -16,4 +16,12 @@ export interface F0TagBalanceProps {
    * Inverts the balance status
    */
   inverted?: boolean
+  /**
+   * Hint text
+   */
+  hint?: string
+  /**
+   * Info text
+   */
+  info?: string
 }

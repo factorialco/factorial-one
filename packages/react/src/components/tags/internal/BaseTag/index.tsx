@@ -12,10 +12,11 @@ type Props = {
    */
   additionalAccesibleText?: string
   className?: string
+  // Hint text
+  hint?: string
   // Tooltip text
   info?: string
   // Hides the info icon
-  noInfoIcon?: boolean
   shape?: "rounded" | "square"
 } & (
   | {
@@ -38,8 +39,8 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
       right,
       additionalAccesibleText,
       className,
+      hint,
       info,
-      noInfoIcon,
       shape = "rounded",
     },
     ref
@@ -69,7 +70,12 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
           )}
           {right}
         </div>
-        {info && !noInfoIcon && <F0Icon icon={InfoCircle} size="md" />}
+        {hint && (
+          <span className="text-base font-medium text-f1-foreground-secondary">
+            {hint}
+          </span>
+        )}
+        {info && <F0Icon icon={InfoCircle} size="md" />}
       </div>
     )
 
