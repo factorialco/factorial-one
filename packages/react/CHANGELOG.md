@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.175.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.175.0...factorial-one-react-v1.175.1) (2025-09-04)
+
+
+### Bug Fixes
+
+* export dropdown button as experimental component ([#2521](https://github.com/factorialco/factorial-one/issues/2521)) ([d905ae5](https://github.com/factorialco/factorial-one/commit/d905ae5357d5340cb220afdb6c1ed2f3a6d7a626))
+
 ## [1.175.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.174.0...factorial-one-react-v1.175.0) (2025-09-04)
 
 
