@@ -1,13 +1,26 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
+import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import { F0TagStatus } from "../"
+import { statuses } from "../types"
 
 const meta: Meta = {
   component: F0TagStatus,
-  title: "Tag/TagStatus",
+  title: "Tags/TagStatus",
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
+  },
+  argTypes: {
+    variant: {
+      control: "select",
+      options: statuses,
+      table: {
+        type: {
+          summary: "StatusVariant",
+        },
+      },
+    },
   },
   args: {
     text: "Label",
@@ -42,4 +55,22 @@ export const CriticalStatusTag: Story = {
   args: {
     variant: "critical",
   },
+}
+
+export const Snapshot: Story = {
+  parameters: withSnapshot({}),
+  render: () => (
+    <div className="flex w-[200px] flex-col gap-2 overflow-hidden border-[1px] border-dotted border-[#333]">
+      <h3 className="text-lg font-semibold">All Status Tags</h3>
+      {statuses.map((status) => (
+        <F0TagStatus key={status} text={status} variant={status} />
+      ))}
+
+      <F0TagStatus
+        key={status}
+        text="This is a long label text that should be truncated but should have an ellipsis and a tooltip"
+        variant="critical"
+      />
+    </div>
+  ),
 }

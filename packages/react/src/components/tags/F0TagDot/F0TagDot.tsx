@@ -1,4 +1,4 @@
-import { BaseTag } from "@/components/tags/BaseTag"
+import { BaseTag } from "@/components/tags/internal/BaseTag"
 import { useTextFormatEnforcer } from "@/lib/text"
 import { baseColors } from "@factorialco/factorial-one-core"
 import { forwardRef } from "react"

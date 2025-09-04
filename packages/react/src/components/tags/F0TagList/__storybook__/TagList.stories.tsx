@@ -152,7 +152,7 @@ const rawTags = [
  * relevant to that specific tag type.
  */
 const meta = {
-  title: "Tag/TagList",
+  title: "Tags/TagList",
   component: F0TagList,
   parameters: {
     layout: "centered",

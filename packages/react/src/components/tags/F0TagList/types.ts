@@ -1,4 +1,4 @@
-import { TagVariant } from "../Tag"
+import { TagVariant } from "../F0Tag/F0Tag"
 
 // Generic type helper to create tag data types
 type TagDataType<T extends string> = Omit<

@@ -1,5 +1,5 @@
+import { Tag, TagVariant } from "@/components/tags/F0Tag/F0Tag"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
-import { Tag, TagVariant } from "@/components/tags/Tag"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn, focusRing } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
