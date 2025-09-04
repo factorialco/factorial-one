@@ -5,6 +5,7 @@ import {
   FC,
   PropsWithChildren,
   useContext,
+  useEffect,
   useState,
 } from "react"
 import { AiChatMode } from ".."
@@ -34,6 +35,10 @@ export const AiChatStateProvider: FC<PropsWithChildren<AiChatState>> = ({
   const [mode, setMode] = useState<AiChatMode>(initialMode)
   const [enabledInternal, setEnabledInternal] = useState(enabled)
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    setEnabledInternal(enabled)
+  }, [enabled])
 
   return (
     <AiChatStateContext.Provider
