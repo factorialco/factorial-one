@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { motion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
-import { Icon } from "../../components/Utilities/Icon"
+import { F0Icon } from "../../components/F0Icon"
 import { Spinner } from "../../icons/app"
 
 import { OneEmptyState } from "@/experimental/OneEmptyState"
@@ -118,6 +118,8 @@ export const useDataSource = <
   NavigationFilters,
   Grouping
 > => {
+  const i18n = useI18n()
+
   const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
@@ -135,7 +137,7 @@ export const useDataSource = <
         return [
           key,
           filterType.valueConverter
-            ? filterType.valueConverter(filter.defaultValue, filter)
+            ? filterType.valueConverter(filter.defaultValue, filter, i18n)
             : filter.defaultValue,
         ]
       })
@@ -215,7 +217,7 @@ export const useDataSource = <
   }
 }
 
-const MotionIcon = motion.create(Icon)
+const MotionIcon = motion.create(F0Icon)
 
 /**
  * A component that renders a collection of data with filtering and visualization capabilities.

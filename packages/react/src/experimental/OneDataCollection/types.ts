@@ -1,9 +1,9 @@
+import { IconType } from "@/components/F0Icon"
 import type {
   FiltersDefinition,
   FiltersState,
   PresetsDefinition,
 } from "@/components/OneFilterPicker/types"
-import { IconType } from "@/components/Utilities/Icon"
 import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
