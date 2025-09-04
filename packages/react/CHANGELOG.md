@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.175.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.174.0...factorial-one-react-v1.175.0) (2025-09-04)
+
+
+### Features
+
+* **ValueDisplay:** add percentage cell type ([#2516](https://github.com/factorialco/factorial-one/issues/2516)) ([a03c006](https://github.com/factorialco/factorial-one/commit/a03c006de5bc365d90d8471ee8aa23aefe220921))
+
 ## [1.174.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.173.0...factorial-one-react-v1.174.0) (2025-09-04)
 
 
