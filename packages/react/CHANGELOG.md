@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.177.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.176.0...factorial-one-react-v1.177.0) (2025-09-04)
+
+
+### Features
+
+* stabilize avatar components ([#2524](https://github.com/factorialco/factorial-one/issues/2524)) ([3b9b4f3](https://github.com/factorialco/factorial-one/commit/3b9b4f3c1284c9cac4171cee60ada903b066c031))
+
 ## [1.176.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.175.1...factorial-one-react-v1.176.0) (2025-09-04)
 
 
