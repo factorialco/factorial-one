@@ -118,7 +118,7 @@ export const MessagesContainer = ({
                   filter: { duration: 0.2, ease: "easeOut", delay: 0.1 },
                 }}
               >
-                <OneIcon className="my-4 h-10 w-10" />
+                <OneIcon spin size="lg" className="my-4" />
               </motion.div>
               {greeting && (
                 <motion.p
