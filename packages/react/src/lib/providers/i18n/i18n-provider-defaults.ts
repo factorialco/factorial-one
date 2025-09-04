@@ -182,6 +182,7 @@ export const defaultTranslations = {
     openChat: "Open Chat",
     scrollToBottom: "Scroll to bottom",
     welcome: "I'm One. Ask or make anything.",
+    initialMessage: "How can I help you today?",
   },
 } as const
 
