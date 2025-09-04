@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.173.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.172.0...factorial-one-react-v1.173.0) (2025-09-04)
+
+
+### Features
+
+* add hover actions to table ([#2454](https://github.com/factorialco/factorial-one/issues/2454)) ([a0e13b0](https://github.com/factorialco/factorial-one/commit/a0e13b09d5aae7a9a004ad6fac4675da68ce9510))
+
 ## [1.172.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.3...factorial-one-react-v1.172.0) (2025-09-03)
 
 
