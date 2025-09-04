@@ -227,9 +227,9 @@ const NotesTextEditorComponent = forwardRef<
         />
       </div>
 
-      <ScrollArea className="h-full gap-6 pb-20 pt-6">
+      <ScrollArea className="h-full gap-6">
         {(onTitleChange || title) && (
-          <div className="flex flex-col px-40 pb-5">
+          <div className="flex flex-col px-28 pb-5 pt-5">
             <input
               disabled={!onTitleChange}
               value={title}
@@ -273,7 +273,7 @@ const NotesTextEditorComponent = forwardRef<
 
           <EditorContent
             editor={editor}
-            className="pb-6 [&>div]:w-full [&>div]:px-40"
+            className="pb-28 [&>div]:w-full [&>div]:px-28"
           />
         </div>
       </ScrollArea>

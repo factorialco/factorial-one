@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/Button"
+import { F0ButtonToggle } from "@/experimental/Actions/F0ButtonToggle"
 import { Picker } from "@/experimental/Information/Reactions/Picker"
 import {
   AlignTextCenter,
@@ -27,7 +28,6 @@ import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
 import { Fragment, ReactNode } from "react"
 import { LinkPopup } from "./LinkPopup"
-import { ToolbarButton } from "./ToolbarButton"
 import { ToolbarDivider } from "./ToolbarDivider"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 import { ButtonConfig, ToolbarProps } from "./types"
@@ -187,14 +187,13 @@ export const Toolbar = ({
   const renderButtons = (configs: ButtonConfig[]) => (
     <div className="flex flex-row items-center gap-0.5">
       {configs.map((config) => (
-        <ToolbarButton
+        <F0ButtonToggle
           key={config.key}
-          active={config.active(editor)}
           label={labels[config.key as keyof typeof labels]}
           icon={config.icon}
+          selected={config.active(editor)}
           disabled={disableButtons}
-          onClick={() => config.onClick(editor)}
-          tooltip={config.tooltip}
+          onSelectedChange={() => config.onClick(editor)}
         />
       ))}
     </div>
