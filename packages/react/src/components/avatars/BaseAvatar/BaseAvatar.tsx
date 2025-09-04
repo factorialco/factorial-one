@@ -122,7 +122,10 @@ export const BaseAvatar = forwardRef<HTMLDivElement, BaseAvatarProps>(
               }
             >
               <AvatarImage src={src} alt={initials} />
-              <AvatarFallback data-a11y-color-contrast-ignore>
+              <AvatarFallback
+                data-a11y-color-contrast-ignore
+                className="select-none"
+              >
                 {initials}
               </AvatarFallback>
             </AvatarComponent>

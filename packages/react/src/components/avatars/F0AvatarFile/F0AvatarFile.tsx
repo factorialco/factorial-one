@@ -70,7 +70,9 @@ const F0AvatarFile = forwardRef<ElementRef<typeof Avatar>, F0AvatarFileProps>(
         {...props}
         size={mappedSize}
       >
-        <AvatarFallback className={cn("font-semibold", textSize, fileColor)}>
+        <AvatarFallback
+          className={cn("select-none font-semibold", textSize, fileColor)}
+        >
           {fileType}
         </AvatarFallback>
         {badge && (
