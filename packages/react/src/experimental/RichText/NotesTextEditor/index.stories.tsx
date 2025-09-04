@@ -1,10 +1,11 @@
-import { AcademicCap, List } from "@/icons/app"
+import { NewColor } from "@/components/tags/F0TagDot"
+import { AcademicCap, List, Placeholder } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { BasicTextEditor } from "./index"
+import { NotesTextEditor } from "./index"
 
-const meta: Meta<typeof BasicTextEditor> = {
-  title: "Rich text/BasicTextEditor",
-  component: BasicTextEditor,
+const meta: Meta<typeof NotesTextEditor> = {
+  title: "Rich text/NotesTextEditor",
+  component: NotesTextEditor,
   tags: ["experimental"],
 }
 
@@ -303,5 +304,38 @@ export const Default: Story = {
         },
       ],
     },
+
+    actions: [
+      {
+        label: "Actions 2",
+        onClick: () => {
+          console.log("Actions 2")
+        },
+        hideLabel: true,
+        icon: Placeholder,
+      },
+      {
+        label: "Actions",
+        onClick: () => {
+          console.log("Actions")
+        },
+      },
+    ],
+    metadata: [
+      {
+        type: "status",
+        label: "Status",
+        variant: "warning",
+      },
+      {
+        type: "dot-tag",
+        label: "Dot tag",
+        color: "malibu" as NewColor,
+      },
+      {
+        type: "text",
+        content: "Metadata",
+      },
+    ],
   },
 }

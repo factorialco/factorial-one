@@ -25,7 +25,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
-import React from "react"
+import { Fragment, ReactNode } from "react"
 import { LinkPopup } from "./LinkPopup"
 import { ToolbarButton } from "./ToolbarButton"
 import { ToolbarDivider } from "./ToolbarDivider"
@@ -33,12 +33,12 @@ import { ToolbarDropdown } from "./ToolbarDropdown"
 import { ButtonConfig, ToolbarProps } from "./types"
 import { getTextAlignIcon, getTextAlignLabel } from "./utils"
 
-const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
+const intersperse = (arr: ReactNode[], sep: ReactNode) =>
   arr.map((item, index) => (
-    <React.Fragment key={`intersperse-${index}`}>
+    <Fragment key={`intersperse-${index}`}>
       {item}
       {index < arr.length - 1 && sep}
-    </React.Fragment>
+    </Fragment>
   ))
 
 export const Toolbar = ({

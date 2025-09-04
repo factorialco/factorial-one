@@ -20,18 +20,16 @@ import {
 import { AIBlockConfig, AIBlockLabels } from "../CoreEditor/Extensions/AIBlock"
 import { LiveCompanionLabels } from "../CoreEditor/Extensions/LiveCompanion"
 import { MoodTrackerLabels } from "../CoreEditor/Extensions/MoodTracker"
-import {
-  Message,
-  TranscriptLabels,
-  User,
-} from "../CoreEditor/Extensions/Transcript"
+import { TranscriptLabels } from "../CoreEditor/Extensions/Transcript"
 import "../index.css"
-import { createBasicTextEditorExtensions } from "./extensions"
+import { createNotesTextEditorExtensions } from "./extensions"
+import Header from "./Header"
+import { actionType, MetadataItemValue, NotesTextEditorHandle } from "./types"
 
-interface BasicTextEditorProps {
+interface NotesTextEditorProps {
   onChange: (value: { json: JSONContent | null; html: string | null }) => void
   placeholder: string
-  initialEditorState?: { content: JSONContent | string; title?: string }
+  initialEditorState?: { content?: JSONContent | string; title?: string }
   readonly?: boolean
   aiBlockConfig?: AIBlockConfig
   onTitleChange?: (title: string) => void
@@ -44,20 +42,14 @@ interface BasicTextEditorProps {
     transcriptLabels?: TranscriptLabels
     titlePlaceholder?: string
   }
+  actions?: actionType[]
+  metadata?: MetadataItemValue[]
 }
 
-type BasicTextEditorHandle = {
-  clear: () => void
-  focus: () => void
-  setContent: (content: string) => void
-  insertAIBlock: () => void
-  insertTranscript: (title: string, users: User[], messages: Message[]) => void
-}
-
-const BasicTextEditorComponent = forwardRef<
-  BasicTextEditorHandle,
-  BasicTextEditorProps
->(function BasicTextEditor(
+const NotesTextEditorComponent = forwardRef<
+  NotesTextEditorHandle,
+  NotesTextEditorProps
+>(function NotesTextEditor(
   {
     onChange,
     placeholder,
@@ -66,6 +58,8 @@ const BasicTextEditorComponent = forwardRef<
     labels,
     aiBlockConfig,
     onTitleChange,
+    actions,
+    metadata,
   },
   ref
 ) {
@@ -92,7 +86,7 @@ const BasicTextEditorComponent = forwardRef<
   }, [title, onTitleChange])
 
   const editor = useEditor({
-    extensions: createBasicTextEditorExtensions(
+    extensions: createNotesTextEditorExtensions(
       placeholder,
       toolbarLabels,
       slashCommandGroupLabels,
@@ -219,20 +213,23 @@ const BasicTextEditorComponent = forwardRef<
       ref={containerRef}
       id={editorId}
     >
-      <div className="border-0 border-b border-solid border-f1-border-secondary px-6 py-3">
+      {((actions && actions.length > 0) ||
+        (metadata && metadata.length > 0)) && (
+        <Header actions={actions} metadata={metadata} />
+      )}
+      <div className="absolute bottom-8 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-f1-background p-2 shadow-lg">
         <Toolbar
           labels={toolbarLabels}
           editor={editor}
           disableButtons={false}
-          darkMode
           showEmojiPicker={false}
           plainHtmlMode={false}
         />
       </div>
 
-      <ScrollArea className="h-full gap-6 pt-6">
+      <ScrollArea className="h-full gap-6 pb-20 pt-6">
         {(onTitleChange || title) && (
-          <div className="flex flex-col px-16 pb-6">
+          <div className="flex flex-col px-40 pb-5">
             <input
               disabled={!onTitleChange}
               value={title}
@@ -276,7 +273,7 @@ const BasicTextEditorComponent = forwardRef<
 
           <EditorContent
             editor={editor}
-            className="pb-6 [&>div]:w-full [&>div]:px-16"
+            className="pb-6 [&>div]:w-full [&>div]:px-40"
           />
         </div>
       </ScrollArea>
@@ -285,5 +282,5 @@ const BasicTextEditorComponent = forwardRef<
 })
 
 export type { Message, User } from "../CoreEditor/Extensions/Transcript"
-export { BasicTextEditorComponent as BasicTextEditor }
-export type { BasicTextEditorHandle, BasicTextEditorProps }
+export { NotesTextEditorComponent as NotesTextEditor }
+export type { NotesTextEditorHandle, NotesTextEditorProps }
