@@ -218,11 +218,11 @@ export const Snapshot: Story = {
         {avatarVariants.map((type) => (
           <div key={`${type}-10`} className="flex w-fit flex-col gap-2">
             {avatarListSizes.map((size) => (
-              <div key={`${type}-${size}-10`} className="mb-3">
+              <div key={`${type}-${size}-10`} className="mb-3 max-w-[270px]">
                 <F0AvatarList
                   size={size}
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  avatars={getDummyAvatars(10, type) as any}
+                  avatars={getDummyAvatars(20, type) as any}
                   type={type}
                 />
               </div>
