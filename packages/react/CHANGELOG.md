@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.174.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.173.0...factorial-one-react-v1.174.0) (2025-09-04)
+
+
+### Features
+
+* **One:** add glowing textarea effect ([#2511](https://github.com/factorialco/factorial-one/issues/2511)) ([82bd736](https://github.com/factorialco/factorial-one/commit/82bd736a75d0882c33bbb60ed010e0d8469c8751))
+
 ## [1.173.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.172.0...factorial-one-react-v1.173.0) (2025-09-04)
 
 
