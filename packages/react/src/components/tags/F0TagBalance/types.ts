@@ -9,19 +9,34 @@ export interface NumericValue {
   locale?: string
 }
 
-export interface F0TagBalanceProps {
-  percentage: number | Omit<NumericValue, "units" | "unitsPosition">
-  amount: number | NumericValue
+export type F0TagBalanceProps = {
   /**
-   * Inverts the balance status
+   * Inverts the balance status color. Is useful when a negative percent mean something positive.
    */
-  inverted?: boolean
+  invertStatus?: boolean
   /**
-   * Hint text
+   * Hint text to display next to the tag (This text is not displayed when the balance is null or undefined)
    */
   hint?: string
   /**
-   * Info text
+   * Info text to display an i icon and a tooltip next to the tag
    */
   info?: string
-}
+
+  /**
+   * Text to display when the balance is null or undefined
+   */
+  nullText?: string
+
+  /**
+   * Amount to display next to the tag
+   */
+  amount?: number | NumericValue | null
+} & (
+  | {
+      percentage: number | Omit<NumericValue, "units" | "unitsPosition">
+    }
+  | {
+      percentage?: null
+    }
+)

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 
 import { withSnapshot } from "@/lib/storybook-utils/parameters"
 import { F0TagBalance } from "../"
-import { statuses } from "../types"
 
 const meta: Meta = {
   component: F0TagBalance,
@@ -81,11 +80,11 @@ export const NegativeBalanceTag: Story = {
   },
 }
 
-export const InvertedBalanceTag: Story = {
+export const InvertedBalanceStatusTag: Story = {
   args: {
     percentage: -17,
     amount: -1522.48,
-    inverted: true,
+    invertStatus: true,
   },
 }
 
@@ -97,28 +96,115 @@ export const BalanceTagWithInfo: Story = {
   },
 }
 
+export const BalanceTagWithNull: Story = {
+  args: {
+    percentage: null,
+    amount: null,
+    info: "This is a balance tag with null",
+    nullText: "N/A",
+  },
+}
+
 export const Snapshot: Story = {
   parameters: withSnapshot({}),
-  render: () => (
-    <div className="flex flex-col gap-2">
-      {statuses.map((status) => (
-        <F0TagBalance
-          hint={
-            status === "positive"
-              ? "vs last month"
-              : status === "negative"
-                ? "vs last month"
-                : undefined
-          }
-          key={status}
-          percentage={
-            status === "positive" ? 10 : status === "negative" ? -10 : 0
-          }
-          amount={
-            status === "positive" ? 1000 : status === "negative" ? -1000 : 0
-          }
-        />
-      ))}
-    </div>
-  ),
+  render: () => {
+    const demo = [
+      { title: "positive", percentage: 10, amount: 1000 },
+      { title: "neutral", percentage: 0, amount: 0 },
+      { title: "negative", percentage: -10, amount: -1000 },
+      { title: "null", percentage: null, amount: null },
+      { title: "undefined", percentage: undefined, amount: undefined },
+      {
+        title: "custom null text",
+        percentage: null,
+        amount: null,
+        nullText: "Desi says no salary",
+      },
+      {
+        title: "custom null text and info",
+        percentage: null,
+        amount: null,
+        nullText: "Desi says no salary",
+        info: "This is a balance tag with info",
+      },
+      {
+        title: "with info",
+        percentage: 10,
+        amount: 1000,
+        info: "This is a balance tag with info",
+      },
+      {
+        title: "with hint",
+        percentage: 10,
+        amount: 1000,
+        hint: "vs last month",
+      },
+      {
+        title: "with hint and info",
+        percentage: 10,
+        amount: 1000,
+        hint: "vs last month",
+        info: "This is a balance tag with info",
+      },
+      {
+        title: "with invert status",
+        percentage: 10,
+        amount: 1000,
+        invertStatus: true,
+      },
+      {
+        title: "with decimal places",
+        percentage: { number: 10, decimalPlaces: 2 },
+        amount: 1000,
+      },
+      {
+        title: "with units",
+        percentage: 10,
+        amount: { number: 1000, units: "€" },
+      },
+      {
+        title: "with units position",
+        percentage: 10,
+        amount: {
+          number: 1000,
+          unitsPosition: "left" as const,
+          decimalPlaces: 2,
+          units: "$",
+        },
+      },
+      {
+        title: "with locale",
+        percentage: 10,
+        amount: { number: 1000, locale: "es-ES" },
+      },
+    ]
+    return (
+      <div className="flex flex-col gap-2">
+        {demo.map(
+          ({
+            title,
+            percentage,
+            amount,
+            info,
+            hint,
+            invertStatus,
+            nullText,
+          }) => (
+            <div key={title} className="flex flex-row gap-2">
+              <span className="w-40 font-medium">{title}</span>
+              <F0TagBalance
+                hint={hint}
+                key={title}
+                info={info}
+                invertStatus={invertStatus}
+                nullText={nullText}
+                percentage={percentage}
+                amount={amount}
+              />
+            </div>
+          )
+        )}
+      </div>
+    )
+  },
 }

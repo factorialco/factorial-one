@@ -10,6 +10,12 @@ const meta: Meta = {
   tags: ["autodocs"],
   parameters: {
     layout: "centered",
+    docs: {
+      description: {
+        component:
+          "This is a component that is used to display a simpliest tag. with an icon and a label. or just a label or icon",
+      },
+    },
   },
   args: {
     text: "Label",
@@ -30,6 +36,7 @@ export const NoIconTag: Story = {
 
 export const IconTag: Story = {
   args: {
+    hideLabel: true,
     text: undefined,
   },
 }
@@ -42,6 +49,7 @@ export const Snapshot: Story = {
       <F0TagRaw text="Label" icon={Ai} />
       <F0TagRaw text="Label" />
       <F0TagRaw text="Label" icon={Ai} />
+      <F0TagRaw text="Label" hideLabel icon={Ai} />
     </div>
   ),
 }

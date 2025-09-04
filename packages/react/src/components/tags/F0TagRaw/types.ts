@@ -1,9 +1,25 @@
 import { IconType } from "@/components/F0Icon"
 
-export interface F0TagRawProps {
-  text?: string
+export type F0TagRawProps = {
+  /**
+   * The label to display in the tag or used for accessible text
+   */
+  text: string
+  /**
+   * Additional accessible text to display in the tag
+   */
   additionalAccesibleText?: string
-  icon?: IconType
-  noBorder?: boolean
-  className?: string
-}
+  /**
+   * Whether to hide the label
+   */
+  hideLabel?: boolean
+} & (
+  | {
+      icon: IconType
+      hideLabel: true
+    }
+  | {
+      icon?: IconType
+      hideLabel?: boolean
+    }
+)

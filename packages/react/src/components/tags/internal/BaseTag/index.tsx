@@ -1,11 +1,11 @@
 import { F0Icon } from "@/components/F0Icon"
 import { OneEllipsis } from "@/components/OneEllipsis"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { InfoCircle } from "@/icons/app"
+import { InfoCircleLine } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { forwardRef, ReactNode } from "react"
 
-type Props = {
+type BaseTagProps = {
   /**
    * Sometimes you need to clarify the status for screen reader users
    * E.g., when showing a tooltip for sighted user, provide the tootip text to this prop because tooltips aren't accessible
@@ -18,6 +18,10 @@ type Props = {
   info?: string
   // Hides the info icon
   shape?: "rounded" | "square"
+  /**
+   * Whether to hide the label
+   */
+  hideLabel?: boolean
 } & (
   | {
       left: ReactNode
@@ -31,7 +35,7 @@ type Props = {
     }
 )
 
-export const BaseTag = forwardRef<HTMLDivElement, Props>(
+export const BaseTag = forwardRef<HTMLDivElement, BaseTagProps>(
   (
     {
       left,
@@ -42,11 +46,13 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
       hint,
       info,
       shape = "rounded",
+      hideLabel,
     },
     ref
   ) => {
-    console.log(shape)
-    const content = (
+    additionalAccesibleText =
+      additionalAccesibleText || (hideLabel ? text : undefined)
+    return (
       <div className="flex w-fit max-w-full flex-row items-center justify-start gap-1">
         <div
           ref={ref}
@@ -60,7 +66,7 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
           )}
         >
           {left}
-          {!!text && (
+          {!!text && !hideLabel && (
             <OneEllipsis tag="span" lines={1}>
               {text}
             </OneEllipsis>
@@ -75,11 +81,13 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
             {hint}
           </span>
         )}
-        {info && <F0Icon icon={InfoCircle} size="md" />}
+        {info && (
+          <Tooltip description={info}>
+            <F0Icon icon={InfoCircleLine} size="md" />
+          </Tooltip>
+        )}
       </div>
     )
-
-    return info ? <Tooltip description={info}>{content}</Tooltip> : content
   }
 )
 
