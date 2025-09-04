@@ -78,12 +78,14 @@ export function WidgetAvatarsListItem({
         <p className="line-clamp-1 font-medium">{title}</p>
         <p className="line-clamp-1 text-f1-foreground-secondary">{subtitle}</p>
       </div>
-      <F0AvatarList
-        avatars={avatars}
-        remainingCount={remainingCount}
-        size={"emoji" in props && props.emoji ? "md" : "sm"}
-        type="person"
-      />
+      <div className="min-w-0 flex-1">
+        <F0AvatarList
+          avatars={avatars}
+          remainingCount={remainingCount}
+          size={"emoji" in props && props.emoji ? "md" : "sm"}
+          type="person"
+        />
+      </div>
     </Wrapper>
   )
 }
