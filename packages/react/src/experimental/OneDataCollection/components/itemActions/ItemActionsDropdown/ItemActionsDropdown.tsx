@@ -1,8 +1,8 @@
+import { Button } from "@/components/Actions/Button"
+import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
+import { Ellipsis } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
-import { Button } from "../../../components/Actions/Button"
-import { Ellipsis } from "../../../icons/app"
-import { Dropdown, DropdownItem } from "../../Navigation/Dropdown"
 
 export type ItemActionsDropdownProps = {
   items: DropdownItem[]
