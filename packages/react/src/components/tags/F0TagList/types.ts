@@ -6,6 +6,19 @@ type TagDataType<T extends string> = Omit<
   "type" | "description"
 >
 
+export const tagTypes = [
+  "dot",
+  "person",
+  "team",
+  "company",
+  "alert",
+  "status",
+  "balance",
+  "raw",
+] as const
+
+export type TagType = (typeof tagTypes)[number]
+
 // Define tag types using the generic helper
 type TagTypeMapping = {
   dot: TagDataType<"dot">
@@ -18,13 +31,11 @@ type TagTypeMapping = {
   raw: TagDataType<"raw">
 }
 
-export type TagType = keyof TagTypeMapping
-
 type WithTooltipDescription = {
   description?: string
 }
 
-export type Props<T extends TagType> = {
+export type F0TagListProps<T extends TagType> = {
   /**
    * The type of tags to display. Only one type can be used at a time.
    */

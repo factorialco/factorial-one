@@ -9,17 +9,13 @@ export type F0TagRawProps = {
    * Additional accessible text to display in the tag
    */
   additionalAccesibleText?: string
-  /**
-   * Whether to hide the label
-   */
-  hideLabel?: boolean
 } & (
   | {
       icon: IconType
-      hideLabel: true
+      onlyIcon: true
     }
   | {
       icon?: IconType
-      hideLabel?: boolean
+      onlyIcon?: boolean
     }
 )
