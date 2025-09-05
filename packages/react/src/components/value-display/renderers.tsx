@@ -10,6 +10,7 @@ import { FileCell } from "./types/file.tsx"
 import { FolderCell } from "./types/folder.tsx"
 import { IconCell } from "./types/icon.tsx"
 import { NumberCell } from "./types/number.tsx"
+import { PercentageCell } from "./types/percentage.tsx"
 import { PersonCell } from "./types/person.tsx"
 import { StatusCell } from "./types/status.tsx"
 import { TagCell } from "./types/tag.tsx"
@@ -40,6 +41,7 @@ export const valueDisplayRenderers = {
   status: StatusCell,
   alertTag: AlertTagCell,
   person: PersonCell,
+  percentage: PercentageCell,
   company: CompanyCell,
   team: TeamCell,
   tag: TagCell,

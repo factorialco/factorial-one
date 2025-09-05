@@ -24,6 +24,8 @@ export * from "./RichText/exports"
 export * from "./Utilities/exports"
 export * from "./Widgets/exports"
 
+export * from "../components/Actions/OneDropdownButton"
+
 export const ScrollArea = Component(
   {
     name: "ScrollArea",

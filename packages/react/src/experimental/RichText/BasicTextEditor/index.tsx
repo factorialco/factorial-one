@@ -1,4 +1,4 @@
-import { Icon } from "@/components/Utilities/Icon"
+import { F0Icon } from "@/components/F0Icon"
 import { Toolbar, ToolbarLabels } from "@/experimental/RichText/CoreEditor"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
 import { Handle, Plus } from "@/icons/app"
@@ -259,7 +259,7 @@ const BasicTextEditorComponent = forwardRef<
                 className="text-f1-foreground-tertiary"
                 onClick={handlePlusClick}
               >
-                <Icon icon={Plus} size="sm" />
+                <F0Icon icon={Plus} size="sm" />
               </Button>
               <Button
                 round
@@ -269,7 +269,7 @@ const BasicTextEditorComponent = forwardRef<
                 data-drag-handle
                 draggable
               >
-                <Icon icon={Handle} size="xs" />
+                <F0Icon icon={Handle} size="xs" />
               </Button>
             </div>
           </DragHandle>

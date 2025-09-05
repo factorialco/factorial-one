@@ -43,7 +43,7 @@ export const Default: Story = {
 }
 
 export const Variants: Story = {
-  ...withSnapshot({}),
+  parameters: withSnapshot({}),
   render: (args) => (
     <div className="[&>h3]:mt-5 [&>h3]:pb-2">
       <h3 className="!m-0">Basic usage</h3>
@@ -59,7 +59,7 @@ export const Variants: Story = {
 }
 
 export const States: Story = {
-  ...withSnapshot({}),
+  parameters: withSnapshot({}),
   render: (args) => (
     <div className="flex flex-row items-center justify-center space-x-6">
       <Link {...args} variant="link">

@@ -107,7 +107,7 @@ export const Default: Story = {
 }
 
 export const Variants: Story = {
-  ...withSnapshot({}),
+  parameters: withSnapshot({}),
   render: (args) => (
     <div className="flex gap-2">
       <Button {...args} variant="default" label="Default" />
@@ -122,7 +122,7 @@ export const Variants: Story = {
 }
 
 export const IconVariants: Story = {
-  ...withSnapshot({}),
+  parameters: withSnapshot({}),
   render: (args) => (
     <div className="flex flex-col gap-6">
       <div>
@@ -208,7 +208,7 @@ export const IconVariants: Story = {
 
 // Size Variants
 export const Sizes: Story = {
-  ...withSnapshot({}),
+  parameters: withSnapshot({}),
   render: (args) => (
     <div className="flex items-center gap-4">
       <Button {...args} size="lg" label="Large" />
@@ -249,7 +249,7 @@ export const AsyncAction: Story = {
 }
 
 export const IconButtonGroup: Story = {
-  ...withSnapshot({}),
+  parameters: withSnapshot({}),
   render: () => (
     <div className="flex items-center gap-2">
       <Button variant="ghost" icon={Add} hideLabel round label="Add" />
@@ -269,7 +269,7 @@ export const OnlyEmoji: Story = {
 }
 
 export const States: Story = {
-  ...withSnapshot({}),
+  parameters: withSnapshot({}),
   render: (args) => {
     const [asyncLoading, setAsyncLoading] = React.useState(false)
     return (
