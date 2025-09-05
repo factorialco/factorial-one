@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.178.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.3...factorial-one-react-v1.178.0) (2025-09-05)
+
+
+### Features
+
+* **ai-chat:** add sidebar chat ([#2527](https://github.com/factorialco/factorial-one/issues/2527)) ([094ab7b](https://github.com/factorialco/factorial-one/commit/094ab7b094efca8b8c921be79e520dc0213d2d00))
+
 ## [1.177.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.2...factorial-one-react-v1.177.3) (2025-09-05)
 
 
