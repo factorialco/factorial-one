@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.177.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.2...factorial-one-react-v1.177.3) (2025-09-05)
+
+
+### Bug Fixes
+
+* change mobile actions label ([#2537](https://github.com/factorialco/factorial-one/issues/2537)) ([3b3ef8b](https://github.com/factorialco/factorial-one/commit/3b3ef8bc6fbfcceeafe2b51478378401ffba8b84))
+
 ## [1.177.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.1...factorial-one-react-v1.177.2) (2025-09-05)
 
 
