@@ -1,3 +1,16 @@
+import type { FiltersDefinition } from "@/components/OneFilterPicker"
+import {
+  BaseFetchOptions,
+  BaseResponse,
+  GROUP_ID_SYMBOL,
+  GroupingDefinition,
+  PaginatedFetchOptions,
+  SortingsDefinition,
+  SortingsState,
+  WithGroupId,
+} from "@/hooks/datasource"
+import { PromiseState } from "@/lib/promise-to-observable"
+import { defaultTranslations, I18nProvider } from "@/lib/providers/i18n"
 import {
   act,
   render,
@@ -10,21 +23,12 @@ import { userEvent } from "@testing-library/user-event"
 import { LayoutGrid } from "lucide-react"
 import { describe, expect, test, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
-import type { FiltersDefinition } from "../../../components/OneFilterPicker/types"
-import { SortingsDefinition } from "../../../hooks/datasource/types/sortings.typings"
-import { GROUP_ID_SYMBOL, WithGroupId } from "../../../hooks/datasource/useData"
-import { PromiseState } from "../../../lib/promise-to-observable"
-import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
-import {
-  BaseFetchOptions,
-  BaseResponse,
-  DataCollectionSource,
-  GroupingDefinition,
-  PaginatedFetchOptions,
-  SortingsState,
-  useDataCollectionSource,
-} from "../exports"
 import { useDataCollectionData } from "../hooks/useDataCollectionData/useDataCollectionData"
+import {
+  DataCollectionSource,
+  useDataCollectionSource,
+} from "../hooks/useDataCollectionSource"
+
 import { OneDataCollection } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"

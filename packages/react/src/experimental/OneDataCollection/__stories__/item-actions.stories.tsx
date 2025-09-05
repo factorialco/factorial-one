@@ -1,6 +1,7 @@
 import { Ai, Download, Pencil, Upload } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
-import { OneDataCollection, useDataCollectionSource } from "../exports"
+import { OneDataCollection } from ".."
+import { useDataCollectionSource } from "../hooks/useDataCollectionSource"
 import { ItemActionsDefinition } from "../item-actions"
 
 const meta = {
