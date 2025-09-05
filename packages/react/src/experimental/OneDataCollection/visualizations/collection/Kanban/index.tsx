@@ -4,9 +4,9 @@ import type {
   CardMetadata,
   CardMetadataProperty,
 } from "@/components/F0Card/types"
+import type { IconType } from "@/components/F0Icon"
 import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import type { Variant } from "@/components/tags/F0TagStatus"
-import type { IconType } from "@/components/Utilities/Icon"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
 import { createAtlaskitDriver } from "@/lib/dnd/atlaskitDriver"
 import { DndProvider } from "@/lib/dnd/context"
