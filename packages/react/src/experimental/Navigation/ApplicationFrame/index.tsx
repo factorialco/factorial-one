@@ -10,6 +10,7 @@ import { useReducedMotion } from "../../../lib/a11y"
 import { useI18n } from "../../../lib/providers/i18n"
 
 import { AiChat, AiChatProvider, AiChatProviderProps } from "../../AiChat"
+import { useAiChat } from "../../AiChat/providers/AiChatStateProvider"
 import { FrameProvider, useSidebar } from "./FrameProvider"
 
 interface ApplicationFrameProps {
@@ -57,6 +58,7 @@ function ApplicationFrameContent({
 }: ApplicationFrameProps) {
   const { sidebarState, toggleSidebar, isSmallScreen } = useSidebar()
   const shouldReduceMotion = useReducedMotion()
+  const { mode } = useAiChat()
 
   return (
     <>
@@ -107,11 +109,12 @@ function ApplicationFrameContent({
               </div>
               <motion.main
                 id="content"
+                layoutId="main"
                 className={cn(
                   "relative flex max-w-full flex-1 overflow-auto xs:py-1 xs:pr-1",
                   sidebarState === "locked" ? "pl-0" : "xs:pl-1"
                 )}
-                layout
+                layoutDependency={[mode, sidebarState]}
                 transition={{
                   duration: shouldReduceMotion ? 0 : 0.3,
                   type: "spring",
@@ -119,7 +122,12 @@ function ApplicationFrameContent({
                   damping: 30,
                 }}
               >
-                {children}
+                <motion.div
+                  className="flex max-w-full flex-1 overflow-auto"
+                  layout="position"
+                >
+                  {children}
+                </motion.div>
               </motion.main>
               <AiChat />
             </div>

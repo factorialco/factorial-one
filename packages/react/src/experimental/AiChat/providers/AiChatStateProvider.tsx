@@ -17,6 +17,7 @@ export interface AiChatState {
   initialMode: AiChatMode
   enabled: boolean
 }
+
 type AiChatProviderReturnValue = {
   mode: AiChatMode
   setMode: React.Dispatch<React.SetStateAction<AiChatMode>>
@@ -24,6 +25,8 @@ type AiChatProviderReturnValue = {
   setEnabled: React.Dispatch<React.SetStateAction<boolean>>
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  shouldPlayEntranceAnimation: boolean
+  setShouldPlayEntranceAnimation: React.Dispatch<React.SetStateAction<boolean>>
 } & Pick<AiChatState, "greeting">
 
 export const AiChatStateProvider: FC<PropsWithChildren<AiChatState>> = ({
@@ -35,10 +38,21 @@ export const AiChatStateProvider: FC<PropsWithChildren<AiChatState>> = ({
   const [mode, setMode] = useState<AiChatMode>(initialMode)
   const [enabledInternal, setEnabledInternal] = useState(enabled)
   const [open, setOpen] = useState(false)
+  const [shouldPlayEntranceAnimation, setShouldPlayEntranceAnimation] =
+    useState(true)
 
   useEffect(() => {
     setEnabledInternal(enabled)
   }, [enabled])
+
+  useEffect(() => {
+    if (!open) {
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches
+      setShouldPlayEntranceAnimation(!prefersReducedMotion)
+    }
+  }, [open])
 
   return (
     <AiChatStateContext.Provider
@@ -50,6 +64,8 @@ export const AiChatStateProvider: FC<PropsWithChildren<AiChatState>> = ({
         setEnabled: setEnabledInternal,
         open,
         setOpen,
+        shouldPlayEntranceAnimation,
+        setShouldPlayEntranceAnimation,
       }}
     >
       {children}
@@ -69,6 +85,8 @@ export function useAiChat(): AiChatProviderReturnValue {
       setEnabled: () => {},
       open: false,
       setOpen: () => {},
+      shouldPlayEntranceAnimation: true,
+      setShouldPlayEntranceAnimation: () => {},
     }
   }
 
