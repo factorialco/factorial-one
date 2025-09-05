@@ -40,8 +40,10 @@ const AiChatProviderCmp = ({
   children,
   ...copilotKitProps
 }: AiChatProviderProps) => {
+  // todo: implement error handling
+  // temporary set runtime url until error handling is done
   return (
-    <CopilotKit {...copilotKitProps}>
+    <CopilotKit runtimeUrl="/copilotkit" {...copilotKitProps}>
       <AiChatStateProvider
         enabled={enabled}
         initialMode={mode}
