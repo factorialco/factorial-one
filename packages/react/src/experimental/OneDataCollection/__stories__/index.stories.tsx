@@ -1,4 +1,5 @@
 import { SummariesDefinition } from "@/experimental/OneDataCollection/summary.ts"
+import { GroupingDefinition } from "@/hooks/datasource"
 import {
   Add,
   Ai,
@@ -31,12 +32,9 @@ import {
   YEARS_OF_EXPERIENCIE_MOCK,
 } from "@/mocks"
 import { Meta, StoryObj } from "@storybook/react-vite"
-import {
-  GroupingDefinition,
-  OneDataCollection,
-  useDataCollectionSource,
-} from "../exports"
 import { useDataCollectionData } from "../hooks/useDataCollectionData/useDataCollectionData"
+import { useDataCollectionSource } from "../hooks/useDataCollectionSource"
+import { OneDataCollection } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import {

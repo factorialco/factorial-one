@@ -11,6 +11,7 @@ import {
   SortingsDefinition,
   useDataSource,
 } from "@/hooks/datasource"
+import { useI18n } from "@/lib/providers/i18n"
 import { useMemo, useState } from "react"
 import { ItemActionsDefinition } from "../../item-actions"
 import { navigationFilterTypes } from "../../navigationFilters"
@@ -50,6 +51,7 @@ export const useDataCollectionSource = <
   NavigationFilters,
   Grouping
 > => {
+  const i18n = useI18n()
   const { navigationFilters, summaries } = source
 
   const datasource = useDataSource<R, FiltersSchema, Sortings, Grouping>(
@@ -73,7 +75,7 @@ export const useDataCollectionSource = <
         return [
           key,
           filterType.valueConverter
-            ? filterType.valueConverter(filter.defaultValue, filter)
+            ? filterType.valueConverter(filter.defaultValue, filter, i18n)
             : filter.defaultValue,
         ]
       })

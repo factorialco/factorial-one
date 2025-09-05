@@ -9,6 +9,7 @@ import {
   PaginatedFetchOptions,
   PaginationType,
 } from "@/hooks/datasource"
+import { defaultTranslations, I18nProvider } from "@/lib/providers/i18n"
 import {
   act,
   render,
@@ -20,10 +21,6 @@ import {
 import userEvent from "@testing-library/user-event"
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
-import {
-  defaultTranslations,
-  I18nProvider,
-} from "../../../../../lib/providers/i18n"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SummariesDefinition } from "../../../summary"
 import { TableCollection } from "./index"
@@ -921,7 +918,7 @@ describe("TableCollection", () => {
 
     const createTestSourceWithActions = (
       itemActions: ItemActionsDefinition<Person>
-    ): DataSource<
+    ): DataCollectionSource<
       Person,
       TestFilters,
       SortingsDefinition,
