@@ -38,7 +38,8 @@ export const PopupWindow = ({ children }: WindowProps) => {
   const windowRef = useRef<HTMLDivElement>(null)
   const [windowHeight, setWindowHeight] = useState(MIN_HEIGHT)
   const [messageContainerScrollTop, setMessageContainerScrollTop] = useState(0)
-  const { mode } = useAiChat()
+  const { mode, shouldPlayEntranceAnimation, setShouldPlayEntranceAnimation } =
+    useAiChat()
 
   useEffect(() => {
     if (!open) return
@@ -101,7 +102,20 @@ export const PopupWindow = ({ children }: WindowProps) => {
           <DialogPrimitiveContent
             layoutId="ai-chat"
             layoutDependency={mode}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+            initial={
+              shouldPlayEntranceAnimation ? { opacity: 0, scale: 0.9 } : false
+            }
+            animate={{ opacity: 1, scale: 1 }}
+            transition={
+              shouldPlayEntranceAnimation
+                ? { duration: 0.3, ease: "easeOut" }
+                : { duration: 0.2, ease: "easeOut" }
+            }
+            onAnimationComplete={() => {
+              if (shouldPlayEntranceAnimation) {
+                setShouldPlayEntranceAnimation(false)
+              }
+            }}
             onPointerDownOutside={(e) => {
               e.preventDefault()
             }}
@@ -111,7 +125,6 @@ export const PopupWindow = ({ children }: WindowProps) => {
             style={{ display: open ? "fixed" : "none" }}
             className={cn(
               "fixed bottom-4 right-4 isolate z-50 w-[90%] origin-bottom-right rounded-xl border bg-f1-background shadow-lg",
-              // "duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
               "flex max-h-[min(680px,calc(100%-16px))] min-h-[416px] max-w-[464px] flex-col overflow-hidden rounded-xl border-solid border-f1-border shadow"
             )}
             ref={windowRef}
@@ -128,7 +141,8 @@ export const PopupWindow = ({ children }: WindowProps) => {
 
 export const SidebarWindow = ({ children }: WindowProps) => {
   const { open } = useChatContext()
-  const { mode } = useAiChat()
+  const { mode, shouldPlayEntranceAnimation, setShouldPlayEntranceAnimation } =
+    useAiChat()
   const [messageContainerScrollTop, setMessageContainerScrollTop] = useState(0)
   const chatWindowContext = useMemo(
     () => ({
@@ -140,17 +154,28 @@ export const SidebarWindow = ({ children }: WindowProps) => {
   )
 
   return (
-    <motion.div
-      aria-hidden={!open}
-      className="relative flex h-full w-[360px] flex-col overflow-hidden bg-f1-special-page shadow xs:rounded-xl"
-      layoutId="ai-chat"
-      layoutDependency={mode}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      style={{ display: open ? "flex" : "none" }}
-    >
-      <ChatWindowContext.Provider value={chatWindowContext}>
-        {children}
-      </ChatWindowContext.Provider>
-    </motion.div>
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          aria-hidden={!open}
+          className="relative flex h-full w-[360px] flex-col overflow-hidden bg-f1-special-page shadow xs:rounded-xl"
+          layoutId="ai-chat"
+          layoutDependency={mode}
+          initial={shouldPlayEntranceAnimation ? { opacity: 0, x: 100 } : false}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: 100 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          onAnimationComplete={() => {
+            if (shouldPlayEntranceAnimation) {
+              setShouldPlayEntranceAnimation(false)
+            }
+          }}
+        >
+          <ChatWindowContext.Provider value={chatWindowContext}>
+            {children}
+          </ChatWindowContext.Provider>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
