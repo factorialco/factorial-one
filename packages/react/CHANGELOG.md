@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.177.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.1...factorial-one-react-v1.177.2) (2025-09-05)
+
+
+### Bug Fixes
+
+* auto-select first filter by default when opening the filters picker ([#2534](https://github.com/factorialco/factorial-one/issues/2534)) ([8c77cbc](https://github.com/factorialco/factorial-one/commit/8c77cbcddf3da5cc47b8b9f681ea46841e74ad33))
+
 ## [1.177.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.0...factorial-one-react-v1.177.1) (2025-09-05)
 
 
