@@ -70,7 +70,15 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     }
 
     if (isOpen) {
-      setSelectedFilterKey(getFirstFilterNotEmpty()?.[0] as keyof Filters)
+      // First try to find a filter that has a value
+      const firstFilterWithValue = getFirstFilterNotEmpty()
+      if (firstFilterWithValue) {
+        setSelectedFilterKey(firstFilterWithValue[0] as keyof Filters)
+      } else {
+        // If no filter has a value, auto-select the first filter by default
+        const firstFilterKey = Object.keys(filters)[0] as keyof Filters
+        setSelectedFilterKey(firstFilterKey)
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run this when the popover is opened
   }, [isOpen])
