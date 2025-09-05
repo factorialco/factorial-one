@@ -70,12 +70,10 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     }
 
     if (isOpen) {
-      // First try to find a filter that has a value
       const firstFilterWithValue = getFirstFilterNotEmpty()
       if (firstFilterWithValue) {
         setSelectedFilterKey(firstFilterWithValue[0] as keyof Filters)
       } else {
-        // If no filter has a value, auto-select the first filter by default
         const firstFilterKey = Object.keys(filters)[0] as keyof Filters
         setSelectedFilterKey(firstFilterKey)
       }
