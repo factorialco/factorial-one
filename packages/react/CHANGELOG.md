@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.178.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.178.0...factorial-one-react-v1.178.1) (2025-09-05)
+
+
+### Bug Fixes
+
+* allow selecting group by clicking on group header when collapsing is not enabled ([#2533](https://github.com/factorialco/factorial-one/issues/2533)) ([e5708ca](https://github.com/factorialco/factorial-one/commit/e5708ca924db02c598d309131fb925662340838b))
+
 ## [1.178.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.3...factorial-one-react-v1.178.0) (2025-09-05)
 
 
