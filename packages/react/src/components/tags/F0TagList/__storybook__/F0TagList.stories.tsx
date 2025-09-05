@@ -1,6 +1,6 @@
 import { Settings } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react-vite"
-import { F0TagList } from "../"
+import { F0TagList } from ".."
 
 const mockAvatarUrl = "https://i.pravatar.cc/150"
 const mockTeamImageUrl = "https://placehold.co/64/5856D6/ffffff?text=T"
