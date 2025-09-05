@@ -1009,7 +1009,6 @@ export function createDataAdapter<
       filteredRecords = filteredRecords.filter((record) =>
         (filters.department as string[]).includes(record.department)
       )
-      console.log("filteredRecords", filteredRecords, filters)
     }
 
     // Apply sorting if available

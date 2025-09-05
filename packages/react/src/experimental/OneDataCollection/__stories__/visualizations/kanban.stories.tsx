@@ -68,8 +68,6 @@ export const BasicKanbanVisualization: Story = {
       return adapter
     }, [items])
 
-    console.log(items)
-
     return (
       <ExampleComponent
         visualizations={[mockVisualizations.kanban, mockVisualizations.table]}
