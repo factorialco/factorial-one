@@ -41,8 +41,8 @@ export const F0AvatarList = ({
   }
 
   const gaps = {
-    xs: -0.5,
-    sm: -3,
+    xs: -3,
+    sm: -8,
     md: -10,
   } satisfies Record<AvatarListSize, number>
   const gap = gaps[size] ?? 0
