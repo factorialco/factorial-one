@@ -70,6 +70,7 @@ export const defaultTranslations = {
       table: "Table view",
       card: "Card view",
       list: "List view",
+      kanban: "Kanban view",
       pagination: {
         of: "of",
       },
