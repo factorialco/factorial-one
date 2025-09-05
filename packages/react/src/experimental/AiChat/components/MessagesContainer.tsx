@@ -3,13 +3,13 @@ import { ArrowDown } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useCopilotChatInternal as useCopilotChat } from "@copilotkit/react-core"
-import { useChatContext, type MessagesProps } from "@copilotkit/react-ui"
+import { type MessagesProps } from "@copilotkit/react-ui"
 import { type Message } from "@copilotkit/shared"
 import { AnimatePresence, motion } from "motion/react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useEventListener, useResizeObserver } from "usehooks-ts"
 import OneIcon from "../OneIcon"
-import { useAiChatLabels } from "../providers/AiChatLabelsProvider"
+import { useAiChat } from "../providers/AiChatStateProvider"
 import { useChatWindowContext } from "./ChatWindow"
 
 // corresponds to padding pt-14 applied for the header
@@ -29,15 +29,14 @@ export const MessagesContainer = ({
   markdownTagRenderers,
 }: MessagesProps) => {
   const turnsContainerRef = useRef<HTMLDivElement>(null)
-  const context = useChatContext()
   const { messages, interrupt } = useCopilotChat()
 
-  const { greeting } = useAiChatLabels()
+  const { greeting } = useAiChat()
   const translations = useI18n()
   const [longestTurnHeight, setLongestTurnHeight] = useState<number>(0)
   const initialMessages = useMemo(
-    () => makeInitialMessages(context.labels.initial),
-    [context.labels.initial]
+    () => makeInitialMessages(translations.ai.initialMessage),
+    [translations.ai.initialMessage]
   )
   const showWelcomeBlock =
     messages.length == 0 && (greeting || initialMessages.length > 0)
