@@ -10,7 +10,7 @@ import {
   RecordType,
 } from "@/hooks/datasource"
 import { FiltersDefinition } from "../../../../components/OneFilterPicker/types"
-import { DataCollectionSource } from "../../exports"
+import { DataCollectionSource } from "../../hooks/useDataCollectionSource/types"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { SortingsDefinition, SummariesDefinition } from "../../types"

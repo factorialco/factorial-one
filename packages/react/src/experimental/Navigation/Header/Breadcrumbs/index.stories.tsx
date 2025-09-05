@@ -1,5 +1,5 @@
+import { IconType } from "@/components/F0Icon"
 import { FiltersDefinition } from "@/components/OneFilterPicker"
-import { IconType } from "@/components/Utilities/Icon"
 import { SelectItemProps } from "@/experimental/Forms/Fields/Select/types"
 import { PaginatedFetchOptions } from "@/hooks/datasource"
 import {
