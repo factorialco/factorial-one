@@ -27,15 +27,11 @@ export const FiltersPresets = <Filters extends FiltersDefinition>({
         key={index}
         label={preset.label}
         selected={isSelected}
-        onClick={() => {
-          if (isSelected) {
-            // If preset is already selected, deselect it by clearing filters
-            onPresetsChange?.({} as FiltersState<Filters>)
-          } else {
-            // If preset is not selected, apply the preset's filter
-            onPresetsChange?.(preset.filter)
-          }
-        }}
+        onClick={() =>
+          onPresetsChange?.(
+            isSelected ? ({} as FiltersState<Filters>) : preset.filter
+          )
+        }
         data-visible={isVisible}
         number={preset.itemsCount?.(value) ?? undefined}
       />
@@ -56,15 +52,11 @@ export const FiltersPresets = <Filters extends FiltersDefinition>({
             "bg-f1-background-selected hover:bg-f1-background-selected",
           focusRing()
         )}
-        onClick={() => {
-          if (isSelected) {
-            // If preset is already selected, deselect it by clearing filters
-            onPresetsChange?.({} as FiltersState<Filters>)
-          } else {
-            // If preset is not selected, apply the preset's filter
-            onPresetsChange?.(preset.filter)
-          }
-        }}
+        onClick={() =>
+          onPresetsChange?.(
+            isSelected ? ({} as FiltersState<Filters>) : preset.filter
+          )
+        }
         data-visible={true}
       >
         {preset.label}
