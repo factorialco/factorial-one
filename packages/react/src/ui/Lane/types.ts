@@ -57,4 +57,10 @@ export interface LaneProps<Record extends RecordType> {
    * The variant of the lane
    */
   variant?: Variant
+
+  /**
+   * The total number of items in the lane (for display in header)
+   * If not provided, defaults to items.length
+   */
+  total?: number
 }
