@@ -10,7 +10,6 @@ import { LoadingSkeleton } from "./components/LoadingSkeleton"
 import { LaneProps } from "./types"
 
 const DEFAULT_MAX_LANE_HEIGHT = 700
-const HEADER_HEIGHT = 40
 
 export function Lane<Record extends RecordType>({
   title,
@@ -24,16 +23,16 @@ export function Lane<Record extends RecordType>({
   loading = false,
   hasMore = false,
   loadingMore = false,
+  total,
+  paginationInfo: realPaginationInfo,
 }: LaneProps<Record>) {
-  const scrollAreaHeight = maxHeight - HEADER_HEIGHT - 4 // 4px for ScrollArea mb-1
-
-  // Create pagination info for infinite scroll
-  const paginationInfo = {
+  // Use real pagination info if provided, otherwise create fake one for visual scroll
+  const paginationInfo = realPaginationInfo ?? {
     type: "infinite-scroll" as const,
     cursor: null,
     hasMore,
     total: items.length + (hasMore ? 1 : 0),
-    perPage: 2,
+    perPage: 3,
   }
 
   // Use the infinite scroll hook
@@ -54,17 +53,16 @@ export function Lane<Record extends RecordType>({
       <LaneHeader
         label={title || "Lane"}
         variant={variant}
-        count={items.length}
+        count={total ?? items.length}
       />
 
-      <div className="flex min-h-0 flex-1 flex-col px-1">
+      <div className="flex min-h-0 flex-1 flex-col px-1 pb-1">
         {loading ? (
           <ScrollArea
             className={cn(
-              "relative flex-1 rounded-lg",
+              "relative h-auto flex-1 rounded-lg",
               loading && "select-none opacity-50 transition-opacity"
             )}
-            style={{ maxHeight: `${scrollAreaHeight}px` }}
           >
             <LoadingSkeleton />
             <AnimatePresence>
@@ -81,11 +79,8 @@ export function Lane<Record extends RecordType>({
         ) : items.length === 0 ? (
           emptyState
         ) : (
-          <div className="relative">
-            <ScrollArea
-              className="flex-1"
-              style={{ maxHeight: `${scrollAreaHeight}px` }}
-            >
+          <>
+            <ScrollArea className="h-auto flex-1">
               <div
                 className={cn(
                   loadingMore && "select-none opacity-50 transition-opacity"
@@ -118,7 +113,7 @@ export function Lane<Record extends RecordType>({
                 </motion.div>
               </AnimatePresence>
             )}
-          </div>
+          </>
         )}
       </div>
     </div>

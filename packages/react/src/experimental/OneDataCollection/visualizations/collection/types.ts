@@ -12,9 +12,10 @@ import type {
   OnSelectItemsCallback,
   RecordType,
 } from "../../types"
-import type { CardVisualizationOptions } from "../../visualizations/collection/Card"
-import type { TableVisualizationOptions } from "../../visualizations/collection/Table"
+import type { CardVisualizationOptions } from "./Card"
+import type { KanbanVisualizationOptions } from "./Kanban"
 import { ListVisualizationOptions } from "./List/types"
+import type { TableVisualizationOptions } from "./Table"
 
 /**
  * Represents a visualization configuration for displaying collection data.
@@ -38,6 +39,12 @@ export type Visualization<
       type: "card"
       /** Configuration options for card visualization */
       options: CardVisualizationOptions<Record, Filters, Sortings>
+    }
+  | {
+      /** Kanban-based visualization type */
+      type: "kanban"
+      /** Configuration options for kanban visualization */
+      options: KanbanVisualizationOptions<Record, Filters, Sortings>
     }
   | {
       /** Table-based visualization type */

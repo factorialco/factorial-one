@@ -513,6 +513,12 @@ export const getMockVisualizations = (options?: {
       ],
     },
   },
+  kanban: {
+    type: "kanban",
+    options: {
+      lanes: [],
+    },
+  },
 })
 // Example of using the object-based approach (recommended)
 export const sortings = {
@@ -840,6 +846,12 @@ export const ExampleComponent = ({
         ? createObservableDataFetch()
         : createPromiseDataFetch(),
     },
+    lanes: [
+      { id: "eng", filters: { department: ["Engineering"] } },
+      { id: "prod", filters: { department: ["Product"] } },
+      { id: "design", filters: { department: ["Design"] } },
+      { id: "other", filters: { department: ["Marketing"] } },
+    ],
   })
 
   return (

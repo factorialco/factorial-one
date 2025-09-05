@@ -29,4 +29,5 @@ storybook-static
 
 dist
 /packages/react/icons
+/packages/react/html
 .nyc_output

@@ -57,4 +57,22 @@ export interface LaneProps<Record extends RecordType> {
    * The variant of the lane
    */
   variant?: Variant
+
+  /**
+   * The total number of items in the lane (for display in header)
+   * If not provided, defaults to items.length
+   */
+  total?: number
+
+  /**
+   * Real pagination info from the data source
+   * If provided, will be used instead of creating fake pagination info
+   */
+  paginationInfo?: {
+    type: "infinite-scroll"
+    total: number
+    perPage: number
+    cursor: string | null
+    hasMore: boolean
+  }
 }

@@ -42,7 +42,11 @@
     "vitest": "vitest",
     "vitest:ui": "vitest --ui",
     "vitest:watch": "vitest dev",
-    "vitest:ci": "pnpm run vitest --reporter=dot"
+    "vitest:ci": "pnpm run vitest --reporter=dot",
+    "vitest:coverage": "pnpm vitest --run --coverage & npx http-server coverage -p 8080 -o",
+    "vitest:coverage:useData:build": "pnpm vitest --run src/experimental/OneDataCollection/__tests__/useData.spec.tsx --coverage",
+    "vitest:coverage:useData:serve": "python3 -m http.server 3002 -d coverage",
+    "vitest:coverage:useData": "pnpm run vitest:coverage:useData:build && pnpm run vitest:coverage:useData:serve"
   },
   "peerDependencies": {
     "@copilotkit/react-core": "^1.10.2",
@@ -166,6 +170,7 @@
     "@atlaskit/pragmatic-drag-and-drop": "^1.7.4",
     "@atlaskit/pragmatic-drag-and-drop-flourish": "^2.0.4",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.1.0",
+    "@atlaskit/pragmatic-drag-and-drop-react-drop-indicator": "^3.2.5",
     "@factorialco/factorial-one-core": "workspace:*",
     "@radix-ui/react-hover-card": "^1.1.6",
     "@radix-ui/react-switch": "^1.2.2",

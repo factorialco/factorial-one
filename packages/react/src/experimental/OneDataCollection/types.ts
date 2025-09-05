@@ -94,6 +94,8 @@ export type DataSourceDefinition<
   /** Grouping configuration */
   grouping?: Grouping
   currentGrouping?: GroupingState<Record, Grouping>
+  /** Lanes configuration */
+  lanes?: ReadonlyArray<LaneDataSource<Filters>>
 }
 
 export type CollectionSearchOptions = {
@@ -206,9 +208,8 @@ export type PaginatedResponse<TRecord> =
 /**
  * Pagination state and controls
  */
-export type PaginationInfo = Omit<
-  | PageBasedPaginatedResponse<unknown>
-  | InfiniteScrollPaginatedResponse<unknown>,
+export type PaginationInfo<T = unknown> = Omit<
+  PageBasedPaginatedResponse<T> | InfiniteScrollPaginatedResponse<T>,
   "records"
 >
 
@@ -474,6 +475,8 @@ export type DataSource<
   setCurrentSummaries?: React.Dispatch<React.SetStateAction<R | undefined>>
   /** Function to provide an id for a record, necessary for append mode */
   idProvider?: (item: R, index?: number) => string | number | symbol
+  /** Lanes data sources */
+  lanes?: ReadonlyArray<LaneDataSource<Filters>>
 }
 
 /**
@@ -484,3 +487,14 @@ export type PromiseOrObservable<T> =
   | T
   | Promise<T>
   | Observable<PromiseState<T>>
+
+/**
+ * Represents a single lane configuration with its own filters
+ * @template Filters - The available filter configurations for this lane
+ */
+export type LaneDataSource<Filters extends FiltersDefinition> = {
+  /** Unique identifier for the lane */
+  id: string
+  /** Current state of applied filters for this lane */
+  filters: FiltersState<Filters>
+}

@@ -57,6 +57,7 @@ type SimpleResult<T> = T[]
 interface UseDataOptions<Filters extends FiltersDefinition> {
   filters?: Partial<FiltersState<Filters>>
   onError?: (error: DataError) => void
+  onLaneError?: (laneId: string, error: DataError) => void
 }
 
 /**
@@ -72,19 +73,34 @@ export type WithGroupId<RecordType> = RecordType & {
  */
 interface UseDataReturn<R> {
   data: Data<R>
-  isInitialLoading: boolean
-  isLoading: boolean
-  isLoadingMore: boolean
   error: DataError | null
   paginationInfo: PaginationInfo | null
 
   // For page-based pagination:
   setPage: (page: number) => void
+  isLoading: boolean
 
   // For infinite-scroll pagination:
   loadMore: () => void
+  isInitialLoading: boolean
+  isLoadingMore: boolean
   totalItems: number | undefined
-  summaries?: R // Add summaries to the return type
+
+  // For lanes data only infinite-scroll:
+  lanesData?: Record<string, LaneDataState<R>>
+  laneLoadMore?: (laneId: string) => Promise<void>
+
+  summaries?: R
+}
+
+/**
+ * Data state for a single lane (always uses infinite scroll)
+ */
+export type LaneDataState<R> = {
+  data: Data<R>
+  isInitialLoading: boolean
+  isLoadingMore: boolean
+  paginationInfo: InfiniteScrollPaginatedResponse<R> | null
 }
 
 type DataType<T> = PromiseState<T>
@@ -112,7 +128,7 @@ export type Data<RecordType> = {
  * Custom hook for handling data fetching state
  */
 function useDataFetchState<Record>() {
-  const [isInitialLoading, setIsInitialLoading] = useState(true)
+  const [isInitialLoading, setIsInitialLoading] = useState(false)
   const [data, setData] = useState<Record[]>([])
   const [error, setError] = useState<DataError | null>(null)
 
@@ -135,6 +151,8 @@ function usePaginationState() {
   )
   return { paginationInfo, setPaginationInfo }
 }
+
+const DEFAULT_PAGE_SIZE = 20
 
 /**
  * A core React hook that manages data fetching, state management, and pagination within the Collections ecosystem.
@@ -219,7 +237,7 @@ export function useData<
     NavigationFilters,
     Grouping
   >,
-  { filters, onError }: UseDataOptions<Filters> = {}
+  { filters, onError, onLaneError }: UseDataOptions<Filters> = {}
 ): UseDataReturn<R> {
   const {
     dataAdapter,
@@ -232,9 +250,13 @@ export function useData<
     currentNavigationFilters,
     currentGrouping,
     grouping,
+    lanes,
     idProvider = (item, index): string | number =>
       "id" in item ? `${item.id}` : index || JSON.stringify(item),
   } = source
+
+  const hasLanes = useMemo(() => lanes && lanes.length > 0, [lanes])
+
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
@@ -267,6 +289,24 @@ export function useData<
       : deferredSearch
 
   const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
+
+  // Initialize lanes data structure
+  const [lanesData, setLanesData] = useState<
+    Record<string, LaneDataState<R>> | undefined
+  >(() => {
+    if (!hasLanes || !lanes) return undefined
+
+    const initialLanesData: Record<string, LaneDataState<R>> = {}
+    lanes!.forEach((lane) => {
+      initialLanesData[lane.id] = {
+        data: { type: "flat", records: [] },
+        isInitialLoading: true,
+        isLoadingMore: false,
+        paginationInfo: null,
+      }
+    })
+    return initialLanesData
+  })
 
   /**
    * Merges 2 arrays of items using the idProvider to update the existing items
@@ -502,14 +542,10 @@ export function useData<
         function fetcher(): PromiseOrObservable<ResultType> {
           setTotalItems(undefined)
 
-          // TODO: Default perPage value from somewhere
-          const defaultPerPage = 20
-
-          // Safely access perPage, defaulting to 20 if not available
           const perPageValue =
             "perPage" in dataAdapter && dataAdapter.perPage !== undefined
               ? dataAdapter.perPage
-              : defaultPerPage
+              : DEFAULT_PAGE_SIZE
 
           // Use appropriate pagination type based on dataAdapter configuration
           if (dataAdapter.paginationType === "pages") {
@@ -637,8 +673,10 @@ export function useData<
     setIsLoadingMore,
   ])
 
+  // Initial fetch
   useEffect(() => {
-    if (!isLoadingMoreRef.current) {
+    if (!isLoadingMoreRef.current && !hasLanes) {
+      setIsInitialLoading(true)
       setIsLoading(true)
       // Explicitly pass 0 as the initial position for infinite scroll
       const initialPosition =
@@ -655,9 +693,303 @@ export function useData<
     mergedFilters,
     setIsLoading,
     currentNavigationFilters,
-
     dataAdapter.paginationType,
+    hasLanes,
+    setIsInitialLoading,
   ])
+
+  // Function to fetch data for a specific lane
+  const fetchLaneData = useCallback(
+    async (
+      lane: { id: string; filters?: Partial<FiltersState<Filters>> },
+      currentLaneData?: LaneDataState<R>
+    ) => {
+      const laneFilters = { ...mergedFilters, ...lane.filters }
+
+      try {
+        const sortings: SortingsStateMultiple = [
+          ...(currentSortings
+            ? [
+                {
+                  field: currentSortings.field as string,
+                  order: currentSortings.order,
+                },
+              ]
+            : []),
+          ...(currentGrouping
+            ? [
+                {
+                  field: currentGrouping.field as string,
+                  order: currentGrouping.order,
+                },
+              ]
+            : []),
+        ]
+
+        const baseFetchOptions: BaseFetchOptions<Filters, NavigationFilters> = {
+          filters: laneFilters,
+          search: searchValue,
+          sortings,
+          navigationFilters: currentNavigationFilters,
+        }
+
+        function fetcher(
+          paginationInfo: InfiniteScrollPaginatedResponse<R> | null
+        ): PromiseOrObservable<ResultType> {
+          if (!paginationInfo) {
+            return dataAdapter.fetchData({
+              ...baseFetchOptions,
+              pagination: {},
+            }) as PromiseOrObservable<ResultType>
+          }
+          const perPageValue = paginationInfo.perPage
+
+          return dataAdapter.fetchData({
+            ...baseFetchOptions,
+            pagination: {
+              cursor: "0",
+              perPage: perPageValue,
+            },
+          }) as PromiseOrObservable<ResultType>
+        }
+
+        const result = await fetcher(currentLaneData?.paginationInfo || null)
+
+        const records = "records" in result ? result.records : []
+        const processedRecords = records.map((record) => ({
+          ...record,
+          [GROUP_ID_SYMBOL]:
+            (currentGrouping?.field &&
+              getValueByPath(record, currentGrouping.field as string)) ||
+            undefined,
+        }))
+
+        console.log("useData. fetchLaneData result: ", result)
+
+        return {
+          data: { type: "flat" as const, records: processedRecords },
+          isInitialLoading: false,
+          isLoadingMore: false,
+          paginationInfo: {
+            total: "total" in result ? Number(result.total) || 0 : 0,
+            perPage: "perPage" in result ? result.perPage : DEFAULT_PAGE_SIZE,
+            type: "infinite-scroll" as const,
+            cursor:
+              "cursor" in result && typeof result.cursor === "string"
+                ? result.cursor
+                : null,
+            hasMore: Boolean("hasMore" in result ? result.hasMore : false),
+            records: processedRecords,
+            summaries: currentLaneData?.paginationInfo?.summaries,
+          } as InfiniteScrollPaginatedResponse<R>,
+        } as LaneDataState<R>
+      } catch (error) {
+        const dataError: DataError = {
+          message: `Failed to fetch data for lane ${lane.id}`,
+          cause: error,
+        }
+        onLaneError?.(lane.id, dataError)
+        throw dataError
+      }
+    },
+    [
+      mergedFilters,
+      dataAdapter,
+      currentSortings,
+      currentGrouping,
+      searchValue,
+      currentNavigationFilters,
+      onLaneError,
+    ]
+  )
+
+  // Initial fetch for lanes (only when lanes change or global settings change)
+  useEffect(() => {
+    if (!hasLanes || !lanes) return
+
+    const fetchAllLanes = async () => {
+      try {
+        // Use Promise.all instead of forEach for better concurrency control
+        const lanePromises = lanes.map(async (lane) => {
+          // Use functional update to get current lane data safely
+          let currentLaneData: LaneDataState<R> | undefined
+
+          // Get current lane data using a ref pattern to avoid dependency
+          setLanesData((prevLanesData) => {
+            currentLaneData = prevLanesData?.[lane.id]
+            return prevLanesData // Don't modify state here
+          })
+
+          if (!currentLaneData) return null
+
+          const newLaneData = await fetchLaneData(lane, currentLaneData)
+          return { laneId: lane.id, data: newLaneData }
+        })
+
+        const results = await Promise.all(lanePromises)
+        const validResults = results.filter(Boolean) as Array<{
+          laneId: string
+          data: LaneDataState<R>
+        }>
+
+        // Update all lanes data at once using functional update
+        setLanesData((currentLanesData) => {
+          if (!currentLanesData) return currentLanesData
+
+          const newLanesData = { ...currentLanesData }
+          validResults.forEach(({ laneId, data }) => {
+            newLanesData[laneId] = data
+          })
+          return newLanesData
+        })
+      } catch (error) {
+        console.error("Error fetching lanes data:", error)
+      }
+    }
+
+    fetchAllLanes()
+  }, [
+    hasLanes,
+    lanes, // Lane definitions
+    fetchLaneData, // This callback is memoized and contains all the necessary dependencies
+  ])
+
+  // Function to fetch more data for a specific lane
+  const laneLoadMore = useCallback(
+    async (laneId: string) => {
+      if (!hasLanes || !lanes) return
+
+      const lane = lanes.find((l) => l.id === laneId)
+      const laneData = lanesData?.[laneId]
+      if (!lane || !laneData?.paginationInfo) return
+
+      const paginationInfo = laneData.paginationInfo
+      if (!paginationInfo) return
+      if (!paginationInfo.hasMore) return
+
+      // Set loading for this lane
+      setLanesData((prev) =>
+        prev
+          ? {
+              ...prev,
+              [laneId]: { ...prev[laneId], isLoading: true },
+            }
+          : prev
+      )
+
+      try {
+        const laneFilters = { ...mergedFilters, ...lane.filters }
+
+        const sortings: SortingsStateMultiple = [
+          ...(currentSortings
+            ? [
+                {
+                  field: currentSortings.field as string,
+                  order: currentSortings.order,
+                },
+              ]
+            : []),
+          ...(currentGrouping
+            ? [
+                {
+                  field: currentGrouping.field as string,
+                  order: currentGrouping.order,
+                },
+              ]
+            : []),
+        ]
+
+        const result = await dataAdapter.fetchData({
+          filters: laneFilters,
+          search: searchValue,
+          sortings,
+          navigationFilters: currentNavigationFilters,
+          pagination: {
+            cursor: paginationInfo.cursor,
+            perPage: paginationInfo.perPage,
+          },
+        })
+
+        const records = "records" in result ? result.records : []
+        const processedRecords = records.map((record) => ({
+          ...record,
+          [GROUP_ID_SYMBOL]:
+            (currentGrouping?.field &&
+              getValueByPath(record, currentGrouping.field as string)) ||
+            undefined,
+        }))
+
+        // Append new records to existing ones
+        setLanesData((prev) =>
+          prev
+            ? {
+                ...prev,
+                [laneId]: {
+                  data: {
+                    type: "flat",
+                    records: [
+                      ...prev[laneId].data.records,
+                      ...processedRecords,
+                    ],
+                  },
+                  isInitialLoading: false,
+                  isLoadingMore: false,
+                  paginationInfo:
+                    "total" in result
+                      ? {
+                          total: Number(result.total) || 0,
+                          perPage:
+                            "perPage" in dataAdapter
+                              ? dataAdapter.perPage || 20
+                              : 20,
+                          type: "infinite-scroll" as const,
+                          cursor:
+                            "cursor" in result &&
+                            typeof result.cursor === "string"
+                              ? result.cursor
+                              : null,
+                          hasMore: Boolean(
+                            "hasMore" in result ? result.hasMore : false
+                          ),
+                          records: [
+                            ...prev[laneId].data.records,
+                            ...processedRecords,
+                          ],
+                        }
+                      : null,
+                },
+              }
+            : prev
+        )
+      } catch (error) {
+        const dataError: DataError = {
+          message: `Failed to fetch more data for lane ${laneId}`,
+          cause: error,
+        }
+        onLaneError?.(laneId, dataError)
+        setLanesData((prev) =>
+          prev
+            ? {
+                ...prev,
+                [laneId]: { ...prev[laneId], isLoading: false },
+              }
+            : prev
+        )
+      }
+    },
+    [
+      hasLanes,
+      lanes,
+      lanesData,
+      mergedFilters,
+      currentSortings,
+      currentGrouping,
+      searchValue,
+      currentNavigationFilters,
+      dataAdapter,
+      onLaneError, // Added for callback dependency
+    ]
+  )
 
   useEffect(() => {
     return () => {
@@ -676,6 +1008,8 @@ export function useData<
     loadMore,
     totalItems,
     summaries: summariesData, // Add summaries to the return object
+    lanesData, // Lanes data state
+    laneLoadMore: hasLanes ? laneLoadMore : undefined, // Fetch more function for lanes
   }
 }
 
