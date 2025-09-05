@@ -7,27 +7,7 @@ import type {
 } from "../types"
 import { FiltersPresets } from "./FiltersPresets"
 
-// Mock data for testing
-const mockFiltersDefinition: FiltersDefinition = {
-  department: {
-    type: "in",
-    label: "Department",
-    options: [
-      { value: "engineering", label: "Engineering" },
-      { value: "marketing", label: "Marketing" },
-    ],
-  },
-  status: {
-    type: "in",
-    label: "Status",
-    options: [
-      { value: "active", label: "Active" },
-      { value: "inactive", label: "Inactive" },
-    ],
-  },
-}
-
-const mockPresets: PresetsDefinition<typeof mockFiltersDefinition> = [
+const mockPresets: PresetsDefinition<FiltersDefinition> = [
   {
     label: "Engineering Active",
     filter: { department: ["engineering"], status: ["active"] },
@@ -42,7 +22,7 @@ describe("FiltersPresets", () => {
   it("should apply preset when clicked and not selected", async () => {
     const user = userEvent.setup()
     const mockOnPresetsChange = vi.fn()
-    const initialFilters: FiltersState<typeof mockFiltersDefinition> = {}
+    const initialFilters: FiltersState<FiltersDefinition> = {}
 
     const { getByText } = zeroRender(
       <FiltersPresets
@@ -65,7 +45,7 @@ describe("FiltersPresets", () => {
   it("should deselect preset when clicked and already selected", async () => {
     const user = userEvent.setup()
     const mockOnPresetsChange = vi.fn()
-    const selectedFilters: FiltersState<typeof mockFiltersDefinition> = {
+    const selectedFilters: FiltersState<FiltersDefinition> = {
       department: ["engineering"],
       status: ["active"],
     }
@@ -88,7 +68,7 @@ describe("FiltersPresets", () => {
   it("should toggle between different presets correctly", async () => {
     const user = userEvent.setup()
     const mockOnPresetsChange = vi.fn()
-    const initialFilters: FiltersState<typeof mockFiltersDefinition> = {}
+    const initialFilters: FiltersState<FiltersDefinition> = {}
 
     const { getByText } = zeroRender(
       <FiltersPresets
@@ -118,7 +98,7 @@ describe("FiltersPresets", () => {
   it("should work with dropdown preset items", async () => {
     const user = userEvent.setup()
     const mockOnPresetsChange = vi.fn()
-    const selectedFilters: FiltersState<typeof mockFiltersDefinition> = {
+    const selectedFilters: FiltersState<FiltersDefinition> = {
       department: ["marketing"],
     }
 
