@@ -1,5 +1,5 @@
+import { RecordType } from "@/hooks/datasource"
 import { ReactNode } from "react"
-import { RecordType } from "../../experimental/OneDataCollection/types"
 
 export interface OneLaneProps<Record extends RecordType> {
   /**

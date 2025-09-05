@@ -1,4 +1,9 @@
+import type {
+  FiltersDefinition,
+  FiltersState,
+} from "@/components/OneFilterPicker/types"
 import { getValueByPath } from "@/lib/objectPaths"
+import { PromiseState, promiseToObservable } from "@/lib/promise-to-observable"
 import { groupBy } from "lodash"
 import {
   useCallback,
@@ -9,24 +14,8 @@ import {
   useState,
 } from "react"
 import { Observable } from "zen-observable-ts"
-import type {
-  FiltersDefinition,
-  FiltersState,
-} from "../../components/OneFilterPicker/types"
-import {
-  PromiseState,
-  promiseToObservable,
-} from "../../lib/promise-to-observable"
-import { ItemActionsDefinition } from "./item-actions"
-import {
-  NavigationFiltersDefinition,
-  NavigationFiltersState,
-} from "./navigationFilters/types"
-import { SortingsDefinition } from "./sortings"
-import { SummariesDefinition } from "./summary"
 import {
   BaseFetchOptions,
-  DataSource,
   GroupingDefinition,
   InfiniteScrollPaginatedResponse,
   PageBasedPaginatedResponse,
@@ -35,8 +24,10 @@ import {
   PaginationType,
   PromiseOrObservable,
   RecordType,
+  SortingsDefinition,
   SortingsStateMultiple,
 } from "./types"
+import { DataSource } from "./types/datasource.typings"
 
 /**
  * Represents an error that occurred during data fetching
@@ -54,9 +45,30 @@ type SimpleResult<T> = T[]
 /**
  * Hook options for useData
  */
-interface UseDataOptions<Filters extends FiltersDefinition> {
+export interface UseDataOptions<
+  R extends RecordType,
+  Filters extends FiltersDefinition,
+> {
   filters?: Partial<FiltersState<Filters>>
+  /**
+   * A function that is called when an error occurs during data fetching.
+   * It is called with the error object.
+   * @param error - The error object.
+   */
   onError?: (error: DataError) => void
+  /**
+   * A function that provides the fetch parameters for the data source.
+   * It is called before each fetch request and can be used to modify the fetch parameters.
+   * @param options - The fetch parameters for the data source.
+   * @returns The fetch parameters for the data source.
+   */
+  fetchParamsProvider?: <O extends BaseFetchOptions<Filters>>(options: O) => O
+  /**
+   * A function that is called when the data is fetched successfully.
+   * It is called with the response data.
+   * @param response - The response data.
+   */
+  onResponse?: (response: PaginatedResponse<R> | SimpleResult<R>) => void
 }
 
 /**
@@ -70,7 +82,7 @@ export type WithGroupId<RecordType> = RecordType & {
 /**
  * Hook return type for useData
  */
-interface UseDataReturn<R> {
+interface UseDataReturn<R extends RecordType> {
   data: Data<R>
   isInitialLoading: boolean
   isLoading: boolean
@@ -96,24 +108,18 @@ export type GroupRecord<RecordType> = {
   records: RecordType[]
 }
 
-export type Data<RecordType> = {
-  records: WithGroupId<RecordType>[]
-} & (
-  | {
-      type: "grouped"
-      groups: GroupRecord<WithGroupId<RecordType>>[]
-    }
-  | {
-      type: "flat"
-    }
-)
+export type Data<R extends RecordType> = {
+  records: WithGroupId<R>[]
+  type: "grouped" | "flat"
+  groups: GroupRecord<R>[]
+}
 
 /**
  * Custom hook for handling data fetching state
  */
-function useDataFetchState<Record>() {
+function useDataFetchState<R extends RecordType>() {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [data, setData] = useState<Record[]>([])
+  const [data, setData] = useState<R[]>([])
   const [error, setError] = useState<DataError | null>(null)
 
   return {
@@ -135,6 +141,19 @@ function usePaginationState() {
   )
   return { paginationInfo, setPaginationInfo }
 }
+
+const defaultFetchDataAndUpdateOptions = <
+  Filters extends FiltersDefinition,
+  O extends BaseFetchOptions<Filters>,
+>(
+  options: O
+): O => options
+
+const defaultIdProvider = (
+  item: RecordType,
+  index?: number
+): string | number =>
+  "id" in item ? `${item.id}` : index || JSON.stringify(item)
 
 /**
  * A core React hook that manages data fetching, state management, and pagination within the Collections ecosystem.
@@ -203,23 +222,20 @@ function usePaginationState() {
  * - setPage: Function to navigate to a specific page
  */
 export function useData<
-  R extends RecordType,
-  Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Summaries extends SummariesDefinition,
-  NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<R>,
+  R extends RecordType = RecordType,
+  Filters extends FiltersDefinition = FiltersDefinition,
+  Sortings extends SortingsDefinition = SortingsDefinition,
+  Grouping extends GroupingDefinition<R> = GroupingDefinition<R>,
 >(
-  source: DataSource<
-    R,
-    Filters,
-    Sortings,
-    Summaries,
-    ItemActionsDefinition<R>,
-    NavigationFilters,
-    Grouping
-  >,
-  { filters, onError }: UseDataOptions<Filters> = {}
+  source: DataSource<R, Filters, Sortings, Grouping>,
+  {
+    filters,
+    onError,
+    fetchParamsProvider = defaultFetchDataAndUpdateOptions,
+    onResponse,
+  }: UseDataOptions<R, Filters> = {},
+  // Deps to trigger fetchDataAndUpdate
+  deps: unknown[] = []
 ): UseDataReturn<R> {
   const {
     dataAdapter,
@@ -229,12 +245,11 @@ export function useData<
     currentSearch,
     isLoading,
     setIsLoading,
-    currentNavigationFilters,
     currentGrouping,
     grouping,
-    idProvider = (item, index): string | number =>
-      "id" in item ? `${item.id}` : index || JSON.stringify(item),
+    idProvider = defaultIdProvider,
   } = source
+
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
@@ -248,25 +263,38 @@ export function useData<
 
   const { paginationInfo, setPaginationInfo } = usePaginationState()
 
+  // We need to use a ref to get the latest paginationInfo value
+  // because the paginationInfo is updated asynchronously
+  // and we need to use the latest value in the callback functions
+  // like loadMore, setPage, etc.
+  const paginationInfoRef = useRef(paginationInfo)
+  useEffect(() => {
+    paginationInfoRef.current = paginationInfo
+  }, [paginationInfo])
+
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
 
   const isLoadingMoreRef = useRef(false)
 
-  const mergedFilters = useMemo(
-    () => ({ ...currentFilters, ...filters }),
-    [currentFilters, filters]
-  )
+  const mergedFilters = useMemo(() => {
+    return { ...currentFilters, ...filters }
+  }, [currentFilters, filters])
 
   const deferredSearch = useDeferredValue(currentSearch)
 
-  const searchValue = !search?.enabled
-    ? undefined
-    : search?.sync
-      ? currentSearch
-      : deferredSearch
-
-  const [summariesData, setSummariesData] = useState<R | undefined>(undefined)
+  // We need to use a ref to get the latest search value
+  // because the search value is updated asynchronously
+  // and we need to use the latest value in the callback functions
+  // like loadMore, setPage, etc.
+  const searchValue = useRef<string | undefined>(undefined)
+  useEffect(() => {
+    searchValue.current = !search?.enabled
+      ? undefined
+      : search?.sync
+        ? currentSearch
+        : deferredSearch
+  }, [currentSearch, deferredSearch, search?.enabled, search?.sync])
 
   /**
    * Merges 2 arrays of items using the idProvider to update the existing items
@@ -294,10 +322,11 @@ export function useData<
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<R> | SimpleResult<R>, appendMode: boolean) => {
-      // Extract summaries data if available
-      const extractedSummaries =
-        "summaries" in result ? result.summaries : undefined
-      setSummariesData(extractedSummaries)
+      /**
+       * Call to the onResponse callback
+       */
+      onResponse?.(result)
+
       let records: R[] = []
       if ("records" in result) {
         records = result.records
@@ -308,23 +337,28 @@ export function useData<
         // Update pagination info based on the pagination type
         if (
           paginationType &&
-          ["pages", "infinite-scroll"].includes(paginationType)
+          ["pages", "infinite-scroll"].includes(paginationType) &&
+          paginationType !== "no-pagination"
         ) {
           // For page-based pagination
-          setPaginationInfo({
+          const common = {
             total: result.total,
             perPage: result.perPage,
-            type: paginationType,
-            // Pages pagination
-            ...(paginationType === "pages" && {
+          }
+          if (paginationType === "pages") {
+            setPaginationInfo({
+              ...common,
+              type: "pages" as const,
               currentPage: "currentPage" in result ? result.currentPage : 1,
               pagesCount:
                 "pagesCount" in result
                   ? result.pagesCount
                   : Math.ceil(result.total / result.perPage),
-            }),
-            // Infinite scroll pagination
-            ...(paginationType === "infinite-scroll" && {
+            })
+          } else if (paginationType === "infinite-scroll") {
+            setPaginationInfo({
+              ...common,
+              type: "infinite-scroll" as const,
               cursor:
                 "cursor" in result && result.cursor !== undefined
                   ? result.cursor
@@ -335,8 +369,9 @@ export function useData<
                 "hasMore" in result
                   ? result.hasMore
                   : rawData.length + result.records.length < result.total,
-            }),
-          })
+            })
+          }
+
           setTotalItems(result.total)
         }
       } else {
@@ -366,7 +401,6 @@ export function useData<
       setIsLoading,
       setIsLoadingMore,
       setTotalItems,
-      setSummariesData,
       isLoadingMoreRef,
     ]
   )
@@ -422,7 +456,18 @@ export function useData<
     /**
      * Flat data
      */
-    return { type: "flat" as const, records: data }
+    return {
+      type: "flat" as const,
+      records: data,
+      groups: [
+        {
+          key: "all",
+          label: "All",
+          itemCount: data.length,
+          records: data,
+        },
+      ],
+    }
   }, [rawData, currentGrouping, grouping, mergedFilters])
 
   const handleFetchError = useCallback(
@@ -447,25 +492,22 @@ export function useData<
   type ResultType = PaginatedResponse<R> | SimpleResult<R>
 
   // Define a type for the fetch parameters to make the function more maintainable
-  type FetchDataParams<
-    Filters extends FiltersDefinition,
-    NavigationFilters extends NavigationFiltersDefinition,
-  > = {
+  type FetchDataParams<Filters extends FiltersDefinition> = {
     filters: FiltersState<Filters>
     currentPage?: number
-    navigationFilters: NavigationFiltersState<NavigationFilters>
     appendMode?: boolean
     cursor?: string | null
+    search?: string | undefined
   }
 
   const fetchDataAndUpdate = useCallback(
     async ({
       filters,
       currentPage = 1,
-      navigationFilters,
+      search,
       appendMode = false,
       cursor = null,
-    }: FetchDataParams<Filters, NavigationFilters>) => {
+    }: FetchDataParams<Filters>) => {
       try {
         // Clean up any existing subscription before creating a new one
         if (cleanup.current) {
@@ -492,12 +534,13 @@ export function useData<
             : []),
         ]
 
-        const baseFetchOptions: BaseFetchOptions<Filters, NavigationFilters> = {
-          filters,
-          search: searchValue,
-          sortings,
-          navigationFilters,
-        }
+        const baseFetchOptions: BaseFetchOptions<Filters> = fetchParamsProvider(
+          {
+            filters,
+            search,
+            sortings,
+          }
+        )
 
         function fetcher(): PromiseOrObservable<ResultType> {
           setTotalItems(undefined)
@@ -512,23 +555,22 @@ export function useData<
               : defaultPerPage
 
           // Use appropriate pagination type based on dataAdapter configuration
-          if (dataAdapter.paginationType === "pages") {
-            return dataAdapter.fetchData({
-              ...baseFetchOptions,
-              pagination: { currentPage, perPage: perPageValue },
-            })
-          } else if (dataAdapter.paginationType === "infinite-scroll") {
-            // For infinite scroll, use the cursor parameter directly
-            return dataAdapter.fetchData({
-              ...baseFetchOptions,
-              pagination: { cursor, perPage: perPageValue },
-            })
-          } else {
-            return dataAdapter.fetchData({
-              ...baseFetchOptions,
-              pagination: {},
-            }) as PromiseOrObservable<ResultType>
-          }
+          return dataAdapter.fetchData({
+            ...baseFetchOptions,
+            pagination: {
+              ...(dataAdapter.paginationType === "pages"
+                ? {
+                    currentPage,
+                    perPage: perPageValue,
+                  }
+                : dataAdapter.paginationType === "infinite-scroll"
+                  ? {
+                      cursor,
+                      perPage: perPageValue,
+                    }
+                  : {}),
+            },
+          }) as PromiseOrObservable<ResultType>
         }
 
         const result = fetcher()
@@ -564,14 +606,17 @@ export function useData<
         handleFetchError(error)
       }
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fetchDataAndUpdateParamsProvider must be stable
     [
       handleFetchError,
       dataAdapter,
       currentSortings,
       currentGrouping,
-      searchValue,
       handleFetchSuccess,
       setIsLoading,
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
+      ...deps,
     ]
   )
 
@@ -588,76 +633,91 @@ export function useData<
       fetchDataAndUpdate({
         filters: mergedFilters,
         currentPage: page,
-        navigationFilters: currentNavigationFilters,
+        search: searchValue.current,
       })
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
     [
+      searchValue.current,
       fetchDataAndUpdate,
       mergedFilters,
       setIsLoading,
       paginationInfo,
-      currentNavigationFilters,
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
+      ...deps,
     ]
   )
 
   // In loadMore function
-  const loadMore = useCallback(() => {
-    if (!paginationInfo || isLoading) return
+  const loadMore = useCallback(
+    () => {
+      const currentPaginationInfo = paginationInfoRef.current
+      if (!currentPaginationInfo || isLoading) return
 
-    if (!isInfiniteScrollPagination(paginationInfo)) {
-      console.warn(
-        "loadMore is only applicable for infinite-scroll pagination type"
-      )
-      return
-    }
+      if (!isInfiniteScrollPagination(currentPaginationInfo)) {
+        console.warn(
+          "loadMore is only applicable for infinite-scroll pagination type"
+        )
+        return
+      }
 
-    if (paginationInfo.hasMore) {
-      // Extract the cursor from paginationInfo
-      const currentCursor = paginationInfo.cursor
+      if (currentPaginationInfo.hasMore) {
+        // Extract the cursor from paginationInfo
+        const currentCursor = currentPaginationInfo.cursor
 
-      setIsLoadingMore(true)
-      setIsLoading(true)
-      isLoadingMoreRef.current = true
+        setIsLoadingMore(true)
+        setIsLoading(true)
+        isLoadingMoreRef.current = true
 
-      // Use named parameters
-      fetchDataAndUpdate({
-        filters: mergedFilters,
-        navigationFilters: currentNavigationFilters,
-        appendMode: true,
-        cursor: currentCursor,
-      })
-    }
-  }, [
-    fetchDataAndUpdate,
-    isLoading,
-    mergedFilters,
-    paginationInfo,
-    currentNavigationFilters,
-    setIsLoading,
-    setIsLoadingMore,
-  ])
+        // Use named parameters
+        fetchDataAndUpdate({
+          filters: mergedFilters,
+          appendMode: true,
+          cursor: currentCursor,
+          search: searchValue.current,
+        })
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
+    [
+      fetchDataAndUpdate,
+      isLoading,
+      mergedFilters,
+      paginationInfoRef.current,
+      searchValue.current,
+      setIsLoading,
+      setIsLoadingMore,
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
+      ...deps,
+    ]
+  )
 
-  useEffect(() => {
-    if (!isLoadingMoreRef.current) {
-      setIsLoading(true)
-      // Explicitly pass 0 as the initial position for infinite scroll
-      const initialPosition =
-        dataAdapter.paginationType === "infinite-scroll" ? 0 : 1
-      fetchDataAndUpdate({
-        filters: mergedFilters,
-        currentPage: initialPosition,
-        navigationFilters: currentNavigationFilters,
-        cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
-      })
-    }
-  }, [
-    fetchDataAndUpdate,
-    mergedFilters,
-    setIsLoading,
-    currentNavigationFilters,
-
-    dataAdapter.paginationType,
-  ])
+  useEffect(
+    () => {
+      if (!isLoadingMoreRef.current) {
+        setIsLoading(true)
+        // Explicitly pass 0 as the initial position for infinite scroll
+        const initialPosition =
+          dataAdapter.paginationType === "infinite-scroll" ? 0 : 1
+        fetchDataAndUpdate({
+          filters: mergedFilters,
+          currentPage: initialPosition,
+          search: searchValue.current,
+          cursor: dataAdapter.paginationType === "infinite-scroll" ? "0" : null, // Pass "0" as initial cursor
+        })
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we want to oberver ref current
+    [
+      fetchDataAndUpdate,
+      mergedFilters,
+      setIsLoading,
+      dataAdapter.paginationType,
+      searchValue.current,
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
+      ...deps,
+    ]
+  )
 
   useEffect(() => {
     return () => {
@@ -675,11 +735,9 @@ export function useData<
     setPage,
     loadMore,
     totalItems,
-    summaries: summariesData, // Add summaries to the return object
   }
 }
 
-// TODO: move them to utils file???
 // Type guard functions to check pagination types
 export function isPageBasedPagination<R extends RecordType>(
   pagination: PaginationInfo | null
