@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.177.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.0...factorial-one-react-v1.177.1) (2025-09-05)
+
+
+### Bug Fixes
+
+* allow deselecting a preset by clicking on it again ([#2531](https://github.com/factorialco/factorial-one/issues/2531)) ([f7cc87e](https://github.com/factorialco/factorial-one/commit/f7cc87ef463dcd44bfd7d9ac698e820689247ce7))
+
 ## [1.177.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.176.0...factorial-one-react-v1.177.0) (2025-09-04)
 
 
