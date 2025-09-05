@@ -6,12 +6,10 @@ import { AreaChartWidgetProps } from './AreaChartWidget';
 import { AriaAttributes } from 'react';
 import { AvatarListCellValue } from './types/avatarList.tsx';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
-import { AvatarProps } from '@radix-ui/react-avatar';
 import { BarChartProps } from '../../../components/Charts/BarChart';
 import { baseColors } from '@factorialco/factorial-one-core';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
-import { color as color_2 } from '../../../ui/avatar';
 import { CompanyCellValue } from './types/company.tsx';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
@@ -44,6 +42,7 @@ import { LineChartProps } from '../../../components/Charts/LineChart';
 import { NumberCellValue } from './types/number.tsx';
 import { Observable } from 'zen-observable-ts';
 import { Path } from 'react-hook-form';
+import { PercentageCellValue } from './types/percentage.tsx';
 import { PersonCellValue } from './types/person.tsx';
 import { PieChartProps } from '../../../components/Charts/PieChart';
 import { PopoverProps } from '@radix-ui/react-popover';
@@ -54,7 +53,6 @@ import { ReactNode } from 'react';
 import * as RechartsPrimitive from 'recharts';
 import { RefAttributes } from 'react';
 import { ScrollAreaProps } from '@radix-ui/react-scroll-area';
-import { sizes as sizes_2 } from '../../../ui/avatar';
 import { StatusCellValue } from './types/status.tsx';
 import { SVGProps } from 'react';
 import { TagCellValue } from './types/tag.tsx';
@@ -62,7 +60,6 @@ import { TagListCellValue } from './types/tagList.tsx';
 import { TeamCellValue } from './types/team.tsx';
 import { TextCellValue } from './types/text.tsx';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
-import { type as type_2 } from '../../../ui/avatar';
 import { useForm } from 'react-hook-form';
 import { UseFormHandleSubmit } from 'react-hook-form';
 import { UseFormProps } from 'react-hook-form';
@@ -236,10 +233,13 @@ export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLA
 })) | undefined) => string> & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLElement | SVGElement>>;
 
 declare type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
-    icon?: IconType;
-    type: "critical" | "warning" | "info" | "positive";
-    size?: "sm" | "md" | "lg";
-};
+    type: (typeof alertAvatarTypes)[number];
+    size?: (typeof alertAvatarSizes)[number];
+} & Partial<Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">>;
+
+declare const alertAvatarSizes: readonly ["sm", "md", "lg"];
+
+declare const alertAvatarTypes: readonly ["critical", "warning", "info", "positive"];
 
 declare const alertAvatarVariants: (props?: ({
     type?: "info" | "critical" | "warning" | "positive" | undefined;
@@ -320,9 +320,9 @@ className?: ClassValue;
 })) | undefined) => string> & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 declare const Avatar: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.AvatarProps & React_2.RefAttributes<HTMLSpanElement>, "ref"> & {
-    size?: (typeof sizes)[number];
-    type?: (typeof type)[number];
-    color?: (typeof color)[number];
+    size?: (typeof internalAvatarSizes)[number];
+    type?: (typeof internalAvatarTypes)[number];
+    color?: (typeof internalAvatarColors)[number];
 } & React_2.RefAttributes<HTMLSpanElement>>;
 
 declare type AvatarBadge = ({
@@ -335,18 +335,29 @@ declare type AvatarBadge = ({
     tooltip?: string;
 };
 
-declare type AvatarVariant = ({
+declare type AvatarFileSize = (typeof avatarFileSizes)[number];
+
+declare const avatarFileSizes: readonly ["xs", "sm", "md", "lg"];
+
+declare type AvatarSize = (typeof avatarSizes)[number];
+
+declare const avatarSizes: readonly ["xs", "sm", "md", "lg", "xl", "2xl"];
+
+declare type AvatarVariant = DistributiveOmit<({
     type: "person";
-} & Omit<PersonAvatarProps, "size">) | ({
+} & F0AvatarPersonProps) | ({
     type: "team";
-} & Omit<TeamAvatarProps, "size">) | ({
+} & F0AvatarTeamProps) | ({
     type: "company";
-} & Omit<CompanyAvatarProps, "size">);
+} & F0AvatarCompanyProps) | ({
+    type: "file";
+} & F0AvatarFileProps), "size">;
 
 export declare const Badge: ({ type, size, icon }: BadgeProps) => JSX_2.Element;
 
 export declare interface BadgeProps extends VariantProps<typeof badgeVariants> {
     icon: IconType;
+    type?: VariantProps<typeof badgeVariants>["type"];
     size?: keyof typeof iconSizes;
 }
 
@@ -374,26 +385,40 @@ chart: BarChartProps;
 
 export declare const BaseActivityItemList: ({ items, loadingMoreItems, onClickItem, onEndReached, onEndReachedItemsThreshold, }: ActivityItemListProps) => default_2.JSX.Element;
 
-declare const BaseAvatar: ForwardRefExoticComponent<    {
-type: ShadAvatarProps["type"];
-name: string | string[];
-src?: string;
-size?: ShadAvatarProps["size"];
-color?: ShadAvatarProps["color"] | "random";
-badge?: AvatarBadge;
-} & Pick<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
-size?: sizes_2[number];
-type?: type_2[number];
-color?: color_2[number];
-} & RefAttributes<HTMLSpanElement>, "aria-label" | "aria-labelledby"> & RefAttributes<HTMLDivElement>>;
+declare const BaseAvatar: ForwardRefExoticComponent<BaseAvatarProps & RefAttributes<HTMLDivElement>>;
 
-declare type BaseAvatarProps = ComponentProps<typeof BaseAvatar>;
+declare type BaseAvatarProps = {
+    /**
+     * The type of the avatar.
+     */
+    type: InternalAvatarProps["type"];
+    /**
+     * The name of the avatar.
+     */
+    name: string | string[];
+    /**
+     * The source of the avatar's image.
+     */
+    src?: string;
+    /**
+     * The color of the avatar.
+     * @default "random"
+     */
+    color?: InternalAvatarProps["color"] | "random";
+    /**
+     * The badge to display on the avatar. Can be a module badge or a custom badge.
+     */
+    badge?: AvatarBadge;
+} & Partial<Pick<InternalAvatarProps, "aria-label" | "aria-labelledby">> & ({
+    size: AvatarSize;
+} | {
+    /**
+     * @deprecated Use AvatarSize instead (xs, sm, md, lg, xl, 2xl)
+     */
+    size: InternalAvatarProps["size"];
+});
 
 declare type BaseAvatarProps_2 = ComponentProps<typeof BaseAvatar>;
-
-declare type BaseAvatarProps_3 = ComponentProps<typeof BaseAvatar>;
-
-declare type BaseAvatarProps_4 = ComponentProps<typeof BaseAvatar>;
 
 export declare const BaseBanner: ForwardRefExoticComponent<BaseBannerProps & RefAttributes<HTMLDivElement>> & {
     Skeleton: ForwardRefExoticComponent<RefAttributes<HTMLDivElement>>;
@@ -724,7 +749,7 @@ declare interface ButtonProps_2 extends React_2.ButtonHTMLAttributes<HTMLButtonE
     pressed?: boolean;
 }
 
-declare type ButtonSize = (typeof sizes_3)[number];
+declare type ButtonSize = (typeof sizes)[number];
 
 declare type ButtonVariant = (typeof variants_2)[number];
 
@@ -782,6 +807,9 @@ declare type CardAvatarVariant = AvatarVariant | {
 } | {
     type: "file";
     file: File;
+} | {
+    type: "icon";
+    icon: IconType;
 };
 
 declare type CardPropertyDefinition<T> = PropertyDefinition_2<T> & {
@@ -892,9 +920,9 @@ declare type ChartItem<K extends ChartConfig> = {
     };
 };
 
-export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_7 & RefAttributes<HTMLDivElement>>;
+export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_5 & RefAttributes<HTMLDivElement>>;
 
-export declare type ChatWidgetEmptyStateProps = Props_7;
+export declare type ChatWidgetEmptyStateProps = Props_5;
 
 export declare function ClockInControls({ trackedMinutes, remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, breakTypeName, }: ClockInControlsProps): JSX_2.Element;
 
@@ -975,8 +1003,6 @@ export declare type CollectionProps<Record extends RecordType, Filters extends F
     onLoadError: OnLoadErrorCallback;
 } & VisualizationOptions;
 
-declare const color: readonly ["viridian", "malibu", "yellow", "purple", "lilac", "barbie", "smoke", "army", "flubber", "indigo", "camel"];
-
 declare type ColumnNumber = 1 | 2 | 3 | 4 | 6;
 
 declare type ColumnWidth = keyof typeof columnWidths | number;
@@ -1036,7 +1062,9 @@ declare interface Company {
     logo?: string;
 }
 
-declare type CompanyAvatarProps = ComponentProps<typeof F0AvatarCompany>;
+declare type CompanyAvatarVariant = Extract<AvatarVariant, {
+    type: "company";
+}>;
 
 declare const CompanyItem: ForwardRefExoticComponent<CompanyItemProps & RefAttributes<HTMLLIElement>>;
 
@@ -1219,7 +1247,7 @@ declare const DataList: ForwardRefExoticComponent<DataListProps & RefAttributes<
     CompanyItem: ForwardRefExoticComponent<CompanyItemProps & RefAttributes<HTMLLIElement>>;
     PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
     TeamItem: ForwardRefExoticComponent<TeamItemProps & RefAttributes<HTMLLIElement>>;
-    DotTagItem: ForwardRefExoticComponent<Props_4 & RefAttributes<HTMLLIElement>>;
+    DotTagItem: ForwardRefExoticComponent<Props_3 & RefAttributes<HTMLLIElement>>;
 };
 
 declare type DataListProps = {
@@ -1353,6 +1381,8 @@ export declare type DateRangeString = {
     to?: string;
 };
 
+export declare type DateStringFormat = "default" | "long";
+
 declare type DateValue = {
     value: DateRangeComplete;
     valueString: string;
@@ -1388,6 +1418,192 @@ declare const daytimePageVariants: (props?: ({
     class?: never;
     className?: ClassValue;
 })) | undefined) => string;
+
+declare const defaultTranslations: {
+    readonly approvals: {
+        readonly history: "Approval history";
+        readonly statuses: {
+            readonly waiting: "Waiting";
+            readonly pending: "Pending";
+            readonly approved: "Approved";
+            readonly rejected: "Rejected";
+        };
+        readonly requiredNumbers: {
+            readonly one: "One approval required";
+            readonly other: "{{count}} approvals required";
+        };
+    };
+    readonly navigation: {
+        readonly sidebar: "Main navigation";
+        readonly previous: "Previous";
+        readonly next: "Next";
+    };
+    readonly actions: {
+        readonly add: "Add";
+        readonly edit: "Edit";
+        readonly save: "Save";
+        readonly cancel: "Cancel";
+        readonly copy: "Copy";
+        readonly close: "Close";
+        readonly showAll: "Show all";
+        readonly showLess: "Show less";
+        readonly skipToContent: "Skip to content";
+        readonly view: "View";
+        readonly unselect: "Unselect";
+        readonly search: "Search";
+        readonly clear: "Clear";
+        readonly more: "More";
+        readonly moveUp: "Move up";
+        readonly moveDown: "Move down";
+        readonly thumbsUp: "Like";
+        readonly thumbsDown: "Dislike";
+        readonly other: "Other actions";
+        readonly toggle: "Toggle";
+    };
+    readonly status: {
+        readonly selected: {
+            readonly singular: "Selected";
+            readonly plural: "Selected";
+        };
+    };
+    readonly filters: {
+        readonly label: "Filters";
+        readonly applyFilters: "Apply filters";
+        readonly cancel: "Cancel";
+        readonly failedToLoadOptions: "Failed to load options";
+        readonly retry: "Retry";
+    };
+    readonly collections: {
+        readonly sorting: {
+            readonly noSorting: "No sorting";
+            readonly toggleDirection: "Toggle sorting direction";
+            readonly sortBy: "Sort by";
+        };
+        readonly grouping: {
+            readonly noGrouping: "No grouping";
+            readonly groupBy: "Group by";
+            readonly toggleDirection: "Toggle direction";
+        };
+        readonly actions: {
+            readonly actions: "Actions";
+        };
+        readonly visualizations: {
+            readonly table: "Table view";
+            readonly card: "Card view";
+            readonly list: "List view";
+            readonly pagination: {
+                readonly of: "of";
+            };
+        };
+        readonly itemsCount: "items";
+        readonly emptyStates: {
+            readonly noData: {
+                readonly title: "No data";
+                readonly description: "No data available";
+            };
+            readonly noResults: {
+                readonly title: "No results";
+                readonly description: "No results found try another search or clear the filters";
+                readonly clearFilters: "Clear filters";
+            };
+            readonly error: {
+                readonly title: "Error";
+                readonly description: "An error occurred while loading the data";
+                readonly retry: "Retry";
+            };
+        };
+        readonly summaries: {
+            readonly types: {
+                readonly sum: "sum";
+            };
+        };
+    };
+    readonly shortcut: "Shortcut";
+    readonly date: {
+        readonly from: "From";
+        readonly to: "To";
+        readonly none: "None";
+        readonly date: "Date";
+        readonly custom: "Custom period";
+        readonly selectDate: "Select Date";
+        readonly compareTo: "Compare to";
+        readonly presets: {
+            readonly last7Days: "Last 7 days";
+            readonly last30Days: "Last 30 days";
+            readonly last3Months: "Last 3 months";
+            readonly last6Months: "Last 6 months";
+            readonly lastYear: "Last year";
+            readonly last3Years: "Last 3 years";
+            readonly last100Years: "Last 100 years";
+        };
+        readonly range: "Range";
+        readonly selectedBy: "Selected by";
+        readonly groups: {
+            readonly today: "Today";
+            readonly yesterday: "Yesterday";
+            readonly lastWeek: "Last week";
+            readonly lastMonth: "Last month";
+            readonly other: "Other";
+        };
+        readonly granularities: {
+            readonly day: {
+                readonly currentDate: "Today";
+                readonly label: "Day";
+            };
+            readonly week: {
+                readonly currentDate: "This week";
+                readonly label: "Week";
+                readonly long: "Week of %{day} %{month} %{year}";
+            };
+            readonly month: {
+                readonly currentDate: "This month";
+                readonly label: "Month";
+            };
+            readonly quarter: {
+                readonly currentDate: "This quarter";
+                readonly label: "Quarter";
+            };
+            readonly halfyear: {
+                readonly currentDate: "This half year";
+                readonly label: "Half year";
+            };
+            readonly year: {
+                readonly currentDate: "This year";
+                readonly label: "Year";
+            };
+            readonly range: {
+                readonly currentDate: "Today";
+                readonly label: "Range";
+            };
+        };
+        readonly month: {
+            readonly january: "January";
+            readonly february: "February";
+            readonly march: "March";
+            readonly april: "April";
+            readonly may: "May";
+            readonly june: "June";
+            readonly july: "July";
+            readonly august: "August";
+            readonly september: "September";
+            readonly october: "October";
+            readonly november: "November";
+            readonly december: "December";
+        };
+    };
+    readonly favorites: {
+        readonly favorites: "Favorites";
+        readonly remove: "Remove favorite";
+    };
+    readonly notifications: "Notifications";
+    readonly ai: {
+        readonly description: "Chat with AI";
+        readonly newChat: "New Chat";
+        readonly openChat: "Open Chat";
+        readonly scrollToBottom: "Scroll to bottom";
+        readonly welcome: "I'm One. Ask or make anything.";
+    };
+};
 
 export declare const DetailsItem: ForwardRefExoticComponent<DetailsItemType & RefAttributes<HTMLDivElement>>;
 
@@ -1431,6 +1647,22 @@ icon?: IconType_2 | undefined;
 open?: boolean;
 onClose?: () => void;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+/**
+ * Remove a property from a union of objects.
+ * @example
+ * type Person = {
+ *   name: string
+ *   age: number
+ * } | {
+ *   name: string
+ *   height: number
+ * }
+ *
+ * type PersonWithoutName = DistributiveOmit<Person, "name">
+ * // { age: number } | { height: number }
+ */
+declare type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
 
 export declare const Dropdown: (props: DropdownProps) => JSX_2.Element;
 
@@ -1616,48 +1848,108 @@ declare interface ErrorMessageProps {
  */
 export declare type ExtractPropertyKeys<RecordType> = keyof RecordType;
 
-declare const F0AvatarAlert: ({ icon, type, size }: AlertAvatarProps) => JSX_2.Element;
-
-declare const F0AvatarCompany: {
-    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: F0AvatarCompanyProps): JSX_2.Element;
-    displayName: string;
-};
+declare const F0AvatarAlert: ({ type, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, }: AlertAvatarProps) => JSX_2.Element;
 
 declare type F0AvatarCompanyProps = {
     name: string;
-    src?: string;
-    size?: BaseAvatarProps_3["size"];
-    badge?: AvatarBadge;
-} & Pick<BaseAvatarProps_3, "aria-label" | "aria-labelledby">;
-
-declare const F0AvatarPerson: {
-    ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: F0AvatarPersonProps): JSX_2.Element;
-    displayName: string;
-};
-
-declare type F0AvatarPersonProps = {
-    firstName: string;
-    lastName: string;
     src?: string;
     size?: BaseAvatarProps["size"];
     badge?: AvatarBadge;
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
 
+declare type F0AvatarFileProps = Omit<React.ComponentPropsWithoutRef<typeof Avatar>, "type" | "size"> & {
+    file: FileDef;
+    size?: AvatarFileSize;
+    badge?: AvatarBadge;
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
+
+/**
+ * Module avatar
+ * @description A component that displays a module avatar
+ * @experimental
+ * @returns
+ */
+export declare function F0AvatarModule({ size, module, ...props }: F0AvatarModuleProps): JSX_2.Element;
+
+export declare type F0AvatarModuleProps = VariantProps<typeof moduleAvatarVariants> & {
+    module: ModuleId;
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
+
+declare type F0AvatarPersonProps = {
+    /**
+     * The first name of the person.
+     */
+    firstName: string;
+    /**
+     * The last name of the person.
+     */
+    lastName: string;
+    /**
+     * The source of the person's image.
+     */
+    src?: string;
+    /**
+     * The size of the avatar.
+     */
+    size?: BaseAvatarProps["size"];
+    /**
+     * The badge to display on the avatar. Can be a module badge or a custom badge.
+     */
+    badge?: AvatarBadge;
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
+
 declare const F0AvatarPulse: {
-    ({ firstName, lastName, src, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, pulse, onPulseClick, }: Props_6): JSX_2.Element;
+    ({ firstName, lastName, src, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, pulse, onPulseClick, }: F0AvatarPulseProps): JSX_2.Element;
     displayName: string;
 };
 
-declare const F0AvatarTeam: {
-    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props): JSX_2.Element;
-    displayName: string;
-};
+declare type F0AvatarPulseProps = {
+    /**
+     * The first name of the person.
+     */
+    firstName: string;
+    /**
+     * The last name of the person.
+     */
+    lastName: string;
+    /**
+     * The source of the person's image.
+     */
+    src?: string;
+    /**
+     * The pulse to display on the avatar.
+     */
+    pulse?: Pulse;
+    /**
+     * The callback to be called when the pulse is clicked.
+     */
+    onPulseClick: () => void;
+} & Pick<BaseAvatarProps_2, "aria-label" | "aria-labelledby">;
+
+declare type F0AvatarTeamProps = {
+    /**
+     * The name of the team.
+     */
+    name: string;
+    /**
+     * The source of the team's image.
+     */
+    src?: string;
+    /**
+     * The size of the avatar.
+     */
+    size?: BaseAvatarProps["size"];
+    /**
+     * The badge to display on the avatar. Can be a module badge or a custom badge.
+     */
+    badge?: AvatarBadge;
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
 
 export declare function F0TableOfContent(props: TOCProps): JSX_2.Element;
 
-declare const F0TagAlert: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
+declare const F0TagAlert: ForwardRefExoticComponent<Props_8 & RefAttributes<HTMLDivElement>>;
 
-declare const F0TagRaw: ForwardRefExoticComponent<Props_5 & RefAttributes<HTMLDivElement>>;
+declare const F0TagRaw: ForwardRefExoticComponent<Props_4 & RefAttributes<HTMLDivElement>>;
 
 export declare const F1SearchBox: ForwardRefExoticComponent<    {
 value?: string;
@@ -1696,6 +1988,11 @@ export declare type FileAction = {
     label: string;
     onClick: () => void;
     critical?: boolean;
+};
+
+declare type FileDef = {
+    name: string;
+    type: string;
 };
 
 export declare const FileItem: ForwardRefExoticComponent<FileItemProps & RefAttributes<HTMLDivElement>>;
@@ -1773,6 +2070,7 @@ export declare type FiltersState<Definition extends Record<string, FilterDefinit
 
 declare type FilterTypeContext<Options extends object = never> = {
     schema: FilterTypeSchema<Options>;
+    i18n: TranslationsType;
 };
 
 declare type FilterTypeDefinition<Value = unknown, Options extends object = never, EmptyValue = Value> = {
@@ -1877,11 +2175,11 @@ export declare const getSecondaryActions: (secondaryActions: SecondaryActionsDef
 export declare interface GranularityDefinition {
     calendarMode?: CalendarMode;
     calendarView: CalendarView;
-    label: (viewDate: Date) => ReactNode;
-    toRangeString: (date: Date | DateRange | undefined | null) => DateRangeString;
+    label: (viewDate: Date, i18n: TranslationsType) => ReactNode;
+    toRangeString: (date: Date | DateRange | undefined | null, i18n: TranslationsType, format?: DateStringFormat) => DateRangeString;
     toRange: <T extends Date | DateRange | undefined | null>(date: T) => T extends Date | DateRange ? DateRangeComplete : T;
-    toString: (date: Date | DateRange | undefined | null) => string;
-    fromString: (dateStr: string | DateRangeString) => DateRange | null;
+    toString: (date: Date | DateRange | undefined | null, i18n: TranslationsType, format?: DateStringFormat) => string;
+    fromString: (dateStr: string | DateRangeString, i18n: TranslationsType) => DateRange | null;
     navigateUIView: (viewDate: Date, direction: -1 | 1) => Date;
     navigate: (date: Date, direction: -1 | 1) => Date;
     getViewDateFromDate: (date: Date) => Date;
@@ -2149,6 +2447,18 @@ export declare type InputProps<T extends string> = Pick<ComponentProps<typeof In
     type?: Exclude<HTMLInputTypeAttribute, "number">;
 };
 
+declare const internalAvatarColors: readonly ["viridian", "malibu", "yellow", "purple", "lilac", "barbie", "smoke", "army", "flubber", "indigo", "camel"];
+
+declare type InternalAvatarProps = React_2.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> & {
+    size?: (typeof internalAvatarSizes)[number];
+    type?: (typeof internalAvatarTypes)[number];
+    color?: (typeof internalAvatarColors)[number];
+};
+
+declare const internalAvatarSizes: readonly ["xsmall", "small", "medium", "large", "xlarge", "xxlarge"];
+
+declare const internalAvatarTypes: readonly ["base", "rounded"];
+
 export declare function Item({ item, counter, isActive, collapsible, isExpanded, onToggleExpanded, sortable, children, }: TOCItemProps): JSX_2.Element;
 
 declare const Item_2: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
@@ -2314,11 +2624,18 @@ declare type MetadataItemValue = {
     type: "status";
     label: string;
     variant: StatusVariant;
-} | {
+} | ({
     type: "list";
-    variant: AvatarVariant["type"];
-    avatars: AvatarVariant[];
+} & ({
+    variant: "person";
+    avatars: (PersonAvatarVariant | (PersonAvatarVariant & Record<string, unknown>))[];
 } | {
+    variant: "team";
+    avatars: (TeamAvatarVariant | (TeamAvatarVariant & Record<string, unknown>))[];
+} | {
+    variant: "company";
+    avatars: (CompanyAvatarVariant | (CompanyAvatarVariant & Record<string, unknown>))[];
+})) | {
     type: "data-list";
     data: string[];
 } | {
@@ -2349,23 +2666,6 @@ declare interface MetadataProps {
 export declare const MobileDropdown: ({ items, children }: DropdownProps) => JSX_2.Element;
 
 declare type ModalPosition = "center" | "left" | "right" | "fullscreen";
-
-/**
- * Module avatar
- * @description A component that displays a module avatar
- * @experimental
- * @returns
- */
-export declare function ModuleAvatar({ size, ...props }: ModuleAvatarProps): JSX_2.Element;
-
-export declare type ModuleAvatarProps = VariantProps<typeof moduleAvatarVariants> & ({
-    module: ModuleId;
-} | {
-    /**
-     * @deprecated This component should only render module related icons, not arbitrary icons. The `icon` property will be removed soon. Use the `module` prop instead.
-     */
-    icon: IconType;
-});
 
 declare const moduleAvatarVariants: (props?: ({
     size?: "lg" | "md" | "sm" | "xs" | "xxs" | undefined;
@@ -2463,7 +2763,7 @@ export declare type NavigationFilter<T, InitialValue = T> = {
      * @param props - The props of the filter
      * @returns The converted value
      */
-    valueConverter?: (defaultValue: InitialValue, filterDef: NavigationFilterComponentProps<T>["filter"]) => T;
+    valueConverter?: (defaultValue: InitialValue, filterDef: NavigationFilterComponentProps<T>["filter"], i18n: TranslationsType) => T;
     /**
      * Renders the filter component.
      * @param props - The props of the filter
@@ -2622,12 +2922,32 @@ export declare interface OneDatePickerProps extends Omit<OneDatePickerPopupProps
     hideGoToCurrent?: boolean;
 }
 
-declare type OneDropdownButtonItem<T = string> = {
+export declare const OneDropdownButton: ({ items, onClick, value, ...props }: OneDropdownButtonProps) => JSX_2.Element | undefined;
+
+export declare type OneDropdownButtonItem<T = string> = {
     value: T;
     label: string;
     icon?: IconType;
     critical?: boolean;
 };
+
+export declare type OneDropdownButtonProps<T = string> = {
+    size?: OneDropdownButtonSize;
+    items: OneDropdownButtonItem<T>[];
+    variant?: OneDropdownButtonVariant;
+    value?: T;
+    disabled?: boolean;
+    loading?: boolean;
+    onClick: (value: T, item: OneDropdownButtonItem<T>) => void;
+};
+
+declare type OneDropdownButtonSize = (typeof oneDropdownButtonSizes)[number];
+
+declare const oneDropdownButtonSizes: readonly ["sm", "md", "lg"];
+
+declare type OneDropdownButtonVariant = (typeof oneDropdownButtonVariants)[number];
+
+declare const oneDropdownButtonVariants: readonly ["default", "outline", "neutral"];
 
 export declare function OneEmptyState({ title, description, variant, emoji, actions, }: Types.OneEmptyStateProps): JSX_2.Element;
 
@@ -2799,8 +3119,8 @@ export declare type OnePersonListItemProps = {
         avatarBadge?: AvatarBadge;
     };
     description?: string;
-    bottomTags: Omit<Props_5, "noBorder">[];
-    rightTag?: Props_4;
+    bottomTags: Omit<Props_4, "noBorder">[];
+    rightTag?: Props_3;
     actions?: {
         primary?: {
             icon?: IconType;
@@ -2976,7 +3296,9 @@ export declare type PaginationInfo = Omit<PageBasedPaginatedResponse<unknown>, "
  */
 export declare type PaginationType = "pages" | "infinite-scroll" | "no-pagination";
 
-declare type PersonAvatarProps = ComponentProps<typeof F0AvatarPerson>;
+declare type PersonAvatarVariant = Extract<AvatarVariant, {
+    type: "person";
+}>;
 
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
@@ -3089,7 +3411,7 @@ declare type ProductUpdatesProp = {
             title: string;
             description: string;
             onClick: () => void;
-            icon: IconType;
+            module: ModuleId;
             dismissable: boolean;
             onClose?: () => void;
             trackVisibility?: (open: boolean) => void;
@@ -3135,26 +3457,9 @@ declare type PropertyDefinition_2<T> = {
     render: (item: T) => RendererDefinition | string | number | undefined;
 };
 
-declare type Props = {
-    name: string;
-    src?: string;
-    size?: BaseAvatarProps_2["size"];
-    badge?: AvatarBadge;
-} & Pick<BaseAvatarProps_2, "aria-label" | "aria-labelledby">;
+declare type Props = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
 
-declare type Props_10<Text extends string = string> = {
-    text: Text extends "" ? never : Text;
-    level: Level;
-};
-
-declare type Props_11<Id extends string | number = string | number> = {
-    items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
-    minSize?: number;
-    onClickItem?: (id: Id) => void;
-    showAllItems?: boolean;
-} & Pick<ComponentProps<typeof VerticalOverflowList>, "onVisibleItemsChange">;
-
-declare type Props_12<Id extends string | number = string | number> = {
+declare type Props_10<Id extends string | number = string | number> = {
     items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
     minSize?: number;
     gap?: number;
@@ -3162,9 +3467,7 @@ declare type Props_12<Id extends string | number = string | number> = {
     showAllItems?: boolean;
 };
 
-declare type Props_2 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
-
-declare type Props_3 = {
+declare type Props_2 = {
     /** Main heading text */
     title: string;
     /** Description text below the title */
@@ -3183,7 +3486,7 @@ declare type Props_3 = {
     separator?: "top" | "bottom";
 };
 
-declare type Props_4 = {
+declare type Props_3 = {
     text: string;
 } & ({
     color: NewColor;
@@ -3191,7 +3494,7 @@ declare type Props_4 = {
     customColor: string;
 });
 
-declare interface Props_5 {
+declare interface Props_4 {
     text?: string;
     additionalAccesibleText?: string;
     icon?: IconType;
@@ -3199,15 +3502,7 @@ declare interface Props_5 {
     className?: string;
 }
 
-declare type Props_6 = {
-    firstName: string;
-    lastName: string;
-    src?: string;
-    pulse?: Pulse;
-    onPulseClick: () => void;
-} & Pick<BaseAvatarProps_4, "aria-label" | "aria-labelledby">;
-
-declare interface Props_7 {
+declare interface Props_5 {
     title: string;
     content: string;
     buttonLabel?: string;
@@ -3216,7 +3511,7 @@ declare interface Props_7 {
     type: Type;
 }
 
-declare type Props_8 = {
+declare type Props_6 = {
     label: string;
     icon: IconType;
     iconClassName?: string;
@@ -3224,7 +3519,7 @@ declare type Props_8 = {
     onClick?: () => void;
 };
 
-declare type Props_9<Id extends string | number = string | number> = {
+declare type Props_7<Id extends string | number = string | number> = {
     id: Id;
     module?: ModuleId;
     title: string;
@@ -3232,7 +3527,21 @@ declare type Props_9<Id extends string | number = string | number> = {
     onClick?: (id: Id) => void;
 };
 
-declare type Pulse = "superNegative" | "negative" | "neutral" | "positive" | "superPositive";
+declare type Props_8<Text extends string = string> = {
+    text: Text extends "" ? never : Text;
+    level: Level;
+};
+
+declare type Props_9<Id extends string | number = string | number> = {
+    items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
+    minSize?: number;
+    onClickItem?: (id: Id) => void;
+    showAllItems?: boolean;
+} & Pick<ComponentProps<typeof VerticalOverflowList>, "onVisibleItemsChange">;
+
+declare type Pulse = (typeof pulses)[number];
+
+declare const pulses: readonly ["superNegative", "negative", "neutral", "positive", "superPositive"];
 
 /**
  * @experimental This is an experimental component use it at your own risk
@@ -3288,7 +3597,7 @@ export declare type RecordType = Record<string, unknown>;
 
 declare type RendererDefinition = ValueDisplayRendererDefinition;
 
-export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_2) => JSX_2.Element;
+export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props) => JSX_2.Element;
 
 export declare type resultType = {
     value: string | null;
@@ -3391,7 +3700,7 @@ export declare type secondaryActionType = (actionType | toggleActionType) & {
     type?: "button" | "switch";
 };
 
-export declare const SectionHeader: ({ title, description, action, link, separator, }: Props_3) => JSX_2.Element;
+export declare const SectionHeader: ({ title, description, action, link, separator, }: Props_2) => JSX_2.Element;
 
 declare type SectionProps = {
     title: string;
@@ -3473,8 +3782,6 @@ export declare type SelectProps<T extends string, R extends RecordType = RecordT
     options: SelectItemProps<T, R>[];
 }) & Pick<InputFieldProps<T>, "loading" | "hideLabel" | "clearable" | "labelIcon" | "size" | "label" | "icon" | "placeholder" | "disabled" | "name" | "error" | "status" | "hint">;
 
-declare type ShadAvatarProps = ComponentProps<typeof Avatar>;
-
 export declare function Shortcut({ keys, variant }: ShortcutProps): JSX_2.Element | null;
 
 declare interface ShortcutProps extends VariantProps<typeof shortcutVariants> {
@@ -3527,9 +3834,7 @@ declare interface SidebarProps {
 
 declare type SidebarState = "locked" | "unlocked" | "hidden";
 
-declare const sizes: readonly ["xsmall", "small", "medium", "large", "xlarge", "xxlarge"];
-
-declare const sizes_3: readonly ["sm", "md", "lg"];
+declare const sizes: readonly ["sm", "md", "lg"];
 
 declare const skeletonVariants: (props?: ({
     height?: "lg" | "md" | "sm" | undefined;
@@ -3672,8 +3977,8 @@ declare type Success = {
 declare interface SuccessMessageProps {
     title: string;
     description: string;
-    buttonLabel: string;
-    buttonOnClick: () => void;
+    buttonLabel?: string;
+    buttonOnClick?: () => void;
 }
 
 export declare type SummariesDefinition = Record<string, {
@@ -3748,7 +4053,7 @@ declare type TableColumnDefinition<R extends RecordType, Sortings extends Sortin
     summary?: SummaryKey<Summaries>;
 };
 
-declare function TableHead({ children, width, sortState, onSortClick, info, infoIcon, sticky, hidden, align, }: TableHeadProps): JSX_2.Element;
+declare function TableHead({ children, width, sortState, onSortClick, info, infoIcon, sticky, hidden, align, className, }: TableHeadProps): JSX_2.Element;
 
 declare interface TableHeadProps {
     children: React.ReactNode;
@@ -3799,6 +4104,10 @@ declare interface TableHeadProps {
      * @default "left"
      */
     align?: "left" | "right";
+    /**
+     * The class name of the header cell
+     */
+    className?: string;
 }
 
 declare type TableVisualizationOptions<R extends RecordType, _Filters extends FiltersDefinition, Sortings extends SortingsDefinition, Summaries extends SummariesDefinition> = {
@@ -3853,7 +4162,9 @@ export declare interface TasksListProps {
     hideIcons?: boolean;
 }
 
-declare type TeamAvatarProps = ComponentProps<typeof F0AvatarTeam>;
+declare type TeamAvatarVariant = Extract<AvatarVariant, {
+    type: "team";
+}>;
 
 declare const TeamItem: ForwardRefExoticComponent<TeamItemProps & RefAttributes<HTMLLIElement>>;
 
@@ -4034,6 +4345,12 @@ declare interface TranscriptLabels {
     messagesCountSingular: string;
 }
 
+declare type TranslationShape<T> = {
+    [K in keyof T]: T[K] extends string ? string : T[K] extends Record<string, string | Record<string, unknown>> ? TranslationShape<T[K]> : never;
+};
+
+declare type TranslationsType = TranslationShape<typeof defaultTranslations>;
+
 declare interface TwoColumnsItemType {
     title: string;
     info: string | ReactNode;
@@ -4047,8 +4364,6 @@ declare interface TwoColumnsListType {
 }
 
 declare type Type = "bar-chart" | "line-chart";
-
-declare const type: readonly ["base", "rounded"];
 
 declare namespace Types {
     export {
@@ -4101,6 +4416,7 @@ declare const valueDisplayRenderers: {
     readonly status: (args: StatusCellValue) => JSX_2.Element;
     readonly alertTag: (args: AlertTagCellValue) => JSX_2.Element;
     readonly person: (args: PersonCellValue) => JSX_2.Element;
+    readonly percentage: (args: PercentageCellValue) => JSX_2.Element | null;
     readonly company: (args: CompanyCellValue) => JSX_2.Element;
     readonly team: (args: TeamCellValue) => JSX_2.Element;
     readonly tag: (args: TagCellValue) => JSX_2.Element;
@@ -4194,7 +4510,7 @@ export declare type WidgetAvatarsListItemProps = {
     id: string | number;
     title: string;
     subtitle: string;
-    avatars: AvatarVariant[];
+    avatars: Omit<PersonAvatarVariant, "type">[] & Record<string, unknown>[];
     remainingCount?: number;
     withPointerCursor?: boolean;
     onClick?: (id: string | number) => void;
@@ -4202,7 +4518,6 @@ export declare type WidgetAvatarsListItemProps = {
     emoji: string;
 } | {
     alert: ComponentProps<typeof F0AvatarAlert>["type"];
-    alertIcon?: IconType;
 });
 
 export declare function WidgetEmptyState({ title, description, emoji, actions, }: WidgetEmptyStateProps): JSX_2.Element;
@@ -4214,15 +4529,15 @@ export declare type WidgetEmptyStateProps = {
     actions?: Action_2[];
 };
 
-export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_8): JSX_2.Element;
+export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_6): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, onVisibleItemsChange, }: Props_11): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, onVisibleItemsChange, }: Props_9): JSX_2.Element;
 
-export declare function WidgetInboxListItem({ id, title, subtitle, onClick, module, }: Props_9): JSX_2.Element;
+export declare function WidgetInboxListItem({ id, title, subtitle, onClick, module, }: Props_7): JSX_2.Element;
 
-export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_9<Id>;
+export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_7<Id>;
 
-export declare type WidgetInboxListProps = Props_11;
+export declare type WidgetInboxListProps = Props_9;
 
 export declare interface WidgetProps {
     header?: {
@@ -4260,7 +4575,7 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_12): JSX_2.Element;
+export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_10): JSX_2.Element;
 
 export declare function WidgetSimpleListItem({ id, title, alert, rawTag, count, icon, rightIcon, iconClassName, rightIconClassName, onClick, }: WidgetSimpleListItemProps): JSX_2.Element;
 
@@ -4277,7 +4592,7 @@ export declare type WidgetSimpleListItemProps<Id extends string | number = strin
     onClick?: (id: Id) => void;
 };
 
-export declare type WidgetSimpleListProps = Props_12;
+export declare type WidgetSimpleListProps = Props_10;
 
 export declare type WidgetSkeletonProps = {
     header?: {
@@ -4325,8 +4640,8 @@ declare global {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        aiBlock: {
-            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
+        liveCompanion: {
+            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
     }
 }
@@ -4334,8 +4649,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        liveCompanion: {
-            insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
+        aiBlock: {
+            insertAIBlock: (data: AIBlockData, config: AIBlockConfigWithLabels) => ReturnType;
         };
     }
 }
