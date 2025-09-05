@@ -15,7 +15,11 @@ type CalculateVisibleItemCountParams = {
  * @param gap - The gap between items
  * @returns The overflow calculation state
  */
-export function useOverflowCalculation<T>(items: T[], gap: number) {
+export function useOverflowCalculation<T>(
+  items: T[],
+  gap: number,
+  max?: number
+) {
   const containerRef = useRef<HTMLDivElement>(null)
   const overflowButtonRef = useRef<HTMLButtonElement>(null)
   const customOverflowIndicatorRef = useRef<HTMLDivElement>(null)
@@ -72,9 +76,9 @@ export function useOverflowCalculation<T>(items: T[], gap: number) {
       }
 
       // Return the actual count without enforcing a minimum of 1
-      return visibleCount
+      return Math.min(visibleCount, max ?? items.length)
     },
-    []
+    [max, items.length]
   )
 
   // Calculate which items should be visible and which should overflow

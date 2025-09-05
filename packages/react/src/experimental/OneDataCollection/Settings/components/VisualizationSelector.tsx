@@ -1,5 +1,6 @@
-import { Icon } from "@/components/Utilities/Icon"
+import { F0Icon } from "@/components/F0Icon"
 import { RecordType } from "@/hooks/datasource"
+
 import { focusRing } from "@/lib/utils"
 
 import { GroupingDefinition } from "@/hooks/datasource"
@@ -104,7 +105,7 @@ export const VisualizationSelector = <
             key={visualization.type}
             onClick={() => handleVisualizationChange(index)}
           >
-            <Icon icon={icon} />
+            <F0Icon icon={icon} />
             {label}
           </button>
         )

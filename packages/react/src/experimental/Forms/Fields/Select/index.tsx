@@ -1,6 +1,6 @@
 import { F0Avatar } from "@/components/avatars/F0Avatar"
+import { F0Icon } from "@/components/F0Icon"
 import { F0TagRaw } from "@/components/tags/F0TagRaw"
-import { Icon } from "@/components/Utilities/Icon"
 
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import {
@@ -112,10 +112,10 @@ const SelectItem = <T extends string, R>({
   return (
     <SelectItemPrimitive value={item.value}>
       <div className="flex w-full items-start gap-1.5">
-        {item.avatar && <F0Avatar avatar={item.avatar} size="xsmall" />}
+        {item.avatar && <F0Avatar avatar={item.avatar} size="xs" />}
         {item.icon && (
           <div className="text-f1-icon">
-            <Icon icon={item.icon} />
+            <F0Icon icon={item.icon} />
           </div>
         )}
         <div className="flex flex-1 flex-col">
@@ -144,7 +144,7 @@ const SelectValue = forwardRef<
     <div className="flex items-center gap-1.5" ref={ref}>
       {item.icon && (
         <div className="h-5 shrink-0 text-f1-icon">
-          <Icon icon={item.icon} />
+          <F0Icon icon={item.icon} />
         </div>
       )}
       {item.label}
@@ -172,7 +172,7 @@ const SelectComponent = forwardRef(function Select<
     onSearchChange,
     searchBoxPlaceholder,
     searchEmptyMessage,
-    size,
+    size = "sm",
     selectContentClassName,
     actions,
     source,
@@ -464,7 +464,7 @@ const SelectComponent = forwardRef(function Select<
                       openLocal && "rotate-180"
                     )}
                   >
-                    <Icon
+                    <F0Icon
                       onClick={() => {
                         if (disabled) return
                         handleChangeOpenLocal(!openLocal)

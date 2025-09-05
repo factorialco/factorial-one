@@ -3,6 +3,7 @@ import { render, type RenderOptions } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import React, { type ReactElement } from "react"
 import { I18nProvider, defaultTranslations } from "../lib/providers/i18n"
+export * from "@testing-library/react"
 
 import { MotionGlobalConfig } from "motion"
 MotionGlobalConfig.skipAnimations = true
@@ -20,5 +21,4 @@ const zeroRender = (
   options?: Omit<RenderOptions, "wrapper">
 ) => render(ui, { wrapper: AllTheProviders, ...options })
 
-export * from "@testing-library/react"
 export { userEvent, zeroRender }

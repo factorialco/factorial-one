@@ -6,6 +6,7 @@ import {
   Delete,
   Envelope,
   ExternalLink,
+  Lightbulb,
   Office,
   Star,
 } from "@/icons/app"
@@ -195,6 +196,16 @@ export const WithEmoji: Story = {
     avatar: {
       type: "emoji",
       emoji: "🐱",
+    },
+  },
+}
+
+export const WithIcon: Story = {
+  args: {
+    ...Default.args,
+    avatar: {
+      type: "icon",
+      icon: Lightbulb,
     },
   },
 }

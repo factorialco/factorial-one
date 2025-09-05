@@ -13,16 +13,19 @@ import { useCallback, useRef, useState } from "react"
 import { markdownRenderers as f0MarkdownRenderers } from "../markdownRenderers"
 
 export const AssistantMessage = ({
-  message,
   isGenerating,
   isLoading,
   markdownTagRenderers,
+  message,
   onCopy,
   onThumbsDown,
   onThumbsUp,
 }: AssistantMessageProps) => {
+  const content = message?.content || ""
+  const subComponent = message?.generativeUI?.()
+  const isEmptyMessage = !content && !subComponent
+
   const translations = useI18n()
-  const containerRef = useRef<HTMLDivElement>(null)
   const [reactionValue, setReactionValue] = useState<"like" | "dislike" | null>(
     null
   )
@@ -32,20 +35,24 @@ export const AssistantMessage = ({
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current)
     }
-    setIsHovered(true)
-  }, [])
+
+    if (!isLoading && !isGenerating && !subComponent) {
+      setIsHovered(true)
+    }
+  }, [isGenerating, isLoading, subComponent])
   const handleMouseLeave = useCallback(() => {
     timeoutRef.current = setTimeout(() => {
       setIsHovered(false)
     }, 150)
   }, [])
-  const content = message?.content || ""
-  const subComponent = message?.generativeUI?.()
+
+  if (!isLoading && !isGenerating && isEmptyMessage) {
+    return null
+  }
 
   return (
     <div
-      className="relative isolate flex w-fit max-w-[330px] flex-col items-start justify-center last:mb-8"
-      ref={containerRef}
+      className="relative isolate flex w-full flex-col items-start justify-center last:mb-8"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -56,7 +63,7 @@ export const AssistantMessage = ({
       )}
       {message && (
         <>
-          <div className="[&>div]:flex [&>div]:flex-col [&>div]:gap-1">
+          <div className="w-fit max-w-[330px] [&>div]:flex [&>div]:flex-col [&>div]:gap-1">
             <Markdown
               content={content}
               components={{ ...f0MarkdownRenderers, ...markdownTagRenderers }}

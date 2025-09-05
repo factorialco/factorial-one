@@ -132,6 +132,7 @@ export const defaultTranslations = {
       week: {
         currentDate: "This week",
         label: "Week",
+        long: "Week of %{day} %{month} %{year}",
       },
       month: {
         currentDate: "This month",
@@ -179,6 +180,7 @@ export const defaultTranslations = {
     newChat: "New Chat",
     openChat: "Open Chat",
     scrollToBottom: "Scroll to bottom",
+    welcome: "I'm One. Ask or make anything.",
   },
 } as const
 

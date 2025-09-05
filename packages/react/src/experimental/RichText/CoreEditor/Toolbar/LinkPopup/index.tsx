@@ -1,4 +1,4 @@
-import { Icon } from "@/components/Utilities/Icon"
+import { F0Icon } from "@/components/F0Icon"
 import { Badge } from "@/experimental/Information/Badge"
 import {
   Alert,
@@ -121,7 +121,7 @@ export const LinkPopup = ({ editor, disabled, labels }: LinkPopupProps) => {
                     }}
                     className="[&>button]:aspect-square [&>button]:px-0"
                   >
-                    <Icon icon={Cross} />
+                    <F0Icon icon={Cross} />
                   </Button>
                   <div
                     className={cn(
@@ -171,7 +171,7 @@ export const LinkPopup = ({ editor, disabled, labels }: LinkPopupProps) => {
                     />
 
                     {editor.isActive("link") && (
-                      <Icon
+                      <F0Icon
                         size="md"
                         icon={CrossedCircle}
                         className="cursor-pointer text-f1-foreground-tertiary hover:text-f1-foreground-secondary"

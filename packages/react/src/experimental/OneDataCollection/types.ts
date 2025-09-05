@@ -1,8 +1,8 @@
+import { IconType } from "@/components/F0Icon"
 import type {
   FiltersDefinition,
   FiltersState,
 } from "@/components/OneFilterPicker/types"
-import { IconType } from "@/components/Utilities/Icon"
 import {
   DataError,
   GroupingDefinition,

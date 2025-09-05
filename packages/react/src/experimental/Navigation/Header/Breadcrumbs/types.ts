@@ -1,9 +1,9 @@
+import { ModuleId } from "@/components/avatars/F0AvatarModule"
 import { FiltersDefinition } from "@/components/OneFilterPicker"
 import {
   SelectItemObject,
   SelectItemProps,
 } from "@/experimental/Forms/Fields/Select"
-import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { DropdownItemObject } from "@/experimental/Navigation/Dropdown"
 import { NavigationItem } from "@/experimental/Navigation/utils"
 import {

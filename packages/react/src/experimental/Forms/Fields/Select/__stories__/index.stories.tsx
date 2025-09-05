@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite"
 import { fn } from "storybook/test"
 import { Select, SelectItemObject, SelectProps } from "../index"
 
-import { IconType } from "@/components/Utilities/Icon"
+import { IconType } from "@/components/F0Icon"
 import { createDataSourceDefinition } from "@/hooks/datasource"
 import { Appearance, Circle, Desktop, Plus } from "@/icons/app"
 import {

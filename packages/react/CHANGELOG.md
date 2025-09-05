@@ -1,5 +1,132 @@
 # Changelog
 
+## [1.177.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.176.0...factorial-one-react-v1.177.0) (2025-09-04)
+
+
+### Features
+
+* stabilize avatar components ([#2524](https://github.com/factorialco/factorial-one/issues/2524)) ([3b9b4f3](https://github.com/factorialco/factorial-one/commit/3b9b4f3c1284c9cac4171cee60ada903b066c031))
+
+## [1.176.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.175.1...factorial-one-react-v1.176.0) (2025-09-04)
+
+
+### Features
+
+* **One:** make the whole textarea clickable ([#2519](https://github.com/factorialco/factorial-one/issues/2519)) ([3b762a0](https://github.com/factorialco/factorial-one/commit/3b762a001ef20275782dd5033c751a226844b491))
+
+## [1.175.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.175.0...factorial-one-react-v1.175.1) (2025-09-04)
+
+
+### Bug Fixes
+
+* export dropdown button as experimental component ([#2521](https://github.com/factorialco/factorial-one/issues/2521)) ([d905ae5](https://github.com/factorialco/factorial-one/commit/d905ae5357d5340cb220afdb6c1ed2f3a6d7a626))
+
+## [1.175.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.174.0...factorial-one-react-v1.175.0) (2025-09-04)
+
+
+### Features
+
+* **ValueDisplay:** add percentage cell type ([#2516](https://github.com/factorialco/factorial-one/issues/2516)) ([a03c006](https://github.com/factorialco/factorial-one/commit/a03c006de5bc365d90d8471ee8aa23aefe220921))
+
+## [1.174.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.173.0...factorial-one-react-v1.174.0) (2025-09-04)
+
+
+### Features
+
+* **One:** add glowing textarea effect ([#2511](https://github.com/factorialco/factorial-one/issues/2511)) ([82bd736](https://github.com/factorialco/factorial-one/commit/82bd736a75d0882c33bbb60ed010e0d8469c8751))
+
+## [1.173.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.172.0...factorial-one-react-v1.173.0) (2025-09-04)
+
+
+### Features
+
+* add hover actions to table ([#2454](https://github.com/factorialco/factorial-one/issues/2454)) ([a0e13b0](https://github.com/factorialco/factorial-one/commit/a0e13b09d5aae7a9a004ad6fac4675da68ce9510))
+
+## [1.172.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.3...factorial-one-react-v1.172.0) (2025-09-03)
+
+
+### Features
+
+* hide filter chips if the filter matches a preset ([#2485](https://github.com/factorialco/factorial-one/issues/2485)) ([586ab4e](https://github.com/factorialco/factorial-one/commit/586ab4e095742fe0a88267e131dcbd4462c38bc6))
+* long format in week granularity ([#2479](https://github.com/factorialco/factorial-one/issues/2479)) ([6f01a18](https://github.com/factorialco/factorial-one/commit/6f01a18557b1ca0f7928b4485cd98a76fdc57964))
+
+## [1.171.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.2...factorial-one-react-v1.171.3) (2025-09-03)
+
+
+### Bug Fixes
+
+* show presets itemCount when value is 0 ([#2484](https://github.com/factorialco/factorial-one/issues/2484)) ([7b2779c](https://github.com/factorialco/factorial-one/commit/7b2779cf40d7f165e8493eb38247da68a9eeea47))
+
+## [1.171.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.1...factorial-one-react-v1.171.2) (2025-09-03)
+
+
+### Bug Fixes
+
+* **One:** dialog origin position ([#2508](https://github.com/factorialco/factorial-one/issues/2508)) ([5c74417](https://github.com/factorialco/factorial-one/commit/5c74417dd8e301493380ffab9e57bd919694c384))
+
+## [1.171.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.171.0...factorial-one-react-v1.171.1) (2025-09-03)
+
+
+### Bug Fixes
+
+* select arrow align ([#2487](https://github.com/factorialco/factorial-one/issues/2487)) ([101c96f](https://github.com/factorialco/factorial-one/commit/101c96f7e5ef34c856e25ba322863ba926431958))
+
+## [1.171.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.170.0...factorial-one-react-v1.171.0) (2025-09-02)
+
+
+### Features
+
+* **One:** welcome message animation ([#2503](https://github.com/factorialco/factorial-one/issues/2503)) ([582b222](https://github.com/factorialco/factorial-one/commit/582b222de47a5c124451a85438baf3a17048bf06))
+
+## [1.170.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.1...factorial-one-react-v1.170.0) (2025-09-02)
+
+
+### Features
+
+* **One:** trigger button ([#2498](https://github.com/factorialco/factorial-one/issues/2498)) ([9574eaf](https://github.com/factorialco/factorial-one/commit/9574eaf68e54857266fd944c561fb5e100e871e6))
+
+## [1.169.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.169.0...factorial-one-react-v1.169.1) (2025-09-02)
+
+
+### Bug Fixes
+
+* fill discover avatar module ([66557b7](https://github.com/factorialco/factorial-one/commit/66557b739b9e64203902a0397e98615377a9f35a))
+
+## [1.169.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.6...factorial-one-react-v1.169.0) (2025-09-02)
+
+
+### Features
+
+* add support to show file avatar in data collection ([#2497](https://github.com/factorialco/factorial-one/issues/2497)) ([ff54cc0](https://github.com/factorialco/factorial-one/commit/ff54cc006fe894c18a3bdf9e47811bfdc32887c0))
+
+## [1.168.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.5...factorial-one-react-v1.168.6) (2025-09-01)
+
+
+### Bug Fixes
+
+* ensure that the footer is at the bottom in fullscreen modals ([#2493](https://github.com/factorialco/factorial-one/issues/2493)) ([0d74925](https://github.com/factorialco/factorial-one/commit/0d7492565e42c39443b8106b23fa6723a8370d7a))
+
+## [1.168.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.4...factorial-one-react-v1.168.5) (2025-09-01)
+
+
+### Bug Fixes
+
+* set correct tag raw import ([#2491](https://github.com/factorialco/factorial-one/issues/2491)) ([5af9fe1](https://github.com/factorialco/factorial-one/commit/5af9fe16c7300a624f6e8cd637867cde0eedafb5))
+
+## [1.168.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.3...factorial-one-react-v1.168.4) (2025-09-01)
+
+
+### Bug Fixes
+
+* scrollarea not working ([6c79cfb](https://github.com/factorialco/factorial-one/commit/6c79cfb3e4dd3d78444abcdde44a1e6738927685))
+
+## [1.168.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.2...factorial-one-react-v1.168.3) (2025-08-29)
+
+
+### Bug Fixes
+
+* **ai-chat:** several small improvements ([#2472](https://github.com/factorialco/factorial-one/issues/2472)) ([e768b96](https://github.com/factorialco/factorial-one/commit/e768b96762fcbefd1543cdea28716d0d97c409f0))
+
 ## [1.168.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.168.1...factorial-one-react-v1.168.2) (2025-08-29)
 
 

@@ -3,7 +3,7 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { motion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
-import { Icon } from "../../components/Utilities/Icon"
+import { F0Icon } from "../../components/F0Icon"
 import { Spinner } from "../../icons/app"
 
 import { OneEmptyState } from "@/experimental/OneEmptyState"
@@ -36,7 +36,7 @@ export * from "./navigationFilters/types"
 import type { Visualization } from "./visualizations/collection"
 import { VisualizationRenderer } from "./visualizations/collection"
 
-const MotionIcon = motion.create(Icon)
+const MotionIcon = motion.create(F0Icon)
 
 import {
   GroupingDefinition,

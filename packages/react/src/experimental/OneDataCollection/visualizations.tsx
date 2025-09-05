@@ -1,18 +1,18 @@
+import { Button } from "@/components/Actions/Button"
+import { F0Icon, IconType } from "@/components/F0Icon"
+import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import {
   GroupingDefinition,
   OnSelectItemsCallback,
   RecordType,
 } from "@/hooks/datasource"
+import { SortingsDefinition } from "@/hooks/datasource/types/sortings.typings"
+import { Kanban, Sliders, Table } from "@/icons/app"
+import { useI18n } from "@/lib/providers/i18n"
+import { cn, focusRing } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
-import { Button } from "../../components/Actions/Button"
-import type { FiltersDefinition } from "../../components/OneFilterPicker/types"
-import { Icon, IconType } from "../../components/Utilities/Icon"
-import { SortingsDefinition } from "../../hooks/datasource/types/sortings.typings"
-import { Kanban, Sliders, Table } from "../../icons/app"
-import { useI18n } from "../../lib/providers/i18n"
-import { cn, focusRing } from "../../lib/utils"
-import { DataCollectionSource } from "./exports"
+import { DataCollectionSource } from "./hooks/useDataCollectionSource/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SummariesDefinition } from "./summary"
@@ -205,7 +205,7 @@ export const VisualizationSelector = <
                   key={visualization.type}
                   onClick={() => handleVisualizationChange(index)}
                 >
-                  <Icon icon={IconVisualization} />
+                  <F0Icon icon={IconVisualization} />
                   {label}
                 </button>
               )
