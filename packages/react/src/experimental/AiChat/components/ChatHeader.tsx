@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { DialogDescription, DialogHeader, DialogTitle } from "@/ui/dialog"
 import { useCopilotChatInternal } from "@copilotkit/react-core"
 import { useChatContext, type HeaderProps } from "@copilotkit/react-ui"
+import { motion } from "motion/react"
 import { ElementType } from "react"
 import { useAiChat } from "../providers/AiChatStateProvider"
 import { useChatWindowContext } from "./ChatWindow"
@@ -68,7 +69,7 @@ const ChatHeader = ({
       <DescriptionComponent className="sr-only">
         {translations.ai.description}
       </DescriptionComponent>
-      <div className="flex items-center gap-x-2" {...rest}>
+      <motion.div layout className="flex items-center gap-x-2" {...rest}>
         {messages.length > 0 && (
           <ButtonInternal
             variant="outline"
@@ -97,7 +98,7 @@ const ChatHeader = ({
           size="sm"
           onClick={() => setOpen(false)}
         />
-      </div>
+      </motion.div>
     </Container>
   )
 }
