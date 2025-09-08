@@ -437,8 +437,10 @@ export function useData<
       })
       setIsInitialLoading(false)
       setIsLoading(false)
+      setIsLoadingMore(false)
       // Clear the cleanup reference when an error occurs
       cleanup.current = undefined
+      isLoadingMoreRef.current = false
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we don't want to re-run this effect when the onError changes
     [setError, setIsInitialLoading, setIsLoading]
@@ -502,7 +504,6 @@ export function useData<
         function fetcher(): PromiseOrObservable<ResultType> {
           setTotalItems(undefined)
 
-          // TODO: Default perPage value from somewhere
           const defaultPerPage = 20
 
           // Safely access perPage, defaulting to 20 if not available
@@ -545,7 +546,7 @@ export function useData<
 
         const subscription = observable.subscribe({
           next: (state) => {
-            if (state.loading) {
+            if (state.loading && !state.data) {
               setIsLoading(true)
             } else if (state.error) {
               handleFetchError(state.error)
@@ -602,7 +603,7 @@ export function useData<
 
   // In loadMore function
   const loadMore = useCallback(() => {
-    if (!paginationInfo || isLoading) return
+    if (!paginationInfo || isLoading || isLoadingMore) return
 
     if (!isInfiniteScrollPagination(paginationInfo)) {
       console.warn(
