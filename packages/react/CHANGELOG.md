@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.179.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.178.1...factorial-one-react-v1.179.0) (2025-09-08)
+
+
+### Features
+
+* **One:** Logo animation ([#2523](https://github.com/factorialco/factorial-one/issues/2523)) ([44c4fbc](https://github.com/factorialco/factorial-one/commit/44c4fbcee9f1236c2434a93c27d4afe0a086cdd7))
+
 ## [1.178.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.178.0...factorial-one-react-v1.178.1) (2025-09-05)
 
 
