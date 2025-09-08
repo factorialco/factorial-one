@@ -17,14 +17,16 @@ const buildMetadataItems = ({ items }: { items: MetadataItemValue[] }) =>
       ) : item.type === "dot-tag" ? (
         <F0TagDot text={item.label} color={item.color} />
       ) : (
-        <div className="flex flex-row gap-2">
-          <div className="flex w-fit items-center truncate text-f1-foreground-secondary">
-            <span>{item.content}</span>
+        item.type === "text" && (
+          <div className="flex flex-row gap-2">
+            <div className="flex w-fit items-center truncate text-f1-foreground-secondary">
+              <span>{item.label}</span>
+            </div>
+            <div className="flex items-center truncate font-medium text-f1-foreground">
+              <span>{item.content}</span>
+            </div>
           </div>
-          <div className="flex items-center truncate font-medium text-f1-foreground">
-            <span>{item.content}</span>
-          </div>
-        </div>
+        )
       )}
       {index < items.length - 1 && <div className="h-4 w-[1px] bg-f1-border" />}
     </Fragment>

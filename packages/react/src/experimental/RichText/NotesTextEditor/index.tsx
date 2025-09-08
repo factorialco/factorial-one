@@ -2,6 +2,7 @@ import { F0Icon } from "@/components/F0Icon"
 import { Toolbar, ToolbarLabels } from "@/experimental/RichText/CoreEditor"
 import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
 import { Handle, Plus } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { ScrollArea } from "@/ui/scrollarea"
 import DragHandle from "@tiptap/extension-drag-handle-react"
@@ -44,6 +45,7 @@ interface NotesTextEditorProps {
   }
   actions?: actionType[]
   metadata?: MetadataItemValue[]
+  withPadding?: boolean
 }
 
 const NotesTextEditorComponent = forwardRef<
@@ -60,6 +62,7 @@ const NotesTextEditorComponent = forwardRef<
     onTitleChange,
     actions,
     metadata,
+    withPadding = false,
   },
   ref
 ) {
@@ -229,7 +232,12 @@ const NotesTextEditorComponent = forwardRef<
 
       <ScrollArea className="h-full gap-6">
         {(onTitleChange || title) && (
-          <div className="flex flex-col px-28 pb-5 pt-5">
+          <div
+            className={cn(
+              "flex flex-col pb-5 pt-5",
+              withPadding ? "px-28" : "px-14"
+            )}
+          >
             <input
               disabled={!onTitleChange}
               value={title}
@@ -273,7 +281,10 @@ const NotesTextEditorComponent = forwardRef<
 
           <EditorContent
             editor={editor}
-            className="pb-28 [&>div]:w-full [&>div]:px-28"
+            className={cn(
+              "pb-28 [&>div]:w-full",
+              withPadding ? "[&>div]:px-28" : "[&>div]:px-14"
+            )}
           />
         </div>
       </ScrollArea>

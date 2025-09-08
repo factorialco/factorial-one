@@ -21,7 +21,7 @@ type actionType = {
 }
 
 type MetadataItemValue =
-  | { type: "text"; content: string }
+  | { type: "text"; content: string; label: string }
   | { type: "status"; label: string; variant: StatusVariant }
   | { type: "dot-tag"; label: string; color: NewColor }
 
