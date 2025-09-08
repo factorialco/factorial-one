@@ -621,7 +621,7 @@ declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
  */
 export declare function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps): JSX_2.Element;
 
-export declare function BreadcrumbSelect<T extends string, R extends RecordType = RecordType>({ ...props }: BreadcrumbSelectProps<T, R>): JSX_2.Element;
+export declare function BreadcrumbSelect<T extends string, R = unknown>({ ...props }: BreadcrumbSelectProps<T, R>): JSX_2.Element;
 
 declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     type: "select";
@@ -640,7 +640,7 @@ declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     options: SelectItemProps<string, RecordType>[];
 });
 
-export declare type BreadcrumbSelectProps<T extends string, R extends RecordType = RecordType> = SelectProps<T, R>;
+export declare type BreadcrumbSelectProps<T extends string, R = unknown> = SelectProps<T, R>;
 
 export declare interface BreadcrumbsProps {
     /** Array of breadcrumb items to display */
@@ -3597,6 +3597,8 @@ export declare type RecordType = Record<string, unknown>;
 
 declare type RendererDefinition = ValueDisplayRendererDefinition;
 
+export declare type ResolvedRecordType<R> = R extends RecordType ? R : RecordType;
+
 export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props) => JSX_2.Element;
 
 export declare type resultType = {
@@ -3709,7 +3711,7 @@ declare type SectionProps = {
     onItemVisible?: (id: string) => void;
 };
 
-export declare const Select: <T extends string = string, R extends RecordType = RecordType>(props: SelectProps<T, R> & {
+export declare const Select: <T extends string = string, R = unknown>(props: SelectProps<T, R> & {
     ref?: React.Ref<HTMLButtonElement>;
 }) => React.ReactElement;
 
@@ -3756,11 +3758,11 @@ export declare type SelectItemProps<T, R = unknown> = SelectItemObject<T, R> | {
  * @template R - The type of the record/item data (used with data source)
  *
  */
-export declare type SelectProps<T extends string, R extends RecordType = RecordType> = {
-    onChange: (value: T, originalItem?: R, option?: SelectItemObject<T, R>) => void;
-    onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void;
+export declare type SelectProps<T extends string, R = unknown> = {
+    onChange: (value: T, originalItem?: ResolvedRecordType<R>, option?: SelectItemObject<T, ResolvedRecordType<R>>) => void;
+    onChangeSelectedOption?: (option: SelectItemObject<T, ResolvedRecordType<R>>) => void;
     value?: T;
-    defaultItem?: SelectItemObject<T, R>;
+    defaultItem?: SelectItemObject<T, ResolvedRecordType<R>>;
     children?: React.ReactNode;
     open?: boolean;
     showSearchBox?: boolean;
@@ -3773,13 +3775,13 @@ export declare type SelectProps<T extends string, R extends RecordType = RecordT
     selectContentClassName?: string;
     actions?: Action[];
 } & ({
-    source: DataSourceDefinition<R, FiltersDefinition, SortingsDefinition, GroupingDefinition<R>>;
-    mapOptions: (item: R) => SelectItemProps<T, R>;
+    source: DataSourceDefinition<ResolvedRecordType<R>, FiltersDefinition, SortingsDefinition, GroupingDefinition<ResolvedRecordType<R>>>;
+    mapOptions: (item: ResolvedRecordType<R>) => SelectItemProps<T, ResolvedRecordType<R>>;
     options?: never;
 } | {
     source?: never;
     mapOptions?: never;
-    options: SelectItemProps<T, R>[];
+    options: SelectItemProps<T, ResolvedRecordType<R>>[];
 }) & Pick<InputFieldProps<T>, "loading" | "hideLabel" | "clearable" | "labelIcon" | "size" | "label" | "icon" | "placeholder" | "disabled" | "name" | "error" | "status" | "hint">;
 
 export declare function Shortcut({ keys, variant }: ShortcutProps): JSX_2.Element | null;
