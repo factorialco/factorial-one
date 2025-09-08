@@ -43,6 +43,9 @@ import { SelectTopActions } from "./SelectTopActions"
 import type { SelectItemObject, SelectItemProps } from "./types"
 export * from "./types"
 
+// Helper type to resolve the actual record type
+export type ResolvedRecordType<R> = R extends RecordType ? R : RecordType
+
 /**
  * Select component for choosing from a list of options.
  *
@@ -50,15 +53,17 @@ export * from "./types"
  * @template R - The type of the record/item data (used with data source)
  *
  */
-export type SelectProps<T extends string, R extends RecordType = RecordType> = {
+export type SelectProps<T extends string, R = unknown> = {
   onChange: (
     value: T,
-    originalItem?: R,
-    option?: SelectItemObject<T, R>
+    originalItem?: ResolvedRecordType<R>,
+    option?: SelectItemObject<T, ResolvedRecordType<R>>
   ) => void
-  onChangeSelectedOption?: (option: SelectItemObject<T, R>) => void
+  onChangeSelectedOption?: (
+    option: SelectItemObject<T, ResolvedRecordType<R>>
+  ) => void
   value?: T
-  defaultItem?: SelectItemObject<T, R>
+  defaultItem?: SelectItemObject<T, ResolvedRecordType<R>>
   children?: React.ReactNode
   open?: boolean
   showSearchBox?: boolean
@@ -73,18 +78,20 @@ export type SelectProps<T extends string, R extends RecordType = RecordType> = {
 } & (
   | {
       source: DataSourceDefinition<
-        R,
+        ResolvedRecordType<R>,
         FiltersDefinition,
         SortingsDefinition,
-        GroupingDefinition<R>
+        GroupingDefinition<ResolvedRecordType<R>>
       >
-      mapOptions: (item: R) => SelectItemProps<T, R>
+      mapOptions: (
+        item: ResolvedRecordType<R>
+      ) => SelectItemProps<T, ResolvedRecordType<R>>
       options?: never
     }
   | {
       source?: never
       mapOptions?: never
-      options: SelectItemProps<T, R>[]
+      options: SelectItemProps<T, ResolvedRecordType<R>>[]
     }
 ) &
   Pick<
@@ -154,7 +161,7 @@ const SelectValue = forwardRef<
 
 const SelectComponent = forwardRef(function Select<
   T extends string,
-  R extends RecordType = RecordType,
+  R = unknown,
 >(
   {
     placeholder,
@@ -189,6 +196,7 @@ const SelectComponent = forwardRef(function Select<
   }: SelectProps<T, R>,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
+  type ActualRecordType = ResolvedRecordType<R>
   const searchInputRef = useRef<HTMLInputElement>(null)
 
   const [openLocal, setOpenLocal] = useState(open)
@@ -212,12 +220,15 @@ const SelectComponent = forwardRef(function Select<
     return {
       ...source,
       dataAdapter: source
-        ? (source.dataAdapter as PaginatedDataAdapter<R, FiltersDefinition>)
+        ? (source.dataAdapter as PaginatedDataAdapter<
+            ActualRecordType,
+            FiltersDefinition
+          >)
         : {
             fetchData: ({
               search,
             }: BaseFetchOptions<FiltersDefinition>): PromiseOrObservable<
-              BaseResponse<R>
+              BaseResponse<ActualRecordType>
             > => {
               return {
                 records: options.filter(
@@ -225,7 +236,7 @@ const SelectComponent = forwardRef(function Select<
                     option.type === "separator" ||
                     !search ||
                     option.label.toLowerCase().includes(search.toLowerCase())
-                ) as unknown as R[],
+                ) as unknown as ActualRecordType[],
               }
             },
           },
@@ -246,29 +257,29 @@ const SelectComponent = forwardRef(function Select<
   )
 
   /**
-   * Maps an item to a SelectItemProps<T, R>
+   * Maps an item to a SelectItemProps<T, ActualRecordType>
    */
   const optionMapper = useCallback(
-    (item: R): SelectItemProps<T, R> => {
+    (item: ActualRecordType): SelectItemProps<T, ActualRecordType> => {
       if (source) {
         if (!mapOptions) {
           throw new Error("mapOptions is required when using a source")
         }
         return mapOptions(item)
       }
-      // At this point, we are sure that options is an array of SelectItemProps<T, R>
-      return item as unknown as SelectItemProps<T, R>
+      // At this point, we are sure that options is an array of SelectItemProps<T, ActualRecordType>
+      return item as unknown as SelectItemProps<T, ActualRecordType>
     },
     [mapOptions, source]
   )
 
   const { data, isInitialLoading, loadMore, isLoadingMore } =
-    useData<R>(localSource)
+    useData<ActualRecordType>(localSource)
 
   const { currentSearch, setCurrentSearch } = localSource
 
   const [selectedOption, setSelectedOption] = useState<
-    SelectItemObject<T, R> | undefined
+    SelectItemObject<T, ActualRecordType> | undefined
   >(undefined)
 
   /**
@@ -277,7 +288,9 @@ const SelectComponent = forwardRef(function Select<
    * @returns The option if found, undefined otherwise
    */
   const findOption = useCallback(
-    (value: string | T | undefined): SelectItemObject<T, R> | undefined => {
+    (
+      value: string | T | undefined
+    ): SelectItemObject<T, ActualRecordType> | undefined => {
       if (value === undefined) {
         return undefined
       }
@@ -351,7 +364,9 @@ const SelectComponent = forwardRef(function Select<
   )
 
   const getItems = useCallback(
-    (records: WithGroupId<R>[] | R[]): VirtualItem[] => {
+    (
+      records: WithGroupId<ActualRecordType>[] | ActualRecordType[]
+    ): VirtualItem[] => {
       return records.map((option, index) => {
         const mappedOption = optionMapper(option)
         return mappedOption.type === "separator"
@@ -519,7 +534,7 @@ const SelectComponent = forwardRef(function Select<
 
 export const Select = SelectComponent as <
   T extends string = string,
-  R extends RecordType = RecordType,
+  R = unknown,
 >(
   props: SelectProps<T, R> & { ref?: React.Ref<HTMLButtonElement> }
 ) => React.ReactElement

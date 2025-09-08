@@ -177,8 +177,25 @@ export const BasicActionsExample: Story = {
 export const WithExpandedActionsExample: Story = {
   render: () => {
     const dataSource = useDataCollectionSource({
+      filters: {
+        status: {
+          type: "in",
+          label: "Status",
+          options: {
+            options: [
+              { value: "active", label: "Active" },
+              { value: "inactive", label: "Inactive" },
+            ],
+          },
+        },
+      },
       dataAdapter: {
-        fetchData: () => Promise.resolve({ records: mockUsers }),
+        fetchData: ({ filters }) =>
+          Promise.resolve({
+            records: mockUsers.filter((user) =>
+              filters.status?.includes(user.status)
+            ),
+          }),
       },
       primaryActions: () => ({
         label: "Create user",
@@ -192,7 +209,7 @@ export const WithExpandedActionsExample: Story = {
     })
 
     dataSource.setCurrentFilters({
-      status: "active",
+      status: ["active"],
     })
 
     return <BaseStory dataSource={dataSource} />

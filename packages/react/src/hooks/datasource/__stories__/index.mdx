@@ -11,8 +11,8 @@ pagination, grouping, and selection.
 
 {/* prettier-ignore */}
 > If your are looking for the `OneDataCollection` component, please refer to the  <LinkTo kind="Components/Data Collection" story="Documentation">OneDataCollection</LinkTo>
-> documentation. as this hooks, even if it's compatible with the >
-> `OneDataCollection` component, it does not provide all the features of the >
+> documentation. as this hooks, even if it's compatible with the 
+> `OneDataCollection` component, it does not provide all the features of the
 > `OneDataCollection` component.
 
 ## Overview
@@ -73,6 +73,17 @@ const dataSource = useDataSource({
   grouping: {
     /* grouping definitions */
   },
+  currentFilters: {
+    /* initial filter state */
+  },
+  currentGrouping: {
+    /* initial grouping state */
+  },
+  currentSearch: "" // initial search value,
+  defaultSorting: {
+    field: "name", // default sorting field
+    order: "asc",
+  },
 })
 ```
 
@@ -117,6 +128,18 @@ function MyDataCollection() {
   const dataSource = useDataSource({
     dataAdapter: { fetchData: myFetchFunction },
     filters: myFilters,
+    currentFilters: {
+      name: "John",
+    },
+    currentGrouping: {
+      field: "name",
+      order: "asc",
+    },
+    currentSearch: "John",
+    defaultSorting: {
+      field: "name",
+      order: "asc",
+    },
   })
 
   const { data, isLoading } = useData(dataSource)

@@ -118,9 +118,10 @@ export function useDataSource<
         return JSON.stringify(next) === JSON.stringify(prev) ? prev : next
       })
     } else {
-      _setCurrentFilters((prev) =>
-        JSON.stringify(value) === JSON.stringify(prev) ? prev : value
-      )
+      if (JSON.stringify(currentFilters) === JSON.stringify(value)) {
+        return
+      }
+      _setCurrentFilters(value)
     }
   }
 
