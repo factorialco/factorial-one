@@ -5,12 +5,10 @@ const dotTags = [
   {
     text: "Category 1",
     color: "viridian" as const,
-    description: "This is a category tag with a description",
   },
   {
     text: "Category 2",
     color: "malibu" as const,
-    description: "Another category with description",
   },
   {
     text: "Category 3",
@@ -19,12 +17,10 @@ const dotTags = [
   {
     text: "Category 4",
     color: "purple" as const,
-    description: "Yet another category description",
   },
   {
     text: "Category 5",
     color: "lilac" as const,
-    description: "Yet another category description",
   },
 ]
 

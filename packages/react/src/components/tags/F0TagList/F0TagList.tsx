@@ -1,4 +1,3 @@
-import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { OverflowList } from "@/ui/OverflowList"
 import { Tag, TagVariant } from "../F0Tag/F0Tag"
 import { TagCounter } from "./components/TagCounter"
@@ -19,19 +18,7 @@ export const F0TagList = <T extends TagType>({
     <OverflowList
       items={tagVariants}
       max={max}
-      renderListItem={(tag) => {
-        const description = getTagDescription(tag)
-
-        return description ? (
-          <Tooltip label={description}>
-            <div>
-              <Tag tag={tag} />
-            </div>
-          </Tooltip>
-        ) : (
-          <Tag tag={tag} />
-        )
-      }}
+      renderListItem={(tag) => <Tag tag={tag} />}
       renderDropdownItem={() => null}
       forceShowingOverflowIndicator={initialRemainingCount !== undefined}
       renderOverflowIndicator={(count) => (
@@ -48,13 +35,6 @@ export const F0TagList = <T extends TagType>({
       className="flex-1"
     />
   )
-}
-
-const getTagDescription = (tag: TagVariant): string | undefined => {
-  if ("description" in tag && typeof tag.description === "string") {
-    return tag.description
-  }
-  return undefined
 }
 
 F0TagList.displayName = "F0TagList"
