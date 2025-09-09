@@ -794,10 +794,12 @@ export declare const defaultTranslations: {
     readonly notifications: "Notifications";
     readonly ai: {
         readonly description: "Chat with AI";
-        readonly newChat: "New Chat";
+        readonly expandChat: "Expand chat";
+        readonly minimizeChat: "Minimize chat window";
         readonly openChat: "Open Chat";
         readonly scrollToBottom: "Scroll to bottom";
         readonly welcome: "I'm One. Ask or make anything.";
+        readonly initialMessage: "How can I help you today?";
     };
 };
 

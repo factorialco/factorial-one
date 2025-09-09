@@ -1,5 +1,5 @@
-import { C as A, L as ct, c as dt, P as Be, a as k, f as ft, b as pt, A as vt, B as gt, d as mt, e as yt, g as ht, V as bt, h as He, i as wt, j as xt, F as We, k as Dt, l as Ct, m as Ot, D as Tt, n as Pt, o as St, p as Et, q as Ke, S as Nt, r as At, s as $, U as qe, t as jt, u as Mt, v as he, w as Lt, x as Ue, y as Ft, z as It, E as kt, G as Rt, H as $t, I as Bt, J as Ht, K as Wt, M as Kt, X as qt, N as Ut, O as Vt, Q as Yt, R as zt } from "./index-CEnYNEQD.js";
-import { ak as Un, T as Vn, aq as Yn, W as zn, Y as Xn, Z as Gn, _ as Jn, $ as Qn, a0 as Zn, a1 as _n, a2 as ea, a4 as ta, a5 as ra, a6 as na, a7 as aa, a9 as oa, aa as ia, ab as la, ac as sa, af as ua, ag as ca, ah as da, ai as fa, a8 as pa, aj as va, ae as ga, an as ma, al as ya, ar as ha, a3 as ba, ad as wa, as as xa, am as Da, ap as Ca, ao as Oa } from "./index-CEnYNEQD.js";
+import { C as A, L as ct, c as dt, P as Be, a as k, f as ft, b as pt, A as vt, B as gt, d as mt, e as yt, g as ht, V as bt, h as He, i as wt, j as xt, F as We, k as Dt, l as Ct, m as Ot, D as Tt, n as Pt, o as St, p as Et, q as Ke, S as Nt, r as At, s as $, U as qe, t as jt, u as Mt, v as he, w as Lt, x as Ue, y as It, z as Ft, E as kt, G as Rt, H as $t, I as Bt, J as Ht, K as Wt, M as Kt, X as qt, N as Ut, O as Vt, Q as Yt, R as zt } from "./index-CuD6nmQf.js";
+import { ak as Un, T as Vn, aq as Yn, W as zn, Y as Xn, Z as Gn, _ as Jn, $ as Qn, a0 as Zn, a1 as _n, a2 as ea, a4 as ta, a5 as ra, a6 as na, a7 as aa, a9 as oa, aa as ia, ab as la, ac as sa, af as ua, ag as ca, ah as da, ai as fa, a8 as pa, aj as va, ae as ga, an as ma, al as ya, ar as ha, a3 as ba, ad as wa, as as xa, am as Da, ap as Ca, ao as Oa } from "./index-CuD6nmQf.js";
 import { jsx as u, jsxs as C, Fragment as ue } from "react/jsx-runtime";
 import * as ce from "react";
 import Xt, { forwardRef as Q, useRef as de, useImperativeHandle as Gt, Children as Jt, useState as M, useEffect as z, useMemo as Qt, createContext as Ve, useContext as Zt } from "react";
@@ -182,10 +182,12 @@ const wn = {
   notifications: "Notifications",
   ai: {
     description: "Chat with AI",
-    newChat: "New Chat",
+    expandChat: "Expand chat",
+    minimizeChat: "Minimize chat window",
     openChat: "Open Chat",
     scrollToBottom: "Scroll to bottom",
-    welcome: "I'm One. Ask or make anything."
+    welcome: "I'm One. Ask or make anything.",
+    initialMessage: "How can I help you today?"
   }
 }, xn = A(
   {
@@ -528,7 +530,7 @@ function vr({
     }
   ) });
 }
-function Fn({
+function In({
   isOpen: e,
   onClose: r,
   title: t,
@@ -733,7 +735,7 @@ const mr = Q(
       }
     ), l = (r == null ? void 0 : r.variant) !== "promote" ? r : void 0, s = (t == null ? void 0 : t.variant) !== "promote" ? t : void 0;
     return /* @__PURE__ */ C(
-      Ft,
+      It,
       {
         ref: a,
         ...n,
@@ -748,7 +750,7 @@ const mr = Q(
   }
 );
 mr.displayName = "UpsellingBanner";
-function In({
+function Fn({
   isOpen: e,
   setIsOpen: r,
   label: t,
@@ -785,7 +787,7 @@ function In({
     onClick: () => T(D)
   } : D);
   return /* @__PURE__ */ C(ue, { children: [
-    /* @__PURE__ */ C(It, { open: N, onOpenChange: S, children: [
+    /* @__PURE__ */ C(Ft, { open: N, onOpenChange: S, children: [
       /* @__PURE__ */ u(kt, { asChild: !0, children: /* @__PURE__ */ u(
         $,
         {
@@ -975,11 +977,11 @@ function rt() {
   }
   return K.bind = e, K;
 }
-var I = {}, Te;
+var F = {}, Te;
 function Tr() {
-  if (Te) return I;
+  if (Te) return F;
   Te = 1;
-  var e = I && I.__assign || function() {
+  var e = F && F.__assign || function() {
     return e = Object.assign || function(o) {
       for (var l, s = 1, i = arguments.length; s < i; s++) {
         l = arguments[s];
@@ -988,7 +990,7 @@ function Tr() {
       return o;
     }, e.apply(this, arguments);
   };
-  Object.defineProperty(I, "__esModule", { value: !0 }), I.bindAll = void 0;
+  Object.defineProperty(F, "__esModule", { value: !0 }), F.bindAll = void 0;
   var r = /* @__PURE__ */ rt();
   function t(o) {
     if (!(typeof o > "u"))
@@ -1013,7 +1015,7 @@ function Tr() {
       });
     };
   }
-  return I.bindAll = a, I;
+  return F.bindAll = a, F;
 }
 var Pe;
 function Pr() {
@@ -1210,7 +1212,7 @@ function Lr(e) {
     });
   };
 }
-function Fr() {
+function Ir() {
   var e = null;
   function r() {
     return e = null, B.bind(window, {
@@ -1257,7 +1259,7 @@ function Fr() {
     getOnPostDispatch: t
   };
 }
-function Ir(e) {
+function Fr(e) {
   if (Array.isArray(e)) return oe(e);
 }
 function kr(e) {
@@ -1268,7 +1270,7 @@ function Rr() {
 In order to be iterable, non-array objects must have a [Symbol.iterator]() method.`);
 }
 function it(e) {
-  return Ir(e) || kr(e) || et(e) || Rr();
+  return Fr(e) || kr(e) || et(e) || Rr();
 }
 function H(e) {
   var r = null;
@@ -1744,7 +1746,7 @@ function Le(e, r) {
   }
   return t;
 }
-function F(e) {
+function I(e) {
   for (var r = 1; r < arguments.length; r++) {
     var t = arguments[r] != null ? arguments[r] : {};
     r % 2 ? Le(Object(t), !0).forEach(function(n) {
@@ -1789,12 +1791,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
 }
 function Zr(e, r) {
   if (e) {
-    if (typeof e == "string") return Fe(e, r);
+    if (typeof e == "string") return Ie(e, r);
     var t = {}.toString.call(e).slice(8, -1);
-    return t === "Object" && e.constructor && (t = e.constructor.name), t === "Map" || t === "Set" ? Array.from(e) : t === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? Fe(e, r) : void 0;
+    return t === "Object" && e.constructor && (t = e.constructor.name), t === "Map" || t === "Set" ? Array.from(e) : t === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? Ie(e, r) : void 0;
   }
 }
-function Fe(e, r) {
+function Ie(e, r) {
   (r == null || r > e.length) && (r = e.length);
   for (var t = 0, n = Array(r); t < r; t++) n[t] = e[t];
   return n;
@@ -1875,7 +1877,7 @@ function _r(e) {
     var v = c.eventName, m = c.payload, h = ne(m.location.current.dropTargets), P;
     try {
       for (h.s(); !(P = h.n()).done; ) {
-        var b, x = P.value, w = n.get(x.element), y = F(F({}, m), {}, {
+        var b, x = P.value, w = n.get(x.element), y = I(I({}, m), {}, {
           self: x
         });
         w == null || (b = w[v]) === null || b === void 0 || b.call(
@@ -1905,7 +1907,7 @@ function _r(e) {
         for (b.s(); !(x = b.n()).done; ) {
           var w, y = x.value;
           P.add(y.element);
-          var g = n.get(y.element), S = h.has(y.element), T = F(F({}, m), {}, {
+          var g = n.get(y.element), S = h.has(y.element), T = I(I({}, m), {}, {
             self: y
           });
           if (g == null || (w = g.onDropTargetChange) === null || w === void 0 || w.call(g, T), !S) {
@@ -1923,7 +1925,7 @@ function _r(e) {
         for (N.s(); !(j = N.n()).done; ) {
           var D, R, _ = j.value;
           if (!P.has(_.element)) {
-            var ye = F(F({}, m), {}, {
+            var ye = I(I({}, m), {}, {
               self: _
             }), L = n.get(_.element);
             L == null || (D = L.onDropTargetChange) === null || D === void 0 || D.call(L, ye), L == null || (R = L.onDragEnter) === null || R === void 0 || R.call(L, ye);
@@ -1966,7 +1968,7 @@ function _r(e) {
       };
       if (D.canDrop && !D.canDrop(R) || !((S = D.getIsSticky) !== null && S !== void 0 && S.call(D, R)))
         break;
-      y.push(F(F({}, T), {}, {
+      y.push(I(I({}, T), {}, {
         // making it clear to consumers this drop target is active due to stickiness
         isActiveDueToStickiness: !0
       }));
@@ -2013,12 +2015,12 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
 }
 function tn(e, r) {
   if (e) {
-    if (typeof e == "string") return Ie(e, r);
+    if (typeof e == "string") return Fe(e, r);
     var t = {}.toString.call(e).slice(8, -1);
-    return t === "Object" && e.constructor && (t = e.constructor.name), t === "Map" || t === "Set" ? Array.from(e) : t === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? Ie(e, r) : void 0;
+    return t === "Object" && e.constructor && (t = e.constructor.name), t === "Map" || t === "Set" ? Array.from(e) : t === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? Fe(e, r) : void 0;
   }
 }
-function Ie(e, r) {
+function Fe(e, r) {
   (r == null || r > e.length) && (r = e.length);
   for (var t = 0, n = Array(r); t < r; t++) n[t] = e[t];
   return n;
@@ -2139,7 +2141,7 @@ function cn(e) {
     Y.delete(e.element);
   };
 }
-var $e = Fr(), ge = an({
+var $e = Ir(), ge = an({
   typeKey: "element",
   defaultDropEffect: "move",
   mount: function(r) {
@@ -2412,7 +2414,7 @@ export {
   Ut as PrivacyModeProvider,
   _e as ProductBlankslate,
   va as ProductCard,
-  Fn as ProductModal,
+  In as ProductModal,
   gr as ProductWidget,
   An as ProgressBarChart,
   jn as StandardLayout,
@@ -2421,7 +2423,7 @@ export {
   qe as UpsellRequestResponseDialog,
   mr as UpsellingBanner,
   Ue as UpsellingButton,
-  In as UpsellingPopover,
+  Fn as UpsellingPopover,
   Nn as VerticalBarChart,
   Dn as avatarVariants,
   ma as buildTranslations,
