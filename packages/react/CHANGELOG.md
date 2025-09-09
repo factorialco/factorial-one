@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.180.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.2...factorial-one-react-v1.180.0) (2025-09-09)
+
+
+### Features
+
+* **RichText:** header and toolbar integration ([#2528](https://github.com/factorialco/factorial-one/issues/2528)) ([9919163](https://github.com/factorialco/factorial-one/commit/9919163515b1fc0c936be5f42ce1b1f2c755678c))
+
 ## [1.179.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.1...factorial-one-react-v1.179.2) (2025-09-09)
 
 
