@@ -69,7 +69,7 @@ export function useOverflowCalculation<T>(
     }
 
     return widths
-  }, [])
+  }, [options?.itemsWidth, items.length])
 
   // Calculate how many items can fit in the available width
   const calculateVisibleItemCount = useCallback(

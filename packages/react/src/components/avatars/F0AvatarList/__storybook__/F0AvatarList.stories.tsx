@@ -88,13 +88,6 @@ function getDummyAvatars<
     ...sourceData[index % sourceData.length],
   }))
 
-  if (type === "person") {
-    return mockList.map((item, index) => ({
-      ...item,
-      src: item.src ? item.src + "?t=" + index : undefined,
-    })) as PersonAvatarVariant[]
-  }
-
   return mockList as T extends "person"
     ? PersonAvatarVariant[]
     : T extends "company"
