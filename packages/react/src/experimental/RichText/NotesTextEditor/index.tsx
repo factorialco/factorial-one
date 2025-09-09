@@ -220,7 +220,7 @@ const NotesTextEditorComponent = forwardRef<
         (metadata && metadata.length > 0)) && (
         <Header actions={actions} metadata={metadata} />
       )}
-      <div className="absolute bottom-8 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-f1-background p-2 shadow-lg">
+      <div className="absolute bottom-8 left-1/2 z-50 -translate-x-1/2 rounded-lg bg-f1-background p-2 shadow-md">
         <Toolbar
           labels={toolbarLabels}
           editor={editor}
@@ -235,7 +235,7 @@ const NotesTextEditorComponent = forwardRef<
           <div
             className={cn(
               "flex flex-col pb-5 pt-5",
-              withPadding ? "px-28" : "px-14"
+              withPadding ? "px-32" : "px-14"
             )}
           >
             <input
@@ -283,7 +283,7 @@ const NotesTextEditorComponent = forwardRef<
             editor={editor}
             className={cn(
               "pb-28 [&>div]:w-full",
-              withPadding ? "[&>div]:px-28" : "[&>div]:px-14"
+              withPadding ? "[&>div]:px-32" : "[&>div]:px-14"
             )}
           />
         </div>
