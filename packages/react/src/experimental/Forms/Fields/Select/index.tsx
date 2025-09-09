@@ -91,7 +91,7 @@ export type SelectProps<T extends string, R = unknown> = {
   | {
       source?: never
       mapOptions?: never
-      options: SelectItemProps<T, ResolvedRecordType<R>>[]
+      options: SelectItemProps<T, unknown>[]
     }
 ) &
   Pick<
