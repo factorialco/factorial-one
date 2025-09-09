@@ -631,6 +631,7 @@ export function useData<
   }, [
     fetchDataAndUpdate,
     isLoading,
+    isLoadingMore,
     mergedFilters,
     paginationInfo,
     currentNavigationFilters,
