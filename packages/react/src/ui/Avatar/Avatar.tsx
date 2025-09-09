@@ -78,7 +78,7 @@ const AvatarImage = React.forwardRef<
     {...props}
     asChild
   >
-    <Image />
+    <Image loading="lazy" />
   </AvatarPrimitive.Image>
 ))
 AvatarImage.displayName = AvatarPrimitive.Image.displayName

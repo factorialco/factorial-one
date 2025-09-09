@@ -63,7 +63,7 @@ interface OverflowListProps<T> {
    * This value is used to avoid calculating the width of the items in runtime
    * @default undefined (means auto)
    **/
-  itemWidth?: number | number[]
+  itemsWidth?: number | number[]
 }
 
 const OverflowList = function OverflowList<T>({
@@ -76,7 +76,7 @@ const OverflowList = function OverflowList<T>({
   className = "",
   gap = 8,
   max,
-  itemWidth,
+  itemsWidth,
 }: OverflowListProps<T>) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -92,7 +92,10 @@ const OverflowList = function OverflowList<T>({
     visibleItems,
     overflowItems,
     isInitialized,
-  } = useOverflowCalculation(items, gap, max)
+  } = useOverflowCalculation(items, gap, {
+    max,
+    itemsWidth,
+  })
 
   const DefaultOverflowIndicator = useMemo(
     () => (
@@ -125,7 +128,7 @@ const OverflowList = function OverflowList<T>({
         marginLeft: gap < 0 ? `${-gap}px` : undefined,
       }}
     >
-      {!itemWidth && (
+      {!itemsWidth && (
         <div
           ref={measurementContainerRef}
           aria-hidden="true"

@@ -26,6 +26,16 @@ const dummyPeople = [
     firstName: "Saúl",
     lastName: "Domínguez",
   },
+  {
+    firstName: "Dani",
+    lastName: "Moreno",
+    src: "/avatars/person03.jpg",
+  },
+  {
+    firstName: "Hellen",
+    lastName: "Fernández",
+    src: "/avatars/person04.jpg",
+  },
 ]
 
 const dummyCompanies = [
@@ -74,9 +84,18 @@ function getDummyAvatars<
     file: dummyFiles,
   }[type]
 
-  return Array.from({ length: count }, (_, index) => ({
+  const mockList = Array.from({ length: count }, (_, index) => ({
     ...sourceData[index % sourceData.length],
-  })) as T extends "person"
+  }))
+
+  if (type === "person") {
+    return mockList.map((item, index) => ({
+      ...item,
+      src: item.src ? item.src + "?t=" + index : undefined,
+    })) as PersonAvatarVariant[]
+  }
+
+  return mockList as T extends "person"
     ? PersonAvatarVariant[]
     : T extends "company"
       ? CompanyAvatarVariant[]

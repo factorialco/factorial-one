@@ -52,8 +52,8 @@ export function useOverflowCalculation<T>(
   const measureItemWidths = useCallback(() => {
     if (options?.itemsWidth) {
       return Array.isArray(options.itemsWidth)
-        ? options.itemsWidth.reduce((acc, width) => acc + width, 0)
-        : options.itemsWidth * items.length
+        ? options.itemsWidth
+        : Array(items.length).fill(options.itemsWidth)
     }
 
     if (!measurementContainerRef.current) {
@@ -87,9 +87,9 @@ export function useOverflowCalculation<T>(
       }
 
       // Return the actual count without enforcing a minimum of 1
-      return Math.min(visibleCount, max ?? items.length)
+      return Math.min(visibleCount, options?.max ?? items.length)
     },
-    [max, items.length]
+    [options?.max, items.length]
   )
 
   // Calculate which items should be visible and which should overflow
