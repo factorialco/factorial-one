@@ -19,7 +19,11 @@ import { DataError } from "../../hooks/datasource/useData"
 import { OneActionBar } from "../OneActionBar"
 import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
-import { CustomEmptyStates, useEmptyState } from "./hooks/useEmptyState"
+import {
+  CustomEmptyStates,
+  EmptyStateType,
+  useEmptyState,
+} from "./hooks/useEmptyState"
 import { ItemActionsDefinition } from "./item-actions"
 import { navigationFilterTypes } from "./navigationFilters"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
@@ -262,16 +266,27 @@ const OneDataCollectionComp = <
     [search, visualizations]
   )
 
-  const { emptyState, setEmptyStateType } = useEmptyState(emptyStates, {
-    retry: () => {
-      setEmptyStateType(false)
-      setCurrentFilters({ ...currentFilters })
-    },
-    clearFilters: () => {
-      setEmptyStateType(false)
-      setCurrentFilters({})
-    },
-  })
+  const { emptyState, setEmptyStateType: _setEmptyStateType } = useEmptyState(
+    emptyStates,
+    {
+      retry: () => {
+        setEmptyStateType(false)
+        setCurrentFilters({ ...currentFilters })
+      },
+      clearFilters: () => {
+        setEmptyStateType(false)
+        setCurrentFilters({})
+      },
+    }
+  )
+
+  const setEmptyStateType = (
+    type: EmptyStateType | false,
+    errorMessage?: string
+  ) => {
+    console.log("setEmptyStateType", type, errorMessage)
+    _setEmptyStateType(type, errorMessage)
+  }
 
   const getEmptyStateType = (
     totalItems: number | undefined,
@@ -291,7 +306,9 @@ const OneDataCollectionComp = <
     isInitialLoading: isInitialLoadingFromCallback,
     search,
   }: Parameters<OnLoadDataCallback<R, Filters>>[0]) => {
-    if (isInitialLoading) return
+    if (isInitialLoadingFromCallback) {
+      return
+    }
 
     setIsInitialLoading(isInitialLoadingFromCallback)
     setTotalItems(totalItems)
@@ -403,7 +420,6 @@ const OneDataCollectionComp = <
           )}
         </OneFilterPicker>
       </div>
-
       {/* Visualization renderer must be always mounted to react (load data) even if empty state is shown */}
       <div
         className={cn(
@@ -419,7 +435,6 @@ const OneDataCollectionComp = <
           onLoadError={onLoadError}
         />
       </div>
-
       {emptyState ? (
         <div className="flex flex-1 flex-col items-center justify-center">
           <OneEmptyState

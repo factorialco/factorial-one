@@ -686,6 +686,7 @@ export function useData<
       mergedFilters,
       paginationInfoRef.current,
       searchValue.current,
+      isLoadingMore,
       setIsLoading,
       setIsLoadingMore,
       // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
