@@ -88784,11 +88784,19 @@ function EPt({
     n(p), h(!1);
   };
   Ve(() => {
-    var C;
-    f && s((C = Object.entries(p).find(([x, S]) => !gu(e[x].type).isEmpty(S, {
-      schema: e[x],
+    const k = () => Object.entries(p).find(([C, x]) => !gu(e[C].type).isEmpty(x, {
+      schema: e[C],
       i18n: l
-    }))) == null ? void 0 : C[0]);
+    }));
+    if (f) {
+      const C = k();
+      if (C)
+        s(C[0]);
+      else {
+        const x = Object.keys(e)[0];
+        s(x);
+      }
+    }
   }, [f]);
   const w = vt(() => Object.entries(e).reduce((C, [x, S]) => {
     const $ = gu(S.type);
@@ -88938,7 +88946,9 @@ const OPt = ({
       {
         label: i.label,
         selected: u,
-        onClick: () => n == null ? void 0 : n(i.filter),
+        onClick: () => n == null ? void 0 : n(
+          u ? {} : i.filter
+        ),
         "data-visible": s,
         number: ((c = i.itemsCount) == null ? void 0 : c.call(i, t)) ?? void 0
       },
@@ -88954,7 +88964,9 @@ const OPt = ({
           s && "bg-f1-background-selected hover:bg-f1-background-selected",
           br()
         ),
-        onClick: () => n == null ? void 0 : n(i.filter),
+        onClick: () => n == null ? void 0 : n(
+          s ? {} : i.filter
+        ),
         "data-visible": !0,
         children: [
           i.label,
@@ -90137,7 +90149,7 @@ function m2t(e, {
       }), n == null || n({
         message: "Error fetching data",
         cause: re
-      }), M(!1), h(!1), y.current = void 0;
+      }), M(!1), h(!1), z(!1), y.current = void 0, F.current = !1;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps -- we don't want to re-run this effect when the onError changes
     [S, M, h]
@@ -90237,7 +90249,7 @@ function m2t(e, {
   ), me = Gt(
     () => {
       const re = A.current;
-      if (!(!re || f)) {
+      if (!(!re || f || I)) {
         if (!oxt(re)) {
           console.warn(
             "loadMore is only applicable for infinite-scroll pagination type"
@@ -90720,12 +90732,12 @@ export {
   wi as bc,
   Nq as bd,
   br as be,
-  bH as bf,
-  wH as bg,
-  y4 as bh,
-  Yq as bi,
-  Qq as bj,
-  Fa as bk,
+  Fa as bf,
+  bH as bg,
+  wH as bh,
+  y4 as bi,
+  Yq as bj,
+  Qq as bk,
   cee as bl,
   Hie as bm,
   ree as bn,

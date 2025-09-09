@@ -14,8 +14,7 @@ import { CompanyCellValue } from './types/company.tsx';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
-import { CopilotKit } from '@copilotkit/react-core';
-import { CopilotPopup } from '@copilotkit/react-ui';
+import { CopilotKitProps } from '@copilotkit/react-core';
 import { DateCellValue } from './types/date.tsx';
 import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
@@ -208,19 +207,17 @@ declare type AIButton = {
 /**
  * @experimental This is an experimental component use it at your own risk
  */
-export declare const AiChat: ({ labels, ...props }: AiChatProps) => JSX_2.Element;
+export declare const AiChat: () => JSX_2.Element | null;
 
-declare interface AiChatLabels {
+declare type AiChatMode = "popup" | "sidebar";
+
+export declare const AiChatProvider: ({ enabled, mode, greeting, children, ...copilotKitProps }: AiChatProviderProps) => JSX_2.Element;
+
+export declare type AiChatProviderProps = {
+    enabled?: boolean;
+    mode?: AiChatMode;
     greeting?: string;
-}
-
-export declare type AiChatProps = Omit<CopilotPopupProps, "labels"> & {
-    labels?: ComponentProps<typeof CopilotPopup>["labels"] & AiChatLabels;
-};
-
-export declare const AiChatProvider: (props: AiChatProviderProps) => JSX_2.Element;
-
-export declare type AiChatProviderProps = ComponentProps<typeof CopilotKit>;
+} & Pick<CopilotKitProps, "agent" | "credentials" | "children" | "runtimeUrl" | "showDevConsole" | "threadId" | "headers">;
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "warning" | "positive" | "destructive" | undefined;
@@ -282,9 +279,10 @@ declare const alertVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-export declare function ApplicationFrame({ children, sidebar, banner, }: ApplicationFrameProps): JSX_2.Element;
+export declare function ApplicationFrame({ children, sidebar, banner, ai, }: ApplicationFrameProps): JSX_2.Element;
 
 declare interface ApplicationFrameProps {
+    ai?: Omit<AiChatProviderProps, "children">;
     banner?: React.ReactNode;
     sidebar: React.ReactNode;
     children: React.ReactNode;
@@ -1113,8 +1111,6 @@ declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "dot-tag";
 });
 
-declare type CopilotPopupProps = ComponentProps<typeof CopilotPopup>;
-
 declare type CopyActionType = {
     type: "copy";
     text?: string;
@@ -1598,10 +1594,13 @@ declare const defaultTranslations: {
     readonly notifications: "Notifications";
     readonly ai: {
         readonly description: "Chat with AI";
+        readonly expandChat: "Expand chat";
+        readonly minimizeChat: "Minimize chat window";
         readonly newChat: "New Chat";
         readonly openChat: "Open Chat";
         readonly scrollToBottom: "Scroll to bottom";
         readonly welcome: "I'm One. Ask or make anything.";
+        readonly initialMessage: "How can I help you today?";
     };
 };
 
