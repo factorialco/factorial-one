@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.180.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.180.0...factorial-one-react-v1.180.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* adjust paddings and margins on entity selector ([#2552](https://github.com/factorialco/factorial-one/issues/2552)) ([52200b9](https://github.com/factorialco/factorial-one/commit/52200b98aadbdb69348b16293a05751676f3ea85))
+
 ## [1.180.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.2...factorial-one-react-v1.180.0) (2025-09-09)
 
 
