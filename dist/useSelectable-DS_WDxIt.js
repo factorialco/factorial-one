@@ -90274,6 +90274,7 @@ function m2t(e, {
       q,
       A.current,
       X.current,
+      I,
       h,
       z,
       // eslint-disable-next-line react-hooks/exhaustive-deps -- deps are handled by the caller
