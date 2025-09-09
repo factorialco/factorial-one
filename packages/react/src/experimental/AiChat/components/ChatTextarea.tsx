@@ -45,6 +45,7 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
 
   return (
     <motion.form
+      layout
       aria-busy={inProgress}
       ref={formRef}
       className={cn(
@@ -58,9 +59,14 @@ export const ChatTextarea = ({ inProgress, onSend, onStop }: InputProps) => {
         "--gradient-angle": ["0deg", "360deg"],
       }}
       transition={{
-        duration: 6,
-        ease: "linear",
-        repeat: Infinity,
+        default: {
+          duration: 6,
+          ease: "linear",
+          repeat: Infinity,
+        },
+        layout: {
+          duration: 0.3,
+        },
       }}
       style={
         {

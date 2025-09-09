@@ -1,9 +1,4 @@
-export {
-  AiChat,
-  AiChatProvider,
-  type AiChatProps,
-  type AiChatProviderProps,
-} from "./index"
+export { AiChat, AiChatProvider, type AiChatProviderProps } from "./index"
 
 export {
   HILActionConfirmation,

@@ -29,10 +29,10 @@ export const ChatButton = (props: ButtonProps) => {
       <motion.div
         initial={false}
         className={cn(
-          "absolute right-1.5 top-1.5 flex h-8 w-8 items-center justify-center"
+          "absolute right-1.5 top-[5px] flex h-8 w-8 items-center justify-center"
         )}
         animate={{
-          translateX: isHovered ? "0" : "-32px",
+          translateX: isHovered ? "0" : "-34px",
           rotate: isHovered ? "90deg" : "0",
           scale: isHovered ? [1, 0.8, 1] : 1,
         }}

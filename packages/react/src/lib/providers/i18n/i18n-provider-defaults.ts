@@ -177,10 +177,13 @@ export const defaultTranslations = {
   notifications: "Notifications",
   ai: {
     description: "Chat with AI",
+    expandChat: "Expand chat",
+    minimizeChat: "Minimize chat window",
     newChat: "New Chat",
     openChat: "Open Chat",
     scrollToBottom: "Scroll to bottom",
     welcome: "I'm One. Ask or make anything.",
+    initialMessage: "How can I help you today?",
   },
 } as const
 
