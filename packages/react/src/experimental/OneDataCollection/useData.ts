@@ -546,7 +546,7 @@ export function useData<
 
         const subscription = observable.subscribe({
           next: (state) => {
-            if (state.loading && !state.data) {
+            if (state.loading) {
               setIsLoading(true)
             } else if (state.error) {
               handleFetchError(state.error)
