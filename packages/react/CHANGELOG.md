@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.179.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.0...factorial-one-react-v1.179.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* solve infinite scroll loading in data collection ([#2546](https://github.com/factorialco/factorial-one/issues/2546)) ([20496fe](https://github.com/factorialco/factorial-one/commit/20496fe3f7e1977f1c9df19879c15db63f15a977))
+
 ## [1.179.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.178.1...factorial-one-react-v1.179.0) (2025-09-08)
 
 
