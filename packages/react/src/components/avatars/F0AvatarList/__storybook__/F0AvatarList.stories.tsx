@@ -63,6 +63,46 @@ const dummyFiles = [
   { file: { name: "image.jpg", type: "image/jpeg" } },
 ]
 
+function getDummyAvatar<
+  T extends "person" | "company" | "team" | "file" = "person",
+>(
+  type: T,
+  index: number
+): T extends "person"
+  ? PersonAvatarVariant
+  : T extends "company"
+    ? CompanyAvatarVariant
+    : T extends "team"
+      ? TeamAvatarVariant
+      : T extends "file"
+        ? FileAvatarVariant
+        : never {
+  const sourceData = {
+    person: dummyPeople,
+    company: dummyCompanies,
+    team: dummyTeams,
+    file: dummyFiles,
+  }
+
+  const mockItem = sourceData[type][index % sourceData[type].length]
+
+  return {
+    ...mockItem,
+    src:
+      "src" in mockItem && mockItem.src
+        ? mockItem.src + "?t=" + index
+        : undefined,
+  } as T extends "person"
+    ? PersonAvatarVariant
+    : T extends "company"
+      ? CompanyAvatarVariant
+      : T extends "team"
+        ? TeamAvatarVariant
+        : T extends "file"
+          ? FileAvatarVariant
+          : never
+}
+
 function getDummyAvatars<
   T extends "person" | "company" | "team" | "file" = "person",
 >(
@@ -77,18 +117,11 @@ function getDummyAvatars<
       : T extends "file"
         ? FileAvatarVariant[]
         : never {
-  const sourceData = {
-    person: dummyPeople,
-    company: dummyCompanies,
-    team: dummyTeams,
-    file: dummyFiles,
-  }[type]
+  const mockList = Array.from({ length: count }, (_, index) =>
+    getDummyAvatar(type, index)
+  )
 
-  const mockList = Array.from({ length: count }, (_, index) => ({
-    ...sourceData[index % sourceData.length],
-  }))
-
-  return mockList as T extends "person"
+  return mockList as unknown as T extends "person"
     ? PersonAvatarVariant[]
     : T extends "company"
       ? CompanyAvatarVariant[]
