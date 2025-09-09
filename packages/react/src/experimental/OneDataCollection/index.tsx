@@ -19,11 +19,7 @@ import { DataError } from "../../hooks/datasource/useData"
 import { OneActionBar } from "../OneActionBar"
 import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
-import {
-  CustomEmptyStates,
-  EmptyStateType,
-  useEmptyState,
-} from "./hooks/useEmptyState"
+import { CustomEmptyStates, useEmptyState } from "./hooks/useEmptyState"
 import { ItemActionsDefinition } from "./item-actions"
 import { navigationFilterTypes } from "./navigationFilters"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
@@ -266,7 +262,7 @@ const OneDataCollectionComp = <
     [search, visualizations]
   )
 
-  const { emptyState, setEmptyStateType: _setEmptyStateType } = useEmptyState(
+  const { emptyState, setEmptyStateType: setEmptyStateType } = useEmptyState(
     emptyStates,
     {
       retry: () => {
@@ -279,14 +275,6 @@ const OneDataCollectionComp = <
       },
     }
   )
-
-  const setEmptyStateType = (
-    type: EmptyStateType | false,
-    errorMessage?: string
-  ) => {
-    console.log("setEmptyStateType", type, errorMessage)
-    _setEmptyStateType(type, errorMessage)
-  }
 
   const getEmptyStateType = (
     totalItems: number | undefined,
