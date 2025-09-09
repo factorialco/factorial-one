@@ -1,12 +1,10 @@
 import { ButtonInternal } from "@/components/Actions/Button/internal"
-import Add from "@/icons/app/Add"
 import Cross from "@/icons/app/Cross"
 import Maximize from "@/icons/app/Maximize"
 import Minimize from "@/icons/app/Minimize"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { DialogDescription, DialogHeader, DialogTitle } from "@/ui/dialog"
-import { useCopilotChatInternal } from "@copilotkit/react-core"
 import { useChatContext, type HeaderProps } from "@copilotkit/react-ui"
 import { motion } from "motion/react"
 import { ElementType } from "react"
@@ -48,7 +46,6 @@ const ChatHeader = ({
   ...rest
 }: ChatHeaderProps) => {
   const { setOpen, labels } = useChatContext()
-  const { messages, reset } = useCopilotChatInternal()
   const { messageContainerScrollTop } = useChatWindowContext()
   const translations = useI18n()
   const { mode, setMode } = useAiChat()
@@ -70,16 +67,6 @@ const ChatHeader = ({
         {translations.ai.description}
       </DescriptionComponent>
       <motion.div layout className="flex items-center gap-x-2" {...rest}>
-        {messages.length > 0 && (
-          <ButtonInternal
-            variant="outline"
-            hideLabel
-            label={translations.ai.newChat}
-            icon={Add}
-            size="sm"
-            onClick={() => reset()}
-          />
-        )}
         <ButtonInternal
           variant="outline"
           hideLabel
