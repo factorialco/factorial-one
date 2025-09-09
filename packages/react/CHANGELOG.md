@@ -1,5 +1,61 @@
 # Changelog
 
+## [1.179.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.1...factorial-one-react-v1.179.2) (2025-09-09)
+
+
+### Bug Fixes
+
+* export hook and remove create button form chat header ([#2550](https://github.com/factorialco/factorial-one/issues/2550)) ([84d58b1](https://github.com/factorialco/factorial-one/commit/84d58b18ee9ff41d0d4285acfdbdd43731536798))
+
+## [1.179.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.0...factorial-one-react-v1.179.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* solve infinite scroll loading in data collection ([#2546](https://github.com/factorialco/factorial-one/issues/2546)) ([20496fe](https://github.com/factorialco/factorial-one/commit/20496fe3f7e1977f1c9df19879c15db63f15a977))
+
+## [1.179.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.178.1...factorial-one-react-v1.179.0) (2025-09-08)
+
+
+### Features
+
+* **One:** Logo animation ([#2523](https://github.com/factorialco/factorial-one/issues/2523)) ([44c4fbc](https://github.com/factorialco/factorial-one/commit/44c4fbcee9f1236c2434a93c27d4afe0a086cdd7))
+
+## [1.178.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.178.0...factorial-one-react-v1.178.1) (2025-09-05)
+
+
+### Bug Fixes
+
+* allow selecting group by clicking on group header when collapsing is not enabled ([#2533](https://github.com/factorialco/factorial-one/issues/2533)) ([e5708ca](https://github.com/factorialco/factorial-one/commit/e5708ca924db02c598d309131fb925662340838b))
+
+## [1.178.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.3...factorial-one-react-v1.178.0) (2025-09-05)
+
+
+### Features
+
+* **ai-chat:** add sidebar chat ([#2527](https://github.com/factorialco/factorial-one/issues/2527)) ([094ab7b](https://github.com/factorialco/factorial-one/commit/094ab7b094efca8b8c921be79e520dc0213d2d00))
+
+## [1.177.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.2...factorial-one-react-v1.177.3) (2025-09-05)
+
+
+### Bug Fixes
+
+* change mobile actions label ([#2537](https://github.com/factorialco/factorial-one/issues/2537)) ([3b3ef8b](https://github.com/factorialco/factorial-one/commit/3b3ef8bc6fbfcceeafe2b51478378401ffba8b84))
+
+## [1.177.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.1...factorial-one-react-v1.177.2) (2025-09-05)
+
+
+### Bug Fixes
+
+* auto-select first filter by default when opening the filters picker ([#2534](https://github.com/factorialco/factorial-one/issues/2534)) ([8c77cbc](https://github.com/factorialco/factorial-one/commit/8c77cbcddf3da5cc47b8b9f681ea46841e74ad33))
+
+## [1.177.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.177.0...factorial-one-react-v1.177.1) (2025-09-05)
+
+
+### Bug Fixes
+
+* allow deselecting a preset by clicking on it again ([#2531](https://github.com/factorialco/factorial-one/issues/2531)) ([f7cc87e](https://github.com/factorialco/factorial-one/commit/f7cc87ef463dcd44bfd7d9ac698e820689247ce7))
+
 ## [1.177.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.176.0...factorial-one-react-v1.177.0) (2025-09-04)
 
 
