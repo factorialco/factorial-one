@@ -18,7 +18,10 @@ type CalculateVisibleItemCountParams = {
 export function useOverflowCalculation<T>(
   items: T[],
   gap: number,
-  max?: number
+  options?: {
+    max?: number
+    itemsWidth?: number | number[]
+  }
 ) {
   const containerRef = useRef<HTMLDivElement>(null)
   const overflowButtonRef = useRef<HTMLButtonElement>(null)
@@ -47,7 +50,15 @@ export function useOverflowCalculation<T>(
 
   // Measure all items in a hidden container
   const measureItemWidths = useCallback(() => {
-    if (!measurementContainerRef.current) return []
+    if (options?.itemsWidth) {
+      return Array.isArray(options.itemsWidth)
+        ? options.itemsWidth.reduce((acc, width) => acc + width, 0)
+        : options.itemsWidth * items.length
+    }
+
+    if (!measurementContainerRef.current) {
+      return []
+    }
 
     const itemElements = measurementContainerRef.current.children
     const widths: number[] = []

@@ -57,6 +57,13 @@ interface OverflowListProps<T> {
    * @default undefined (means auto)
    */
   max?: number
+
+  /**
+   * The widths of the items in pixels
+   * This value is used to avoid calculating the width of the items in runtime
+   * @default undefined (means auto)
+   **/
+  itemWidth?: number | number[]
 }
 
 const OverflowList = function OverflowList<T>({
@@ -69,6 +76,7 @@ const OverflowList = function OverflowList<T>({
   className = "",
   gap = 8,
   max,
+  itemWidth,
 }: OverflowListProps<T>) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -117,23 +125,25 @@ const OverflowList = function OverflowList<T>({
         marginLeft: gap < 0 ? `${-gap}px` : undefined,
       }}
     >
-      <div
-        ref={measurementContainerRef}
-        aria-hidden="true"
-        className="pointer-events-none invisible absolute left-0 top-0 flex opacity-0"
-        style={{ gap: gap > 0 ? `${gap}px` : undefined }}
-        data-testid="overflow-measurement-container"
-      >
-        {items.map((item, index) => (
-          <div
-            key={`measure-${index}`}
-            data-testid="overflow-measurement-item"
-            style={{ marginLeft: gap < 0 ? `${gap}px` : undefined }}
-          >
-            {renderListItem(item, index, false)}
-          </div>
-        ))}
-      </div>
+      {!itemWidth && (
+        <div
+          ref={measurementContainerRef}
+          aria-hidden="true"
+          className="pointer-events-none invisible absolute left-0 top-0 flex opacity-0"
+          style={{ gap: gap > 0 ? `${gap}px` : undefined }}
+          data-testid="overflow-measurement-container"
+        >
+          {items.map((item, index) => (
+            <div
+              key={`measure-${index}`}
+              data-testid="overflow-measurement-item"
+              style={{ marginLeft: gap < 0 ? `${gap}px` : undefined }}
+            >
+              {renderListItem(item, index, false)}
+            </div>
+          ))}
+        </div>
+      )}
 
       <div
         className="flex items-center whitespace-nowrap"
