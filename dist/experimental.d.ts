@@ -3780,7 +3780,7 @@ export declare type SelectProps<T extends string, R = unknown> = {
 } | {
     source?: never;
     mapOptions?: never;
-    options: SelectItemProps<T, ResolvedRecordType<R>>[];
+    options: SelectItemProps<T, unknown>[];
 }) & Pick<InputFieldProps<T>, "loading" | "hideLabel" | "clearable" | "labelIcon" | "size" | "label" | "icon" | "placeholder" | "disabled" | "name" | "error" | "status" | "hint">;
 
 export declare function Shortcut({ keys, variant }: ShortcutProps): JSX_2.Element | null;
