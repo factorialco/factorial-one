@@ -97,7 +97,6 @@ export const KanbanCollection = <
       const laneData = lanesHooks[l.id]
       const totalItems = laneData?.paginationInfo?.total
 
-      console.log(laneData?.paginationInfo)
       const hasMore = laneData?.paginationInfo?.hasMore
       return {
         id: l.id,
@@ -166,7 +165,9 @@ export const KanbanCollection = <
     laneItems.forEach((lane) => {
       const map = new Map<string, number>()
       lane.items.forEach((item, index) => {
-        const itemId = String(idProvider ? idProvider(item, index) : index)
+        const itemId = String(
+          idProvider ? idProvider(item as Record, index) : index
+        )
         map.set(itemId, index)
       })
       maps.set(lane.id, map)
@@ -206,7 +207,7 @@ export const KanbanCollection = <
       },
       paginationInfo: lanesHooks[lane.id]?.paginationInfo || null,
     }))
-  }, [lanes, laneItems])
+  }, [lanes, lanesHooks])
 
   const { lanesSelectProvider, lanesUseSelectable } = useSelectableLanes<
     Record,
@@ -218,8 +219,6 @@ export const KanbanCollection = <
   >(lanesDef, source, (selectItemsStatus, clearCallback) => {
     onSelectItems?.(selectItemsStatus, clearCallback)
   })
-
-  console.log(lanesUseSelectable.get("eng"))
 
   return (
     <>

@@ -345,16 +345,20 @@ const OneDataCollectionComp = <
             {navigationFilters &&
               Object.entries(navigationFilters).map(([key, filter]) => {
                 const filterDef = navigationFilterTypes[filter.type]
-                return filterDef.render({
-                  filter: filter,
-                  value: currentNavigationFilters[key]!,
-                  onChange: (value) => {
-                    setCurrentNavigationFilters({
-                      ...currentNavigationFilters,
-                      [key]: value,
-                    })
-                  },
-                })
+                return (
+                  <div key={key}>
+                    {filterDef.render({
+                      filter: filter,
+                      value: currentNavigationFilters[key]!,
+                      onChange: (value) => {
+                        setCurrentNavigationFilters({
+                          ...currentNavigationFilters,
+                          [key]: value,
+                        })
+                      },
+                    })}
+                  </div>
+                )
               })}
           </div>
         </div>

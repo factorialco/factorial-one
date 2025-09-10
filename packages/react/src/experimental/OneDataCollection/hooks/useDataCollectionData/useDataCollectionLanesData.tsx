@@ -6,12 +6,15 @@ import {
   SortingsDefinition,
   UseDataOptions,
 } from "@/hooks/datasource"
-import { ReactElement, useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { SummariesDefinition } from "../../summary"
 import { DataCollectionSource, Lane } from "../useDataCollectionSource"
-import { useDataCollectionData } from "./useDataCollectionData"
+import {
+  UseDataCollectionData,
+  useDataCollectionData,
+} from "./useDataCollectionData"
 import { mergeFiltersWithIntersection } from "./utils"
 
 type LaneProviderProps<
@@ -22,7 +25,6 @@ type LaneProviderProps<
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 > = {
-  children: ReactElement
   source: Omit<
     DataCollectionSource<
       R,
@@ -37,7 +39,7 @@ type LaneProviderProps<
   >
   lane: Lane<Filters>
   onError?: (error: DataError) => void
-  onHookUpdate?: (value: ReturnType<typeof useDataCollectionData>) => void
+  onHookUpdate?: (value: UseDataCollectionData<R>) => void
 }
 
 const LaneProvider = <
@@ -48,7 +50,6 @@ const LaneProvider = <
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 >({
-  children,
   source,
   lane,
   onError,
@@ -66,16 +67,24 @@ const LaneProvider = <
     [source.currentFilters, lane.filters]
   )
 
-  const hook = useDataCollectionData(source, {
+  const hook = useDataCollectionData<
+    R,
+    Filters,
+    Sortings,
+    Summaries,
+    NavigationFilters,
+    Grouping
+  >(source, {
     filters: mergedFilters,
     onError,
   })
 
   useEffect(() => {
     onHookUpdate?.(hook)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hook])
 
-  return children
+  return null
 }
 
 export function useDataCollectionLanesData<
@@ -105,41 +114,50 @@ export function useDataCollectionLanesData<
     throw new Error("Lanes has not been configured on data source")
   }
 
-  type HookUpdate = ReturnType<typeof useDataCollectionData>
-
   const [lanesHooks, setLanesHooks] = useState<
-    Record<string | symbol, HookUpdate>
+    Record<string | symbol, UseDataCollectionData<R>>
   >({})
 
   const handleHookUpdate = useCallback(
-    (laneId: string | symbol, value: HookUpdate) => {
+    (laneId: string | symbol, value: UseDataCollectionData<R>) => {
       setLanesHooks((prev) => ({ ...prev, [laneId]: value }))
     },
     []
   )
 
   // Generar componentes provider para cada columna
-  const lanesProvider = useMemo(() => {
-    return (lanes || []).map((lane) => (
-      <LaneProvider
-        key={lane.id}
-        lane={lane}
-        onError={options.onError}
-        source={source}
-        onHookUpdate={(value) => handleHookUpdate(lane.id, value)}
-      ></LaneProvider>
-    ))
-  }, [
-    // TODO check why source ref is updated always
-    JSON.stringify(lanes),
-    handleHookUpdate,
-    JSON.stringify(source.currentFilters),
-    JSON.stringify(source.currentNavigationFilters),
-    JSON.stringify(source.currentSortings),
-    JSON.stringify(source.currentGrouping),
-    JSON.stringify(source.currentSearch),
-    JSON.stringify(source.grouping),
-  ])
+  const lanesProvider = useMemo(
+    () => {
+      return (lanes || []).map((lane) => (
+        <LaneProvider<
+          R,
+          Filters,
+          Sortings,
+          Summaries,
+          NavigationFilters,
+          Grouping
+        >
+          key={lane.id}
+          lane={lane}
+          onError={options.onError}
+          source={source}
+          onHookUpdate={(value) => handleHookUpdate(lane.id, value)}
+        ></LaneProvider>
+      ))
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      // TODO check why source ref is updated always
+      JSON.stringify(lanes),
+      handleHookUpdate,
+      JSON.stringify(source.currentFilters),
+      JSON.stringify(source.currentNavigationFilters),
+      JSON.stringify(source.currentSortings),
+      JSON.stringify(source.currentGrouping),
+      JSON.stringify(source.currentSearch),
+      JSON.stringify(source.grouping),
+    ]
+  )
 
   return {
     lanesProvider,

@@ -9,12 +9,13 @@ import {
   UseSelectable,
   useSelectable,
 } from "@/hooks/datasource"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 
 import { DataCollectionSource } from "@/experimental/OneDataCollection/hooks/useDataCollectionSource"
 import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { SummariesDefinition } from "@/experimental/OneDataCollection/types"
+import { mergeLanesSelectItemsStatus } from "./utils"
 
 type LaneSelectProviderProps<
   R extends RecordType,
@@ -71,6 +72,7 @@ const LaneSelectProvider = <
 
   useEffect(() => {
     props.onHookUpdate(hook)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hook])
 
   return null
@@ -105,16 +107,7 @@ export const useSelectableLanes = <
     NavigationFilters,
     Grouping
   >,
-  onSelectItems?: (
-    selectItemsStatus: Record<
-      string,
-      Parameters<OnSelectItemsCallback<R, Filters>>[0]
-    >,
-    clearCallback: Record<
-      string,
-      Parameters<OnSelectItemsCallback<R, Filters>>[1]
-    >
-  ) => void
+  onSelectItems?: OnSelectItemsCallback<R, Filters>
 ) => {
   const [lanesUseSelectable, setLanesUseSelectable] = useState<
     Map<string, UseSelectable<R>>
@@ -128,12 +121,27 @@ export const useSelectableLanes = <
     clearCallback: Map<string, Parameters<OnSelectItemsCallback<R, Filters>>[1]>
   }>({ selectItemsStatus: new Map(), clearCallback: new Map() })
 
+  // Clears the selection for all lanes
+  const onClearCallback = useCallback(() => {
+    selectItemsCallbackResult.clearCallback.forEach((callback) => callback())
+  }, [selectItemsCallbackResult.clearCallback])
+
   useEffect(() => {
-    onSelectItems?.(
-      Object.fromEntries(selectItemsCallbackResult.selectItemsStatus),
-      Object.fromEntries(selectItemsCallbackResult.clearCallback)
+    const selectItemsStatus = Object.fromEntries(
+      selectItemsCallbackResult.selectItemsStatus
     )
-  }, [selectItemsCallbackResult, onSelectItems])
+
+    onSelectItems?.(
+      {
+        ...mergeLanesSelectItemsStatus<R, Filters>(
+          selectItemsCallbackResult.selectItemsStatus
+        ),
+        byLane: selectItemsStatus,
+      },
+      onClearCallback
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- onSelectItems and onClearCallback are stable functions
+  }, [selectItemsCallbackResult])
 
   const lanesSelectProvider = useMemo(() => {
     return (lanes || []).map((lane) => (
@@ -158,6 +166,7 @@ export const useSelectableLanes = <
         }}
       />
     ))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(lanes)])
 
   return {
