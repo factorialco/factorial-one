@@ -1,18 +1,29 @@
+import { Add, Archive, Delete, Save } from "@/icons/app"
 import { withSnapshot } from "@/lib/storybook-utils/parameters"
+import { navTargets } from "@/ui/Action"
 import type { Meta, StoryObj } from "@storybook/react-vite"
 import React from "react"
 import { expect, within } from "storybook/test"
-import { Add, Archive, Delete, Save } from "../../../icons/app"
-import { Button } from "./index"
+import { F0Button } from "../F0Button"
 
 const meta = {
-  title: "Button",
-  component: Button,
+  title: "Actions/Button",
+  component: F0Button,
   parameters: {
     layout: "centered",
     design: {
       type: "figma",
       url: "https://www.figma.com/design/pZzg1KTe9lpKTSGPUZa8OJ/Web-components?node-id=41-1256&t=99GWQFvFLZtKW49N-4",
+    },
+    docs: {
+      description: {
+        component: [
+          "A button component that allows to trigger actions and navigate using the router to  different parts of the application if the `href` prop is provided.",
+          "For navigation between pages we should use the `href` prop to allow the user to open the link in a new tab or window.",
+        ]
+          .map((line) => `<p>${line}</p>`)
+          .join("\n"),
+      },
     },
   },
   tags: ["autodocs", "stable"],
@@ -58,7 +69,7 @@ const meta = {
     emoji: {
       control: "text",
       description:
-        "Adds an emoji to the button, can be used as a special case of icon-only button.",
+        "Adds an emoji to the button, using emoji disables the label as is a icon-only button.",
     },
     disabled: {
       control: "boolean",
@@ -85,8 +96,19 @@ const meta = {
       description:
         "Callback fired when the button is clicked. Supports async functions for loading state.",
     },
+    href: {
+      control: "text",
+      description:
+        "The URL to navigate to when the button is clicked. It will render internally as a HTML link element, so allows to open the link in a new tab or window.",
+    },
+    target: {
+      control: "select",
+      options: [undefined, ...navTargets],
+      description:
+        "The target to navigate to when the button is clicked. It will render internally as a HTML link element, so allows to open the link in a new tab or window.",
+    },
   },
-} satisfies Meta<typeof Button>
+} satisfies Meta<typeof F0Button>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -106,17 +128,40 @@ export const Default: Story = {
   },
 }
 
+// Basic Variants
+export const WithHref: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "A button that navigates to a different page when clicked. It will render as a HTML link element.",
+      },
+    },
+  },
+  args: {
+    variant: "default",
+    label: "Default Button",
+    href: "https://www.google.com",
+    "data-test": "data",
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const button = canvas.getByRole("a")
+    await expect(button.dataset.test).toBe("data")
+  },
+}
+
 export const Variants: Story = {
   parameters: withSnapshot({}),
   render: (args) => (
     <div className="flex gap-2">
-      <Button {...args} variant="default" label="Default" />
-      <Button {...args} variant="outline" label="Outline" />
-      <Button {...args} variant="neutral" label="Neutral" />
-      <Button {...args} variant="ghost" label="Ghost" />
-      <Button {...args} variant="critical" label="Critical" />
-      <Button {...args} variant="promote" label="Promote" />
-      {/* <Button {...args} variant="outlinePromote" label="Outline Promote" /> */}
+      <F0Button {...args} variant="default" label="Default" />
+      <F0Button {...args} variant="outline" label="Outline" />
+      <F0Button {...args} variant="neutral" label="Neutral" />
+      <F0Button {...args} variant="ghost" label="Ghost" />
+      <F0Button {...args} variant="critical" label="Critical" />
+      <F0Button {...args} variant="promote" label="Promote" />
     </div>
   ),
 }
@@ -128,18 +173,28 @@ export const IconVariants: Story = {
       <div>
         <div style={{ fontWeight: 600, marginBottom: 8 }}>With icon</div>
         <div className="flex gap-2">
-          <Button {...args} variant="default" label="Default" icon={Add} />
-          <Button {...args} variant="outline" label="Outline" icon={Add} />
-          <Button {...args} variant="neutral" label="Neutral" icon={Archive} />
-          <Button {...args} variant="ghost" label="Ghost" icon={Save} />
-          <Button {...args} variant="critical" label="Critical" icon={Delete} />
-          <Button {...args} variant="promote" label="Promote" icon={Add} />
+          <F0Button {...args} variant="default" label="Default" icon={Add} />
+          <F0Button {...args} variant="outline" label="Outline" icon={Add} />
+          <F0Button
+            {...args}
+            variant="neutral"
+            label="Neutral"
+            icon={Archive}
+          />
+          <F0Button {...args} variant="ghost" label="Ghost" icon={Save} />
+          <F0Button
+            {...args}
+            variant="critical"
+            label="Critical"
+            icon={Delete}
+          />
+          <F0Button {...args} variant="promote" label="Promote" icon={Add} />
         </div>
       </div>
       <div>
         <div style={{ fontWeight: 600, marginBottom: 8 }}>Only icon</div>
         <div className="flex gap-2">
-          <Button
+          <F0Button
             {...args}
             variant="default"
             label="Default"
@@ -147,7 +202,7 @@ export const IconVariants: Story = {
             hideLabel
             round
           />
-          <Button
+          <F0Button
             {...args}
             variant="outline"
             label="Outline"
@@ -155,7 +210,7 @@ export const IconVariants: Story = {
             hideLabel
             round
           />
-          <Button
+          <F0Button
             {...args}
             variant="neutral"
             label="Neutral"
@@ -163,7 +218,7 @@ export const IconVariants: Story = {
             hideLabel
             round
           />
-          <Button
+          <F0Button
             {...args}
             variant="ghost"
             label="Ghost"
@@ -171,7 +226,7 @@ export const IconVariants: Story = {
             hideLabel
             round
           />
-          <Button
+          <F0Button
             {...args}
             variant="critical"
             label="Critical"
@@ -179,7 +234,7 @@ export const IconVariants: Story = {
             hideLabel
             round
           />
-          <Button
+          <F0Button
             {...args}
             variant="promote"
             label="Promote"
@@ -192,14 +247,7 @@ export const IconVariants: Story = {
       <div>
         <div style={{ fontWeight: 600, marginBottom: 8 }}>Only emoji</div>
         <div className="flex gap-2">
-          <Button
-            {...args}
-            emoji="🥰"
-            label="🥰"
-            variant="neutral"
-            hideLabel
-            round
-          />
+          <F0Button {...args} emoji="🥰" label="🥰" variant="neutral" round />
         </div>
       </div>
     </div>
@@ -211,9 +259,9 @@ export const Sizes: Story = {
   parameters: withSnapshot({}),
   render: (args) => (
     <div className="flex items-center gap-4">
-      <Button {...args} size="lg" label="Large" />
-      <Button {...args} size="md" label="Medium" />
-      <Button {...args} size="sm" label="Small" />
+      <F0Button {...args} size="lg" label="Large" />
+      <F0Button {...args} size="md" label="Medium" />
+      <F0Button {...args} size="sm" label="Small" />
     </div>
   ),
 }
@@ -244,7 +292,7 @@ export const AsyncAction: Story = {
       alert("Changes saved!")
     }
 
-    return <Button {...args} onClick={onClick} />
+    return <F0Button {...args} onClick={onClick} />
   },
 }
 
@@ -252,9 +300,15 @@ export const IconButtonGroup: Story = {
   parameters: withSnapshot({}),
   render: () => (
     <div className="flex items-center gap-2">
-      <Button variant="ghost" icon={Add} hideLabel round label="Add" />
-      <Button variant="ghost" icon={Archive} hideLabel round label="Archive" />
-      <Button variant="ghost" icon={Delete} hideLabel round label="Delete" />
+      <F0Button variant="ghost" icon={Add} hideLabel round label="Add" />
+      <F0Button
+        variant="ghost"
+        icon={Archive}
+        hideLabel
+        round
+        label="Archive"
+      />
+      <F0Button variant="ghost" icon={Delete} hideLabel round label="Delete" />
     </div>
   ),
 }
@@ -274,10 +328,10 @@ export const States: Story = {
     const [asyncLoading, setAsyncLoading] = React.useState(false)
     return (
       <div className="flex gap-2">
-        <Button {...args} label="Pressed" pressed />
-        <Button {...args} label="Disabled" disabled />
-        <Button {...args} label="Loading" loading />
-        <Button
+        <F0Button {...args} label="Pressed" pressed />
+        <F0Button {...args} label="Disabled" disabled />
+        <F0Button {...args} label="Loading" loading />
+        <F0Button
           {...args}
           label={asyncLoading ? "Saving..." : "Async Loading"}
           loading={asyncLoading}
@@ -297,7 +351,7 @@ export const AsyncLoading: Story = {
   render: (args) => {
     const [asyncLoading, setAsyncLoading] = React.useState(false)
     return (
-      <Button
+      <F0Button
         {...args}
         label={asyncLoading ? "Saving..." : "Async Loading"}
         loading={asyncLoading}

@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { Sliders } from "@/icons/app"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
@@ -105,7 +105,7 @@ export const Settings = <
     <div className="flex gap-2">
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild onClick={() => setOpen(!open)}>
-          <Button
+          <F0Button
             variant="outline"
             label="Filters"
             icon={Sliders}

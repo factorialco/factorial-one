@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import CrossIcon from "@/icons/app/Cross"
 import { ButtonVariant } from "@/ui/button"
 import { Card, CardContent, CardFooter } from "@/ui/Card"
@@ -81,7 +81,7 @@ export function ProductWidget({
           <CardContent>
             {dismissible && (
               <div className="absolute right-2 top-2 z-10">
-                <Button
+                <F0Button
                   variant="ghost"
                   icon={CrossIcon}
                   size="sm"
@@ -138,7 +138,7 @@ export function ProductWidget({
                     variant={action.variant}
                   />
                 ) : (
-                  <Button
+                  <F0Button
                     key={action.label}
                     label={action.label}
                     onClick={action.onClick}

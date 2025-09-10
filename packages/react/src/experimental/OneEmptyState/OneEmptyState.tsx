@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { F0AvatarAlert } from "@/components/avatars/F0AvatarAlert"
 import { F0AvatarEmoji } from "@/components/avatars/F0AvatarEmoji"
 import { UpsellingButton } from "@/components/UpsellingKit/UpsellingButton"
@@ -43,7 +43,7 @@ export function OneEmptyState({
               )
             } else {
               return (
-                <Button
+                <F0Button
                   key={action.label}
                   label={action.label}
                   variant={action.variant}

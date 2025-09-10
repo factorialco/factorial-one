@@ -1,5 +1,5 @@
-import { Button } from "@/components/Actions/Button"
-import { Link } from "@/components/Actions/Link"
+import { F0Button } from "@/components/actions/F0Button"
+import { F0Link } from "@/components/actions/F0Link"
 import { F0AvatarIcon } from "@/components/avatars/F0AvatarIcon"
 import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
 import { Reactions, ReactionsProps } from "@/experimental/Information/Reactions"
@@ -102,13 +102,13 @@ export const BaseCommunityPost = ({
     >
       <div className="hidden md:block">
         {author ? (
-          <Link href={author.url} title={authorFullName} stopPropagation>
+          <F0Link href={author.url} title={authorFullName} stopPropagation>
             <F0AvatarPerson
               firstName={author.firstName}
               lastName={author.lastName}
               src={author.avatarUrl}
             />
-          </Link>
+          </F0Link>
         ) : (
           <F0AvatarIcon icon={PersonIcon} />
         )}
@@ -119,7 +119,7 @@ export const BaseCommunityPost = ({
             <div className="flex flex-1 flex-row flex-wrap items-center gap-1">
               {author ? (
                 <>
-                  <Link
+                  <F0Link
                     href={author.url}
                     className="block md:hidden"
                     title={authorFullName}
@@ -133,15 +133,15 @@ export const BaseCommunityPost = ({
                         size="xs"
                       />
                     </span>
-                  </Link>
-                  <Link
+                  </F0Link>
+                  <F0Link
                     href={author.url}
                     title={authorFullName}
                     className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
                     stopPropagation
                   >
                     {authorFullName}
-                  </Link>
+                  </F0Link>
                 </>
               ) : (
                 <div className="block md:hidden">
@@ -156,14 +156,14 @@ export const BaseCommunityPost = ({
               >
                 {inLabel}
               </span>
-              <Link
+              <F0Link
                 onClick={group.onClick}
                 title={group.title}
                 className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
                 stopPropagation
               >
                 {group.title}
-              </Link>
+              </F0Link>
               <span className="hidden text-f1-foreground-secondary md:inline">
                 ·
               </span>
@@ -230,7 +230,7 @@ export const BaseCommunityPost = ({
         <p className="text-f1-foreground-secondary">{countersDisplay}</p>
         <div className="flex flex-row gap-2.5">
           {!noReactionsButton && (
-            <Button
+            <F0Button
               label={comment.label}
               onClick={comment.onClick}
               variant="outline"

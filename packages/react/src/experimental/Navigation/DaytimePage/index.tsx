@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
 import { F0AvatarPulse } from "@/components/avatars/F0AvatarPulse"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
@@ -58,7 +58,7 @@ export function DaytimePage({
         <div className="@container">
           <div className="flex flex-row items-center gap-2 px-5 py-4 @5xl:px-6">
             {(isSmallScreen || sidebarState === "hidden") && (
-              <Button
+              <F0Button
                 variant="ghost"
                 onClick={toggleSidebar}
                 label="Open main menu"

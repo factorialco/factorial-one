@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { Ellipsis } from "@/icons/app"
 import { cn } from "@/lib/utils"
@@ -44,7 +44,7 @@ export const ItemActionsDropdown = ({
           onOpenChange?.(open)
         }}
       >
-        <Button
+        <F0Button
           icon={Ellipsis}
           label={label}
           hideLabel

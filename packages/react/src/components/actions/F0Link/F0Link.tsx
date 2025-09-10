@@ -25,14 +25,14 @@ const linkVariants = cva({
   },
 })
 
-export interface LinkProps
+export interface F0LinkProps
   extends BaseLinkProps,
     VariantProps<typeof linkVariants>,
     DataAttributes {
   stopPropagation?: boolean
 }
 
-export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
+export const F0Link = forwardRef<HTMLAnchorElement, F0LinkProps>(function Link(
   { className, children, variant, stopPropagation = false, ...props },
   ref
 ) {

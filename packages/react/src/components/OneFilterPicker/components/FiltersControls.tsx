@@ -1,8 +1,8 @@
+import { F0Button } from "@/components/actions/F0Button"
+import { Filter } from "@/icons/app"
+import { useI18n } from "@/lib/providers/i18n"
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useEffect, useId, useMemo, useState } from "react"
-import { Filter } from "../../../icons/app"
-import { useI18n } from "../../../lib/providers/i18n"
-import { Popover, PopoverContent, PopoverTrigger } from "../../../ui/popover"
-import { Button } from "../../Actions/Button"
 import { getFilterType } from "../filterTypes"
 import { FilterTypeContext, FilterTypeSchema } from "../filterTypes/types"
 import type { FiltersDefinition, FiltersState } from "../types"
@@ -96,7 +96,7 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     <div className="flex items-center gap-2">
       <Popover open={isOpen} onOpenChange={onOpenChange}>
         <PopoverTrigger asChild>
-          <Button
+          <F0Button
             variant="outline"
             label={i18n.filters.label}
             icon={Filter}
@@ -138,7 +138,7 @@ export function FiltersControls<Filters extends FiltersDefinition>({
               )}
             </div>
             <div className="flex items-center justify-end gap-2 border border-solid border-transparent border-t-f1-border-secondary p-2">
-              <Button
+              <F0Button
                 onClick={handleApplyFilters}
                 label={i18n.filters.applyFilters}
               />

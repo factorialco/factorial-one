@@ -1,13 +1,13 @@
 import { render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test, vi } from "vitest"
-import Add from "../../../icons/app/Add"
-import { Button } from "./index"
+import Add from "../../../../icons/app/Add"
+import { F0Button } from "../index"
 
 test("Button calls the `onClick` handler when clicked", async () => {
   const onClick = vi.fn()
 
-  render(<Button label="Click me" onClick={() => onClick()} />)
+  render(<F0Button label="Click me" onClick={() => onClick()} />)
 
   const button = screen.getByRole("button")
   await userEvent.click(button)
@@ -20,7 +20,7 @@ test("Button is temporarily disabled when onClick is a promise until the promise
     vi.fn()
   }
 
-  render(<Button label="Click me" onClick={() => onClick()} />)
+  render(<F0Button label="Click me" onClick={() => onClick()} />)
 
   const button = screen.getByRole("button", { name: "Click me" })
   await userEvent.click(button)
@@ -31,7 +31,7 @@ test("Button is temporarily disabled when onClick is a promise until the promise
 })
 
 test("Button renders with icon", () => {
-  render(<Button label="Add Item" icon={Add} />)
+  render(<F0Button label="Add Item" icon={Add} />)
   const button = screen.getByRole("button")
   const svg = button.querySelector("svg")
   expect(svg).toBeInTheDocument()
@@ -39,7 +39,7 @@ test("Button renders with icon", () => {
 })
 
 test("Button renders as icon-only when hideLabel is true", () => {
-  render(<Button label="Add Item" icon={Add} hideLabel round />)
+  render(<F0Button label="Add Item" icon={Add} hideLabel round />)
   const button = screen.getByTitle("Add Item")
   const svg = button.querySelector("svg")
   expect(svg).toBeInTheDocument()
@@ -47,12 +47,12 @@ test("Button renders as icon-only when hideLabel is true", () => {
 })
 
 test("Button shows loading state", () => {
-  render(<Button label="Submit" loading />)
+  render(<F0Button label="Submit" loading />)
   expect(screen.getByRole("button")).toBeDisabled()
 })
 
 test("Button is disabled when disabled prop is true", () => {
-  render(<Button label="Submit" disabled />)
+  render(<F0Button label="Submit" disabled />)
   const button = screen.getByRole("button")
   expect(button).toBeDisabled()
 })
@@ -64,7 +64,7 @@ test("Button handles async click with error", async () => {
   }
 
   render(
-    <Button
+    <F0Button
       label="Error Test"
       onClick={() => {
         onClick().catch(onError)

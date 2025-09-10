@@ -1,5 +1,5 @@
-import { Button } from "@/components/Actions/Button"
-import { ButtonInternal } from "@/components/Actions/Button/internal"
+import { F0Button } from "@/components/actions/F0Button"
+import { ButtonInternal } from "@/components/actions/F0Button/internal"
 import { F0Icon } from "@/components/F0Icon"
 import { ProductCard } from "@/components/UpsellingKit/ProductCard"
 import AlertCircle from "@/icons/app/AlertCircle"
@@ -302,14 +302,14 @@ const Header = ({
 }: {
   title: string
   url: string
-  onClick: ComponentProps<typeof Button>["onClick"]
+  onClick: ComponentProps<typeof F0Button>["onClick"]
 }) => (
   <a
     href={url}
     className="flex items-center justify-between gap-4 px-4 pb-2 pt-3 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
   >
     <h2 className="text-base font-medium">{title}</h2>
-    <Button
+    <F0Button
       variant="outline"
       round
       size="sm"
@@ -369,7 +369,7 @@ const NoUpdates = ({
     icon={<F0Icon icon={Megaphone} size="lg" className="block" />}
     button={
       <Link href={buttonUrl}>
-        <Button label={buttonText} />
+        <F0Button label={buttonText} />
       </Link>
     }
   />
@@ -386,7 +386,7 @@ const ErrorScreen = ({
     description={description}
     iconWrapperClassName="text-f1-icon-critical bg-f1-background-critical border-f1-critical"
     icon={<F0Icon icon={AlertCircle} size="lg" />}
-    button={<Button variant="outline" label={buttonText} onClick={onClick} />}
+    button={<F0Button variant="outline" label={buttonText} onClick={onClick} />}
   />
 )
 
@@ -465,7 +465,7 @@ const DiscoverMoreProducts = ({
             </p>
 
             <div className="relative z-10 h-6 w-6">
-              <Button
+              <F0Button
                 variant="ghost"
                 icon={CrossIcon}
                 size="sm"

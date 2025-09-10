@@ -9,10 +9,10 @@ import {
   useEffect,
   useState,
 } from "react"
-import { F0Icon } from "../../F0Icon"
-import { iconOnlyVariants } from "./internal"
+import { F0Icon } from "../../../F0Icon"
+import { iconOnlyVariants } from "../../F0Button/internal"
 
-export type CopyButtonProps = Omit<
+export type F0ButtonCopyProps = Omit<
   ComponentProps<typeof ShadcnButton>,
   "onClick" | "children" | "title" | "label" | "hideLabel" | "icon" | "round"
 > & {
@@ -29,7 +29,7 @@ const copyIconMotionVariants = {
 }
 const copyIconTransition = { duration: 0.15, ease: "easeOut" }
 
-export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(
+export const F0ButtonCopy = forwardRef<HTMLButtonElement, F0ButtonCopyProps>(
   (
     {
       valueToCopy,
@@ -111,4 +111,4 @@ export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(
   }
 )
 
-CopyButton.displayName = "CopyButton"
+F0ButtonCopy.displayName = "F0CopyButton"

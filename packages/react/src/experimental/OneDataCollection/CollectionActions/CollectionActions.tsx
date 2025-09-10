@@ -1,6 +1,6 @@
 import { Ellipsis } from "@/icons/app"
 import { useState } from "react"
-import { Button } from "../../../components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { Dropdown } from "../../Navigation/Dropdown"
 import {
   PrimaryActionsDefinition,
@@ -36,7 +36,7 @@ export const CollectionActions = ({
   return (
     <div className="flex flex-row-reverse items-center gap-2">
       {primaryActionsButton.map((action) => (
-        <Button
+        <F0Button
           size="md"
           key={action.label}
           onClick={action.onClick}
@@ -47,7 +47,7 @@ export const CollectionActions = ({
       ))}
 
       {secondaryActionsButtons?.map((action) => (
-        <Button
+        <F0Button
           size="md"
           key={action.label}
           onClick={action.onClick}
@@ -65,7 +65,7 @@ export const CollectionActions = ({
           open={open}
           onOpenChange={onOpenChange}
         >
-          <Button
+          <F0Button
             variant="outline"
             icon={Ellipsis}
             label="Actions"

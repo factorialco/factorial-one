@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { Select } from "@/experimental/Forms/Fields/Select"
 import { Ascending, Descending } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
@@ -70,7 +70,7 @@ export const GroupingSelector = <
           />
         </div>
         {currentGrouping?.field && (
-          <Button
+          <F0Button
             hideLabel
             label={i18n.collections.grouping.toggleDirection}
             variant="outline"

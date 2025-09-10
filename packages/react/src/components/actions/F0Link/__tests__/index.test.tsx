@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import { Link } from "../"
+import { F0Link } from ".."
 import { useNavigation } from "../../../../lib/linkHandler"
 
 vi.mock("@/lib/linkHandler", async () => {
@@ -10,29 +10,29 @@ vi.mock("@/lib/linkHandler", async () => {
 
 describe("Link", () => {
   it("renders children correctly", () => {
-    render(<Link href="/test">Click me</Link>)
+    render(<F0Link href="/test">Click me</F0Link>)
     expect(screen.getByText("Click me")).toBeInTheDocument()
   })
 
   it("applies link variant by default", () => {
-    render(<Link href="/test">Click me</Link>)
+    render(<F0Link href="/test">Click me</F0Link>)
     expect(screen.getByRole("link")).toHaveClass("underline")
   })
 
   it("shows external link icon when target is _blank", () => {
     render(
-      <Link href="https://example.com" target="_blank">
+      <F0Link href="https://example.com" target="_blank">
         External Link
-      </Link>
+      </F0Link>
     )
     expect(screen.getByRole("link").querySelector("svg")).toBeInTheDocument()
   })
 
   it("applies custom className", () => {
     render(
-      <Link href="/test" className="custom-class">
+      <F0Link href="/test" className="custom-class">
         Click me
-      </Link>
+      </F0Link>
     )
     expect(screen.getByRole("link")).toHaveClass("custom-class")
   })
@@ -41,22 +41,22 @@ describe("Link", () => {
     const { isActive } = vi.mocked(useNavigation)()
     vi.mocked(isActive).mockReturnValue(true)
 
-    render(<Link href="/test">Click me</Link>)
+    render(<F0Link href="/test">Click me</F0Link>)
     expect(screen.getByRole("link")).toHaveAttribute("aria-current", "page")
   })
 
   it("forwards ref correctly", () => {
     const ref = { current: null }
     render(
-      <Link href="/test" ref={ref}>
+      <F0Link href="/test" ref={ref}>
         Click me
-      </Link>
+      </F0Link>
     )
     expect(ref.current).toBeInstanceOf(HTMLAnchorElement)
   })
 
   it("passes href correctly", () => {
-    render(<Link href="/test">Click me</Link>)
+    render(<F0Link href="/test">Click me</F0Link>)
     expect(screen.getByRole("link")).toHaveAttribute("href", "/test")
   })
 })

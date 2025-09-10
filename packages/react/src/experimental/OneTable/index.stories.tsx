@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
 import { F0Checkbox } from "@/components/F0Checkbox"
 import { Delete, Ellipsis, Pencil } from "@/icons/app"
@@ -581,7 +581,7 @@ export const Actions: Story = {
                   },
                 ]}
               >
-                <Button
+                <F0Button
                   hideLabel
                   variant="ghost"
                   icon={Ellipsis}
@@ -661,7 +661,7 @@ export const WithLinks: Story = {
                   },
                 ]}
               >
-                <Button
+                <F0Button
                   hideLabel
                   variant="ghost"
                   icon={Ellipsis}
@@ -809,7 +809,7 @@ export const WithOnClick: Story = {
                     },
                   ]}
                 >
-                  <Button
+                  <F0Button
                     hideLabel
                     variant="ghost"
                     icon={Ellipsis}

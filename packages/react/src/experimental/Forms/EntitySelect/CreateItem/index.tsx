@@ -1,6 +1,6 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { Plus } from "@/icons/app"
-import { cn } from "../../../../lib/utils"
+import { cn } from "@/lib/utils"
 import { focusNextFocusable, focusPreviousFocusable } from "../ListItem"
 
 export const CreateItem = ({
@@ -32,7 +32,7 @@ export const CreateItem = ({
           "select-none"
         )}
       >
-        <Button
+        <F0Button
           hideLabel
           label={label}
           onClick={() => onCreate()}

@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { ModuleId } from "@/components/avatars/F0AvatarModule"
 import { IconType } from "@/components/F0Icon"
 import type { StatusVariant } from "@/components/tags/F0TagStatus"
@@ -89,7 +89,7 @@ function PageNavigationLink({
       disabled={disabled}
       ref={ref}
     >
-      <Button
+      <F0Button
         size="sm"
         variant="outline"
         round
@@ -153,7 +153,7 @@ export function PageHeader({
               exit={{ opacity: 0, width: 0 }}
             >
               <div className="mr-3">
-                <Button
+                <F0Button
                   ref={(buttonEl) => {
                     buttonEl?.focus()
                   }}
@@ -180,7 +180,7 @@ export function PageHeader({
             !("loading" in parentBreadcrumb) && (
               <div className="absolute left-4">
                 <Link href={parentBreadcrumb.href}>
-                  <Button
+                  <F0Button
                     variant="ghost"
                     hideLabel
                     round
@@ -296,7 +296,7 @@ function PageAction({ action }: { action: PageAction }): ReactElement {
   if ("actions" in action) {
     return (
       <Dropdown items={action.actions} open={isOpen} onOpenChange={setIsOpen}>
-        <Button
+        <F0Button
           size="md"
           variant="outline"
           label={action.label}
@@ -315,7 +315,7 @@ function PageAction({ action }: { action: PageAction }): ReactElement {
       aria-label={action.label}
       ref={ref}
     >
-      <Button
+      <F0Button
         size="md"
         variant="outline"
         label={action.label}

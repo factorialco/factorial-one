@@ -1,9 +1,9 @@
 import { Component } from "../../lib/component"
-import { Link as LinkComponent } from "./Link"
+import { F0Link as LinkComponent } from "./F0Link"
 
-export * from "./Button"
+export * from "./F0Button"
 
-export type { LinkProps } from "./Link"
+export type { F0LinkProps as LinkProps } from "./F0Link"
 export const Link = Component(
   {
     name: "Link",

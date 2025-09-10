@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import {
   GranularityDefinitionKey,
   OneCalendar,
@@ -206,7 +206,7 @@ export function OneDatePickerPopup({
             {(presets.length > 0 || granularities.length > 1) && (
               <div>
                 {presets.length > 0 && (
-                  <Button
+                  <F0Button
                     icon={ChevronLeft}
                     variant="neutral"
                     size="sm"

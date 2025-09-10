@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { F0AvatarAlert } from "@/components/avatars/F0AvatarAlert"
 import { F0Icon } from "@/components/F0Icon"
 import { ExternalLink } from "@/icons/app"
@@ -92,7 +92,7 @@ export const OneAlert = ({
               <F0Icon icon={ExternalLink} size="sm" />
             </a>
           )}
-          <Button
+          <F0Button
             label={action.label}
             variant={buttonVariants[variant]}
             onClick={action.onClick}

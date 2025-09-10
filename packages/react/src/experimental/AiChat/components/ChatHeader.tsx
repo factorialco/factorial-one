@@ -1,4 +1,4 @@
-import { ButtonInternal } from "@/components/Actions/Button/internal"
+import { ButtonInternal } from "@/components/actions/F0Button/internal"
 import Cross from "@/icons/app/Cross"
 import Maximize from "@/icons/app/Maximize"
 import Minimize from "@/icons/app/Minimize"

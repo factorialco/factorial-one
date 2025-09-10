@@ -1,8 +1,8 @@
-import { Button, ButtonProps } from "@/components/Actions/Button"
+import { F0Button, F0ButtonProps } from "@/components/actions/F0Button"
 import {
   OneDropdownButton,
   OneDropdownButtonProps,
-} from "@/components/Actions/OneDropdownButton"
+} from "@/components/actions/OneDropdownButton"
 import { AvatarVariant, F0Avatar } from "@/components/avatars/F0Avatar"
 import { StatusVariant } from "@/components/tags/F0TagStatus"
 import { Description } from "@/experimental/Information/Headers/BaseHeader/Description"
@@ -55,18 +55,18 @@ const isVisible = (action: { isVisible?: boolean }) =>
 const ButtonWithTooltip = memo(function ButtonWithTooltip({
   tooltip,
   ...buttonProps
-}: ButtonProps & { tooltip?: string }) {
+}: F0ButtonProps & { tooltip?: string }) {
   if (tooltip) {
     const Wrapper = buttonProps.disabled ? "span" : Fragment
     return (
       <Tooltip description={tooltip}>
         <Wrapper>
-          <Button {...buttonProps} />
+          <F0Button {...buttonProps} />
         </Wrapper>
       </Tooltip>
     )
   }
-  return <Button {...buttonProps} />
+  return <F0Button {...buttonProps} />
 })
 
 const DropdownButtonWithTooltip = memo(function DropdownButtonWithTooltip({

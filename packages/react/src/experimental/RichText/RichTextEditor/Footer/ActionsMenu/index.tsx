@@ -1,8 +1,8 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import {
   OneDropdownButton,
   OneDropdownButtonItem,
-} from "@/components/Actions/OneDropdownButton"
+} from "@/components/actions/OneDropdownButton"
 import { Switch } from "@/experimental/Forms/Fields/Switch"
 import { ToolbarDivider } from "@/experimental/RichText/CoreEditor"
 import {
@@ -142,7 +142,7 @@ const SecondaryActionsButtons = ({
       {/* Render button actions - these might be hidden in little mode */}
       {!shouldHideButtonActions &&
         buttonActions.map((action, index) => (
-          <Button
+          <F0Button
             key={`button-${index}`}
             onClick={(e) => {
               e.preventDefault()
@@ -172,7 +172,7 @@ const PrimaryActionButton = ({
   onClick,
 }: PrimaryActionButtonProps) => {
   return (
-    <Button
+    <F0Button
       onClick={onClick}
       variant={primaryAction.variant ?? "default"}
       size="md"
@@ -225,7 +225,7 @@ const renderPrimaryActionContent = ({
   return (
     <>
       {primaryAction.subActions?.map((sub) => (
-        <Button
+        <F0Button
           key={getLabelID(sub.label)}
           onClick={(e) => {
             e.preventDefault()

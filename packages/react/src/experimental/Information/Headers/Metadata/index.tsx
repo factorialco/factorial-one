@@ -1,4 +1,6 @@
-import { Button, CopyButton } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
+import { F0ButtonCopy } from "@/components/actions/internal/F0ButtonCopy"
+
 import {
   AvatarVariant,
   CompanyAvatarVariant,
@@ -226,7 +228,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
                   {item.actions?.map((action, index) => {
                     if (isMetadataCopyAction(action)) {
                       return (
-                        <CopyButton
+                        <F0ButtonCopy
                           key={`copy-${index}`}
                           valueToCopy={getValueToCopy(
                             item.value,
@@ -237,7 +239,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
                     } else {
                       return (
                         <Tooltip label={action.label} key={`tooltip-${index}`}>
-                          <Button
+                          <F0Button
                             key={`action-${index}`}
                             size="sm"
                             variant="neutral"

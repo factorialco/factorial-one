@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { F0ButtonToggle } from "@/experimental/Actions/F0ButtonToggle"
 import { Picker } from "@/experimental/Information/Reactions/Picker"
 import {
@@ -306,7 +306,7 @@ export const Toolbar = ({
   return (
     <div className={cn("flex flex-row items-start gap-2 overflow-hidden")}>
       {onClose && (
-        <Button
+        <F0Button
           onClick={(e) => {
             e.preventDefault()
             onClose()

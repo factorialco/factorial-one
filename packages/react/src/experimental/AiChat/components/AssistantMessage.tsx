@@ -1,4 +1,5 @@
-import { Button, CopyButton } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
+import { F0ButtonCopy } from "@/components/actions/internal/F0ButtonCopy"
 import { Spinner } from "@/experimental"
 import {
   ThumbsDown,
@@ -81,7 +82,7 @@ export const AssistantMessage = ({
           >
             <div className="flex gap-1">
               <div>
-                <CopyButton
+                <F0ButtonCopy
                   variant="ghost"
                   valueToCopy={content}
                   disabled={isGenerating}
@@ -92,7 +93,7 @@ export const AssistantMessage = ({
                 />
               </div>
               <div>
-                <Button
+                <F0Button
                   variant="ghost"
                   size="sm"
                   label={translations.actions.thumbsUp}
@@ -107,7 +108,7 @@ export const AssistantMessage = ({
                 />
               </div>
               <div>
-                <Button
+                <F0Button
                   variant="ghost"
                   size="sm"
                   label={translations.actions.thumbsDown}

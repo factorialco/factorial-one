@@ -1,4 +1,4 @@
-import { Button as ActionButton } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { F0Icon, F0IconProps, IconType } from "@/components/F0Icon"
 import {
   FaceNegative,
@@ -182,7 +182,7 @@ export const F0AvatarPulse = ({
                 }}
                 className="absolute -bottom-1 -right-1 rounded-sm bg-f1-background"
               >
-                <ActionButton
+                <F0Button
                   label={translations.actions.add}
                   variant="neutral"
                   size="sm"

@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { AvatarBadge } from "@/components/avatars/F0Avatar/types"
 import { F0AvatarPerson } from "@/components/avatars/F0AvatarPerson"
 import { F0Icon, IconType } from "@/components/F0Icon"
@@ -101,7 +101,7 @@ const BaseOnePersonListItem = React.forwardRef<
         {"actions" in props && (
           <div className="flex flex-1 flex-row items-center justify-end gap-2">
             {props.actions?.primary && (
-              <Button
+              <F0Button
                 variant="outline"
                 onClick={props.actions.primary.onClick}
                 label={props.actions.primary.label}
@@ -110,7 +110,7 @@ const BaseOnePersonListItem = React.forwardRef<
             )}
 
             {props.actions?.secondary && (
-              <Button
+              <F0Button
                 variant="outline"
                 onClick={props.actions.secondary.onClick}
                 label="Secondary"

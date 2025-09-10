@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { F0Checkbox } from "@/components/F0Checkbox"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { Ellipsis } from "@/icons/app"
@@ -66,7 +66,7 @@ export function CardOptions({
       {hasOtherActions && (
         <div className="flex items-center justify-center">
           <Dropdown items={otherActions} open={isOpen} onOpenChange={setIsOpen}>
-            <Button
+            <F0Button
               label={translations.actions.other}
               icon={Ellipsis}
               variant="ghost"

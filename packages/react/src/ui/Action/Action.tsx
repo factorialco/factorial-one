@@ -1,5 +1,3 @@
-import { F0Icon } from "@/components/F0Icon"
-import { Spinner } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn, focusRing } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
@@ -11,6 +9,7 @@ import {
   buttonSizeVariants,
   iconVariants,
   linkSizeVariants,
+  loadingVariants,
 } from "./variants"
 
 export interface ActionCommonProps {
@@ -33,9 +32,11 @@ export interface ActionCommonProps {
   size?: "sm" | "md" | "lg"
 }
 
+export const navTargets = ["_blank", "_self", "_parent", "_top"] as const
+export type NavTarget = (typeof navTargets)[number]
 export interface LinkActionProps {
   href: string
-  target?: "_blank" | "_self" | "_parent" | "_top"
+  target?: NavTarget
 }
 
 type ActionVariantProps = VariantProps<typeof actionVariants>
@@ -93,18 +94,18 @@ export const Action = React.forwardRef<HTMLElement, ActionProps>(
         </div>
         <AnimatePresence>
           {loading && !isLinkStyled && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.7 }}
-              transition={{ duration: 0.1, ease: "easeInOut" }}
-              className={cn(
-                "absolute inset-0 flex items-center justify-center",
-                iconVariants({ variant: defaultVariant, mode: "only" })
-              )}
-            >
-              <F0Icon icon={Spinner} className="animate-spin" />
-            </motion.div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <motion.div
+                className={cn(loadingVariants({ size, variant }))}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                aria-label="Loading..."
+              />
+            </div>
           )}
           {loading && isLinkStyled && (
             <Skeleton className="absolute inset-0 my-auto h-full w-full" />

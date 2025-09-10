@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import { Ellipsis } from "@/icons/app"
 import { Dropdown, DropdownItem } from "../../Dropdown"
 
@@ -29,7 +29,7 @@ export function ItemDropDown({
       open={open}
       onOpenChange={setOpen}
     >
-      <Button
+      <F0Button
         icon={Ellipsis}
         label="Actions"
         hideLabel

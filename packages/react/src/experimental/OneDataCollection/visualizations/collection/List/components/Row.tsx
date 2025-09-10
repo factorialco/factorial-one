@@ -1,18 +1,22 @@
-import { Link } from "@/components/Actions/Link"
+import { F0Link } from "@/components/actions/F0Link"
 import { F0Checkbox } from "@/components/F0Checkbox"
+import { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import { ItemActionsMobile } from "@/experimental/OneDataCollection/components/itemActions/ItemActionsMobile/ItemActionsMobile"
+import { ItemActionsRow } from "@/experimental/OneDataCollection/components/itemActions/ItemActionsRow/ItemActionsRow"
 import { ItemActionsRowContainer } from "@/experimental/OneDataCollection/components/itemActions/ItemActionsRowContainer"
 import { useItemActions } from "@/experimental/OneDataCollection/components/itemActions/useItemActions"
+import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import { renderProperty } from "@/experimental/OneDataCollection/property-render"
+import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
+import { SummariesDefinition } from "@/experimental/OneDataCollection/summary"
+import {
+  DataSource,
+  GroupingDefinition,
+  RecordType,
+} from "@/experimental/OneDataCollection/types"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { FiltersDefinition } from "../../../../../../components/OneFilterPicker/types"
-import { ItemActionsRow } from "../../../../components/itemActions/ItemActionsRow/ItemActionsRow"
-import { ItemActionsDefinition } from "../../../../item-actions"
-import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
-import { renderProperty } from "../../../../property-render"
-import { SortingsDefinition } from "../../../../sortings"
-import { SummariesDefinition } from "../../../../summary"
-import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
 import { ItemDefinition, ListPropertyDefinition } from "../types"
 import { ItemTeaser } from "./ItemTeaser"
 
@@ -112,9 +116,13 @@ export const Row = <
           </div>
         )}
         {itemHref && (
-          <Link href={itemHref} className="absolute inset-0 block" tabIndex={0}>
+          <F0Link
+            href={itemHref}
+            className="absolute inset-0 block"
+            tabIndex={0}
+          >
             <span className="sr-only">{actions.view}</span>
-          </Link>
+          </F0Link>
         )}
         <ItemTeaser
           title={itemDef.title}

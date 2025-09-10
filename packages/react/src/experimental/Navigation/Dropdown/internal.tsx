@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@/components/Actions/Button"
+import { F0Button, F0ButtonProps } from "@/components/actions/F0Button"
 import { AvatarVariant } from "@/components/avatars/F0Avatar"
 import { IconType } from "@/components/F0Icon"
 import { EllipsisHorizontal } from "@/icons/app"
@@ -30,7 +30,7 @@ export type DropdownItemObject = NavigationItem & {
 export type DropdownInternalProps = {
   items: DropdownItem[]
   icon?: IconType
-  size?: ButtonProps["size"]
+  size?: F0ButtonProps["size"]
   children?: React.ReactNode
   align?: "start" | "end"
   open?: boolean
@@ -96,7 +96,7 @@ export function DropdownInternal({
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
         {children || (
-          <Button
+          <F0Button
             {...rest}
             hideLabel
             icon={icon}

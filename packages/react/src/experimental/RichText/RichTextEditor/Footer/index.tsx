@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { F0Button } from "@/components/actions/F0Button"
 import {
   Toolbar,
   ToolbarDivider,
@@ -122,7 +122,7 @@ const Footer = ({
             ease: "easeInOut",
           }}
         >
-          <Button
+          <F0Button
             onClick={(e) => {
               e.preventDefault()
               setIsToolbarOpen(true)
@@ -137,7 +137,7 @@ const Footer = ({
             icon={TextSize}
           />
           {canUseFiles && (
-            <Button
+            <F0Button
               icon={Paperclip}
               onClick={(e) => {
                 e.preventDefault()
