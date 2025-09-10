@@ -43,7 +43,7 @@ export type Visualization<
       /** Kanban-based visualization type */
       type: "kanban"
       /** Configuration options for kanban visualization */
-      options: KanbanVisualizationOptions<Record, Filters, Sortings>
+      options: KanbanVisualizationOptions<R, Filters, Sortings>
     }
   | {
       /** Table-based visualization type */

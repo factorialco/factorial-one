@@ -1,5 +1,5 @@
 import { FiltersDefinition, RecordType } from "@/hooks/datasource"
-import { SelectedItems } from "@/hooks/datasource/types/selection.typings"
+import { SelectedItemsDetailedStatus } from "@/hooks/datasource/types/selection.typings"
 
 /**
  * Merges the select items status for all lanes into a single object
@@ -11,8 +11,8 @@ export const mergeLanesSelectItemsStatus = <
   R extends RecordType,
   Filters extends FiltersDefinition,
 >(
-  selectItemsStatus: Map<string, SelectedItems<R, Filters>>
-): SelectedItems<R, Filters> => {
+  selectItemsStatus: Map<string, SelectedItemsDetailedStatus<R, Filters>>
+): SelectedItemsDetailedStatus<R, Filters> => {
   const lanesStatus = Array.from(selectItemsStatus.values())
   return {
     allSelected: lanesStatus.every((status) => status.allSelected),

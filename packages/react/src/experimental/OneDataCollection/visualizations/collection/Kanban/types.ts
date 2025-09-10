@@ -1,23 +1,21 @@
 import { CardAvatarVariant } from "@/components/F0Card/components/CardAvatar"
 import { CardMetadataProperty } from "@/components/F0Card/types"
 import { IconType } from "@/components/F0Icon"
-import { TagVariant } from "@/components/tags/Tag"
-import {
-  ItemActionsDefinition,
-  NavigationFiltersDefinition,
-} from "@/experimental"
+import { Variant } from "@/components/tags/F0TagStatus"
 import {
   FiltersDefinition,
   GroupingDefinition,
   RecordType,
   SortingsDefinition,
 } from "@/hooks/datasource"
+import { ItemActionsDefinition } from "../../../item-actions"
+import { NavigationFiltersDefinition } from "../../../navigationFilters/types"
 import { CollectionProps, SummariesDefinition } from "../../../types"
 
 export type KanbanLaneDefinition = {
   id: string
   title: string
-  variant?: TagVariant
+  variant?: Variant
 }
 
 export type KanbanVisualizationOptions<

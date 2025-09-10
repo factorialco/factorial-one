@@ -1,8 +1,8 @@
+import { FiltersState } from "@/components/OneFilterPicker/types"
+import { PromiseState } from "@/lib/promise-to-observable"
 import { act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
-import { FiltersState } from "../../../components/OneFilterPicker/types"
-import { PromiseState } from "../../../lib/promise-to-observable"
 import {
   BaseDataAdapter,
   BaseFetchOptions,
@@ -449,11 +449,7 @@ describe("mergeFiltersWithIntersection", () => {
   it("should work with lanes feature", () => {
     // This test verifies that the lanes feature works correctly
     // The filter merging logic is tested indirectly through console output
-    const mockAdapter: PaginatedDataAdapter<
-      TestRecord,
-      TestFilters,
-      NavigationFiltersDefinition
-    > = {
+    const mockAdapter: PaginatedDataAdapter<TestRecord, TestFilters> = {
       paginationType: "infinite-scroll",
       perPage: 10,
       fetchData: vi.fn().mockResolvedValue({
@@ -464,22 +460,10 @@ describe("mergeFiltersWithIntersection", () => {
       }),
     }
 
-    const lanes = [
-      {
-        id: "test-lane",
-        filters: {
-          search: "test",
-        },
-      },
-    ]
-
     const source: DataSource<
       TestRecord,
       TestFilters,
       SortingsDefinition,
-      SummariesDefinition,
-      ItemActionsDefinition<TestRecord>,
-      NavigationFiltersDefinition,
       GroupingDefinition<TestRecord>
     > = {
       dataAdapter: mockAdapter,
@@ -487,7 +471,6 @@ describe("mergeFiltersWithIntersection", () => {
         search: "global",
       },
       setCurrentFilters: vi.fn(),
-      lanes,
       currentSortings: null,
       setCurrentSortings: vi.fn(),
       currentSearch: "",
@@ -495,9 +478,6 @@ describe("mergeFiltersWithIntersection", () => {
       setCurrentSearch: vi.fn(),
       isLoading: false,
       setIsLoading: vi.fn(),
-      currentNavigationFilters: {},
-      setCurrentNavigationFilters: vi.fn(),
-      navigationFilters: undefined,
       currentGrouping: undefined,
       setCurrentGrouping: vi.fn(),
     }

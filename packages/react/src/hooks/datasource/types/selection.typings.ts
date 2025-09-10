@@ -13,7 +13,7 @@ export type SelectedItemsState = {
   groups?: ReadonlyArray<{ groupId: string; checked: boolean }>
 }
 
-export type SelectedItems<
+export type SelectedItemsDetailedStatus<
   R extends RecordType,
   Filters extends FiltersDefinition,
 > = {
@@ -28,8 +28,8 @@ export type OnSelectItemsCallback<
   R extends RecordType,
   Filters extends FiltersDefinition,
 > = (
-  selectedItems: SelectedItems<R, Filters> & {
-    byLane?: Record<string, SelectedItems<R, Filters>>
+  selectedItems: SelectedItemsDetailedStatus<R, Filters> & {
+    byLane?: Record<string, SelectedItemsDetailedStatus<R, Filters>>
   },
   clearSelectedItems: () => void
 ) => void
