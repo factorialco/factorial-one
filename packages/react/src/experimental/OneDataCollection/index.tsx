@@ -446,6 +446,7 @@ const OneDataCollectionComp = <
     clearFilters: () => {
       setEmptyStateType(false)
       setCurrentFilters({})
+      setCurrentSearch(undefined)
     },
   })
 
