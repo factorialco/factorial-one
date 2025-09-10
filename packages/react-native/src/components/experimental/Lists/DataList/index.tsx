@@ -34,14 +34,14 @@ const _DataList = ({
         isHorizontalItem
           ? "flex min-h-12 flex-shrink flex-row"
           : "min-w-32 max-w-72",
-        tableView ? "px-2 py-4" : "",
+        tableView ? "px-[8px] pb-[10px] pt-[14px]" : "",
       )}
     >
       {!!label && (
         <Text
           className={cn(
             "px-1.5 text-f1-foreground-secondary",
-            isHorizontalItem ? "mt-1.5 w-36 shrink-0" : "mb-0.5",
+            isHorizontalItem ? "mt-1.5 w-36 shrink-0" : "",
           )}
         >
           {label}
