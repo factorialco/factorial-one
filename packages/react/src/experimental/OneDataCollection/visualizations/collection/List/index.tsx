@@ -138,7 +138,7 @@ export const ListCollection = <
       <ListSkeleton
         source={source}
         fields={fields}
-        count={10}
+        count={30}
         isInitialLoading
       />
     )

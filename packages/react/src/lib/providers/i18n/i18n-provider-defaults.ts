@@ -70,6 +70,7 @@ export const defaultTranslations = {
       table: "Table view",
       card: "Card view",
       list: "List view",
+      kanban: "Kanban view",
       pagination: {
         of: "of",
       },
@@ -179,7 +180,6 @@ export const defaultTranslations = {
     description: "Chat with AI",
     expandChat: "Expand chat",
     minimizeChat: "Minimize chat window",
-    newChat: "New Chat",
     openChat: "Open Chat",
     scrollToBottom: "Scroll to bottom",
     welcome: "I'm One. Ask or make anything.",

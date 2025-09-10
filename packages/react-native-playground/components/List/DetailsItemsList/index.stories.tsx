@@ -82,3 +82,11 @@ export const TableView: Story = {
     tableView: true,
   },
 };
+
+export const TableViewHorizontalItems: Story = {
+  args: {
+    title: undefined,
+    tableView: true,
+    isHorizontalItem: true,
+  },
+};

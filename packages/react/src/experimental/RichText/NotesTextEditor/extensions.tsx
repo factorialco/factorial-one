@@ -40,7 +40,7 @@ import {
   TranscriptLabels,
 } from "@/experimental/RichText/CoreEditor/Extensions/Transcript"
 
-export const createBasicTextEditorExtensions = (
+export const createNotesTextEditorExtensions = (
   placeholder: string,
   toolbarLabels: ToolbarLabels,
   groupLabels?: SlashCommandGroupLabels,

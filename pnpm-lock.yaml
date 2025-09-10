@@ -81,6 +81,9 @@ importers:
       '@atlaskit/pragmatic-drag-and-drop-hitbox':
         specifier: ^1.1.0
         version: 1.1.0
+      '@atlaskit/pragmatic-drag-and-drop-react-drop-indicator':
+        specifier: ^3.2.5
+        version: 3.2.5(@types/react@18.3.18)(react@18.3.1)
       '@copilotkit/react-core':
         specifier: ^1.10.2
         version: 1.10.2(@types/react@18.3.18)(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -920,6 +923,11 @@ packages:
 
   '@atlaskit/pragmatic-drag-and-drop-hitbox@1.1.0':
     resolution: {integrity: sha512-JWt6eVp6Br2FPHRM8s0dUIHQk/jFInGP1f3ti5CdtM1Ji5/pt8Akm44wDC063Gv2i5RGseixtbW0z/t6RYtbdg==}
+
+  '@atlaskit/pragmatic-drag-and-drop-react-drop-indicator@3.2.5':
+    resolution: {integrity: sha512-XNpZH0m1k9PiXAmm49NZqCAalsLc0VIFsUAjKkwoRfzNlCmHObv/B9vbwAVX+Zf7afUvBwi1RBEWjdjRHcYpNA==}
+    peerDependencies:
+      react: ^18.2.0 || ^19.0.0
 
   '@atlaskit/pragmatic-drag-and-drop@1.7.4':
     resolution: {integrity: sha512-lZHnO9BJdHPKnwB0uvVUCyDnIhL+WAHzXQ2EXX0qacogOsnvIUiCgY0BLKhBqTCWln3/f/Ox5jU54MKO6ayh9A==}
@@ -12904,6 +12912,18 @@ snapshots:
     dependencies:
       '@atlaskit/pragmatic-drag-and-drop': 1.7.4
       '@babel/runtime': 7.27.6
+
+  '@atlaskit/pragmatic-drag-and-drop-react-drop-indicator@3.2.5(@types/react@18.3.18)(react@18.3.1)':
+    dependencies:
+      '@atlaskit/pragmatic-drag-and-drop': 1.7.4
+      '@atlaskit/pragmatic-drag-and-drop-hitbox': 1.1.0
+      '@atlaskit/tokens': 6.0.0(@types/react@18.3.18)(react@18.3.1)
+      '@babel/runtime': 7.27.6
+      '@compiled/react': 0.18.6(react@18.3.1)
+      react: 18.3.1
+    transitivePeerDependencies:
+      - '@types/react'
+      - supports-color
 
   '@atlaskit/pragmatic-drag-and-drop@1.7.4':
     dependencies:

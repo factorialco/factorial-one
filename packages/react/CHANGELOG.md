@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.180.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.180.0...factorial-one-react-v1.180.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* adjust paddings and margins on entity selector ([#2552](https://github.com/factorialco/factorial-one/issues/2552)) ([52200b9](https://github.com/factorialco/factorial-one/commit/52200b98aadbdb69348b16293a05751676f3ea85))
+
+## [1.180.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.2...factorial-one-react-v1.180.0) (2025-09-09)
+
+
+### Features
+
+* **RichText:** header and toolbar integration ([#2528](https://github.com/factorialco/factorial-one/issues/2528)) ([9919163](https://github.com/factorialco/factorial-one/commit/9919163515b1fc0c936be5f42ce1b1f2c755678c))
+
+## [1.179.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.1...factorial-one-react-v1.179.2) (2025-09-09)
+
+
+### Bug Fixes
+
+* export hook and remove create button form chat header ([#2550](https://github.com/factorialco/factorial-one/issues/2550)) ([84d58b1](https://github.com/factorialco/factorial-one/commit/84d58b18ee9ff41d0d4285acfdbdd43731536798))
+
+## [1.179.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.0...factorial-one-react-v1.179.1) (2025-09-09)
+
+
+### Bug Fixes
+
+* solve infinite scroll loading in data collection ([#2546](https://github.com/factorialco/factorial-one/issues/2546)) ([20496fe](https://github.com/factorialco/factorial-one/commit/20496fe3f7e1977f1c9df19879c15db63f15a977))
+
 ## [1.179.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.178.1...factorial-one-react-v1.179.0) (2025-09-08)
 
 
