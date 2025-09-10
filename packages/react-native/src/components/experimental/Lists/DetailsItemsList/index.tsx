@@ -6,12 +6,14 @@ import { View, Text } from "react-native";
 export interface DetailsItemsListProps {
   title?: string;
   tableView?: boolean;
+  isHorizontalItem?: boolean;
   details: DetailsItemType[];
 }
 
 export const DetailsItemsList = function DetailsItemList({
   title,
   tableView = false,
+  isHorizontalItem = false,
   details,
 }: DetailsItemsListProps) {
   return (
@@ -36,7 +38,8 @@ export const DetailsItemsList = function DetailsItemList({
               key={item.title}
               content={item.content}
               spacingAtTheBottom={item.spacingAtTheBottom}
-              isHorizontal={tableView}
+              tableView={tableView}
+              isHorizontalItem={isHorizontalItem}
             />
             {tableView && index !== details.length - 1 && (
               <View className="h-[1px] w-full bg-f1-border-secondary" />
