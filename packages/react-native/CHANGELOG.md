@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.19.0...factorial-one-react-native-v0.19.1) (2025-09-10)
+
+
+### Bug Fixes
+
+* add new props to adapt the design ([#2559](https://github.com/factorialco/factorial-one/issues/2559)) ([b0832c2](https://github.com/factorialco/factorial-one/commit/b0832c254265499d95485af2258cab026ad51b51))
+
 ## [0.19.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.18.1...factorial-one-react-native-v0.19.0) (2025-09-03)
 
 
