@@ -722,7 +722,7 @@ export declare type DataSource<R extends RecordType, Filters extends FiltersDefi
     /** Function to update the current grouping state */
     setCurrentGrouping: React.Dispatch<React.SetStateAction<GroupingState<R, Grouping>>>;
     /** Function to provide an id for a record, necessary for append mode */
-    idProvider?: (item: R, index?: number) => string | number | symbol;
+    idProvider?: <Item extends R>(item: Item, index?: number) => string | number | symbol;
 };
 
 /**
@@ -852,6 +852,7 @@ export declare const defaultTranslations: {
             readonly table: "Table view";
             readonly card: "Card view";
             readonly list: "List view";
+            readonly kanban: "Kanban view";
             readonly pagination: {
                 readonly of: "of";
             };
@@ -961,7 +962,6 @@ export declare const defaultTranslations: {
         readonly description: "Chat with AI";
         readonly expandChat: "Expand chat";
         readonly minimizeChat: "Minimize chat window";
-        readonly newChat: "New Chat";
         readonly openChat: "Open Chat";
         readonly scrollToBottom: "Scroll to bottom";
         readonly welcome: "I'm One. Ask or make anything.";
@@ -1769,15 +1769,8 @@ declare interface OneFilterPickerRootProps<Definition extends FiltersDefinition>
     children?: React.ReactNode;
 }
 
-export declare type OnSelectItemsCallback<R extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {
-    allSelected: boolean | "indeterminate";
-    itemsStatus: ReadonlyArray<{
-        item: R;
-        checked: boolean;
-    }>;
-    groupsStatus: Record<string, boolean>;
-    filters: FiltersState<Filters>;
-    selectedCount: number;
+export declare type OnSelectItemsCallback<R extends RecordType, Filters extends FiltersDefinition> = (selectedItems: SelectedItemsDetailedStatus<R, Filters> & {
+    byLane?: Record<string, SelectedItemsDetailedStatus<R, Filters>>;
 }, clearSelectedItems: () => void) => void;
 
 /**
@@ -2048,6 +2041,17 @@ declare type SearchOptions = {
  * @template T - The type of items in the collection
  */
 export declare type SelectedItems<T> = ReadonlyArray<T>;
+
+export declare type SelectedItemsDetailedStatus<R extends RecordType, Filters extends FiltersDefinition> = {
+    allSelected: boolean | "indeterminate";
+    itemsStatus: ReadonlyArray<{
+        item: R;
+        checked: boolean;
+    }>;
+    groupsStatus: Record<string, boolean>;
+    filters: FiltersState<Filters>;
+    selectedCount: number;
+};
 
 /**
  * Represents the selected items by id
@@ -2462,7 +2466,7 @@ export declare interface UseDataOptions<R extends RecordType, Filters extends Fi
 /**
  * Hook return type for useData
  */
-declare interface UseDataReturn<R extends RecordType> {
+export declare interface UseDataReturn<R extends RecordType> {
     data: Data<R>;
     isInitialLoading: boolean;
     isLoading: boolean;
@@ -2472,7 +2476,7 @@ declare interface UseDataReturn<R extends RecordType> {
     setPage: (page: number) => void;
     loadMore: () => void;
     totalItems: number | undefined;
-    summaries?: R;
+    mergedFilters: FiltersState<FiltersDefinition>;
 }
 
 /**
@@ -2523,7 +2527,7 @@ export declare function useDraggable(args: {
     handleRef?: React.RefObject<HTMLElement | null>;
 }): void;
 
-export declare function useDroppableList(args: {
+export declare function useDroppableList(args?: {
     ref: React.RefObject<HTMLElement>;
     id: string;
     accepts: string[];
@@ -2547,7 +2551,7 @@ export declare const usePrivacyMode: () => {
 
 export declare const useReducedMotion: () => boolean;
 
-declare type UseSelectable<R extends RecordType> = {
+export declare type UseSelectable<R extends RecordType> = {
     isAllSelected: boolean;
     selectedItems: Map<number | string, R>;
     selectedGroups: Map<string, GroupRecord<R>>;
@@ -2659,15 +2663,15 @@ declare module "@tiptap/core" {
 }
 
 
-declare namespace Calendar {
-    var displayName: string;
-}
-
-
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
+}
+
+
+declare namespace Calendar {
+    var displayName: string;
 }

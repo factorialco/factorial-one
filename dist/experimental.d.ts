@@ -1,32 +1,40 @@
 import { AlertAvatarProps as AlertAvatarProps_2 } from '../../factorial-one';
 import { AlertTagCellValue } from './types/alertTag.tsx';
+import { AlertTagCellValue as AlertTagCellValue_2 } from '../../value-display/types/alertTag';
 import { AmountCellValue } from './types/amount.tsx';
+import { AmountCellValue as AmountCellValue_2 } from '../../value-display/types/amount';
 import { AnchorHTMLAttributes } from 'react';
 import { AreaChartWidgetProps } from './AreaChartWidget';
 import { AriaAttributes } from 'react';
 import { AvatarListCellValue } from './types/avatarList.tsx';
+import { AvatarListCellValue as AvatarListCellValue_2 } from '../../value-display/types/avatarList';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { BarChartProps } from '../../../components/Charts/BarChart';
 import { baseColors } from '@factorialco/factorial-one-core';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
 import { CompanyCellValue } from './types/company.tsx';
+import { CompanyCellValue as CompanyCellValue_2 } from '../../value-display/types/company';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
 import { CopilotKitProps } from '@copilotkit/react-core';
 import { DateCellValue } from './types/date.tsx';
+import { DateCellValue as DateCellValue_2 } from '../../value-display/types/date';
 import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
 import { Dispatch } from 'react';
 import { DotTagCellValue } from './types/dotTag.tsx';
+import { DotTagCellValue as DotTagCellValue_2 } from '../../value-display/types/dotTag';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Editor } from '@tiptap/react';
 import { FC } from 'react';
 import { FieldPath } from 'react-hook-form';
 import { FieldValues } from 'react-hook-form';
 import { FileCellValue } from './types/file.tsx';
+import { FileCellValue as FileCellValue_2 } from '../../value-display/types/file';
 import { FolderCellValue } from './types/folder.tsx';
+import { FolderCellValue as FolderCellValue_2 } from '../../value-display/types/folder';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
 import { HTMLAttributes } from 'react';
@@ -39,10 +47,12 @@ import { JSONContent as JSONContent_2 } from '@tiptap/core';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
 import { NumberCellValue } from './types/number.tsx';
+import { NumberCellValue as NumberCellValue_2 } from '../../value-display/types/number';
 import { Observable } from 'zen-observable-ts';
 import { Path } from 'react-hook-form';
 import { PercentageCellValue } from './types/percentage.tsx';
 import { PersonCellValue } from './types/person.tsx';
+import { PersonCellValue as PersonCellValue_2 } from '../../value-display/types/person';
 import { PieChartProps } from '../../../components/Charts/PieChart';
 import { PopoverProps } from '@radix-ui/react-popover';
 import { PropsWithChildren } from 'react';
@@ -53,16 +63,22 @@ import * as RechartsPrimitive from 'recharts';
 import { RefAttributes } from 'react';
 import { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { StatusCellValue } from './types/status.tsx';
+import { StatusCellValue as StatusCellValue_2 } from '../../value-display/types/status';
 import { SVGProps } from 'react';
 import { TagCellValue } from './types/tag.tsx';
+import { TagCellValue as TagCellValue_2 } from '../../value-display/types/tag';
 import { TagListCellValue } from './types/tagList.tsx';
+import { TagListCellValue as TagListCellValue_2 } from '../../value-display/types/tagList';
 import { TeamCellValue } from './types/team.tsx';
+import { TeamCellValue as TeamCellValue_2 } from '../../value-display/types/team';
 import { TextCellValue } from './types/text.tsx';
+import { TextCellValue as TextCellValue_2 } from '../../value-display/types/text';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { useForm } from 'react-hook-form';
 import { UseFormHandleSubmit } from 'react-hook-form';
 import { UseFormProps } from 'react-hook-form';
 import { UseFormReturn } from 'react-hook-form';
+import { ValueDisplayRendererContext as ValueDisplayRendererContext_2 } from '../../value-display';
 import { VariantProps } from 'cva';
 import { VerticalBarChartProps } from '../../../components/Charts/VerticalBarChart';
 import { WidgetProps as WidgetProps_2 } from '../Widget';
@@ -218,6 +234,23 @@ export declare type AiChatProviderProps = {
     mode?: AiChatMode;
     greeting?: string;
 } & Pick<CopilotKitProps, "agent" | "credentials" | "children" | "runtimeUrl" | "showDevConsole" | "threadId" | "headers">;
+
+declare type AiChatProviderReturnValue = {
+    mode: AiChatMode;
+    setMode: React.Dispatch<React.SetStateAction<AiChatMode>>;
+    enabled: boolean;
+    setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    shouldPlayEntranceAnimation: boolean;
+    setShouldPlayEntranceAnimation: React.Dispatch<React.SetStateAction<boolean>>;
+} & Pick<AiChatState, "greeting">;
+
+declare interface AiChatState {
+    greeting?: string;
+    initialMode: AiChatMode;
+    enabled: boolean;
+}
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "warning" | "positive" | "destructive" | undefined;
@@ -810,9 +843,40 @@ declare type CardAvatarVariant = AvatarVariant | {
     icon: IconType;
 };
 
+/**
+ * Card metadata property renderers.
+ * Each metadata item consists of an icon and a property with its data.
+ */
+declare type CardMetadataProperty = {
+    [K in CardPropertyType]: {
+        type: K;
+        value: Parameters<(typeof valueDisplayRenderers)[K]>[0];
+    };
+}[CardPropertyType];
+
 declare type CardPropertyDefinition<T> = PropertyDefinition_2<T> & {
     icon?: IconType;
 };
+
+declare const cardPropertyRenderers: {
+    readonly text: (args: TextCellValue_2) => default_2.JSX.Element;
+    readonly number: (args: NumberCellValue_2, meta: ValueDisplayRendererContext_2) => default_2.JSX.Element;
+    readonly date: (args: DateCellValue_2) => default_2.JSX.Element;
+    readonly amount: (args: AmountCellValue_2, meta: ValueDisplayRendererContext_2) => default_2.JSX.Element;
+    readonly person: (args: PersonCellValue_2) => default_2.JSX.Element;
+    readonly company: (args: CompanyCellValue_2) => default_2.JSX.Element;
+    readonly team: (args: TeamCellValue_2) => default_2.JSX.Element;
+    readonly status: (args: StatusCellValue_2) => default_2.JSX.Element;
+    readonly tag: (args: TagCellValue_2) => default_2.JSX.Element;
+    readonly avatarList: (args: AvatarListCellValue_2) => default_2.JSX.Element;
+    readonly tagList: (args: TagListCellValue_2) => default_2.JSX.Element;
+    readonly alertTag: (args: AlertTagCellValue_2) => default_2.JSX.Element;
+    readonly dotTag: (args: DotTagCellValue_2) => default_2.JSX.Element;
+    readonly file: (args: FileCellValue_2) => default_2.JSX.Element;
+    readonly folder: (args: FolderCellValue_2) => default_2.JSX.Element;
+};
+
+declare type CardPropertyType = keyof typeof cardPropertyRenderers;
 
 declare type CardVisualizationOptions<T, _Filters extends FiltersDefinition, _Sortings extends SortingsDefinition> = {
     cardProperties: ReadonlyArray<CardPropertyDefinition<T>>;
@@ -1228,6 +1292,8 @@ export declare type DataCollectionSourceDefinition<R extends RecordType = Record
     /** Bulk actions that can be performed on the collection */
     bulkActions?: BulkActionsDefinition<R, Filters>;
     totalItemSummary?: (totalItems: number) => string;
+    /** Lanes configuration */
+    lanes?: ReadonlyArray<Lane<Filters>>;
 };
 
 /**
@@ -1278,7 +1344,7 @@ export declare type DataSource<R extends RecordType, Filters extends FiltersDefi
     /** Function to update the current grouping state */
     setCurrentGrouping: React.Dispatch<React.SetStateAction<GroupingState<R, Grouping>>>;
     /** Function to provide an id for a record, necessary for append mode */
-    idProvider?: (item: R, index?: number) => string | number | symbol;
+    idProvider?: <Item extends R>(item: Item, index?: number) => string | number | symbol;
 };
 
 /**
@@ -1487,6 +1553,7 @@ declare const defaultTranslations: {
             readonly table: "Table view";
             readonly card: "Card view";
             readonly list: "List view";
+            readonly kanban: "Kanban view";
             readonly pagination: {
                 readonly of: "of";
             };
@@ -1596,7 +1663,6 @@ declare const defaultTranslations: {
         readonly description: "Chat with AI";
         readonly expandChat: "Expand chat";
         readonly minimizeChat: "Minimize chat window";
-        readonly newChat: "New Chat";
         readonly openChat: "Open Chat";
         readonly scrollToBottom: "Scroll to bottom";
         readonly welcome: "I'm One. Ask or make anything.";
@@ -2480,6 +2546,33 @@ declare type Items = typeof Item_2 | typeof PersonItem | typeof CompanyItem | ty
 
 export declare function ItemSectionHeader({ item, children, isActive, collapsible, isExpanded, onToggleExpanded, sortable, }: TOCItemSectionHeaderProps): JSX_2.Element;
 
+declare type KanbanLaneDefinition = {
+    id: string;
+    title: string;
+    variant?: Variant;
+};
+
+declare type KanbanVisualizationOptions<Record extends RecordType, _Filters extends FiltersDefinition, _Sortings extends SortingsDefinition> = {
+    lanes: ReadonlyArray<KanbanLaneDefinition>;
+    title?: (record: Record) => string;
+    description?: (record: Record) => string;
+    avatar?: (record: Record) => CardAvatarVariant;
+    metadata?: (record: Record) => ReadonlyArray<{
+        icon: IconType;
+        property: CardMetadataProperty;
+    }>;
+    onMove?: (fromLaneId: string, toLaneId: string, sourceId: string, toIndex: number | null) => Promise<void>;
+};
+
+/**
+ * Represents a single lane configuration with its own filters
+ * @template Filters - The available filter configurations for this lane
+ */
+export declare type Lane<Filters extends FiltersDefinition> = {
+    id: string;
+    filters: FiltersState<Filters>;
+};
+
 export declare type lastIntentType = {
     selectedIntent?: string;
     customIntent?: string;
@@ -3146,15 +3239,8 @@ export declare type OnLoadDataCallback<Record extends RecordType, Filters extend
 
 export declare type OnLoadErrorCallback = (error: DataError) => void;
 
-export declare type OnSelectItemsCallback<R extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {
-    allSelected: boolean | "indeterminate";
-    itemsStatus: ReadonlyArray<{
-        item: R;
-        checked: boolean;
-    }>;
-    groupsStatus: Record<string, boolean>;
-    filters: FiltersState<Filters>;
-    selectedCount: number;
+export declare type OnSelectItemsCallback<R extends RecordType, Filters extends FiltersDefinition> = (selectedItems: SelectedItemsDetailedStatus<R, Filters> & {
+    byLane?: Record<string, SelectedItemsDetailedStatus<R, Filters>>;
 }, clearSelectedItems: () => void) => void;
 
 declare type OnSubmitHandler<TFieldValues extends FieldValues, TTransformedValues extends FieldValues | undefined = undefined> = (data: ReturnType<UseFormHandleSubmit<TFieldValues, TTransformedValues>>) => Promise<Success | FormError<TFieldValues>> | Success | FormError<TFieldValues>;
@@ -3719,6 +3805,17 @@ export declare const Select: <T extends string = string, R = unknown>(props: Sel
  * @template T - The type of items in the collection
  */
 export declare type SelectedItems<T> = ReadonlyArray<T>;
+
+export declare type SelectedItemsDetailedStatus<R extends RecordType, Filters extends FiltersDefinition> = {
+    allSelected: boolean | "indeterminate";
+    itemsStatus: ReadonlyArray<{
+        item: R;
+        checked: boolean;
+    }>;
+    groupsStatus: Record<string, boolean>;
+    filters: FiltersState<Filters>;
+    selectedCount: number;
+};
 
 /**
  * Represents the selected items by id
@@ -4375,6 +4472,8 @@ declare namespace Types {
 
 declare type URL_2 = string;
 
+export declare function useAiChat(): AiChatProviderReturnValue;
+
 export declare const useDataCollectionSource: <R extends RecordType = RecordType, FiltersSchema extends FiltersDefinition = FiltersDefinition, Sortings extends SortingsDefinition = SortingsDefinition, Summaries extends SummariesDefinition = SummariesDefinition, ItemActions extends ItemActionsDefinition<R> = ItemActionsDefinition<R>, NavigationFilters extends NavigationFiltersDefinition = NavigationFiltersDefinition, Grouping extends GroupingDefinition<R> = GroupingDefinition<R>>(source: DataCollectionSourceDefinition<R, FiltersSchema, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>, deps?: ReadonlyArray<unknown>) => DataCollectionSource<R, FiltersSchema, Sortings, Summaries, ItemActions, NavigationFilters, Grouping>;
 
 export { useForm }
@@ -4466,6 +4565,11 @@ declare type Visualization<R extends RecordType, Filters extends FiltersDefiniti
     type: "card";
     /** Configuration options for card visualization */
     options: CardVisualizationOptions<R, Filters, Sortings>;
+} | {
+    /** Kanban-based visualization type */
+    type: "kanban";
+    /** Configuration options for kanban visualization */
+    options: KanbanVisualizationOptions<R, Filters, Sortings>;
 } | {
     /** Table-based visualization type */
     type: "table";
@@ -4666,15 +4770,15 @@ declare module "@tiptap/core" {
 }
 
 
-declare namespace Calendar {
-    var displayName: string;
-}
-
-
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
         moodTracker: {
             insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
+}
+
+
+declare namespace Calendar {
+    var displayName: string;
 }
