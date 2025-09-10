@@ -27,7 +27,7 @@ export const DetailsItemsList = function DetailsItemList({
         className={cn(
           "flex",
           tableView
-            ? "rounded-md border border-solid border-f1-border-secondary"
+            ? "rounded-[16px] border border-solid border-f1-border-secondary"
             : "gap-3",
         )}
       >

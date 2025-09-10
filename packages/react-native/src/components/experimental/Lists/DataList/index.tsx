@@ -34,7 +34,7 @@ const _DataList = ({
         isHorizontalItem
           ? "flex min-h-12 flex-shrink flex-row"
           : "min-w-32 max-w-72",
-        tableView ? "py-1.5 pl-3 pr-1.5" : "",
+        tableView ? "px-2 py-4" : "",
       )}
     >
       {!!label && (
