@@ -125,7 +125,32 @@ export function useDataCollectionLanesData<
     []
   )
 
-  // Generar componentes provider para cada columna
+  const lanesSignature = useMemo(() => JSON.stringify(lanes), [lanes])
+  const currentFiltersSignature = useMemo(
+    () => JSON.stringify(source.currentFilters),
+    [source.currentFilters]
+  )
+  const currentNavigationFiltersSignature = useMemo(
+    () => JSON.stringify(source.currentNavigationFilters),
+    [source.currentNavigationFilters]
+  )
+  const currentSortingsSignature = useMemo(
+    () => JSON.stringify(source.currentSortings),
+    [source.currentSortings]
+  )
+  const currentGroupingSignature = useMemo(
+    () => JSON.stringify(source.currentGrouping),
+    [source.currentGrouping]
+  )
+  const currentSearchSignature = useMemo(
+    () => JSON.stringify(source.currentSearch),
+    [source.currentSearch]
+  )
+  const groupingSignature = useMemo(
+    () => JSON.stringify(source.grouping),
+    [source.grouping]
+  )
+
   const lanesProvider = useMemo(
     () => {
       return (lanes || []).map((lane) => (
@@ -148,14 +173,14 @@ export function useDataCollectionLanesData<
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       // TODO check why source ref is updated always
-      JSON.stringify(lanes),
+      lanesSignature,
       handleHookUpdate,
-      JSON.stringify(source.currentFilters),
-      JSON.stringify(source.currentNavigationFilters),
-      JSON.stringify(source.currentSortings),
-      JSON.stringify(source.currentGrouping),
-      JSON.stringify(source.currentSearch),
-      JSON.stringify(source.grouping),
+      currentFiltersSignature,
+      currentNavigationFiltersSignature,
+      currentSortingsSignature,
+      currentGroupingSignature,
+      currentSearchSignature,
+      groupingSignature,
     ]
   )
 

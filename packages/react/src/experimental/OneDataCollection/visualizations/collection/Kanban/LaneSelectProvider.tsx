@@ -82,6 +82,7 @@ export const LaneSelectProvider = <
 
   useEffect(() => {
     props.onSelectedItemsChange(selectedItems)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only want to re-run this effect when the selected items change
   }, [selectedItems])
 
   return null

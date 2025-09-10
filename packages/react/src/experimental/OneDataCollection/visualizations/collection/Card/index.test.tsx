@@ -3,13 +3,11 @@ import {
   GroupingDefinition,
   SortingsDefinition,
 } from "@/hooks/datasource"
-import { I18nProvider } from "@/lib/providers/i18n"
-import { defaultTranslations } from "@/lib/providers/i18n/i18n-provider-defaults"
-import { render, renderHook, screen, waitFor } from "@testing-library/react"
-import { ReactNode } from "react"
+import { zeroRender } from "@/testing/test-utils"
+import { renderHook, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import { useDataCollectionData } from "../../../hooks/useDataCollectionData/useDataCollectionData.ts"
-import { DataCollectionSource } from "../../../hooks/useDataCollectionSource/index.ts"
+import { useDataCollectionData } from "../../../hooks/useDataCollectionData"
+import { DataCollectionSource } from "../../../hooks/useDataCollectionSource"
 import { ItemActionsDefinition } from "../../../item-actions.tsx"
 import { NavigationFiltersDefinition } from "../../../navigationFilters/types"
 import { SummariesDefinition } from "../../../summary.ts"
@@ -21,11 +19,6 @@ type Person = {
   email: string
   role: string
 }
-
-// Test wrapper component that provides I18nProvider
-const TestWrapper = ({ children }: { children: ReactNode }) => (
-  <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
-)
 
 const testData: Person[] = [
   {
@@ -84,28 +77,26 @@ const createTestSource = (
 describe("CardCollection", () => {
   describe("rendering", () => {
     it("shows loading state initially", () => {
-      render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            SummariesDefinition,
-            ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition,
-            GroupingDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={[
-              { label: "Email", render: (item) => item.email },
-              { label: "Role", render: (item) => item.role },
-            ]}
-            onSelectItems={vi.fn()}
-            onLoadData={vi.fn()}
-            onLoadError={vi.fn()}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+      zeroRender(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={[
+            { label: "Email", render: (item) => item.email },
+            { label: "Role", render: (item) => item.role },
+          ]}
+          onSelectItems={vi.fn()}
+          onLoadData={vi.fn()}
+          onLoadError={vi.fn()}
+          source={createTestSource()}
+        />
       )
 
       // Look for skeleton elements
@@ -114,25 +105,23 @@ describe("CardCollection", () => {
     })
 
     it("renders cards with data after loading", async () => {
-      render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            SummariesDefinition,
-            ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition,
-            GroupingDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            onSelectItems={vi.fn()}
-            onLoadData={vi.fn()}
-            onLoadError={vi.fn()}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+      zeroRender(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          onSelectItems={vi.fn()}
+          onLoadData={vi.fn()}
+          onLoadError={vi.fn()}
+          source={createTestSource()}
+        />
       )
 
       // Wait for loading state to disappear by checking for actual data
@@ -151,25 +140,23 @@ describe("CardCollection", () => {
 
   describe("features", () => {
     it("uses titleProperty when provided", async () => {
-      render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            SummariesDefinition,
-            ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition,
-            GroupingDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            onSelectItems={vi.fn()}
-            onLoadData={vi.fn()}
-            onLoadError={vi.fn()}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+      zeroRender(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          onSelectItems={vi.fn()}
+          onLoadData={vi.fn()}
+          onLoadError={vi.fn()}
+          source={createTestSource()}
+        />
       )
 
       await waitFor(() => {
@@ -184,25 +171,23 @@ describe("CardCollection", () => {
     })
 
     it("displays all properties correctly when using titleProperty", async () => {
-      render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            SummariesDefinition,
-            ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition,
-            GroupingDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            onSelectItems={vi.fn()}
-            onLoadData={vi.fn()}
-            onLoadError={vi.fn()}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+      zeroRender(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          onSelectItems={vi.fn()}
+          onLoadData={vi.fn()}
+          onLoadError={vi.fn()}
+          source={createTestSource()}
+        />
       )
 
       await waitFor(() => {
@@ -236,25 +221,23 @@ describe("CardCollection", () => {
         { label: "Role", render: (item: Person) => item.role },
       ]
 
-      render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            SummariesDefinition,
-            ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition,
-            GroupingDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={propertiesWithCustomRender}
-            onSelectItems={vi.fn()}
-            onLoadData={vi.fn()}
-            onLoadError={vi.fn()}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+      zeroRender(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={propertiesWithCustomRender}
+          onSelectItems={vi.fn()}
+          onLoadData={vi.fn()}
+          onLoadError={vi.fn()}
+          source={createTestSource()}
+        />
       )
 
       await waitFor(() => {
@@ -267,25 +250,23 @@ describe("CardCollection", () => {
 
   describe("edge cases", () => {
     it("handles empty data gracefully", async () => {
-      render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            SummariesDefinition,
-            ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition,
-            GroupingDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            onSelectItems={vi.fn()}
-            onLoadData={vi.fn()}
-            onLoadError={vi.fn()}
-            source={createTestSource([])}
-          />
-        </TestWrapper>
+      zeroRender(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          onSelectItems={vi.fn()}
+          onLoadData={vi.fn()}
+          onLoadError={vi.fn()}
+          source={createTestSource([])}
+        />
       )
 
       // Wait for loading state to finish
@@ -298,33 +279,28 @@ describe("CardCollection", () => {
     it("handles error states appropriately", async () => {
       const error = new Error("Failed to fetch data")
 
-      render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            SummariesDefinition,
-            ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition,
-            GroupingDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            onSelectItems={vi.fn()}
-            onLoadData={vi.fn()}
-            onLoadError={vi.fn()}
-            source={createTestSource([], error)}
-          />
-        </TestWrapper>
+      zeroRender(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          onSelectItems={vi.fn()}
+          onLoadData={vi.fn()}
+          onLoadError={vi.fn()}
+          source={createTestSource([], error)}
+        />
       )
 
       // Wait for loading state to finish and verify error state
-      const { result } = renderHook(
-        () => useDataCollectionData(createTestSource([], error)),
-        {
-          wrapper: TestWrapper,
-        }
+      const { result } = renderHook(() =>
+        useDataCollectionData(createTestSource([], error))
       )
       await waitFor(() => {
         expect(result.current.error).toEqual({
@@ -373,25 +349,23 @@ describe("CardCollection", () => {
         },
       }
 
-      render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            SummariesDefinition,
-            ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition,
-            GroupingDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            onSelectItems={vi.fn()}
-            onLoadData={vi.fn()}
-            onLoadError={vi.fn()}
-            source={source}
-          />
-        </TestWrapper>
+      zeroRender(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          onSelectItems={vi.fn()}
+          onLoadData={vi.fn()}
+          onLoadError={vi.fn()}
+          source={source}
+        />
       )
 
       // Wait for the data to load
@@ -440,25 +414,23 @@ describe("CardCollection", () => {
         },
       }
 
-      render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            SummariesDefinition,
-            ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition,
-            GroupingDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            onSelectItems={vi.fn()}
-            onLoadData={vi.fn()}
-            onLoadError={vi.fn()}
-            source={source}
-          />
-        </TestWrapper>
+      zeroRender(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          SummariesDefinition,
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          onSelectItems={vi.fn()}
+          onLoadData={vi.fn()}
+          onLoadError={vi.fn()}
+          source={source}
+        />
       )
 
       // Wait for the data to load
