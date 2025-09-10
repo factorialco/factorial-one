@@ -7,7 +7,12 @@ import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
 import { DataCollectionDataAdapter } from "@/experimental"
 import { useDataCollectionLanesData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData/useDataCollectionLanesData"
 import { useSelectableLanes } from "@/experimental/OneDataCollection/hooks/useSelectableLanes"
-import { PaginatedDataAdapter, type RecordType } from "@/hooks/datasource"
+import {
+  InfiniteScrollPaginatedResponse,
+  PaginatedDataAdapter,
+  PaginationInfo,
+  type RecordType,
+} from "@/hooks/datasource"
 import { createAtlaskitDriver } from "@/lib/dnd/atlaskitDriver"
 import { DndProvider } from "@/lib/dnd/context"
 import { useIsDev } from "@/lib/providers/user-platafform"
@@ -103,12 +108,20 @@ export const KanbanCollection = <
       property.type === "file" ? { property } : { icon, property }
     )
 
+  const isInfiniteScrollPaginationInfo = (
+    paginationInfo: PaginationInfo | undefined | null
+  ): paginationInfo is InfiniteScrollPaginatedResponse<unknown> => {
+    return Boolean(paginationInfo && paginationInfo.type === "infinite-scroll")
+  }
+
   const kanbanProps: KanbanProps<R> = {
     lanes: laneItems.map((l) => {
       const laneData = lanesHooks[l.id]
       const totalItems = laneData?.paginationInfo?.total
 
-      const hasMore = laneData?.paginationInfo?.hasMore
+      const hasMore =
+        isInfiniteScrollPaginationInfo(laneData?.paginationInfo) &&
+        laneData?.paginationInfo?.hasMore
       return {
         id: l.id,
         title: l.title,
