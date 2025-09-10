@@ -4,9 +4,10 @@ import type {
 } from "@/components/F0Card/types"
 import type { IconType } from "@/components/F0Icon"
 import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
+import { DataCollectionDataAdapter } from "@/experimental"
 import { useDataCollectionLanesData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData/useDataCollectionLanesData"
 import { useSelectableLanes } from "@/experimental/OneDataCollection/hooks/useSelectableLanes"
-import type { RecordType } from "@/hooks/datasource"
+import { PaginatedDataAdapter, type RecordType } from "@/hooks/datasource"
 import { createAtlaskitDriver } from "@/lib/dnd/atlaskitDriver"
 import { DndProvider } from "@/lib/dnd/context"
 import { useIsDev } from "@/lib/providers/user-platafform"
@@ -24,13 +25,13 @@ import type {
 import { KanbanCollectionProps } from "./types"
 
 export const KanbanCollection = <
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   Summaries extends SummariesDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
+  Grouping extends GroupingDefinition<R>,
 >({
   lanes,
   title,
@@ -42,7 +43,7 @@ export const KanbanCollection = <
   onSelectItems,
   onLoadError,
 }: KanbanCollectionProps<
-  Record,
+  R,
   Filters,
   Sortings,
   Summaries,
@@ -51,7 +52,7 @@ export const KanbanCollection = <
   Grouping
 >) => {
   const { lanesProvider, lanesHooks } = useDataCollectionLanesData<
-    Record,
+    R,
     Filters,
     Sortings,
     Summaries,
@@ -67,7 +68,13 @@ export const KanbanCollection = <
     throw new Error("Grouping is not supported in Kanban yet")
   }
 
-  if (source.dataAdapter.paginationType !== "infinite-scroll" && isDev) {
+  const isInfiniteScrollPagination = (
+    dataAdapter: DataCollectionDataAdapter<R, Filters>
+  ): dataAdapter is PaginatedDataAdapter<R, Filters> => {
+    return dataAdapter.paginationType === "infinite-scroll"
+  }
+
+  if (!isInfiniteScrollPagination(source.dataAdapter)) {
     throw new Error("Infinite scroll pagination is required in Kanban")
   }
 
@@ -75,14 +82,19 @@ export const KanbanCollection = <
 
   const idProvider = source.idProvider
 
+  const lanesSignature = useMemo(() => {
+    return JSON.stringify(
+      Object.values(lanesHooks).map((laneHook) => laneHook.data)
+    )
+  }, [lanesHooks])
+
   const laneItems = useMemo(() => {
     return lanes.map((lane) => ({
       ...lane,
       items: lanesHooks[lane.id]?.data?.records || [],
     }))
-  }, [
-    JSON.stringify(Object.values(lanesHooks).map((laneHook) => laneHook.data)),
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lanesSignature])
 
   const toCardMetadata = (
     items: ReadonlyArray<{ icon: IconType; property: CardMetadataProperty }>
@@ -91,7 +103,7 @@ export const KanbanCollection = <
       property.type === "file" ? { property } : { icon, property }
     )
 
-  const kanbanProps: KanbanProps<Record> = {
+  const kanbanProps: KanbanProps<R> = {
     lanes: laneItems.map((l) => {
       const laneData = lanesHooks[l.id]
       const totalItems = laneData?.paginationInfo?.total
@@ -164,9 +176,7 @@ export const KanbanCollection = <
     laneItems.forEach((lane) => {
       const map = new Map<string, number>()
       lane.items.forEach((item, index) => {
-        const itemId = String(
-          idProvider ? idProvider(item as Record, index) : index
-        )
+        const itemId = String(idProvider ? idProvider(item as R, index) : index)
         map.set(itemId, index)
       })
       maps.set(lane.id, map)
@@ -209,7 +219,7 @@ export const KanbanCollection = <
   }, [lanes, lanesHooks])
 
   const { lanesSelectProvider, lanesUseSelectable } = useSelectableLanes<
-    Record,
+    R,
     Filters,
     Sortings,
     Summaries,
@@ -224,10 +234,10 @@ export const KanbanCollection = <
       {lanesProvider}
       {lanesSelectProvider}
       {!onMove ? (
-        <Kanban<Record> {...kanbanProps} />
+        <Kanban<R> {...kanbanProps} />
       ) : (
         <DndProvider driver={createAtlaskitDriver(instanceId)}>
-          <Kanban<Record> {...kanbanProps} />
+          <Kanban<R> {...kanbanProps} />
         </DndProvider>
       )}
     </>
