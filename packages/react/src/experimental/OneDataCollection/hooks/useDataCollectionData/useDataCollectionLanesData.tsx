@@ -75,14 +75,6 @@ const LaneProvider = <
     onHookUpdate?.(hook)
   }, [hook])
 
-  useEffect(() => {
-    console.log("hook", lane.id, hook.data)
-  }, [hook.data])
-
-  useEffect(() => {
-    console.log("source.currentFilters", source.currentFilters)
-  }, [source.currentFilters])
-
   return children
 }
 

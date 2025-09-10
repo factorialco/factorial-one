@@ -18,7 +18,7 @@ export type AllSelectionStatus = {
   unselectedCount: number
 }
 
-type UseSelectable<R extends RecordType> = {
+export type UseSelectable<R extends RecordType> = {
   isAllSelected: boolean
   selectedItems: Map<number | string, R>
   selectedGroups: Map<string, GroupRecord<R>>

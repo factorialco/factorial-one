@@ -95,5 +95,8 @@ export type DataSource<
   >
 
   /** Function to provide an id for a record, necessary for append mode */
-  idProvider?: (item: R, index?: number) => string | number | symbol
+  idProvider?: <Item extends R>(
+    item: Item,
+    index?: number
+  ) => string | number | symbol
 }
