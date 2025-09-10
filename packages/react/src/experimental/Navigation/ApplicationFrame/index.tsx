@@ -9,6 +9,7 @@ import { cn, focusRing } from "../../../lib/utils"
 import { useReducedMotion } from "../../../lib/a11y"
 import { useI18n } from "../../../lib/providers/i18n"
 
+import { Fragment } from "react"
 import { AiChat, AiChatProvider, AiChatProviderProps } from "../../AiChat"
 import { useAiChat } from "../../AiChat/providers/AiChatStateProvider"
 import { FrameProvider, useSidebar } from "./FrameProvider"
@@ -26,13 +27,14 @@ export function ApplicationFrame({
   banner,
   ai,
 }: ApplicationFrameProps) {
+  const AiProvider = ai ? AiChatProvider : Fragment
   return (
     <FrameProvider>
-      <AiChatProvider {...ai}>
+      <AiProvider {...ai}>
         <ApplicationFrameContent sidebar={sidebar} banner={banner}>
           {children}
         </ApplicationFrameContent>
-      </AiChatProvider>
+      </AiProvider>
     </FrameProvider>
   )
 }

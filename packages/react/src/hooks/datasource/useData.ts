@@ -82,7 +82,7 @@ export type WithGroupId<RecordType> = RecordType & {
 /**
  * Hook return type for useData
  */
-interface UseDataReturn<R extends RecordType> {
+export interface UseDataReturn<R extends RecordType> {
   data: Data<R>
   isInitialLoading: boolean
   isLoading: boolean
@@ -96,7 +96,9 @@ interface UseDataReturn<R extends RecordType> {
   // For infinite-scroll pagination:
   loadMore: () => void
   totalItems: number | undefined
-  summaries?: R // Add summaries to the return type
+
+  // Merged filters (default values and current values)
+  mergedFilters: FiltersState<FiltersDefinition>
 }
 
 type DataType<T> = PromiseState<T>
@@ -406,6 +408,7 @@ export function useData<
   )
 
   const data = useMemo(() => {
+    // if (hasLanes) return { type: "flat" as const, records: [] }
     // Add the groupId to the data if grouping is enabled
     const data: WithGroupId<R>[] = rawData.map((record) => ({
       ...record,
@@ -736,6 +739,7 @@ export function useData<
     paginationInfo,
     setPage,
     loadMore,
+    mergedFilters,
     totalItems,
   }
 }

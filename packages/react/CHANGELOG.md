@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.179.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.1...factorial-one-react-v1.179.2) (2025-09-09)
+
+
+### Bug Fixes
+
+* export hook and remove create button form chat header ([#2550](https://github.com/factorialco/factorial-one/issues/2550)) ([84d58b1](https://github.com/factorialco/factorial-one/commit/84d58b18ee9ff41d0d4285acfdbdd43731536798))
+
 ## [1.179.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.179.0...factorial-one-react-v1.179.1) (2025-09-09)
 
 

@@ -1,7 +1,8 @@
-import { RecordType } from "@/hooks/datasource"
+import type { Variant } from "@/components/tags/F0TagStatus"
+import type { RecordType } from "@/hooks/datasource"
 import { ReactNode } from "react"
 
-export interface OneLaneProps<Record extends RecordType> {
+export interface LaneProps<Record extends RecordType> {
   /**
    * The title of the card
    */
@@ -51,4 +52,15 @@ export interface OneLaneProps<Record extends RecordType> {
    * Function to fetch more items. This is used to fetch more items when the lane is at the bottom of the viewport.
    */
   fetchMore?: () => void
+
+  /**
+   * The variant of the lane
+   */
+  variant?: Variant
+
+  /**
+   * The total number of items in the lane (for display in header)
+   * If not provided, defaults to items.length
+   */
+  total?: number
 }

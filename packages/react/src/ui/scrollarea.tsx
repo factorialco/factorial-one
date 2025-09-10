@@ -91,7 +91,6 @@ const ScrollBar = forwardRef<
   <ScrollAreaPrimitive.ScrollAreaScrollbar
     ref={ref}
     orientation={orientation}
-    forceMount
     className={cn(
       "group/scrollbar z-50 flex touch-none select-none p-[1px]",
       "transition-opacity data-[state=hidden]:pointer-events-none data-[state=visible]:pointer-events-auto data-[state=hidden]:opacity-0 data-[state=visible]:opacity-100",

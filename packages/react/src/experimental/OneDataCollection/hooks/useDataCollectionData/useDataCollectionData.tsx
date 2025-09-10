@@ -12,7 +12,7 @@ import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { SummariesDefinition } from "../../summary"
 import { DataCollectionSource } from "../useDataCollectionSource"
 
-export function useDataCollectionData<
+function useDCDataWithoutLanes<
   R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -20,14 +20,17 @@ export function useDataCollectionData<
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 >(
-  source: DataCollectionSource<
-    R,
-    Filters,
-    Sortings,
-    Summaries,
-    ItemActionsDefinition<R>,
-    NavigationFilters,
-    Grouping
+  source: Omit<
+    DataCollectionSource<
+      R,
+      Filters,
+      Sortings,
+      Summaries,
+      ItemActionsDefinition<R>,
+      NavigationFilters,
+      Grouping
+    >,
+    "lanes"
   >,
   { filters, onError }: UseDataOptions<R, Filters> = {}
 ) {
@@ -58,5 +61,31 @@ export function useDataCollectionData<
   return {
     ...data,
     summaries: summariesData,
+  }
+}
+
+export function useDataCollectionData<
+  R extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  Summaries extends SummariesDefinition,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<R>,
+>(
+  source: DataCollectionSource<
+    R,
+    Filters,
+    Sortings,
+    Summaries,
+    ItemActionsDefinition<R>,
+    NavigationFilters,
+    Grouping
+  >,
+  options: UseDataOptions<R, Filters> = {}
+) {
+  const noLanesData = useDCDataWithoutLanes(source, options)
+
+  return {
+    ...noLanesData,
   }
 }

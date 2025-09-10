@@ -5,6 +5,7 @@ import {
   DataSource,
   DataSourceDefinition,
   FiltersDefinition,
+  FiltersState,
   GroupingDefinition,
   PaginatedDataAdapter,
   PaginatedFetchOptions,
@@ -83,6 +84,15 @@ export type DataCollectionDataAdapter<
     >
 
 /**
+ * Represents a single lane configuration with its own filters
+ * @template Filters - The available filter configurations for this lane
+ */
+export type Lane<Filters extends FiltersDefinition> = {
+  id: string
+  filters: FiltersState<Filters>
+}
+
+/**
  * Data collection source definition
  * Extends the base data source definition with data collection specific elements / features
  */
@@ -124,6 +134,9 @@ export type DataCollectionSourceDefinition<
   /** Bulk actions that can be performed on the collection */
   bulkActions?: BulkActionsDefinition<R, Filters>
   totalItemSummary?: (totalItems: number) => string
+
+  /** Lanes configuration */
+  lanes?: ReadonlyArray<Lane<Filters>>
 }
 
 /**
