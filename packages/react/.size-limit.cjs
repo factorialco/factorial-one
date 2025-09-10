@@ -7,7 +7,6 @@ module.exports = [
     path: "dist/experimental.js",
     name: "JS: Experimental",
   },
-  { path: "dist/index-*.js", name: "JS: shared.js" },
   {
     path: "dist/*.css",
     name: "CSS",
