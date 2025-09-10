@@ -42,4 +42,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           directory: packages/react
           package_manager: pnpm
-          script: size:ci
+          script: pnpm size:ci
