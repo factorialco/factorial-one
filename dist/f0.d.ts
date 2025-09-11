@@ -7,7 +7,7 @@ import { AvatarListCellValue } from '../../value-display/types/avatarList';
 import { AvatarListCellValue as AvatarListCellValue_2 } from './types/avatarList.tsx';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { AvatarProps as AvatarProps_2 } from '@radix-ui/react-avatar';
-import { baseColors } from '@factorialco/factorial-one-core';
+import { baseColors } from '@factorialco/f0-core';
 import { CategoryBarProps } from './CategoryBarChart';
 import { ChartConfig } from '../../ui/chart';
 import { ChartConfig as ChartConfig_2 } from './utils/types';
@@ -23,7 +23,7 @@ import { default as default_2 } from 'react';
 import { DotTagCellValue } from '../../value-display/types/dotTag';
 import { DotTagCellValue as DotTagCellValue_2 } from './types/dotTag.tsx';
 import { F0IconProps as F0IconProps_2 } from './F0Icon';
-import { f1Colors } from '@factorialco/factorial-one-core';
+import { f1Colors } from '@factorialco/f0-core';
 import { FileCellValue } from '../../value-display/types/file';
 import { FileCellValue as FileCellValue_2 } from './types/file.tsx';
 import { FolderCellValue } from '../../value-display/types/folder';
@@ -41,6 +41,7 @@ import { JSX as JSX_2 } from 'react';
 import { LineChartConfig } from '../../ui/chart';
 import { LineChartPropsBase } from './utils/types';
 import { LinkProps as LinkProps_3 } from './Link';
+import { LongTextCellValue } from './types/longText.tsx';
 import { MouseEventHandler } from 'react';
 import { NumberCellValue } from '../../value-display/types/number';
 import { NumberCellValue as NumberCellValue_2 } from './types/number.tsx';
@@ -1963,6 +1964,7 @@ declare type ValueDisplayRendererContext_2 = {
 
 declare const valueDisplayRenderers: {
     readonly text: (args: TextCellValue_2) => JSX_2.Element;
+    readonly longText: (args: LongTextCellValue) => JSX_2.Element;
     readonly number: (args: NumberCellValue_2, meta: ValueDisplayRendererContext_2) => JSX_2.Element;
     readonly date: (args: DateCellValue_2) => JSX_2.Element;
     readonly amount: (args: AmountCellValue_2, meta: ValueDisplayRendererContext_2) => JSX_2.Element;
@@ -2028,6 +2030,15 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
+        transcript: {
+            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
+        };
+    }
+}
+
+
+declare module "@tiptap/core" {
+    interface Commands<ReturnType> {
         liveCompanion: {
             insertLiveCompanion: (data: LiveCompanionData, config?: LiveCompanionConfig) => ReturnType;
         };
@@ -2037,8 +2048,8 @@ declare module "@tiptap/core" {
 
 declare module "@tiptap/core" {
     interface Commands<ReturnType> {
-        transcript: {
-            insertTranscript: (data: TranscriptData, config?: TranscriptConfig) => ReturnType;
+        moodTracker: {
+            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
         };
     }
 }
@@ -2046,13 +2057,4 @@ declare module "@tiptap/core" {
 
 declare namespace Calendar {
     var displayName: string;
-}
-
-
-declare module "@tiptap/core" {
-    interface Commands<ReturnType> {
-        moodTracker: {
-            insertMoodTracker: (data: MoodTrackerData, config?: MoodTrackerConfig) => ReturnType;
-        };
-    }
 }
