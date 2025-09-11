@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.181.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.180.1...factorial-one-react-v1.181.0) (2025-09-11)
+
+
+### Features
+
+* **dataCollection:** add new LongText cell type ([#2568](https://github.com/factorialco/factorial-one/issues/2568)) ([ae9f885](https://github.com/factorialco/factorial-one/commit/ae9f885d9b6afdbefb6f426a5b74787aa48238ce))
+
 ## [1.180.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.180.0...factorial-one-react-v1.180.1) (2025-09-09)
 
 
