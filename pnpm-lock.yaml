@@ -609,6 +609,9 @@ importers:
       '@types/twemoji-parser':
         specifier: ^13.1.4
         version: 13.1.4
+      babel-jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@babel/core@7.26.10)
       globals:
         specifier: ^16.0.0
         version: 16.0.0
@@ -21877,7 +21880,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.2
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.8.4(debug@4.4.1))
+      retry-axios: 2.6.0(axios@1.8.4)
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -25682,7 +25685,7 @@ snapshots:
       onetime: 2.0.1
       signal-exit: 3.0.7
 
-  retry-axios@2.6.0(axios@1.8.4(debug@4.4.1)):
+  retry-axios@2.6.0(axios@1.8.4):
     dependencies:
       axios: 1.8.4(debug@4.4.1)
 
