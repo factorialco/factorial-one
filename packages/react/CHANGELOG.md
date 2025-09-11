@@ -1,6 +1,17 @@
 # Changelog
 
 ## [1.180.1](https://github.com/factorialco/f0/compare/f0-react-v1.180.0...f0-react-v1.180.1) (2025-09-09)
+=======
+
+## [1.181.0](https://github.com/factorialco/f0/compare/f0-react-v1.180.1...f0-react-v1.181.0) (2025-09-11)
+
+
+### Features
+
+* **dataCollection:** add new LongText cell type ([#2568](https://github.com/factorialco/f0/issues/2568)) ([ae9f885](https://github.com/factorialco/f0/commit/ae9f885d9b6afdbefb6f426a5b74787aa48238ce))
+
+## [1.180.1](https://github.com/factorialco/f0/compare/f0-react-v1.180.0...f0-react-v1.180.1) (2025-09-09)
+
 
 
 ### Bug Fixes
