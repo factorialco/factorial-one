@@ -7,8 +7,8 @@ import {
   ModuleAvatar,
   ModuleIcons,
   PersonAvatar,
-} from "@factorialco/factorial-one-react-native";
-import { Check } from "@factorialco/factorial-one-react-native/src/icons/app";
+} from "@factorialco/f0-react-native";
+import { Check } from "@factorialco/f0-react-native/src/icons/app";
 import type { Meta, StoryFn } from "@storybook/react";
 import { icons } from "lucide-react-native";
 import { ScrollView, View, Text } from "react-native";
