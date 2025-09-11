@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.20.0](https://github.com/factorialco/factorial-one/compare/f0-react-native-v0.19.1...f0-react-native-v0.20.0) (2025-09-11)
+
+
+### Features
+
+* add experimental/List components in Mobile ([#2090](https://github.com/factorialco/factorial-one/issues/2090)) ([424c9c9](https://github.com/factorialco/factorial-one/commit/424c9c929e6260691506ca7353ec7f68e782b91a))
+* add fullwith to buttons ([#2161](https://github.com/factorialco/factorial-one/issues/2161)) ([3b85e82](https://github.com/factorialco/factorial-one/commit/3b85e8237b98200375a703ac835462f513313c09))
+* add stroke to moduleAvatar for budge ([#2410](https://github.com/factorialco/factorial-one/issues/2410)) ([464527c](https://github.com/factorialco/factorial-one/commit/464527ca0460e77f5f48d92a68da0302711d7c7d))
+* create new component avatar for mobile ([#2026](https://github.com/factorialco/factorial-one/issues/2026)) ([b6da3c6](https://github.com/factorialco/factorial-one/commit/b6da3c60fa98d4d4be048b684cfd6ae81e427948))
+* do not use dark mode as a classname to avoid wrong behaviour in the Mobile app ([#2126](https://github.com/factorialco/factorial-one/issues/2126)) ([77ace3d](https://github.com/factorialco/factorial-one/commit/77ace3d3b94cbcd469f24e86e88b6f1f5f8e52b9))
+* new inbox module components and new page header component ([#2031](https://github.com/factorialco/factorial-one/issues/2031)) ([3474fc0](https://github.com/factorialco/factorial-one/commit/3474fc056ac11ea2414a3ee017763c14f44e1123))
+* remove module inbox ([#2514](https://github.com/factorialco/factorial-one/issues/2514)) ([183c97c](https://github.com/factorialco/factorial-one/commit/183c97c8803792ef0312ec876b45a827af085574))
+* remove unused separator ([#2073](https://github.com/factorialco/factorial-one/issues/2073)) ([af53065](https://github.com/factorialco/factorial-one/commit/af5306513a91e927a478d9299a333a5bc7849646))
+* Rename all references to factorial-one to f0 ([#2570](https://github.com/factorialco/factorial-one/issues/2570)) ([719464d](https://github.com/factorialco/factorial-one/commit/719464d753f568e90684a41895cb4321bb781f7f))
+
+
+### Bug Fixes
+
+* add new props to adapt the design ([#2559](https://github.com/factorialco/factorial-one/issues/2559)) ([b0832c2](https://github.com/factorialco/factorial-one/commit/b0832c254265499d95485af2258cab026ad51b51))
+* better grouping in ActivityItemList ([#2036](https://github.com/factorialco/factorial-one/issues/2036)) ([ea1e031](https://github.com/factorialco/factorial-one/commit/ea1e0314e4b159ead0e9c6d4f85d727515019571))
+* change type ([#2264](https://github.com/factorialco/factorial-one/issues/2264)) ([2b5b3eb](https://github.com/factorialco/factorial-one/commit/2b5b3eb5c7800058602cceb7a2cfb2b36a1cc1af))
+* size ([#2414](https://github.com/factorialco/factorial-one/issues/2414)) ([4c1f145](https://github.com/factorialco/factorial-one/commit/4c1f14515830bcbf7c2d88aa057213909163c49c))
+
 ## [0.19.1](https://github.com/factorialco/f0/compare/f0-react-native-v0.19.0...f0-react-native-v0.19.1) (2025-09-10)
 
 
