@@ -83,7 +83,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        ["factorial-one"]: resolve(__dirname, "src/factorial-one.ts"),
+        ["f0"]: resolve(__dirname, "src/f0.ts"),
         ["experimental"]: resolve(__dirname, "src/experimental.ts"),
       },
       fileName: (_, entryName) => {
