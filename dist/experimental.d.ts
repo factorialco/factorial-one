@@ -1,4 +1,4 @@
-import { AlertAvatarProps as AlertAvatarProps_2 } from '../../factorial-one';
+import { AlertAvatarProps as AlertAvatarProps_2 } from '../../f0';
 import { AlertTagCellValue } from './types/alertTag.tsx';
 import { AlertTagCellValue as AlertTagCellValue_2 } from '../../value-display/types/alertTag';
 import { AmountCellValue } from './types/amount.tsx';
@@ -10,7 +10,7 @@ import { AvatarListCellValue } from './types/avatarList.tsx';
 import { AvatarListCellValue as AvatarListCellValue_2 } from '../../value-display/types/avatarList';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { BarChartProps } from '../../../components/Charts/BarChart';
-import { baseColors } from '@factorialco/factorial-one-core';
+import { baseColors } from '@factorialco/f0-core';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
 import { CompanyCellValue } from './types/company.tsx';
@@ -40,12 +40,13 @@ import { ForwardRefExoticComponent } from 'react';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
 import { IconCellValue } from './types/icon.tsx';
-import { IconType as IconType_2 } from '../../factorial-one';
+import { IconType as IconType_2 } from '../../f0';
 import { InFilterOptions } from './InFilter/types';
 import { JSONContent } from '@tiptap/react';
 import { JSONContent as JSONContent_2 } from '@tiptap/core';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
+import { LongTextCellValue } from './types/longText.tsx';
 import { NumberCellValue } from './types/number.tsx';
 import { NumberCellValue as NumberCellValue_2 } from '../../value-display/types/number';
 import { Observable } from 'zen-observable-ts';
@@ -4541,6 +4542,7 @@ declare type ValueDisplayRendererDefinition = {
 
 declare const valueDisplayRenderers: {
     readonly text: (args: TextCellValue) => JSX_2.Element;
+    readonly longText: (args: LongTextCellValue) => JSX_2.Element;
     readonly number: (args: NumberCellValue, meta: ValueDisplayRendererContext) => JSX_2.Element;
     readonly date: (args: DateCellValue) => JSX_2.Element;
     readonly amount: (args: AmountCellValue, meta: ValueDisplayRendererContext) => JSX_2.Element;
