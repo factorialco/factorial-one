@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
-import { ExampleComponent } from "@factorialco/factorial-one-react-native";
+import { ExampleComponent } from "@factorialco/f0-react-native";
 
 const meta = {
   title: "Components/ExampleComponent",
