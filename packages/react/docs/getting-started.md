@@ -25,4 +25,4 @@ And that's it!
 
 Related:
 
-- [Using F0 source](development/using-factorial-one-source.md)
+- [Using F0 source](development/using-f0-source.md)

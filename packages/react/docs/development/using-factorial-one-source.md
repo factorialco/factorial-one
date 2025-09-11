@@ -39,8 +39,8 @@ local computer
 2. Run `pnpm build:watch` to rebuild the project on any change
 3. Run `pnpm link --global` to add the package to the local links
 4. Go to the factorial app monorepo: `cd factorial/frontend`
-5. Run `pnpm link --global @factorialco/factorial-one-react` to use the local
-   version of the package
+5. Run `pnpm link --global @factorialco/f0-react` to use the local version of
+   the package
 
 ### How to use local version of `factorial-one` in coder {#cder}
 
