@@ -1,5 +1,32 @@
 # Changelog
 
+## [1.26.0](https://github.com/factorialco/factorial-one/compare/f0-core-v1.25.1...f0-core-v1.26.0) (2025-09-11)
+
+
+### Features
+
+* add ClockBack icon ([#2106](https://github.com/factorialco/factorial-one/issues/2106)) ([77a7c30](https://github.com/factorialco/factorial-one/commit/77a7c30adbb789e174a1f2f8dac3ca94b5a09f98))
+* add files icon ([#2018](https://github.com/factorialco/factorial-one/issues/2018)) ([e2bacf7](https://github.com/factorialco/factorial-one/commit/e2bacf73e96d5806dd5c823f3fa21ba904925905))
+* add IT Management module ([#2393](https://github.com/factorialco/factorial-one/issues/2393)) ([16f1f32](https://github.com/factorialco/factorial-one/commit/16f1f32e2e8ff987e77cf2e29eb52b31d5783404))
+* create AiChat component ([#2259](https://github.com/factorialco/factorial-one/issues/2259)) ([58a1f36](https://github.com/factorialco/factorial-one/commit/58a1f362f73b97090367037ab37eaac7afd6ec2f))
+* **icons:** add PersonMinus & PersonPlus icons ([#2104](https://github.com/factorialco/factorial-one/issues/2104)) ([cb9a4dd](https://github.com/factorialco/factorial-one/commit/cb9a4dd6ffb8d049e159bcd7c03d28f4d599d2a2))
+* **Icons:** new icons for IT management ([#2432](https://github.com/factorialco/factorial-one/issues/2432)) ([305d13c](https://github.com/factorialco/factorial-one/commit/305d13c03763ab357c1898d2cddfd20ceb2ea193))
+* **Icons:** new icons missing from Gamma ([#2221](https://github.com/factorialco/factorial-one/issues/2221)) ([528674b](https://github.com/factorialco/factorial-one/commit/528674bc0115abbab8d8520614c5f4d22ed3f1c8))
+* **Icons:** thumbs up and down icons ([#2317](https://github.com/factorialco/factorial-one/issues/2317)) ([6b6cc1f](https://github.com/factorialco/factorial-one/commit/6b6cc1f8d7c3ef2ac3253020dc75a69b439a9c79))
+* **Link:** Link styling and files structure ([#2127](https://github.com/factorialco/factorial-one/issues/2127)) ([c24d648](https://github.com/factorialco/factorial-one/commit/c24d6485190b9d3e4428f9afa7525ed0318b6262))
+* new module icons ([#2236](https://github.com/factorialco/factorial-one/issues/2236)) ([b064e94](https://github.com/factorialco/factorial-one/commit/b064e94ea2af72cb537ac1125523d13452712c2e))
+* Rename all references to factorial-one to f0 ([#2570](https://github.com/factorialco/factorial-one/issues/2570)) ([719464d](https://github.com/factorialco/factorial-one/commit/719464d753f568e90684a41895cb4321bb781f7f))
+* tokens for spacing between elements ([#2423](https://github.com/factorialco/factorial-one/issues/2423)) ([8b6162e](https://github.com/factorialco/factorial-one/commit/8b6162e09973eb0bafbffd5632ca02620c5a465a))
+
+
+### Bug Fixes
+
+* add support to show warning message for bulk actions in data collection ([#2368](https://github.com/factorialco/factorial-one/issues/2368)) ([2c1b3ee](https://github.com/factorialco/factorial-one/commit/2c1b3eedf9ddac270428e4d0a537cb377213be2e))
+* apply visual fixes to data collection grouping and sorting selectors ([#2482](https://github.com/factorialco/factorial-one/issues/2482)) ([46c1207](https://github.com/factorialco/factorial-one/commit/46c12075ec4284e843268715402be58ac5ed24fd))
+* **Colors:** Color tokens audit ([#2366](https://github.com/factorialco/factorial-one/issues/2366)) ([74c90df](https://github.com/factorialco/factorial-one/commit/74c90df7d88cb776b313a3766fb0553b5ba48a79))
+* input type extends string ([#2265](https://github.com/factorialco/factorial-one/issues/2265)) ([ff995c6](https://github.com/factorialco/factorial-one/commit/ff995c6f847c5fa172874fdcffb72e697353a5e8))
+* pulse avatar icon color ([#2282](https://github.com/factorialco/factorial-one/issues/2282)) ([5fdd117](https://github.com/factorialco/factorial-one/commit/5fdd117b2b2c22eb9b2e148a1101c46e3d8208f8))
+
 ## [1.25.1](https://github.com/factorialco/f0/compare/f0-core-v1.25.0...f0-core-v1.25.1) (2025-08-29)
 
 
