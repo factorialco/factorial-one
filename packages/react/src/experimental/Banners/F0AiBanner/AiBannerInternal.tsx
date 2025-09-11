@@ -45,11 +45,7 @@ export const AiBannerInternal = forwardRef<
           {children}
         </div>
         {(secondaryAction || primaryAction) && (
-          <div
-            className={cn(
-              "flex flex-row items-center justify-between gap-3 rounded-b-[13.25px] bg-f1-background px-4 py-3"
-            )}
-          >
+          <div className="flex flex-row items-center justify-between gap-3 rounded-b-[13.25px] bg-f1-background px-4 py-3">
             <div>
               {secondaryAction && (
                 <Button
