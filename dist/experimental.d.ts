@@ -175,6 +175,15 @@ export declare type actionType = {
     icon?: IconType;
 };
 
+declare type actionType_2 = {
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+    icon?: IconType;
+    hideLabel?: boolean;
+    variant?: "default" | "outline" | "neutral";
+};
+
 export declare const ActivityItemList: (({ items, loadingMoreItems, onClickItem, onEndReached, onEndReachedItemsThreshold, }: ActivityItemListProps) => default_2.JSX.Element) & {
     Skeleton: () => default_2.JSX.Element;
 };
@@ -577,40 +586,6 @@ declare interface BaseTOCItem {
     icon?: IconType;
     disabled?: boolean;
     otherActions?: TOCItemAction[];
-}
-
-export declare const BasicTextEditor: ForwardRefExoticComponent<BasicTextEditorProps & RefAttributes<BasicTextEditorHandle>>;
-
-export declare type BasicTextEditorHandle = {
-    clear: () => void;
-    focus: () => void;
-    setContent: (content: string) => void;
-    insertAIBlock: () => void;
-    insertTranscript: (title: string, users: User[], messages: Message[]) => void;
-};
-
-export declare interface BasicTextEditorProps {
-    onChange: (value: {
-        json: JSONContent | null;
-        html: string | null;
-    }) => void;
-    placeholder: string;
-    initialEditorState?: {
-        content: JSONContent | string;
-        title?: string;
-    };
-    readonly?: boolean;
-    aiBlockConfig?: AIBlockConfig;
-    onTitleChange?: (title: string) => void;
-    labels: {
-        toolbarLabels: ToolbarLabels;
-        slashCommandGroupLabels?: SlashCommandGroupLabels;
-        aiBlockLabels?: AIBlockLabels;
-        moodTrackerLabels?: MoodTrackerLabels;
-        liveCompanionLabels?: LiveCompanionLabels;
-        transcriptLabels?: TranscriptLabels;
-        titlePlaceholder?: string;
-    };
 }
 
 declare type BreadcrumbBaseItemType = NavigationItem & {
@@ -2010,6 +1985,17 @@ declare type F0AvatarTeamProps = {
     badge?: AvatarBadge;
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
 
+export declare const F0ButtonToggle: ForwardRefExoticComponent<F0ButtonToggleProps & RefAttributes<HTMLButtonElement>>;
+
+declare interface F0ButtonToggleProps {
+    selected?: boolean;
+    onSelectedChange?: (selected: boolean) => void;
+    label: string;
+    disabled?: boolean;
+    icon: IconType;
+    size?: "sm" | "md" | "lg";
+}
+
 export declare function F0TableOfContent(props: TOCProps): JSX_2.Element;
 
 declare const F0TagAlert: ForwardRefExoticComponent<Props_8 & RefAttributes<HTMLDivElement>>;
@@ -2743,6 +2729,20 @@ declare type MetadataItemValue = {
     icon?: "warning" | "critical";
 };
 
+declare type MetadataItemValue_2 = {
+    type: "text";
+    content: string;
+    label: string;
+} | {
+    type: "status";
+    label: string;
+    variant: StatusVariant;
+} | {
+    type: "dot-tag";
+    label: string;
+    color: NewColor;
+};
+
 declare interface MetadataProps {
     /**
      * Everything is not a MetadataItem is ignored.
@@ -2927,6 +2927,43 @@ declare type NextDepth<T> = T extends 1 ? 2 : T extends 2 ? 3 : T extends 3 ? 4 
 declare interface NextStepsProps {
     title: string;
     items: StepItemProps[];
+}
+
+export declare const NotesTextEditor: ForwardRefExoticComponent<NotesTextEditorProps & RefAttributes<NotesTextEditorHandle>>;
+
+export declare type NotesTextEditorHandle = {
+    clear: () => void;
+    focus: () => void;
+    setContent: (content: string) => void;
+    insertAIBlock: () => void;
+    insertTranscript: (title: string, users: User[], messages: Message[]) => void;
+};
+
+export declare interface NotesTextEditorProps {
+    onChange: (value: {
+        json: JSONContent | null;
+        html: string | null;
+    }) => void;
+    placeholder: string;
+    initialEditorState?: {
+        content?: JSONContent | string;
+        title?: string;
+    };
+    readonly?: boolean;
+    aiBlockConfig?: AIBlockConfig;
+    onTitleChange?: (title: string) => void;
+    labels: {
+        toolbarLabels: ToolbarLabels;
+        slashCommandGroupLabels?: SlashCommandGroupLabels;
+        aiBlockLabels?: AIBlockLabels;
+        moodTrackerLabels?: MoodTrackerLabels;
+        liveCompanionLabels?: LiveCompanionLabels;
+        transcriptLabels?: TranscriptLabels;
+        titlePlaceholder?: string;
+    };
+    actions?: actionType_2[];
+    metadata?: MetadataItemValue_2[];
+    withPadding?: boolean;
 }
 
 export declare const NumberInput: ForwardRefExoticComponent<Omit<NumberInputProps, "ref"> & RefAttributes<HTMLInputElement>>;
