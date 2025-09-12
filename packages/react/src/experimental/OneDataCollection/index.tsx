@@ -43,6 +43,7 @@ import {
   OnSelectItemsCallback,
   RecordType,
 } from "@/hooks/datasource"
+import React from "react"
 import { DataCollectionSource } from "./hooks/useDataCollectionSource"
 
 /**
