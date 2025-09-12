@@ -96,7 +96,7 @@ importers:
       '@copilotkit/shared':
         specifier: ^1.10.2
         version: 1.10.2
-      '@factorialco/factorial-one-core':
+      '@factorialco/f0-core':
         specifier: workspace:*
         version: link:../core
       '@hookform/resolvers':
@@ -557,9 +557,9 @@ importers:
 
   packages/react-native:
     dependencies:
-      '@factorialco/factorial-one-core':
-        specifier: 1.9.0
-        version: 1.9.0(@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.17))(tailwindcss-animate@1.0.7(tailwindcss@3.4.17))(tailwindcss@3.4.17)(typescript@5.8.2)
+      '@factorialco/f0-core':
+        specifier: workspace:*
+        version: link:../core
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -606,6 +606,9 @@ importers:
       '@types/twemoji-parser':
         specifier: ^13.1.4
         version: 13.1.4
+      babel-jest:
+        specifier: ^29.7.0
+        version: 29.7.0(@babel/core@7.26.10)
       globals:
         specifier: ^16.0.0
         version: 16.0.0
@@ -645,10 +648,10 @@ importers:
 
   packages/react-native-playground:
     dependencies:
-      '@factorialco/factorial-one-core':
+      '@factorialco/f0-core':
         specifier: workspace:*
         version: link:../core
-      '@factorialco/factorial-one-react-native':
+      '@factorialco/f0-react-native':
         specifier: workspace:*
         version: link:../react-native
       '@react-navigation/native':
@@ -2410,14 +2413,6 @@ packages:
   '@expo/xcpretty@4.3.2':
     resolution: {integrity: sha512-ReZxZ8pdnoI3tP/dNnJdnmAk7uLT4FjsKDGW7YeDdvdOMz2XCQSmSCM9IWlrXuWtMF9zeSB6WJtEhCQ41gQOfw==}
     hasBin: true
-
-  '@factorialco/factorial-one-core@1.9.0':
-    resolution: {integrity: sha512-P0jxWcAlkT0yjZ28ZgDxiVZtWXePXDTTUsmCDjUPnzjGusKz3HLQobmQg5pPmfdwMhN8DYHN/ovw55T85LXGGg==}
-    peerDependencies:
-      '@tailwindcss/container-queries': ^0.1.1
-      tailwindcss: ^3.4.3
-      tailwindcss-animate: ^1.0.7
-      typescript: ^5.7.2
 
   '@fastify/busboy@3.1.1':
     resolution: {integrity: sha512-5DGmA8FTdB2XbDeEwc/5ZXBl6UbBAyBOOLlPuBnZ/N1SwdH9Ii+cOX3tBROlDgcTXxjOYnLMVoKk9+FXAw0CJw==}
@@ -15141,13 +15136,6 @@ snapshots:
       chalk: 4.1.2
       find-up: 5.0.0
       js-yaml: 4.1.0
-
-  '@factorialco/factorial-one-core@1.9.0(@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.17))(tailwindcss-animate@1.0.7(tailwindcss@3.4.17))(tailwindcss@3.4.17)(typescript@5.8.2)':
-    dependencies:
-      '@tailwindcss/container-queries': 0.1.1(tailwindcss@3.4.17)
-      tailwindcss: 3.4.17
-      tailwindcss-animate: 1.0.7(tailwindcss@3.4.17)
-      typescript: 5.8.2
 
   '@fastify/busboy@3.1.1': {}
 

@@ -1,6 +1,6 @@
 module.exports = [
   {
-    path: "dist/factorial-one.js",
+    path: "dist/f0.js",
     name: "JS: Stable",
   },
   {
