@@ -4,12 +4,10 @@ import type {
 } from "@/components/F0Card/types"
 import type { IconType } from "@/components/F0Icon"
 import type { FiltersDefinition } from "@/components/OneFilterPicker/types"
-import { DataCollectionDataAdapter } from "@/experimental"
 import { useDataCollectionLanesData } from "@/experimental/OneDataCollection/hooks/useDataCollectionData/useDataCollectionLanesData"
 import { useSelectableLanes } from "@/experimental/OneDataCollection/hooks/useSelectableLanes"
 import {
   InfiniteScrollPaginatedResponse,
-  PaginatedDataAdapter,
   PaginationInfo,
   type RecordType,
 } from "@/hooks/datasource"
@@ -73,16 +71,6 @@ export const KanbanCollection = <
     throw new Error("Grouping is not supported in Kanban yet")
   }
 
-  const isInfiniteScrollPagination = (
-    dataAdapter: DataCollectionDataAdapter<R, Filters>
-  ): dataAdapter is PaginatedDataAdapter<R, Filters> => {
-    return dataAdapter.paginationType === "infinite-scroll"
-  }
-
-  if (!isInfiniteScrollPagination(source.dataAdapter)) {
-    throw new Error("Infinite scroll pagination is required in Kanban")
-  }
-
   const [instanceId] = useState(() => Symbol("kanban-visualization"))
 
   const idProvider = source.idProvider
@@ -134,6 +122,9 @@ export const KanbanCollection = <
         fetchMore: hasMore ? () => laneData.loadMore() : undefined,
       }
     }),
+    loading: Object.values(lanesHooks).some(
+      (laneHook) => laneHook.isInitialLoading
+    ),
     getKey: (item, index) =>
       idProvider ? String(idProvider(item, index)) : index,
     renderCard: (item, index, total, laneId) => {
