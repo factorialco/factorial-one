@@ -237,7 +237,7 @@ export declare const AiChat: () => JSX_2.Element | null;
 
 declare type AiChatMode = "popup" | "sidebar";
 
-export declare const AiChatProvider: ({ enabled, mode, greeting, children, ...copilotKitProps }: AiChatProviderProps) => JSX_2.Element;
+export declare const AiChatProvider: ({ enabled, mode, greeting, children, agent, ...copilotKitProps }: AiChatProviderProps) => JSX_2.Element;
 
 export declare type AiChatProviderProps = {
     enabled?: boolean;
@@ -254,12 +254,14 @@ declare type AiChatProviderReturnValue = {
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     shouldPlayEntranceAnimation: boolean;
     setShouldPlayEntranceAnimation: React.Dispatch<React.SetStateAction<boolean>>;
-} & Pick<AiChatState, "greeting">;
+    tmp_setAgent: (agent?: string) => void;
+} & Pick<AiChatState, "greeting" | "agent">;
 
 declare interface AiChatState {
     greeting?: string;
     initialMode: AiChatMode;
     enabled: boolean;
+    agent?: string;
 }
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
