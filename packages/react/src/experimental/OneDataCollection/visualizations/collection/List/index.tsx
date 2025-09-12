@@ -256,7 +256,7 @@ export const ListCollection = <
             paginationInfo.hasMore && (
               <div
                 ref={loadingIndicatorRef}
-                className="w-full"
+                className="h-10 w-full"
                 aria-hidden="true"
               />
             )}
